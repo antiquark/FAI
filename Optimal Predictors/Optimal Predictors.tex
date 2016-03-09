@@ -1,0 +1,450 @@
+%
+\documentclass{article}
+\usepackage[affil-it]{authblk}
+%\usepackage{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+%\newtheorem{conjecture}{Conjecture}[section]
+
+%\theoremstyle{remark}
+%\newtheorem{note}{Note}[section]
+
+\newcommand{\Words}{{\{ 0, 1 \}^*}}
+\newcommand{\WordsLen}[1]{{\{ 0, 1 \}^{#1}}}
+\newcommand{\Bool}{\{0,1\}}
+
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\T}{T}
+\DeclareMathOperator{\R}{r}
+\DeclareMathOperator{\A}{a}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+
+
+\begin{document}
+
+\title{Optimal Predictors: A Bayesian Notion of Approximation Algorithm}
+
+
+\author{Vadim Kosoy}
+\affil{Affiliation not available}
+
+
+
+\date{\today}
+
+\bibliographystyle{plain}
+
+\maketitle
+
+\begin{abstract}
+The concept of an "approximation algorithm" is usually only applied to optimization problems since in optimization problems the performance of the algorithm on any given input is a continuous parameter. We introduce a new concept of approximation applicable to decision problems and functions, inspired by Bayesian probability. From the perspective of a Bayesian reasoner with limited computational resources, the answer to a problem that cannot be solved exactly is uncertain and therefore should be described by a random variable. It thus should make sense to talk about the expected value of this random variable, an idea we formalize in the language of average-case complexity theory by introducing the concept of "optimal predictor." We show that optimal predictors exhibit many parallels with "classical" probability theory, prove some existence theorems and demonstrate some applications to artificial general intelligence.%
+\end{abstract}%
+
+
+
+\section*{Introduction}
+%
+Imagine you are strolling in the city with a friend when a car passes by with the license plate number "7614829". Your friend proposes a wager, claiming that the number is composite and offering 10 : 1 odds in your favor. Knowing that your friend has no exceptional ability in mental arithmetic and that it's highly unlikely they saw this car before, you realize they are just guessing. Your mental arithmetic is also insufficient to test the number for primality, but is sufficient to check that $7614829 \equiv 1 \pmod{3}$ and $\frac{1}{\ln 7614829} \approx 0.06$. Arguing from the prime number theorem and observing that 7614829 is odd and is divisible neither by 3 nor by 5, you conclude that the probability 7614829 is prime is $\frac{1}{\ln 7614829} \times 2 \times \frac{3}{2} \times \frac{5}{4} \approx 22\%$. Convinced that the odds are in your favor you accept the bet\footnote{Alas, $7614829 = 271 \times 28099$.}.
+
+
+From the perspective of frequentist probability the question "what is the probability 7614829 is prime?" seems meaningless, since it is either prime or not so there is no frequency to observe (unless the frequency is 0 or 1). From a Bayesian perspective, probability represents a degree of confidence, however in classical Bayesian probability theory it is assumed the only source of uncertainty is the lack of information. The number 7614829 already contains all information needed to determine whether it's prime so the probability again has to be 0 or 1. However, real life uncertainty is not only information-theoretic but also complexity-theoretic. Even when we have all information to obtain the answer, out computational resources are limited so we remain uncertain. The rigorous formalization of this idea is the main goal of the present work.
+
+The idea of assigning probabilities to purely mathematical questions was studied by several authors \cite{Gaifman_2004}\cite{Hutter_2013}\cite{Demski_2012}\cite{Christiano_2014}\cite{Garrabrant_2015}, mainly in the setting of formal logic. That is, their approach was looking for functions from the set of sentences in some formal logical language to $[0,1]$. However, although there is a strong intuitive case for assigning probabilities to sentences like "7614829 is prime" it is much less clear there is a meaningful assignment of probabilities to sentences like $\varphi_1 := \text{"there are no odd perfect numbers"}$ or (even worse) $\varphi_2 := \text{"there is no cardinality } \kappa \text{ s.t. } \aleph_0 < \kappa < 2^{\aleph_0} \text{."}$. The problem is that a wager on $\varphi_1$ can only become resolved in one direction while a wager on $\varphi_2$ cannot be resolved at all.
+
+In the present work we avoid choosing a specific category of mathematical questions. Instead, we consider the abstract setting of arbitrary distributional decision problems. This leads to the perspective that an assignment of probabilities is a form of \emph{approximate} solution to a problem. This is not the same sense of approximation as used in optimization problems, where the approximation error is the difference between the ideal solution and the actual solution. Instead, the approximation error is the prediction accuracy of our probability assignment. This is also different from average-complexity theory where the solution is required to be exact on most input instances. However the language of average-complexity theory (in particular the concept of a distributional decision problem) turns out to be well-suited to our purpose.
+The concept of "optimal predictor" that arises from the approach turns out to behave much like probabilities, or more generally expected values, in "classical" probability theory. They display an appropriate form of calibration. The "expected values" are linear in general and multiplicative for functions that are independent in an appropriate sense. There is a natural parallel of conditional probabilities. For simple examples constructed from one-way functions we get the probability values we expect. Also they are well behaved in the complexity-theoretic sense that a natural class of reductions transforms optimal predictors into optimal predictors, and complete problems for these reductions exist for important complexity classes.
+
+Optimal predictors turn out to be unique up to a certain equivalence relation. The existence of optimal predictors depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal predictors that exist for completely arbitrary problems. Uniform optimal predictors of this kind exist for a certain class of problems we call "generatable" which is can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal predictors allows for much further research.
+
+Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence \cite{Hutter_2013}\cite{Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other\cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal predictors. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal predictors to decision theory and the theory of self-modifying agents.
+
+The structure of the paper is as follows. Section 2 introduces notation. Section 3 introduces the main definitions and gives a simple example using one-way functions. Section 4 shows the parallel between properties of optimal predictors and classical probability theory. Section 5 discusses behavior of optimal predictors and reductions and shows $\textsc{SampNP}$ has a complete problem under appropriate reductions. Section 6 discusses existence and uniqueness of optimal predictors. Section 7 discusses applications to AGI. Section 8 discusses possible avenues for further research. The Appendix reviews relevant theorems about one-way functions.
+
+\setcounter{section}{-1}
+
+\section{Notation}
+%
+\subsection{Numbers}
+
+$\Nats$ is the set of natural numbers. We will use the convention in which natural numbers start from 0, so $\Nats = \{0, 1, 2 \ldots \}$. 
+
+$\Rats$ is the field of rational numbers, $\Reals$ is the field of real numbers.
+
+For $F \in \{\Rats,\Reals\}$, $F^{>0} := \{x \in F \mid x > 0\}$, $F^{\geq 0} := \{x \in F \mid x \geq 0\}$.
+
+$\log: \Reals^{\geq 0} \rightarrow \Reals \sqcup \{-\infty\}$ will denote the logarithm in base 2.
+
+\subsection{Measures and Probabilities}
+
+For $X$ a measurable space, $\mu$ a probability measure on $X$, $V$ a finite dimensional vector space over $\Reals$ and $f: X \rightarrow V$, $\E_{x \sim \mu}[f(x)]$ will denote the expected value of $f$ with respect to $\mu$, i.e. $\E_{x \sim \mu}[f(x)] := \int_X f(x) d\mu(x)$. We will the abbreviated notations $\E_\mu[f(x)]$, $\E[f(x)]$, $\E_\mu[f]$, $\E[f]$ when no confusion is likely to occur.
+
+Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Supp \mu$ will denote the support of $\mu$. In particular when $X$ is discrete, $\Supp \mu = \{x \in X \mid \mu(x) > 0\}$.
+
+\subsection{Algorithms}
+
+$\Words$ is the set of all finite binary strings (words). For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). For any $n \in \Nats$, $U^n$ is the uniform probability distribution on $\WordsLen{n}$.
+
+\begin{definition}
+
+An \emph{encoded set} is a set $X$ together with an injection $e_X: X \rightarrow \Words$ (the encoding) s.t. $\Img e_X$ is decidable in polynomial time.
+
+\end{definition}
+
+We treat standard sets such as $\Nats$ or $\Rats$ as encoded without specifying the encoding explicitly since it is only important up to a polynomial time transformation (any conventional encoding will suffice).
+
+Given $n \in \Nats$, encoded sets $X_1, X_2 \ldots X_n$ and encoded set $Y$ we use the notation $A: \prod_{i=1}^n X_i \xrightarrow{alg} Y$ to mean a Turing machine with $n$ input tapes that halts on every input for which the $i$-th tape is initialized to a value in $\Img e_X$ and produces an output in $\Img e_Y$. Given $\{x_i \in X_i\}_{i=1}^n$ the notation $A(x_1, x_2 \ldots x_n)$ stands for the unique $y \in Y$ s.t. applying $A$ to the input composed of $e_{X_i}(x_i)$ results in output $e_Y(y)$. We use different input tapes for different components of the input instead of encoding the $n$-tuple as a single word in order to allow $A$ to process some components of the input in time smaller than the length of other components. This involves abuse of notation since a Cartesian product of encoded sets is naturally an encoded set, but hopefully this won't cause much confusion.
+
+Given $A: X \xrightarrow{alg} Y$ and $x \in X$, $\T_A(x)$ stands for the number of time steps in the computation of $A(x)$.
+
+\section{Fundamentals}
+%
+\subsection{Optimal Predictors}
+
+We start with a simple model to help build intuition and motivate the following definitions.
+
+Consider finite sets $X$ and $Y$, a probability distribution $\mu: X \rightarrow [0,1]$, a mapping $m: X \rightarrow Y$ and a function $f: X \rightarrow \Reals$. Suppose $x$ was sampled from $\mu$ and we were told $y := m(x)$ (but not told $x$ itself). Our expected value of $f(x)$ in these conditions is $\E[f(x)] = \E_{x' \sim \mu}[f(x') \mid m(x') = y]$.
+
+Let $P: X \rightarrow \Reals$ be the function $P(x) := \E_{x' \sim \mu}[f(x') \mid m(x) = m(x)]$. How can we characterize $P$ without referring to the concept of a conditional expected value? For any $Q: X \rightarrow \Reals$ we can consider the "error" $\E_\mu[(Q - f)^2]$. $Q$ is called "efficient" when it factors as $Q = q \circ m$ for some $q: Y \rightarrow \Reals$. It is easy to see that $P$ has the least error among all efficient functions.
+
+Note that the characterization of $P$ depends not only on $f$ but also on $\mu$. That is, the accuracy of an estimator depends on the prior probabilities to encounter different questions. In general, we assume that the possible questions are indexed by elements of $\Words$. Thus we need to consider a probability distribution on $\Words$. However, in the spirit of average-complexity theory we will only require our estimators to be \emph{asymptotically} optimal. Therefore instead of considering a single probability distribution we consider a family of probability distribution indexed by an integer parameter, where the role of the parameter is defining the relevant limit. We thereby arrive at the following:
+
+\begin{definition}
+
+A \emph{word ensemble} $\mu$ is a family of probability distributions $\{\mu^k: \Words \rightarrow [0,1]\}_{k \in \Nats}$.
+
+\end{definition}
+
+We now introduce our abstraction for a "class of mathematical questions" (with quantitative real-valued answers). This abstraction is a trivial generalization of the concept of a distributional decision problem from average-case complexity theory (see e.g. \cite{Bogdanov_2006}).
+
+\begin{definition}
+
+A \emph{distributional estimation problem} is a pair $(\mu,f)$ where $\mu$ is a word ensemble and $f: \Supp \mu \rightarrow \Reals$ is bounded.
+
+\end{definition}
+
+In the motivational model, the estimator was restricted to lie in a class of functions that factor through a fixed mapping. Of course we are interested in more realistic notions of efficiency. In the present work consider restrictions on time complexity, access to random bits and size of advice strings. Spatial complexity is also of interest but treating it is out of our current scope. It is possible to consider weaker or stronger restrictions which we represent using the following abstraction:
+
+\begin{definition}
+
+Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions $\gamma: \Nats^n \rightarrow \Nats$ s.t.
+
+\begin{enumerate}[(i)]
+
+\item If $\gamma_1, \gamma_2 \in \Gamma$ then $\gamma_1 + \gamma_2 \in \Gamma$.
+
+\item If $\gamma_1 \in \Gamma$, $\gamma_2: \Nats^n \rightarrow \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
+
+\end{enumerate}
+
+We think of $n$ as the number of parameters on which the resource restriction depends and $m$ as the number of different resource types.
+
+\end{definition}
+
+\begin{example}
+
+For any $n \in \Nats$, $\Gamma_{\text{poly}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{poly}}^n$ when there is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\gamma(K) \leq p(K)$.
+
+\end{example}
+
+\begin{example}
+
+For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{log}}^n$ when there is $c \in \Nats$ s.t. $\gamma(K_1, K_2 \ldots K_n) \leq c \sum_{i=1}^n \log(K_i+1)$.
+
+\end{example}
+
+We now introduce our notion of an "efficient" algorithm.
+
+\begin{definition}
+
+Fix $n \in \Nats$ and $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{$\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where $S: \Nats^n \times X \times \Words^2 \xrightarrow{alg} Y$, $\R_S: \Nats^2 \xrightarrow{alg} \Nats$ and $\A_S: \Nats^2 \rightarrow \Words$ are s.t.
+
+\begin{enumerate}[(i)]
+
+\item There is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$, $T_S(K,x,y,\A_S(K)) \leq p(K)$.
+
+\item There is a polynomial $q: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $T_{\R_S}(K) \leq q(K)$.
+
+\item $\R_S \in \Gamma_{\mathfrak{R}}$
+
+\item $\Abs{\A_S} \in \Gamma_{\mathfrak{A}}$
+
+\end{enumerate}
+
+Abusing notation, we denote the $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y,z)$ will denote $S(K,x,y,z)$, $S^K(x,y)$ will denote $S(K,x,y,\A_S(K))$ and $S^K(x)$ will denote a random variable which equals $S(K,x,y,a(K))$ for $y$ sampled from $U^{\R_S(K)}$. We think of $S$ as a randomized algorithm with advice where $y$ are the internal coin tosses and $\A_S$ is the advice.
+
+We will use the notation $S: X \xrightarrow{\Gamma} Y$ to signify $S$ is a $\Gamma$-scheme of signature $X \rightarrow Y$.
+
+\end{definition}
+
+Instead of requiring the time complexity to be polynomial in $K$, we could have used a third growth space which determines the allowed time complexity. However, we make do without this generalization in the current work.
+
+Fix $\Gamma$ a pair of growth spaces of rank 2. The first parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The second parameter serves to control the resources available to the predictor. To illustrate the significance of the second parameter using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question "what is the probability 7614829 is prime?" depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
+
+Given a distributional estimation problem $(\mu,f)$ and $Q: \Words \xrightarrow{\Gamma} \Rats$, we can consider the estimation error $\E_{(x,y) \sim \mu^k \times U^{\R_Q(k,j)}}[(Q^{kj}(x,y) - f(x))^2]$. It makes little sense to require this error to be minimal for every $(k,j) \in \Nats^2$, since we can always hard-code a finite number of answers into $Q$ without violating the resource restrictions. Instead we require minimization up to an asymptotically small error. Since it makes sense to consider different kind of asymptotic requirements, we introduce an abstraction that corresponds to this choice.
+
+\begin{definition}
+
+Given $n \in \Nats$, an \emph{error space of rank $n$} is a set $\mathcal{E}$ of bounded functions $\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}$ s.t.
+
+\begin{enumerate}[(i)]
+
+\item If $\varepsilon_1, \varepsilon_2 \in \mathcal{E}$ then $\varepsilon_1 + \varepsilon_2 \in \mathcal{E}$.
+
+\item If $\varepsilon_1 \in \mathcal{E}$, $\varepsilon_2: \Nats^n \rightarrow \Reals^{\geq 0}$ and $\forall K \in \Nats^n: \varepsilon_2(K) \leq \varepsilon_1(K)$ then $\varepsilon_2 \in \mathcal{E}$.
+
+\item There is a polynomial $h: \Nats^n \rightarrow \Nats$ s.t. $2^{-h} \in \mathcal{E}$.
+
+\end{enumerate}
+
+\end{definition}
+
+We note a few simple properties of error spaces which will be useful in the following.
+
+\begin{proposition}
+\label{prp:err_spc_zero}
+
+For any error space $\mathcal{E}$, $0 \in \mathcal{E}$.
+
+\end{proposition}
+
+\begin{proof}
+
+Follows from conditions (ii) and (iii), since $0 \leq 2^{-h}$.
+
+\end{proof}
+
+\begin{proposition}
+
+For any error space $\mathcal{E}$, $\varepsilon \in \mathcal{E}$ and $c \in \Reals^{\geq 0}$, $c \varepsilon \in \mathcal{E}$.
+
+\end{proposition}
+
+\begin{proof}
+
+For $c = 0$, it follows from proposition~$\ref{prp:err_spc_zero}$. For $c > 0$, it follows from condition (i).
+
+\end{proof}
+
+\begin{proposition}
+
+For any error space $\mathcal{E}$, $\varepsilon \in \mathcal{E}$ and $\alpha \in \Reals$, if $\alpha \geq 1$ then $\varepsilon^\alpha \in \mathcal{E}$.
+
+\end{proposition}
+
+\begin{proof}
+
+$$\varepsilon^\alpha = (\sup \varepsilon)^\alpha (\frac{\varepsilon}{\sup \varepsilon})^\alpha \leq  (\sup \varepsilon)^\alpha \frac{\varepsilon}{\sup \varepsilon} \in \mathcal{E}$$
+
+\end{proof}
+
+\begin{proposition}
+
+Consider $\mathcal{E}$ an error space and $\alpha \in \Reals^{>0}$. Define $\mathcal{E}^\alpha := \{\varepsilon^\alpha \mid \varepsilon \in \mathcal{E}\}$. Then, $\mathcal{E}^\alpha$ is an error space.
+
+\end{proposition}
+
+\begin{proof}
+
+To check condition (i), consider $\varepsilon_1, \varepsilon_2 \in \mathcal{E}$. 
+
+If $\alpha > 1$, $(\varepsilon_1^\alpha + \varepsilon_2^\alpha)^\frac{1}{\alpha} \leq \varepsilon_1 + \varepsilon_2 \in \mathcal{E}$ hence $(\varepsilon_1^\alpha + \varepsilon_2^\alpha)^\frac{1}{\alpha} \in \mathcal{E}$ and $\varepsilon_1^\alpha + \varepsilon_2^\alpha \in \mathcal{E}^\alpha$.
+
+If $\alpha \leq 1$, $(\varepsilon_1^\alpha + \varepsilon_2^\alpha)^\frac{1}{\alpha} = 2^\frac{1}{\alpha}(\frac{\varepsilon_1^\alpha + \varepsilon_2^\alpha}{2})^\frac{1}{\alpha} \leq 2^\frac{1}{\alpha} \frac{\varepsilon_1+\varepsilon_2}{2} \in \mathcal{E}$ hence $(\varepsilon_1^\alpha + \varepsilon_2^\alpha)^\frac{1}{\alpha} \in \mathcal{E}$ and $\varepsilon_1^\alpha + \varepsilon_2^\alpha \in \mathcal{E}^\alpha$.
+
+Conditions (ii) and (iii) are obvious.
+
+\end{proof}
+
+We are now ready to give our central definition, which corresponds to a notion of "expected value" for distributional estimation problems.
+
+\begin{definition}
+\label{def:op}
+
+Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an error space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $Q: \Words \xrightarrow{\Gamma} \Rats$ there is $\varepsilon \in \mathcal{E}$ s.t.
+
+\begin{equation}
+\label{eqn:op}
+\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \varepsilon(k,j)
+\end{equation}
+
+\end{definition}
+
+Distributional \emph{decision} problems are the special case when the range of $f$ is $\Bool$. In this special case, the outputs of an optimal predictors can be thought of as probabilities\footnote{That said, $P^{kj}(x,y)=1$ doesn't imply $f(x) = 1$ and $P^{kj}(x,y)=0$ doesn't imply $f(x)=0$. We can try to fix this using a logarithmic error function instead of the squared norm, however this creates other difficulties and is outside the scope of the present work.}.
+
+TODO: Advice is more powerful than random
+
+\subsection{Orthogonality Theorems}
+
+There is a variant of definition~\ref{def:op} which is nearly equivalent and often useful. 
+
+We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real inner product space with inner product $\Chev{f,g}:=\E_\mu[fg]$. Informally, we can think of $\Gamma$-schemes as a subspace (although a $\Gamma$-scheme is not even a function) and an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$ as the nearest point to $f$ in this subspace. Now, given an inner product space $V$, a vector $f \in V$, an actual subspace $W \subseteq V$ and $p = \Argmin{q \in W} \Norm{q - f}^2$, we have $\forall v \in W: \Chev{p-f,v}=0$. This motivates the following:
+
+\begin {definition}
+
+Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an error space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$
+
+\begin{equation}
+\Abs{\E_{(x,y,z) \sim \mu^k \times U^{\R_P(k,j)} \times U^{\R_S(k,j)-\R_P(k,j)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,yz)]} \in \mathcal{E}
+\end{equation}
+
+\end {definition}
+
+The following theorem is the analogue in our language of the previous fact about inner product spaces.
+
+\begin{theorem}
+\label{thm:ort}
+
+Fix $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an error space of rank 2. Assume there is $\zeta: \Nats^2 \rightarrow \Reals^{>0}$ s.t. $\zeta \in \mathcal{E}$ and $\Floor{\log \max(-\log \zeta, 2)} \in \Gamma_{\mathfrak{A}}$\footnote{If $\Floor{\log(k+2)}, \Floor{\log(j+2)} \in \Gamma_{\mathfrak{A}}$ (equivalently $\Gamma_{\text{log}}^2 \subseteq \Gamma_{\mathfrak{A}}$) then this condition holds for any $\mathcal{E}$ since we can take $\zeta = 2^{-h}$ for $h$ polynomial.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\mathcal{E}^{\frac{1}{2}\sharp}(\Gamma)$-optimal predictor for $(\mu,f)$.
+
+\end{theorem}
+
+To prove theorem~\ref{thm:ort}, we will need the following proposition:
+
+\begin{proposition}
+
+MOO
+
+\end{proposition}
+
+\begin{proof}
+
+FOO
+
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:ort}]
+
+Fix $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$. Consider any $\sigma: \Nats^2 \rightarrow \{ \pm 1 \}$ and $n: \Nats^2 \rightarrow \Nats$. Define $t(k,j) := \sigma(k,j) 2^{-n(k,j)}$. Choose $h: \Nats^2 \rightarrow \Nats$ a polynomial s.t. $2^{-h} \in \mathcal{E}$. Then, it is easy to see there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. given $k,j \in \Nats$, $x \in \Supp \mu^k$, $y \in \WordsLen{\R_P(k,j)}$ and $z \in \WordsLen{\R_P(k,j) - \R_S(k,j)}$
+
+\begin{equation}
+\label{eqn:thm__ort__prf1}
+\Abs{Q_t^{kj}(x,yz) - P^{kj}(x,y) - t(k,j) S^{kj}(x,yz)} \leq 2^{-h(k,j)}
+\end{equation}
+
+Specifically, $Q_t^{kj}(x,yz)$ is computed by computing $P^{kj}(x,y) + t(k,j) S^{kj}(x,yz)$ within $h(k,j)$ digits after the binary point.
+
+Applying (\ref{eqn:op}) to $Q_t$, we conclude that there is $\varepsilon \in \mathcal{E}$ s.t.
+
+$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_S(k,j)}}[(Q_t^{kj} - f)^2] + \varepsilon(k,j)$$
+
+Denoting $\varepsilon_t^{kj}(x,y,z):=Q_t^{kj}(x,yz) - P^{kj}(x,y) - t(k,j) S^{kj}(x,yz)$
+
+$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} + t(k,j)S^{kj} + \varepsilon_t^{kj} - f)^2] + \varepsilon(k,j)$$
+
+$$\E[(P^{kj} - f)^2] \leq \E[(P^{kj} + t(k,j)S^{kj} - f)^2] + 2 \E[(P^{kj} + t(k,j)S^{kj} - f) \varepsilon_t^{kj}] + \E[(\varepsilon_t^{kj})^2] + \varepsilon(k,j)$$
+
+Using (\ref{eqn:thm__ort__prf1})
+
+$$\E[(P^{kj} - f)^2] \leq \E[(P^{kj} + t(k,j)S^{kj} - f)^2] + 2 (\sup \Abs{P} + \sup \Abs{S} + \sup \Abs{f}) 2^{-h(k,j)} + 4^{-h(k,j)} + \varepsilon(k,j)$$
+
+Denoting $\varepsilon_1(k,j):=2 (\sup \Abs{P} + \sup \Abs{S} + \sup \Abs{f}) 2^{-h(k,j)} + 4^{-h(k,j)} + \varepsilon(k,j)$ we get
+
+$$\E[(P^{kj} - f)^2] \leq \E[(P^{kj} + t(k,j)S^{kj} - f)^2] + \varepsilon_1(k,j)$$
+
+Note that $\varepsilon_1 \in \mathcal{E}$.
+
+$$\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f)^2 - (P^{kj} + t(k,j)S^{kj} - f)^2] \leq \varepsilon_1(k,j)$$
+
+$$-\E_{\mu^k \times U^{\R_S(k,j)}}[(t(k,j)S^{kj} + 2 (P^{kj} - f)) S^{kj}] t(k,j) \leq \varepsilon_1(k,j)$$
+
+$$-\E_{\mu^k \times U^{\R_S(k,j)}}[(S^{kj})^2] t(k,j)^2 + 2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \varepsilon_1(k,j)$$
+
+$$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \E_{\mu^k \times U^{\R_S(k,j)}}[(S^{kj})^2] t(k,j)^2 + \varepsilon_1(k,j)$$
+
+$$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq (\sup \Abs{S^{kj}})^2 t(k,j)^2 + \varepsilon_1(k,j)$$
+
+$$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) 2^{-n(k,j)} \leq (\sup \Abs{S^{kj}})^2 4^{-n(k,j)} + \varepsilon_1(k,j)$$
+
+Multiplying both sides by $2^{n(k,j)-1}$ we get
+
+$$\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) \leq (\sup \Abs{S^{kj}})^2 2^{-n(k,j)-1} + \varepsilon_1(k,j) 2^{n(k,j)-1}$$
+
+$$ |E_{\mu^k \times U^{r(k,j)} \times U^s}[Q(P^{kj}-f))]| \leq 2^{a-1} \delta(k,j,T_Q^{\mu}(k,s),2^{|Q|}) + E_{\mu^k \times U^s}[Q^2] 2^{-a-1} $$
+
+Take $a:=-\frac{1}{2}\log \delta(k,j,T_Q^{\mu}(k,s),2^{|Q|})+\phi(k,j)$ where $\phi(k,j) \in [-\frac{1}{2}, +\frac{1}{2}]$ is the rounding error. We get
+
+$$ |E_{\mu^k \times U^{r(k,j)} \times U^s}[Q(P^{kj}-f)]| \leq 2^{\phi(k,j)-1} \delta(k,j,T_Q^{\mu}(k,s),2^{|Q|})^{\frac{1}{2}} + E_{\mu^k \times U^s}[Q^2] 2^{-\phi(k,j)-1}\delta(k,j,T_Q^{\mu}(k,s),2^{|Q|})^{\frac{1}{2}} $$
+
+\end{proof}
+
+\subsection{Simple Example}
+
+TBD
+
+\section{Optimal Predictors and Probability Theory}
+
+TBD
+
+\section{Reductions and Completeness}
+
+TBD
+
+\section{Existence and Uniqueness}
+
+TBD
+
+\section{Reflective Systems and Game Theory}
+
+TBD
+
+\section{Discussion}
+
+TBD
+
+\appendix
+
+\section{Appendix: One-Way Functions}
+
+TBD
+
+\section*{Acknowledgments}
+
+TBD
+
+\bibliographystyle{unsrt}
+\bibliography{Optimal_Predictors}
+
+\end{document}
+
