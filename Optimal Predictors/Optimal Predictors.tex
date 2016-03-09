@@ -2,6 +2,7 @@
 \documentclass{article}
 \usepackage[affil-it]{authblk}
 %\usepackage{natbib}
+\usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
@@ -60,7 +61,7 @@
 \newcommand{\Floor}[1]{\lfloor #1 \rfloor}
 \newcommand{\Ceil}[1]{\lceil #1 \rceil}
 \newcommand{\Chev}[1]{\langle #1 \rangle}
-
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
 
 \begin{document}
 
@@ -120,7 +121,7 @@ $\log: \Reals^{\geq 0} \rightarrow \Reals \sqcup \{-\infty\}$ will denote the lo
 
 For $X$ a measurable space, $\mu$ a probability measure on $X$, $V$ a finite dimensional vector space over $\Reals$ and $f: X \rightarrow V$, $\E_{x \sim \mu}[f(x)]$ will denote the expected value of $f$ with respect to $\mu$, i.e. $\E_{x \sim \mu}[f(x)] := \int_X f(x) d\mu(x)$. We will the abbreviated notations $\E_\mu[f(x)]$, $\E[f(x)]$, $\E_\mu[f]$, $\E[f]$ when no confusion is likely to occur.
 
-Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Supp \mu$ will denote the support of $\mu$. In particular when $X$ is discrete, $\Supp \mu = \{x \in X \mid \mu(x) > 0\}$.
+Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Supp \mu$ will denote the support of $\mu$. In particular when $X$ is discrete, ${\Supp \mu = \{x \in X \mid \mu(x) > 0\}}$.
 
 \subsection{Algorithms}
 
@@ -137,6 +138,8 @@ We treat standard sets such as $\Nats$ or $\Rats$ as encoded without specifying 
 Given $n \in \Nats$, encoded sets $X_1, X_2 \ldots X_n$ and encoded set $Y$ we use the notation $A: \prod_{i=1}^n X_i \xrightarrow{alg} Y$ to mean a Turing machine with $n$ input tapes that halts on every input for which the $i$-th tape is initialized to a value in $\Img e_X$ and produces an output in $\Img e_Y$. Given $\{x_i \in X_i\}_{i=1}^n$ the notation $A(x_1, x_2 \ldots x_n)$ stands for the unique $y \in Y$ s.t. applying $A$ to the input composed of $e_{X_i}(x_i)$ results in output $e_Y(y)$. We use different input tapes for different components of the input instead of encoding the $n$-tuple as a single word in order to allow $A$ to process some components of the input in time smaller than the length of other components. This involves abuse of notation since a Cartesian product of encoded sets is naturally an encoded set, but hopefully this won't cause much confusion.
 
 Given $A: X \xrightarrow{alg} Y$ and $x \in X$, $\T_A(x)$ stands for the number of time steps in the computation of $A(x)$.
+
+For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing machine with $n+1$ input tapes: 1 program tape and $n$ tapes that serve as input to the program. Given $A: \prod_{i=1}^n X_i \xrightarrow{alg}\ Y$, $\Quote{A} \in \Words$ denotes the corresponding program for $\mathcal{U}_n$.
 
 \section{Fundamentals}
 %
@@ -202,9 +205,9 @@ Fix $n \in \Nats$ and $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ 
 
 \begin{enumerate}[(i)]
 
-\item There is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$, $T_S(K,x,y,\A_S(K)) \leq p(K)$.
+\item There is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$, $\T_S(K,x,y,\A_S(K)) \leq p(K)$.
 
-\item There is a polynomial $q: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $T_{\R_S}(K) \leq q(K)$.
+\item There is a polynomial $q: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $\T_{\R_S}(K) \leq q(K)$.
 
 \item $\R_S \in \Gamma_{\mathfrak{R}}$
 
@@ -220,13 +223,35 @@ We will use the notation $S: X \xrightarrow{\Gamma} Y$ to signify $S$ is a $\Gam
 
 Instead of requiring the time complexity to be polynomial in $K$, we could have used a third growth space which determines the allowed time complexity. However, we make do without this generalization in the current work.
 
+It will also be useful to consider families of $\Gamma$-schemes satisfying uniform resource bounds.
+
+\begin{definition}
+
+Fix $n \in \Nats$, $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank $n$ and encoded sets $X$, $Y$. A set $F$ of $\Gamma$-schemes of signature $X \rightarrow Y$ is called a \emph{uniform family} when
+
+\begin{enumerate}[(i)]
+
+\item There is a polynomial $p_1: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$, $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$, $\T_S(K,x,y,\A_S(K)) \leq p_1(K)$.
+
+\item There is a polynomial $p_2: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$ and $K \in \Nats^n$, $\T_{\R_S}(K) \leq p_2(K)$.
+
+\item There is $\R_F: \Nats^n \xrightarrow{alg} \Nats$ and a polynomial $p_3: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $\T_{\R_F}(K) \leq p_3(K)$, $\R_F \in \Gamma_{\mathfrak{R}}$ and for any $S \in F$, $\R_S \leq \R_F$.
+
+\item There is $l \in \Gamma_{\mathfrak{A}}$ s.t. for any $S \in F$ and $K \in \Nats^n$, ${\Abs{\Quote{S}} + \Abs{\Quote{\R_S}} + \Abs{\A_S(K)} \leq l(K)}$.
+
+\end{enumerate}
+
+\end{definition}
+
+Note that the concept of a uniform family is non-trivial only when $1 \in \Gamma_{\mathfrak{A}}$, otherwise condition (iv) allows only families of at most one member.
+
 Fix $\Gamma$ a pair of growth spaces of rank 2. The first parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The second parameter serves to control the resources available to the predictor. To illustrate the significance of the second parameter using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question "what is the probability 7614829 is prime?" depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
 
 Given a distributional estimation problem $(\mu,f)$ and $Q: \Words \xrightarrow{\Gamma} \Rats$, we can consider the estimation error $\E_{(x,y) \sim \mu^k \times U^{\R_Q(k,j)}}[(Q^{kj}(x,y) - f(x))^2]$. It makes little sense to require this error to be minimal for every $(k,j) \in \Nats^2$, since we can always hard-code a finite number of answers into $Q$ without violating the resource restrictions. Instead we require minimization up to an asymptotically small error. Since it makes sense to consider different kind of asymptotic requirements, we introduce an abstraction that corresponds to this choice.
 
 \begin{definition}
 
-Given $n \in \Nats$, an \emph{error space of rank $n$} is a set $\mathcal{E}$ of bounded functions $\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}$ s.t.
+Given $n \in \Nats$, an \emph{fall space of rank $n$} is a set $\mathcal{E}$ of bounded functions $\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -240,12 +265,12 @@ Given $n \in \Nats$, an \emph{error space of rank $n$} is a set $\mathcal{E}$ of
 
 \end{definition}
 
-We note a few simple properties of error spaces which will be useful in the following.
+We note a few simple properties of fall spaces which will be useful in the following.
 
 \begin{proposition}
 \label{prp:err_spc_zero}
 
-For any error space $\mathcal{E}$, $0 \in \mathcal{E}$.
+For any fall space $\mathcal{E}$, $0 \in \mathcal{E}$.
 
 \end{proposition}
 
@@ -257,7 +282,7 @@ Follows from conditions (ii) and (iii), since $0 \leq 2^{-h}$.
 
 \begin{proposition}
 
-For any error space $\mathcal{E}$, $\varepsilon \in \mathcal{E}$ and $c \in \Reals^{\geq 0}$, $c \varepsilon \in \mathcal{E}$.
+For any fall space $\mathcal{E}$, $\varepsilon \in \mathcal{E}$ and $c \in \Reals^{\geq 0}$, $c \varepsilon \in \mathcal{E}$.
 
 \end{proposition}
 
@@ -269,7 +294,7 @@ For $c = 0$, it follows from proposition~$\ref{prp:err_spc_zero}$. For $c > 0$, 
 
 \begin{proposition}
 
-For any error space $\mathcal{E}$, $\varepsilon \in \mathcal{E}$ and $\alpha \in \Reals$, if $\alpha \geq 1$ then $\varepsilon^\alpha \in \mathcal{E}$.
+For any fall space $\mathcal{E}$, $\varepsilon \in \mathcal{E}$ and $\alpha \in \Reals$, if $\alpha \geq 1$ then $\varepsilon^\alpha \in \mathcal{E}$.
 
 \end{proposition}
 
@@ -281,7 +306,7 @@ $$\varepsilon^\alpha = (\sup \varepsilon)^\alpha (\frac{\varepsilon}{\sup \varep
 
 \begin{proposition}
 
-Consider $\mathcal{E}$ an error space and $\alpha \in \Reals^{>0}$. Define $\mathcal{E}^\alpha := \{\varepsilon^\alpha \mid \varepsilon \in \mathcal{E}\}$. Then, $\mathcal{E}^\alpha$ is an error space.
+Consider $\mathcal{E}$ an fall space and $\alpha \in \Reals^{>0}$. Define $\mathcal{E}^\alpha := \{\varepsilon^\alpha \mid \varepsilon \in \mathcal{E}\}$. Then, $\mathcal{E}^\alpha$ is an fall space.
 
 \end{proposition}
 
@@ -302,7 +327,7 @@ We are now ready to give our central definition, which corresponds to a notion o
 \begin{definition}
 \label{def:op}
 
-Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an error space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $Q: \Words \xrightarrow{\Gamma} \Rats$ there is $\varepsilon \in \mathcal{E}$ s.t.
+Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $Q: \Words \xrightarrow{\Gamma} \Rats$ there is $\varepsilon \in \mathcal{E}$ s.t.
 
 \begin{equation}
 \label{eqn:op}
@@ -312,6 +337,39 @@ Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an error space 
 \end{definition}
 
 Distributional \emph{decision} problems are the special case when the range of $f$ is $\Bool$. In this special case, the outputs of an optimal predictors can be thought of as probabilities\footnote{That said, $P^{kj}(x,y)=1$ doesn't imply $f(x) = 1$ and $P^{kj}(x,y)=0$ doesn't imply $f(x)=0$. We can try to fix this using a logarithmic error function instead of the squared norm, however this creates other difficulties and is outside the scope of the present work.}.
+
+Note that $\varepsilon$ in (\ref{eqn:op}) depends on $Q$. However in some sense the optimality condition can be amplified to uniformity w.r.t. the resources required by $Q$.
+
+\begin{proposition}
+\label{prp:unif}
+
+Fix $\Gamma=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$ and $F$ a uniform family of $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \mathcal{E}$ s.t. for any $Q \in F$, equation~\ref{eqn:op} holds.
+
+\end{proposition}
+
+\begin{proof}
+
+Consider $\bar{Q}: \Words \xrightarrow{\Gamma} \Rats$ defined as follows. $\R_{\bar{Q}}:=\R_F$. For any $k,j \in \Nats$, $\{\E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] \mid Q \in F\}$ is a finite set because $F$ is a uniform family so the runtime of $Q^{kj}$ is bounded by a polynomial in $k,j$ that doesn't depend on $Q$. Therefore we can choose $Q_{kj} \in \Argmin{Q \in F} \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2]$. Let $\A_{\bar{Q}}(k,j)$ be an encoding of $(\Quote{Q_{kj}},\Quote{\R_{Q_{kj}}},\A_{Q_{kj}}(k,j))$. It is easy to see we can define $\bar{Q}$ so that for any $k,j \in \Nats$, $y_1 \in \WordsLen{\R_{Q_{kj}}(k,j)}$, $y_2 \in \WordsLen{\R_F(k,j)-\R_{Q_{kj}}(k,j)}$, $\bar{Q}^{kj}(x,y_1 y_2,\A_{\bar{Q}}(k,j))=Q_{kj}^{kj}(x,y_1,\A_{Q_{kj}}(k,j))$.
+
+Since $P$ is an $\mathcal{E}(\Gamma)$-optimal predictor, there is $\varepsilon \in \mathcal{E}$ s.t.
+
+\begin{equation}
+\label{eqn:prp__unif__prf1}
+\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_{\bar{Q}}(k,j)}}[(\bar{Q}^{kj} - f)^2] + \varepsilon(k,j)
+\end{equation}
+
+For any $Q \in F$, we have 
+
+$$\E_{\mu^k \times U^{\R_{\bar{Q}}(k,j)}}[(\bar{Q}^{kj} - f)^2]=\E_{\mu^k \times U^{\R_{Q_{kj}}(k,j)}}[(Q_{kj}^{kj} - f)^2]$$
+
+\begin{equation}
+\label{eqn:prp__unif__prf2}
+\E_{\mu^k \times U^{\R_{\bar{Q}}(k,j)}}[(\bar{Q}^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2]
+\end{equation}
+
+Combining \ref{eqn:prp__unif__prf1} and \ref{eqn:prp__unif__prf2} we get the desired result.
+
+\end{proof}
 
 TODO: Advice is more powerful than random
 
@@ -323,7 +381,7 @@ We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real
 
 \begin {definition}
 
-Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an error space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$
+Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$
 
 \begin{equation}
 \Abs{\E_{(x,y,z) \sim \mu^k \times U^{\R_P(k,j)} \times U^{\R_S(k,j)-\R_P(k,j)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,yz)]} \in \mathcal{E}
@@ -336,78 +394,47 @@ The following theorem is the analogue in our language of the previous fact about
 \begin{theorem}
 \label{thm:ort}
 
-Fix $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an error space of rank 2. Assume there is $\zeta: \Nats^2 \rightarrow \Reals^{>0}$ s.t. $\zeta \in \mathcal{E}$ and $\Floor{\log \max(-\log \zeta, 2)} \in \Gamma_{\mathfrak{A}}$\footnote{If $\Floor{\log(k+2)}, \Floor{\log(j+2)} \in \Gamma_{\mathfrak{A}}$ (equivalently $\Gamma_{\text{log}}^2 \subseteq \Gamma_{\mathfrak{A}}$) then this condition holds for any $\mathcal{E}$ since we can take $\zeta = 2^{-h}$ for $h$ polynomial.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\mathcal{E}^{\frac{1}{2}\sharp}(\Gamma)$-optimal predictor for $(\mu,f)$.
+Fix $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an fall space of rank 2. Assume there is $\zeta: \Nats^2 \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \mathcal{E}$ and $\Floor{\log \log \frac{1}{\zeta}} \in \Gamma_{\mathfrak{A}}$\footnote{If $\Floor{\log(k+2)}, \Floor{\log(j+2)} \in \Gamma_{\mathfrak{A}}$ (equivalently $\Gamma_{\text{log}}^2 \subseteq \Gamma_{\mathfrak{A}}$) then this condition holds for any $\mathcal{E}$ since we can take $\zeta = 2^{-h}$ for $h$ polynomial.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\mathcal{E}^{\frac{1}{2}\sharp}(\Gamma)$-optimal predictor for $(\mu,f)$.
 
 \end{theorem}
 
-To prove theorem~\ref{thm:ort}, we will need the following proposition:
-
-\begin{proposition}
-
-MOO
-
-\end{proposition}
-
 \begin{proof}
 
-FOO
+Assume without loss of generality that there is a polynomial ${h: \Nats^2 \rightarrow \Nats}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take a polynomial $h$ s.t. $2^{-h} \in \mathcal{E}$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$. Consider any ${\sigma: \Nats^2 \rightarrow \{ \pm 1 \}}$ and $n: \Nats^2 \rightarrow \Ints$ s.t. $\Abs{n} \leq \log \frac{1}{\zeta}$. Define ${t(k,j) := \sigma(k,j) 2^{-n(k,j)}}$. It is easy to see there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. given $k,j \in \Nats$, $x \in \Supp \mu^k$, ${y \in \WordsLen{\R_P(k,j)}}$ and $z \in \WordsLen{\R_P(k,j) - \R_S(k,j)}$, $Q_t^{kj}(x,yz) = P^{kj}(x,y) + t(k,j) S^{kj}(x,yz)$. Moreover, the set of $Q_t$ for all admissible choices of $t$ (but fixed $S$) is a uniform family.
 
-\end{proof}
-
-\begin{proof}[Proof of Theorem \ref{thm:ort}]
-
-Fix $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$. Consider any $\sigma: \Nats^2 \rightarrow \{ \pm 1 \}$ and $n: \Nats^2 \rightarrow \Nats$. Define $t(k,j) := \sigma(k,j) 2^{-n(k,j)}$. Choose $h: \Nats^2 \rightarrow \Nats$ a polynomial s.t. $2^{-h} \in \mathcal{E}$. Then, it is easy to see there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. given $k,j \in \Nats$, $x \in \Supp \mu^k$, $y \in \WordsLen{\R_P(k,j)}$ and $z \in \WordsLen{\R_P(k,j) - \R_S(k,j)}$
-
-\begin{equation}
-\label{eqn:thm__ort__prf1}
-\Abs{Q_t^{kj}(x,yz) - P^{kj}(x,y) - t(k,j) S^{kj}(x,yz)} \leq 2^{-h(k,j)}
-\end{equation}
-
-Specifically, $Q_t^{kj}(x,yz)$ is computed by computing $P^{kj}(x,y) + t(k,j) S^{kj}(x,yz)$ within $h(k,j)$ digits after the binary point.
-
-Applying (\ref{eqn:op}) to $Q_t$, we conclude that there is $\varepsilon \in \mathcal{E}$ s.t.
+Applying Proposition~\ref{prp:unif}, we conclude that there is $\varepsilon \in \mathcal{E}$ which doesn't depend on $t$ s.t.
 
 $$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_S(k,j)}}[(Q_t^{kj} - f)^2] + \varepsilon(k,j)$$
 
-Denoting $\varepsilon_t^{kj}(x,y,z):=Q_t^{kj}(x,yz) - P^{kj}(x,y) - t(k,j) S^{kj}(x,yz)$
+$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} + t(k,j)S^{kj}  - f)^2] + \varepsilon(k,j)$$
 
-$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} + t(k,j)S^{kj} + \varepsilon_t^{kj} - f)^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f)^2 - (P^{kj} + t(k,j)S^{kj} - f)^2] \leq \varepsilon(k,j)$$
 
-$$\E[(P^{kj} - f)^2] \leq \E[(P^{kj} + t(k,j)S^{kj} - f)^2] + 2 \E[(P^{kj} + t(k,j)S^{kj} - f) \varepsilon_t^{kj}] + \E[(\varepsilon_t^{kj})^2] + \varepsilon(k,j)$$
+$$-\E_{\mu^k \times U^{\R_S(k,j)}}[(t(k,j)S^{kj} + 2 (P^{kj} - f)) S^{kj}] t(k,j) \leq \varepsilon(k,j)$$
 
-Using (\ref{eqn:thm__ort__prf1})
+$$-\E_{\mu^k \times U^{\R_S(k,j)}}[(S^{kj})^2] t(k,j)^2 + 2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \varepsilon(k,j)$$
 
-$$\E[(P^{kj} - f)^2] \leq \E[(P^{kj} + t(k,j)S^{kj} - f)^2] + 2 (\sup \Abs{P} + \sup \Abs{S} + \sup \Abs{f}) 2^{-h(k,j)} + 4^{-h(k,j)} + \varepsilon(k,j)$$
+$$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \E_{\mu^k \times U^{\R_S(k,j)}}[(S^{kj})^2] t(k,j)^2 + \varepsilon(k,j)$$
 
-Denoting $\varepsilon_1(k,j):=2 (\sup \Abs{P} + \sup \Abs{S} + \sup \Abs{f}) 2^{-h(k,j)} + 4^{-h(k,j)} + \varepsilon(k,j)$ we get
+$$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq (\sup \Abs{S^{kj}})^2 t(k,j)^2 + \varepsilon(k,j)$$
 
-$$\E[(P^{kj} - f)^2] \leq \E[(P^{kj} + t(k,j)S^{kj} - f)^2] + \varepsilon_1(k,j)$$
-
-Note that $\varepsilon_1 \in \mathcal{E}$.
-
-$$\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f)^2 - (P^{kj} + t(k,j)S^{kj} - f)^2] \leq \varepsilon_1(k,j)$$
-
-$$-\E_{\mu^k \times U^{\R_S(k,j)}}[(t(k,j)S^{kj} + 2 (P^{kj} - f)) S^{kj}] t(k,j) \leq \varepsilon_1(k,j)$$
-
-$$-\E_{\mu^k \times U^{\R_S(k,j)}}[(S^{kj})^2] t(k,j)^2 + 2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \varepsilon_1(k,j)$$
-
-$$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \E_{\mu^k \times U^{\R_S(k,j)}}[(S^{kj})^2] t(k,j)^2 + \varepsilon_1(k,j)$$
-
-$$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq (\sup \Abs{S^{kj}})^2 t(k,j)^2 + \varepsilon_1(k,j)$$
-
-$$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) 2^{-n(k,j)} \leq (\sup \Abs{S^{kj}})^2 4^{-n(k,j)} + \varepsilon_1(k,j)$$
+$$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) 2^{-n(k,j)} \leq (\sup \Abs{S^{kj}})^2 4^{-n(k,j)} + \varepsilon(k,j)$$
 
 Multiplying both sides by $2^{n(k,j)-1}$ we get
 
-$$\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) \leq (\sup \Abs{S^{kj}})^2 2^{-n(k,j)-1} + \varepsilon_1(k,j) 2^{n(k,j)-1}$$
+$$\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) \leq (\sup \Abs{S^{kj}})^2 2^{-n(k,j)-1} + \varepsilon(k,j) 2^{n(k,j)-1}$$
 
-$$ |E_{\mu^k \times U^{r(k,j)} \times U^s}[Q(P^{kj}-f))]| \leq 2^{a-1} \delta(k,j,T_Q^{\mu}(k,s),2^{|Q|}) + E_{\mu^k \times U^s}[Q^2] 2^{-a-1} $$
+Let $\sigma(k,j):=\Sgn \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}]$.
 
-Take $a:=-\frac{1}{2}\log \delta(k,j,T_Q^{\mu}(k,s),2^{|Q|})+\phi(k,j)$ where $\phi(k,j) \in [-\frac{1}{2}, +\frac{1}{2}]$ is the rounding error. We get
+$$\Abs{\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}]} \leq (\sup \Abs{S^{kj}})^2 2^{-n(k,j)-1} + \varepsilon(k,j) 2^{n(k,j)-1}$$
+
+($\varepsilon \leq \frac{1}{\zeta^2}$???) Let $n(k,j):=\min(\Floor{\frac{1}{2}\log \frac{1}{\varepsilon(k,j)}},\Floor{\log \frac{1}{\zeta}})$.
 
 $$ |E_{\mu^k \times U^{r(k,j)} \times U^s}[Q(P^{kj}-f)]| \leq 2^{\phi(k,j)-1} \delta(k,j,T_Q^{\mu}(k,s),2^{|Q|})^{\frac{1}{2}} + E_{\mu^k \times U^s}[Q^2] 2^{-\phi(k,j)-1}\delta(k,j,T_Q^{\mu}(k,s),2^{|Q|})^{\frac{1}{2}} $$
 
 \end{proof}
+
+TODO: Converse theorem
 
 \subsection{Simple Example}
 
