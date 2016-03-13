@@ -1,7 +1,7 @@
 %
 \documentclass{article}
 \usepackage[affil-it]{authblk}
-%\usepackage{natbib}
+\usepackage{cite}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -69,13 +69,9 @@
 
 
 \author{Vadim Kosoy}
-\affil{Affiliation not available}
-
-
+\affil{Affiliation TBD}
 
 \date{\today}
-
-\bibliographystyle{plain}
 
 \maketitle
 
@@ -92,14 +88,14 @@ Imagine you are strolling in the city with a friend when a car passes by with th
 
 From the perspective of frequentist probability the question "what is the probability 7614829 is prime?" seems meaningless, since it is either prime or not so there is no frequency to observe (unless the frequency is 0 or 1). From a Bayesian perspective, probability represents a degree of confidence, however in classical Bayesian probability theory it is assumed the only source of uncertainty is the lack of information. The number 7614829 already contains all information needed to determine whether it's prime so the probability again has to be 0 or 1. However, real life uncertainty is not only information-theoretic but also complexity-theoretic. Even when we have all information to obtain the answer, out computational resources are limited so we remain uncertain. The rigorous formalization of this idea is the main goal of the present work.
 
-The idea of assigning probabilities to purely mathematical questions was studied by several authors \cite{Gaifman_2004}\cite{Hutter_2013}\cite{Demski_2012}\cite{Christiano_2014}\cite{Garrabrant_2015}, mainly in the setting of formal logic. That is, their approach was looking for functions from the set of sentences in some formal logical language to $[0,1]$. However, although there is a strong intuitive case for assigning probabilities to sentences like "7614829 is prime" it is much less clear there is a meaningful assignment of probabilities to sentences like $\varphi_1 := \text{"there are no odd perfect numbers"}$ or (even worse) $\varphi_2 := \text{"there is no cardinality } \kappa \text{ s.t. } \aleph_0 < \kappa < 2^{\aleph_0} \text{."}$. The problem is that a wager on $\varphi_1$ can only become resolved in one direction while a wager on $\varphi_2$ cannot be resolved at all.
+The idea of assigning probabilities to purely mathematical questions was studied by several authors\cite{Gaifman_2004,Hutter_2013,Demski_2012,Christiano_2014,Garrabrant_2015}, mainly in the setting of formal logic. That is, their approach was looking for functions from the set of sentences in some formal logical language to $[0,1]$. However, although there is a strong intuitive case for assigning probabilities to sentences like "7614829 is prime" it is much less clear there is a meaningful assignment of probabilities to sentences like $\varphi_1 := \text{"there are no odd perfect numbers"}$ or (even worse) $\varphi_2 := \text{"there is no cardinality } \kappa \text{ s.t. } \aleph_0 < \kappa < 2^{\aleph_0} \text{."}$. The problem is that a wager on $\varphi_1$ can only become resolved in one direction while a wager on $\varphi_2$ cannot be resolved at all.
 
 In the present work we avoid choosing a specific category of mathematical questions. Instead, we consider the abstract setting of arbitrary distributional decision problems. This leads to the perspective that an assignment of probabilities is a form of \emph{approximate} solution to a problem. This is not the same sense of approximation as used in optimization problems, where the approximation error is the difference between the ideal solution and the actual solution. Instead, the approximation error is the prediction accuracy of our probability assignment. This is also different from average-complexity theory where the solution is required to be exact on most input instances. However the language of average-complexity theory (in particular the concept of a distributional decision problem) turns out to be well-suited to our purpose.
 The concept of "optimal predictor" that arises from the approach turns out to behave much like probabilities, or more generally expected values, in "classical" probability theory. They display an appropriate form of calibration. The "expected values" are linear in general and multiplicative for functions that are independent in an appropriate sense. There is a natural parallel of conditional probabilities. For simple examples constructed from one-way functions we get the probability values we expect. Also they are well behaved in the complexity-theoretic sense that a natural class of reductions transforms optimal predictors into optimal predictors, and complete problems for these reductions exist for important complexity classes.
 
 Optimal predictors turn out to be unique up to a certain equivalence relation. The existence of optimal predictors depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal predictors that exist for completely arbitrary problems. Uniform optimal predictors of this kind exist for a certain class of problems we call "generatable" which is can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal predictors allows for much further research.
 
-Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence \cite{Hutter_2013}\cite{Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other\cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal predictors. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal predictors to decision theory and the theory of self-modifying agents.
+Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence\cite{Hutter_2013,Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other \cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal predictors. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal predictors to decision theory and the theory of self-modifying agents.
 
 The structure of the paper is as follows. Section 2 introduces notation. Section 3 introduces the main definitions and gives a simple example using one-way functions. Section 4 shows the parallel between properties of optimal predictors and classical probability theory. Section 5 discusses behavior of optimal predictors and reductions and shows $\textsc{SampNP}$ has a complete problem under appropriate reductions. Section 6 discusses existence and uniqueness of optimal predictors. Section 7 discusses applications to AGI. Section 8 discusses possible avenues for further research. The Appendix reviews relevant theorems about one-way functions.
 
@@ -127,6 +123,7 @@ Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Su
 
 $\Words$ is the set of all finite binary strings (words). For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). For any $n \in \Nats$, $U^n$ is the uniform probability distribution on $\WordsLen{n}$.
 
+We fix some efficient encoding of tuples. Given $n \in \Nats$ and ${x_1, x_2 \ldots x_n \in \Words}$, $\Chev{x_1,x_2 \ldots x_n} \in \Words$ denotes the encoding of $(x_1,x_2 \ldots x_n)$.
 \begin{definition}
 
 An \emph{encoded set} is a set $X$ together with an injection $e_X: X \rightarrow \Words$ (the encoding) s.t. $\Img e_X$ is decidable in polynomial time.
@@ -179,21 +176,29 @@ Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions $\gamm
 
 \item If $\gamma_1 \in \Gamma$, $\gamma_2: \Nats^n \rightarrow \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
 
+\item $0 \in \Gamma$
+
 \end{enumerate}
 
 We think of $n$ as the number of parameters on which the resource restriction depends and $m$ as the number of different resource types.
+
+\begin{example}
+
+For any $n \in \Nats$, $\Gamma_0^n$ is a growth space of rank $n$. $\gamma \in \Gamma_0^n$ iff $\gamma \equiv 0$.
+
+\end{example}
 
 \end{definition}
 
 \begin{example}
 
-For any $n \in \Nats$, $\Gamma_{\text{poly}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{poly}}^n$ when there is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\gamma(K) \leq p(K)$.
+For any $n \in \Nats$, $\Gamma_{\text{poly}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{poly}}^n$ iff there is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\gamma(K) \leq p(K)$.
 
 \end{example}
 
 \begin{example}
 
-For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{log}}^n$ when there is $c \in \Nats$ s.t. $\gamma(K_1, K_2 \ldots K_n) \leq c \sum_{i=1}^n \log(K_i+1)$.
+For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{log}}^n$ iff there is $c \in \Nats$ s.t. $\gamma(K_1, K_2 \ldots K_n) \leq c \sum_{i=1}^n \log(K_i+1)$.
 
 \end{example}
 
@@ -201,21 +206,21 @@ We now introduce our notion of an "efficient" algorithm.
 
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{$\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where $S: \Nats^n \times X \times \Words^2 \xrightarrow{alg} Y$, $\R_S: \Nats^2 \xrightarrow{alg} \Nats$ and $\A_S: \Nats^2 \rightarrow \Words$ are s.t.
+Fix $n \in \Nats$ and $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{$\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where $S: \Nats^n \times X \times \Words^2 \xrightarrow{alg} Y$, $\R_S: \Nats^n \times \Words \xrightarrow{alg} \Nats$ and $\A_S: \Nats^n \rightarrow \Words$ are s.t.
 
 \begin{enumerate}[(i)]
 
 \item There is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$, $\T_S(K,x,y,\A_S(K)) \leq p(K)$.
 
-\item There is a polynomial $q: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $\T_{\R_S}(K) \leq q(K)$.
+\item There is a polynomial $q: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, ${\T_{\R_S}(K,\A_S(K)) \leq q(K)}$.
 
-\item $\R_S \in \Gamma_{\mathfrak{R}}$
+\item The function $r: \Nats^n \rightarrow n$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\Gamma_{\mathfrak{R}}$.
 
 \item $\Abs{\A_S} \in \Gamma_{\mathfrak{A}}$
 
 \end{enumerate}
 
-Abusing notation, we denote the $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y,z)$ will denote $S(K,x,y,z)$, $S^K(x,y)$ will denote $S(K,x,y,\A_S(K))$ and $S^K(x)$ will denote a random variable which equals $S(K,x,y,a(K))$ for $y$ sampled from $U^{\R_S(K)}$. We think of $S$ as a randomized algorithm with advice where $y$ are the internal coin tosses and $\A_S$ is the advice.
+Abusing notation, we denote the $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y,z)$ will denote $S(K,x,y,z)$, $S^K(x,y)$ will denote $S(K,x,y,\A_S(K))$ and $S^K(x)$ will denote a random variable which equals $S(K,x,y,a(K))$ for $y$ sampled from $U^{\R_S(K)}$. We think of $S$ as a randomized algorithm with advice where $y$ are the internal coin tosses and $\A_S$ is the advice. Similarly, $\R_S(K)$ will denote $\R_S(K,\A_S(K))$.
 
 We will use the notation $S: X \xrightarrow{\Gamma} Y$ to signify $S$ is a $\Gamma$-scheme of signature $X \rightarrow Y$.
 
@@ -233,15 +238,31 @@ Fix $n \in \Nats$, $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a p
 
 \item There is a polynomial $p_1: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$, $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$, $\T_S(K,x,y,\A_S(K)) \leq p_1(K)$.
 
-\item There is a polynomial $p_2: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$ and $K \in \Nats^n$, $\T_{\R_S}(K) \leq p_2(K)$.
+\item There is a polynomial $p_2: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$ and $K \in \Nats^n$, $\T_{\R_S}(K,\A_S(K)) \leq p_2(K)$.
 
-\item There is $\R_F: \Nats^n \xrightarrow{alg} \Nats$ and a polynomial $p_3: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $\T_{\R_F}(K) \leq p_3(K)$, $\R_F \in \Gamma_{\mathfrak{R}}$ and for any $S \in F$, $\R_S \leq \R_F$.
+\item $\max_{S \in F} \R_S \in \Gamma_{\mathfrak{R}}$
 
 \item There is $l \in \Gamma_{\mathfrak{A}}$ s.t. for any $S \in F$ and $K \in \Nats^n$, ${\Abs{\Quote{S}} + \Abs{\Quote{\R_S}} + \Abs{\A_S(K)} \leq l(K)}$.
 
 \end{enumerate}
 
 \end{definition}
+
+The details of this definition are motivated by the following proposition.
+
+\begin{proposition}
+\label{prp:fam_diag}
+
+Fix $n \in \Nats$, $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank $n$ and encoded sets $X$, $Y$. Consider $F$ a uniform family of $\Gamma$-schemes of signature $X \rightarrow Y$ and a collection $\{\mathcal{S}_K \in F\}_{K \in \Nats^n}$. Then, there is $\Delta_\mathcal{S}: X \xrightarrow{
+\Gamma} Y$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in Y$, $\Pr[\Delta_\mathcal{S}^K(x)=y] = \Pr[\mathcal{S}_K^K(x)=y]$.
+
+\end{proposition}
+
+\begin{proof}
+
+We take $\A_{\Delta_{\mathcal{S}}}(k,j):=\Chev{\Quote{\mathcal{S}_K},\Quote{\R_{\mathcal{S}_K}},\A_{\mathcal{S}_K}(K)}$. $\R_{\Delta_{\mathcal{S}}}$ is constructed so that $\R_{\Delta_{\mathcal{S}}}(K)=\R_{\mathcal{S}_K}(K)$. $\Delta_{\mathcal{S}}$ is constructed so that $\Delta_{\mathcal{S}}^K(x,z)=\mathcal{S}_K^K(x,z)$.
+
+\end{proof}
 
 Note that the concept of a uniform family is non-trivial only when $1 \in \Gamma_{\mathfrak{A}}$, otherwise condition (iv) allows only families of at most one member.
 
@@ -251,7 +272,7 @@ Given a distributional estimation problem $(\mu,f)$ and $Q: \Words \xrightarrow{
 
 \begin{definition}
 
-Given $n \in \Nats$, an \emph{fall space of rank $n$} is a set $\mathcal{E}$ of bounded functions $\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}$ s.t.
+Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\mathcal{E}$ of bounded functions $\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -288,11 +309,20 @@ For any fall space $\mathcal{E}$, $\varepsilon \in \mathcal{E}$ and $c \in \Real
 
 \begin{proof}
 
-For $c = 0$, it follows from proposition~$\ref{prp:err_spc_zero}$. For $c > 0$, it follows from condition (i).
+By induction, condition (i) implies that for any $m \in \Nats$, $m\varepsilon \in \mathcal{E}$. It follows that $c\varepsilon \in \mathcal{E}$ since $c\varepsilon \leq \Ceil{c}\varepsilon$.
 
 \end{proof}
 
 \begin{proposition}
+
+For any fall space $\mathcal{E}$ and $\varepsilon_1, \varepsilon_2 \in \mathcal{E}$, $\max(\varepsilon_1,\varepsilon_2) \in \mathcal{E}$
+
+\end{proposition}
+
+\proof{$$\max(\varepsilon_1,\varepsilon_2) \leq \varepsilon_1+\varepsilon_2$$}
+
+\begin{proposition}
+\label{prp:fall_space_closed_wrt_power}
 
 For any fall space $\mathcal{E}$, $\varepsilon \in \mathcal{E}$ and $\alpha \in \Reals$, if $\alpha \geq 1$ then $\varepsilon^\alpha \in \mathcal{E}$.
 
@@ -306,7 +336,7 @@ $$\varepsilon^\alpha = (\sup \varepsilon)^\alpha (\frac{\varepsilon}{\sup \varep
 
 \begin{proposition}
 
-Consider $\mathcal{E}$ an fall space and $\alpha \in \Reals^{>0}$. Define $\mathcal{E}^\alpha := \{\varepsilon^\alpha \mid \varepsilon \in \mathcal{E}\}$. Then, $\mathcal{E}^\alpha$ is an fall space.
+Consider $\mathcal{E}$ a fall space and $\alpha \in \Reals^{>0}$. Define $\mathcal{E}^\alpha := \{\varepsilon^\alpha \mid \varepsilon \in \mathcal{E}\}$. Then, $\mathcal{E}^\alpha$ is a fall space.
 
 \end{proposition}
 
@@ -322,12 +352,24 @@ Conditions (ii) and (iii) are obvious.
 
 \end{proof}
 
+\begin{proposition}
+
+Consider $\mathcal{E}$ a fall space and $\alpha_1,\alpha_2 \in \Reals^{>0}$ with $\alpha_1 \leq \alpha_2$. Then, ${\mathcal{E}^{\alpha_2} \subseteq \mathcal{E}^{\alpha_1}}$.
+
+\end{proposition}
+
+\begin{proof}
+
+Follows from Proposition~\ref{prp:fall_space_closed_wrt_power}.
+
+\end{proof}
+
 We are now ready to give our central definition, which corresponds to a notion of "expected value" for distributional estimation problems.
 
 \begin{definition}
 \label{def:op}
 
-Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $Q: \Words \xrightarrow{\Gamma} \Rats$ there is $\varepsilon \in \mathcal{E}$ s.t.
+Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $Q: \Words \xrightarrow{\Gamma} \Rats$ there is $\varepsilon \in \mathcal{E}$ s.t.
 
 \begin{equation}
 \label{eqn:op}
@@ -343,13 +385,13 @@ Note that $\varepsilon$ in (\ref{eqn:op}) depends on $Q$. However in some sense 
 \begin{proposition}
 \label{prp:unif}
 
-Fix $\Gamma=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$ and $F$ a uniform family of $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \mathcal{E}$ s.t. for any $Q \in F$, equation~\ref{eqn:op} holds.
+Fix $\Gamma=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$ and $F$ a uniform family of $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \mathcal{E}$ s.t. for any $Q \in F$, equation~\ref{eqn:op} holds.
 
 \end{proposition}
 
 \begin{proof}
 
-Consider $\bar{Q}: \Words \xrightarrow{\Gamma} \Rats$ defined as follows. $\R_{\bar{Q}}:=\R_F$. For any $k,j \in \Nats$, $\{\E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] \mid Q \in F\}$ is a finite set because $F$ is a uniform family so the runtime of $Q^{kj}$ is bounded by a polynomial in $k,j$ that doesn't depend on $Q$. Therefore we can choose $Q_{kj} \in \Argmin{Q \in F} \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2]$. Let $\A_{\bar{Q}}(k,j)$ be an encoding of $(\Quote{Q_{kj}},\Quote{\R_{Q_{kj}}},\A_{Q_{kj}}(k,j))$. It is easy to see we can define $\bar{Q}$ so that for any $k,j \in \Nats$, $y_1 \in \WordsLen{\R_{Q_{kj}}(k,j)}$, $y_2 \in \WordsLen{\R_F(k,j)-\R_{Q_{kj}}(k,j)}$, $\bar{Q}^{kj}(x,y_1 y_2,\A_{\bar{Q}}(k,j))=Q_{kj}^{kj}(x,y_1,\A_{Q_{kj}}(k,j))$.
+For any $k,j \in \Nats$, $\{\E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] \mid Q \in F\}$ is a finite set because $F$ is a uniform family so the runtime of $Q^{kj}$ is bounded by a polynomial in $k,j$ that doesn't depend on $Q$. Therefore we can choose ${Q_{kj} \in \Argmin{Q \in F} \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2]}$. By Proposition~\ref{prp:fam_diag}, there is $\bar{Q}: \Words \xrightarrow{\Gamma} \Rats$ s.t. $\bar{Q}^{kj}(x)$ is distributed the same as $Q_{kj}^{kj}(x)$.
 
 Since $P$ is an $\mathcal{E}(\Gamma)$-optimal predictor, there is $\varepsilon \in \mathcal{E}$ s.t.
 
@@ -371,7 +413,39 @@ Combining \ref{eqn:prp__unif__prf1} and \ref{eqn:prp__unif__prf2} we get the des
 
 \end{proof}
 
-TODO: Advice is more powerful than random
+As usual, random is no more powerful than advice. This is demonstrated by the following two propositions.
+
+\begin{proposition}
+
+Fix $\Gamma=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a fall space of rank 2. Observe that $\bar{\Gamma}_{\mathfrak{R}}:=\Gamma_{\mathfrak{R}}+\Gamma_{\mathfrak{A}}$ is a growth space and denote $\bar{\Gamma}:=(\bar{\Gamma}_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\mathcal{E}(\bar{\Gamma})$-optimal predictor for $(\mu,f)$.
+
+\end{proposition}
+
+\begin{proof}
+
+Consider any $Q: \Words \xrightarrow{\bar{\Gamma}} \Rats$. Suppose $\R_Q=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \Gamma_{\mathfrak{R}}$ and $r_{\mathfrak{A}} \in \Gamma_{\mathfrak{A}}$. For any $k,j \in \Nats$, choose ${\bar{\A}_Q(k,j) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(k,j)}} \E_{(x,z) \sim \mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(Q^{kj}(x,yz) - f(x))^2]}$. As easy to see, there is $\bar{Q}: \Words \xrightarrow{\Gamma} \Rats$ s.t. for all $k,j \in \Nats$, $\R_{\bar{Q}}(k,j) = r_{\mathfrak{R}}(k,j)$, $\A_{\bar{Q}}(k,j):=\Chev{\A_Q(k,j),\bar{\A}_Q(k,j)}$ and for any $x \in \Supp \mu^k$ and $z \in \WordsLen{r_{\mathfrak{R}}(k,j)}$, ${\bar{Q}^{kj}(x,z)=Q^{kj}(x,\bar{\A}_Q(k,j)z)}$.
+
+It follows that there is $\varepsilon \in \mathcal{E}$ s.t.
+
+$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(\bar{Q}^{kj} - f)^2] + \varepsilon(k,j)$$
+
+Obviously $\E_{\mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(\bar{Q}^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2]$ therefore
+
+$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \varepsilon(k,j)$$
+
+\end{proof}
+
+\begin{proposition}
+
+Fix $\Gamma=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a fall space of rank 2. Denote $\Gamma_{0,\mathfrak{A}}:=(\Gamma_0^2,\Gamma_{\mathfrak{A}})$. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$. Then, there exists $P_0: \Words \xrightarrow{\Gamma_{0,\mathfrak{A}}} \Rats$ which is also an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$.
+
+\end{proposition}
+
+\begin{proof}
+
+Suppose $\R_P=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \Gamma_{\mathfrak{R}}$ and $r_{\mathfrak{A}} \in \Gamma_{\mathfrak{A}}$. For any ${k,j \in \Nats}$, choose ${\bar{\A}_P(k,j) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(k,j)}} \E_{(x,z) \sim \mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(P^{kj}(x,yz) - f(x))^2]}$. We can construct $P_0$ so that for all $k,j \in \Nats$, $\R_{P_0}(k,j) = r_{\mathfrak{R}}(k,j)$, $\A_{P_0}(k,j):=\Chev{\A_P(k,j),\bar{\A}_P(k,j)}$ and for any $x \in \Supp \mu^k$ and $z \in \WordsLen{r_{\mathfrak{R}}(k,j)}$, ${P_0^{kj}(x,z)=P^{kj}(x,\bar{\A}_P(k,j)z)}$. Clearly $\E_{\mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(P_0^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2]$ and therefore $P_0$ is an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$.
+
+\end{proof}
 
 \subsection{Orthogonality Theorems}
 
@@ -381,7 +455,7 @@ We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real
 
 \begin {definition}
 
-Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$
+Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$
 
 \begin{equation}
 \Abs{\E_{(x,y,z) \sim \mu^k \times U^{\R_P(k,j)} \times U^{\R_S(k,j)-\R_P(k,j)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,yz)]} \in \mathcal{E}
@@ -394,13 +468,13 @@ The following theorem is the analogue in our language of the previous fact about
 \begin{theorem}
 \label{thm:ort}
 
-Fix $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ an fall space of rank 2. Assume there is $\zeta: \Nats^2 \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \mathcal{E}$ and $\Floor{\log \log \frac{1}{\zeta}} \in \Gamma_{\mathfrak{A}}$\footnote{If $\Floor{\log(k+2)}, \Floor{\log(j+2)} \in \Gamma_{\mathfrak{A}}$ (equivalently $\Gamma_{\text{log}}^2 \subseteq \Gamma_{\mathfrak{A}}$) then this condition holds for any $\mathcal{E}$ since we can take $\zeta = 2^{-h}$ for $h$ polynomial.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\mathcal{E}^{\frac{1}{2}\sharp}(\Gamma)$-optimal predictor for $(\mu,f)$.
+Fix $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a fall space of rank 2. Assume there is $\zeta: \Nats^2 \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \mathcal{E}^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \Gamma_{\mathfrak{A}}}$\footnote{If $\Floor{\log(k+2)}, \Floor{\log(j+2)} \in \Gamma_{\mathfrak{A}}$ (equivalently $\Gamma_{\text{log}}^2 \subseteq \Gamma_{\mathfrak{A}}$) then this condition holds for any $\mathcal{E}$ since we can take $\zeta = 2^{-h}$ for $h$ polynomial.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\mathcal{E}^{\frac{1}{2}\sharp}(\Gamma)$-optimal predictor for $(\mu,f)$.
 
 \end{theorem}
 
 \begin{proof}
 
-Assume without loss of generality that there is a polynomial ${h: \Nats^2 \rightarrow \Nats}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take a polynomial $h$ s.t. $2^{-h} \in \mathcal{E}$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$. Consider any ${\sigma: \Nats^2 \rightarrow \{ \pm 1 \}}$ and $n: \Nats^2 \rightarrow \Ints$ s.t. $\Abs{n} \leq \log \frac{1}{\zeta}$. Define ${t(k,j) := \sigma(k,j) 2^{-n(k,j)}}$. It is easy to see there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. given $k,j \in \Nats$, $x \in \Supp \mu^k$, ${y \in \WordsLen{\R_P(k,j)}}$ and $z \in \WordsLen{\R_P(k,j) - \R_S(k,j)}$, $Q_t^{kj}(x,yz) = P^{kj}(x,y) + t(k,j) S^{kj}(x,yz)$. Moreover, the set of $Q_t$ for all admissible choices of $t$ (but fixed $S$) is a uniform family.
+Assume without loss of generality that there is a polynomial ${h: \Nats^2 \rightarrow \Nats}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take a polynomial $h$ s.t. $2^{-h} \in \mathcal{E}$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$. Consider any ${\sigma: \Nats^2 \rightarrow \{ \pm 1 \}}$ and $n: \Nats^2 \rightarrow \Nats$ s.t. $n \leq \log \frac{1}{\zeta}$ (in particular $n \leq h$). Define ${t(k,j) := \sigma(k,j) 2^{-n(k,j)}}$. It is easy to see there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. given $k,j \in \Nats$, $x \in \Supp \mu^k$, ${y \in \WordsLen{\R_P(k,j)}}$ and $z \in \WordsLen{\R_P(k,j) - \R_S(k,j)}$, $Q_t^{kj}(x,yz) = P^{kj}(x,y) + t(k,j) S^{kj}(x,yz)$. Moreover, the set of $Q_t$ for all admissible choices of $t$ (but fixed $S$) is a uniform family.
 
 Applying Proposition~\ref{prp:unif}, we conclude that there is $\varepsilon \in \mathcal{E}$ which doesn't depend on $t$ s.t.
 
@@ -422,19 +496,35 @@ $$2 \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) 2^{-n(k,j)}
 
 Multiplying both sides by $2^{n(k,j)-1}$ we get
 
-$$\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) \leq (\sup \Abs{S^{kj}})^2 2^{-n(k,j)-1} + \varepsilon(k,j) 2^{n(k,j)-1}$$
+$$\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) \leq \frac{1}{2}((\sup \Abs{S^{kj}})^2 2^{-n(k,j)} + \varepsilon(k,j) 2^{n(k,j)})$$
 
 Let $\sigma(k,j):=\Sgn \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}]$.
 
-$$\Abs{\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}]} \leq (\sup \Abs{S^{kj}})^2 2^{-n(k,j)-1} + \varepsilon(k,j) 2^{n(k,j)-1}$$
+$$\Abs{\E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}]} \leq \frac{1}{2}((\sup \Abs{S^{kj}})^2 2^{-n(k,j)} + \varepsilon(k,j) 2^{n(k,j)})$$
 
-($\varepsilon \leq \frac{1}{\zeta^2}$???) Let $n(k,j):=\min(\Floor{\frac{1}{2}\log \frac{1}{\varepsilon(k,j)}},\Floor{\log \frac{1}{\zeta}})$.
+Let $n(k,j):=\min(\Floor{\frac{1}{2}\log \max(\frac{1}{\varepsilon(k,j)},1)},\Floor{\log \frac{1}{\zeta(k,j)}})$.
 
-$$ |E_{\mu^k \times U^{r(k,j)} \times U^s}[Q(P^{kj}-f)]| \leq 2^{\phi(k,j)-1} \delta(k,j,T_Q^{\mu}(k,s),2^{|Q|})^{\frac{1}{2}} + E_{\mu^k \times U^s}[Q^2] 2^{-\phi(k,j)-1}\delta(k,j,T_Q^{\mu}(k,s),2^{|Q|})^{\frac{1}{2}} $$
+$$\Abs{\E[(P^{kj} - f) S^{kj}]} \leq (\sup \Abs{S^{kj}})^2 \max(\min(\varepsilon(k,j)^{\frac{1}{2}},1),\zeta(k,j)) + \frac{1}{2}\varepsilon(k,j) \min(\max(\varepsilon(k,j)^{-\frac{1}{2}},1),\zeta(k,j)^{-1})$$
+
+$$\Abs{\E[(P^{kj} - f) S^{kj}]} \leq (\sup \Abs{S^{kj}})^2 \max(\varepsilon(k,j)^{\frac{1}{2}},\zeta(k,j)) + \frac{1}{2} \max(\varepsilon(k,j)^{\frac{1}{2}},\varepsilon(k,j))$$
+
+The right hand side is obviously in $\mathcal{E}^{\frac{1}{2}}$.
 
 \end{proof}
 
-TODO: Converse theorem
+Conversely, we have the following:
+
+\begin{theorem}
+
+Fix $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\mathcal{E}^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$.
+
+\end{theorem}
+
+\begin{proof}
+
+
+
+\end{proof}
 
 \subsection{Simple Example}
 
