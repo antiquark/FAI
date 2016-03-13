@@ -220,7 +220,7 @@ Fix $n \in \Nats$ and $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ 
 
 \end{enumerate}
 
-Abusing notation, we denote the $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y,z)$ will denote $S(K,x,y,z)$, $S^K(x,y)$ will denote $S(K,x,y,\A_S(K))$ and $S^K(x)$ will denote a random variable which equals $S(K,x,y,a(K))$ for $y$ sampled from $U^{\R_S(K)}$. We think of $S$ as a randomized algorithm with advice where $y$ are the internal coin tosses and $\A_S$ is the advice. Similarly, $\R_S(K)$ will denote $\R_S(K,\A_S(K))$.
+Abusing notation, we denote the $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y,z)$ will denote $S(K,x,y,z)$, $S^K(x,y)$ will denote $S(K,x,y,\A_S(K))$ and $S^K(x)$ will denote a random variable which equals $S(K,x,y,a(K))$ for $y$ sampled from $U^{\R_S(K)}$. We think of $S$ as a randomized algorithm with advice where $y$ are the internal coin tosses and $\A_S$ is the advice\footnote{Note that the number of random bits $\R_S(k,j)$ has to be efficiently computable modulo the advice $\A_S(k,j)$ rather than being an arbitrary function. This requirement is needed to prevent using the function $\R_S$ as advice in itself. In particular, when $\Gamma_{\mathfrak{A}}=\Gamma_0^2$, $S$ represents a uniform randomized algorithm.}. Similarly, $\R_S(K)$ will denote $\R_S(K,\A_S(K))$.
 
 We will use the notation $S: X \xrightarrow{\Gamma} Y$ to signify $S$ is a $\Gamma$-scheme of signature $X \rightarrow Y$.
 
@@ -458,6 +458,7 @@ We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real
 Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \xrightarrow{\Gamma} \Rats$ with bounded range. $P$ is called an \emph{$\mathcal{E}^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$
 
 \begin{equation}
+\label{eqn:op_sharp}
 \Abs{\E_{(x,y,z) \sim \mu^k \times U^{\R_P(k,j)} \times U^{\R_S(k,j)-\R_P(k,j)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,yz)]} \in \mathcal{E}
 \end{equation}
 
@@ -522,7 +523,17 @@ Fix $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth s
 
 \begin{proof}
 
+Consider any $Q: \Words \xrightarrow{\Gamma} \Rats$. We have
 
+$$\E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj}-f)^2]=\E_{\mu^k \times U^{\R_Q(k,j)} \times U^{\R_P(k,j)}}[(Q^{kj}-P^{kj}+P^{kj}-f)^2]$$
+
+$$\E[(Q^{kj}-f)^2]=\E[(Q^{kj}-P^{kj})^2]+2\E[(Q^{kj}-P^{kj})(P^{kj}-f)]+\E[(P^{kj}-f)^2]$$
+
+$$\E[(P^{kj}-f)^2]+\E[(Q^{kj}-P^{kj})^2]=\E[(Q^{kj}-f)^2]+2\E[(P^{kj}-Q^{kj})(P^{kj}-f)]$$
+
+$$\E[(P^{kj}-f)^2] \leq \E[(Q^{kj}-f)^2] + 2\E[(P^{kj}-Q^{kj})(P^{kj}-f)]$$
+
+Applying \ref{eqn:op_sharp}, we conclude that there is $\varepsilon \in \mathcal{E}$ s.t. \ref{eqn:op} holds.
 
 \end{proof}
 
