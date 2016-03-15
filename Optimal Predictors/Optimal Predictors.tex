@@ -93,7 +93,7 @@ The idea of assigning probabilities to purely mathematical questions was studied
 In the present work we avoid choosing a specific category of mathematical questions. Instead, we consider the abstract setting of arbitrary distributional decision problems. This leads to the perspective that an assignment of probabilities is a form of \emph{approximate} solution to a problem. This is not the same sense of approximation as used in optimization problems, where the approximation error is the difference between the ideal solution and the actual solution. Instead, the approximation error is the prediction accuracy of our probability assignment. This is also different from average-complexity theory where the solution is required to be exact on most input instances. However the language of average-complexity theory (in particular the concept of a distributional decision problem) turns out to be well-suited to our purpose.
 The concept of "optimal predictor" that arises from the approach turns out to behave much like probabilities, or more generally expected values, in "classical" probability theory. They display an appropriate form of calibration. The "expected values" are linear in general and multiplicative for functions that are independent in an appropriate sense. There is a natural parallel of conditional probabilities. For simple examples constructed from one-way functions we get the probability values we expect. Also they are well behaved in the complexity-theoretic sense that a natural class of reductions transforms optimal predictors into optimal predictors, and complete problems for these reductions exist for important complexity classes.
 
-Optimal predictors turn out to be unique up to a certain equivalence relation. The existence of optimal predictors depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal predictors that exist for completely arbitrary problems. Uniform optimal predictors of this kind exist for a certain class of problems we call "generatable" which is can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal predictors allows for much further research.
+Optimal predictors turn out to be unique up to a certain equivalence relation. The existence of optimal predictors depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal predictors that exist for completely arbitrary problems. Uniform optimal predictors of this kind exist for a certain class of problems we call "samplable" which is can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal predictors allows for much further research.
 
 Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence\cite{Hutter_2013,Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other \cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal predictors. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal predictors to decision theory and the theory of self-modifying agents.
 
@@ -103,7 +103,7 @@ The structure of the paper is as follows. Section 2 introduces notation. Section
 
 \section{Notation}
 %
-\subsection{Numbers}
+\subsection{Numbers and Functions}
 
 $\Nats$ is the set of natural numbers. We will use the convention in which natural numbers start from 0, so $\Nats = \{0, 1, 2 \ldots \}$. 
 
@@ -113,15 +113,21 @@ For $F \in \{\Rats,\Reals\}$, $F^{>0} := \{x \in F \mid x > 0\}$, $F^{\geq 0} :=
 
 $\log: \Reals^{\geq 0} \rightarrow \Reals \sqcup \{-\infty\}$ will denote the logarithm in base 2.
 
+$\theta: \Reals \rightarrow \Bool$ will denote the Heaviside step function
+
+$$\theta(t):=\begin{cases}1 & \text{if } t \geq 0 \\ 0 & \text{if } t < 0 \end{cases}$$
+
 \subsection{Measures and Probabilities}
 
 For $X$ a measurable space, $\mu$ a probability measure on $X$, $V$ a finite dimensional vector space over $\Reals$ and $f: X \rightarrow V$, $\E_{x \sim \mu}[f(x)]$ will denote the expected value of $f$ with respect to $\mu$, i.e. $\E_{x \sim \mu}[f(x)] := \int_X f(x) d\mu(x)$. We will the abbreviated notations $\E_\mu[f(x)]$, $\E[f(x)]$, $\E_\mu[f]$, $\E[f]$ when no confusion is likely to occur.
 
 Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Supp \mu$ will denote the support of $\mu$. In particular when $X$ is discrete, ${\Supp \mu = \{x \in X \mid \mu(x) > 0\}}$.
 
+Given $X,Y$ measurable spaces, $\mu$ a measure on $X$ and $f: X \rightarrow Y$ a measurable mapping, $f_*(\mu)$ will denote the corresponding pushforward measure on $Y$.
+
 \subsection{Algorithms}
 
-$\Words$ is the set of all finite binary strings (words). For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). For any $n \in \Nats$, $U^n$ is the uniform probability distribution on $\WordsLen{n}$.
+$\Words$ is the set of all finite binary strings (words). For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i=1}^n x_i y_i$. For any $n \in \Nats$, $U^n$ is the uniform probability distribution on $\WordsLen{n}$.
 
 We fix some efficient encoding of tuples. Given $n \in \Nats$ and ${x_1, x_2 \ldots x_n \in \Words}$, $\Chev{x_1,x_2 \ldots x_n} \in \Words$ denotes the encoding of $(x_1,x_2 \ldots x_n)$.
 \begin{definition}
@@ -285,6 +291,22 @@ Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\mathcal{E}$ of b
 \end{enumerate}
 
 \end{definition}
+
+\begin{example}
+
+Given $n \in \Nats$, we define $\mathcal{E}_{\text{neg}}^n$, a fall space of rank $n$. For any $\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}$ bounded, $\varepsilon \in \mathcal{E}_{\text{neg}}^n$ iff for any $d \in \Nats$ and polynomials ${p_1,p_2 \ldots p_{n-1}: \Nats \rightarrow \Nats}$
+
+$$\Lim{k} k^d \max_{j_1 \leq p_1(k)} \max_{j_2 \leq p_2(k)} \ldots \max_{j_{n-1} \leq p_{n-1}(k)} \varepsilon(k,j_1,j_2 \ldots j_{n-1}) = 0$$
+
+\end{example}
+
+\begin{example}
+
+Given $n \in \Nats$, we define $\mathcal{E}_{\text{uneg}}^n$, a fall space of rank $n$. For any ${\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}}$ bounded, $\varepsilon \in \mathcal{E}_{\text{uneg}}^n$ iff for any $d \in \Nats$, ${J_1,J_2 \ldots J_{n-1}: \Nats \xrightarrow{alg} \Nats}$, and polynomials ${p_1,p_2 \ldots p_{n-1}: \Nats \rightarrow \Nats}$, ${q_1,q_2 \ldots q_{n-1}: \Nats \rightarrow \Nats}$, if $J_i \leq p_i$ and $\T_{J_i} \leq q_i$ then
+
+$$\Lim{k} k^d \varepsilon(k,J_1(k),J_2(k) \ldots J_{n-1}(k)) = 0$$
+
+\end{example}
 
 We note a few simple properties of fall spaces which will be useful in the following.
 
@@ -539,7 +561,42 @@ Applying \ref{eqn:op_sharp}, we conclude that there is $\varepsilon \in \mathcal
 
 \subsection{Simple Example}
 
-TBD
+The concept of an optimal predictor is in some sense complementary to the concept of pseudorandom: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal predictors compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal predictor, we use the concept of a one-way function (which may be regarded as a function with pseudorandom inverse).
+
+\begin{theorem}
+\label{thm:one_way}
+
+Consider $f: \Words \rightarrow \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_f^k:=f_*^{(k)}(U^k \times U^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
+
+Denote $\Gamma:=(\Gamma_{\text{poly}}^2,\Gamma_0^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\text{uneg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{uneg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_0^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_f, \chi_f)$.
+
+\end{theorem}
+
+\begin{proof}
+
+Assume to the contrary that $P$ is not optimal. Then there is ${Q: \Words \xrightarrow{\Gamma} \Rats}$, $d \in \Nats$, $J: \Nats \xrightarrow{alg} \Nats$, polynomials $p,q: \Nats \rightarrow \Nats$, an infinite set ${I \subseteq \Nats}$ and $\epsilon \in \Reals^{>0}$ s.t. $J \leq p$, $\T_J \leq q$ and
+
+$$ \forall k \in I: \E_{\mu_f^k}[(\frac{1}{2}-\chi_f)^2] \geq \E_{\mu_f^k \times U^{\R_Q(k,J(k))}}[(Q^{k,J(k)}-\chi_f)^2] +\frac{\epsilon}{k^d}$$
+
+$$ \forall k \in I: \E_{\mu_f^k \times U^{\R_Q(k,J(k))}}[(Q^{k,J(k)}-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+
+Denoting $\Gamma^1:=(\Gamma_{\text{poly}}^1,\Gamma_0^1)$, there is $G: \Words \xrightarrow{\Gamma^1} \Bool$ s.t. ${\Abs{\Pr[G^k(x)=1]-\E[Q^{k,J(k)}(x)]}\leq 2^{-k}}$.
+
+% there is a $\Gamma^1$-scheme $Q_J$ s.t. $\R_{Q_J}(k)=\R_Q(k,J(k))$ and $Q_J^k(x,y)=Q^{k,J(k)}(x,y)$. We have
+% 
+% $$ \forall k \in I: \E_{\mu_f^k \times U^{\R_{Q_J}(k)}}[(Q_J^k-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+
+\end{proof}
+
+The following is the non-uniform version of Theorem~\ref{thm:one_way} which we state without proof since the proof is a straightforward adaptation of the above.
+
+\begin{theorem}
+
+Consider $f: \Words \rightarrow \Words$ a one-to-one non-uniformly hard to invert one-way function.
+
+Denote $\Gamma:=(\Gamma_{\text{poly}}^2,\Gamma_{\text{poly}}^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\text{neg}}^2(\Gamma)$-optimal predictor for $(\mu_f, \chi_f)$.
+
+\end{theorem}
 
 \section{Optimal Predictors and Probability Theory}
 
