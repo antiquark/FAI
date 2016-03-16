@@ -31,6 +31,7 @@
 \DeclareMathOperator{\Supp}{supp}
 \DeclareMathOperator{\Stab}{stab}
 \DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Prb}{Pr}
 \DeclareMathOperator{\E}{E}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\Ent}{H}
@@ -65,7 +66,7 @@
 
 \begin{document}
 
-\title{Optimal Predictors: A Bayesian Notion of Approximation Algorithm}
+\title{Optimal Predictors: A Bayesian Notion of Approximation Algorithm (Draft)}
 
 
 \author{Vadim Kosoy}
@@ -97,7 +98,7 @@ Optimal predictors turn out to be unique up to a certain equivalence relation. T
 
 Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence\cite{Hutter_2013,Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other \cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal predictors. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal predictors to decision theory and the theory of self-modifying agents.
 
-The structure of the paper is as follows. Section 2 introduces notation. Section 3 introduces the main definitions and gives a simple example using one-way functions. Section 4 shows the parallel between properties of optimal predictors and classical probability theory. Section 5 discusses behavior of optimal predictors and reductions and shows $\textsc{SampNP}$ has a complete problem under appropriate reductions. Section 6 discusses existence and uniqueness of optimal predictors. Section 7 discusses applications to AGI. Section 8 discusses possible avenues for further research. The Appendix reviews relevant theorems about one-way functions.
+The structure of the paper is as follows. Section~\ref{sec:fundamentals} introduces the main definitions and gives a simple example using one-way functions. Section~\ref{sec:probability} shows the parallel between properties of optimal predictors and classical probability theory. Section~\ref{sec:reductions} discusses behavior of optimal predictors and reductions and shows $\textsc{SampNP}$ has a complete problem under appropriate reductions. Section~\ref{sec:e_and_u} discusses existence and uniqueness of optimal predictors. Section~\ref{sec:reflective} discusses applications to AGI. Section~\ref{sec:discussion} discusses possible avenues for further research. The Appendix reviews relevant theorems about one-way functions.
 
 \setcounter{section}{-1}
 
@@ -145,7 +146,8 @@ Given $A: X \xrightarrow{alg} Y$ and $x \in X$, $\T_A(x)$ stands for the number 
 For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing machine with $n+1$ input tapes: 1 program tape and $n$ tapes that serve as input to the program. Given $A: \prod_{i=1}^n X_i \xrightarrow{alg}\ Y$, $\Quote{A} \in \Words$ denotes the corresponding program for $\mathcal{U}_n$.
 
 \section{Fundamentals}
-%
+\label{sec:fundamentals}
+
 \subsection{Optimal Predictors}
 
 We start with a simple model to help build intuition and motivate the following definitions.
@@ -566,9 +568,9 @@ The concept of an optimal predictor is in some sense complementary to the concep
 \begin{theorem}
 \label{thm:one_way}
 
-Consider $f: \Words \rightarrow \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_f^k:=f_*^{(k)}(U^k \times U^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
+Consider $f: \Words \xrightarrow{alg} \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_f^k:=f_*^{(k)}(U^k \times U^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
 
-Denote $\Gamma:=(\Gamma_{\text{poly}}^2,\Gamma_0^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\text{uneg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{uneg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_0^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_f, \chi_f)$.
+Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_0^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{uneg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{uneg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_0^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_f, \chi_f)$.
 
 \end{theorem}
 
@@ -580,41 +582,70 @@ $$ \forall k \in I: \E_{\mu_f^k}[(\frac{1}{2}-\chi_f)^2] \geq \E_{\mu_f^k \times
 
 $$ \forall k \in I: \E_{\mu_f^k \times U^{\R_Q(k,J(k))}}[(Q^{k,J(k)}-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
-Denoting $\Gamma^1:=(\Gamma_{\text{poly}}^1,\Gamma_0^1)$, there is $G: \Words \xrightarrow{\Gamma^1} \Bool$ s.t. ${\Abs{\Pr[G^k(x)=1]-\E[Q^{k,J(k)}(x)]}\leq 2^{-k}}$.
+$$ \forall k \in I: \E_{\mu_f^k}[(\E_{U^{\R_Q(k,J(k))}}[Q^{k,J(k)}]-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
-% there is a $\Gamma^1$-scheme $Q_J$ s.t. $\R_{Q_J}(k)=\R_Q(k,J(k))$ and $Q_J^k(x,y)=Q^{k,J(k)}(x,y)$. We have
-% 
-% $$ \forall k \in I: \E_{\mu_f^k \times U^{\R_{Q_J}(k)}}[(Q_J^k-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+Denoting $\Gamma^1:=(\Gamma_{\text{poly}}^1,\Gamma_0^1)$, there is $G: \Words \xrightarrow{\Gamma^1} \Bool$ s.t. for all ${x \in \Words}$, ${\Abs{\E[Q^{k,J(k)}(x)]-\Pr[G^k(x)=1]}\leq 2^{-k}}$ ($G^k$ works by evaluating ${\alpha \leftarrow Q^{k,J(k)}}$ and then returning 1 with probability $\alpha \pm 2^{-k}$ and 0 with probability $1-\alpha \pm 2^{-k}$, where the $2^{-k}$ error comes from rounding a rational number to a binary fraction). Denoting $\delta(x):=\E[Q^{k,J(k)}(x)]-\Pr[G^k(x)=1]$
+
+$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]+\delta-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+
+$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)^2]+2 \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)\delta]+\E_{\mu_f^k}[\delta^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
+
+$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)^2]-2 \cdot 2^{-k}- 4^{-k} \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
+
+Since $2^{-k}$ falls faster than $k^{-d}$, there is $I_1 \subseteq \Nats$ infinite and $\epsilon_1 \in \Reals^{>0}$ s.t.
+
+$$ \forall k \in I_1: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon_1}{k^d}$$
+
+$$ \forall k \in I_1: \E_{\mu_f^k}[\Abs{\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f}] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+
+$$ \forall k \in I_1: \E_{\mu_f^k}[\Prb_{U^{\R_G(k)}}[G^k \ne \chi_f]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+
+$$ \forall k \in I_1: \E_{(x,y) \sim U^k \times U^k}[\Prb_{U^{\R_G(k)}}[G^k(\Chev{f(x),y}) \ne x \cdot y]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+
+$$ \forall k \in I_1: \Prb_{U^k \times U^k \times U^{\R_G(k)}}[G^k(\Chev{f(x),y}) \ne x \cdot y] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+
+Since $\sqrt{t}$ is a concave function and the derivative of $\sqrt{t}$ is $\frac{1}{2\sqrt{t}}$, we have $\sqrt{t} \leq \sqrt{t_0} + \frac{t-t_0}{2\sqrt{t_0}}$. We get
+
+$$ \forall k \in I_1: \Prb_{U^k \times U^k \times U^{\R_G(k)}}[G^k(\Chev{f(x),y}) \ne x \cdot y] \leq \frac{1}{2}-\frac{\epsilon_1}{k^d}$$
+
+$$ \forall k \in I_1: \Prb_{U^k \times U^k \times U^{\R_G(k)}}[G^k(\Chev{f(x),y}) = x \cdot y] \geq \frac{1}{2}+\frac{\epsilon_1}{k^d}$$
+
+This contradicts Theorem~\ref{thm:hard_core}.
 
 \end{proof}
 
-The following is the non-uniform version of Theorem~\ref{thm:one_way} which we state without proof since the proof is a straightforward adaptation of the above.
+The following is the non-uniform version of Theorem~\ref{thm:one_way} which we state without proof since the proof is a straightforward adaptation of the above (using Theorem~\ref{thm:hard_core_circ} in place of Theorem~\ref{thm:hard_core}).
 
 \begin{theorem}
 
-Consider $f: \Words \rightarrow \Words$ a one-to-one non-uniformly hard to invert one-way function.
+Consider $f: \Words \xrightarrow{alg} \Words$ a one-to-one non-uniformly hard to invert one-way function.
 
-Denote $\Gamma:=(\Gamma_{\text{poly}}^2,\Gamma_{\text{poly}}^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\text{neg}}^2(\Gamma)$-optimal predictor for $(\mu_f, \chi_f)$.
+Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_{\textnormal{poly}}^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{neg}}^2(\Gamma)$-optimal predictor for $(\mu_f, \chi_f)$.
 
 \end{theorem}
 
 \section{Optimal Predictors and Probability Theory}
+\label{sec:probability}
 
 TBD
 
 \section{Reductions and Completeness}
+\label{sec:reductions}
 
 TBD
 
 \section{Existence and Uniqueness}
+\label{sec:e_and_u}
 
 TBD
 
 \section{Reflective Systems and Game Theory}
+\label{sec:reflective}
 
 TBD
 
 \section{Discussion}
+\label{sec:discussion}
 
 TBD
 
@@ -622,7 +653,71 @@ TBD
 
 \section{Appendix: One-Way Functions}
 
-TBD
+We review the definition of a one-way function and a non-uniformly hard one-way function and state a theorem by Goldreich and Levin which is used in Section~\ref{sec:fundamentals}.
+
+We will use the notation $\Gamma_{\text{rand}}:=(\Gamma_{\text{poly}}^1,\Gamma_0^1)$, $\Gamma_{\text{circ}}:=(\Gamma_0^1,\Gamma_{\text{poly}}^1)$.
+
+\begin{samepage}
+\begin{definition}
+
+$f: \Words \xrightarrow{alg} \Words$ is called an \emph{one-way function}
+when
+
+\begin{enumerate}[(i)]
+
+\item There is $p: \Nats \rightarrow \Nats$ polynomial s.t. $\forall x \in \Words: \T_f(x) \leq p(\Abs{x})$.
+
+\item For any $S: \Words \xrightarrow{\Gamma_{\text{rand}}} \Words$, ${\Prb_{U^k \times U^{\R_S(k)}}[f(S^k(f(x)))=x] \in \mathcal{E}_{\text{neg}}^1}$.
+
+\end{enumerate}
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+$f: \Words \xrightarrow{alg} \Words$ is called a \emph{non-uniformly hard to invert} one-way function
+when
+
+\begin{enumerate}[(i)]
+
+\item There is $p: \Nats \rightarrow \Nats$ polynomial s.t. $\forall x \in \Words: \T_f(x) \leq p(\Abs{x})$.
+
+\item For any $S: \Words \xrightarrow{\Gamma_{\text{circ}}} \Words$, ${\Prb_{U^k \times U^{\R_S(k)}}[f(S^k(f(x)))=x] \in \mathcal{E}_{\text{neg}}^1}$.
+
+\end{enumerate}
+
+\end{definition}
+\end{samepage}
+
+It is easy to see that any non-uniformly hard to invert one-way function is in particular a one-way function.
+
+The following appears in \cite{Goldreich_2008} as Theorem 7.7. Here we state it in the notation of the present work.
+
+\begin{theorem}[Goldreich and Levin]
+\label{thm:hard_core}
+
+Consider a one-way function ${f: \Words \xrightarrow{alg} \Words}$ and $G: \Words \times \Words \xrightarrow{\Gamma_{\textnormal{rand}}} \Bool$. Then there is $\varepsilon \in \mathcal{E}_{\textnormal{neg}}^1$ s.t. 
+
+\begin{equation}
+\Prb_{(x,y,z) \sim U^k \times U^k \times U^{\R_G(k)}}[G^k(f(x),y,z)=x \cdot y] \leq \frac{1}{2} + \varepsilon(k)
+\end{equation}
+
+\end{theorem}
+
+There is also a non-uniform version of the theorem which is not stated in \cite{Goldreich_2008}, but its proof is a straightforward adaptation.
+
+\begin{theorem}
+\label{thm:hard_core_circ}
+
+Consider a non-uniformly hard one-way function ${f: \Words \xrightarrow{alg} \Words}$ and $G: \Words \times \Words \xrightarrow{\Gamma_{\textnormal{circ}}} \Bool$. Then there is $\varepsilon \in \mathcal{E}_{\textnormal{neg}}^1$ s.t. 
+
+\begin{equation}
+\Prb_{(x,y) \sim U^k \times U^k}[G^k(f(x),y)=x \cdot y] \leq \frac{1}{2} + \varepsilon(k)
+\end{equation}
+
+\end{theorem}
 
 \section*{Acknowledgments}
 
