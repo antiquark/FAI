@@ -89,7 +89,9 @@ Imagine you are strolling in the city with a friend when a car passes by with th
 
 From the perspective of frequentist probability the question "what is the probability 7614829 is prime?" seems meaningless, since it is either prime or not so there is no frequency to observe (unless the frequency is 0 or 1). From a Bayesian perspective, probability represents a degree of confidence, however in classical Bayesian probability theory it is assumed the only source of uncertainty is lack of information. The number 7614829 already contains all information needed to determine whether it's prime so the probability again has to be 0 or 1. However, real life uncertainty is not only information-theoretic but also complexity-theoretic. Even when we have all information to obtain the answer, out computational resources are limited so we remain uncertain. The rigorous formalization of this idea is the main goal of the present work.
 
-The idea of assigning probabilities to purely mathematical questions was studied by several authors\cite{Gaifman_2004,Hutter_2013,Demski_2012,Christiano_2014,Garrabrant_2015}, mainly in the setting of formal logic. That is, their approach was looking for functions from the set of sentences in some formal logical language to $[0,1]$. However, although there is a strong intuitive case for assigning probabilities to sentences like "7614829 is prime" it is much less clear there is a meaningful assignment of probabilities to sentences like $\varphi_1 := \text{"there are no odd perfect numbers"}$ or (even worse) $\varphi_2 := \text{"there is no cardinality } \kappa \text{ s.t. } \aleph_0 < \kappa < 2^{\aleph_0} \text{."}$. The problem is that a wager on $\varphi_1$ can only become resolved in one direction while a wager on $\varphi_2$ cannot be resolved at all.
+The idea of assigning probabilities to purely mathematical questions was studied by several authors\cite{Gaifman_2004,Hutter_2013,Demski_2012,Christiano_2014,Garrabrant_2015}, mainly in the setting of formal logic. That is, their approach was looking for functions from the set of sentences in some formal logical language to $[0,1]$. However, although there is a strong intuitive case for assigning probabilities to sentences like $\varphi_1:=\text{"7614829 is prime"}$ it is much less clear there is a meaningful assignment of probabilities to sentences like $\varphi_2 := \text{"there are no odd perfect numbers"}$ or (even worse) $\varphi_3 := \text{"there is no cardinality } \kappa \text{ s.t. } \aleph_0 < \kappa < 2^{\aleph_0} \text{."}$.
+
+A wager on $\varphi_1$ can be resolved in a predetermined finite amount of time (the amount of time it takes to test it directly). On the other hand, it is unknown how long the resolution of $\varphi_2$ will take. It is possible that there is an odd perfect number but finding it (or otherwise becoming certain of its existence) will take a very long time. It is also possible there is no odd perfect number, a fact that cannot be directly verified because of its infinite nature. It is possible that there a proof of $\varphi_1$ within some formal theory, but accepting such a proof as resolution requires us to be completely certain of the consistency of the theory (whereas it is arguable that the consistency of formal mathematical theories, especially more abstract theories like ZFC, is itself only known empirically and in particular with less than absolute certainty). Moreover, there is no knowing a priori whether a proof exists or how long it will take to find it. For $\varphi_3$ there is no way to "directly" verify neither the sentence nor its negation, and it is actually known to be independent of ZFC.
 
 In the present work we avoid choosing a specific category of mathematical questions. Instead, we consider the abstract setting of arbitrary distributional decision problems. This leads to the perspective that an assignment of probabilities is a form of \emph{approximate} solution to a problem. This is not the same sense of approximation as used in optimization problems, where the approximation error is the difference between the ideal solution and the actual solution. Instead, the approximation error is the prediction accuracy of our probability assignment. This is also different from average-complexity theory where the solution is required to be exact on most input instances. However the language of average-complexity theory (in particular the concept of a distributional decision problem) turns out to be well-suited to our purpose.
 The concept of "optimal predictor" that arises from the approach turns out to behave much like probabilities, or more generally expected values, in "classical" probability theory. They display an appropriate form of calibration. The "expected values" are linear in general and multiplicative for functions that are independent in an appropriate sense. There is a natural parallel of conditional probabilities. For simple examples constructed from one-way functions we get the probability values we expect. Also they are well behaved in the complexity-theoretic sense that a natural class of reductions transforms optimal predictors into optimal predictors, and complete problems for these reductions exist for important complexity classes.
@@ -116,7 +118,11 @@ For any $t \in \Reals$, $\Floor{t} := \max \{n \in \Ints \mid n \leq t\}$, $\Cei
 
 $\log: \Reals^{\geq 0} \rightarrow \Reals \sqcup \{-\infty\}$ will denote the logarithm in base 2.
 
-$\theta: \Reals \rightarrow \Bool$ will denote the Heaviside step function
+Given a set $X$ and a subset $Y$, $\chi_Y: X \rightarrow \Bool$ will denote the characteristic function of $Y$ (when $X$ is assumed to be known from the context)
+
+$$\chi_Y(x):=\begin{cases}1 & \text{if } x \in Y \\ 0 & \text{if } x \not\in Y \end{cases}$$
+
+$\theta: \Reals \rightarrow \Bool$ will denote the Heaviside step function $\theta:=\chi_{[0,\infty)}$ i.e.
 
 $$\theta(t):=\begin{cases}1 & \text{if } t \geq 0 \\ 0 & \text{if } t < 0 \end{cases}$$
 
@@ -627,6 +633,88 @@ Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_{\textnormal{poly}}^2)$. Le
 
 \section{Optimal Predictors and Probability Theory}
 \label{sec:probability}
+
+\subsection{Calibration}
+
+From a Bayesian perspective, a good probability assignment should be calibrated. For example, suppose there 100 people in a room and you assign each person a probability they are married. If there are 60 people you assigned probabilities in the range 70\%-80\%, the number of married people among these 60 should be close to the interval $60 \times [0.7, 0.8] = [42,48]$. The same requirement can be made for expected value assignments. For example, if you now need to assign an expected value to the age of each person and you assigned an expected age in the range 30-40 to some sufficiently large group of people, the mean age in the group should be close to the interval $[30,40]$. 
+
+We will now show that optimal predictors satisfy an analogous property.
+
+\begin{definition}
+
+Given $n \in \Nats$, a growth space $\Gamma$ of rank $n$ and a fall space $\mathcal{E}$ of rank $n$, $\mathcal{E}$ is called \emph{$\Gamma$-ample} when there is $\zeta: \Nats^n \rightarrow (0,1]$ s.t.  $\zeta \in \mathcal{E}$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma$.
+
+\end{definition}
+
+\begin{theorem}
+\label{thm:calib}
+
+Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$, $s,t: \Nats^2 \rightarrow \Reals$. denote ${\alpha(k,j):=\Prb_{\mu^k \times U^{\R_P(k,j)}}[s(k,j) \leq P^{kj} \leq t(k,j)]}$ and ${\delta(k,j):=\E_{\mu^k \times U^{\R_P(k,j)}}[P^{kj}-f \mid s(k,j) \leq P^{kj} \leq t(k,j)]}$. Then, $\alpha \delta^2 \in \mathcal{E}$.
+
+\end{theorem}
+
+To see the relationship between Theorem~\ref{thm:calib} and calibration, consider the following corollary.
+
+\begin{corollary}
+
+In the setting of Theorem~\ref{thm:calib}, there is $\varepsilon \in \mathcal{E}$ s.t. 
+
+\begin{equation}
+s(k,j) - \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}} \leq \E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] \leq t(k,j) + \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}
+\end{equation}
+
+\end{corollary}
+
+\begin{proof}
+
+$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] = \E[P^{kj}-P^{kj}+f \mid s(k,j) \leq P^{kj} \leq t(k,j)]$$
+
+$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] = \E[P^{kj} \mid s(k,j) \leq P^{kj} \leq t(k,j)]-\E[P^{kj}-f \mid s(k,j) \leq P^{kj} \leq t(k,j)]$$
+
+$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] \leq t(k,j)+\Abs{\delta(k,j)}$$
+
+Denoting $\varepsilon := \alpha \delta^2$, we conclude that
+
+$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] \leq t(k,j) + \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}$$
+
+In the same manner, we can show that
+
+$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] \geq s(k,j) - \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}$$
+
+\end{proof}
+
+To prove Theorem~\ref{thm:calib}, we need the following proposition.
+
+\begin{proposition}
+\label{prp:weight}
+
+Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \xrightarrow{\Gamma} \Rats$ and ${W: \Words \xrightarrow{\Gamma} \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Then, there is $\varepsilon \in \mathcal{E}$ s.t.
+
+\begin{multline}
+\E_{(x,y,z) \sim \mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k,j)-\R_P(k,j)}}[W^{kj}(x,yz)(P^{kj}(x,y) - f(x))^2] \leq \\ \E_{(x,y,z) \sim \mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k,j)-\R_Q(k,j)}}[W^{kj}(x,yz)(Q^{kj}(x,y) - f(x))^2] + \varepsilon(k,j)
+\end{multline}
+
+\end{proposition}
+
+\begin{proof}
+
+Foo
+
+\end{proof}
+
+Proposition~\ref{prp:weight} shows that...
+
+We are now ready to prove Theorem~\ref{calib}.
+
+\begin{proof}[Proof of Theorem \ref{thm:calib}]
+
+Haha!
+
+\end{proof}
+
+TBD
+
+\subsection{Algebraic Properties}
 
 TBD
 
