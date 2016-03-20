@@ -688,11 +688,11 @@ To prove Theorem~\ref{thm:calib}, we need the following proposition.
 \begin{proposition}
 \label{prp:weight}
 
-Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \xrightarrow{\Gamma} \Rats$ and ${W: \Words \xrightarrow{\Gamma} \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Then, there is $\varepsilon \in \mathcal{E}$ s.t.
+Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \xrightarrow{\Gamma} \Rats$ and ${W: \Words \xrightarrow{\Gamma} \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{kj}_{P,W}:=\mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k,j)-\R_P(k,j)}}$, ${\mu^{kj}_{Q,W}:=\mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k,j)-\R_Q(k,j)}}$. Then, there is $\varepsilon \in \mathcal{E}$ s.t.
 
-\begin{multline}
-\E_{(x,y,z) \sim \mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k,j)-\R_P(k,j)}}[W^{kj}(x,yz)(P^{kj}(x,y) - f(x))^2] \leq \\ \E_{(x,y,z) \sim \mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k,j)-\R_Q(k,j)}}[W^{kj}(x,yz)(Q^{kj}(x,y) - f(x))^2] + \varepsilon(k,j)
-\end{multline}
+\begin{equation}
+\E_{\mu^{kj}_{P,W}}[W^{kj}(P^{kj} - f)^2] \leq \\ \E_{\mu^{kj}_{Q,W}}[W^{kj}(Q^{kj} - f)^2] + \varepsilon(k,j)
+\end{equation}
 
 \end{proposition}
 
