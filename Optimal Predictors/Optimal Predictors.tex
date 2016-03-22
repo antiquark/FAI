@@ -1,13 +1,14 @@
 %
 \documentclass{article}
+
 \usepackage[affil-it]{authblk}
 \usepackage{cite}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
+\usepackage{commath}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -136,16 +137,16 @@ Given $X,Y$ measurable spaces, $\mu$ a measure on $X$ and $f: X \rightarrow Y$ a
 
 \subsection{Algorithms}
 
-$\Words$ is the set of all finite binary strings (words). For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i=1}^n x_i y_i$. For any $n \in \Nats$, $U^n$ is the uniform probability distribution on $\WordsLen{n}$.
+$\Words$ is the set of all finite binary strings (words). For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i=1}^n x_i y_i$. For any $n \in \Nats$, $U^n$ is the uniform probability distribution on $\WordsLen{n}$.
 
-We fix some efficient encoding of tuples. Given $n \in \Nats$ and ${x_1, x_2 \ldots x_n \in \Words}$, $\Chev{x_1,x_2 \ldots x_n} \in \Words$ denotes the encoding of $(x_1,x_2 \ldots x_n)$.
+Given $n \in \Nats$ and ${x_1, x_2 \ldots x_n \in \Words}$, $\Chev{x_1,x_2 \ldots x_n} \in \Words$ denotes the encoding of $(x_1,x_2 \ldots x_n)$ obtained by repeating each bit of $x_1, x_2 \ldots x_n$ twice and inserting the separators 01.
 \begin{definition}
 
 An \emph{encoded set} is a set $X$ together with an injection ${e_X: X \rightarrow \Words}$ (the encoding) s.t. $\Img e_X$ is decidable in polynomial time.
 
 \end{definition}
 
-We treat standard sets such as $\Nats$ or $\Rats$ as encoded without specifying the encoding explicitly since it is only important up to a polynomial time transformation (any conventional encoding will suffice).
+There are standard encodings we implicitly use throughout. $\Words$ is an encoded set with the trivial encoding ${e_\Words(x):=x}$. $\Nats$ is an encoded set where $e_\Nats(n)$ is the binary representation of $n$. $\Rats$ is an encoded set where ${e_\Rats(\frac{n}{m}):=\Chev{n,m}}$ for an irreducible fraction $\frac{n}{m}$. For any encoded set $X$ and $L \in \textsc{P}$, $\{x \in X \mid e_X(x) \in L\}$ is an encoded set whose encoding is the restriction of $e_X$. For $X,Y$ encoded sets, $X \times Y$ is an encoded set with encoding $e_{X \times Y}(x,y):=\Chev{e_X(x),e_Y(y)}$.
 
 Given $n \in \Nats$, encoded sets $X_1, X_2 \ldots X_n$ and encoded set $Y$ we use the notation $A: \prod_{i=1}^n X_i \xrightarrow{alg} Y$ to mean a Turing machine with $n$ input tapes that halts on every input for which the $i$-th tape is initialized to a value in $\Img e_X$ and produces an output in $\Img e_Y$. Given $\{x_i \in X_i\}_{i=1}^n$ the notation $A(x_1, x_2 \ldots x_n)$ stands for the unique $y \in Y$ s.t. applying $A$ to the input composed of $e_{X_i}(x_i)$ results in output $e_Y(y)$. We use different input tapes for different components of the input instead of encoding the $n$-tuple as a single word in order to allow $A$ to process some components of the input in time smaller than the length of other components. This involves abuse of notation since a Cartesian product of encoded sets is naturally an encoded set, but hopefully this won't cause much confusion.
 
@@ -505,7 +506,7 @@ Fix $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth s
 
 \begin{proof}
 
-Assume without loss of generality that there is a polynomial ${h: \Nats^2 \rightarrow \Nats}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take a polynomial $h$ s.t. $2^{-h} \in \mathcal{E}$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$. Consider any ${\sigma: \Nats^2 \rightarrow \{ \pm 1 \}}$ and $n: \Nats^2 \rightarrow \Nats$ s.t. $n \leq \log \frac{1}{\zeta}$ (in particular $n \leq h$). Define ${t(k,j) := \sigma(k,j) 2^{-n(k,j)}}$. It is easy to see there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. given $k,j \in \Nats$, $x \in \Supp \mu^k$, ${y \in \WordsLen{\R_P(k,j)}}$ and $z \in \WordsLen{\R_P(k,j) - \R_S(k,j)}$, $Q_t^{kj}(x,yz) = P^{kj}(x,y) + t(k,j) S^{kj}(x,yz)$. Moreover, the set of $Q_t$ for all admissible choices of $t$ (but fixed $S$) is a uniform family.
+Assume without loss of generality that there is a polynomial ${h: \Nats^2 \rightarrow \Nats}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any polynomial $h$ s.t. $2^{-h} \in \mathcal{E}$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \xrightarrow{\Gamma} \Rats$ with $\R_S \geq \R_P$. Consider any ${\sigma: \Nats^2 \rightarrow \{ \pm 1 \}}$ and $n: \Nats^2 \rightarrow \Nats$ s.t. $n \leq \log \frac{1}{\zeta}$ (in particular $n \leq h$). Define ${t(k,j) := \sigma(k,j) 2^{-n(k,j)}}$. It is easy to see there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. given $k,j \in \Nats$, $x \in \Supp \mu^k$, ${y \in \WordsLen{\R_P(k,j)}}$ and $z \in \WordsLen{\R_P(k,j) - \R_S(k,j)}$, $Q_t^{kj}(x,yz) = P^{kj}(x,y) + t(k,j) S^{kj}(x,yz)$. Moreover, we can construct $Q_t$ for all admissible choices of $t$ (but fixed $S$) to get a uniform family.
 
 Applying Proposition~\ref{prp:unif}, we conclude that there is $\varepsilon \in \mathcal{E}$ which doesn't depend on $t$ s.t.
 
@@ -642,7 +643,7 @@ We will now show that optimal predictors satisfy an analogous property.
 
 \begin{definition}
 
-Given $n \in \Nats$, a growth space $\Gamma$ of rank $n$ and a fall space $\mathcal{E}$ of rank $n$, $\mathcal{E}$ is called \emph{$\Gamma$-ample} when there is $\zeta: \Nats^n \rightarrow (0,1]$ s.t.  $\zeta \in \mathcal{E}$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma$.
+Given $n \in \Nats$, a growth space $\Gamma$ of rank $n$ and a fall space $\mathcal{E}$ of rank $n$, $\mathcal{E}$ is called \emph{$\Gamma$-ample} when there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \mathcal{E}$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma$.
 
 \end{definition}
 
@@ -698,13 +699,55 @@ Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spa
 
 \begin{proof}
 
-Foo
+Consider $\zeta: \Nats^2 \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \mathcal{E}$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_{\mathfrak{A}}$. For any $k,j \in \Nats$ and $t \in \Reals$, let $\rho_\zeta^{kj}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(k,j),t+\zeta(k,j)]} e_\Rats(s)$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \Gamma_{\mathfrak{A}}$ s.t. for any $t \in [0, M]$, $\Abs{e_\Rats(\rho_\zeta^{kj}(t))} \leq \gamma(k,j)$.
+
+For any $t \in \Reals$ there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. for any $x \in \Supp \mu^k$ and ${y \in \WordsLen{\R_W(k,j)}}$
+
+$$Q_t^{kj}(x,y)=\begin{cases}Q^{kj}(x,y_{\leq \R_Q(k,j)}) \text{ if } W^{kj}(x,y) \geq \rho^{kj}_\zeta(t) \\ P^{kj}(x,y_{\leq \R_P(k,j)}) \text{ if } W^{kj}(x,y) < \rho^{kj}_\zeta(t)\end{cases}$$
+
+Moreover we can construct the $Q_t$ for all $t \in [0, M]$ s.t. they form a uniform family. By Proposition~\ref{prp:unif} there is $\varepsilon \in \mathcal{E}$ s.t. for all $t \in [0, M]$
+
+$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj}-f)^2] \leq \E_{\mu^k \times U^{\R_W(k,j)}}[(Q_t^{kj}-f)^2] + \varepsilon(k,j)$$
+
+$$\E_{(x,y) \sim \mu^k \times U^{\R_W(k,j)}}[(P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q_t^{kj}(x,y)-f(x))^2] \leq \varepsilon(k,j)$$
+
+The expression inside the expected values vanishes when $W^{kj}(x,y) < \rho^{kj}_\zeta(t)$. In other cases, $Q_t^{kj}(x,y) = Q^{kj}(x,y_{\leq \R_Q(k,j)})$. We get
+
+$$\E_{(x,y) \sim \mu^k \times U^{\R_W(k,j)}}[\theta(W^{kj}(x,y)-\rho_\zeta^{kj}(t)) \cdot ((P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q^{kj}(x,y_{\leq \R_Q(k,j)})-f(x))^2)] \leq \varepsilon(k,j)$$
+
+We integrate both sides of the inequality over $t$ from 0 to $M$.
+
+\begin{equation}
+\label{eqn:prp__weight__prf1}
+\E[\int_0^M\theta(W^{kj}-\rho_\zeta^{kj}(t)) \dif t \cdot ((P^{kj}-f)^2-(Q^{kj}-f)^2)] \leq M \varepsilon(k,j)
+\end{equation}
+
+For any $s \in \Reals$
+
+$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t = \int_0^{s-\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t + \int_{s+\zeta(k,j)}^M \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
+
+$\Abs{\rho_\zeta^{kj}(t)-t} \leq \zeta(k,j)$ therefore the integrand in the first term is 1 and in the last term 0:
+
+$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t = \int_0^{s-\zeta(k,j)} \dif t + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
+
+$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t = s-\zeta(k,j) + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
+
+$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t - s = \zeta(k,j) + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
+
+\begin{equation}
+\label{eqn:prp__weight__prf2}
+\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t - s \in [0,3\zeta(k,j)]
+\end{equation}
+
+Combining \ref{eqn:prp__weight__prf1} and \ref{eqn:prp__weight__prf2} we conclude that for some $M' \in \Reals^{\geq 0}$
+
+$$\E[W^{kj} \cdot ((P^{kj}-f)^2-(Q^{kj}-f)^2)] \leq M \varepsilon(k,j) + M'\zeta(k,j)$$
 
 \end{proof}
 
 Proposition~\ref{prp:weight} shows that...
 
-We are now ready to prove Theorem~\ref{calib}.
+We are now ready to prove Theorem~\ref{thm:calib}.
 
 \begin{proof}[Proof of Theorem \ref{thm:calib}]
 
@@ -784,7 +827,7 @@ It is easy to see that any non-uniformly hard to invert one-way function is in p
 
 The following appears in \cite{Goldreich_2008} as Theorem 7.7. Here we state it in the notation of the present work.
 
-\begin{theorem}[Goldreich and Levin]
+\begin{theorem}[Goldreich-Levin]
 \label{thm:hard_core}
 
 Consider a one-way function ${f: \Words \xrightarrow{alg} \Words}$ and $G: \Words \times \Words \xrightarrow{\Gamma_{\textnormal{rand}}} \Bool$. Then there is $\varepsilon \in \mathcal{E}_{\textnormal{neg}}^1$ s.t. 
