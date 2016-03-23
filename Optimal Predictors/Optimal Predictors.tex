@@ -9,6 +9,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{commath}
+\usepackage{bm}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -146,7 +147,7 @@ An \emph{encoded set} is a set $X$ together with an injection ${e_X: X \rightarr
 
 \end{definition}
 
-There are standard encodings we implicitly use throughout. $\Words$ is an encoded set with the trivial encoding ${e_\Words(x):=x}$. $\Nats$ is an encoded set where $e_\Nats(n)$ is the binary representation of $n$. $\Rats$ is an encoded set where ${e_\Rats(\frac{n}{m}):=\Chev{n,m}}$ for an irreducible fraction $\frac{n}{m}$. For any encoded set $X$ and $L \in \textsc{P}$, $\{x \in X \mid e_X(x) \in L\}$ is an encoded set whose encoding is the restriction of $e_X$. For $X,Y$ encoded sets, $X \times Y$ is an encoded set with encoding $e_{X \times Y}(x,y):=\Chev{e_X(x),e_Y(y)}$.
+There are standard encodings we implicitly use throughout. $\bm{1}$ denotes an encoded set with 1 element whose encoding is the empty string. $\Words$ is an encoded set with the trivial encoding ${e_\Words(x):=x}$. $\Nats$ is an encoded set where $e_\Nats(n)$ is the binary representation of $n$. $\Rats$ is an encoded set where ${e_\Rats(\frac{n}{m}):=\Chev{n,m}}$ for an irreducible fraction $\frac{n}{m}$. For any encoded set $X$ and $L \in \textsc{P}$, $\{x \in X \mid e_X(x) \in L\}$ is an encoded set whose encoding is the restriction of $e_X$. For $X,Y$ encoded sets, $X \times Y$ is an encoded set with encoding $e_{X \times Y}(x,y):=\Chev{e_X(x),e_Y(y)}$.
 
 Given $n \in \Nats$, encoded sets $X_1, X_2 \ldots X_n$ and encoded set $Y$ we use the notation $A: \prod_{i=1}^n X_i \xrightarrow{alg} Y$ to mean a Turing machine with $n$ input tapes that halts on every input for which the $i$-th tape is initialized to a value in $\Img e_X$ and produces an output in $\Img e_Y$. Given $\{x_i \in X_i\}_{i=1}^n$ the notation $A(x_1, x_2 \ldots x_n)$ stands for the unique $y \in Y$ s.t. applying $A$ to the input composed of $e_{X_i}(x_i)$ results in output $e_Y(y)$. We use different input tapes for different components of the input instead of encoding the $n$-tuple as a single word in order to allow $A$ to process some components of the input in time smaller than the length of other components. This involves abuse of notation since a Cartesian product of encoded sets is naturally an encoded set, but hopefully this won't cause much confusion.
 
@@ -411,7 +412,11 @@ Fix $\Gamma$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a fall space of
 
 Distributional \emph{decision} problems are the special case when the range of $f$ is $\Bool$. In this special case, the outputs of an optimal predictors can be thought of as probabilities\footnote{With some caveats. First, $P$ can take values outside $[0,1]$ but it's easy to see that clipping all values to $[0,1]$ preserves optimality. Second, $P^{kj}(x,y)=1$ doesn't imply $f(x) = 1$ and $P^{kj}(x,y)=0$ doesn't imply $f(x)=0$. We can try to fix this using a logarithmic error function instead of the squared norm, however this creates other difficulties and is outside the scope of the present work.}.
 
-Note that $\varepsilon$ in (\ref{eqn:op}) depends on $Q$. However in some sense the optimality condition can be amplified to uniformity w.r.t. the resources required by $Q$.
+\subsection{Basic Properties}
+
+In this subsection we discuss some basic properties of optimal predictors which will be used in the following.
+
+Note that $\varepsilon$ in (\ref{eqn:op}) depends on $Q$. However in some sense the optimality condition is automatically uniform w.r.t. the resources required by $Q$.
 
 \begin{proposition}
 \label{prp:unif}
@@ -478,9 +483,112 @@ Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}}
 
 \end{proof}
 
+Although the word ensemble plays a central role in the definition of an optimal predictor, the dependence on the word ensemble is lax in some sense. To see this, consider the following proposition.
+
+\begin{definition}
+
+Given $n \in \Nats$, a growth space $\Gamma$ of rank $n$ and a fall space $\mathcal{E}$ of rank $n$, $\mathcal{E}$ is called \emph{$\Gamma$-ample} when there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \mathcal{E}$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma$.
+
+\end{definition}
+
+\begin{proposition}
+\label{prp:weight}
+
+Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \xrightarrow{\Gamma} \Rats$ and ${W: \Words \xrightarrow{\Gamma} \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{kj}_{P,W}:=\mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k,j)-\R_P(k,j)}}$, ${\mu^{kj}_{Q,W}:=\mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k,j)-\R_Q(k,j)}}$. Then, there is $\varepsilon \in \mathcal{E}$ s.t.
+
+\begin{equation}
+\E_{\mu^{kj}_{P,W}}[W^{kj}(P^{kj} - f)^2] \leq \\ \E_{\mu^{kj}_{Q,W}}[W^{kj}(Q^{kj} - f)^2] + \varepsilon(k,j)
+\end{equation}
+
+\end{proposition}
+
+To relationship to the role of the word ensemble is as follows.
+
+\begin{samepage}
+\begin{corollary}
+
+Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$. Suppose $\Gamma^1:=(\Gamma_{\mathfrak{R}}^1,\Gamma_{\mathfrak{A}}^2)$ is a pair of growth spaces of rank 1 s.t. for any $\gamma \in \Gamma_{\mathfrak{R}}^1$ the function ${\gamma^2(k,j):=\gamma(k)}$ is in $\Gamma_{\mathfrak{R}}$ and for any $\gamma \in \Gamma_{\mathfrak{A}}^1$ the function $\gamma^2(k,j):=\gamma(k)$ is in $\Gamma_{\mathfrak{A}}$. Consider ${W: \Words \xrightarrow{\Gamma^1} \Rats^{\geq 0}}$ bounded s.t. for any $k \in \Nats$ there is $x \in \Supp \mu^k$ and $y \in \WordsLen{\R_W(k)}$ s.t. $W^k(x,y) > 0$. Define 
+
+$${\mathcal{E}_W:=\{\varepsilon_W: \Nats^2 \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid  \E_{\mu^k \times U^{\R_W(k)}}[W^k]\varepsilon_W(k,j) \in \mathcal{E}\}}$$
+
+It is easy to see $\mathcal{E}_W$ is a fall space. Define the word ensemble $\nu$ by ${\nu^k(x):=\frac{\E_{U^{\R_W(k)}}[W^k(x)] \mu^k(x)}{\E_{\mu^k \times U^{\R_W(k)}}[W^k(x)]}}$. Then, $P$ is an $\mathcal{E}_W(\Gamma)$-optimal predictor for $(\nu,f)$.
+
+\end{corollary}
+\end{samepage}
+
+\begin{proof}
+
+Consider any $Q: \Words \xrightarrow{alg} \Rats$. Proposition~\ref{prp:weight} implies there is $\varepsilon \in \mathcal{E}$ s.t.
+
+$$\E_{\mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k)}}[W^k(P^{kj} - f)^2] \leq \\ \E_{\mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k)}}[W^k(Q^{kj} - f)^2] + \varepsilon(k,j)$$
+
+$$\E_{\mu^k \times U^{\R_P(k,j)}}[\E_{U^{\R_W(k)}}[W^k](P^{kj} - f)^2] \leq \\ \E_{\mu^k \times U^{\R_Q(k,j)}}[\E_{U^{\R_W(k)}}[W^k](Q^{kj} - f)^2] + \varepsilon(k,j)$$
+
+Dividing both sides of the inequality by $\E_{\mu^k \times U^{\R_W(k)}}[W^k(x)]$ we get
+
+$$\E_{\nu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \\ \E_{\nu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \frac{\varepsilon(k,j)}{\E_{\mu^k \times U^{\R_W(k)}}[W^k(x)]}$$
+
+Let $M$ be the supremum of the left hand side.
+
+$$\E_{\nu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \\ \E_{\nu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \min(\frac{\varepsilon(k,j)}{\E_{\mu^k \times U^{\R_W(k)}}[W^k(x)]},M)$$
+
+The second term on the right hand side is clearly in $\mathcal{E}_W$.
+
+\end{proof}
+
+We now give the proof of Proposition~\ref{prp:weight}.
+
+\begin{proof}[Proof of \ref{prp:weight}]
+
+Consider $\zeta: \Nats^2 \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \mathcal{E}$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_{\mathfrak{A}}$. For any $k,j \in \Nats$ and $t \in \Reals$, let $\rho_\zeta^{kj}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(k,j),t+\zeta(k,j)]} e_\Rats(s)$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \Gamma_{\mathfrak{A}}$ s.t. for any $t \in [0, M]$, $\Abs{e_\Rats(\rho_\zeta^{kj}(t))} \leq \gamma(k,j)$.
+
+For any $t \in \Reals$ there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. for any $x \in \Supp \mu^k$ and ${y \in \WordsLen{\R_W(k,j)}}$
+
+$$Q_t^{kj}(x,y)=\begin{cases}Q^{kj}(x,y_{\leq \R_Q(k,j)}) \text{ if } W^{kj}(x,y) \geq \rho^{kj}_\zeta(t) \\ P^{kj}(x,y_{\leq \R_P(k,j)}) \text{ if } W^{kj}(x,y) < \rho^{kj}_\zeta(t)\end{cases}$$
+
+Moreover we can construct the $Q_t$ for all $t \in [0, M]$ s.t. they form a uniform family. By Proposition~\ref{prp:unif} there is $\varepsilon \in \mathcal{E}$ s.t. for all $t \in [0, M]$
+
+$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj}-f)^2] \leq \E_{\mu^k \times U^{\R_W(k,j)}}[(Q_t^{kj}-f)^2] + \varepsilon(k,j)$$
+
+$$\E_{(x,y) \sim \mu^k \times U^{\R_W(k,j)}}[(P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q_t^{kj}(x,y)-f(x))^2] \leq \varepsilon(k,j)$$
+
+The expression inside the expected values vanishes when $W^{kj}(x,y) < \rho^{kj}_\zeta(t)$. In other cases, $Q_t^{kj}(x,y) = Q^{kj}(x,y_{\leq \R_Q(k,j)})$. We get
+
+$$\E_{(x,y) \sim \mu^k \times U^{\R_W(k,j)}}[\theta(W^{kj}(x,y)-\rho_\zeta^{kj}(t)) \cdot ((P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q^{kj}(x,y_{\leq \R_Q(k,j)})-f(x))^2)] \leq \varepsilon(k,j)$$
+
+We integrate both sides of the inequality over $t$ from 0 to $M$.
+
+\begin{equation}
+\label{eqn:prp__weight__prf1}
+\E[\int_0^M\theta(W^{kj}-\rho_\zeta^{kj}(t)) \dif t \cdot ((P^{kj}-f)^2-(Q^{kj}-f)^2)] \leq M \varepsilon(k,j)
+\end{equation}
+
+For any $s \in \Reals$
+
+$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t = \int_0^{s-\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t + \int_{s+\zeta(k,j)}^M \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
+
+$\Abs{\rho_\zeta^{kj}(t)-t} \leq \zeta(k,j)$ therefore the integrand in the first term is 1 and in the last term 0:
+
+$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t = \int_0^{s-\zeta(k,j)} \dif t + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
+
+$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t = s-\zeta(k,j) + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
+
+$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t - s = \zeta(k,j) + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
+
+\begin{equation}
+\label{eqn:prp__weight__prf2}
+\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t - s \in [0,3\zeta(k,j)]
+\end{equation}
+
+Combining \ref{eqn:prp__weight__prf1} and \ref{eqn:prp__weight__prf2} we conclude that for some $M' \in \Reals^{\geq 0}$
+
+$$\E[W^{kj} \cdot ((P^{kj}-f)^2-(Q^{kj}-f)^2)] \leq M \varepsilon(k,j) + M'\zeta(k,j)$$
+
+\end{proof}
+
 \subsection{Orthogonality Theorems}
 
-There is a variant of Definition~\ref{def:op} which is nearly equivalent in many cases and often useful. 
+There is a variant of Definition~\ref{def:op} which is nearly equivalent in many cases and often useful.
 
 We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real inner product space with inner product $\Chev{f,g}:=\E_\mu[fg]$. Informally, we can think of $\Gamma$-schemes as a subspace (although a $\Gamma$-scheme is not even a function) and an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$ as the nearest point to $f$ in this subspace. Now, given an inner product space $V$, a vector $f \in V$, an actual subspace $W \subseteq V$ and $p = \Argmin{q \in W} \Norm{q - f}^2$, we have $\forall v \in W: \Chev{p-f,v}=0$. This motivates the following:
 
@@ -641,16 +749,10 @@ From a Bayesian perspective, a good probability assignment should be calibrated.
 
 We will now show that optimal predictors satisfy an analogous property.
 
-\begin{definition}
-
-Given $n \in \Nats$, a growth space $\Gamma$ of rank $n$ and a fall space $\mathcal{E}$ of rank $n$, $\mathcal{E}$ is called \emph{$\Gamma$-ample} when there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \mathcal{E}$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma$.
-
-\end{definition}
-
 \begin{theorem}
 \label{thm:calib}
 
-Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$, $s,t: \Nats^2 \rightarrow \Reals$. denote ${\alpha(k,j):=\Prb_{\mu^k \times U^{\R_P(k,j)}}[s(k,j) \leq P^{kj} \leq t(k,j)]}$ and ${\delta(k,j):=\E_{\mu^k \times U^{\R_P(k,j)}}[P^{kj}-f \mid s(k,j) \leq P^{kj} \leq t(k,j)]}$. Then, $\alpha \delta^2 \in \mathcal{E}$.
+Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$ and ${W: \Words \xrightarrow{\Gamma} \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \R_P$ and for every $k,j \in \Nats$ there is $x \in \Supp \mu^k$ and $y \in U^{\R_W(k,j)}$ with $W^{kj}(x,y) > 0$. Denote ${\alpha(k,j):=\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}]}$ and ${\delta(k,j):=\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj}-f)]}$. Then, $\frac{\delta^2}{\alpha} \in \mathcal{E}$.
 
 \end{theorem}
 
@@ -658,104 +760,60 @@ To see the relationship between Theorem~\ref{thm:calib} and calibration, conside
 
 \begin{corollary}
 
-In the setting of Theorem~\ref{thm:calib}, there is $\varepsilon \in \mathcal{E}$ s.t. 
+Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$ and $A,B: \bm{1} \xrightarrow{\Gamma} \Rats$ s.t. $\R_A \equiv 0$ and $\R_B \equiv 0$. Denote ${\alpha(k,j):=\Prb_{\mu^k \times U^{\R_P(k,j)}}[A^{kj} \leq P^{kj} \leq B^{kj}]}$. Then, there is $\varepsilon \in \mathcal{E}$ s.t. 
 
 \begin{equation}
-s(k,j) - \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}} \leq \E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] \leq t(k,j) + \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}
+A^{kj} - \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}} \leq \E[f \mid A^{kj} \leq P^{kj} \leq B^{kj}] \leq B^{kj} + \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}
 \end{equation}
 
 \end{corollary}
 
 \begin{proof}
 
-$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] = \E[P^{kj}-P^{kj}+f \mid s(k,j) \leq P^{kj} \leq t(k,j)]$$
+Construct $W: \Words \xrightarrow{\Gamma} \Bool$ s.t. ${W^{kj}(x,y)=\theta(P^{kj}(x,y)-A^{kj})\theta(B^{kj}-P^{kj}(x,y))}$. Denote $\delta(k,j):=\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj}-f)]$ and $\varepsilon:=\frac{\delta^2}{\alpha}$. According to Theorem~\ref{thm:calib}, $\varepsilon \in \mathcal{E}$.
+We get
 
-$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] = \E[P^{kj} \mid s(k,j) \leq P^{kj} \leq t(k,j)]-\E[P^{kj}-f \mid s(k,j) \leq P^{kj} \leq t(k,j)]$$
+$$\frac{\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj}-f)]^2}{\alpha(k,j)} = \varepsilon(k,j)$$
 
-$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] \leq t(k,j)+\Abs{\delta(k,j)}$$
+$$\frac{\E_{\mu^k \times U^{\R_W(k,j)}}[\theta(P^{kj}(x,y)-A^{kj})\theta(B^{kj}-P^{kj}(x,y))(P^{kj}-f)]^2}{\alpha(k,j)} = \varepsilon(k,j)$$
 
-Denoting $\varepsilon := \alpha \delta^2$, we conclude that
+$$\frac{(\E_{\mu^k \times U^{\R_W(k,j)}}[\theta(P^{kj}(x,y)-A^{kj})\theta(B^{kj}-P^{kj}(x,y))]\E[P^{kj}-f \mid A^{kj} \leq P^{kj} \leq B^{kj}])^2}{\alpha(k,j)} = \varepsilon(k,j)$$
 
-$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] \leq t(k,j) + \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}$$
+$$\frac{(\alpha(k,j)\E[P^{kj}-f \mid A^{kj} \leq P^{kj} \leq B^{kj}])^2}{\alpha(k,j)} = \varepsilon(k,j)$$
+
+$$\alpha(k,j)\E[P^{kj}-f \mid A^{kj} \leq P^{kj} \leq B^{kj}]^2 = \varepsilon(k,j)$$
+
+\begin{equation}
+\label{eqn:crl__calib__prf}
+\Abs{\E[P^{kj}-f \mid A^{kj} \leq P^{kj} \leq B^{kj}]} = \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}
+\end{equation}
+
+On the other hand
+
+$$\E[f \mid A^{kj} \leq P^{kj} \leq B^{kj}] = \E[P^{kj}-P^{kj}+f \mid A^{kj} \leq P^{kj} \leq B^{kj}]$$
+
+$$\E[f \mid A^{kj} \leq P^{kj} \leq B^{kj}] = \E[P^{kj} \mid A^{kj} \leq P^{kj} \leq B^{kj}]-\E[P^{kj}-f \mid A^{kj} \leq P^{kj} \leq B^{kj}]$$
+
+Applying \ref{eqn:crl__calib__prf}
+
+$$\E[f \mid A^{kj} \leq P^{kj} \leq B^{kj}] \leq \E[P^{kj} \mid A^{kj} \leq P^{kj} \leq B^{kj}]+\sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}$$
+
+
+$$\E[f \mid A^{kj} \leq P^{kj} \leq B^{kj}] \leq B^{kj} + \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}$$
 
 In the same manner, we can show that
 
-$$\E[f \mid s(k,j) \leq P^{kj} \leq t(k,j)] \geq s(k,j) - \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}$$
+$$\E[f \mid A^{kj} \leq P^{kj} \leq B^{kj}] \geq A^{kj} - \sqrt{\frac{\varepsilon(k,j)}{\alpha(k,j)}}$$
 
 \end{proof}
 
-To prove Theorem~\ref{thm:calib}, we need the following proposition.
-
-\begin{proposition}
-\label{prp:weight}
-
-Fix $\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank 2 and $\mathcal{E}$ a $\Gamma_{\mathfrak{A}}$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\mathcal{E}(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \xrightarrow{\Gamma} \Rats$ and ${W: \Words \xrightarrow{\Gamma} \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{kj}_{P,W}:=\mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k,j)-\R_P(k,j)}}$, ${\mu^{kj}_{Q,W}:=\mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k,j)-\R_Q(k,j)}}$. Then, there is $\varepsilon \in \mathcal{E}$ s.t.
-
-\begin{equation}
-\E_{\mu^{kj}_{P,W}}[W^{kj}(P^{kj} - f)^2] \leq \\ \E_{\mu^{kj}_{Q,W}}[W^{kj}(Q^{kj} - f)^2] + \varepsilon(k,j)
-\end{equation}
-
-\end{proposition}
-
-\begin{proof}
-
-Consider $\zeta: \Nats^2 \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \mathcal{E}$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_{\mathfrak{A}}$. For any $k,j \in \Nats$ and $t \in \Reals$, let $\rho_\zeta^{kj}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(k,j),t+\zeta(k,j)]} e_\Rats(s)$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \Gamma_{\mathfrak{A}}$ s.t. for any $t \in [0, M]$, $\Abs{e_\Rats(\rho_\zeta^{kj}(t))} \leq \gamma(k,j)$.
-
-For any $t \in \Reals$ there is $Q_t: \Words \xrightarrow{\Gamma} \Rats$ s.t. for any $x \in \Supp \mu^k$ and ${y \in \WordsLen{\R_W(k,j)}}$
-
-$$Q_t^{kj}(x,y)=\begin{cases}Q^{kj}(x,y_{\leq \R_Q(k,j)}) \text{ if } W^{kj}(x,y) \geq \rho^{kj}_\zeta(t) \\ P^{kj}(x,y_{\leq \R_P(k,j)}) \text{ if } W^{kj}(x,y) < \rho^{kj}_\zeta(t)\end{cases}$$
-
-Moreover we can construct the $Q_t$ for all $t \in [0, M]$ s.t. they form a uniform family. By Proposition~\ref{prp:unif} there is $\varepsilon \in \mathcal{E}$ s.t. for all $t \in [0, M]$
-
-$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj}-f)^2] \leq \E_{\mu^k \times U^{\R_W(k,j)}}[(Q_t^{kj}-f)^2] + \varepsilon(k,j)$$
-
-$$\E_{(x,y) \sim \mu^k \times U^{\R_W(k,j)}}[(P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q_t^{kj}(x,y)-f(x))^2] \leq \varepsilon(k,j)$$
-
-The expression inside the expected values vanishes when $W^{kj}(x,y) < \rho^{kj}_\zeta(t)$. In other cases, $Q_t^{kj}(x,y) = Q^{kj}(x,y_{\leq \R_Q(k,j)})$. We get
-
-$$\E_{(x,y) \sim \mu^k \times U^{\R_W(k,j)}}[\theta(W^{kj}(x,y)-\rho_\zeta^{kj}(t)) \cdot ((P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q^{kj}(x,y_{\leq \R_Q(k,j)})-f(x))^2)] \leq \varepsilon(k,j)$$
-
-We integrate both sides of the inequality over $t$ from 0 to $M$.
-
-\begin{equation}
-\label{eqn:prp__weight__prf1}
-\E[\int_0^M\theta(W^{kj}-\rho_\zeta^{kj}(t)) \dif t \cdot ((P^{kj}-f)^2-(Q^{kj}-f)^2)] \leq M \varepsilon(k,j)
-\end{equation}
-
-For any $s \in \Reals$
-
-$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t = \int_0^{s-\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t + \int_{s+\zeta(k,j)}^M \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
-
-$\Abs{\rho_\zeta^{kj}(t)-t} \leq \zeta(k,j)$ therefore the integrand in the first term is 1 and in the last term 0:
-
-$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t = \int_0^{s-\zeta(k,j)} \dif t + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
-
-$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t = s-\zeta(k,j) + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
-
-$$\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t - s = \zeta(k,j) + \int_{s-\zeta(k,j)}^{s+\zeta(k,j)} \theta(s-\rho_\zeta^{kj}(t)) \dif t$$
-
-\begin{equation}
-\label{eqn:prp__weight__prf2}
-\int_0^M \theta(s-\rho_\zeta^{kj}(t)) \dif t - s \in [0,3\zeta(k,j)]
-\end{equation}
-
-Combining \ref{eqn:prp__weight__prf1} and \ref{eqn:prp__weight__prf2} we conclude that for some $M' \in \Reals^{\geq 0}$
-
-$$\E[W^{kj} \cdot ((P^{kj}-f)^2-(Q^{kj}-f)^2)] \leq M \varepsilon(k,j) + M'\zeta(k,j)$$
-
-\end{proof}
-
-Proposition~\ref{prp:weight} shows that...
-
-We are now ready to prove Theorem~\ref{thm:calib}.
+The proof of Theorem~\ref{thm:calib} follows.
 
 \begin{proof}[Proof of Theorem \ref{thm:calib}]
 
-Haha!
+FOO
 
 \end{proof}
-
-TBD
 
 \subsection{Algebraic Properties}
 
