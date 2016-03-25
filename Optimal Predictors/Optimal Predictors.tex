@@ -735,7 +735,7 @@ This contradicts the definition of hard-core predicate.
 
 Consider $f: \Words \xrightarrow{alg} \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_{(f)}^k:=f_*^{(k)}(U^k \times U^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
 
-Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_0^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{uneg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{uneg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_0^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_{(f)}, \chi_f)$.
+Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_0^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{uneg}}^2(\Gamma)$-optimal predictor for $(\mu_{(f)}, \chi_f)$.
 
 \end{corollary}
 
@@ -752,7 +752,7 @@ The following is the non-uniform version of Theorem~\ref{thm:hard_core} which we
 
 Consider $\mu$ a word ensemble s.t. for any different $k,l \in \Nats$, $\Supp \mu^k \cap \Supp \mu^l = \varnothing$, $f: \Supp \mu \rightarrow \Words$ one-to-one and $B$ a non-uniformly hard-core predicate of $(\mu,f)$. 
 
-Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_{\textnormal{poly}}^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{neg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{uneg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_0^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_f, \chi_B)$.
+Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_{\textnormal{poly}}^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{neg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{neg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_{\text{poly}}^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_f, \chi_B)$.
 
 \end{theorem}
 
