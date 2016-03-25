@@ -679,14 +679,14 @@ Applying \ref{eqn:op_sharp}, we conclude that there is $\varepsilon \in \mathcal
 \subsection{Simple Example}
 \label{sec:fundamentals__one_way}
 
-The concept of an optimal predictor is in some sense complementary to the concept of pseudorandom: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal predictors compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal predictor, we use the concept of a one-way function (which may be regarded as a function with pseudorandom inverse).
+The concept of an optimal predictor is in some sense complementary to the concept of pseudorandom: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal predictors compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal predictor, we use the concept of a hard-core predicate (which may be regarded as en elementary example of pseudorandom).
 
 \begin{theorem}
-\label{thm:one_way}
+\label{thm:hard_core}
 
-Consider $f: \Words \xrightarrow{alg} \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_f^k:=f_*^{(k)}(U^k \times U^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
+Consider $\mu$ a word ensemble s.t. for any different $k,l \in \Nats$, $\Supp \mu^k \cap \Supp \mu^l = \varnothing$, $f: \Supp \mu \rightarrow \Words$ one-to-one and $B$ a hard-core predicate of $(\mu,f)$. For every $k \in \Nats$, define $\mu_f^k:=f_*^k(\mu^k).$ Define ${K: \Supp \mu \rightarrow \Nats}$ by $\forall x \in \Supp \mu^k: K(x):=k$. Finally, define $\chi_B: \Supp \mu_f \rightarrow \Bool$ by ${\chi_B(f(x)):=B^{K(x)}(x)}$.
 
-Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_0^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{uneg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{uneg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_0^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_f, \chi_f)$.
+Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_0^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{uneg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{uneg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_0^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_f, \chi_B)$.
 
 \end{theorem}
 
@@ -694,51 +694,81 @@ Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_0^2)$. Let $P: \Words \xrig
 
 Assume to the contrary that $P$ is not optimal. Then there is ${Q: \Words \xrightarrow{\Gamma} \Rats}$, $d \in \Nats$, $J: \Nats \xrightarrow{alg} \Nats$, polynomials $p,q: \Nats \rightarrow \Nats$, an infinite set ${I \subseteq \Nats}$ and $\epsilon \in \Reals^{>0}$ s.t. $J \leq p$, $\T_J \leq q$ and
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\frac{1}{2}-\chi_f)^2] \geq \E_{\mu_f^k \times U^{\R_Q(k,J(k))}}[(Q^{k,J(k)}-\chi_f)^2] +\frac{\epsilon}{k^d}$$
+$$ \forall k \in I: \E_{\mu_f^k}[(\frac{1}{2}-\chi_B)^2] \geq \E_{\mu_f^k \times U^{\R_Q(k,J(k))}}[(Q^{k,J(k)}-\chi_B)^2] +\frac{\epsilon}{k^d}$$
 
-$$ \forall k \in I: \E_{\mu_f^k \times U^{\R_Q(k,J(k))}}[(Q^{k,J(k)}-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+$$ \forall k \in I: \E_{\mu_f^k \times U^{\R_Q(k,J(k))}}[(Q^{k,J(k)}-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\E_{U^{\R_Q(k,J(k))}}[Q^{k,J(k)}]-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+$$ \forall k \in I: \E_{\mu_f^k}[(\E_{U^{\R_Q(k,J(k))}}[Q^{k,J(k)}]-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
 Denoting $\Gamma^1:=(\Gamma_{\text{poly}}^1,\Gamma_0^1)$, there is $G: \Words \xrightarrow{\Gamma^1} \Bool$ s.t. for all ${x \in \Words}$, ${\Abs{\E[Q^{k,J(k)}(x)]-\Pr[G^k(x)=1]}\leq 2^{-k}}$ ($G^k$ works by evaluating ${\alpha \leftarrow Q^{k,J(k)}}$ and then returning 1 with probability $\alpha \pm 2^{-k}$ and 0 with probability $1-\alpha \pm 2^{-k}$, where the $2^{-k}$ error comes from rounding a rational number to a binary fraction). Denoting $\delta(x):=\E[Q^{k,J(k)}(x)]-\Pr[G^k(x)=1]$
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]+\delta-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]+\delta-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)^2]+2 \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)\delta]+\E_{\mu_f^k}[\delta^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
+$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)^2]+2 \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_B)\delta]+\E_{\mu_f^k}[\delta^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)^2]-2 \cdot 2^{-k}- 4^{-k} \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
+$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_B)^2]-2 \cdot 2^{-k}- 4^{-k} \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
 
 Since $2^{-k}$ falls faster than $k^{-d}$, there is $I_1 \subseteq \Nats$ infinite and $\epsilon_1 \in \Reals^{>0}$ s.t.
 
-$$ \forall k \in I_1: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)^2] \leq \frac{1}{4} - \frac{\epsilon_1}{k^d}$$
+$$ \forall k \in I_1: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon_1}{k^d}$$
 
-$$ \forall k \in I_1: \E_{\mu_f^k}[\Abs{\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f}] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+$$ \forall k \in I_1: \E_{\mu_f^k}[\Abs{\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_B}] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
 
-$$ \forall k \in I_1: \E_{\mu_f^k}[\Prb_{U^{\R_G(k)}}[G^k \ne \chi_f]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+$$ \forall k \in I_1: \E_{\mu_f^k}[\Prb_{U^{\R_G(k)}}[G^k \ne \chi_B]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
 
-$$ \forall k \in I_1: \E_{(x,y) \sim U^k \times U^k}[\Prb_{U^{\R_G(k)}}[G^k(\Chev{f(x),y}) \ne x \cdot y]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+$$ \forall k \in I_1: \E_{x \sim \mu^k}[\Prb_{U^{\R_G(k)}}[G^k(f(x)) \ne B^k(x)]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
 
-$$ \forall k \in I_1: \Prb_{U^k \times U^k \times U^{\R_G(k)}}[G^k(\Chev{f(x),y}) \ne x \cdot y] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+$$ \forall k \in I_1: \Prb_{\mu^k \times U^{\R_G(k)}}[G^k(f(x)) \ne B^k(x)] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
 
 Since $\sqrt{t}$ is a concave function and the derivative of $\sqrt{t}$ is $\frac{1}{2\sqrt{t}}$, we have $\sqrt{t} \leq \sqrt{t_0} + \frac{t-t_0}{2\sqrt{t_0}}$. We get
 
-$$ \forall k \in I_1: \Prb_{U^k \times U^k \times U^{\R_G(k)}}[G^k(\Chev{f(x),y}) \ne x \cdot y] \leq \frac{1}{2}-\frac{\epsilon_1}{k^d}$$
+$$ \forall k \in I_1: \Prb_{\mu^k \times U^{\R_G(k)}}[G^k(f(x)) \ne B^k(x)] \leq \frac{1}{2}-\frac{\epsilon_1}{k^d}$$
 
-$$ \forall k \in I_1: \Prb_{U^k \times U^k \times U^{\R_G(k)}}[G^k(\Chev{f(x),y}) = x \cdot y] \geq \frac{1}{2}+\frac{\epsilon_1}{k^d}$$
+$$ \forall k \in I_1: \Prb_{\mu^k \times U^{\R_G(k)}}[G^k(f(x)) = B^k(x)] \geq \frac{1}{2}+\frac{\epsilon_1}{k^d}$$
 
-This contradicts Theorem~\ref{thm:hard_core}.
+This contradicts the definition of hard-core predicate.
 
 \end{proof}
 
-The following is the non-uniform version of Theorem~\ref{thm:one_way} which we state without proof since the proof is a straightforward adaptation of the above (using Theorem~\ref{thm:hard_core_circ} in place of Theorem~\ref{thm:hard_core}).
+\begin{corollary}
+\label{thm:one_way}
+
+Consider $f: \Words \xrightarrow{alg} \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_{(f)}^k:=f_*^{(k)}(U^k \times U^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
+
+Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_0^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{uneg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{uneg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_0^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_{(f)}, \chi_f)$.
+
+\end{corollary}
+
+\begin{proof}
+
+Follows immediately from Theorem~\ref{thm:hard_core} and Theorem~\ref{thm:goldreich_levin}.
+
+\end{proof}
+
+The following is the non-uniform version of Theorem~\ref{thm:hard_core} which we state without proof since the proof is a straightforward adaptation of the above.
 
 \begin{theorem}
+\label{thm:hard_core_circ}
+
+Consider $\mu$ a word ensemble s.t. for any different $k,l \in \Nats$, $\Supp \mu^k \cap \Supp \mu^l = \varnothing$, $f: \Supp \mu \rightarrow \Words$ one-to-one and $B$ a non-uniformly hard-core predicate of $(\mu,f)$. 
+
+Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_{\textnormal{poly}}^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{neg}}^2(\Gamma)$-optimal predictor\footnote{Because of the way $\mathcal{E}_{\text{uneg}}^2$ is defined, we can also think of $P$ as a $(\Gamma_{\text{poly}}^1,\Gamma_0^1)$-scheme which is optimal among such schemes up to an error in $\mathcal{E}_{\text{neg}}^1$.} for $(\mu_f, \chi_B)$.
+
+\end{theorem}
+
+\begin{corollary}
 
 Consider $f: \Words \xrightarrow{alg} \Words$ a one-to-one non-uniformly hard to invert one-way function.
 
 Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_{\textnormal{poly}}^2)$. Let $P: \Words \xrightarrow{\Gamma} \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\mathcal{E}_{\textnormal{neg}}^2(\Gamma)$-optimal predictor for $(\mu_f, \chi_f)$.
 
-\end{theorem}
+\end{corollary}
+
+\begin{proof}
+
+Follows immediately from Theorem~\ref{thm:hard_core_circ} and Theorem~\ref{thm:goldreich_levin_circ}.
+
+\end{proof}
 
 \section{Optimal Predictors and Probability Theory}
 \label{sec:probability}
@@ -841,11 +871,35 @@ TBD
 
 \appendix
 
-\section{Appendix: One-Way Functions}
+\section{Appendix}
 
-We review the definition of a one-way function and a non-uniformly hard one-way function and state a theorem by Goldreich and Levin which is used in Section~\ref{sec:fundamentals__one_way}.
+We review the definitions of hard-core predicate and one-way function and state the Goldreich-Levin theorem.
 
-We will use the notation $\Gamma_{\text{rand}}:=(\Gamma_{\text{poly}}^1,\Gamma_0^1)$, $\Gamma_{\text{circ}}:=(\Gamma_0^1,\Gamma_{\text{poly}}^1)$.
+We will use the notation $\Gamma_{\text{det}}:=(\Gamma_0^1,\Gamma_0^1)$, $\Gamma_{\text{rand}}:=(\Gamma_{\text{poly}}^1,\Gamma_0^1)$, ${\Gamma_{\text{circ}}:=(\Gamma_0^1,\Gamma_{\text{poly}}^1)}$.
+
+\begin{samepage}
+\begin{definition}
+
+Given $\mu$ a word ensemble\footnote{The standard definition of a hard-core predicate corresponds to the case $\mu^k=U^k$. Here we allow for slightly greater generality.}, $f: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{hard-core predicate} of $(\mu,f)$ when for any $S: \Words \xrightarrow{\Gamma_{\textnormal{rand}}} \Bool$ there is $\varepsilon \in \mathcal{E}_{\text{neg}}^1$ s.t. 
+
+\begin{equation}
+\Prb_{(x,y) \sim \mu^k \times U^{\R_S(k)}}[S^k(f(x),y)=B^k(x)] \leq \frac{1}{2} + \varepsilon(k)
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $\mu$ a word ensemble, $f: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{non-uniformly hard-core predicate} of $(\mu,f)$ when for any ${S: \Words \xrightarrow{\Gamma_{\textnormal{circ}}} \Bool}$ there is $\varepsilon \in \mathcal{E}_{\text{neg}}^1$ s.t. 
+
+\begin{equation}
+\Prb_{x \sim \mu^k}[S^k(f(x),y)=B^k(x)] \leq \frac{1}{2} + \varepsilon(k)
+\end{equation}
+
+\end{definition}
+\end{samepage}
 
 \begin{samepage}
 \begin{definition}
@@ -857,7 +911,11 @@ when
 
 \item There is $p: \Nats \rightarrow \Nats$ polynomial s.t. $\forall x \in \Words: \T_f(x) \leq p(\Abs{x})$.
 
-\item For any $S: \Words \xrightarrow{\Gamma_{\text{rand}}} \Words$, ${\Prb_{U^k \times U^{\R_S(k)}}[f(S^k(f(x)))=x] \in \mathcal{E}_{\text{neg}}^1}$.
+\item For any $S: \Words \xrightarrow{\Gamma_{\text{rand}}} \Words$
+
+\begin{equation}
+\Prb_{(x,y) \sim U^k \times U^{\R_S(k)}}[f(S^k(f(x),y))=x] \in \mathcal{E}_{\text{neg}}^1
+\end{equation}
 
 \end{enumerate}
 
@@ -874,39 +932,34 @@ when
 
 \item There is $p: \Nats \rightarrow \Nats$ polynomial s.t. $\forall x \in \Words: \T_f(x) \leq p(\Abs{x})$.
 
-\item For any $S: \Words \xrightarrow{\Gamma_{\text{circ}}} \Words$, ${\Prb_{U^k \times U^{\R_S(k)}}[f(S^k(f(x)))=x] \in \mathcal{E}_{\text{neg}}^1}$.
+\item For any $S: \Words \xrightarrow{\Gamma_{\text{circ}}} \Words$
+
+\begin{equation}
+\Prb_{x \sim U^k}[f(S^k(f(x)))=x] \in \mathcal{E}_{\text{neg}}^1
+\end{equation}
 
 \end{enumerate}
 
 \end{definition}
 \end{samepage}
 
-It is easy to see that any non-uniformly hard to invert one-way function is in particular a one-way function.
+It is easy to see that any non-uniformly hard-core predicate is in particular a hard-core predicate and any non-uniformly hard to invert one-way function is in particular a one-way function.
 
 The following appears in \cite{Goldreich_2008} as Theorem 7.7. Here we state it in the notation of the present work.
 
 \begin{theorem}[Goldreich-Levin]
-\label{thm:hard_core}
+\label{thm:goldreich_levin}
 
-Consider a one-way function ${f: \Words \xrightarrow{alg} \Words}$ and $G: \Words \times \Words \xrightarrow{\Gamma_{\textnormal{rand}}} \Bool$. Then there is $\varepsilon \in \mathcal{E}_{\textnormal{neg}}^1$ s.t. 
-
-\begin{equation}
-\Prb_{(x,y,z) \sim U^k \times U^k \times U^{\R_G(k)}}[G^k(f(x),y,z)=x \cdot y] \leq \frac{1}{2} + \varepsilon(k)
-\end{equation}
+Consider a one-way function ${f: \Words \xrightarrow{alg} \Words}$. Let $\mu^k:=U^{2k}$, $f_{\textnormal{GL}}: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Bool}$ be s.t. for any $x,y \in \WordsLen{k}$, $f_{\textnormal{GL}}(xy)=\Chev{f(x),y}$ and ${B^k(xy)=x \cdot y}$. Then, $B$ is a hard-core predicate of $(\mu, f_{\textnormal{GL}})$.
 
 \end{theorem}
 
 There is also a non-uniform version of the theorem which is not stated in \cite{Goldreich_2008}, but its proof is a straightforward adaptation.
 
 \begin{theorem}
-\label{thm:hard_core_circ}
+\label{thm:goldreich_levin_circ}
 
-Consider a non-uniformly hard one-way function ${f: \Words \xrightarrow{alg} \Words}$ and $G: \Words \times \Words \xrightarrow{\Gamma_{\textnormal{circ}}} \Bool$. Then there is $\varepsilon \in \mathcal{E}_{\textnormal{neg}}^1$ s.t. 
-
-\begin{equation}
-\Prb_{(x,y) \sim U^k \times U^k}[G^k(f(x),y)=x \cdot y] \leq \frac{1}{2} + \varepsilon(k)
-\end{equation}
-
+In the setting of Theorem~\ref{thm:goldreich_levin}, assume $f$ is non-uniformly hard to invert. Then $B$ is a non-uniformly hard-core predicate of $(\mu, f_{\textnormal{GL}})$.
 \end{theorem}
 
 \section*{Acknowledgments}
