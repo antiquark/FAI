@@ -11,6 +11,8 @@
 \usepackage{commath}
 \usepackage{bm}
 
+\numberwithin{equation}{section}
+
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{example}{Example}[section]
@@ -48,6 +50,7 @@
 \DeclareMathOperator{\En}{c}
 
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
 
 \newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
 \newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
@@ -68,6 +71,12 @@
 \newcommand{\Ceil}[1]{\lceil #1 \rceil}
 \newcommand{\Chev}[1]{\langle #1 \rangle}
 \newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Grow}{\Gamma:=(\Gamma_{\mathfrak{R}},\Gamma_{\mathfrak{A}})}
+\newcommand{\GrowR}{\Gamma_{\mathfrak{R}}}
+\newcommand{\GrowA}{\Gamma_{\mathfrak{A}}}
+\newcommand{\MGrow}{\mathrm{M}\Gamma}
+\newcommand{\Fall}{\mathcal{E}}
 
 \begin{document}
 
@@ -101,7 +110,7 @@ A wager on $\varphi_1$ can be resolved in a predetermined finite amount of time 
 In the present work we avoid choosing a specific category of mathematical questions. Instead, we consider the abstract setting of arbitrary distributional decision problems. This leads to the perspective that an assignment of probabilities is a form of \emph{approximate} solution to a problem. This is not the same sense of approximation as used in optimization problems, where the approximation error is the difference between the ideal solution and the actual solution. Instead, the approximation error is the prediction accuracy of our probability assignment. This is also different from average-complexity theory where the solution is required to be exact on most input instances. However the language of average-complexity theory (in particular the concept of a distributional decision problem) turns out to be well-suited to our purpose.
 The concept of "optimal predictor" that arises from the approach turns out to behave much like probabilities, or more generally expected values, in "classical" probability theory. They display an appropriate form of calibration. The "expected values" are linear in general and multiplicative for functions that are independent in an appropriate sense. There is a natural parallel of conditional probabilities. For simple examples constructed from one-way functions we get the probability values we expect. Also they are well behaved in the complexity-theoretic sense that a natural class of reductions transforms optimal predictors into optimal predictors, and complete problems for these reductions exist for important complexity classes.
 
-Optimal predictors turn out to be unique up to a certain equivalence relation. The existence of optimal predictors depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal predictors that exist for completely arbitrary problems. Uniform optimal predictors of this kind exist for a certain class of problems we call "samplable" which can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal predictors allows for much further research.
+Optimal predictors turn out to be unique up to a certain equivalence relation. The existence of optimal predictors depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal predictors that exist for completely arbitrary problems. Uniform optimal predictors of this kind exist for a certain class of problems we call "generatable" which can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal predictors allows for much further research.
 
 Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence\cite{Hutter_2013,Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other \cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal predictors. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal predictors to decision theory and the theory of self-modifying agents.
 
@@ -123,13 +132,15 @@ For any $t \in \Reals$, $\Floor{t} := \max \{n \in \Ints \mid n \leq t\}$, $\Cei
 
 $\log: \Reals^{\geq 0} \rightarrow \Reals \sqcup \{-\infty\}$ will denote the logarithm in base 2.
 
+Given $n \in \Nats$, sets $X_1, X_2 \ldots X_n$, $x \in \prod_{i=1}^n X_i$ and $m \in \{1,2 \ldots n\}$, $x_m \in X_m$ is the $m$-th component of the $n$-tuple $x$ i.e. $x=(x_1, x_2 \ldots x_n)$.
+
 Given a set $X$ and $x,y \in X$, $\delta_{xy}$ (or $\delta_{x,y})$ will denote the the Kronecker delta
 
-$$\delta_{xy} := \begin{cases}1 & \text{if } x=y \\ 0 & \text{if } x \ne y \end{cases}$
+$$\delta_{xy} := \begin{cases}1 & \text{if } x=y \\ 0 & \text{if } x \ne y \end{cases}$$
 
 Given a set $X$ and a subset $Y$, $\chi_Y: X \rightarrow \Bool$ will denote the characteristic function of $Y$ (when $X$ is assumed to be known from the context)
 
-$$\chi_Y(x):=\begin{cases}1 & \text{if } x \in Y \\ 0 & \text{if } x \not\in Y \end{cases}$
+$$\chi_Y(x):=\begin{cases}1 & \text{if } x \in Y \\ 0 & \text{if } x \not\in Y \end{cases}$$
 
 $\theta: \Reals \rightarrow \Bool$ will denote the Heaviside step function $\theta:=\chi_{[0,\infty)}$. ${\Sgn: \Reals \rightarrow \Bool}$ will denote the function $2 \theta - 1$.
 \subsection{Measures and Probabilities}
@@ -139,6 +150,8 @@ For $X$ a measurable space, $\mu$ a probability measure on $X$, $V$ a finite dim
 Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Supp \mu$ will denote the support of $\mu$. In particular when $X$ is discrete, ${\Supp \mu = \{x \in X \mid \mu(x) > 0\}}$.
 
 Given $X,Y$ measurable spaces, $\mu$ a measure on $X$ and $f: X \rightarrow Y$ a measurable mapping, $f_*(\mu)$ will denote the corresponding pushforward measure on $Y$.
+
+Given $X$ a measurable space and $\mu$, $\nu$ probability measures on $X$, $\Dtv(\mu,\nu)$ will denote the total variation distance between $\mu$ and $\nu$.
 
 \subsection{Algorithms}
 
@@ -883,7 +896,13 @@ $$\frac{\delta(k,j)^2}{\alpha(k,j)} \leq \frac{4}{3}\varepsilon(k,j)$$
 
 In this subsection we show that several algebraic identities satisfied by expected values have analogues for optimal predictors.
 
-Given $F_1,F_2$ random variables and $t_1,t_2 \in \Reals$, we have ${\E[t_1 F_1 + t_2 F_2] = t_1 \E[F_1] + t_2 \E[F_2]}$. Optimal predictors have an analogous property:
+Given $F_1,F_2$ random variables and $t_1,t_2 \in \Reals$, we have 
+
+\begin{equation}
+\E[t_1 F_1 + t_2 F_2] = t_1 \E[F_1] + t_2 \E[F_2]
+\end{equation}
+
+Optimal predictors have an analogous property:
 
 \begin{proposition}
 \label{prp:linearity}
@@ -906,15 +925,22 @@ Using \ref{eqn:op_sharp} for $P_1$ and $P_2$ we see that the right hand side is 
 
 \end{proof}
 
-Independent random variables $F_1, F_2$ satisfy $\E[F_1 F_2] = \E[F_1] \E[F_2]$. To formulate an analogous property for optimal predictors, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_2$ is "independent" of $f_1$ when learning the value of $f_1(x)$ provides no (efficiently accessible) information useful for estimating $f_2(x)$. We will now construct a specific scenario in which this independence assumption is justifiable.
+Independent random variables $F_1, F_2$ satisfy 
 
-We start with an informal description. Suppose that $f_2(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_2(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid y$ for which a good estimate of $f_1(x')$ is known\footnote{This is substantially weaker than saying $f_1$ can be efficiently computed even in the uniform case (assuming standard complexity theoretic conjectures) and even more so in the non-uniform case, as we shall see when the relevant notion of "efficient sampling" is formalised.}. Then, the knowledge of $f_1(x)$ cannot help estimating $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
+\begin{equation}
+\label{eqn:ev_mult}
+\E[F_1 F_2] = \E[F_1] \E[F_2]
+\end{equation}
+
+To formulate an analogous property for optimal predictors, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_2$ is "independent" of $f_1$ when learning the value of $f_1(x)$ provides no efficiently accessible information about $f_2(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
+
+We start with an informal description. Suppose that $f_2(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_2(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid y$ for which $f_1(x')$ is known\footnote{This is substantially weaker than saying $f_1$ can be efficiently computed even in the uniform case (assuming standard complexity theoretic conjectures) and even more so in the non-uniform case, as we shall see when the relevant notion of "efficient sampling" is formalised.}. Then, the knowledge of $f_1(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
 
 In order to formalise the above, we introduce several new definitions.
 
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, an \emph{$\mathrm{M}\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\M_S)$ where $S: \Nats^n \times X \times \Words^2 \xrightarrow{alg} Y$, $\R_S: \Nats^n \times \Words \xrightarrow{alg} \Nats$ and a word ensemble $\M_S$ are s.t.
+Fix $n \in \Nats$ and $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, an \emph{$\mathrm{M}\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\M_S)$ where $S: \Nats^n \times X \times \Words^2 \xrightarrow{alg} Y$, $\R_S: \Nats^n \times \Words \xrightarrow{alg} \Nats$ and a family of probability distributions $\{\M_S^K: \Words \rightarrow [0,1]\}_{K \in \Nats^n}$ are s.t.
 
 \begin{enumerate}[(i)]
 
@@ -924,7 +950,7 @@ Fix $n \in \Nats$ and $\Gamma=(\Gamma_{\mathfrak{R}}$, $\Gamma_{\mathfrak{A}})$ 
 
 \item There is $r \in \Gamma_{\mathfrak{R}}$ s.t. for any $K \in \Nats^n$ and $z \in \Supp \M_S^K$, $\R_S(K,z) \leq r(K)$.
 
-\item There is $\gamma \in \Gamma_{\mathfrak{A}}$ s.t. for any $K \in \Nats^n$, $\Supp \M_S^K \subseteq \WordsLen{\gamma(K)}$.
+\item There is $l \in \Gamma_{\mathfrak{A}}$ s.t. for any $K \in \Nats^n$, $\Supp \M_S^K \subseteq \WordsLen{l(K)}$.
 
 \end{enumerate}
 
@@ -935,6 +961,44 @@ We think of $S$ as a randomized algorithm with advice which is random in itself.
 We will use the notation $S: X \xrightarrow{\mathrm{M}\Gamma} Y$ to signify $S$ is a $\mathrm{M}\Gamma$-scheme of signature $X \rightarrow Y$.
 
 \end{definition}
+
+\begin{definition}
+
+Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. A word ensemble $\mu$ is called \emph{$\Fall(\MGrow)$-samplable} when there is $L: \bm{1} \xrightarrow{\MGrow} \Words$ s.t. the function $\varepsilon(K):=\Dtv(\mu^{K_1},L_*^K(\UM_L^K))$ is in $\Fall$.
+
+In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler} of $\mu$.
+
+\end{definition}
+
+\begin{definition}
+
+Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. A distributional estimation problem $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-generatable} when there is $G: \bm{1} \xrightarrow{\MGrow} \Words \times \Rats$ s.t. 
+
+\begin{enumerate}[(i)]
+
+\item $G_1$ is an $\Fall(\MGrow)$-sampler of $\mu$.
+
+\item Denote $\mu_G^K:=G_{1*}^K(\UM_L^K)$. For any $x \in \Supp \mu_G^K$, denote ${f_G^K(x):=\E_{y \sim\UM_G^K}[G_2^K(y) \mid G_1^K(y) = x]}$. We require that $\E_{x \sim \mu^{K_1}}[(\chi_{\Supp \mu_G^K}(x) f_G^K(x)-f(x))^2] \in \Fall$.
+
+\end{enumerate}
+
+In this case, $G$ is called an \emph{$\Fall(\MGrow)$-generator} of $(\mu,f)$.
+
+\end{definition}
+
+The following is an analogue of \ref{eqn:ev_mult} for optimal predictors.
+
+\begin{theorem}
+
+Fix $\Grow$ a pair of growth space of rank 2 and $\Fall$ a fall space of rank 2...
+
+\end{theorem}
+
+\begin{proof}
+
+Foo
+
+\end{proof}
 
 TBD
 
