@@ -209,6 +209,7 @@ A \emph{distributional estimation problem} is a pair $(\mu,f)$ where $\mu$ is a 
 
 In the motivational model, the estimator was restricted to lie in a class of functions that factor through a fixed mapping. Of course we are interested in more realistic notions of efficiency. In the present work we consider restrictions on time complexity, access to random bits and size of advice strings. Spatial complexity is also of interest but treating it is out of our current scope. It is possible to consider weaker or stronger restrictions which we represent using the following abstraction:
 
+\begin{samepage}
 \begin{definition}
 
 Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gamma: \Nats^n \rightarrow \Nats}$ s.t.
@@ -223,13 +224,14 @@ Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gam
 
 \end{enumerate}
 
+\end{definition}
+\end{samepage}
+
 \begin{example}
 
 For any $n \in \Nats$, $\Gamma_0^n$ is a growth space of rank $n$. $\gamma \in \Gamma_0^n$ iff $\gamma \equiv 0$.
 
 \end{example}
-
-\end{definition}
 
 \begin{example}
 
@@ -324,6 +326,8 @@ Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded
 \item There is a polynomial $h: \Nats^n \rightarrow \Nats$ s.t. $2^{-h} \in \Fall$.
 
 \end{enumerate}
+
+Given $f,g: \Nats^n \rightarrow \Reals$, the notation $f(K) \equiv g(K) \pmod \Fall$ means $\Abs{f-g} \in \Fall$. $f(K) \leq g(K) \pmod \Fall$ means $\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \leq g(K) + \varepsilon(K)$. Similarly, $f(K) \geq g(K) \pmod \Fall$ means $\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \geq g(K) - \varepsilon(K)$.
 
 \end{definition}
 
@@ -426,11 +430,11 @@ We are now ready to give our central definition, which corresponds to a notion o
 \begin{definition}
 \label{def:op}
 
-Fix $\Gamma$ a pair of growth spaces of rank 2 and $\Fall$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. $P$ is called an \emph{$\Fall(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $Q: \Words \Scheme \Rats$ there is $\varepsilon \in \Fall$ s.t.
+Fix $\Gamma$ a pair of growth spaces of rank 2 and $\Fall$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. $P$ is called an \emph{$\Fall(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $Q: \Words \Scheme \Rats$
 
 \begin{equation}
 \label{eqn:op}
-\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \varepsilon(k,j)
+\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] \pmod \Fall
 \end{equation}
 
 \end{definition}
@@ -446,7 +450,11 @@ Note that $\varepsilon$ in (\ref{eqn:op}) depends on $Q$. However in some sense 
 \begin{proposition}
 \label{prp:unif}
 
-Fix $\Gamma=(\GrowR,\GrowA)$ a pair of growth spaces of rank 2 and $\Fall$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and $F$ a uniform family of $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \Fall$ s.t. for any $Q \in F$, equation~\ref{eqn:op} holds.
+Fix $\Gamma=(\GrowR,\GrowA)$ a pair of growth spaces of rank 2 and $\Fall$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and $F$ a uniform family of $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \Fall$ s.t. for any $Q \in F$
+
+\begin{equation}
+\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \varepsilon(k,j)
+\end{equation}
 
 \end{proposition}
 
@@ -519,10 +527,10 @@ Given $n \in \Nats$, a growth space $\Gamma$ of rank $n$ and a fall space $\Fall
 \begin{proposition}
 \label{prp:weight}
 
-Fix $\Grow$ a pair of growth spaces of rank 2 and $\Fall$ a $\GrowA$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{kj}_{P,W}:=\mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k,j)-\R_P(k,j)}}$, ${\mu^{kj}_{Q,W}:=\mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k,j)-\R_Q(k,j)}}$. Then, there is $\varepsilon \in \Fall$ s.t.
+Fix $\Grow$ a pair of growth spaces of rank 2 and $\Fall$ a $\GrowA$-ample fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{kj}_{P,W}:=\mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k,j)-\R_P(k,j)}}$, ${\mu^{kj}_{Q,W}:=\mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k,j)-\R_Q(k,j)}}$. Then
 
 \begin{equation}
-\E_{\mu^{kj}_{P,W}}[W^{kj}(P^{kj} - f)^2] \leq \\ \E_{\mu^{kj}_{Q,W}}[W^{kj}(Q^{kj} - f)^2] + \varepsilon(k,j)
+\E_{\mu^{kj}_{P,W}}[W^{kj}(P^{kj} - f)^2] \leq \\ \E_{\mu^{kj}_{Q,W}}[W^{kj}(Q^{kj} - f)^2] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -619,11 +627,11 @@ We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real
 
 \begin {definition}
 
-Fix $\Gamma$ a pair of growth spaces of rank 2 and $\Fall$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. $P$ is called an \emph{$\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $S: \Words \Scheme \Rats$ with $\R_S \geq \R_P$
+Fix $\Gamma$ a pair of growth spaces of rank 2 and $\Fall$ a fall space of rank 2. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. $P$ is called an \emph{$\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any bounded $S: \Words \Scheme \Rats$ with $\R_S \geq \R_P$
 
 \begin{equation}
 \label{eqn:op_sharp}
-\Abs{\E_{(x,y,z) \sim \mu^k \times U^{\R_P(k,j)} \times U^{\R_S(k,j)-\R_P(k,j)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,yz)]} \in \Fall
+\E_{\mu^k \times U^{\R_P(k,j)} \times U^{\R_S(k,j)-\R_P(k,j)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,yz)] \equiv 0 \pmod \Fall
 \end{equation}
 
 \end {definition}
@@ -697,7 +705,7 @@ $$\E[(P^{kj}-f)^2]+\E[(Q^{kj}-P^{kj})^2]=\E[(Q^{kj}-f)^2]+2\E[(P^{kj}-Q^{kj})(P^
 
 $$\E[(P^{kj}-f)^2] \leq \E[(Q^{kj}-f)^2] + 2\E[(P^{kj}-Q^{kj})(P^{kj}-f)]$$
 
-Applying \ref{eqn:op_sharp}, we conclude that there is $\varepsilon \in \Fall$ s.t. \ref{eqn:op} holds.
+We can assume $Q$ is bounded without loss of generality since given any $Q$ it easy to construct bounded $\tilde{Q}$ s.t. $\E[(\tilde{Q}^{kj}-f)^2] \leq \E[(Q^{kj}-f)^2]$. Applying \ref{eqn:op_sharp}, we conclude that there is $\varepsilon \in \Fall$ s.t. \ref{eqn:op} holds.
 
 \end{proof}
 
@@ -921,7 +929,7 @@ Fix $\Gamma=(\GrowR,\GrowA)$ a pair of growth spaces of rank 2 and $\Fall$ a fal
 
 \begin{proof}
 
-Consider any $S: \Words \Scheme \Rats$ with $\R_S \geq \R_P$. We have
+Consider any bounded $S: \Words \Scheme \Rats$ with $\R_S \geq \R_P$. We have
 
 $$\E[(P^{kj} - f)S^{kj}] = \E[(t_1 P_1^{kj} + t_2 P_2^{kj} - (t_1 f_1 + t_2 f_2))S^{kj}]$$
 
@@ -943,7 +951,8 @@ Independent random variables $F_1, F_2$ satisfy
 To formulate an analogous property for optimal predictors, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_2$ is "independent" of $f_1$ when learning the value of $f_1(x)$ provides no efficiently accessible information about $f_2(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
 
 We start with an informal description. Suppose that $f_2(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_2(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ for which $f_1(x')$ is known\footnote{This is substantially weaker than saying $f_1$ can be efficiently computed even in the uniform case (assuming standard complexity theoretic conjectures) and even more so in the non-uniform case, as we shall see when the relevant notion of "efficient sampling" is formalised.}. Then, the knowledge of $f_1(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
-
+ Moreover, if we can only efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ together with $\tilde{f}_1(x')$ an \emph{unbiased estimate} of $f_1(x')$, we still expect the analogue of \ref{eqn:ev_mult} to hold since the expected value of $\tilde{f}_1(x') - f_1(x')$ vanishes for any given $x'$ so it is uncorrelated with $f_2(x)$.
+ 
 In order to formalise the above, we introduce several new definitions.
 
 \begin{definition}
@@ -974,13 +983,15 @@ We will use the notation $S: X \MScheme Y$ to signify $S$ is an $\MGrow$-scheme 
 
 \end{definition}
 
+\begin{samepage}
 \begin{definition}
 
 Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. A word ensemble $\mu$ is called \emph{$\Fall(\MGrow)$-samplable} (resp. \emph{$\Fall(\Gamma)$-samplable}) when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $\bm{1} \rightarrow \Words$  s.t. the function $\varepsilon(K):=\Dtv(\mu^{K_1},L_\bullet^K)$ is in $\Fall$.
 
-In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler)} of $\mu$.
+In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$}.
 
 \end{definition}
+\end{samepage}
 
 \begin{samepage}
 \begin{definition}
@@ -991,11 +1002,15 @@ Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fal
 
 \item $G_1$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$.
 
-\item For any $K \in \Nats^n$, denote $X_{G}^K:=\Supp \, (G_1)_\bullet^K$ and $\chi_G^K:=\chi_{X_{G}^K}$. For any $x \in X_G^K$, denote ${f_G^K(x):=\E_{z \sim\UM_G^K}[G_2^K(z) \mid G_1^K(z) = x]}$. We require that the function $\varepsilon(K):=\E_{x \sim \mu^{K_1}}[(\chi_G^K(x) f_G^K(x)-f(x))^2]$ is in $\Fall$.
+\item For any $K \in \Nats^n$, denote $X_{G}^K:=\Supp \, (G_1)_\bullet^K$. For any $x \in \Words$, denote 
+
+$$f_G^K(x):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(z)_2 \mid G^K(z)_1 = x] \text{ if } x \in X_{G}^K \\ 0 \text{ if } x \not\in X_{G}^K \end{cases}$$
+
+We require that the function $\varepsilon(K):=\E_{x \sim \mu^{K_1}}[\Abs{f_G^K(x)-f(x)}]$ is in $\Fall$.
 
 \end{enumerate}
 
-In this case, $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Gamma)$-generator)} of $(\mu,f)$.
+In this case, $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Gamma)$-generator) of $(\mu,f)$}.
 
 \end{definition}
 \end{samepage}
@@ -1004,28 +1019,38 @@ In this case, $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Ga
 
 Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K_1} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_1} \ltimes \pi^K}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)]}$ is in $\Fall$.
 
-In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler)} of $(\mu,\pi)$.
+In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$ relative to $\pi$}.
 
 \end{definition}
 
+\begin{samepage}
 \begin{definition}
+\label{def:gen_rel}
 
 Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \mu^{K_1} \Markov Y\}_{K \in \Nats^n}$. $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-generatable (resp. $\Fall(\Gamma)$-generatable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
 
 \begin{enumerate}[(i)]
 
-\item $G_1$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $(\mu,\pi)$.
+\item $G_1$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$ relative to $\pi$.
 
-\item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{G,y}^K:=\Supp \, (G_1)_y^K$ and $\chi_{G,y}^X:=\chi_{X_y^K}$. For any ${x \in X_{G,y}^K}$, denote ${f_G^K(x,y):=\E_{z \sim\UM_G^K}[G_2^K(y,z) \mid G_1^K(y,z) = x]}$. We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_1} \ltimes \pi^K}[(\chi_{G,y}^K(x) f_G^K(x,y)-f(x))^2]}$ is in $\Fall$.
+\item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{G,y}^K:=\Supp \, (G_1)_y^K$. For any ${x \in \Words}$, denote 
+
+$$f_G^K(x,y):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(y,z)_2 \mid G^K(y,z)_1 = x] \text{ if } x \in X_{G,y}^K \\ 0 \text{ if } x \not\in X_{G,y}^K \end{cases}$$
+
+We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_1} \ltimes \pi^K}[\Abs{f_G^K(x,y)-f(x)}]}$ is in $\Fall$.
 
 \end{enumerate}
 
+In this case, $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Gamma)$-generator) of $(\mu,f)$ relative to $\pi$}.
+
 \end{definition}
+\end{samepage}
 
 The following is an analogue of \ref{eqn:ev_mult} for optimal predictors.
 
 \begin{samepage}
 \begin{theorem}
+\label{thm:mult}
 
 Fix $\Grow$ a pair of growth spaces of rank 2 and $\Fall$ a fall space of rank 2. Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded, $(\nu,g)$ a distributional estimation problem and $\pi: \Words \Scheme \Words$. Assume the following conditions:
 
@@ -1033,7 +1058,7 @@ Fix $\Grow$ a pair of growth spaces of rank 2 and $\Fall$ a fall space of rank 2
 
 \item $\Dtv(\nu^k,\mu^k \ltimes \pi^{kj}) \in \Fall$
 
-\item $\E_{(x,z) \sim \mu^k \times UM_\pi^{kj}}[(f_2(x)-g(\pi^{kj}(x,z)))^2] \in \Fall$
+\item $\E_{(x,z) \sim \mu^k \times U^{\R_\pi(k,j)}}[\Abs{f_2(x)-g(\pi^{kj}(x,z))}] \in \Fall$
 
 \item $\nu$ is $\Fall(\MGrow)$-samplable.
 
@@ -1041,14 +1066,119 @@ Fix $\Grow$ a pair of growth spaces of rank 2 and $\Fall$ a fall space of rank 2
 
 \end{enumerate}
 
-Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1)$ and $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(g,\nu)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P=\R_{P_1}+\R_{P_2}+\R_{\pi}$ and ${P^{kj}(x,y_1 y_2 y_3)=P_1^{kj}(x,y_1) P_2^{kj}(\pi^{kj}(x,y_3),y_2)}$. Then, $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1 f_2)$.
+Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1)$ and $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(g,\nu)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P=\R_{P_1}+\R_{P_2}+\R_{\pi}$ and for any $z_1 \in \WordsLen{\R_{P_1}(k,j)}$, $z_2 \in \WordsLen{\R_{P_2}(k,j)}$ and $z_3 \in \WordsLen{\R_\pi(k,j)}$
+
+\begin{equation}
+P^{kj}(x,z_1 z_2 z_3)=P_1^{kj}(x,z_1) P_2^{kj}(\pi^{kj}(x,z_3),z_2)
+\end{equation}
+
+Then, $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1 f_2)$.
 
 \end{theorem}
 \end{samepage}
 
+In order to prove Theorem~\ref{thm:mult} we will need the following propositions.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:smp}
+
+Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. Consider a word ensemble $\mu$, an encoded set $Y$, a family $\{\pi^K: \Supp \mu^{K_1} \Markov Y\}_{K \in \Nats^n}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $L$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$. Then
+
+\begin{equation}
+E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] \equiv \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
 \begin{proof}
 
-Foo
+If we sample $(x,y)$ from $\mu^{K_1} \ltimes \pi^K$ and then sample $x'$ from ${\mu^{K_1} \mid (\pi^K)^{-1}(y)}$, $(x',y)$ will obey the distribution $\mu^{K_1} \ltimes \pi^K$. Denote $\mu_y^K:=\mu^{K_1} \mid (\pi^K)^{-1}(y)$. We get
+
+$$\E_{(x,y) \sim \mu^{K_1} \ltimes \pi^K}[h(x,y)] = \E_{(x,y) \sim \mu^{K_1} \ltimes \pi^K}[\E_{x' \sim \mu_y^K}[h(x',y)]]$$
+
+$$\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_1} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]$$
+
+$$\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_1} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\UM_L^K}[h(L^K(y,z),y)]]$$
+
+$$\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_1} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]]$$
+
+$$\Abs{\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]} \leq \E_{\mu^{K_1} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]}]$$
+
+$$\Abs{\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K_1} \ltimes \pi^K}[\Dtv(\mu_y^K,L_y^K)]$$
+
+Using the defining property of $L$, we get the desired result.
+
+\end{proof}
+
+\begin{proposition}
+\label{prp:gen}
+
+Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family $\{\pi^K: \Supp \mu^{K_1} \Markov Y\}_{K \in \Nats^n}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Denote $\mu_\pi^K:=\mu^{K_1} \ltimes \pi^K$. Suppose $G$ is an $\Fall(\MGrow)$-generator of $(\mu,f)$ relative to $\pi$. Then
+
+\begin{equation}
+\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y)G^K(y,z)_2] \pmod \Fall
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+
+$$\E_{\mu_\pi^K}[h(x,y)f(x)]-\E_{\mu_\pi^K}[h(x,y)f_G^K(x,y)]=\E_{\mu_\pi^K}[h(x,y)(f(x)-f_G^K(x,y))]$$
+
+$$\Abs{\E_{\mu_\pi^K}[h(x,y)f(x)]-\E_{\mu_\pi^K}[h(x,y)f_G^K(x,y)]} \leq \E_{\mu_\pi^K}[\Abs{h(x,y)} \cdot \Abs{f(x)-f_G^K(x,y)}]$$
+
+$$\Abs{\E_{\mu_\pi^K}[h(x,y)f(x)]-\E_{\mu_\pi^K}[h(x,y)f_G^K(x,y)]} \leq (\sup \Abs{h}) \E_{\mu_\pi^K}[\Abs{f(x)-f_G^K(x,y)}]$$
+
+By property (ii) of Definition~\ref{def:gen_rel}
+
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K}[h(x,y)f_G^K(x,y)] \pmod \Fall$$
+
+Using property (i) of Definition~\ref{def:gen_rel} we can apply Proposition~\ref{prp:smp} to the second term and get
+
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y) f_G^K(G^K(y,z)_1,y)] \pmod \Fall$$
+
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y) \E_{z' \sim\UM_G^K}[G^K(y,z')_2 \mid G^K(y,z')_1 = G^K(y,z)_1]] \pmod \Fall$$
+
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y) G^K(y,z)_2] \pmod \Fall$$
+
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:mult}]
+
+Consider $k,j \in \Nats$, $x \in \Supp \mu^k$, $z_1 \in \WordsLen{\R_{P_1}(k,j)}$, ${z_2 \in \WordsLen{\R_{P_2}(k,j)}}$ and $z_3 \in \WordsLen{\R_\pi(k,j)}$.
+
+$$P^{kj}(x,z_1 z_2 z_3)-f_1(x)f_2(x)=f_1(x)(P_2^{kj}(\pi^{kj}(x,z_3),z_2)-f_2(x))+(P_1^{kj}(x,z_1)-f_1(x))P_2^{kj}(\pi^{kj}(x,z_3),z_2)$$
+
+Denote $\bar{P}_2^{kj}:=P_2^{kj} \circ \pi^{kj}$. For any bounded $S: \Words \Scheme \Rats$ with $\R_S \geq \R_P$ we get
+
+\begin{equation}
+\label{eqn:thm__mult__prf1}
+\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}]} + \Abs{\E[(P_1^{kj}-f_1) \bar{P}_2^{kj} S^{kj}]}
+\end{equation}
+
+For the first term on the right hand side we have
+
+$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}]-\E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]=\E[(g \circ \pi^{kj} - f_2) f_1 S^{kj}]$$
+
+$$\Abs{\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}]-\E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]} \leq (\sup \Abs{f_1}) (\sup \Abs{S}) \E[\Abs{g \circ \pi^{kj} - f_2}]$$
+
+Using condition (ii) we conclude that
+
+$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}] \pmod \Fall$$
+
+$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj} \times U^{\R_{P_2}(k,j)}}[(P_2^{kj}(y,z_{2})-g(y))f_1(x) \E[S^{kj}(x,z_1 z_2 z_3 z_4) \mid \pi^{kj}(x,z_3)=y]] \pmod \Fall$$
+
+$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj}}[\E[(P_2^{kj}(y,z_{2})-g(y))S^{kj}(x,z_1 z_2 z_3 z_4) \mid \pi^{kj}(x,z_3)=y]f_1(x)] \pmod \Fall$$
+
+Let $G$ be an $\Fall(\MGrow)$-generator of $(\mu,f_1)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
+
+$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj}}[\E[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y,w)_1) \mid \pi^{kj}(G^{kj}(y,w)_1,z_{3})=y]G^{kj}(y,w)_2] \pmod \Fall$$
+
+$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \times U^{\R_S(k,j)} \times \UM_G^{kj}}[(P_2^{kj}(y,z_2)-g(y))S^{kj}(G^{kj}(y,w)_1,z_1 z_2 z_3 z_4) G^{kj}(y,w)_2] \pmod \Fall$$
+
+TBD
 
 \end{proof}
 
