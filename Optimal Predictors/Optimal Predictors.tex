@@ -635,11 +635,11 @@ We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real
 
 \begin {definition}
 
-Fix $\Gamma$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. Denote $\mu_P^{kj}:=\mu^k \times \U_P^{kj}$. $P$ is called an \emph{$\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats$
+Fix $\Gamma$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. Denote $\mu_P^{kj}:=\mu^k \times \U_P^{kj}$. $P$ is called an \emph{$\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats\footnote{The $\Rats$-valued argument of $S$ is only important for non-trivial $\GrowR$, otherwise we can absorb it into the definition of $S$ using $P$ as a subroutine.}$
 
 \begin{equation}
 \label{eqn:op_sharp}
-\E_{(x,y,z) \sim \mu_P^{kj} \times \U_S^{kj}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z)] \equiv 0 \pmod \Fall
+\E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z)] \equiv 0 \pmod \Fall
 \end{equation}
 
 \end {definition}
@@ -1076,8 +1076,6 @@ Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank
 
 \item $\E_{(x,z) \sim \mu^k \times U^{\R_\pi(k,j)}}[\Abs{f_2(x)-g(\pi^{kj}(x,z))}] \in \Fall$
 
-\item $\nu$ is $\Fall(\MGrow)$-samplable.
-
 \item $(\mu, f_1)$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
 
 \end{enumerate}
@@ -1163,11 +1161,13 @@ $$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y
 
 \begin{samepage}
 \begin{proposition}
+\label{prp:mixed_ort}
 
 Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$ and $S: \Words \times \Rats \MScheme \Rats$ bounded. Then
 
 \begin{equation}
-\E_{\mu^k \times \U_P^{kj} \times \UM_S^{kj}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z)] \equiv 0 \pmod \Fall
+\label{eqn:prp__mixed_ort}
+\E_{\mu^k \times \U_P^{kj} \times \UM_S^{kj}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z,w)] \equiv 0 \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1175,7 +1175,17 @@ Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank
 
 \begin{proof}
 
-BAR
+For any $k,j \in \Nats$, choose 
+
+$$w^{kj} \in \Argmax{w \in \Supp \M_S^{kj}} \Abs{\E_{\mu^k \times \U_P^{kj} \times \U^{\R_S^{kj}(w)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z,w)]}$$
+
+Construct $\bar{S}: \Words \times \Rats \Scheme \Rats$ s.t. $\R_{\bar{S}}(k,j)=\R_S^{kj}(w^{kj})$ and ${\bar{S}^{kj}(x,q,z)=S^{kj}(x,q,z,w^{kj})}$. $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$, therefore
+
+$$\E_{\mu^k \times \U_P^{kj} \times \U_{\bar{S}}^{kj}}[(P^{kj}(x,y) - f(x))\bar{S}^{kj}(x,P^{kj}(x,y),z)] \equiv 0 \pmod \Fall$$
+
+$$\E_{\mu^k \times \U_P^{kj} \times \U^{\R_S^{kj}(w)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z,w^{kj})] \equiv 0 \pmod \Fall$$
+
+By construction of $w^{kj}$, the absolute value of the left hand side is no less than the absolute value of the left hand side in \ref{eqn:prp__mixed_ort}.
 
 \end{proof}
 
@@ -1202,11 +1212,11 @@ Using condition (ii) we conclude that
 
 $$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}] \pmod \Fall$$
 
-Denote $U_{\text{tot}}^{kj}:= \U_{P_1}^{kj} \times \U_{P_2}^{kj} \times U^{\R_{S}(k,j)}$. We change variables inside the expected value on the right hand side by $y:=\pi^{kj}(x,z_3)$. Observing that $(x,y)$ obeys the distribution $\mu^k \ltimes \pi^{kj}$ we get
+Denote $\U_{\text{tot}}^{kj}:= \U_{P_1}^{kj} \times \U_{P_2}^{kj} \times \U_S^{kj}$. We change variables inside the expected value on the right hand side by $y:=\pi^{kj}(x,z_3)$. Observing that $(x,y)$ obeys the distribution $\mu^k \ltimes \pi^{kj}$ we get
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj} \times U_{\text{tot}}^{kj}}[(P_2^{kj}(y,z_{2})-g(y))f_1(x) S^{kj}(x,P_1^{kj}(x,z_1)P_2^{kj}(y,z_2), z_4)] \pmod \Fall$$
+$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj} \times \U_{\text{tot}}^{kj}}[(P_2^{kj}(y,z_{2})-g(y))f_1(x) S^{kj}(x,P_1^{kj}(x,z_1)P_2^{kj}(y,z_2), z_4)] \pmod \Fall$$
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj}}[\E_{U_{\text{tot}}^{kj}}[(P_2^{kj}(y,z_{2})-g(y))S^{kj}(x,P_1^{kj}(x,z_1)P_2^{kj}(y,z_2), z_4)]f_1(x)] \pmod \Fall$$
+$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj}}[\E_{\U_{\text{tot}}^{kj}}[(P_2^{kj}(y,z_{2})-g(y))S^{kj}(x,P_1^{kj}(x,z_1)P_2^{kj}(y,z_2), z_4)]f_1(x)] \pmod \Fall$$
 
 Let $G$ be an $\Fall(\MGrow)$-generator of $(\mu,f_1)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
@@ -1216,7 +1226,19 @@ Using condition (i) we conclude that
 
 $$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\nu^k \times \UM_G^{kj}}[\E[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y)_1,P_1^{kj}(G^{kj}(y)_1)P_2^{kj}(y))]G^{kj}(y)_2] \pmod \Fall$$
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\nu^k \times U_{\text{tot}}^{kj} \times \UM_G^{kj}}[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y)_1,P_1^{kj}(G^{kj}(y)_1)P_2^{kj}(y))G^{kj}(y)_2] \pmod \Fall$$
+$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\nu^k \times \U_{\text{tot}}^{kj} \times \UM_G^{kj}}[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y)_1,P_1^{kj}(G^{kj}(y)_1)P_2^{kj}(y))G^{kj}(y)_2] \pmod \Fall$$
+
+By Proposition~\ref{prp:mixed_ort}, this implies
+
+\begin{equation}
+\label{eqn:thm__mult__prf2}
+\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv 0 \pmod \Fall
+\end{equation}
+
+For the second term on the right hand side of \ref{eqn:thm__mult__prf1}, we have
+
+
+$$\Abs{\E[(P_1^{kj}-f_1) \bar{P}_2^{kj} S^{kj}]}...$$
 
 TBD
 
