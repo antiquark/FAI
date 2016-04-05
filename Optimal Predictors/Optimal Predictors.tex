@@ -319,7 +319,7 @@ Note that the concept of a uniform family is non-trivial only when $1 \in \GrowA
 
 Fix $\Gamma$ a pair of growth spaces of rank $2$. The first parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The second parameter serves to control the resources available to the predictor. To illustrate the significance of the second parameter using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question "what is the probability 7614829 is prime?" depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
 
-Given a distributional estimation problem $(\mu,f)$ and $Q: \Words \Scheme \Rats$, we can consider the estimation error $\E_{(x,y) \sim \mu^k \times U^{\R_Q(k,j)}}[(Q^{kj}(x,y) - f(x))^2]$. It makes little sense to require this error to be minimal for every $(k,j) \in \Nats^2$, since we can always hard-code a finite number of answers into $Q$ without violating the resource restrictions. Instead we require minimization up to an asymptotically small error. Since it makes sense to consider different kind of asymptotic requirements, we introduce an abstraction that corresponds to this choice.
+Given a distributional estimation problem $(\mu,f)$ and $Q: \Words \Scheme \Rats$, we can consider the estimation error $\E_{(x,y) \sim \mu^k \times \U_Q^{kj}}[(Q^{kj}(x,y) - f(x))^2]$. It makes little sense to require this error to be minimal for every $(k,j) \in \Nats^2$, since we can always hard-code a finite number of answers into $Q$ without violating the resource restrictions. Instead we require minimization up to an asymptotically small error. Since it makes sense to consider different kind of asymptotic requirements, we introduce an abstraction that corresponds to this choice.
 
 \begin{definition}
 
@@ -442,7 +442,7 @@ Fix $\Gamma$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of ran
 
 \begin{equation}
 \label{eqn:op}
-\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] \pmod \Fall
+\E_{\mu^k \times \U_P^{kj}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times \U_Q^{kj}}[(Q^{kj} - f)^2] \pmod \Fall
 \end{equation}
 
 \end{definition}
@@ -461,29 +461,29 @@ Note that $\varepsilon$ in (\ref{eqn:op}) depends on $Q$. However in some sense 
 Fix $\Gamma=(\GrowR,\GrowA)$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and $F$ a uniform family of $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \Fall$ s.t. for any $Q \in F$
 
 \begin{equation}
-\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \varepsilon(k,j)
+\E_{\mu^k \times \U_P^{kj}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times \U_Q^{kj}}[(Q^{kj} - f)^2] + \varepsilon(k,j)
 \end{equation}
 
 \end{proposition}
 
 \begin{proof}
 
-For any $k,j \in \Nats$, $\{\E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] \mid Q \in F\}$ is a finite set because $F$ is a uniform family so the runtime of $Q^{kj}$ is bounded by a polynomial in $k,j$ that doesn't depend on $Q$. Therefore we can choose ${Q_{kj} \in \Argmin{Q \in F} \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2]}$. By Proposition~\ref{prp:fam_diag}, there is $\bar{Q}: \Words \Scheme \Rats$ s.t. $\bar{Q}^{kj}(x)$ is distributed the same as $Q_{kj}^{kj}(x)$.
+For any $k,j \in \Nats$, $\{\E_{\mu^k \times \U_Q^{kj}}[(Q^{kj} - f)^2] \mid Q \in F\}$ is a finite set because $F$ is a uniform family so the runtime of $Q^{kj}$ is bounded by a polynomial in $k,j$ that doesn't depend on $Q$. Therefore we can choose ${Q_{kj} \in \Argmin{Q \in F} \E_{\mu^k \times \U_Q^{kj}}[(Q^{kj} - f)^2]}$. By Proposition~\ref{prp:fam_diag}, there is $\bar{Q}: \Words \Scheme \Rats$ s.t. $\bar{Q}^{kj}(x)$ is distributed the same as $Q_{kj}^{kj}(x)$.
 
 Since $P$ is an $\Fall(\Gamma)$-optimal predictor, there is $\varepsilon \in \Fall$ s.t.
 
 \begin{equation}
 \label{eqn:prp__unif__prf1}
-\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_{\bar{Q}}(k,j)}}[(\bar{Q}^{kj} - f)^2] + \varepsilon(k,j)
+\E_{\mu^k \times \U_P^{kj}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times \U_{\bar{Q}}^{kj}}[(\bar{Q}^{kj} - f)^2] + \varepsilon(k,j)
 \end{equation}
 
 For any $Q \in F$, we have 
 
-$$\E_{\mu^k \times U^{\R_{\bar{Q}}(k,j)}}[(\bar{Q}^{kj} - f)^2]=\E_{\mu^k \times U^{\R_{Q_{kj}}(k,j)}}[(Q_{kj}^{kj} - f)^2]$$
+$$\E_{\mu^k \times \U_{\bar{Q}}^{kj}}[(\bar{Q}^{kj} - f)^2]=\E_{\mu^k \times \U_{Q_{kj}}^{kj}}[(Q_{kj}^{kj} - f)^2]$$
 
 \begin{equation}
 \label{eqn:prp__unif__prf2}
-\E_{\mu^k \times U^{\R_{\bar{Q}}(k,j)}}[(\bar{Q}^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2]
+\E_{\mu^k \times \U_{\bar{Q}}^{kj}}[(\bar{Q}^{kj} - f)^2] \leq \E_{\mu^k \times \U_Q^{kj}}[(Q^{kj} - f)^2]
 \end{equation}
 
 Combining \ref{eqn:prp__unif__prf1} and \ref{eqn:prp__unif__prf2} we get the desired result.
@@ -504,11 +504,11 @@ Consider any $Q: \Words \xrightarrow{\bar{\Gamma}} \Rats$. Suppose $\R_Q=r_{\mat
 
 It follows that there is $\varepsilon \in \Fall$ s.t.
 
-$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(\bar{Q}^{kj} - f)^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_P^{kj}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(\bar{Q}^{kj} - f)^2] + \varepsilon(k,j)$$
 
-Obviously $\E_{\mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(\bar{Q}^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2]$ therefore
+Obviously $\E_{\mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(\bar{Q}^{kj} - f)^2] \leq \E_{\mu^k \times \U_Q^{kj}}[(Q^{kj} - f)^2]$ therefore
 
-$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_P^{kj}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times \U_Q^{kj}}[(Q^{kj} - f)^2] + \varepsilon(k,j)$$
 
 \end{proof}
 
@@ -520,7 +520,7 @@ Fix $\Gamma=(\GrowR,\GrowA)$ a pair of growth spaces of rank $2$ and $\Fall$ a f
 
 \begin{proof}
 
-Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any ${k,j \in \Nats}$, choose ${\bar{\A}_P(k,j) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(k,j)}} \E_{(x,z) \sim \mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(\bar{P}^{kj}(x,yz) - f(x))^2]}$. We can construct $P: \Words \Scheme \Rats$ so that for all $k,j \in \Nats$, $\R_P(k,j) = r_{\mathfrak{R}}(k,j)$, $\A_P(k,j):=\Chev{\A_{\bar{P}}(k,j),\bar{\A}_P(k,j)}$ and for any $x \in \Supp \mu^k$ and $z \in \WordsLen{r_{\mathfrak{R}}(k,j)}$, ${P^{kj}(x,z)=\bar{P}^{kj}(x,\bar{\A}_P(k,j)z)}$. Clearly ${\E_{\mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_{\bar{P}}(k,j)}}[(\bar{P}^{kj} - f)^2]}$ and therefore $P$ is an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$.
+Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any ${k,j \in \Nats}$, choose ${\bar{\A}_P(k,j) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(k,j)}} \E_{(x,z) \sim \mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(\bar{P}^{kj}(x,yz) - f(x))^2]}$. We can construct $P: \Words \Scheme \Rats$ so that for all $k,j \in \Nats$, $\R_P(k,j) = r_{\mathfrak{R}}(k,j)$, $\A_P(k,j):=\Chev{\A_{\bar{P}}(k,j),\bar{\A}_P(k,j)}$ and for any $x \in \Supp \mu^k$ and $z \in \WordsLen{r_{\mathfrak{R}}(k,j)}$, ${P^{kj}(x,z)=\bar{P}^{kj}(x,\bar{\A}_P(k,j)z)}$. Clearly ${\E_{\mu^k \times U^{r_{\mathfrak{R}}(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times \U_{\bar{P}}^{kj}}[(\bar{P}^{kj} - f)^2]}$ and therefore $P$ is an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$.
 
 \end{proof}
 
@@ -535,7 +535,7 @@ Given $n \in \Nats$, a growth space $\Gamma$ of rank $n$ and a fall space $\Fall
 \begin{proposition}
 \label{prp:weight}
 
-Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a $\GrowA$-ample fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{kj}_{P,W}:=\mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k,j)-\R_P(k,j)}}$, ${\mu^{kj}_{Q,W}:=\mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k,j)-\R_Q(k,j)}}$. Then
+Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a $\GrowA$-ample fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{kj}_{P,W}:=\mu^k \times \U_P^{kj} \times U^{\R_W(k,j)-\R_P(k,j)}}$, ${\mu^{kj}_{Q,W}:=\mu^k \times \U_Q^{kj} \times U^{\R_W(k,j)-\R_Q(k,j)}}$. Then
 
 \begin{equation}
 \E_{\mu^{kj}_{P,W}}[W^{kj}(P^{kj} - f)^2] \leq \\ \E_{\mu^{kj}_{Q,W}}[W^{kj}(Q^{kj} - f)^2] \pmod \Fall
@@ -550,9 +550,9 @@ To relationship to the role of the word ensemble is as follows.
 
 Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a $\GrowA$-ample fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$. Suppose $\Gamma^1:=(\GrowR^1,\GrowA^2)$ is a pair of growth spaces of rank 1 s.t. for any $\gamma \in \GrowR^1$ the function ${\gamma^2(k,j):=\gamma(k)}$ is in $\GrowR$ and for any $\gamma \in \GrowA^1$ the function $\gamma^2(k,j):=\gamma(k)$ is in $\GrowA$. Consider ${W: \Words \xrightarrow{\Gamma^1} \Rats^{\geq 0}}$ bounded s.t. for any $k \in \Nats$ there is $x \in \Supp \mu^k$ and $y \in \WordsLen{\R_W(k)}$ s.t. $W^k(x,y) > 0$. Define 
 
-$${\Fall_W:=\{\varepsilon_W: \Nats^2 \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid  \E_{\mu^k \times U^{\R_W(k)}}[W^k]\varepsilon_W(k,j) \in \Fall\}}$$
+$${\Fall_W:=\{\varepsilon_W: \Nats^2 \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid  \E_{\mu^k \times \U_W^k}[W^k]\varepsilon_W(k,j) \in \Fall\}}$$
 
-It is easy to see $\Fall_W$ is a fall space. Define the word ensemble $\nu$ by ${\nu^k(x):=\frac{\E_{U^{\R_W(k)}}[W^k(x)] \mu^k(x)}{\E_{\mu^k \times U^{\R_W(k)}}[W^k(x)]}}$. Then, $P$ is an $\Fall_W(\Gamma)$-optimal predictor for $(\nu,f)$.
+It is easy to see $\Fall_W$ is a fall space. Define the word ensemble $\nu$ by ${\nu^k(x):=\frac{\E_{\U_W^k}[W^k(x)] \mu^k(x)}{\E_{\mu^k \times \U_W^k}[W^k(x)]}}$. Then, $P$ is an $\Fall_W(\Gamma)$-optimal predictor for $(\nu,f)$.
 
 \end{corollary}
 \end{samepage}
@@ -561,17 +561,17 @@ It is easy to see $\Fall_W$ is a fall space. Define the word ensemble $\nu$ by $
 
 Consider any $Q: \Words \Alg \Rats$. Proposition~\ref{prp:weight} implies there is $\varepsilon \in \Fall$ s.t.
 
-$$\E_{\mu^k \times U^{\R_P(k,j)} \times U^{\R_W(k)}}[W^k(P^{kj} - f)^2] \leq \\ \E_{\mu^k \times U^{\R_Q(k,j)} \times U^{\R_W(k)}}[W^k(Q^{kj} - f)^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_P^{kj} \times \U_W^k}[W^k(P^{kj} - f)^2] \leq \\ \E_{\mu^k \times \U_Q^{kj} \times \U_W^k}[W^k(Q^{kj} - f)^2] + \varepsilon(k,j)$$
 
-$$\E_{\mu^k \times U^{\R_P(k,j)}}[\E_{U^{\R_W(k)}}[W^k](P^{kj} - f)^2] \leq \\ \E_{\mu^k \times U^{\R_Q(k,j)}}[\E_{U^{\R_W(k)}}[W^k](Q^{kj} - f)^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_P^{kj}}[\E_{\U_W^k}[W^k](P^{kj} - f)^2] \leq \\ \E_{\mu^k \times \U_Q^{kj}}[\E_{\U_W^k}[W^k](Q^{kj} - f)^2] + \varepsilon(k,j)$$
 
-Dividing both sides of the inequality by $\E_{\mu^k \times U^{\R_W(k)}}[W^k(x)]$ we get
+Dividing both sides of the inequality by $\E_{\mu^k \times \U_W^k}[W^k(x)]$ we get
 
-$$\E_{\nu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \\ \E_{\nu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \frac{\varepsilon(k,j)}{\E_{\mu^k \times U^{\R_W(k)}}[W^k(x)]}$$
+$$\E_{\nu^k \times \U_P^{kj}}[(P^{kj} - f)^2] \leq \\ \E_{\nu^k \times \U_Q^{kj}}[(Q^{kj} - f)^2] + \frac{\varepsilon(k,j)}{\E_{\mu^k \times \U_W^k}[W^k(x)]}$$
 
 Let $M$ be the supremum of the left hand side.
 
-$$\E_{\nu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \\ \E_{\nu^k \times U^{\R_Q(k,j)}}[(Q^{kj} - f)^2] + \min(\frac{\varepsilon(k,j)}{\E_{\mu^k \times U^{\R_W(k)}}[W^k(x)]},M)$$
+$$\E_{\nu^k \times \U_P^{kj}}[(P^{kj} - f)^2] \leq \\ \E_{\nu^k \times \U_Q^{kj}}[(Q^{kj} - f)^2] + \min(\frac{\varepsilon(k,j)}{\E_{\mu^k \times \U_W^k}[W^k(x)]},M)$$
 
 The second term on the right hand side is clearly in $\Fall_W$.
 
@@ -589,13 +589,13 @@ $$Q_t^{kj}(x,y)=\begin{cases}Q^{kj}(x,y_{\leq \R_Q(k,j)}) \text{ if } W^{kj}(x,y
 
 Moreover we can construct the $Q_t$ for all $t \in [0, M]$ s.t. they form a uniform family. By Proposition~\ref{prp:unif} there is $\varepsilon \in \Fall$ s.t. for all $t \in [0, M]$
 
-$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj}-f)^2] \leq \E_{\mu^k \times U^{\R_W(k,j)}}[(Q_t^{kj}-f)^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_P^{kj}}[(P^{kj}-f)^2] \leq \E_{\mu^k \times \U_W^{kj}}[(Q_t^{kj}-f)^2] + \varepsilon(k,j)$$
 
-$$\E_{(x,y) \sim \mu^k \times U^{\R_W(k,j)}}[(P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q_t^{kj}(x,y)-f(x))^2] \leq \varepsilon(k,j)$$
+$$\E_{(x,y) \sim \mu^k \times \U_W^{kj}}[(P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q_t^{kj}(x,y)-f(x))^2] \leq \varepsilon(k,j)$$
 
 The expression inside the expected values vanishes when $W^{kj}(x,y) < \rho^{kj}_\zeta(t)$. In other cases, $Q_t^{kj}(x,y) = Q^{kj}(x,y_{\leq \R_Q(k,j)})$. We get
 
-$$\E_{(x,y) \sim \mu^k \times U^{\R_W(k,j)}}[\theta(W^{kj}(x,y)-\rho_\zeta^{kj}(t)) \cdot ((P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q^{kj}(x,y_{\leq \R_Q(k,j)})-f(x))^2)] \leq \varepsilon(k,j)$$
+$$\E_{(x,y) \sim \mu^k \times \U_W^{kj}}[\theta(W^{kj}(x,y)-\rho_\zeta^{kj}(t)) \cdot ((P^{kj}(x,y_{\leq \R_P(k,j)})-f(x))^2-(Q^{kj}(x,y_{\leq \R_Q(k,j)})-f(x))^2)] \leq \varepsilon(k,j)$$
 
 We integrate both sides of the inequality over $t$ from 0 to $M$.
 
@@ -635,11 +635,11 @@ We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real
 
 \begin {definition}
 
-Fix $\Gamma$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. Denote $\mu_P^{kj}:=\mu^k \times U^{\R_P(k,j)}$. $P$ is called an \emph{$\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats$
+Fix $\Gamma$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. Denote $\mu_P^{kj}:=\mu^k \times \U_P^{kj}$. $P$ is called an \emph{$\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats$
 
 \begin{equation}
-\label{eqmin:op_sharp}
-\E_{(x,y,z) \sim \mu_P^{kj} \times U^{\R_S(k,j)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z)] \equiv 0 \pmod \Fall
+\label{eqn:op_sharp}
+\E_{(x,y,z) \sim \mu_P^{kj} \times \U_S^{kj}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z)] \equiv 0 \pmod \Fall
 \end{equation}
 
 \end {definition}
@@ -663,29 +663,29 @@ Moreover, we can construct $Q_t$ for all admissible choices of $t$ (but fixed $S
 
 Applying Proposition~\ref{prp:unif}, we conclude that there is $\varepsilon \in \Fall$ which doesn't depend on $t$ s.t.
 
-$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(Q_t^{kj} - f)^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_P^{kj}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(Q_t^{kj} - f)^2] + \varepsilon(k,j)$$
 
-$$\E_{\mu^k \times U^{\R_P(k,j)}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(P^{kj} + t(k,j)S^{kj}  - f)^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_P^{kj}}[(P^{kj} - f)^2] \leq \E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(P^{kj} + t(k,j)S^{kj}  - f)^2] + \varepsilon(k,j)$$
 
-$$\E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(P^{kj} - f)^2 - (P^{kj} + t(k,j)S^{kj} - f)^2] \leq \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(P^{kj} - f)^2 - (P^{kj} + t(k,j)S^{kj} - f)^2] \leq \varepsilon(k,j)$$
 
-$$-\E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(t(k,j)S^{kj} + 2 (P^{kj} - f)) S^{kj}] t(k,j) \leq \varepsilon(k,j)$$
+$$-\E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(t(k,j)S^{kj} + 2 (P^{kj} - f)) S^{kj}] t(k,j) \leq \varepsilon(k,j)$$
 
-$$-\E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(S^{kj})^2] t(k,j)^2 + 2 \E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \varepsilon(k,j)$$
+$$-\E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(S^{kj})^2] t(k,j)^2 + 2 \E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \varepsilon(k,j)$$
 
-$$2 \E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(S^{kj})^2] t(k,j)^2 + \varepsilon(k,j)$$
+$$2 \E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(P^{kj} - f) S^{kj}] t(k,j) \leq \E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(S^{kj})^2] t(k,j)^2 + \varepsilon(k,j)$$
 
-$$2 \E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(P^{kj} - f) S^{kj}] t(k,j) \leq (\sup \Abs{S^{kj}})^2 t(k,j)^2 + \varepsilon(k,j)$$
+$$2 \E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(P^{kj} - f) S^{kj}] t(k,j) \leq (\sup \Abs{S^{kj}})^2 t(k,j)^2 + \varepsilon(k,j)$$
 
-$$2 \E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) 2^{-n(k,j)} \leq (\sup \Abs{S^{kj}})^2 4^{-n(k,j)} + \varepsilon(k,j)$$
+$$2 \E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(P^{kj} - f) S^{kj}] \sigma(k,j) 2^{-n(k,j)} \leq (\sup \Abs{S^{kj}})^2 4^{-n(k,j)} + \varepsilon(k,j)$$
 
 Multiplying both sides by $2^{n(k,j)-1}$ we get
 
-$$\E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(P^{kj} - f) S^{kj}] \sigma(k,j) \leq \frac{1}{2}((\sup \Abs{S^{kj}})^2 2^{-n(k,j)} + \varepsilon(k,j) 2^{n(k,j)})$$
+$$\E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(P^{kj} - f) S^{kj}] \sigma(k,j) \leq \frac{1}{2}((\sup \Abs{S^{kj}})^2 2^{-n(k,j)} + \varepsilon(k,j) 2^{n(k,j)})$$
 
-Let $\sigma(k,j):=\Sgn \E_{\mu^k \times U^{\R_S(k,j)}}[(P^{kj} - f) S^{kj}]$.
+Let $\sigma(k,j):=\Sgn \E_{\mu^k \times \U_S^{kj}}[(P^{kj} - f) S^{kj}]$.
 
-$$\Abs{\E_{\mu^k \times U^{\R_P(k,j)+\R_S(k,j)}}[(P^{kj} - f) S^{kj}]} \leq \frac{1}{2}((\sup \Abs{S^{kj}})^2 2^{-n(k,j)} + \varepsilon(k,j) 2^{n(k,j)})$$
+$$\Abs{\E_{\mu^k \times \U_P^{kj} \times \U_S^{kj}}[(P^{kj} - f) S^{kj}]} \leq \frac{1}{2}((\sup \Abs{S^{kj}})^2 2^{-n(k,j)} + \varepsilon(k,j) 2^{n(k,j)})$$
 
 Let $n(k,j):=\min(\Floor{\frac{1}{2}\log \max(\frac{1}{\varepsilon(k,j)},1)},\Floor{\log \frac{1}{\zeta(k,j)}})$.
 
@@ -709,7 +709,7 @@ Fix $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $2$ and $\Fall$ 
 
 Consider any $Q: \Words \Scheme \Rats$. We have
 
-$$\E_{\mu^k \times U^{\R_Q(k,j)}}[(Q^{kj}-f)^2]=\E_{\mu^k \times U^{\R_Q(k,j)} \times U^{\R_P(k,j)}}[(Q^{kj}-P^{kj}+P^{kj}-f)^2]$$
+$$\E_{\mu^k \times \U_Q^{kj}}[(Q^{kj}-f)^2]=\E_{\mu^k \times \U_Q^{kj} \times \U_P^{kj}}[(Q^{kj}-P^{kj}+P^{kj}-f)^2]$$
 
 $$\E[(Q^{kj}-f)^2]=\E[(Q^{kj}-P^{kj})^2]+2\E[(Q^{kj}-P^{kj})(P^{kj}-f)]+\E[(P^{kj}-f)^2]$$
 
@@ -739,37 +739,37 @@ Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_0^2)$. Let $P: \Words \Sche
 
 Assume to the contrary that $P$ is not optimal. Then there is ${Q: \Words \Scheme \Rats}$, $d \in \Nats$, $J: \Nats \Alg \Nats$, polynomials $p,q: \Nats \rightarrow \Nats$, an infinite set ${I \subseteq \Nats}$ and $\epsilon \in \Reals^{>0}$ s.t. $J \leq p$, $\T_J \leq q$ and
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\frac{1}{2}-\chi_B)^2] \geq \E_{\mu_f^k \times U^{\R_Q(k,J(k))}}[(Q^{k,J(k)}-\chi_B)^2] +\frac{\epsilon}{k^d}$$
+$$ \forall k \in I: \E_{\mu_f^k}[(\frac{1}{2}-\chi_B)^2] \geq \E_{\mu_f^k \times \U_Q^{k,J(k)}}[(Q^{k,J(k)}-\chi_B)^2] +\frac{\epsilon}{k^d}$$
 
-$$ \forall k \in I: \E_{\mu_f^k \times U^{\R_Q(k,J(k))}}[(Q^{k,J(k)}-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+$$ \forall k \in I: \E_{\mu_f^k \times \U_Q^{k,J(k)}}[(Q^{k,J(k)}-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\E_{U^{\R_Q(k,J(k))}}[Q^{k,J(k)}]-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+$$ \forall k \in I: \E_{\mu_f^k}[(\E_{\U_Q^{k,J(k)}}[Q^{k,J(k)}]-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
 Denoting $\Gamma^1:=(\Gamma_{\text{poly}}^1,\Gamma_0^1)$, there is $G: \Words \xrightarrow{\Gamma^1} \Bool$ s.t. for all ${x \in \Words}$, ${\Abs{\E[Q^{k,J(k)}(x)]-\Pr[G^k(x)=1]}\leq 2^{-k}}$ ($G^k$ works by evaluating ${\alpha \leftarrow Q^{k,J(k)}}$ and then returning 1 with probability $\alpha \pm 2^{-k}$ and 0 with probability $1-\alpha \pm 2^{-k}$, where the $2^{-k}$ error comes from rounding a rational number to a binary fraction). Denoting $\delta(x):=\E[Q^{k,J(k)}(x)]-\Pr[G^k(x)=1]$
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]+\delta-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
+$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{\U_G^k}[G^k=1]+\delta-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_f)^2]+2 \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_B)\delta]+\E_{\mu_f^k}[\delta^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
+$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{\U_G^k}[G^k=1]-\chi_f)^2]+2 \E_{\mu_f^k}[(\Prb_{\U_G^k}[G^k=1]-\chi_B)\delta]+\E_{\mu_f^k}[\delta^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
 
-$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_B)^2]-2 \cdot 2^{-k}- 4^{-k} \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
+$$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{\U_G^k}[G^k=1]-\chi_B)^2]-2 \cdot 2^{-k}- 4^{-k} \leq \frac{1}{4} - \frac{\epsilon}{k^d}$$
 
 Since $2^{-k}$ falls faster than $k^{-d}$, there is $I_1 \subseteq \Nats$ infinite and $\epsilon_1 \in \Reals^{>0}$ s.t.
 
-$$ \forall k \in I_1: \E_{\mu_f^k}[(\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon_1}{k^d}$$
+$$ \forall k \in I_1: \E_{\mu_f^k}[(\Prb_{\U_G^k}[G^k=1]-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon_1}{k^d}$$
 
-$$ \forall k \in I_1: \E_{\mu_f^k}[\Abs{\Prb_{U^{\R_G(k)}}[G^k=1]-\chi_B}] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+$$ \forall k \in I_1: \E_{\mu_f^k}[\Abs{\Prb_{\U_G^k}[G^k=1]-\chi_B}] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
 
-$$ \forall k \in I_1: \E_{\mu_f^k}[\Prb_{U^{\R_G(k)}}[G^k \ne \chi_B]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+$$ \forall k \in I_1: \E_{\mu_f^k}[\Prb_{\U_G^k}[G^k \ne \chi_B]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
 
-$$ \forall k \in I_1: \E_{x \sim \mu^k}[\Prb_{U^{\R_G(k)}}[G^k(f(x)) \ne B^k(x)]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+$$ \forall k \in I_1: \E_{x \sim \mu^k}[\Prb_{\U_G^k}[G^k(f(x)) \ne B^k(x)]] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
 
-$$ \forall k \in I_1: \Prb_{\mu^k \times U^{\R_G(k)}}[G^k(f(x)) \ne B^k(x)] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
+$$ \forall k \in I_1: \Prb_{\mu^k \times \U_G^k}[G^k(f(x)) \ne B^k(x)] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
 
 Since $\sqrt{t}$ is a concave function and the derivative of $\sqrt{t}$ is $\frac{1}{2\sqrt{t}}$, we have $\sqrt{t} \leq \sqrt{t_0} + \frac{t-t_0}{2\sqrt{t_0}}$. We get
 
-$$ \forall k \in I_1: \Prb_{\mu^k \times U^{\R_G(k)}}[G^k(f(x)) \ne B^k(x)] \leq \frac{1}{2}-\frac{\epsilon_1}{k^d}$$
+$$ \forall k \in I_1: \Prb_{\mu^k \times \U_G^k}[G^k(f(x)) \ne B^k(x)] \leq \frac{1}{2}-\frac{\epsilon_1}{k^d}$$
 
-$$ \forall k \in I_1: \Prb_{\mu^k \times U^{\R_G(k)}}[G^k(f(x)) = B^k(x)] \geq \frac{1}{2}+\frac{\epsilon_1}{k^d}$$
+$$ \forall k \in I_1: \Prb_{\mu^k \times \U_G^k}[G^k(f(x)) = B^k(x)] \geq \frac{1}{2}+\frac{\epsilon_1}{k^d}$$
 
 This contradicts the definition of hard-core predicate.
 
@@ -778,7 +778,7 @@ This contradicts the definition of hard-core predicate.
 \begin{corollary}
 \label{thm:one_way}
 
-Consider $f: \Words \Alg \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_{(f)}^k:=f_*^{(k)}(U^k \times U^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
+Consider $f: \Words \Alg \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_{(f)}^k:=f_*^{(k)}(\U^k \times \U^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
 
 Denote $\Gamma:=(\Gamma_{\textnormal{poly}}^2,\Gamma_0^2)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{uneg}}^2(\Gamma)$-optimal predictor for $(\mu_{(f)}, \chi_f)$.
 
@@ -827,7 +827,7 @@ We will now show that optimal predictors satisfy an analogous property.
 \begin{theorem}
 \label{thm:calib}
 
-Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a $\GrowA$-ample fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \R_P$ and for every $k,j \in \Nats$ there is $x \in \Supp \mu^k$ and $y \in U^{\R_W(k,j)}$ with $W^{kj}(x,y) > 0$. Denote ${\alpha(k,j):=\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}]}$ and ${\delta(k,j):=\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj}-f)]}$. Then, $\frac{\delta^2}{\alpha} \in \Fall$.
+Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a $\GrowA$-ample fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \R_P$ and for every $k,j \in \Nats$ there is $x \in \Supp \mu^k$ and $y \in \U_W^{kj}$ with $W^{kj}(x,y) > 0$. Denote ${\alpha(k,j):=\E_{\mu^k \times \U_W^{kj}}[W^{kj}]}$ and ${\delta(k,j):=\E_{\mu^k \times \U_W^{kj}}[W^{kj}(P^{kj}-f)]}$. Then, $\frac{\delta^2}{\alpha} \in \Fall$.
 
 \end{theorem}
 
@@ -836,7 +836,7 @@ To see the relationship between Theorem~\ref{thm:calib} and calibration, conside
 \begin{corollary}
 \label{crl:calib}
 
-Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a $\GrowA$-ample fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and $A,B: \bm{1} \Scheme \Rats$ s.t. $\R_A \equiv 0$ and $\R_B \equiv 0$. Denote ${\alpha(k,j):=\Prb_{\mu^k \times U^{\R_P(k,j)}}[A^{kj} \leq P^{kj} \leq B^{kj}]}$. Then, there is $\varepsilon \in \Fall$ s.t. 
+Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a $\GrowA$-ample fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and $A,B: \bm{1} \Scheme \Rats$ s.t. $\R_A \equiv 0$ and $\R_B \equiv 0$. Denote ${\alpha(k,j):=\Prb_{\mu^k \times \U_P^{kj}}[A^{kj} \leq P^{kj} \leq B^{kj}]}$. Then, there is $\varepsilon \in \Fall$ s.t. 
 
 \begin{equation}
 \label{eqn:crl__calib}
@@ -851,14 +851,14 @@ We now proceed with the proofs.
 
 \begin{proof}[Proof of Corollary \ref{crl:calib}]
 
-Construct $W: \Words \Scheme \Bool$ s.t. ${W^{kj}(x,y)=\theta(P^{kj}(x,y)-A^{kj})\theta(B^{kj}-P^{kj}(x,y))}$. Denote $\delta(k,j):=\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj}-f)]$ and $\varepsilon:=\frac{\delta^2}{\alpha}$. According to Theorem~\ref{thm:calib}, $\varepsilon \in \Fall$.
+Construct $W: \Words \Scheme \Bool$ s.t. ${W^{kj}(x,y)=\theta(P^{kj}(x,y)-A^{kj})\theta(B^{kj}-P^{kj}(x,y))}$. Denote $\delta(k,j):=\E_{\mu^k \times \U_W^{kj}}[W^{kj}(P^{kj}-f)]$ and $\varepsilon:=\frac{\delta^2}{\alpha}$. According to Theorem~\ref{thm:calib}, $\varepsilon \in \Fall$.
 We get
 
-$$\frac{\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj}-f)]^2}{\alpha(k,j)} = \varepsilon(k,j)$$
+$$\frac{\E_{\mu^k \times \U_W^{kj}}[W^{kj}(P^{kj}-f)]^2}{\alpha(k,j)} = \varepsilon(k,j)$$
 
-$$\frac{\E_{\mu^k \times U^{\R_W(k,j)}}[\theta(P^{kj}(x,y)-A^{kj})\theta(B^{kj}-P^{kj}(x,y))(P^{kj}-f)]^2}{\alpha(k,j)} = \varepsilon(k,j)$$
+$$\frac{\E_{\mu^k \times \U_W^{kj}}[\theta(P^{kj}(x,y)-A^{kj})\theta(B^{kj}-P^{kj}(x,y))(P^{kj}-f)]^2}{\alpha(k,j)} = \varepsilon(k,j)$$
 
-$$\frac{(\E_{\mu^k \times U^{\R_W(k,j)}}[\theta(P^{kj}(x,y)-A^{kj})\theta(B^{kj}-P^{kj}(x,y))]\E[P^{kj}-f \mid A^{kj} \leq P^{kj} \leq B^{kj}])^2}{\alpha(k,j)} = \varepsilon(k,j)$$
+$$\frac{(\E_{\mu^k \times \U_W^{kj}}[\theta(P^{kj}(x,y)-A^{kj})\theta(B^{kj}-P^{kj}(x,y))]\E[P^{kj}-f \mid A^{kj} \leq P^{kj} \leq B^{kj}])^2}{\alpha(k,j)} = \varepsilon(k,j)$$
 
 $$\frac{(\alpha(k,j)\E[P^{kj}-f \mid A^{kj} \leq P^{kj} \leq B^{kj}])^2}{\alpha(k,j)} = \varepsilon(k,j)$$
 
@@ -892,15 +892,15 @@ $$\E[f \mid A^{kj} \leq P^{kj} \leq B^{kj}] \geq A^{kj} - \sqrt{\frac{\varepsilo
 
 Consider $\zeta: \Nats^2 \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. Define $I:=\{(k,j) \in \Nats^2 \mid \frac{\Abs{\delta(k,j)}}{\alpha(k,j)} \geq \zeta(k,j)\}$, $D^{kj}:=\Rats \cap [\frac{\Abs{\delta(k,j)}}{2\alpha(k,j)},\frac{\Abs{\delta(k,j)}}{\alpha(k,j)}]$ and choose ${\epsilon(k,j) \in (\Sgn \delta(k,j)) \cdot \Argmin{t \in D^{kj}} \Abs{\En_\Rats(t)}}$. It is easy to see that ${\Abs{\En_\Rats(\epsilon)} = O(\log \frac{\alpha}{\Abs{\delta}})}$, hence we can construct $Q: \Words \Scheme \Rats$ s.t. $\R_Q=\R_P$ and for any $(k,j) \in I$, and $x,y \in \Words$, $Q^{kj}(x,y)=P^{kj}(x,y)-\epsilon(k,j)$ (we supply $\epsilon$ as advice for $Q$). Applying Proposition~\ref{prp:weight} to $P$, $Q$ and $W$, we conclude there is $\varepsilon \in \Fall$ s.t.
 
-$$\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(Q^{kj}-f)^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_W^{kj}}[W^{kj}(P^{kj} - f)^2] \leq \E_{\mu^k \times \U_W^{kj}}[W^{kj}(Q^{kj}-f)^2] + \varepsilon(k,j)$$
 
-$$\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj} - f)^2] \leq \E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj}-f-\epsilon(k,j))^2] + \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_W^{kj}}[W^{kj}(P^{kj} - f)^2] \leq \E_{\mu^k \times \U_W^{kj}}[W^{kj}(P^{kj}-f-\epsilon(k,j))^2] + \varepsilon(k,j)$$
 
-$$\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}((P^{kj} - f)^2 - (P^{kj}-f-\epsilon(k,j))^2] \leq \varepsilon(k,j)$$
+$$\E_{\mu^k \times \U_W^{kj}}[W^{kj}((P^{kj} - f)^2 - (P^{kj}-f-\epsilon(k,j))^2] \leq \varepsilon(k,j)$$
 
-$$ \epsilon(k,j) \E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(2(P^{kj} - f) - \epsilon(k,j))] \leq \varepsilon(k,j)$$
+$$ \epsilon(k,j) \E_{\mu^k \times \U_W^{kj}}[W^{kj}(2(P^{kj} - f) - \epsilon(k,j))] \leq \varepsilon(k,j)$$
 
-$$ \epsilon(k,j) (2 \E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}(P^{kj} - f)]-\E_{\mu^k \times U^{\R_W(k,j)}}[W^{kj}]\epsilon(k,j)) \leq \varepsilon(k,j)$$
+$$ \epsilon(k,j) (2 \E_{\mu^k \times \U_W^{kj}}[W^{kj}(P^{kj} - f)]-\E_{\mu^k \times \U_W^{kj}}[W^{kj}]\epsilon(k,j)) \leq \varepsilon(k,j)$$
 
 $$ \epsilon(k,j) (2 \delta(k,j) - \alpha(k,j)\epsilon(k,j)) \leq \varepsilon(k,j)$$
 
@@ -1167,7 +1167,7 @@ $$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y
 Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$ and $S: \Words \times \Rats \MScheme \Rats$ bounded. Then
 
 \begin{equation}
-\E_{\mu^k \times U^{\R_P(k,j)} \times \UM_S^{kj}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z)] \equiv 0 \pmod \Fall
+\E_{\mu^k \times \U_P^{kj} \times \UM_S^{kj}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z)] \equiv 0 \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1202,7 +1202,7 @@ Using condition (ii) we conclude that
 
 $$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}] \pmod \Fall$$
 
-Denote $U_{\text{tot}}^{kj}:= U^{\R_{P_1}(k,j)} \times U^{\R_{P_2}(k,j)} \times U^{\R_{S}(k,j)}$. We change variables inside the expected value on the right hand side by $y:=\pi^{kj}(x,z_3)$. Observing that $(x,y)$ obeys the distribution $\mu^k \ltimes \pi^{kj}$ we get
+Denote $U_{\text{tot}}^{kj}:= \U_{P_1}^{kj} \times \U_{P_2}^{kj} \times U^{\R_{S}(k,j)}$. We change variables inside the expected value on the right hand side by $y:=\pi^{kj}(x,z_3)$. Observing that $(x,y)$ obeys the distribution $\mu^k \ltimes \pi^{kj}$ we get
 
 $$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj} \times U_{\text{tot}}^{kj}}[(P_2^{kj}(y,z_{2})-g(y))f_1(x) S^{kj}(x,P_1^{kj}(x,z_1)P_2^{kj}(y,z_2), z_4)] \pmod \Fall$$
 
@@ -1255,10 +1255,10 @@ We will use the notation $\Gamma_{\text{det}}:=(\Gamma_0^1,\Gamma_0^1)$, $\Gamma
 \begin{samepage}
 \begin{definition}
 
-Given $\mu$ a word ensemble\footnote{The standard definition of a hard-core predicate corresponds to the case $\mu^k=U^k$. Here we allow for slightly greater generality.}, $f: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{hard-core predicate} of $(\mu,f)$ when for any $S: \Words \xrightarrow{\Gamma_{\textnormal{rand}}} \Bool$ there is $\varepsilon \in \Fall_{\text{neg}}^1$ s.t. 
+Given $\mu$ a word ensemble\footnote{The standard definition of a hard-core predicate corresponds to the case $\mu^k=\U^k$. Here we allow for slightly greater generality.}, $f: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{hard-core predicate} of $(\mu,f)$ when for any $S: \Words \xrightarrow{\Gamma_{\textnormal{rand}}} \Bool$ there is $\varepsilon \in \Fall_{\text{neg}}^1$ s.t. 
 
 \begin{equation}
-\Prb_{(x,y) \sim \mu^k \times U^{\R_S(k)}}[S^k(f(x),y)=B^k(x)] \leq \frac{1}{2} + \varepsilon(k)
+\Prb_{(x,y) \sim \mu^k \times \U_S^k}[S^k(f(x),y)=B^k(x)] \leq \frac{1}{2} + \varepsilon(k)
 \end{equation}
 
 \end{definition}
@@ -1289,7 +1289,7 @@ when
 \item For any $S: \Words \xrightarrow{\Gamma_{\text{rand}}} \Words$
 
 \begin{equation}
-\Prb_{(x,y) \sim U^k \times U^{\R_S(k)}}[f(S^k(f(x),y))=x] \in \Fall_{\text{neg}}^1
+\Prb_{(x,y) \sim \U^k \times \U_S^k}[f(S^k(f(x),y))=x] \in \Fall_{\text{neg}}^1
 \end{equation}
 
 \end{enumerate}
@@ -1310,7 +1310,7 @@ when
 \item For any $S: \Words \xrightarrow{\Gamma_{\text{circ}}} \Words$
 
 \begin{equation}
-\Prb_{x \sim U^k}[f(S^k(f(x)))=x] \in \Fall_{\text{neg}}^1
+\Prb_{x \sim \U^k}[f(S^k(f(x)))=x] \in \Fall_{\text{neg}}^1
 \end{equation}
 
 \end{enumerate}
@@ -1325,7 +1325,7 @@ The following appears in \cite{Goldreich_2008} as Theorem 7.7. Here we state it 
 \begin{theorem}[Goldreich-Levin]
 \label{thm:goldreich_levin}
 
-Consider a one-way function ${f: \Words \Alg \Words}$. Let $\mu^k:=U^{2k}$, $f_{\textnormal{GL}}: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Bool}$ be s.t. for any $x,y \in \WordsLen{k}$, $f_{\textnormal{GL}}(xy)=\Chev{f(x),y}$ and ${B^k(xy)=x \cdot y}$. Then, $B$ is a hard-core predicate of $(\mu, f_{\textnormal{GL}})$.
+Consider a one-way function ${f: \Words \Alg \Words}$. Let $\mu^k:=\U^{2k}$, $f_{\textnormal{GL}}: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Bool}$ be s.t. for any $x,y \in \WordsLen{k}$, $f_{\textnormal{GL}}(xy)=\Chev{f(x),y}$ and ${B^k(xy)=x \cdot y}$. Then, $B$ is a hard-core predicate of $(\mu, f_{\textnormal{GL}})$.
 
 \end{theorem}
 
@@ -1345,4 +1345,3 @@ TBD
 \bibliography{Optimal_Predictors}
 
 \end{document}
-
