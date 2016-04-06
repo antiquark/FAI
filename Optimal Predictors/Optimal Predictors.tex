@@ -27,9 +27,9 @@
 %\theoremstyle{remark}
 %\newtheorem{note}{Note}[section]
 
-\newcommand{\Words}{{\{ 0, 1 \}^*}}
-\newcommand{\WordsLen}[1]{{\{ 0, 1 \}^{#1}}}
 \newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+\newcommand{\WordsLen}[1]{{\Bool^{#1}}}
 
 % operators that are separated from the operand by a space
 \DeclareMathOperator{\Sgn}{sgn}
@@ -171,7 +171,7 @@ For $X$ a discrete measurable space, a probability measure on $X$ can be represe
 
 \subsection{Algorithms}
 
-$\Words$ is the set of all finite binary strings (words). For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i=1}^n x_i y_i$. For any $n \in \Nats$, $\U^n$ is the uniform probability distribution on $\WordsLen{n}$.
+$\Words$ is the set of all finite binary strings (words), i.e. $\Words:=\bigsqcup_{n \in \Nats} \Bool^n$. For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. For any $n \in \Nats$, $\Bool^{\leq n}:=\{x \in \Words \mid \Abs{x} \leq n\}$, $\Bool^{>n}:=\{x \in \Words \mid \Abs{x} > n\}$. For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i=1}^n x_i y_i$. For any $n \in \Nats$, $\U^n$ is the uniform probability distribution on $\WordsLen{n}$.
 
 Given $n \in \Nats$ and ${x_1, x_2 \ldots x_n \in \Words}$, $\Chev{x_1,x_2 \ldots x_n} \in \Words$ denotes the encoding of $(x_1,x_2 \ldots x_n)$ obtained by repeating each bit of $x_1, x_2 \ldots x_n$ twice and inserting the separators 01.
 \begin{definition}
@@ -224,11 +224,13 @@ Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gam
 
 \begin{enumerate}[(i)]
 
+\item $0 \in \Gamma$
+
 \item If $\gamma_1, \gamma_2 \in \Gamma$ then $\gamma_1 + \gamma_2 \in \Gamma$.
 
 \item If $\gamma_1 \in \Gamma$, $\gamma_2: \Nats^n \rightarrow \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
 
-\item $0 \in \Gamma$
+\item For any $\gamma \in \Gamma$ there is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\gamma \leq p$.
 
 \end{enumerate}
 
@@ -276,8 +278,6 @@ Abusing notation, we denote the $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y
 We will use the notation $S: X \Scheme Y$ to signify $S$ is a $\Gamma$-scheme of signature $X \rightarrow Y$.
 
 \end{definition}
-
-Instead of requiring the time complexity to be polynomial in $K$, we could have used a third growth space which determines the allowed time complexity. However, we make do without this generalization in the current work.
 
 It will also be useful to consider families of $\Gamma$-schemes satisfying uniform resource bounds.
 
@@ -966,11 +966,12 @@ Independent random variables $F_1, F_2$ satisfy
 
 To formulate an analogous property for optimal predictors, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_2$ is "independent" of $f_1$ when learning the value of $f_1(x)$ provides no efficiently accessible information about $f_2(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
 
-We start with an informal description. Suppose that $f_2(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_2(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ for which $f_1(x')$ is known\footnote{This is substantially weaker than saying $f_1$ can be efficiently computed even in the uniform case (assuming standard complexity theoretic conjectures) and even more so in the non-uniform case, as we shall see when the relevant notion of "efficient sampling" is formalised.}. Then, the knowledge of $f_1(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
+We start with an informal description. Suppose that $f_2(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_2(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ for which $f_1(x')$ is known\footnote{This is substantially weaker than saying $f_1$ can be efficiently computed even in the uniform case (assuming standard complexity theoretic conjectures) and even more so in the non-uniform case, as we shall see in Proposition~\ref{prp:adv_mgamma_gen} after formalising the relevant notion of "efficient sampling."}. Then, the knowledge of $f_1(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
  Moreover, if we can only efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ together with $\tilde{f}_1(x')$ an \emph{unbiased estimate} of $f_1(x')$, we still expect the analogue of \ref{eqn:ev_mult} to hold since the expected value of $\tilde{f}_1(x') - f_1(x')$ vanishes for any given $x'$ so it is uncorrelated with $f_2(x)$.
  
 In order to formalise the above, we introduce several new definitions.
 
+\begin{samepage}
 \begin{definition}
 
 Fix $n \in \Nats$ and $\Grow$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, an \emph{$\MGrow$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\M_S)$ where $S: \Nats^n \times X \times \Words^2 \Alg Y$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and a family of probability distributions $\{\M_S^K: \Words \rightarrow [0,1]\}_{K \in \Nats^n}$ are s.t.
@@ -998,6 +999,7 @@ We think of $S$ as a randomized algorithm with advice which is random in itself.
 We will use the notation $S: X \MScheme Y$ to signify $S$ is an $\MGrow$-scheme of signature $X \rightarrow Y$.
 
 \end{definition}
+\end{samepage}
 
 \begin{samepage}
 \begin{definition}
@@ -1030,6 +1032,76 @@ When $\sup{\Abs{G_2}} < \infty$ (since $f$ is bounded, this can always be assume
 
 \end{definition}
 \end{samepage}
+
+For sufficiently large $\GrowA$ the requirements of $\Fall(\MGrow)$-samplability and $\Fall(\MGrow)$-generatability become very weak, as seen in the following propositions.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:adv_mgamma_smp}
+
+Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$, $\mu^{K_1}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Then, $\mu$ is $\Fall(\MGrow)$-samplable.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Denote $I:=\{K \in \Nats^n \mid \mu^{K_1}(\Bool^{\leq l(K)}) > 0\}$. We have $\chi_I \geq \mu^{K_1}(\Bool^{\leq l(K)})$, $1 - \chi_I \leq 1 - \mu^{K_1}(\Bool^{\leq l(K)})$ and therefore $1 - \chi_I \in \Fall$.
+
+Construct ${L: \bm{1} \MScheme \Words}$ s.t. for any $K \in I$, $\M_L^K:=\mu^{K_1} \mid \Bool^{\leq l(K)}$ and ${L^K(y,z)=z}$. Given $K \in I$, ${L_\bullet^K = \mu^{K_1} \mid \Bool^{\leq l(K)}}$ and we get
+
+$$\Dtv(\mu^{K_1}, L_\bullet^K) = \Dtv(\mu^{K_1}, \mu^{K_1} \mid \Bool^{\leq l(K)})$$
+
+$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K_1}(x)-(\mu^{K_1} \mid \WordsLen{\leq l(K)})(x)}$$
+
+Denote $\chi^K:=\chi_{\WordsLen{\leq l(K)}}$.
+
+$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K_1}(x)-\frac{\chi^K(x)\mu^{K_1}(x)}{\mu^{K_1}(\WordsLen{\leq l(K)})}}$$
+
+$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \mu^{K_1}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K_1}(\Bool^{\leq l(K)})}}$$
+
+$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K_1}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K_1}(\Bool^{\leq l(K)})}}+\sum_{x \in \Bool^{>l(K)}} \mu^{K_1}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K_1}(\Bool^{\leq l(K)})}})$$
+
+$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K_1}(x)(\frac{1}{\mu^{K_1}(\Bool^{\leq l(K)})}-1)+\sum_{x \in \Bool^{>l(K)}} \mu^{K_1}(x))$$
+
+$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} (\mu^{K_1}(\Bool^{\leq l(K)})(\frac{1}{\mu^{K_1}(\Bool^{\leq l(K)})}-1)+1 - \mu^{K_1}(\Bool^{\leq l(K)}))$$
+
+$$\Dtv(\mu^{K_1}, L_\bullet^K) = 1-\mu^{K_1}(\Bool^{\leq l(K)})$$
+
+Given arbitrary $K \in \Nats^n$,
+
+$$\Dtv(\mu^{K_1}, L_\bullet^K) \leq \max(1-\mu^{K_1}(\Bool^{\leq l(K)}), 1-\chi_I)$$
+
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:adv_mgamma_gen}
+
+Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a $\GrowA$-ample fall space. Consider a distributional estimation problem $(\mu,f)$ s.t. for some $l \in \GrowA$, $\mu^{K_1}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Then, $(\mu,f)$ is $\Fall(\MGrow)$-generatable. 
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Denote $I:=\{K \in \Nats^n \mid \mu^{K_1}(\Bool^{\leq l(K)}) > 0\}$. As in the proof of Proposition~\ref{prp:adv_mgamma_smp}, $1 - \chi_I \in \Fall$.
+
+Consider $\zeta: \Nats^2 \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by $\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}$. Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$, $\M_G^K:=\alpha_*^K(\mu^{K_1} \mid \Bool^{\leq l(K)})$ and ${G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)}$. We can see $G_1$ is an $\Fall(\MGrow)$-sampler of $\mu$ exactly like in the proof of Proposition~\ref{prp:adv_mgamma_smp}.
+
+Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \mu^{K_1} \cap \Bool^{\leq l(K)}}$, $f_G^K(x)=\rho^K(f(x))$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_G^K(x)=0$. Denote ${p^K:=\mu^{K_1}(\Bool^{\leq l(K)})}$. We get
+
+$$\E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)}]=p^K \E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)} \mid \Abs{x} > l(K)]$$
+
+$$\E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)}]=p^K \E_{\mu^{K_1}}[\Abs{\rho^K(f(x))-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\mu^{K_1}}[\Abs{f(x)} \mid \Abs{x} > l(K)]$$
+
+$$\E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)}] \leq p^K \zeta(K) + (1 - p^K)\sup \Abs{f}$$
+
+The right hand side is obviously in $\Fall$.
+
+\end{proof}
+
+We now introduce the notions of samplability of generatability over a given "base space" $Y$.
 
 \begin{definition}
 
@@ -1179,7 +1251,7 @@ For any $k,j \in \Nats$, choose
 
 $$w^{kj} \in \Argmax{w \in \Supp \M_S^{kj}} \Abs{\E_{\mu^k \times \U_P^{kj} \times \U^{\R_S^{kj}(w)}}[(P^{kj}(x,y) - f(x))S^{kj}(x,P^{kj}(x,y),z,w)]}$$
 
-Construct $\bar{S}: \Words \times \Rats \Scheme \Rats$ s.t. $\R_{\bar{S}}(k,j)=\R_S^{kj}(w^{kj})$ and ${\bar{S}^{kj}(x,q,z)=S^{kj}(x,q,z,w^{kj})}$. $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$, therefore
+Construct $\bar{S}: \Words \times \Rats \Scheme \Rats$ s.t. $\R_{\bar{S}}(k,j)=\R_S^{kj}(w^{kj})$ and ${\bar{S}^{kj}(x,t,z)=S^{kj}(x,t,z,w^{kj})}$. $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$, therefore
 
 $$\E_{\mu^k \times \U_P^{kj} \times \U_{\bar{S}}^{kj}}[(P^{kj}(x,y) - f(x))\bar{S}^{kj}(x,P^{kj}(x,y),z)] \equiv 0 \pmod \Fall$$
 
@@ -1197,54 +1269,85 @@ $$P^{kj}(x,z_1 z_2 z_3)-f_1(x)f_2(x)=f_1(x)(P_2^{kj}(\pi^{kj}(x,z_3),z_2)-f_2(x)
 
 Denote $\bar{P}_2^{kj}:=P_2^{kj} \circ \pi^{kj}$. For any bounded $S: \Words \times \Rats \Scheme \Rats$ we get
 
-\begin{equation}
-\label{eqn:thm__mult__prf1}
-\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}]} + \Abs{\E[(P_1^{kj}-f_1) \bar{P}_2^{kj} S^{kj}]}
-\end{equation}
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}]} + \Abs{\E[(P_1^{kj}-f_1) \bar{P}_2^{kj} S^{kj}]}$$
 
-For the first term on the right hand side we have
+$P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1)$ therefore the second term on the right hand side is in $\Fall$.
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}]-\E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]=\E[(g \circ \pi^{kj} - f_2) f_1 S^{kj}]$$
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}]} \pmod \Fall$$
 
-$$\Abs{\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}]-\E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]} \leq (\sup \Abs{f_1}) (\sup \Abs{S}) \E[\Abs{g \circ \pi^{kj} - f_2}]$$
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] - \E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}] + \E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]} \pmod \Fall$$
 
-Using condition (ii) we conclude that
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] - \E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]} + \Abs{\E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]} \pmod \Fall$$
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}] \pmod \Fall$$
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E[(g \circ \pi^{kj}-f_2)f_1 S^{kj}]} + \Abs{\E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]} \pmod \Fall$$
+
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq (\sup \Abs{f_1}) (\sup \Abs{S}) \E[\Abs{g \circ \pi^{kj} - f_2}] + \Abs{\E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]} \pmod \Fall$$
+
+Condition (ii) implies the first term on the right hand side is in $\Fall$.
+
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E[(\bar{P}_2^{kj}-g \circ \pi^{kj})f_1 S^{kj}]} \pmod \Fall$$
 
 Denote $\U_{\text{tot}}^{kj}:= \U_{P_1}^{kj} \times \U_{P_2}^{kj} \times \U_S^{kj}$. We change variables inside the expected value on the right hand side by $y:=\pi^{kj}(x,z_3)$. Observing that $(x,y)$ obeys the distribution $\mu^k \ltimes \pi^{kj}$ we get
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj} \times \U_{\text{tot}}^{kj}}[(P_2^{kj}(y,z_{2})-g(y))f_1(x) S^{kj}(x,P_1^{kj}(x,z_1)P_2^{kj}(y,z_2), z_4)] \pmod \Fall$$
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E_{\mu^k \ltimes \pi^{kj} \times \U_{\text{tot}}^{kj}}[(P_2^{kj}(y,z_{2})-g(y))f_1(x) S^{kj}(x,P_1^{kj}(x,z_1)P_2^{kj}(y,z_2), z_4)]} \pmod \Fall$$
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj}}[\E_{\U_{\text{tot}}^{kj}}[(P_2^{kj}(y,z_{2})-g(y))S^{kj}(x,P_1^{kj}(x,z_1)P_2^{kj}(y,z_2), z_4)]f_1(x)] \pmod \Fall$$
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E_{\mu^k \ltimes \pi^{kj}}[\E_{\U_{\text{tot}}^{kj}}[(P_2^{kj}(y,z_{2})-g(y))S^{kj}(x,P_1^{kj}(x,z_1)P_2^{kj}(y,z_2), z_4)]f_1(x)]} \pmod \Fall$$
 
 Let $G$ be an $\Fall(\MGrow)$-generator of $(\mu,f_1)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\mu^k \ltimes \pi^{kj} \times \UM_G^{kj}}[\E[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y)_1,P_1^{kj}(G^{kj}(y)_1)P_2^{kj}(y))]G^{kj}(y)_2] \pmod \Fall$$
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E_{\mu^k \ltimes \pi^{kj} \times \UM_G^{kj}}[\E[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y)_1,P_1^{kj}(G^{kj}(y)_1)P_2^{kj}(y))]G^{kj}(y)_2]} \pmod \Fall$$
 
 Using condition (i) we conclude that
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\nu^k \times \UM_G^{kj}}[\E[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y)_1,P_1^{kj}(G^{kj}(y)_1)P_2^{kj}(y))]G^{kj}(y)_2] \pmod \Fall$$
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E_{\nu^k \times \UM_G^{kj}}[\E[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y)_1,P_1^{kj}(G^{kj}(y)_1)P_2^{kj}(y))]G^{kj}(y)_2]} \pmod \Fall$$
 
-$$\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv \E_{\nu^k \times \U_{\text{tot}}^{kj} \times \UM_G^{kj}}[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y)_1,P_1^{kj}(G^{kj}(y)_1)P_2^{kj}(y))G^{kj}(y)_2] \pmod \Fall$$
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \leq \Abs{\E_{\nu^k \times \U_{\text{tot}}^{kj} \times \UM_G^{kj}}[(P_2^{kj}(y)-g(y))S^{kj}(G^{kj}(y)_1,P_1^{kj}(G^{kj}(y)_1)P_2^{kj}(y))G^{kj}(y)_2]} \pmod \Fall$$
 
 By Proposition~\ref{prp:mixed_ort}, this implies
 
-\begin{equation}
-\label{eqn:thm__mult__prf2}
-\E[(\bar{P}_2^{kj}-f_2)f_1 S^{kj}] \equiv 0 \pmod \Fall
-\end{equation}
-
-For the second term on the right hand side of \ref{eqn:thm__mult__prf1}, we have
-
-
-$$\Abs{\E[(P_1^{kj}-f_1) \bar{P}_2^{kj} S^{kj}]}...$$
-
-TBD
+$$\Abs{\E[(P^{kj}-f_1 f_2)S^{kj}]} \equiv 0 \pmod \Fall$$
 
 \end{proof}
 
-TBD
+The following corollary demonstrates one natural scenario in which the conditions of Theorem~\ref{thm:mult} hold.
+
+\begin{samepage}
+\begin{corollary}
+\label{crl:dir_prod}
+
+Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $G$ is an $\Fall(\MGrow)$-generator for $(\mu_1,f_1)$ and $L$ is an $\Fall(\MGrow)$-sampler for $\mu_2$. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Define $f: \Supp \mu \rightarrow \Reals$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $k,j \in \Nats$, $x_1 \in \Supp (G_1)_\bullet^{kj}$, $x_2 \in \Supp L_\bullet^{kj}$, $z_1 \in \WordsLen{\R_{P_1}(k,j)}$ and $z_2 \in \WordsLen{\R_{P_2}(k,j)}$
+
+\begin{equation}
+P^{kj}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{kj}(x_1,z_1) P_2^{kj}(x_2,z_2)
+\end{equation}
+
+Then, $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$.
+
+\end{corollary}
+\end{samepage}
+
+In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following propositions
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+FOO
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+BAR
+
+\end{proof}
+
+\begin{proof}[Proof of Corollary \ref{crl:dir_prod}]
+
+BAR
+
+\end{proof}
 
 \section{Reductions and Completeness}
 \label{sec:reductions}
