@@ -1121,7 +1121,7 @@ Fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fal
 
 \item $G_1$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$ relative to $\pi$.
 
-\item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{G,y}^K:=\Supp \, (G_1)_y^K$. For any ${x \in \Words}$, denote 
+\item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{G,y}^K:=\Supp G_{1y}^K$. For any ${x \in \Words}$, denote 
 
 $$f_G^K(x,y):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(y,z)_2 \mid G^K(y,z)_1 = x] \text{ if } x \in X_{G,y}^K \\ 0 \text{ if } x \not\in X_{G,y}^K \end{cases}$$
 
@@ -1315,7 +1315,7 @@ The following corollary demonstrates one natural scenario in which the condition
 \begin{corollary}
 \label{crl:dir_prod}
 
-Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $G$ is an $\Fall(\MGrow)$-generator for $(\mu_1,f_1)$ and $L$ is an $\Fall(\MGrow)$-sampler for $\mu_2$. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Define $f: \Supp \mu \rightarrow \Reals$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $k,j \in \Nats$, $x_1 \in \Supp (G_1)_\bullet^{kj}$, $x_2 \in \Supp L_\bullet^{kj}$, $z_1 \in \WordsLen{\R_{P_1}(k,j)}$ and $z_2 \in \WordsLen{\R_{P_2}(k,j)}$
+Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $G$ is an $\Fall(\MGrow)$-generator for $(\mu_1,f_1)$ and $L$ is an $\Fall(\MGrow)$-sampler for $\mu_2$. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Define $f: \Supp \mu \rightarrow \Reals$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $k,j \in \Nats$, $x_1 \in \Supp G_{1\bullet}^{kj}$, $x_2 \in \Supp L_\bullet^{kj}$, $z_1 \in \WordsLen{\R_{P_1}(k,j)}$ and $z_2 \in \WordsLen{\R_{P_2}(k,j)}$
 
 \begin{equation}
 P^{kj}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{kj}(x_1,z_1) P_2^{kj}(x_2,z_2)
@@ -1332,7 +1332,7 @@ In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following proposi
 \begin{proposition}
 \label{prp:tbd}
 
-FOO
+Fix $\Grow$ a pair of growth spaces of rank $2$ and $\Fall$ a fall space of rank $2$. Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $k,j \in \Nats$, $x_1 \in \Supp L_{1\bullet}^{kj}$, $x_2 \in \Supp L_{2\bullet}^{kj}$...
 
 \end{proposition}
 \end{samepage}
@@ -1342,6 +1342,8 @@ FOO
 BAR
 
 \end{proof}
+
+TBD
 
 \begin{proof}[Proof of Corollary \ref{crl:dir_prod}]
 
