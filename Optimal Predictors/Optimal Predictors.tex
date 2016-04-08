@@ -1148,7 +1148,7 @@ Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded
 
 \item $\Dtv(\nu^k,\mu^k \ltimes \pi^{kj}) \in \Fall$
 
-\item $\E_{(x,z) \sim \mu^k \times U^{\R_\pi(k,j)}}[\Abs{f_2(x)-g(\pi^{kj}(x,z))}] \in \Fall$
+\item $\E_{(x,z) \sim \mu^k \times \U_\pi^{kj}}[\Abs{f_2(x)-g(\pi^{kj}(x,z))}] \in \Fall$
 
 \item $(\mu, f_1)$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
 
@@ -1334,7 +1334,65 @@ In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following proposi
 \begin{proposition}
 \label{prp:tbd}
 
-Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $k,j \in \Nats$, $x_1 \in \Supp L_{1\bullet}^{kj}$, $x_2 \in \Supp L_{2\bullet}^{kj}$...
+Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $k,j \in \Nats$, $x_1 \in \Supp L_{1\bullet}^{kj}$, ${x_2 \in \Supp L_{2\bullet}^{kj}}$ and $z \in \Bool^{\R_\pi(k,j)}$, $\pi^{kj}(\Chev{x_1,x_2},z)=x_2$. Then $\Dtv(\mu_2^k, \mu^k \ltimes \pi^{kj}) \in \Fall$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+$$\Dtv(\mu_2^k, \mu^k \ltimes \pi^{kj}) \leq \Dtv(\mu_2^k,L_{2\bullet}^{kj})+\Dtv(L_{2\bullet}^{kj}, \mu^k \ltimes \pi^{kj})$$
+
+$$\Dtv(\mu_2^k, \mu^k \ltimes \pi^{kj}) \leq \Dtv(L_{2\bullet}^{kj}, \mu^k \ltimes \pi^{kj}) \pmod \Fall$$
+
+Denote $\mu^{kj}:=(\En_{\Words \times \Words})_*(L_{1\bullet}^{kj} \times L_{2\bullet}^{kj})$. Obviously $\mu^{kj}\ltimes \pi^{kj}=L_{2\bullet}^{kj}$.
+
+$$\Dtv(\mu_2^k, \mu^k \ltimes \pi^{kj}) \leq \Dtv( \mu^{kj} \ltimes \pi^{kj},  \mu^k \ltimes \pi^{kj}) \pmod \Fall$$
+
+Semi-direct products contract the total variation distance, therefore
+
+$$\Dtv(\mu_2^k, \mu^k \ltimes \pi^{kj}) \leq \Dtv(\mu^{kj},  \mu^k) \pmod \Fall$$
+
+$$\Dtv(\mu_2^k, \mu^k \ltimes \pi^{kj}) \leq \Dtv(L_{1\bullet}^{kj} \times L_{2\bullet}^{kj}, \mu_1^k \times \mu_2^k) \pmod \Fall$$
+
+Total variation distance is subadditive w.r.t. direct product, giving
+
+$$\Dtv(\mu_2^k, \mu^k \ltimes \pi^{kj}) \leq \Dtv(L_{1\bullet}^{kj}, \mu_1^k) + \Dtv(L_{2\bullet}^{kj}, \mu_2^k) \pmod \Fall$$
+
+$$\Dtv(\mu_2^k, \mu^k \ltimes \pi^{kj}) \equiv 0 \pmod \Fall$$
+
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $k,j \in \Nats$, $x_1 \in \Supp L_{1\bullet}^{kj}$, ${x_2 \in \Supp L_{2\bullet}^{kj}}$ and $z \in \Bool^{\R_\pi(k,j)}$, $\pi^{kj}(\Chev{x_1,x_2},z)=x_2$. Then, for any $g: \Supp \mu_2 \rightarrow \Reals$ bounded we have 
+
+$$\E_{(x_1,x_2,z) \sim\mu_1^k \times \mu_2^k \times \U_\pi^{kj}}[\Abs{g(x_2)-g(\pi^{kj}(\Chev{x_1,x_2},z))}] \in \Fall$$
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+$$\E[\Abs{g(x_2)-g(\pi^{kj}(\Chev{x_1,x_2}))}] \leq \Prb_{ \mu_1^k \times \mu_2^k}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{kj} \times \Supp L_{2\bullet}^{kj}] (\sup g - \inf g)$$
+
+$$\E[\Abs{g(x_2)-g(\pi^{kj}(\Chev{x_1,x_2}))}] \leq (\Prb_{ L_{1\bullet}^{kj} \times L_{2\bullet}^{kj}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{kj} \times \Supp L_{2\bullet}^{kj}]+\Dtv(\mu_1^k \times \mu_2^k,L_{1\bullet}^{kj} \times L_{2\bullet}^{kj})) (\sup g - \inf g)$$
+
+$$\E[\Abs{g(x_2)-g(\pi^{kj}(\Chev{x_1,x_2}))}] \leq \Dtv(\mu_1^k \times \mu_2^k,L_{1\bullet}^{kj} \times L_{2\bullet}^{kj}) (\sup g - \inf g)$$
+
+$$\E[\Abs{g(x_2)-g(\pi^{kj}(\Chev{x_1,x_2}))}] \leq (\Dtv(\mu_1^k,L_{1\bullet}^{kj})+\Dtv(\mu_2^k,L_{2\bullet}^{kj})) (\sup g - \inf g)$$
+
+$$\E[\Abs{g(x_2)-g(\pi^{kj}(\Chev{x_1,x_2}))}] \in \Fall$$
+
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $k,j \in \Nats$, $x_1 \in \Supp L_{1\bullet}^{kj}$, ${x_2 \in \Supp L_{2\bullet}^{kj}}$ and $z \in \Bool^{\R_\pi(k,j)}$, $\pi^{kj}(\Chev{x_1,x_2},z)=x_2$...
 
 \end{proposition}
 \end{samepage}
