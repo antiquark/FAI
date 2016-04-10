@@ -171,9 +171,9 @@ For $X$ a discrete measurable space, a probability measure on $X$ can be represe
 
 \subsection{Algorithms}
 
-$\Words$ is the set of all finite binary strings (words), i.e. $\Words:=\bigsqcup_{n \in \Nats} \Bool^n$. For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. For any $n \in \Nats$, $\Bool^{\leq n}:=\{x \in \Words \mid \Abs{x} \leq n\}$, $\Bool^{>n}:=\{x \in \Words \mid \Abs{x} > n\}$. For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i=1}^n x_i y_i$. For any $n \in \Nats$, $\U^n$ is the uniform probability distribution on $\WordsLen{n}$.
+$\Words$ is the set of all finite binary strings (words), i.e. $\Words:=\bigsqcup_{n \in \Nats} \Bool^n$. For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. For any $n \in \Nats$, $\Bool^{\leq n}:=\{x \in \Words \mid \Abs{x} \leq n\}$, $\Bool^{>n}:=\{x \in \Words \mid \Abs{x} > n\}$. For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i \in [n]} x_i y_i$. For any $n \in \Nats$, $\U^n$ is the uniform probability distribution on $\WordsLen{n}$.
 
-Given $n \in \Nats$ and ${x_1, x_2 \ldots x_n \in \Words}$, $\Chev{x_1,x_2 \ldots x_n} \in \Words$ denotes the encoding of $(x_1,x_2 \ldots x_n)$ obtained by repeating each bit of $x_1, x_2 \ldots x_n$ twice and inserting the separators 01.
+Given $n \in \Nats$ and ${x_0, x_1 \ldots x_{n-1} \in \Words}$, $\Chev{x_0,x_1 \ldots x_{n-1}} \in \Words$ denotes the encoding of $(x_0,x_1 \ldots x_{n-1})$ obtained by repeating each bit of $x_0, x_1 \ldots x_{n-1}$ twice and inserting the separators 01.
 \begin{definition}
 
 An \emph{encoded set} is a set $X$ together with an injection ${\En_X: X \rightarrow \Words}$ (the encoding) s.t. $\Img \En_X$ is decidable in polynomial time.
@@ -1006,7 +1006,7 @@ We will use the notation $S: X \MScheme Y$ to signify $S$ is an $\MGrow$-scheme 
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. A word ensemble $\mu$ is called \emph{$\Fall(\MGrow)$-samplable} (resp. \emph{$\Fall(\Gamma)$-samplable}) when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $\bm{1} \rightarrow \Words$  s.t. the function $\varepsilon(K):=\Dtv(\mu^{K_1},L_\bullet^K)$ is in $\Fall$.
+Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. A word ensemble $\mu$ is called \emph{$\Fall(\MGrow)$-samplable} (resp. \emph{$\Fall(\Gamma)$-samplable}) when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $\bm{1} \rightarrow \Words$  s.t. the function $\varepsilon(K):=\Dtv(\mu^{K_0},L_\bullet^K)$ is in $\Fall$.
 
 In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$}.
 
@@ -1026,7 +1026,7 @@ Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. A distributional est
 
 $$f_G^K(x):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(z)_2 \mid G^K(z)_1 = x] \text{ if } x \in X_{G}^K \\ 0 \text{ if } x \not\in X_{G}^K \end{cases}$$
 
-We require that the function $\varepsilon(K):=\E_{x \sim \mu^{K_1}}[\Abs{f_G^K(x)-f(x)}]$ is in $\Fall$.
+We require that the function $\varepsilon(K):=\E_{x \sim \mu^{K_0}}[\Abs{f_G^K(x)-f(x)}]$ is in $\Fall$.
 
 \end{enumerate}
 
@@ -1041,38 +1041,38 @@ For sufficiently large $\GrowA$ the requirements of $\Fall(\MGrow)$-samplability
 \begin{proposition}
 \label{prp:adv_mgamma_smp}
 
-Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$, $\mu^{K_1}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_1}(\Bool^{\leq l(K)}) > 0\}}$. Consider ${L: \bm{1} \MScheme \Words}$ s.t. for any $K \in I$, $\M_L^K:=\mu^{K_1} \mid \Bool^{\leq l(K)}$ and ${L^K(y,z)=z}$.  Then, $L$ is an $\Fall(\MGrow)$-sampler of $\mu$. In particular, since such an $L$ can always be constructed, $\mu$ is $\Fall(\MGrow)$-samplable.
+Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$, $\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}}$. Consider ${L: \bm{1} \MScheme \Words}$ s.t. for any $K \in I$, $\M_L^K:=\mu^{K_0} \mid \Bool^{\leq l(K)}$ and ${L^K(y,z)=z}$.  Then, $L$ is an $\Fall(\MGrow)$-sampler of $\mu$. In particular, since such an $L$ can always be constructed, $\mu$ is $\Fall(\MGrow)$-samplable.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-$\chi_I \geq \mu^{K_1}(\Bool^{\leq l(K)})$, $1 - \chi_{I} \leq 1 - \mu^{K_1}(\Bool^{\leq l(K)})$ and therefore $1 - \chi_I \in \Fall$.
+$\chi_I \geq \mu^{K_0}(\Bool^{\leq l(K)})$, $1 - \chi_{I} \leq 1 - \mu^{K_0}(\Bool^{\leq l(K)})$ and therefore $1 - \chi_I \in \Fall$.
 
-Given $K \in I$, ${L_\bullet^K = \mu^{K_1} \mid \Bool^{\leq l(K)}}$ and we get
+Given $K \in I$, ${L_\bullet^K = \mu^{K_0} \mid \Bool^{\leq l(K)}}$ and we get
 
-$$\Dtv(\mu^{K_1}, L_\bullet^K) = \Dtv(\mu^{K_1}, \mu^{K_1} \mid \Bool^{\leq l(K)})$$
+$$\Dtv(\mu^{K_0}, L_\bullet^K) = \Dtv(\mu^{K_0}, \mu^{K_0} \mid \Bool^{\leq l(K)})$$
 
-$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K_1}(x)-(\mu^{K_1} \mid \WordsLen{\leq l(K)})(x)}$$
+$$\Dtv(\mu^{K_0}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K_0}(x)-(\mu^{K_0} \mid \WordsLen{\leq l(K)})(x)}$$
 
 Denote $\chi^K:=\chi_{\WordsLen{\leq l(K)}}$.
 
-$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K_1}(x)-\frac{\chi^K(x)\mu^{K_1}(x)}{\mu^{K_1}(\WordsLen{\leq l(K)})}}$$
+$$\Dtv(\mu^{K_0}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K_0}(x)-\frac{\chi^K(x)\mu^{K_0}(x)}{\mu^{K_0}(\WordsLen{\leq l(K)})}}$$
 
-$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \mu^{K_1}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K_1}(\Bool^{\leq l(K)})}}$$
+$$\Dtv(\mu^{K_0}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \mu^{K_0}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K_0}(\Bool^{\leq l(K)})}}$$
 
-$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K_1}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K_1}(\Bool^{\leq l(K)})}}+\sum_{x \in \Bool^{>l(K)}} \mu^{K_1}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K_1}(\Bool^{\leq l(K)})}})$$
+$$\Dtv(\mu^{K_0}, L_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K_0}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K_0}(\Bool^{\leq l(K)})}}+\sum_{x \in \Bool^{>l(K)}} \mu^{K_0}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K_0}(\Bool^{\leq l(K)})}})$$
 
-$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K_1}(x)(\frac{1}{\mu^{K_1}(\Bool^{\leq l(K)})}-1)+\sum_{x \in \Bool^{>l(K)}} \mu^{K_1}(x))$$
+$$\Dtv(\mu^{K_0}, L_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K_0}(x)(\frac{1}{\mu^{K_0}(\Bool^{\leq l(K)})}-1)+\sum_{x \in \Bool^{>l(K)}} \mu^{K_0}(x))$$
 
-$$\Dtv(\mu^{K_1}, L_\bullet^K) = \frac{1}{2} (\mu^{K_1}(\Bool^{\leq l(K)})(\frac{1}{\mu^{K_1}(\Bool^{\leq l(K)})}-1)+1 - \mu^{K_1}(\Bool^{\leq l(K)}))$$
+$$\Dtv(\mu^{K_0}, L_\bullet^K) = \frac{1}{2} (\mu^{K_0}(\Bool^{\leq l(K)})(\frac{1}{\mu^{K_0}(\Bool^{\leq l(K)})}-1)+1 - \mu^{K_0}(\Bool^{\leq l(K)}))$$
 
-$$\Dtv(\mu^{K_1}, L_\bullet^K) = 1-\mu^{K_1}(\Bool^{\leq l(K)})$$
+$$\Dtv(\mu^{K_0}, L_\bullet^K) = 1-\mu^{K_0}(\Bool^{\leq l(K)})$$
 
 Given arbitrary $K \in \Nats^n$,
 
-$$\Dtv(\mu^{K_1}, L_\bullet^K) \leq \max(1-\mu^{K_1}(\Bool^{\leq l(K)}), 1-\chi_I)$$
+$$\Dtv(\mu^{K_0}, L_\bullet^K) \leq \max(1-\mu^{K_0}(\Bool^{\leq l(K)}), 1-\chi_I)$$
 
 \end{proof}
 
@@ -1080,24 +1080,24 @@ $$\Dtv(\mu^{K_1}, L_\bullet^K) \leq \max(1-\mu^{K_1}(\Bool^{\leq l(K)}), 1-\chi_
 \begin{proposition}
 \label{prp:adv_mgamma_gen}
 
-Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $(\mu,f)$ s.t. for some $l \in \GrowA$, $\mu^{K_1}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Then, $(\mu,f)$ is $\Fall(\MGrow)$-generatable. 
+Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $(\mu,f)$ s.t. for some $l \in \GrowA$, $\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Then, $(\mu,f)$ is $\Fall(\MGrow)$-generatable. 
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Consider $\zeta: \Nats^2 \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by $\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_1}(\Bool^{\leq l(K)}) > 0\}}$. Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$, $\M_G^K:=\alpha_*^K(\mu^{K_1} \mid \Bool^{\leq l(K)})$ and ${G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)}$.
+Consider $\zeta: \Nats^2 \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by $\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}}$. Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$, $\M_G^K:=\alpha_*^K(\mu^{K_0} \mid \Bool^{\leq l(K)})$ and ${G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)}$.
 
 Let $L$ be an $\Fall(\MGrow)$-sampler of $\mu$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $L_{\bullet}^K=G_{1\bullet}^K$ therefore $G_1$ is also an $\Fall(\MGrow)$-sampler of $\mu$.
 
-Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \mu^{K_1} \cap \Bool^{\leq l(K)}}$, $f_G^K(x)=\rho^K(f(x))$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_G^K(x)=0$. Denote ${p^K:=\mu^{K_1}(\Bool^{\leq l(K)})}$. We get
+Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \mu^{K_0} \cap \Bool^{\leq l(K)}}$, $f_G^K(x)=\rho^K(f(x))$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_G^K(x)=0$. Denote ${p^K:=\mu^{K_0}(\Bool^{\leq l(K)})}$. We get
 
-$$\E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)}]=p^K \E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)} \mid \Abs{x} > l(K)]$$
+$$\E_{\mu^{K_0}}[\Abs{f_G^K(x)-f(x)}]=p^K \E_{\mu^{K_0}}[\Abs{f_G^K(x)-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\mu^{K_0}}[\Abs{f_G^K(x)-f(x)} \mid \Abs{x} > l(K)]$$
 
-$$\E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)}]=p^K \E_{\mu^{K_1}}[\Abs{\rho^K(f(x))-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\mu^{K_1}}[\Abs{f(x)} \mid \Abs{x} > l(K)]$$
+$$\E_{\mu^{K_0}}[\Abs{f_G^K(x)-f(x)}]=p^K \E_{\mu^{K_0}}[\Abs{\rho^K(f(x))-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\mu^{K_0}}[\Abs{f(x)} \mid \Abs{x} > l(K)]$$
 
-$$\E_{\mu^{K_1}}[\Abs{f_G^K(x)-f(x)}] \leq p^K \zeta(K) + (1 - p^K)\sup \Abs{f}$$
+$$\E_{\mu^{K_0}}[\Abs{f_G^K(x)-f(x)}] \leq p^K \zeta(K) + (1 - p^K)\sup \Abs{f}$$
 
 The right hand side is obviously in $\Fall$.
 
@@ -1107,7 +1107,7 @@ We now introduce the notions of samplability of generatability over a given "bas
 
 \begin{definition}
 
-Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K_1} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_1} \ltimes \pi^K}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)]}$ is in $\Fall$.
+Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)]}$ is in $\Fall$.
 
 In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$ relative to $\pi$}.
 
@@ -1117,7 +1117,7 @@ In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamm
 \begin{definition}
 \label{def:gen_rel}
 
-Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \mu^{K_1} \Markov Y\}_{K \in \Nats^n}$. $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-generatable (resp. $\Fall(\Gamma)$-generatable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
+Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$. $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-generatable (resp. $\Fall(\Gamma)$-generatable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -1127,7 +1127,7 @@ Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a distribut
 
 $$f_G^K(x,y):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(y,z)_2 \mid G^K(y,z)_1 = x] \text{ if } x \in X_{G,y}^K \\ 0 \text{ if } x \not\in X_{G,y}^K \end{cases}$$
 
-We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_1} \ltimes \pi^K}[\Abs{f_G^K(x,y)-f(x)}]}$ is in $\Fall$.
+We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[\Abs{f_G^K(x,y)-f(x)}]}$ is in $\Fall$.
 
 \end{enumerate}
 
@@ -1171,10 +1171,10 @@ In order to prove Theorem~\ref{thm:mult} we will need the following propositions
 \begin{proposition}
 \label{prp:smp}
 
-Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a word ensemble $\mu$, an encoded set $Y$, a family $\{\pi^K: \Supp \mu^{K_1} \Markov Y\}_{K \in \Nats^n}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $L$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$. Then
+Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a word ensemble $\mu$, an encoded set $Y$, a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $L$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$. Then
 
 \begin{equation}
-E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] \equiv \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
+E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] \equiv \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1182,19 +1182,19 @@ E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] \equiv \E_{\mu^{K_1} \ltimes \pi^K \times \U
 
 \begin{proof}
 
-If we sample $(x,y)$ from $\mu^{K_1} \ltimes \pi^K$ and then sample $x'$ from ${\mu^{K_1} \mid (\pi^K)^{-1}(y)}$, $(x',y)$ will obey the distribution $\mu^{K_1} \ltimes \pi^K$. Denote $\mu_y^K:=\mu^{K_1} \mid (\pi^K)^{-1}(y)$. We get
+If we sample $(x,y)$ from $\mu^{K_0} \ltimes \pi^K$ and then sample $x'$ from ${\mu^{K_0} \mid (\pi^K)^{-1}(y)}$, $(x',y)$ will obey the distribution $\mu^{K_0} \ltimes \pi^K$. Denote $\mu_y^K:=\mu^{K_0} \mid (\pi^K)^{-1}(y)$. We get
 
-$$\E_{(x,y) \sim \mu^{K_1} \ltimes \pi^K}[h(x,y)] = \E_{(x,y) \sim \mu^{K_1} \ltimes \pi^K}[\E_{x' \sim \mu_y^K}[h(x',y)]]$$
+$$\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] = \E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[\E_{x' \sim \mu_y^K}[h(x',y)]]$$
 
-$$\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_1} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]$$
+$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]$$
 
-$$\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_1} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\UM_L^K}[h(L^K(y,z),y)]]$$
+$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\UM_L^K}[h(L^K(y,z),y)]]$$
 
-$$\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_1} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]]$$
+$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]]$$
 
-$$\Abs{\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]} \leq \E_{\mu^{K_1} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]}]$$
+$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]} \leq \E_{\mu^{K_0} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]}]$$
 
-$$\Abs{\E_{\mu^{K_1} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_1} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K_1} \ltimes \pi^K}[\Dtv(\mu_y^K,L_y^K)]$$
+$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K_0} \ltimes \pi^K}[\Dtv(\mu_y^K,L_y^K)]$$
 
 Using the defining property of $L$, we get the desired result.
 
@@ -1203,7 +1203,7 @@ Using the defining property of $L$, we get the desired result.
 \begin{proposition}
 \label{prp:gen}
 
-Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K_1} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Denote $\mu_\pi^K:=\mu^{K_1} \ltimes \pi^K$. Suppose $G$ is an $\Fall(\MGrow)$-generator of $(\mu,f)$ relative to $\pi$. Then
+Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Denote $\mu_\pi^K:=\mu^{K_0} \ltimes \pi^K$. Suppose $G$ is an $\Fall(\MGrow)$-generator of $(\mu,f)$ relative to $\pi$. Then
 
 \begin{equation}
 \E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y)G^K(y,z)_2] \pmod \Fall
