@@ -142,7 +142,7 @@ For any $t \in \Reals$, $\Floor{t} := \max \{n \in \Ints \mid n \leq t\}$, $\Cei
 
 $\log: \Reals^{\geq 0} \rightarrow \Reals \sqcup \{-\infty\}$ will denote the logarithm in base 2.
 
-Given $n \in \Nats$, sets $X_1, X_2 \ldots X_n$, $x \in \prod_{i=1}^n X_i$ and $m \in \{1,2 \ldots n\}$, $x_m \in X_m$ is the $m$-th component of the $n$-tuple $x$ i.e. $x=(x_1, x_2 \ldots x_n)$.
+Given $n \in \Nats$, $[n]:=\{i \in \Nats \mid i < n\}$. Given sets $X_0, X_1 \ldots X_{n-1}$, ${x \in \prod_{i \in [n]} X_i}$ and $m \in [n]$, $x_m \in X_m$ is the $m$-th component of the $n$-tuple $x$ i.e. ${x=(x_0, x_1 \ldots x_{n-1})}$.
 
 Given a set $X$ and $x,y \in X$, $\delta_{xy}$ (or $\delta_{x,y})$ will denote the the Kronecker delta
 
@@ -182,11 +182,11 @@ An \emph{encoded set} is a set $X$ together with an injection ${\En_X: X \righta
 
 There are standard encodings we implicitly use throughout. $\bm{1}$ denotes an encoded set with 1 element $\bullet$ whose encoding is the empty string. $\Words$ is an encoded set with the trivial encoding ${\En_\Words(x):=x}$. $\Nats$ is an encoded set where $\En_\Nats(n)$ is the binary representation of $n$. $\Rats$ is an encoded set where ${\En_\Rats(\frac{n}{m}):=\Chev{n,m}}$ for an irreducible fraction $\frac{n}{m}$. For any encoded set $X$ and $L \in \textsc{P}$, $\{x \in X \mid \En_X(x) \in L\}$ is an encoded set whose encoding is the restriction of $\En_X$. For $X,Y$ encoded sets, $X \times Y$ is an encoded set with encoding $\En_{X \times Y}(x,y):=\Chev{\En_X(x),\En_Y(y)}$.
 
-Given $n \in \Nats$, encoded sets $X_1, X_2 \ldots X_n$ and encoded set $Y$ we use the notation $A: \prod_{i=1}^n X_i \Alg Y$ to mean a Turing machine with $n$ input tapes that halts on every input for which the $i$-th tape is initialized to a value in $\Img \En_X$ and produces an output in $\Img \En_Y$. Given $\{x_i \in X_i\}_{i=1}^n$ the notation $A(x_1, x_2 \ldots x_n)$ stands for the unique $y \in Y$ s.t. applying $A$ to the input composed of $\En_{X_i}(x_i)$ results in output $\En_Y(y)$. We use different input tapes for different components of the input instead of encoding the $n$-tuple as a single word in order to allow $A$ to process some components of the input in time smaller than the length of other components. This involves abuse of notation since a Cartesian product of encoded sets is naturally an encoded set, but hopefully this won't cause much confusion.
+Given $n \in \Nats$, encoded sets $X_0, X_1 \ldots X_{n-1}$ and encoded set $Y$ we use the notation $A: \prod_{i \in [n]} X_i \Alg Y$ to mean a Turing machine with $n$ input tapes that halts on every input for which the $i$-th tape is initialized to a value in $\Img \En_X$ and produces an output in $\Img \En_Y$. Given $\{x_i \in X_i\}_{i \in [n]}$ the notation $A(x_0, x_1 \ldots x_{n-1})$ stands for the unique $y \in Y$ s.t. applying $A$ to the input composed of $\En_{X_i}(x_i)$ results in output $\En_Y(y)$. We use different input tapes for different components of the input instead of encoding the $n$-tuple as a single word in order to allow $A$ to process some components of the input in time smaller than the length of other components. This involves abuse of notation since a Cartesian product of encoded sets is naturally an encoded set, but hopefully this won't cause much confusion.
 
 Given $A: X \Alg Y$ and $x \in X$, $\T_A(x)$ stands for the number of time steps in the computation of $A(x)$.
 
-For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing machine with $n+1$ input tapes: 1 program tape and $n$ tapes that serve as input to the program. Given $A: \prod_{i=1}^n X_i \Alg\ Y$, $\Quote{A} \in \Words$ denotes the corresponding program for $\mathcal{U}_n$.
+For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing machine with $n+1$ input tapes: 1 program tape and $n$ tapes that serve as input to the program. Given $A: \prod_{i \in [n]} X_i \Alg\ Y$, $\Quote{A} \in \Words$ denotes the corresponding program for $\mathcal{U}_n$.
 
 \section{Fundamentals}
 \label{sec:fundamentals}
@@ -251,7 +251,7 @@ For any $n \in \Nats$, $\Gamma_{\text{poly}}^n$ is a growth space of rank $n$. $
 
 \begin{example}
 
-For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{log}}^n$ iff there is $c \in \Nats$ s.t. $\gamma(K_1, K_2 \ldots K_n) \leq c \sum_{i=1}^n \log(K_i+1)$.
+For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{log}}^n$ iff there is $c \in \Nats$ s.t. $\gamma(K_0, K_1 \ldots K_{n-1}) \leq c \sum_{i \in [n]} \log(K_i+1)$.
 
 \end{example}
 
