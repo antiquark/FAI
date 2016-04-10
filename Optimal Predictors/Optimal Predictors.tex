@@ -1041,16 +1041,16 @@ For sufficiently large $\GrowA$ the requirements of $\Fall(\MGrow)$-samplability
 \begin{proposition}
 \label{prp:adv_mgamma_smp}
 
-Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$, $\mu^{K_1}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Then, $\mu$ is $\Fall(\MGrow)$-samplable.
+Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$, $\mu^{K_1}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_1}(\Bool^{\leq l(K)}) > 0\}}$. Consider ${L: \bm{1} \MScheme \Words}$ s.t. for any $K \in I$, $\M_L^K:=\mu^{K_1} \mid \Bool^{\leq l(K)}$ and ${L^K(y,z)=z}$.  Then, $L$ is an $\Fall(\MGrow)$-sampler of $\mu$. In particular, since such an $L$ can always be constructed, $\mu$ is $\Fall(\MGrow)$-samplable.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Denote $I:=\{K \in \Nats^n \mid \mu^{K_1}(\Bool^{\leq l(K)}) > 0\}$. We have $\chi_I \geq \mu^{K_1}(\Bool^{\leq l(K)})$, $1 - \chi_I \leq 1 - \mu^{K_1}(\Bool^{\leq l(K)})$ and therefore $1 - \chi_I \in \Fall$.
+$\chi_I \geq \mu^{K_1}(\Bool^{\leq l(K)})$, $1 - \chi_{I} \leq 1 - \mu^{K_1}(\Bool^{\leq l(K)})$ and therefore $1 - \chi_I \in \Fall$.
 
-Construct ${L: \bm{1} \MScheme \Words}$ s.t. for any $K \in I$, $\M_L^K:=\mu^{K_1} \mid \Bool^{\leq l(K)}$ and ${L^K(y,z)=z}$. Given $K \in I$, ${L_\bullet^K = \mu^{K_1} \mid \Bool^{\leq l(K)}}$ and we get
+Given $K \in I$, ${L_\bullet^K = \mu^{K_1} \mid \Bool^{\leq l(K)}}$ and we get
 
 $$\Dtv(\mu^{K_1}, L_\bullet^K) = \Dtv(\mu^{K_1}, \mu^{K_1} \mid \Bool^{\leq l(K)})$$
 
@@ -1087,9 +1087,9 @@ Fix $n \in \Nats$, let $\Gamma$ and $\Fall$ be of rank $n$. Assume $\Fall$ is $\
 
 \begin{proof}
 
-Denote $I:=\{K \in \Nats^n \mid \mu^{K_1}(\Bool^{\leq l(K)}) > 0\}$. As in the proof of Proposition~\ref{prp:adv_mgamma_smp}, $1 - \chi_I \in \Fall$.
+Consider $\zeta: \Nats^2 \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by $\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_1}(\Bool^{\leq l(K)}) > 0\}}$. Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$, $\M_G^K:=\alpha_*^K(\mu^{K_1} \mid \Bool^{\leq l(K)})$ and ${G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)}$.
 
-Consider $\zeta: \Nats^2 \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by $\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}$. Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$, $\M_G^K:=\alpha_*^K(\mu^{K_1} \mid \Bool^{\leq l(K)})$ and ${G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)}$. We can see $G_1$ is an $\Fall(\MGrow)$-sampler of $\mu$ exactly like in the proof of Proposition~\ref{prp:adv_mgamma_smp}.
+Let $L$ be an $\Fall(\MGrow)$-sampler of $\mu$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $L_{\bullet}^K=G_{1\bullet}^K$ therefore $G_1$ is also an $\Fall(\MGrow)$-sampler of $\mu$.
 
 Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \mu^{K_1} \cap \Bool^{\leq l(K)}}$, $f_G^K(x)=\rho^K(f(x))$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_G^K(x)=0$. Denote ${p^K:=\mu^{K_1}(\Bool^{\leq l(K)})}$. We get
 
@@ -1392,7 +1392,7 @@ $$\E[\Abs{g(x_2)-g(\pi^{kj}(\Chev{x_1,x_2}))}] \in \Fall$$
 \begin{proposition}
 \label{prp:tbd}
 
-Consider $(\mu_1, f)$ a distribution estimation problem with $\Fall(\MGrow)$-generator $G$ and $\mu_2$ a word ensemble with $\Fall(\MGrow)$-sampler $L$. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$ and $\bar{f}: \Supp \mu \rightarrow \Reals$ given by $\bar{f}(\Chev{x_1,x_2})=f(x_1)$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $k,j \in \Nats$, $x_1 \in \Supp G_{1\bullet}^{kj}$, ${x_2 \in \Supp L_\bullet^{kj}}$ and $z \in \Bool^{\R_\pi(k,j)}$, $\pi^{kj}(\Chev{x_1,x_2},z)=x_2$. Then, $(\mu,\bar{f})$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
+Consider  word ensembles $\mu_1$ and $\mu_2$ with $\Fall(\MGrow)$-samplers $L_1$ and $L_2$ respectively. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $k,j \in \Nats$, $x_1 \in \Supp G_{1\bullet}^{kj}$, ${x_2 \in \Supp L_\bullet^{kj}}$ and $z \in \Bool^{\R_\pi(k,j)}$, $\pi^{kj}(\Chev{x_1,x_2},z)=x_2$. Then, $(\mu,\bar{f})$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
@@ -1400,6 +1400,23 @@ Consider $(\mu_1, f)$ a distribution estimation problem with $\Fall(\MGrow)$-gen
 \begin{proof}
 
 BAR
+
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Consider $(\mu_1, f)$ a distribution estimation problem with $\Fall(\MGrow)$-generator $G$ and $\mu_2$ a word ensemble with $\Fall(\MGrow)$-sampler $L$. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$ and $\bar{f}: \Supp \mu \rightarrow \Reals$ given by $\bar{f}(\Chev{x_1,x_2})=f(x_1)$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $k,j \in \Nats$, $x_1 \in \Supp G_{1\bullet}^{kj}$, ${x_2 \in \Supp L_\bullet^{kj}}$ and $z \in \Bool^{\R_\pi(k,j)}$, $\pi^{kj}(\Chev{x_1,x_2},z)=x_2$. Then, $(\mu,\bar{f})$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Construct $\bar{G}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{G}}^{kj}=\UM_G^{kj}$ and ${\bar{G}^{kj}(x,y,z)=G^{kj}(y,z)}$. 
+
+TBD
 
 \end{proof}
 
