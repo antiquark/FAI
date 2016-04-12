@@ -162,15 +162,15 @@ Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Su
 
 Given $X,Y$ measurable spaces, $\mu$ a measure on $X$ and $f: X \rightarrow Y$ a measurable mapping, $f_*(\mu)$ will denote the corresponding pushforward measure on $Y$.
 
-Given $X,Y$ measurable spaces, the notation $f: X \xrightarrow{\textnormal{mk}} Y$ signifies $f$ is a Markov kernel with source $X$ and target $Y$. Given $x \in X$, $f_x$ is the corresponding probability measure on $Y$ and $f(x)$ is a random variable sampled from $f_x$. Given $\mu$ a probability measure on $X$, $\mu \ltimes f$ (resp. $f \rtimes \mu$) is the semidirect product measure on $X \times Y$ (resp. $Y \times X$).
+Given $X,Y$ measurable spaces, the notation $f: X \xrightarrow{\textnormal{mk}} Y$ signifies $f$ is a Markov kernel with source $X$ and target $Y$. Given $x \in X$, $f_x$ is the corresponding probability measure on $Y$ and $f(x)$ is a random variable sampled from $f_x$. Given $\mu$ a probability measure on $X$, $\mu \ltimes f$ (resp. $f \rtimes \mu$) is the semidirect product measure on $X \times Y$ (resp. $Y \times X$). $f_*(\mu)$ is the pushforward measure on $Y$, i.e. $f_*(\mu):=\pi_*(\mu \ltimes f)$ where $\pi: X \times Y \rightarrow Y$ is the projection.
 
-For $X$ a measurable space, $\mu$ a probability measure on $X$ and $A$ a measurable subset of $X$ s.t. $\mu(A) > 0$, $\mu \mid A$ will denote the corresponding conditional probability measure, i.e. $(\mu \mid A)(B):=\frac{\mu(B \cap A)}{\mu(A)}$. Given $Y$ another measurable space, $f: X \Markov Y$ and $A$ a measurable subset of $Y$ s.t. $(\mu \ltimes f)(B \times Y) > 0$, $\mu \mid f^{-1}(A)$ will denote the probability measure on $X$ defined by ${(\mu \mid f^{-1}(A))(B):=(\mu \ltimes f \mid X \times A)(B \times Y)}$. Note that when $f$ is deterministic (i.e. $f_x$ is a Dirac measure for every $x$), this corresponds to conditioning by the inverse image of $A$ with respect to $f$. When $A=\{a\}$ we will use the shorthand notation $\mu \mid f^{-1}(a)$.
+For $X$ a measurable space, $\mu$ a probability measure on $X$ and $A$ a measurable subset of $X$ s.t. $\mu(A) > 0$, $\mu \mid A$ will denote the corresponding conditional probability measure, i.e. $(\mu \mid A)(B):=\frac{\mu(B \cap A)}{\mu(A)}$. Given $Y$ another measurable space, $f: X \Markov Y$ and $A$ a measurable subset of $Y$ s.t. $(\mu \ltimes f)(X \times A) > 0$, $\mu \mid f^{-1}(A)$ will denote the probability measure on $X$ defined by ${(\mu \mid f^{-1}(A))(B):=(\mu \ltimes f \mid X \times A)(B \times Y)}$. Note that when $f$ is deterministic (i.e. $f_x$ is a Dirac measure for every $x$), this corresponds to conditioning by the inverse image of $A$ with respect to $f$. When $A=\{a\}$ we will use the shorthand notation $\mu \mid f^{-1}(a)$.
 
 Given $X$ a measurable space and $\mu$, $\nu$ probability measures on $X$, $\Dtv(\mu,\nu)$ will denote the total variation distance between $\mu$ and $\nu$.
 
 For $X$ a measurable space and $x \in X$, $\delta_x$ will denote the Dirac measure associated with $x$, i.e. $\delta_x(A)=1$ iff $x \in A$.
 
-For $X$ a discrete measurable space, a probability measure on $X$ can be represented by a function $\mu: X \rightarrow [0,1]$ s.t. $\sum_{x \in X} \mu(x) = 1$. Abusing notation, we will make no distinction between the function and the probability measure.
+For $X$ a discrete measurable space, a probability measure on $X$ can be represented by a function $\mu: X \rightarrow [0,1]$ s.t. $\sum_{x \in X} \mu(x) = 1$. Abusing notation, we will use the same symbol to denote the function and the probability measure.
 
 \subsection{Algorithms}
 
@@ -1001,6 +1001,20 @@ Total variation distance is contracted by semi-direct product with a fixed Marko
 
 \begin{samepage}
 \begin{proposition}
+\label{prp:prob_cong_push}
+
+Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and $f: X \Markov Y$. Then, $\mu \equiv \nu \pmod \Fall$ implies $f_*(\mu^K) \equiv f_*(\nu^K) \pmod \Fall$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Total variation distance is contracted by pushforward therefore ${\Dtv(f_*(\mu^K), f_*(\nu^K)) \leq \Dtv(\mu^K, \nu^K)}$.
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
 \label{prp:prob_cong_dir}
 
 Consider $X_1$, $X_2$ measurable spaces, $\{\mu_1^K\}_{K \in \Nats^n}$, $\{\nu_1^K\}_{K \in \Nats^n}$ families of probability measures on $X_1$ and $\{\mu_2^K\}_{K \in \Nats^n}$, $\{\nu_2^K\}_{K \in \Nats^n}$ families of probability measures on $X_2$. Then, $\mu_1 \equiv \nu_1 \pmod \Fall$ and $\mu_2 \equiv \nu_2 \pmod \Fall$ imply $\mu_1^K \times \mu_2^K \equiv \nu_1^K \times \nu_2^K \pmod \Fall$. 
@@ -1062,17 +1076,17 @@ A distributional estimation problem $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-ge
 
 \begin{enumerate}[(i)]
 
-\item $G_1$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$.
+\item $G_0$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$.
 
-\item For any $K \in \Nats^n$, denote $X_{G}^K:=\Supp \, (G_1)_\bullet^K$. For any $x \in \Words$, denote 
+\item For any $K \in \Nats^n$, denote $X_{G}^K:=\Supp G_{0\bullet}^K$. For any $x \in \Words$, denote 
 
-$$f_G^K(x):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(z)_2 \mid G^K(z)_1 = x] \text{ if } x \in X_{G}^K \\ 0 \text{ if } x \not\in X_{G}^K \end{cases}$$
+$$f_G^K(x):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(z)_1 \mid G^K(z)_0 = x] \text{ if } x \in X_{G}^K \\ 0 \text{ if } x \not\in X_{G}^K \end{cases}$$
 
 We require that the function $\varepsilon(K):=\E_{x \sim \mu^{K_0}}[\Abs{f_G^K(x)-f(x)}]$ is in $\Fall$.
 
 \end{enumerate}
 
-When $\sup{\Abs{G_2}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Gamma)$-generator) of $(\mu,f)$}.
+When $\sup{\Abs{G_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Gamma)$-generator) of $(\mu,f)$}.
 
 \end{definition}
 \end{samepage}
@@ -1130,7 +1144,7 @@ Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $
 
 Consider $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by $\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}}$. Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$, $\M_G^K:=\alpha_*^K(\mu^{K_0} \mid \Bool^{\leq l(K)})$ and ${G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)}$.
 
-Let $L$ be an $\Fall(\MGrow)$-sampler of $\mu$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $L_{\bullet}^K=G_{1\bullet}^K$ therefore $G_1$ is also an $\Fall(\MGrow)$-sampler of $\mu$.
+Let $L$ be an $\Fall(\MGrow)$-sampler of $\mu$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $L_{\bullet}^K=G_{0\bullet}^K$ therefore $G_0$ is also an $\Fall(\MGrow)$-sampler of $\mu$.
 
 Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \mu^{K_0} \cap \Bool^{\leq l(K)}}$, $f_G^K(x)=\rho^K(f(x))$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_G^K(x)=0$. Denote ${p^K:=\mu^{K_0}(\Bool^{\leq l(K)})}$. We get
 
@@ -1147,7 +1161,7 @@ We now introduce the notions of samplability of generatability over a given \enq
 
 \begin{definition}
 
-Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)]}$ is in $\Fall$.
+Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. the function ${\varepsilon(K):=\E_{y \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)]}$ is in $\Fall$.
 
 In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$ relative to $\pi$}.
 
@@ -1161,17 +1175,17 @@ Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$ and a
 
 \begin{enumerate}[(i)]
 
-\item $G_1$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$ relative to $\pi$.
+\item $G_0$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$ relative to $\pi$.
 
-\item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{G,y}^K:=\Supp G_{1y}^K$. For any ${x \in \Words}$, denote 
+\item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{G,y}^K:=\Supp G_{0y}^K$. For any ${x \in \Words}$, denote 
 
-$$f_G^K(x,y):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(y,z)_2 \mid G^K(y,z)_1 = x] \text{ if } x \in X_{G,y}^K \\ 0 \text{ if } x \not\in X_{G,y}^K \end{cases}$$
+$$f_G^K(x,y):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(y,z)_1 \mid G^K(y,z)_0 = x] \text{ if } x \in X_{G,y}^K \\ 0 \text{ if } x \not\in X_{G,y}^K \end{cases}$$
 
 We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[\Abs{f_G^K(x,y)-f(x)}]}$ is in $\Fall$.
 
 \end{enumerate}
 
-When $\sup{\Abs{G_2}} < \infty$, $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Gamma)$-generator) of $(\mu,f)$ relative to $\pi$}.
+When $\sup{\Abs{G_1}} < \infty$, $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Gamma)$-generator) of $(\mu,f)$ relative to $\pi$}.
 
 \end{definition}
 \end{samepage}
@@ -1186,18 +1200,18 @@ Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded
 
 \begin{enumerate}[(i)]
 
-\item $\mu^{K_0} \ltimes \pi^{K} \equiv \nu^{K_0} \pmod \Fall$
+\item $\pi_*^{K}(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
 
-\item $\E_{(x,z) \sim \mu^{K_0} \times \U_\pi^{K}}[\Abs{f_2(x)-g(\pi^{K}(x,z))}] \in \Fall$
+\item $\E_{(x,z) \sim \mu^{K_0} \times \U_\pi^{K}}[\Abs{f_1(x)-g(\pi^{K}(x,z))}] \in \Fall$
 
-\item $(\mu, f_1)$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
+\item $(\mu, f_2)$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
 
 \end{enumerate}
 
-Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1)$ and $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(g,\nu)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P=\R_{P_1}+\R_{P_2}+\R_{\pi}$ and for any $z_1 \in \WordsLen{\R_{P_1}(K)}$, $z_2 \in \WordsLen{\R_{P_2}(K)}$ and $z_3 \in \WordsLen{\R_\pi(K)}$
+Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(g,\nu)$ and $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P=\R_{P_1}+\R_{P_2}+\R_{\pi}$ and for any $z_1 \in \WordsLen{\R_{P_1}(K)}$, $z_2 \in \WordsLen{\R_{P_2}(K)}$ and $z_3 \in \WordsLen{\R_\pi(K)}$
 
 \begin{equation}
-P^{K}(x,z_1 z_2 z_3)=P_1^{K}(x,z_1) P_2^{K}(\pi^{K}(x,z_3),z_2)
+P^{K}(x,z_1 z_2 z_3)=P_1^{K}(\pi^{K}(x,z_3),z_1) P_2^{K}(x,z_2)
 \end{equation}
 
 Then, $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1 f_2)$.
@@ -1214,7 +1228,7 @@ In order to prove Theorem~\ref{thm:mult} we will need the following propositions
 Consider a word ensemble $\mu$, an encoded set $Y$, a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $L$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$. Then
 
 \begin{equation}
-E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] \equiv \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
+E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] \equiv \E_{(y,z) \sim \pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1226,15 +1240,15 @@ If we sample $(x,y)$ from $\mu^{K_0} \ltimes \pi^K$ and then sample $x'$ from ${
 
 $$\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] = \E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[\E_{x' \sim \mu_y^K}[h(x',y)]]$$
 
-$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]$$
+$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)]$$
 
-$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\UM_L^K}[h(L^K(y,z),y)]]$$
+$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\UM_L^K}[h(L^K(y,z),y)]]$$
 
-$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]]$$
+$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]]$$
 
-$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]} \leq \E_{\mu^{K_0} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]}]$$
+$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)]} \leq \E_{\mu^{K_0} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]}]$$
 
-$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\mu^{K_0} \ltimes \pi^K \times \UM_L^K}[h(L^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K_0} \ltimes \pi^K}[\Dtv(\mu_y^K,L_y^K)]$$
+$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K_0} \ltimes \pi^K}[\Dtv(\mu_y^K,L_y^K)]$$
 
 Using the defining property of $L$, we get the desired result.
 \end{proof}
@@ -1245,7 +1259,7 @@ Using the defining property of $L$, we get the desired result.
 Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Denote $\mu_\pi^K:=\mu^{K_0} \ltimes \pi^K$. Suppose $G$ is an $\Fall(\MGrow)$-generator of $(\mu,f)$ relative to $\pi$. Then
 
 \begin{equation}
-\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y)G^K(y,z)_2] \pmod \Fall
+\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y)G^K(y,z)_1] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1264,11 +1278,11 @@ $$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K}[h(x,y)f_G^K(x,y)] \pmod \Fall
 
 Using property (i) of Definition~\ref{def:gen_rel} we can apply Proposition~\ref{prp:smp} to the second term and get
 
-$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y) f_G^K(G^K(y,z)_1,y)] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y) f_G^K(G^K(y,z)_0,y)] \pmod \Fall$$
 
-$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y) \E_{z' \sim\UM_G^K}[G^K(y,z')_2 \mid G^K(y,z')_1 = G^K(y,z)_1]] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y) \E_{z' \sim\UM_G^K}[G^K(y,z')_1 \mid G^K(y,z')_0 = G^K(y,z)_0]] \pmod \Fall$$
 
-$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K \times \UM_G^K}[h(G^K(y,z)_1,y) G^K(y,z)_2] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y) G^K(y,z)_1] \pmod \Fall$$
 \end{proof}
 
 \begin{samepage}
@@ -1304,43 +1318,43 @@ By construction of $w^{K}$, the absolute value of the left hand side is no less 
 
 Consider $K \in \Nats^n$, $x \in \Supp \mu^{K_0}$, $z_1 \in \WordsLen{\R_{P_1}(K)}$, ${z_2 \in \WordsLen{\R_{P_2}(K)}}$ and $z_3 \in \WordsLen{\R_\pi(K)}$.
 
-$$P^{K}(x,z_1 z_2 z_3)-f_1(x)f_2(x)=f_1(x)(P_2^{K}(\pi^{K}(x,z_3),z_2)-f_2(x))+(P_1^{K}(x,z_1)-f_1(x))P_2^{K}(\pi^{K}(x,z_3),z_2)$$
+$$P^{K}(x,z_1 z_2 z_3)-f_1(x)f_2(x)=(P_1^{K}(\pi^{K}(x,z_3),z_1)-f_1(x))f_2(x)+P_1^{K}(\pi^{K}(x,z_3),z_1)(P_2^{K}(x,z_2)-f_2(x))$$
 
-Denote $\bar{P}_2^{K}:=P_2^{K} \circ \pi^{K}$. For any bounded $S: \Words \times \Rats \Scheme \Rats$ we get
+Denote $\bar{P}_1^{K}:=P_1^{K} \circ \pi^{K}$. For any bounded $S: \Words \times \Rats \Scheme \Rats$ we get
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_2^{K}-f_2)f_1 S^{K}]} + \Abs{\E[(P_1^{K}-f_1) \bar{P}_2^{K} S^{K}]}$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]} + \Abs{\E[(P_2^{K}-f_2) \bar{P}_1^{K} S^{K}]}$$
 
-$P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1)$ therefore the second term on the right hand side is in $\Fall$.
+$P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_2)$ therefore the second term on the right hand side is in $\Fall$.
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_2^{K}-f_2)f_1 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_2^{K}-f_2)f_1 S^{K}] - \E[(\bar{P}_2^{K}-g \circ \pi^{K})f_1 S^{K}] + \E[(\bar{P}_2^{K}-g \circ \pi^{K})f_1 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}] - \E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}] + \E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_2^{K}-f_2)f_1 S^{K}] - \E[(\bar{P}_2^{K}-g \circ \pi^{K})f_1 S^{K}]} + \Abs{\E[(\bar{P}_2^{K}-g \circ \pi^{K})f_1 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}] - \E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} + \Abs{\E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(g \circ \pi^{K}-f_2)f_1 S^{K}]} + \Abs{\E[(\bar{P}_2^{K}-g \circ \pi^{K})f_1 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(g \circ \pi^{K}-f_1)f_2 S^{K}]} + \Abs{\E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq (\sup \Abs{f_1}) (\sup \Abs{S}) \E[\Abs{g \circ \pi^{K} - f_2}] + \Abs{\E[(\bar{P}_2^{K}-g \circ \pi^{K})f_1 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq (\sup \Abs{f_2}) (\sup \Abs{S}) \E[\Abs{g \circ \pi^{K} - f_1}] + \Abs{\E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
 Condition (ii) implies the first term on the right hand side is in $\Fall$.
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_2^{K}-g \circ \pi^{K})f_1 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
 Denote $\U_{\text{tot}}^{K}:= \U_{P_1}^{K} \times \U_{P_2}^{K} \times \U_S^{K}$. We change variables inside the expected value on the right hand side by $y:=\pi^{K}(x,z_3)$. Observing that $(x,y)$ obeys the distribution $\mu^{K_0} \ltimes \pi^{K}$ we get
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K} \times \U_{\text{tot}}^{K}}[(P_2^{K}(y,z_{2})-g(y))f_1(x) S^{K}(x,P_1^{K}(x,z_1)P_2^{K}(y,z_2), z_4)]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K} \times \U_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-g(y))f_2(x) S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K}}[\E_{\U_{\text{tot}}^{K}}[(P_2^{K}(y,z_{2})-g(y))S^{K}(x,P_1^{K}(x,z_1)P_2^{K}(y,z_2), z_4)]f_1(x)]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K}}[\E_{\U_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-g(y))S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]f_2(x)]} \pmod \Fall$$
 
-Let $G$ be an $\Fall(\MGrow)$-generator of $(\mu,f_1)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
+Let $G$ be an $\Fall(\MGrow)$-generator of $(\mu,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K} \times \UM_G^{K}}[\E[(P_2^{K}(y)-g(y))S^{K}(G^{K}(y)_1,P_1^{K}(G^{K}(y)_1)P_2^{K}(y))]G^{K}(y)_2]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K(\mu^{K_0}) \times \UM_G^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
 
 Using condition (i) we conclude that
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\nu^k \times \UM_G^{K}}[\E[(P_2^{K}(y)-g(y))S^{K}(G^{K}(y)_1,P_1^{K}(G^{K}(y)_1)P_2^{K}(y))]G^{K}(y)_2]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\nu^k \times \UM_G^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\nu^k \times \U_{\text{tot}}^{K} \times \UM_G^{K}}[(P_2^{K}(y)-g(y))S^{K}(G^{K}(y)_1,P_1^{K}(G^{K}(y)_1)P_2^{K}(y))G^{K}(y)_2]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\nu^k \times \U_{\text{tot}}^{K} \times \UM_G^{K}}[(P_1^{K}(y)-g(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))G^{K}(y)_1]} \pmod \Fall$$
 
 By Proposition~\ref{prp:mixed_ort}, this implies
 
@@ -1353,7 +1367,7 @@ The following corollary demonstrates one natural scenario in which the condition
 \begin{corollary}
 \label{crl:dir_prod}
 
-Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $G$ is an $\Fall(\MGrow)$-generator for $(\mu_1,f_1)$ and $L$ is an $\Fall(\MGrow)$-sampler for $\mu_2$. Define ${\mu^{K_0}:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Define $f: \Supp \mu \rightarrow \Reals$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp G_{1\bullet}^{K}$, $x_2 \in \Supp L_\bullet^{K}$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $L$ is an $\Fall(\MGrow)$-sampler for $\mu_1$ and $G$ is an $\Fall(\MGrow)$-generator for $(\mu_2,f_2)$. Define ${\mu^{K_0}:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^{K}$, $x_2 \in \Supp G_{0\bullet}^{K}$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
@@ -1370,23 +1384,23 @@ In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following proposi
 \begin{proposition}
 \label{prp:tbd}
 
-Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_2$. Then $\mu^{K_0} \ltimes \pi^{K} \equiv \mu_2^{K_0} \pmod \Fall$.
+Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K(\mu^{K_0}) \equiv \mu_1^{K_0} \pmod \Fall$
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-$L_{1\bullet}^{K} \equiv \mu_1^{K_0} \pmod \Fall$ and $L_{2\bullet}^{K} \equiv \mu_2^{K_0} \pmod \Fall$ therefore ${L_{1\bullet}^{K} \times L_{2\bullet}^{K} \equiv \mu_1^{K_0} \times \mu_2^{K_0} \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_dir}). Denote $\mu_L^{K}:=(\En_{\Words \times \Words})_*(L_{1\bullet}^{K} \times L_{2\bullet}^{K})$. We get ${\mu_L^{K} \equiv \mu^{K_0} \pmod \Fall}$ and therefore $\mu_L^{K} \ltimes \pi^K \equiv \mu^{K_0} \ltimes \pi^K \pmod \Fall$ (by Proposition~\ref{prp:prob_cong_semidir}). Obviously $\mu_L^{K}\ltimes \pi^{K}=L_{2\bullet}^{K}$. We conclude that ${L_{2\bullet}^{K} \equiv \mu^{K_0} \ltimes \pi^K \pmod \Fall}$ and therefore $\mu_2 \equiv \mu^{K_0} \ltimes \pi^K \pmod \Fall$ (by Proposition~\ref{prp:prob_cong_eq}).
+$L_{1\bullet}^{K} \equiv \mu_1^{K_0} \pmod \Fall$ and $L_{2\bullet}^{K} \equiv \mu_2^{K_0} \pmod \Fall$ therefore ${L_{1\bullet}^{K} \times L_{2\bullet}^{K} \equiv \mu_1^{K_0} \times \mu_2^{K_0} \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_dir}). Denote $\mu_L^{K}:=(\En_{\Words \times \Words})_*(L_{1\bullet}^{K} \times L_{2\bullet}^{K})$. We get ${\mu_L^{K} \equiv \mu^{K_0} \pmod \Fall}$ and therefore $\pi_*^K(\mu_L^{K}) \equiv \pi_*^K(\mu^{K_0}) \pmod \Fall$ (by Proposition~\ref{prp:prob_cong_push}). Obviously $\pi_*^K(\mu_L^{K})=L_{1\bullet}^{K}$. We conclude that ${\pi_*^K(\mu^{K_0}) \equiv L_{1\bullet}^{K} \pmod \Fall}$ and therefore $\pi_*^K(\mu^{K_0}) \equiv \mu_1 \pmod \Fall$ (by Proposition~\ref{prp:prob_cong_eq}).
 \end{proof}
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:tbd}
 
-Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_2$. Then, for any $g: \Supp \mu_2 \rightarrow \Reals$ bounded we have 
+Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \mu_1 \rightarrow \Reals$ bounded we have 
 
-$$\E_{(x_1,x_2,z) \sim\mu_1^{K_0} \times \mu_2^{K_0} \times \U_\pi^{K}}[\Abs{g(x_2)-g(\pi^{K}(\Chev{x_1,x_2},z))}] \in \Fall$$
+$$\E_{(x_1,x_2,z) \sim\mu_1^{K_0} \times \mu_2^{K_0} \times \U_\pi^{K}}[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2},z))}] \in \Fall$$
 
 \end{proposition}
 \end{samepage}
@@ -1395,37 +1409,29 @@ $$\E_{(x_1,x_2,z) \sim\mu_1^{K_0} \times \mu_2^{K_0} \times \U_\pi^{K}}[\Abs{g(x
 
 Denote $M:= \sup g - \inf g$.
 
-$$\E[\Abs{g(x_2)-g(\pi^{K}(\Chev{x_1,x_2}))}] \leq M \Prb_{ \mu_1^{K_0} \times \mu_2^{K_0}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}]$$
+$$\E[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2}))}] \leq M \Prb_{ \mu_1^{K_0} \times \mu_2^{K_0}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}]$$
 
-$$\E[\Abs{g(x_2)-g(\pi^{K}(\Chev{x_1,x_2}))}] \leq M\Prb_{ L_{1\bullet}^{K} \times L_{2\bullet}^{K}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}] \pmod \Fall$$
+$$\E[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2}))}] \leq M\Prb_{ L_{1\bullet}^{K} \times L_{2\bullet}^{K}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}] \pmod \Fall$$
 
-$$\E[\Abs{g(x_2)-g(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
+$$\E[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
 \end{proof}
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:smp_base_change}
 
-Consider  word ensembles $\mu_1$ and $\mu_2$ with $\Fall(\MGrow)$-samplers $L_1$ and $L_2$ respectively. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. 
-
-\begin{enumerate}[(i)]
-
-\item For any $K \in \Nats^n$, $x \in \Supp L_{1\bullet}^{K}$, ${y \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x,y},z)=y}$
-
-\item For any $K \in \Nats^n$, $x,y \in \Words$ and $z \in \Bool^{\R_\pi(K)}$, either ${\pi^{K}(\Chev{x,y},z)=y}$ or ${\pi^{K}(\Chev{x,y},z) \not\in \Supp L_{2\bullet}^{K}}$.
-
-\end{enumerate}
-
-Consider $L: \Words \MScheme \Words$ s.t. $\UM_L^{K}=\UM_{L_1}^{K}$ and ${L^{K}(y,z,w)=\Chev{L_1^{K}(z,w),y}}$. Then, $L$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$. In particular, since such an $L$ can always be constructed, $\mu$ is $\Fall(\MGrow)$-samplable relative to $\pi$.
+Consider  word ensembles $\mu_1$ and $\mu_2$ with $\Fall(\MGrow)$-samplers $L_1$ and $L_2$ respectively. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x_1,x_2},z)=x_1}$. Consider $L: \Words \MScheme \Words$ s.t. $\UM_L^{K}=\UM_{L_2}^{K}$ and for any $x_1 \in \Supp L_{1\bullet}^{K}$, ${L^{K}(x_1,z,w)=\Chev{x_1,L_2^{K}(z,w)}}$. Then, $L$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$. In particular, since such an $L$ can always be constructed, $\mu$ is $\Fall(\MGrow)$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Denote $\mu_\pi^K := \mu^{K_0} \ltimes \pi^K$, $\mu_y^K:=\mu \mid (\pi^K)^{-1}(y)$, ${\mu_L^K:=(\En_{\Words \times \Words})_*(L_{1\bullet}^k \times L_{2\bullet}^k)}$. We have $\mu^{K_0} \equiv \mu_L^K \pmod \Fall$, $\mu_\pi^K \equiv \mu_L^K \ltimes \pi^K \equiv L_{2\bullet}^K \pmod \Fall$.
+Denote $\mu_y^K:=\mu \mid (\pi^K)^{-1}(y)$, ${\mu_L^K:=(\En_{\Words \times \Words})_*(L_{1\bullet}^k \times L_{2\bullet}^k)}$. We have $\mu^{K_0} \equiv \mu_L^K \pmod \Fall$, $\pi_*^K(\mu^{K_0}) \equiv \pi_*^K(\mu_L^K) \equiv L_{1\bullet}^K \pmod \Fall$.
 
-\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \E_{y \sim L_{2\bullet}^K}[\Dtv(\mu_y^K,L_y^K)] \pmod \Fall\]
+\[\E_{x \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\mu_x^K,L_x^K)] \pmod \Fall\]
+
+For any $x \in \Supp L_{1\bullet}^{K}$, $\mu_x^K = (\En_{\Words \times \Words})_*(\delta_x \times \mu_2^{K_0})$...
 
 \[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Words}\Abs{\mu_y^K(x)-L_y^K(x)}] \pmod \Fall\]
 
