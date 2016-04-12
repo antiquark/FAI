@@ -1404,7 +1404,7 @@ $$\E[\Abs{g(x_2)-g(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:smp_base_change}
 
 Consider  word ensembles $\mu_1$ and $\mu_2$ with $\Fall(\MGrow)$-samplers $L_1$ and $L_2$ respectively. Define ${\mu^k:=(\En_{\Words \times \Words})_*(\mu_1^k \times \mu_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. 
 
@@ -1427,29 +1427,48 @@ Denote $\mu_\pi^K := \mu^{K_0} \ltimes \pi^K$, $\mu_y^K:=\mu \mid (\pi^K)^{-1}(y
 
 \[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \E_{y \sim L_{2\bullet}^K}[\Dtv(\mu_y^K,L_y^K)] \pmod \Fall\]
 
-%For any $y \in \Supp L_{2\bullet}^K$, $\mu_y^K = (\En_{\Words \times \Words})_*(\mu_1^{K_0} \times \delta_y) \mid (\pi^K)^{-1}(y)$...
+\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Words}\Abs{\mu_y^K(x)-L_y^K(x)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Words}\Abs{\mu_y^K(x)-L_y^K(x)})] \pmod \Fall\]
+\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x,y' \in \Words}\Abs{\mu_y^K(\Chev{x,y'})-L_y^K(\Chev{x,y'})}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x,y' \in \Words}\Abs{\mu_y^K(\Chev{x,y'})-L_y^K(\Chev{x,y'})})] \pmod \Fall\]
+\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x,y' \in \Words}\Abs{\mu_y^K(\Chev{x,y})\delta_{yy'}-L_{1\bullet}^K(x)\delta_{yy'}}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x,y' \in \Words}\Abs{\mu_y^K(\Chev{x,y})\delta_{yy'}-L_{1\bullet}^K(x)\delta_{yy'}})] \pmod \Fall\]
+\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Words}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Words}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)})] \pmod \Fall\]
-
-\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}+\sum_{x \not\in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)})] \pmod \Fall\]
+\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}+\sum_{x \not\in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}] \pmod \Fall\]
 
 \[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}+\sum_{x \not\in \Supp L_{1\bullet}^K}\mu_y^K(\Chev{x,y})] \pmod \Fall\]
 
 \[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \equiv \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}+\Prb_{\Chev{x,y} \sim \mu_y^K}[x \not\in \Supp L_{1\bullet}^K]] \pmod \Fall\]
 
+The properties of $\pi$ imply that for any $y \in \Supp L_{2\bullet}^K$, ${\Prb_{\Chev{x,y} \sim \mu_y^K}[x \not\in \Supp L_{1\bullet}^K] \leq \Prb_{x \sim \mu_1^{K_0}}[x \not\in \Supp L_{1\bullet}^K]}$.
+
 \[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \leq \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}+\Prb_{x \sim \mu_1^{K_0}}[x \not\in \Supp L_{1\bullet}^K]] \pmod \Fall\]
 
 \[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \leq \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}+\Prb_{x \sim L_{1\bullet}^K}[x \not\in \Supp L_{1\bullet}^K]] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \leq \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}] \pmod \Fall\]
+\begin{equation}
+\label{eqn:prp__smp_base_change__prf1}
+\E_{\mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \leq \frac{1}{2}\E_{L_{2\bullet}^K}[\sum_{x \in \Supp L_{1\bullet}^K}\Abs{\mu_y^K(\Chev{x,y})-L_{1\bullet}^K(x)}] \pmod \Fall
+\end{equation}
 
-\[\E_{(x,y) \sim \mu_\pi^K}[\Dtv(\mu_y^K,L_y^K)] \leq \frac{1}{2}\E_{y \sim L_{2\bullet}^K}[\sum_{x \in \Supp L_{1\bullet}^K}\Abs{\frac{\mu_1^{K_0}(x)}{\sum_{x' \in \Words} \mu_1^{K_0}(x') \Prb_{U_\pi^K}[\pi^K(\Chev{x',y})=y]}-L_{1\bullet}^K(x)}] \pmod \Fall\]
+For any $x,y \in \Words$
+
+\[\mu_y^K(\Chev{x,y})=\frac{\mu^K(\Chev{x,y}) \Prb_{\U_\pi^K}[\pi^K(\Chev{x,y})=y]}{\sum_{x',y' \in \Words} \mu^K(\Chev{x',y'}) \Prb_{\U_\pi^K}[\pi^K(\Chev{x',y'})=y]}\]
+
+Assuming $x \in \Supp L_{1\bullet}^K$, $y \in \Supp L_{2\bullet}^K$
+
+\[\mu_y^K(\Chev{x,y})=\frac{\mu^K(\Chev{x,y})}{\sum_{x' \in \Words} \mu^K(\Chev{x',y}) \Prb_{\U_\pi^K}[\pi^K(\Chev{x',y})=y]}\]
+
+\[\mu_y^K(\Chev{x,y})=\frac{\mu_1^{K_0}(x)\mu_2^{K_0}(y)}{\sum_{x' \in \Words} \mu_1^{K_0}(x')\mu_2^{K_0}(y)\Prb_{\U_\pi^K}[\pi^K(\Chev{x',y})=y]}\]
+
+\[\mu_y^K(\Chev{x,y})=\frac{\mu_1^{K_0}(x)}{\sum_{x' \in \Words} \mu_1^{K_0}(x') \Prb_{\U_\pi^K}[\pi^K(\Chev{x',y})=y]}\]
+
+\[\mu_y^K(\Chev{x,y})=\frac{\mu_1^{K_0}(x)}{\sum_{x' \in \Supp L_{1\bullet}^K} \mu_1^{K_0}(x') \Prb_{\U_\pi^K}[\pi^K(\Chev{x',y})=y]+\sum_{x' \not\in \Supp L_{1\bullet}^K} \mu_1^{K_0}(x') \Prb_{\U_\pi^K}[\pi^K(\Chev{x',y})=y]}\]
+
+\[\mu_y^K(\Chev{x,y})=\frac{\mu_1^{K_0}(x)}{\sum_{x' \in \Supp L_{1\bullet}^K} \mu_1^{K_0}(x') + \sum_{x' \not\in \Supp L_{1\bullet}^K} \mu_1^{K_0}(x') \Prb_{\U_\pi^K}[\pi^K(\Chev{x',y})=y]}\]
+
+Denote $\varepsilon(K):=\sum_{x' \not\in \Supp L_{1\bullet}^K} \mu_1^{K_0}(x')$. Clearly $\varepsilon \in \Fall$ and there is ${\alpha^K(y) \in [0,1]}$ s.t. ...
 
 TBD
 \end{proof}
