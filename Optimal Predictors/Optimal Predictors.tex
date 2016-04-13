@@ -213,6 +213,8 @@ Note that the characterization of $P$ depends not only on $f$ but also on $\mu$.
 
 A \emph{word ensemble} $\mu$ is a family of probability distributions $\{\mu^{K_0}: \Words \rightarrow [0,1]\}_{k \in \Nats}$.
 
+We will use the notation $\Supp \mu := \bigcup_{k \in \Nats} \Supp \mu^k$.
+
 \end{definition}
 
 We now introduce our abstraction for a \enquote{class of mathematical questions} (with quantitative real-valued answers). This abstraction is a trivial generalization of the concept of a distributional decision problem from average-case complexity theory (see e.g. \cite{Bogdanov_2006}).
@@ -904,7 +906,7 @@ $$\frac{\delta(K)^2}{\alpha(K)} \leq \frac{4}{3}\varepsilon(K)$$
 
 \subsection{Algebraic Properties}
 
-In this subsection we show that several algebraic identities satisfied by expected values have analogues for optimal predictors.
+In this subsection and subsection~\ref{subsec:indep_var}, we show that several algebraic identities satisfied by expected values have analogues for optimal predictors.
 
 Given $F_1,F_2$ random variables and $t_1,t_2 \in \Reals$, we have 
 
@@ -951,14 +953,20 @@ The above perspective allows us stating and proving non-tautological theorems an
 \begin{theorem}
 %\label{thm:tbd}
 
-Consider $(\mu, f)$ a distributional estimation problem  and ${D \subseteq \Words}$. Let $P_D$ be an $\ESG$-optimal predictor for $(\mu, \chi_D)$ and $P_{f \mid D}$ be an $\ESG$-optimal predictor for $(\mu \mid D, f)$. Construct $P_f: \Words \Scheme \Rats$ s.t. $\R_{P_f}=\R_{P_D} + \R_{P_{f \mid D}}$ and for any $y \in \BoolR{P_D}$ and $z \in \BoolR{P_{f \mid D}}$, $P_f^K(x,yz)=P_D^K(x,y) P_{f \mid D}^K(x,z)$. Then, $P_f$ is an $\ESG$-optimal predictor for $(\mu,f)$.
+Consider $(\mu, f)$ a distributional estimation problem  and ${D \subseteq \Words}$. Let $P_D$ be an $\ESG$-optimal predictor for $(\mu, \chi_D)$ and $P_{f \mid D}$ be an $\ESG$-optimal predictor for $(\mu \mid D, f)$. Construct $P_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{P_{\chi f}}=\R_{P_D} + \R_{P_{f \mid D}}$ and for any $y \in \BoolR{P_D}$ and $z \in \BoolR{P_{f \mid D}}$, $P_{\chi f}^K(x,yz)=P_D^K(x,y) P_{f \mid D}^K(x,z)$. Then, $P_{\chi f}$ is an $\ESG$-optimal predictor for $(\mu, \chi_Df)$.
 
 \end{theorem}
 \end{samepage}
 
 \begin{proof}
 
-BAR
+Consider any $K \in \Nats^n$, $x \in \Supp \mu^{K_0}$, $y \in \BoolR{P_D}$ and $z \in \BoolR{P_{f \mid D}}$.
+
+\[P_{\chi f}^K(x,yz) - \chi_D(x) f(x) = P_D^K(x,y) P_{f \mid D}^K(x,z) - \chi_D(x) f(x)\]
+
+\[P_{\chi f}^K(x,yz) - \chi_D(x) f(x) = P_D^K(x,y) P_{f \mid D}^K(x,z) - \chi_D(x) f(x)\]
+
+TBD
 %
 \end{proof}
  
@@ -1226,6 +1234,7 @@ When $\sup{\Abs{G_1}} < \infty$, $G$ is called an \emph{$\EMG$-sampler (resp. $\
 Note that relative samplability reduces to absolute (ordinary) samplability when $Y=\bm{1}$.
 
 \subsection{Independent Variables}
+\label{subsec:indep_var}
 
 Independent random variables $F_1, F_2$ satisfy 
 
