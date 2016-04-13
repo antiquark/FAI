@@ -121,7 +121,7 @@ A wager on $\varphi_1$ can be resolved in a predetermined finite amount of time 
 In the present work we avoid choosing a specific category of mathematical questions. Instead, we consider the abstract setting of arbitrary distributional decision problems. This leads to the perspective that an assignment of probabilities is a form of \emph{approximate} solution to a problem. This is not the same sense of approximation as used in optimization problems, where the approximation error is the difference between the ideal solution and the actual solution. Instead, the approximation error is the prediction accuracy of our probability assignment. This is also different from average-complexity theory where the solution is required to be exact on most input instances. However the language of average-complexity theory (in particular the concept of a distributional decision problem) turns out to be well-suited to our purpose.
 The concept of \enquote{optimal predictor} that arises from the approach turns out to behave much like probabilities, or more generally expected values, in \enquote{classical} probability theory. They display an appropriate form of calibration. The \enquote{expected values} are linear in general and multiplicative for functions that are independent in an appropriate sense. There is a natural parallel of conditional probabilities. For simple examples constructed from one-way functions we get the probability values we expect. Also they are well behaved in the complexity-theoretic sense that a natural class of reductions transforms optimal predictors into optimal predictors, and complete problems for these reductions exist for important complexity classes.
 
-Optimal predictors turn out to be unique up to a certain equivalence relation. The existence of optimal predictors depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal predictors that exist for completely arbitrary problems. Uniform optimal predictors of this kind exist for a certain class of problems we call \enquote{generatable} which can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal predictors allows for much further research.
+Optimal predictors turn out to be unique up to a certain equivalence relation. The existence of optimal predictors depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal predictors that exist for completely arbitrary problems. Uniform optimal predictors of this kind exist for a certain class of problems we call \enquote{samplable} which can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal predictors allows for much further research.
 
 Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence\cite{Hutter_2013,Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other \cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal predictors. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal predictors to decision theory and the theory of self-modifying agents.
 
@@ -931,21 +931,13 @@ Using \ref{eqn:op_sharp} for $P_1$ and $P_2$ we see that the right hand side is 
 
 TBD
 
-\subsection{Independent Variables}
+\subsection{\texorpdfstring{$\MGrow$}{MGamma}-Schemes and Samplers}
 
-Independent random variables $F_1, F_2$ satisfy 
+The next subsection and subsequent sections will require several new concepts. Here, we introduce these concepts and discuss some of their properties.
 
-\begin{equation}
-\label{eqn:ev_mult}
-\E[F_1 F_2] = \E[F_1] \E[F_2]
-\end{equation}
+\subsubsection{Congruent Measure Families}
 
-To formulate an analogous property for optimal predictors, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_2$ is \enquote{independent} of $f_1$ when learning the value of $f_1(x)$ provides no efficiently accessible information about $f_2(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
-
-We start with an informal description. Suppose that $f_2(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_2(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ for which $f_1(x')$ is known\footnote{This is substantially weaker than saying $f_1$ can be efficiently computed even in the uniform case (assuming standard complexity theoretic conjectures) and even more so in the non-uniform case, as we shall see in Proposition~\ref{prp:adv_mgamma_gen} after formalising the relevant notion of \enquote{efficient sampling.}}. Then, the knowledge of $f_1(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
- Moreover, if we can only efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ together with $\tilde{f}_1(x')$ an \emph{unbiased estimate} of $f_1(x')$, we still expect the analogue of \ref{eqn:ev_mult} to hold since the expected value of $\tilde{f}_1(x') - f_1(x')$ vanishes for any given $x'$ so it is uncorrelated with $f_2(x)$.
- 
-In order to formalise the above, we introduce several new definitions.
+The notation $f(K) \equiv g(K) \pmod \Fall$ can be conveniently generalized from real-valued functions to families of probability measures.
 
 \begin{samepage}
 \begin{definition}
@@ -1027,7 +1019,9 @@ Consider $X_1$, $X_2$ measurable spaces, $\{\mu_1^K\}_{K \in \Nats^n}$, $\{\nu_1
 Total variation distance is subadditive w.r.t. direct products therefore $\Dtv(\mu_1^K \times \mu_2^K, \nu_1^K \times \nu_2^K) \leq \Dtv(\mu_1^K, \nu_1^K) + \Dtv(\mu_2^K, \nu_2^K)$.
 \end{proof}
 
-The following is a useful generalization of the concept of a $\Gamma$-scheme.
+\subsubsection{\texorpdfstring{$\MGrow$}{MGamma}-Schemes}
+
+The concept of a $\Gamma$-scheme can be generalized in a way which allows the advice to become random in itself.
 
 \begin{samepage}
 \begin{definition}
@@ -1059,6 +1053,12 @@ We will use the notation $S: X \MScheme Y$ to signify $S$ is an $\MGrow$-scheme 
 \end{definition}
 \end{samepage}
 
+\subsubsection{Samplers and Samplability}
+
+The concept of a \emph{samplable} word ensemble is commonly used in average-case complexity theory. Here we introduce a relaxation of this concept which allows approximate sampling with an error compatible with the given fall space. We then proceed to introduce samplable distributional estimation problems.
+
+Samplable word ensembles can be thought of as those ensembles which can be produced by a computationally bounded process. Samplable distributional estimation problems can be thought of as those questions that can be efficiently produced together with their answers, like an exam where the examinee cannot easily find the answer but the examinator knows it (even though the examinator is also computationally bounded).
+
 \begin{samepage}
 \begin{definition}
 
@@ -1072,7 +1072,7 @@ In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamm
 \begin{samepage}
 \begin{definition}
 
-A distributional estimation problem $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-generatable (resp. $\Fall(\Gamma)$-generatable)} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
+A distributional estimation problem $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable)} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
 
 \begin{enumerate}[(i)]
 
@@ -1086,12 +1086,12 @@ We require that the function $\varepsilon(K):=\E_{x \sim \mu^{K_0}}[\Abs{f_G^K(x
 
 \end{enumerate}
 
-When $\sup{\Abs{G_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Gamma)$-generator) of $(\mu,f)$}.
+When $\sup{\Abs{G_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $G$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $(\mu,f)$}.
 
 \end{definition}
 \end{samepage}
 
-For sufficiently large $\GrowA$ the requirements of $\Fall(\MGrow)$-samplability and $\Fall(\MGrow)$-generatability become very weak, as seen in the following propositions.
+For sufficiently large $\GrowA$ the requirements of $\Fall(\MGrow)$-samplability and $\Fall(\MGrow)$-samplability become very weak, as seen in the following propositions.
 
 \begin{samepage}
 \begin{proposition}
@@ -1135,7 +1135,7 @@ $$\Dtv(\mu^{K_0}, L_\bullet^K) \leq \max(1-\mu^{K_0}(\Bool^{\leq l(K)}), 1-\chi_
 \begin{proposition}
 \label{prp:adv_mgamma_gen}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $(\mu,f)$ s.t. for some $l \in \GrowA$, $\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Then, $(\mu,f)$ is $\Fall(\MGrow)$-generatable. 
+Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $(\mu,f)$ s.t. for some $l \in \GrowA$, $\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Then, $(\mu,f)$ is $\Fall(\MGrow)$-samplable. 
 
 \end{proposition}
 \end{samepage}
@@ -1157,7 +1157,7 @@ $$\E_{\mu^{K_0}}[\Abs{f_G^K(x)-f(x)}] \leq p^K \zeta(K) + (1 - p^K)\sup \Abs{f}$
 The right hand side is obviously in $\Fall$.
 \end{proof}
 
-We now introduce the notions of samplability of generatability over a given \enquote{base space} $Y$.
+We now introduce the notions of samplability of samplability over a given \enquote{base space} $Y$.
 
 \begin{definition}
 
@@ -1171,7 +1171,7 @@ In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamm
 \begin{definition}
 \label{def:gen_rel}
 
-Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$. $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-generatable (resp. $\Fall(\Gamma)$-generatable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
+Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$. $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -1185,14 +1185,28 @@ We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_0} \ltimes 
 
 \end{enumerate}
 
-When $\sup{\Abs{G_1}} < \infty$, $G$ is called an \emph{$\Fall(\MGrow)$-generator (resp. $\Fall(\Gamma)$-generator) of $(\mu,f)$ relative to $\pi$}.
+When $\sup{\Abs{G_1}} < \infty$, $G$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $(\mu,f)$ relative to $\pi$}.
 
 \end{definition}
 \end{samepage}
 
-Note that relative samplability and generatability reduce to absolute (ordinary) samplability and generatability when $Y=\bm{1}$.
+Note that relative samplability reduces to absolute (ordinary) samplability when $Y=\bm{1}$.
 
-The following is an analogue of \ref{eqn:ev_mult} for optimal predictors.
+\subsection{Independent Variables}
+
+Independent random variables $F_1, F_2$ satisfy 
+
+\begin{equation}
+\label{eqn:ev_mult}
+\E[F_1 F_2] = \E[F_1] \E[F_2]
+\end{equation}
+
+To formulate an analogous property for optimal predictors, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_1$ is \enquote{independent} of $f_2$ when learning the value of $f_2(x)$ provides no efficiently accessible information about $f_1(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
+
+We start with an informal description. Suppose that $f_1(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_1(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ for which $f_2(x')$ is known. Then, the knowledge of $f_2(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
+ Moreover, if we can only efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ together with $\tilde{f}_2(x')$ an \emph{unbiased estimate} of $f_2(x')$, we still expect the analogue of \ref{eqn:ev_mult} to hold since the expected value of $\tilde{f}_2(x') - f_2(x')$ vanishes for any given $x'$ so it is uncorrelated with $f_1(x)$.
+ 
+The following theorem formalises this setting.
 
 \begin{samepage}
 \begin{theorem}
@@ -1206,7 +1220,7 @@ Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded
 
 \item $\E_{(x,z) \sim \mu^{K_0} \times \U_\pi^{K}}[\Abs{f_1(x)-g(\pi^{K}(x,z))}] \in \Fall$
 
-\item $(\mu, f_2)$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
+\item $(\mu, f_2)$ is $\Fall(\MGrow)$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -1258,7 +1272,7 @@ Using the defining property of $L$, we get the desired result.
 \begin{proposition}
 \label{prp:gen}
 
-Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Denote $\mu_\pi^K:=\mu^{K_0} \ltimes \pi^K$. Suppose $G$ is an $\Fall(\MGrow)$-generator of $(\mu,f)$ relative to $\pi$. Then
+Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Denote $\mu_\pi^K:=\mu^{K_0} \ltimes \pi^K$. Suppose $G$ is an $\Fall(\MGrow)$-sampler of $(\mu,f)$ relative to $\pi$. Then
 
 \begin{equation}
 \E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y)G^K(y,z)_1] \pmod \Fall
@@ -1348,7 +1362,7 @@ $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K} \times 
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K}}[\E_{\U_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-g(y))S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]f_2(x)]} \pmod \Fall$$
 
-Let $G$ be an $\Fall(\MGrow)$-generator of $(\mu,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
+Let $G$ be an $\Fall(\MGrow)$-sampler of $(\mu,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K(\mu^{K_0}) \times \UM_G^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
 
@@ -1369,7 +1383,7 @@ The following corollary demonstrates one natural scenario in which the condition
 \begin{corollary}
 \label{crl:dir_prod}
 
-Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $L$ is an $\Fall(\MGrow)$-sampler for $\mu_1$ and $G$ is an $\Fall(\MGrow)$-generator for $(\mu_2,f_2)$. Define ${\mu^{K_0}:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $L$ is an $\Fall(\MGrow)$-sampler for $\mu_1$ and $G$ is an $\Fall(\MGrow)$-sampler for $(\mu_2,f_2)$. Define ${\mu^{K_0}:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
@@ -1451,7 +1465,7 @@ For any $x \in \Supp L_{1\bullet}^{K}$, $\mu_x^K = \En_*^2(\delta_x \times \mu_2
 \begin{proposition}
 \label{prp:thm__mult__cond3}
 
-Consider $\mu_1$ a word ensemble with $\Fall(\MGrow)$-sampler $L$ and $(\mu_2, f)$ a distribution estimation problem with $\Fall(\MGrow)$-generator $G$. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and $\bar{f}: \Supp \mu \rightarrow \Reals$ given by ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp L_\bullet^{K}}$, $x_2 \in \Words$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\mu,\bar{f})$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
+Consider $\mu_1$ a word ensemble with $\Fall(\MGrow)$-sampler $L$ and $(\mu_2, f)$ a distribution estimation problem with $\Fall(\MGrow)$-sampler $G$. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and $\bar{f}: \Supp \mu \rightarrow \Reals$ given by ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp L_\bullet^{K}}$, $x_2 \in \Words$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\mu,\bar{f})$ is $\Fall(\MGrow)$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
