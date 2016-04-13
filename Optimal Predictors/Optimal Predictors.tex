@@ -86,6 +86,11 @@
 \newcommand{\Grow}{\Gamma:=(\GrowR,\GrowA)}
 \newcommand{\MGrow}{\mathrm{M}\Gamma}
 \newcommand{\Fall}{\mathcal{E}}
+\newcommand{\EG}{\Fall(\Gamma)}
+\newcommand{\ESG}{\Fall^\sharp(\Gamma)}
+\newcommand{\EMG}{\Fall(\MGrow)}
+\newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
+\newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
@@ -149,7 +154,7 @@ Given a set $X$ and $x,y \in X$, $\delta_{xy}$ (or $\delta_{x,y})$ will denote t
 
 $$\delta_{xy} := \begin{cases}1 & \text{if } x=y \\ 0 & \text{if } x \ne y \end{cases}$$
 
-Given a set $X$ and a subset $Y$, $\chi_Y: X \rightarrow \Bool$ will denote the characteristic function of $Y$ (when $X$ is assumed to be known from the context)
+Given a set $X$ and a subset $Y$, $\chi_Y: X \rightarrow \Bool$ will denote the indicator function of $Y$ (when $X$ is assumed to be known from the context)
 
 $$\chi_Y(x):=\begin{cases}1 & \text{if } x \in Y \\ 0 & \text{if } x \not\in Y \end{cases}$$
 
@@ -929,6 +934,34 @@ $$\Abs{\E[(P^{K} - f)S^{K}]} \leq \Abs{t_1} \cdot \Abs{\E[(P_1^{K} - f_1)S^{K}]}
 Using \ref{eqn:op_sharp} for $P_1$ and $P_2$ we see that the right hand side is in $\Fall$.
 \end{proof}
 
+Consider a random variable $F$ and an event $A$. Denote $\chi_A$ the $\Bool$-valued random variable corresponding to the indicator function of $A$. We have
+
+\begin{equation}
+\label{eqn:cond_ev}
+\E[F \mid A] = \frac{\E[\chi_A F]}{\Prb[A]}
+\end{equation}
+
+This identity is tautologous if interpreted as a definition of $\E[F \mid A]$. However, from the perspective of Bayesian probability it is more natural to think of $\E[F \mid A]$ as an atomic entity (the subjective expectation of $F$ after observing $A$). 
+
+The language of optimal predictors provides a natural way to define an analogue of conditional expectation. Namely, consider a distributional estimation problem $(\mu, f)$ and a decision problem $D \subset \Words$. Then, $P: \Words \Scheme \Rats$ represents the conditional expectation of $f$ given $D$ when it is an optimal predictor for $(\mu \mid D, f)$. That is, the conditional expectation is the best estimate of $f(x)$ when the problem instance $x$ is sampled with the \emph{promise} $x \in D$.
+
+The above perspective allows us stating and proving non-tautological theorems analogous to \ref{eqn:cond_ev}. We give two such theorems, corresponding to two different ways to group the variables in \ref{eqn:cond_ev}.
+
+\begin{samepage}
+\begin{theorem}
+%\label{thm:tbd}
+
+Consider $(\mu, f)$ a distributional estimation problem  and ${D \subseteq \Words}$. Let $P_D$ be an $\ESG$-optimal predictor for $(\mu, \chi_D)$ and $P_{f \mid D}$ be an $\ESG$-optimal predictor for $(\mu \mid D, f)$. Construct $P_f: \Words \Scheme \Rats$ s.t. $\R_{P_f}=\R_{P_D} + \R_{P_{f \mid D}}$ and for any $y \in \BoolR{P_D}$ and $z \in \BoolR{P_{f \mid D}}$, $P_f^K(x,yz)=P_D^K(x,y) P_{f \mid D}^K(x,z)$. Then, $P_f$ is an $\ESG$-optimal predictor for $(\mu,f)$.
+
+\end{theorem}
+\end{samepage}
+
+\begin{proof}
+
+BAR
+%
+\end{proof}
+ 
 TBD
 
 \subsection{\texorpdfstring{$\MGrow$}{MGamma}-Schemes and Samplers}
