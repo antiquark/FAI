@@ -1190,6 +1190,8 @@ When $\sup{\Abs{G_1}} < \infty$, $G$ is called an \emph{$\Fall(\MGrow)$-generato
 \end{definition}
 \end{samepage}
 
+Note that relative samplability and generatability reduce to absolute (ordinary) samplability and generatability when $Y=\bm{1}$.
+
 The following is an analogue of \ref{eqn:ev_mult} for optimal predictors.
 
 \begin{samepage}
@@ -1228,7 +1230,7 @@ In order to prove Theorem~\ref{thm:mult} we will need the following propositions
 Consider a word ensemble $\mu$, an encoded set $Y$, a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $L$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$. Then
 
 \begin{equation}
-E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] \equiv \E_{(y,z) \sim \pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
+\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] \equiv \E_{(y,z) \sim \pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1367,13 +1369,11 @@ The following corollary demonstrates one natural scenario in which the condition
 \begin{corollary}
 \label{crl:dir_prod}
 
-Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $L$ is an $\Fall(\MGrow)$-sampler for $\mu_1$ and $G$ is an $\Fall(\MGrow)$-generator for $(\mu_2,f_2)$. Define ${\mu^{K_0}:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^{K}$, $x_2 \in \Supp G_{0\bullet}^{K}$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $L$ is an $\Fall(\MGrow)$-sampler for $\mu_1$ and $G$ is an $\Fall(\MGrow)$-generator for $(\mu_2,f_2)$. Define ${\mu^{K_0}:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
 \end{equation}
-
-Then, $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$.
 
 \end{corollary}
 \end{samepage}
@@ -1382,7 +1382,7 @@ In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following proposi
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:thm__mult__cond1}
 
 Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K(\mu^{K_0}) \equiv \mu_1^{K_0} \pmod \Fall$
 
@@ -1396,7 +1396,7 @@ $L_{1\bullet}^{K} \equiv \mu_1^{K_0} \pmod \Fall$ and $L_{2\bullet}^{K} \equiv \
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:thm__mult__cond2}
 
 Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \mu_1 \rightarrow \Reals$ bounded we have 
 
@@ -1449,7 +1449,7 @@ For any $x \in \Supp L_{1\bullet}^{K}$, $\mu_x^K = \En_*^2(\delta_x \times \mu_2
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:thm__mult__cond3}
 
 Consider $\mu_1$ a word ensemble with $\Fall(\MGrow)$-sampler $L$ and $(\mu_2, f)$ a distribution estimation problem with $\Fall(\MGrow)$-generator $G$. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and $\bar{f}: \Supp \mu \rightarrow \Reals$ given by ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp L_\bullet^{K}}$, $x_2 \in \Words$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\mu,\bar{f})$ is $\Fall(\MGrow)$-generatable relative to $\pi$.
 
@@ -1483,7 +1483,7 @@ Construct $\bar{G}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{G}}^K=\
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:thm__mult__op}
 
 Consider word ensemble $\mu_1$  with $\Fall(\MGrow)$-sampler $L$ and $(\mu_2,f)$ a distributional estimation problem. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and ${\bar{f}: \Supp \mu \rightarrow \Reals}$ given by ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f)$. Let $\bar{P}: \Words \Scheme \Rats$ be s.t. $\R_{\bar{P}}=\R_P$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Supp \mu_2^K$ and $z \in \Bool^{\R_P(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P^K(x_2,z)$. Then, $\bar{P}$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,\bar{f})$.
 
@@ -1492,13 +1492,38 @@ Consider word ensemble $\mu_1$  with $\Fall(\MGrow)$-sampler $L$ and $(\mu_2,f)$
 
 \begin{proof}
 
-BAR
+Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote $\U_{PS}^K:=\U_P^K \times \U_S^K$, ${\mu_{PS}^K:=\mu^{K_0} \times \U_{PS}^K}$.
+
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]=\E_{\mu_1^{K_0} \times \mu_2^{K_0} \times \U_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - \bar{f}(\Chev{x_1,x_2}))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]\]
+
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]=\E_{\mu_1^{K_0} \times \mu_2^{K_0} \times \U_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - f(x_2))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]\]
+
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]=\E_{\mu_1^{K_0}}[\E_{\mu_2^{K_0} \times \U_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - f(x_2))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]]\]
+
+Applying Proposition~\ref{prp:smp} (with $Y = \bm{1}$) to the right hand side, we get
+
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\UM_L^K}[\E_{\mu_2^{K_0} \times \U_{PS}^K}[(\bar{P}^K(\Chev{L^K,x_2}) - f(x_2))S^K(\Chev{L^K,x_2},\bar{P}^K(\Chev{L^K,x_2}))]] \pmod \Fall\]
+
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\UM_L^K}[\E_{\mu_2^{K_0} \times \U_{PS}^K}[(P^K(x_2) - f(x_2))S^K(\Chev{L^K,x_2},P^K(x_2))]] \pmod \Fall\]
+
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\mu_2^{K_0} \times \U_{PS}^K \times \UM_L^K}[(P^K(x_2) - f(x_2))S^K(\Chev{L^K,x_2},P^K(x_2))] \pmod \Fall\]
+
+Using the fact $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f)$, we conclude
+
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv 0 \pmod \Fall\]
 %
 \end{proof}
 
 \begin{proof}[Proof of Corollary \ref{crl:dir_prod}]
 
-BAR
+Define $\bar{f}_1, \bar{f}_2: \Supp \mu \rightarrow \Reals$ by $\bar{f}_1(\Chev{x_1,x_2})=f_1(x_1)$, $\bar{f}_2(\Chev{x_1,x_2})=f_2(x_2)$. 
+
+Construct $\pi: \Words \Scheme \Words$ s.t. $\R_\pi \equiv 0$ and for any ${x_1 \in \Supp L_\bullet^K}$ and $x_2 \in \Words$, $\pi^K(\Chev{x_1,x_2})=x_1$. This is possible because the runtime of $L^K$ is bounded by a polynomial in $K$ so the length of $L^K$'s output is also bounded by a polynomial in $K$, implying $\pi^K$ only has to read a polynomial size prefix of its input in order to output $x_1$.
+
+Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,\bar{f}_2)$. 
+
+We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\mu_1, f_1)$ plays the role of $(\nu,g)$: condition (i) holds due to Proposition~\ref{prp:thm__mult__cond1}, condition (ii) holds due to Proposition~\ref{prp:thm__mult__cond2} and condition (iii) holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal predictor for $(\mu, f)$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$, $P^K(x, z_1 z_2) = P_1^K(\pi^K(x),z_1) \bar{P}^K(x,z_2)$. In particular, for any ${x_1 \in \Supp L_\bullet^K}$ and $x_2 \in \Words$, ${P^K(\Chev{x_1,x_2}, z_1 z_2)=P_1^K(x_1,z_2)P_2^K(x_2,z_2)}$.
+%
 \end{proof}
 
 \section{Reductions and Completeness}
