@@ -430,7 +430,7 @@ We are now ready to give our central definition, which corresponds to a notion o
 \begin{definition}
 \label{def:op}
 
-Fix $n \in \Nats$, $\Gamma$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. $P$ is called an \emph{$\Fall(\Gamma)$-optimal predictor for $(\mu,f)$} when for any $Q: \Words \Scheme \Rats$
+Fix $n \in \Nats$, $\Gamma$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. $P$ is called an \emph{$\EG$-optimal predictor for $(\mu,f)$} when for any $Q: \Words \Scheme \Rats$
 
 \begin{equation}
 \label{eqn:op}
@@ -452,7 +452,7 @@ Note that $\varepsilon$ in (\ref{eqn:op}) depends on $Q$. However in some sense 
 \begin{proposition}
 \label{prp:unif}
 
-Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and $F$ a uniform family of $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \Fall$ s.t. for any $Q \in F$
+Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\EG$-optimal predictor for $(\mu,f)$ and $F$ a uniform family of $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \Fall$ s.t. for any $Q \in F$
 
 \begin{equation}
 \E_{\mu^{K_0} \times \U_P^{K}}[(P^{K} - f)^2] \leq \E_{\mu^{K_0} \times \U_Q^{K}}[(Q^{K} - f)^2] + \varepsilon(K)
@@ -464,7 +464,7 @@ Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-o
 
 For any $K \in \Nats^n$, $\{\E_{\mu^{K_0} \times \U_Q^{K}}[(Q^{K} - f)^2] \mid Q \in F\}$ is a finite set because $F$ is a uniform family so the runtime of $Q^{K}$ is bounded by a polynomial in $K$ that doesn't depend on $Q$. Therefore we can choose ${Q_{K} \in \Argmin{Q \in F} \E_{\mu^{K_0} \times \U_Q^{K}}[(Q^{K} - f)^2]}$. By Proposition~\ref{prp:fam_diag}, there is $\bar{Q}: \Words \Scheme \Rats$ s.t. $\bar{Q}^{K}(x)$ is distributed the same as $Q_{K}^{K}(x)$.
 
-Since $P$ is an $\Fall(\Gamma)$-optimal predictor, there is $\varepsilon \in \Fall$ s.t.
+Since $P$ is an $\EG$-optimal predictor, there is $\varepsilon \in \Fall$ s.t.
 
 \begin{equation}
 \label{eqn:prp__unif__prf1}
@@ -487,7 +487,7 @@ As usual, random is no more powerful than advice. This is demonstrated by the fo
 
 \begin{proposition}
 
-Observe that $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ is a growth space and denote $\bar{\Gamma}:=(\bar{\Gamma}_{\mathfrak{R}},\GrowA)$. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\Fall(\bar{\Gamma})$-optimal predictor for $(\mu,f)$.
+Observe that $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ is a growth space and denote $\bar{\Gamma}:=(\bar{\Gamma}_{\mathfrak{R}},\GrowA)$. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\Fall(\bar{\Gamma})$-optimal predictor for $(\mu,f)$.
 
 \end{proposition}
 
@@ -506,13 +506,13 @@ $$\E_{\mu^{K_0} \times \U_P^{K}}[(P^{K} - f)^2] \leq \E_{\mu^{K_0} \times \U_Q^{
 
 \begin{proposition}
 
-Denote $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ and $\bar{\Gamma}:=(\bar{\Gamma}_{\mathfrak{R}},\GrowA)$. Consider $(\mu,f)$ a distributional estimation problem and $\bar{P}$ an $\Fall(\bar{\Gamma})$-optimal predictor for $(\mu,f)$. Then, there exists an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$.
+Denote $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ and $\bar{\Gamma}:=(\bar{\Gamma}_{\mathfrak{R}},\GrowA)$. Consider $(\mu,f)$ a distributional estimation problem and $\bar{P}$ an $\Fall(\bar{\Gamma})$-optimal predictor for $(\mu,f)$. Then, there exists an $\EG$-optimal predictor for $(\mu,f)$.
 
 \end{proposition}
 
 \begin{proof}
 
-Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any ${K \in \Nats^n}$, choose ${\bar{\A}_P(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \mu^{K_0} \times U^{r_{\mathfrak{R}}(K)}}[(\bar{P}^{K}(x,yz) - f(x))^2]}$. We can construct $P: \Words \Scheme \Rats$ so that for all $K \in \Nats^n$, $\R_P(K) = r_{\mathfrak{R}}(K)$, $\A_P(K):=\Chev{\A_{\bar{P}}(K),\bar{\A}_P(K)}$ and for any $x \in \Supp \mu^{K_0}$ and $z \in \WordsLen{r_{\mathfrak{R}}(K)}$, ${P^{K}(x,z)=\bar{P}^{K}(x,\bar{\A}_P(K)z)}$. Clearly ${\E_{\mu^{K_0} \times U^{r_{\mathfrak{R}}(K)}}[(P^{K} - f)^2] \leq \E_{\mu^{K_0} \times \U_{\bar{P}}^{K}}[(\bar{P}^{K} - f)^2]}$ and therefore $P$ is an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$.
+Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any ${K \in \Nats^n}$, choose ${\bar{\A}_P(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \mu^{K_0} \times U^{r_{\mathfrak{R}}(K)}}[(\bar{P}^{K}(x,yz) - f(x))^2]}$. We can construct $P: \Words \Scheme \Rats$ so that for all $K \in \Nats^n$, $\R_P(K) = r_{\mathfrak{R}}(K)$, $\A_P(K):=\Chev{\A_{\bar{P}}(K),\bar{\A}_P(K)}$ and for any $x \in \Supp \mu^{K_0}$ and $z \in \WordsLen{r_{\mathfrak{R}}(K)}$, ${P^{K}(x,z)=\bar{P}^{K}(x,\bar{\A}_P(K)z)}$. Clearly ${\E_{\mu^{K_0} \times U^{r_{\mathfrak{R}}(K)}}[(P^{K} - f)^2] \leq \E_{\mu^{K_0} \times \U_{\bar{P}}^{K}}[(\bar{P}^{K} - f)^2]}$ and therefore $P$ is an $\EG$-optimal predictor for $(\mu,f)$.
 \end{proof}
 
 Although the word ensemble plays a central role in the definition of an optimal predictor, the dependence on the word ensemble is lax in some sense. To see this, consider the following proposition.
@@ -526,7 +526,7 @@ Given a growth space $\Gamma^n$ of rank $n$, $\Fall$ is called \emph{$\Gamma^n$-
 \begin{proposition}
 \label{prp:weight}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{K}_{P,W}:=\mu^{K_0} \times \U_P^{K} \times U^{\R_W(K)-\R_P(K)}}$, ${\mu^{K}_{Q,W}:=\mu^{K_0} \times \U_Q^{K} \times U^{\R_W(K)-\R_Q(K)}}$. Then
+Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\EG$-optimal predictor for $(\mu,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{K}_{P,W}:=\mu^{K_0} \times \U_P^{K} \times U^{\R_W(K)-\R_P(K)}}$, ${\mu^{K}_{Q,W}:=\mu^{K_0} \times \U_Q^{K} \times U^{\R_W(K)-\R_Q(K)}}$. Then
 
 \begin{equation}
 \E_{\mu^{K}_{P,W}}[W^{K}(P^{K} - f)^2] \leq \\ \E_{\mu^{K}_{Q,W}}[W^{K}(Q^{K} - f)^2] \pmod \Fall
@@ -539,7 +539,7 @@ To relationship to the role of the word ensemble is as follows.
 \begin{samepage}
 \begin{corollary}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$. Suppose ${\Gamma^1:=(\GrowR^1,\GrowA^2)}$ is a pair of growth spaces of rank $1$ s.t. for any $\gamma \in \GrowR^1$ the function ${\gamma^2(K):=\gamma(k)}$ is in $\GrowR$ and for any $\gamma \in \GrowA^1$ the function $\gamma^2(K):=\gamma(k)$ is in $\GrowA$. Consider ${W: \Words \xrightarrow{\Gamma^1} \Rats^{\geq 0}}$ bounded s.t. for any $k \in \Nats$ there is $x \in \Supp \mu^k$ and $y \in \WordsLen{\R_W(k)}$ s.t. $W^k(x,y) > 0$. Define 
+Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal predictor for $(\mu,f)$. Suppose ${\Gamma^1:=(\GrowR^1,\GrowA^2)}$ is a pair of growth spaces of rank $1$ s.t. for any $\gamma \in \GrowR^1$ the function ${\gamma^2(K):=\gamma(k)}$ is in $\GrowR$ and for any $\gamma \in \GrowA^1$ the function $\gamma^2(K):=\gamma(k)$ is in $\GrowA$. Consider ${W: \Words \xrightarrow{\Gamma^1} \Rats^{\geq 0}}$ bounded s.t. for any $k \in \Nats$ there is $x \in \Supp \mu^k$ and $y \in \WordsLen{\R_W(k)}$ s.t. $W^k(x,y) > 0$. Define 
 
 $${\Fall_W:=\{\varepsilon_W: \Nats^2 \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid  \E_{\mu^k \times \U_W^k}[W^k]\varepsilon_W(K) \in \Fall\}}$$
 
@@ -620,11 +620,11 @@ $$\E[W^{K} \cdot ((P^{K}-f)^2-(Q^{K}-f)^2)] \leq M \varepsilon(K) + M'\zeta(K)$$
 
 There is a variant of Definition~\ref{def:op} which is nearly equivalent in many cases and often useful.
 
-We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real inner product space with inner product $\Chev{f,g}:=\E_\mu[fg]$. Informally, we can think of $\Gamma$-schemes as a subspace (although a $\Gamma$-scheme is not even a function) and an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ as the nearest point to $f$ in this subspace. Now, given an inner product space $V$, a vector $f \in V$, an actual subspace $W \subseteq V$ and $p = \Argmin{q \in W} \Norm{q - f}^2$, we have $\forall v \in W: \Chev{p-f,v}=0$. This motivates the following:
+We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real inner product space with inner product $\Chev{f,g}:=\E_\mu[fg]$. Informally, we can think of $\Gamma$-schemes as a subspace (although a $\Gamma$-scheme is not even a function) and an $\EG$-optimal predictor for $(\mu,f)$ as the nearest point to $f$ in this subspace. Now, given an inner product space $V$, a vector $f \in V$, an actual subspace $W \subseteq V$ and $p = \Argmin{q \in W} \Norm{q - f}^2$, we have $\forall v \in W: \Chev{p-f,v}=0$. This motivates the following:
 
 \begin {definition}
 
-Consider $(\mu,f)$ a distributional estimation problem and ${P: \Words \Scheme \Rats}$ with bounded range. Denote $\mu_P^{K}:=\mu^{K_0} \times \U_P^{K}$. $P$ is called an \emph{$\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats\footnote{The $\Rats$-valued argument of $S$ is only important for non-trivial $\GrowR$, otherwise we can absorb it into the definition of $S$ using $P$ as a subroutine.}$
+Consider $(\mu,f)$ a distributional estimation problem and ${P: \Words \Scheme \Rats}$ with bounded range. Denote $\mu_P^{K}:=\mu^{K_0} \times \U_P^{K}$. $P$ is called an \emph{$\ESG$-optimal predictor for $(\mu,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats\footnote{The $\Rats$-valued argument of $S$ is only important for non-trivial $\GrowR$, otherwise we can absorb it into the definition of $S$ using $P$ as a subroutine.}$
 
 \begin{equation}
 \label{eqn:op_sharp}
@@ -638,7 +638,7 @@ The following theorem is the analogue in our language of the previous fact about
 \begin{theorem}
 \label{thm:ort}
 
-Assume there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h$ polynomial.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal predictor for $(\mu,f)$.
+Assume there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h$ polynomial.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal predictor for $(\mu,f)$.
 
 \end{theorem}
 
@@ -689,7 +689,7 @@ Conversely, we have the following:
 
 \begin{theorem}
 
-Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$.
+Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\ESG$-optimal predictor for $(\mu,f)$. Then, $P$ is also an $\EG$-optimal predictor for $(\mu,f)$.
 
 \end{theorem}
 
@@ -811,7 +811,7 @@ We will now show that optimal predictors satisfy an analogous property.
 \begin{theorem}
 \label{thm:calib}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \R_P$ and for every $K \in \Nats^n$ there is $x \in \Supp \mu^{K_0}$ and $y \in \U_W^{K}$ with $W^{K}(x,y) > 0$. Denote ${\alpha(K):=\E_{\mu^{K_0} \times \U_W^{K}}[W^{K}]}$ and ${\delta(K):=\E_{\mu^{K_0} \times \U_W^{K}}[W^{K}(P^{K}-f)]}$. Then, $\frac{\delta^2}{\alpha} \in \Fall$.
+Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\EG$-optimal predictor for $(\mu,f)$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \R_P$ and for every $K \in \Nats^n$ there is $x \in \Supp \mu^{K_0}$ and $y \in \U_W^{K}$ with $W^{K}(x,y) > 0$. Denote ${\alpha(K):=\E_{\mu^{K_0} \times \U_W^{K}}[W^{K}]}$ and ${\delta(K):=\E_{\mu^{K_0} \times \U_W^{K}}[W^{K}(P^{K}-f)]}$. Then, $\frac{\delta^2}{\alpha} \in \Fall$.
 
 \end{theorem}
 
@@ -820,7 +820,7 @@ To see the relationship between Theorem~\ref{thm:calib} and calibration, conside
 \begin{corollary}
 \label{crl:calib}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall(\Gamma)$-optimal predictor for $(\mu,f)$ and $A,B: \bm{1} \Scheme \Rats$ s.t. $\R_A \equiv 0$ and $\R_B \equiv 0$. Denote ${\alpha(K):=\Prb_{\mu^{K_0} \times \U_P^{K}}[A^{K} \leq P^{K} \leq B^{K}]}$. Then, there is $\varepsilon \in \Fall$ s.t. 
+Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\EG$-optimal predictor for $(\mu,f)$ and $A,B: \bm{1} \Scheme \Rats$ s.t. $\R_A \equiv 0$ and $\R_B \equiv 0$. Denote ${\alpha(K):=\Prb_{\mu^{K_0} \times \U_P^{K}}[A^{K} \leq P^{K} \leq B^{K}]}$. Then, there is $\varepsilon \in \Fall$ s.t. 
 
 \begin{equation}
 \label{eqn:crl__calib}
@@ -917,7 +917,7 @@ Optimal predictors have an analogous property:
 \begin{proposition}
 \label{prp:linearity}
 
-Consider $\mu$ a word ensemble, $f_1,f_2: \Supp \mu \rightarrow \Reals$ bounded and $t_1,t_2 \in \Rats$. Denote $f: = t_1 f_1 + t_2 f_2$. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1)$ and $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P(K) = \R_{P_1}(K) + \R_{P_2}(K)$ and for any $x \in \Supp \mu^{K_0}$, $y_1 \in \WordsLen{\R_{P_1}(K)}$, $y_2 \in \WordsLen{\R_{P_1}(K)}$, $P^{K}(x,y_1 y_2)=t_1 P_1^{K}(x,y_1) + t_2 P_2^{K}(x, y_2)$. Then, $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu, f)$.
+Consider $\mu$ a word ensemble, $f_1,f_2: \Supp \mu \rightarrow \Reals$ bounded and $t_1,t_2 \in \Rats$. Denote $f: = t_1 f_1 + t_2 f_2$. Suppose $P_1$ is an $\ESG$-optimal predictor for $(\mu,f_1)$ and $P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P(K) = \R_{P_1}(K) + \R_{P_2}(K)$ and for any $x \in \Supp \mu^{K_0}$, $y_1 \in \WordsLen{\R_{P_1}(K)}$, $y_2 \in \WordsLen{\R_{P_1}(K)}$, $P^{K}(x,y_1 y_2)=t_1 P_1^{K}(x,y_1) + t_2 P_2^{K}(x, y_2)$. Then, $P$ is an $\ESG$-optimal predictor for $(\mu, f)$.
 
 \end{proposition}
 
@@ -1095,9 +1095,9 @@ Samplable word ensembles can be thought of as those ensembles which can be produ
 \begin{samepage}
 \begin{definition}
 
-A word ensemble $\mu$ is called \emph{$\Fall(\MGrow)$-samplable} (resp. \emph{$\Fall(\Gamma)$-samplable}) when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature ${\bm{1} \rightarrow \Words}$  s.t. $\mu^{K_0} \equiv L_\bullet^K \pmod \Fall$.
+A word ensemble $\mu$ is called \emph{$\EMG$-samplable} (resp. \emph{$\EG$-samplable}) when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature ${\bm{1} \rightarrow \Words}$  s.t. $\mu^{K_0} \equiv L_\bullet^K \pmod \Fall$.
 
-In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$}.
+In this case, $L$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\mu$}.
 
 \end{definition}
 \end{samepage}
@@ -1105,11 +1105,11 @@ In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamm
 \begin{samepage}
 \begin{definition}
 
-A distributional estimation problem $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable)} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
+A distributional estimation problem $(\mu,f)$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable)} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
 
 \begin{enumerate}[(i)]
 
-\item $G_0$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$.
+\item $G_0$ is an $\EMG$-sampler (resp. $\EG$-sampler) of $\mu$.
 
 \item For any $K \in \Nats^n$, denote $X_{G}^K:=\Supp G_{0\bullet}^K$. For any $x \in \Words$, denote 
 
@@ -1119,18 +1119,18 @@ We require that the function $\varepsilon(K):=\E_{x \sim \mu^{K_0}}[\Abs{f_G^K(x
 
 \end{enumerate}
 
-When $\sup{\Abs{G_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $G$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $(\mu,f)$}.
+When $\sup{\Abs{G_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $G$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $(\mu,f)$}.
 
 \end{definition}
 \end{samepage}
 
-For sufficiently large $\GrowA$ the requirements of $\Fall(\MGrow)$-samplability and $\Fall(\MGrow)$-samplability become very weak, as seen in the following propositions.
+For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability and $\EMG$-samplability become very weak, as seen in the following propositions.
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:adv_mgamma_smp}
 
-Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$, ${\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall}$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}}$. Consider ${L: \bm{1} \MScheme \Words}$ s.t. for any $K \in I$, $\M_L^K:=\mu^{K_0} \mid \Bool^{\leq l(K)}$ and ${L^K(y,z)=z}$.  Then, $L$ is an $\Fall(\MGrow)$-sampler of $\mu$. In particular, since such an $L$ can always be constructed, $\mu$ is $\Fall(\MGrow)$-samplable.
+Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$, ${\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall}$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}}$. Consider ${L: \bm{1} \MScheme \Words}$ s.t. for any $K \in I$, $\M_L^K:=\mu^{K_0} \mid \Bool^{\leq l(K)}$ and ${L^K(y,z)=z}$.  Then, $L$ is an $\EMG$-sampler of $\mu$. In particular, since such an $L$ can always be constructed, $\mu$ is $\EMG$-samplable.
 
 \end{proposition}
 \end{samepage}
@@ -1168,7 +1168,7 @@ $$\Dtv(\mu^{K_0}, L_\bullet^K) \leq \max(1-\mu^{K_0}(\Bool^{\leq l(K)}), 1-\chi_
 \begin{proposition}
 \label{prp:adv_mgamma_gen}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $(\mu,f)$ s.t. for some $l \in \GrowA$, $\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Then, $(\mu,f)$ is $\Fall(\MGrow)$-samplable. 
+Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $(\mu,f)$ s.t. for some $l \in \GrowA$, $\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall$. Then, $(\mu,f)$ is $\EMG$-samplable. 
 
 \end{proposition}
 \end{samepage}
@@ -1177,7 +1177,7 @@ Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $
 
 Consider $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by $\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}}$. Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$, $\M_G^K:=\alpha_*^K(\mu^{K_0} \mid \Bool^{\leq l(K)})$ and ${G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)}$.
 
-Let $L$ be an $\Fall(\MGrow)$-sampler of $\mu$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $L_{\bullet}^K=G_{0\bullet}^K$ therefore $G_0$ is also an $\Fall(\MGrow)$-sampler of $\mu$.
+Let $L$ be an $\EMG$-sampler of $\mu$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $L_{\bullet}^K=G_{0\bullet}^K$ therefore $G_0$ is also an $\EMG$-sampler of $\mu$.
 
 Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \mu^{K_0} \cap \Bool^{\leq l(K)}}$, $f_G^K(x)=\rho^K(f(x))$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_G^K(x)=0$. Denote ${p^K:=\mu^{K_0}(\Bool^{\leq l(K)})}$. We get
 
@@ -1194,9 +1194,9 @@ We now introduce the notions of samplability of samplability over a given \enquo
 
 \begin{definition}
 
-Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. the function ${\varepsilon(K):=\E_{y \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)]}$ is in $\Fall$.
+Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. the function ${\varepsilon(K):=\E_{y \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)]}$ is in $\Fall$.
 
-In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$ relative to $\pi$}.
+In this case, $L$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\mu$ relative to $\pi$}.
 
 \end{definition}
 
@@ -1204,11 +1204,11 @@ In this case, $L$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamm
 \begin{definition}
 \label{def:gen_rel}
 
-Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$. $(\mu,f)$ is called \emph{$\Fall(\MGrow)$-samplable (resp. $\Fall(\Gamma)$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
+Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$. $(\mu,f)$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
 
 \begin{enumerate}[(i)]
 
-\item $G_0$ is an $\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $\mu$ relative to $\pi$.
+\item $G_0$ is an $\EMG$-sampler (resp. $\EG$-sampler) of $\mu$ relative to $\pi$.
 
 \item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{G,y}^K:=\Supp G_{0y}^K$. For any ${x \in \Words}$, denote 
 
@@ -1218,7 +1218,7 @@ We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \mu^{K_0} \ltimes 
 
 \end{enumerate}
 
-When $\sup{\Abs{G_1}} < \infty$, $G$ is called an \emph{$\Fall(\MGrow)$-sampler (resp. $\Fall(\Gamma)$-sampler) of $(\mu,f)$ relative to $\pi$}.
+When $\sup{\Abs{G_1}} < \infty$, $G$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $(\mu,f)$ relative to $\pi$}.
 
 \end{definition}
 \end{samepage}
@@ -1253,17 +1253,17 @@ Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded
 
 \item $\E_{(x,z) \sim \mu^{K_0} \times \U_\pi^{K}}[\Abs{f_1(x)-g(\pi^{K}(x,z))}] \in \Fall$
 
-\item $(\mu, f_2)$ is $\Fall(\MGrow)$-samplable relative to $\pi$.
+\item $(\mu, f_2)$ is $\EMG$-samplable relative to $\pi$.
 
 \end{enumerate}
 
-Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(g,\nu)$ and $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P=\R_{P_1}+\R_{P_2}+\R_{\pi}$ and for any $z_1 \in \WordsLen{\R_{P_1}(K)}$, $z_2 \in \WordsLen{\R_{P_2}(K)}$ and $z_3 \in \WordsLen{\R_\pi(K)}$
+Suppose $P_1$ is an $\ESG$-optimal predictor for $(g,\nu)$ and $P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P=\R_{P_1}+\R_{P_2}+\R_{\pi}$ and for any $z_1 \in \WordsLen{\R_{P_1}(K)}$, $z_2 \in \WordsLen{\R_{P_2}(K)}$ and $z_3 \in \WordsLen{\R_\pi(K)}$
 
 \begin{equation}
 P^{K}(x,z_1 z_2 z_3)=P_1^{K}(\pi^{K}(x,z_3),z_1) P_2^{K}(x,z_2)
 \end{equation}
 
-Then, $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_1 f_2)$.
+Then, $P$ is an $\ESG$-optimal predictor for $(\mu,f_1 f_2)$.
 
 \end{theorem}
 \end{samepage}
@@ -1274,7 +1274,7 @@ In order to prove Theorem~\ref{thm:mult} we will need the following propositions
 \begin{proposition}
 \label{prp:smp}
 
-Consider a word ensemble $\mu$, an encoded set $Y$, a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $L$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$. Then
+Consider a word ensemble $\mu$, an encoded set $Y$, a family $\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $L$ is an $\EMG$-sampler of $\mu$ relative to $\pi$. Then
 
 \begin{equation}
 \E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] \equiv \E_{(y,z) \sim \pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
@@ -1305,7 +1305,7 @@ Using the defining property of $L$, we get the desired result.
 \begin{proposition}
 \label{prp:gen}
 
-Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Denote $\mu_\pi^K:=\mu^{K_0} \ltimes \pi^K$. Suppose $G$ is an $\Fall(\MGrow)$-sampler of $(\mu,f)$ relative to $\pi$. Then
+Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Denote $\mu_\pi^K:=\mu^{K_0} \ltimes \pi^K$. Suppose $G$ is an $\EMG$-sampler of $(\mu,f)$ relative to $\pi$. Then
 
 \begin{equation}
 \E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y)G^K(y,z)_1] \pmod \Fall
@@ -1338,7 +1338,7 @@ $$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K
 \begin{proposition}
 \label{prp:mixed_ort}
 
-Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$ and $S: \Words \times \Rats \MScheme \Rats$ bounded. Then
+Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\ESG$-optimal predictor for $(\mu,f)$ and $S: \Words \times \Rats \MScheme \Rats$ bounded. Then
 
 \begin{equation}
 \label{eqn:prp__mixed_ort}
@@ -1354,7 +1354,7 @@ For any $K \in \Nats^n$, choose
 
 $$w^{K} \in \Argmax{w \in \Supp \M_S^{K}} \Abs{\E_{\mu^{K_0} \times \U_P^{K} \times \U^{\R_S^{K}(w)}}[(P^{K}(x,y) - f(x))S^{K}(x,P^{K}(x,y),z,w)]}$$
 
-Construct $\bar{S}: \Words \times \Rats \Scheme \Rats$ s.t. $\R_{\bar{S}}(K)=\R_S^{K}(w^{K})$ and ${\bar{S}^{K}(x,t,z)=S^{K}(x,t,z,w^{K})}$. $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$, therefore
+Construct $\bar{S}: \Words \times \Rats \Scheme \Rats$ s.t. $\R_{\bar{S}}(K)=\R_S^{K}(w^{K})$ and ${\bar{S}^{K}(x,t,z)=S^{K}(x,t,z,w^{K})}$. $P$ is an $\ESG$-optimal predictor for $(\mu,f)$, therefore
 
 $$\E_{\mu^{K_0} \times \U_P^{K} \times \U_{\bar{S}}^{K}}[(P^{K}(x,y) - f(x))\bar{S}^{K}(x,P^{K}(x,y),z)] \equiv 0 \pmod \Fall$$
 
@@ -1373,7 +1373,7 @@ Denote $\bar{P}_1^{K}:=P_1^{K} \circ \pi^{K}$. For any bounded $S: \Words \times
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]} + \Abs{\E[(P_2^{K}-f_2) \bar{P}_1^{K} S^{K}]}$$
 
-$P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f_2)$ therefore the second term on the right hand side is in $\Fall$.
+$P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$ therefore the second term on the right hand side is in $\Fall$.
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]} \pmod \Fall$$
 
@@ -1395,7 +1395,7 @@ $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K} \times 
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K}}[\E_{\U_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-g(y))S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]f_2(x)]} \pmod \Fall$$
 
-Let $G$ be an $\Fall(\MGrow)$-sampler of $(\mu,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
+Let $G$ be an $\EMG$-sampler of $(\mu,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K(\mu^{K_0}) \times \UM_G^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
 
@@ -1416,7 +1416,7 @@ The following corollary demonstrates one natural scenario in which the condition
 \begin{corollary}
 \label{crl:dir_prod}
 
-Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f_2)$, $L$ is an $\Fall(\MGrow)$-sampler for $\mu_1$ and $G$ is an $\Fall(\MGrow)$-sampler for $(\mu_2,f_2)$. Define ${\mu^{K_0}:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\ESG$-optimal predictor for $(\mu_2,f_2)$, $L$ is an $\EMG$-sampler for $\mu_1$ and $G$ is an $\EMG$-sampler for $(\mu_2,f_2)$. Define ${\mu^{K_0}:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal predictor for $(\mu,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
@@ -1431,7 +1431,7 @@ In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following proposi
 \begin{proposition}
 \label{prp:thm__mult__cond1}
 
-Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K(\mu^{K_0}) \equiv \mu_1^{K_0} \pmod \Fall$
+Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K(\mu^{K_0}) \equiv \mu_1^{K_0} \pmod \Fall$
 
 \end{proposition}
 \end{samepage}
@@ -1445,7 +1445,7 @@ $L_{1\bullet}^{K} \equiv \mu_1^{K_0} \pmod \Fall$ and $L_{2\bullet}^{K} \equiv \
 \begin{proposition}
 \label{prp:thm__mult__cond2}
 
-Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\Fall(\MGrow)$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \mu_1 \rightarrow \Reals$ bounded we have 
+Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \mu_1 \rightarrow \Reals$ bounded we have 
 
 $$\E_{(x_1,x_2,z) \sim\mu_1^{K_0} \times \mu_2^{K_0} \times \U_\pi^{K}}[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2},z))}] \in \Fall$$
 
@@ -1466,7 +1466,7 @@ $$\E[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
 \begin{proposition}
 \label{prp:smp_base_change}
 
-Consider word ensembles $\mu_1$ and $\mu_2$ with $\Fall(\MGrow)$-samplers $L_1$ and $L_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x_1,x_2},z)=x_1}$. Consider $L: \Words \MScheme \Words$ s.t. $\UM_L^{K}=\UM_{L_2}^{K}$ and for any $x \in \Supp L_{1\bullet}^{K}$, ${L^{K}(x,z,w)=\Chev{x,L_2^{K}(z,w)}}$. Then, $L$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$. In particular, since such an $L$ can always be constructed, $\mu$ is $\Fall(\MGrow)$-samplable relative to $\pi$.
+Consider word ensembles $\mu_1$ and $\mu_2$ with $\EMG$-samplers $L_1$ and $L_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x_1,x_2},z)=x_1}$. Consider $L: \Words \MScheme \Words$ s.t. $\UM_L^{K}=\UM_{L_2}^{K}$ and for any $x \in \Supp L_{1\bullet}^{K}$, ${L^{K}(x,z,w)=\Chev{x,L_2^{K}(z,w)}}$. Then, $L$ is an $\EMG$-sampler of $\mu$ relative to $\pi$. In particular, since such an $L$ can always be constructed, $\mu$ is $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
@@ -1498,14 +1498,14 @@ For any $x \in \Supp L_{1\bullet}^{K}$, $\mu_x^K = \En_*^2(\delta_x \times \mu_2
 \begin{proposition}
 \label{prp:thm__mult__cond3}
 
-Consider $\mu_1$ a word ensemble with $\Fall(\MGrow)$-sampler $L$ and $(\mu_2, f)$ a distribution estimation problem with $\Fall(\MGrow)$-sampler $G$. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and $\bar{f}: \Supp \mu \rightarrow \Reals$ given by ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp L_\bullet^{K}}$, $x_2 \in \Words$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\mu,\bar{f})$ is $\Fall(\MGrow)$-samplable relative to $\pi$.
+Consider $\mu_1$ a word ensemble with $\EMG$-sampler $L$ and $(\mu_2, f)$ a distribution estimation problem with $\EMG$-sampler $G$. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and $\bar{f}: \Supp \mu \rightarrow \Reals$ given by ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp L_\bullet^{K}}$, $x_2 \in \Words$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\mu,\bar{f})$ is $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Construct $\bar{G}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{G}}^K=\UM_G^K$ and for any ${x \in \Supp L_\bullet^K}$, ${\bar{G}^K(x,y,z)=(\Chev{x,G^K(y,z,w)_0},G^K(y,z,w)_1)}$. By Proposition~\ref{prp:smp_base_change}, $\bar{G}_0$ is an $\Fall(\MGrow)$-sampler of $\mu$ relative to $\pi$.
+Construct $\bar{G}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{G}}^K=\UM_G^K$ and for any ${x \in \Supp L_\bullet^K}$, ${\bar{G}^K(x,y,z)=(\Chev{x,G^K(y,z,w)_0},G^K(y,z,w)_1)}$. By Proposition~\ref{prp:smp_base_change}, $\bar{G}_0$ is an $\EMG$-sampler of $\mu$ relative to $\pi$.
 
 \[\mu^{K_0} \equiv \En_*^2(L_\bullet^K \times G_{0\bullet}^K)\pmod \Fall\]
 
@@ -1532,7 +1532,7 @@ Construct $\bar{G}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{G}}^K=\
 \begin{proposition}
 \label{prp:thm__mult__op}
 
-Consider word ensemble $\mu_1$  with $\Fall(\MGrow)$-sampler $L$ and $(\mu_2,f)$ a distributional estimation problem. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and ${\bar{f}: \Supp \mu \rightarrow \Reals}$ given by ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f)$. Let $\bar{P}: \Words \Scheme \Rats$ be s.t. $\R_{\bar{P}}=\R_P$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Supp \mu_2^K$ and $z \in \Bool^{\R_P(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P^K(x_2,z)$. Then, $\bar{P}$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,\bar{f})$.
+Consider word ensemble $\mu_1$  with $\EMG$-sampler $L$ and $(\mu_2,f)$ a distributional estimation problem. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and ${\bar{f}: \Supp \mu \rightarrow \Reals}$ given by ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $P$ is an $\ESG$-optimal predictor for $(\mu_2,f)$. Let $\bar{P}: \Words \Scheme \Rats$ be s.t. $\R_{\bar{P}}=\R_P$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Supp \mu_2^K$ and $z \in \Bool^{\R_P(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P^K(x_2,z)$. Then, $\bar{P}$ is an $\ESG$-optimal predictor for $(\mu,\bar{f})$.
 
 \end{proposition}
 \end{samepage}
@@ -1555,7 +1555,7 @@ Applying Proposition~\ref{prp:smp} (with $Y = \bm{1}$) to the right hand side, w
 
 \[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\mu_2^{K_0} \times \U_{PS}^K \times \UM_L^K}[(P^K(x_2) - f(x_2))S^K(\Chev{L^K,x_2},P^K(x_2))] \pmod \Fall\]
 
-Using the fact $P$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu_2,f)$, we conclude
+Using the fact $P$ is an $\ESG$-optimal predictor for $(\mu_2,f)$, we conclude
 
 \[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv 0 \pmod \Fall\]
 %
@@ -1567,7 +1567,7 @@ Define $\bar{f}_1, \bar{f}_2: \Supp \mu \rightarrow \Reals$ by $\bar{f}_1(\Chev{
 
 Construct $\pi: \Words \Scheme \Words$ s.t. $\R_\pi \equiv 0$ and for any ${x_1 \in \Supp L_\bullet^K}$ and $x_2 \in \Words$, $\pi^K(\Chev{x_1,x_2})=x_1$. This is possible because the runtime of $L^K$ is bounded by a polynomial in $K$ so the length of $L^K$'s output is also bounded by a polynomial in $K$, implying $\pi^K$ only has to read a polynomial size prefix of its input in order to output $x_1$.
 
-Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\Fall^\sharp(\Gamma)$-optimal predictor for $(\mu,\bar{f}_2)$. 
+Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\ESG$-optimal predictor for $(\mu,\bar{f}_2)$. 
 
 We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\mu_1, f_1)$ plays the role of $(\nu,g)$: condition (i) holds due to Proposition~\ref{prp:thm__mult__cond1}, condition (ii) holds due to Proposition~\ref{prp:thm__mult__cond2} and condition (iii) holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal predictor for $(\mu, f)$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$, $P^K(x, z_1 z_2) = P_1^K(\pi^K(x),z_1) \bar{P}^K(x,z_2)$. In particular, for any ${x_1 \in \Supp L_\bullet^K}$ and $x_2 \in \Words$, ${P^K(\Chev{x_1,x_2}, z_1 z_2)=P_1^K(x_1,z_2)P_2^K(x_2,z_2)}$.
 %
