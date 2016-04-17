@@ -199,7 +199,9 @@ For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing ma
 \section{Fundamentals}
 \label{sec:fundamentals}
 
-\subsection{Optimal Predictors}
+\subsection{Basic Concepts}
+
+\subsubsection{Distributional Estimation Problems}
 
 We start with a simple model to help build intuition and motivate the following definitions.
 
@@ -224,6 +226,8 @@ We now introduce our abstraction for a \enquote{class of mathematical questions}
 A \emph{distributional estimation problem} is a pair $(\mu,f)$ where $\mu$ is a word ensemble and $f: \Supp \mu \rightarrow \Reals$ is bounded.
 
 \end{definition}
+
+\subsubsection{Growth Spaces and Schemes}
 
 In the motivational model, the estimator was restricted to lie in a class of functions that factor through a fixed mapping. Of course we are interested in more realistic notions of efficiency. In the present work we consider restrictions on time complexity, access to random bits and size of advice strings. Spatial complexity is also of interest but treating it is out of our current scope. It is possible to consider weaker or stronger restrictions which we represent using the following abstraction:
 
@@ -325,6 +329,8 @@ We take $\A_{\Delta_{\mathcal{S}}}(K):=\Chev{\Quote{\mathcal{S}_K},\Quote{\R_{\m
 \end{proof}
 
 Note that the concept of a uniform family is non-trivial only when $1 \in \GrowA$, otherwise condition (iv) allows only families of at most one member.
+
+\subsubsection{Fall Spaces}
 
 Fix $n \in \Nats$ and $\Gamma$ a pair of growth spaces of rank $n$. The 0th parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The other parameters serve to control the resources available to the predictor. To illustrate the significance of the other parameters using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question \enquote{what is the probability 7614829 is prime?} depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
 
@@ -458,6 +464,8 @@ Conditions (i) and (ii) are obvious. To verify condition (iii) note that for any
 %
 \end{proof}
 
+\subsubsection{Optimal Predictors}
+
 We are now ready to give our central definition, which corresponds to a notion of \enquote{expected value} for distributional estimation problems.
 
 \begin{definition}
@@ -479,6 +487,8 @@ Distributional \emph{decision} problems are the special case when the range of $
 From now on we fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$.
 
 In this subsection we discuss some basic properties of optimal predictors which will be used in the following.
+
+\subsubsection{Optimality Relatively to Uniform Families}
 
 Note that $\varepsilon$ in (\ref{eqn:op}) depends on $Q$. However in some sense the optimality condition is automatically uniform w.r.t. the resources required by $Q$.
 
@@ -516,6 +526,8 @@ $$\E_{\mu^{K_0} \times \U_{\bar{Q}}^{K}}[(\bar{Q}^{K} - f)^2]=\E_{\mu^{K_0} \tim
 Combining \ref{eqn:prp__unif__prf1} and \ref{eqn:prp__unif__prf2} we get the desired result.
 \end{proof}
 
+\subsubsection{Random vs. Advice}
+
 As usual, random is no more powerful than advice. This is demonstrated by the following two propositions.
 
 \begin{proposition}
@@ -547,6 +559,8 @@ Denote $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ and $\bar{\Gamma}:=(\bar{\Ga
 
 Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any ${K \in \Nats^n}$, choose ${\bar{\A}_P(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \mu^{K_0} \times U^{r_{\mathfrak{R}}(K)}}[(\bar{P}^{K}(x,yz) - f(x))^2]}$. We can construct $P: \Words \Scheme \Rats$ so that for all $K \in \Nats^n$, $\R_P(K) = r_{\mathfrak{R}}(K)$, $\A_P(K):=\Chev{\A_{\bar{P}}(K),\bar{\A}_P(K)}$ and for any $x \in \Supp \mu^{K_0}$ and $z \in \WordsLen{r_{\mathfrak{R}}(K)}$, ${P^{K}(x,z)=\bar{P}^{K}(x,\bar{\A}_P(K)z)}$. Clearly ${\E_{\mu^{K_0} \times U^{r_{\mathfrak{R}}(K)}}[(P^{K} - f)^2] \leq \E_{\mu^{K_0} \times \U_{\bar{P}}^{K}}[(\bar{P}^{K} - f)^2]}$ and therefore $P$ is an $\EG$-optimal predictor for $(\mu,f)$.
 \end{proof}
+
+\subsubsection{Optimality of Weighted Error}
 
 Although the word ensemble plays a central role in the definition of an optimal predictor, the dependence on the word ensemble is lax in some sense. To see this, consider the following proposition.
 
@@ -939,6 +953,8 @@ $$\frac{\delta(K)^2}{\alpha(K)} \leq \frac{4}{3}\varepsilon(K)$$
 
 In this subsection and subsection~\ref{subsec:indep_var}, we show that several algebraic identities satisfied by expected values have analogues for optimal predictors.
 
+\subsubsection{Linearity}
+
 Given $F_1,F_2$ random variables and $t_1,t_2 \in \Reals$, we have 
 
 \begin{equation}
@@ -966,6 +982,8 @@ $$\Abs{\E[(P^{K} - f)S^{K}]} \leq \Abs{t_1} \cdot \Abs{\E[(P_1^{K} - f_1)S^{K}]}
 
 Using \ref{eqn:op_sharp} for $P_1$ and $P_2$ we see that the right hand side is in $\Fall$.
 \end{proof}
+
+\subsubsection{Conditional Expectation}
 
 Consider a random variable $F$ and an event $A$. Denote $\chi_A$ the $\Bool$-valued random variable corresponding to the indicator function of $A$. We have
 
