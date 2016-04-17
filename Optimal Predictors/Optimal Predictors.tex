@@ -399,9 +399,17 @@ For any fall space $\Fall$, $\varepsilon \in \Fall$ and $\alpha \in \Reals$, if 
 $$\varepsilon^\alpha = (\sup \varepsilon)^\alpha (\frac{\varepsilon}{\sup \varepsilon})^\alpha \leq  (\sup \varepsilon)^\alpha \frac{\varepsilon}{\sup \varepsilon} \in \Fall$$
 \end{proof}
 
+\begin{samepage}
+\begin{definition}
+
+For any fall space $\Fall$ and $\alpha \in \Reals^{>0}$, we define ${\Fall^\alpha := \{\varepsilon^\alpha \mid \varepsilon \in \Fall\}}$.
+
+\end{definition}
+\end{samepage}
+
 \begin{proposition}
 
-Consider $\Fall$ a fall space and $\alpha \in \Reals^{>0}$. Define ${\Fall^\alpha := \{\varepsilon^\alpha \mid \varepsilon \in \Fall\}}$. Then, $\Fall^\alpha$ is a fall space.
+Consider $\Fall$ a fall space and $\alpha \in \Reals^{>0}$. Then, $\Fall^\alpha$ is a fall space.
 
 \end{proposition}
 
@@ -425,6 +433,29 @@ Consider $\Fall$ a fall space and $\alpha_1,\alpha_2 \in \Reals^{>0}$ with $\alp
 \begin{proof}
 
 Follows from Proposition~\ref{prp:fall_space_closed_wrt_power}.
+\end{proof}
+
+\begin{samepage}
+\begin{definition}
+
+For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \Nats^n \rightarrow \Reals$ s.t. $\inf \gamma > 0$, we define $\gamma \Fall := \{\gamma \varepsilon \text{ bounded} \mid \varepsilon \in \Fall\}$.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \Nats^n \rightarrow \Reals$ s.t. $\inf \gamma > 0$, $\gamma \Fall$ is a fall space.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Conditions (i) and (ii) are obvious. To verify condition (iii) note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h$ is a polynomial s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
+%
 \end{proof}
 
 We are now ready to give our central definition, which corresponds to a notion of \enquote{expected value} for distributional estimation problems.
@@ -953,7 +984,7 @@ The above perspective allows us stating and proving non-tautological theorems an
 \begin{theorem}
 %\label{thm:tbd}
 
-Consider $(\mu, f)$ a distributional estimation problem  and ${D \subseteq \Words}$. Let $P_D$ be an $\ESG$-optimal predictor for $(\mu, \chi_D)$ and $P_{f \mid D}$ be an $\ESG$-optimal predictor for $(\mu \mid D, f)$. Construct $P_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{P_{\chi f}}=\R_{P_D} + \R_{P_{f \mid D}}$ and for any $y \in \BoolR{P_D}$ and $z \in \BoolR{P_{f \mid D}}$, $P_{\chi f}^K(x,yz)=P_D^K(x,y) P_{f \mid D}^K(x,z)$. Then, $P_{\chi f}$ is an $\ESG$-optimal predictor for $(\mu, \chi_Df)$.
+Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $k \in \Nats$, $\mu^k(D) > 0$. Define $\gamma_D: \Nats^n \rightarrow \Reals$ by $\gamma(K):=\mu^{K_0}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal predictor for $(\mu, \chi_D)$ and $P_{f \mid D}$ be an $\Fall_D^\sharp(\Gamma)$-optimal predictor for ${(\mu \mid D, f)}$. Construct $P_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{P_{\chi f}}=\R_{P_D} + \R_{P_{f \mid D}}$ and for any $y \in \BoolR{P_D}$ and $z \in \BoolR{P_{f \mid D}}$, $P_{\chi f}^K(x,yz)=P_D^K(x,y) P_{f \mid D}^K(x,z)$. Then, $P_{\chi f}$ is an $\ESG$-optimal predictor for $(\mu, \chi_Df)$.
 
 \end{theorem}
 \end{samepage}
@@ -964,15 +995,153 @@ Consider any $K \in \Nats^n$, $x \in \Supp \mu^{K_0}$, $y \in \BoolR{P_D}$ and $
 
 \[P_{\chi f}^K(x,yz) - \chi_D(x) f(x) = P_D^K(x,y) P_{f \mid D}^K(x,z) - \chi_D(x) f(x)\]
 
-\[P_{\chi f}^K(x,yz) - \chi_D(x) f(x) = P_D^K(x,y) P_{f \mid D}^K(x,z) - \chi_D(x) f(x)\]
+\[P_{\chi f}^K(x,yz) - \chi_D(x) f(x) = P_D^K(x,y) P_{f \mid D}^K(x,z) - \chi_D(x) P_{f \mid D}^K(x,z) + \chi_D(x) P_{f \mid D}^K(x,z) - \chi_D(x) f(x)\]
 
-TBD
+\[P_{\chi f}^K(x,yz) - \chi_D(x) f(x) = (P_D^K(x,y) - \chi_D(x)) P_{f \mid D}^K(x,z) + \chi_D(x) (P_{f \mid D}^K(x,z) - f(x))\]
+
+Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. We get
+
+\[\E_{\mu^{K_0} \times \U_{P_{\chi f}}^K \times \U_S^K}[(P_{\chi f}^K - \chi_D f)S^K] = \E_{\mu^{K_0} \times \U_{P_{\chi f}}^K \times \U_S^K}[(P_D^K - \chi_D) P_{f \mid D}^KS^K)] + \E_{\mu^{K_0} \times \U_{P_{\chi f}}^K \times \U_S^K}[\chi_D (P_{f \mid D}^K - f)S^K]\]
+
+Using the fact $P_D^K$ is $\ESG$-optimal for $(\mu,\chi_D)$,
+
+\[\E_{\mu^{K_0} \times \U_{P_{\chi f}}^K \times \U_S^K}[(P_{\chi f}^K - \chi_D f)S^K] \equiv  \E_{\mu^{K_0} \times \U_{P_{\chi f}}^K \times \U_S^K}[\chi_D (P_{f \mid D}^K - f)S^K] \pmod \Fall\]
+
+\[\E_{\mu^{K_0} \times \U_{P_{\chi f}}^K \times \U_S^K}[(P_{\chi f}^K - \chi_D f)S^K] \equiv \mu^{K_0}(D)  \E_{(\mu^{K_0} \mid D) \times \U_{P_{\chi f}}^K \times \U_S^K}[(P_{f \mid D}^K - f)S^K] \pmod \Fall\]
+ 
+Using the fact $P_{f \mid D}^K$ is $\Fall_D^\sharp(\Gamma)$-optimal for $(\mu \mid D, f)$, we conclude
+ 
+ \[\Abs{\E_{\mu^{K_0} \times \U_{P_{\chi f}}^K \times \U_S^K}[(P_{\chi f}^K - \chi_D f)S^K]} \equiv 0 \pmod \Fall\]
 %
 \end{proof}
  
-TBD
+\begin{samepage}
+\begin{theorem}
+\label{thm:cond}
 
-\subsection{\texorpdfstring{$\MGrow$}{MGamma}-Schemes and Samplers}
+Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $k \in \Nats$, $\mu^k(D) > 0$. Define $\gamma_D: \Nats^n \rightarrow \Reals$ by $\gamma(K):=\mu^{K_0}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal predictor for $(\mu, \chi_D)$ and $P_{\chi f}$ be an $\ESG$-optimal predictor for $(\mu, \chi_D f)$. Choose any $M \in \Rats$ s.t. ${M \geq \sup \Abs{f}}$ and construct $P_{f \mid D}: \Words \Scheme \Rats$ s.t. $\R_{P_{f \mid D}} = \R_{P_D} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$ 
+
+\begin{equation}
+P_{f \mid D}^K(x,yz)=\begin{cases}P_D^K(x,y)^{-1} P_{\chi f}^K(x,z) \textnormal{ if this number is in } [-M,M] \\ M \textnormal{ if } P_D^K(x,y)=0 \textnormal{ or } P_D^K(x,y)^{-1} P_{\chi f}^K(x,z) > M\\ -M \textnormal{ if } P_D^K(x,y)^{-1} P_{\chi f}^K(x,z) < -M\end{cases}
+\end{equation}
+
+Then, $P_{f \mid D}$ is an $\Fall_D^\sharp(\Gamma)$-optimal predictor for $(\mu \mid D, f)$.
+
+\end{theorem}
+\end{samepage}
+
+In order to prove Theorem~\ref{thm:cond}, we will need the following.
+
+Consider $s,t \in \Rats$, an $[s,t]$-valued random variable $F$ and an event $A$. Denote $\chi_A$ the $\Bool$-valued random variable corresponding to the indicator function of $A$. We have $\Prb[A]s \leq \E[\chi_A F] \leq \Prb[A]t$. For optimal predictors the analogous inequalities don't have to hold strictly (they only hold within an asymptotically small error), but the following proposition shows they can always be enforced.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:thm__cond__lemma}
+
+Consider $(\mu, f)$ a distributional estimation problem, ${D \subseteq \Words}$ and $s, t \in \Rats$ s.t. $s \leq \inf f$, $t \geq \sup f$. Let $P_D$ be an $\ESG$-optimal predictor for $(\mu, \chi_D)$ and $P_{\chi f}$ be an $\ESG$-optimal predictor for $(\mu, \chi_D f)$. Construct $\tilde{P}_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{\tilde{P}_{\chi f}} = \R_{P_D} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$, ${\tilde{P}_{\chi f}^K(x,yz)=\min(\max(P_{\chi f}^K(x,z),P_D^K(x,y) s),P_D^K(x,y) t)}$. Denote $\mu_P^K:=\mu^{K_0} \times \U_{P_D}^K \times \U_{P_{\chi f}}^K$. Then, for any $S: \Words \times \Rats^2 \Scheme \Rats$ bounded
+
+\begin{equation}
+\E_{\mu_P^K \times \U_S^K}[(\tilde{P}_{\chi f}^K(x)-\chi_D(x)f(x))S^K(x,P_D^K(x),P_{\chi f}^K(x))]  \equiv 0 \pmod \Fall
+\end{equation}
+
+In particular, $\tilde{P}$ is also an $\ESG$-optimal predictor for $(\mu, \chi_D f)$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+$P_D$ is an $\ESG$-optimal predictor for $(\mu, \chi_D)$, therefore
+
+\begin{equation}
+\label{eqn:thm__cond__lemma__prf1}
+\E_{\mu_P^K}[(P_D^K- \chi_D) \theta(P_{\chi f}^K- P_D^K t)] \equiv 0 \pmod \Fall
+\end{equation}
+
+$P_{\chi f}$ is an $\ESG$-optimal predictor for $(\mu, \chi_D f)$, therefore
+
+\begin{equation}
+\label{eqn:thm__cond__lemma__prf2}
+\E_{\mu_P^K}[(P_{\chi f}^K - \chi_D f) \theta(P_{\chi f}^K - P_D^K t)] \equiv 0 \pmod \Fall
+\end{equation}
+
+Multiplying \ref{eqn:thm__cond__lemma__prf1} by $t$ and subtracting \ref{eqn:thm__cond__lemma__prf2} we get
+
+\[\E_{\mu_P^K}[(P_D^K t - P_{\chi f}^K - \chi_D \cdot (t - f)) \theta(P_{\chi f}^K- P_D^K t)] \equiv 0 \pmod \Fall\]
+
+\[\E_{\mu_P^K}[(P_D^K t - P_{\chi f}^K ) \theta(P_{\chi f}^K- P_D^K t)] \equiv \E_{\mu_P^K}[\chi_D \cdot (t- f) \theta(P_{\chi f}^K- P_D^K t)] \pmod \Fall\]
+
+The left-hand side is non-positive and the right-hand side is non-negative, therefore
+
+\[\E_{\mu_P^K}[(P_D^K t - P_{\chi f}^K ) \theta(P_{\chi f}^K- P_D^K t)] \equiv 0 \pmod \Fall\]
+
+\begin{equation}
+\label{eqn:thm__cond__lemma__prf3}
+\E_{\mu_P^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) \theta(P_{\chi f}^K - \tilde{P}_{\chi f}^K)] \equiv 0 \pmod \Fall
+\end{equation}
+
+In the same way we can show that
+
+\[\E_{\mu_P^K}[(P_D^K s - P_{\chi f}^K) \theta(P_D^K s-P_{\chi f}^K)] \equiv 0 \pmod \Fall\]
+
+\begin{equation}
+\label{eqn:thm__cond__lemma__prf4}
+\E_{\mu_P^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) \theta(\tilde{P}_{\chi f}^K-P_{\chi f}^K )] \equiv 0 \pmod \Fall
+\end{equation}
+
+Subtracting \ref{eqn:thm__cond__lemma__prf3} from \ref{eqn:thm__cond__lemma__prf4}, we get
+
+\[\E_{\mu_P^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) (\theta(\tilde{P}_{\chi f}^K-P_{\chi f}^K)- \theta(P_{\chi f}^K - \tilde{P}_{\chi f}^K))] \equiv 0 \pmod \Fall\]
+
+\begin{equation}
+\label{eqn:thm__cond__lemma__prf5}
+\E_{\mu_P^K}[\Abs{\tilde{P}_{\chi f}^K - P_{\chi f}^K}] \equiv 0 \pmod \Fall
+\end{equation}
+
+Consider any $S: \Words \times \Rats^2 \Scheme \Rats$ bounded.
+
+\[\E_{\mu_P^K \times \U_S^K}[(\tilde{P}_{\chi f}^K - \chi_Df) S^K(x,P_D^K,P_{\chi f}^K)]=\E_{\mu_P^K \times \U_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K + P_{\chi f}^K - \chi_Df) S^K(x,P_D^K,P_{\chi f}^K)]\]
+
+\[\E_{\mu_P^K \times \U_S^K}[(\tilde{P}_{\chi f}^K - \chi_D f) S^K]=\E_{\mu_P^K \times \U_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) S^K]+\E_{\mu_P^K \times \U_S^K}[( P_{\chi f}^K - \chi_Df) S^K]\]
+
+Using the fact $P_{\chi f}$ is an $\ESG$-optimal predictor for $(\mu, \chi_D f)$, we get
+
+\[\E_{\mu_P^K \times \U_S^K}[(\tilde{P}_{\chi f}^K - \chi_D f) S^K] \equiv \E_{\mu_P^K \times \U_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) S^K] \pmod \Fall\]
+
+\[\Abs{\E_{\mu_P^K \times \U_S^K}[(\tilde{P}_{\chi f}^K - \chi_D f) S^K]} \leq \E_{\mu_P^K \times \U_S^K}[\Abs{\tilde{P}_{\chi f}^K - P_{\chi f}^K}] \sup S \pmod \Fall\]
+
+Applying \ref{eqn:thm__cond__lemma__prf5} we conclude that
+
+\[\E_{\mu_P^K \times \U_S^K}[(\tilde{P}_{\chi f}^K - \chi_D f) S^K] \equiv 0 \pmod \Fall\]
+%
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:cond}]
+
+Construct $\tilde{P}_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{\tilde{P}_{\chi f}} = \R_{P_D} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$, ${\tilde{P}_{\chi f}^K(x,yz)=\min(\max(P_{\chi f}^K(x,z),-P_D^K(x,y) M),P_D^K(x,y) M)}$. For any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$, we have $\tilde{P}_{\chi f}^K(x,yz) = P_D^K(x,y) P_{f \mid D}^K(x,yz)$.
+
+\[\tilde{P}_{\chi f}^K(x,yz) - \chi_D(x) f(x) = P_D^K(x,y) P_{f \mid D}^K(x,yz) - \chi_D(x) f(x)\]
+
+\[\tilde{P}_{\chi f}^K(x,yz) - \chi_D(x) f(x) = P_D^K(x,y) P_{f \mid D}^K(x,z) - \chi_D(x) P_{f \mid D}^K(x,yz) + \chi_D(x) P_{f \mid D}^K(x,yz) - \chi_D(x) f(x)\]
+
+\[\tilde{P}_{\chi f}^K(x,yz) - \chi_D(x) f(x) = (P_D^K(x,y) - \chi_D(x)) P_{f \mid D}^K(x,yz) + \chi_D(x) (P_{f \mid D}^K(x,yz) - f(x))\]
+
+\[\chi_D(x) (P_{f \mid D}^K(x,yz) - f(x)) = \tilde{P}_{\chi f}^K(x,yz) - \chi_D(x) f(x) - (P_D^K(x,y) - \chi_D(x)) P_{f \mid D}^K(x,yz)\]
+
+Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote ${\mu_{PS}^K:=\mu^{K_0} \times \U_{P_D}^K \times \U_{P_{\chi f}}^K \times \U_S^K}$.
+
+\[\E_{\mu_{PS}^K}[\chi_D (P_{f \mid D}^K - f)S^K(x,P_{f \mid D}^K)] = E_{\mu_{PS}^K}[(\tilde{P}_{\chi f}^K - \chi_D f)S^K(x,P_{f \mid D}^K)] - E_{\mu_{PS}^K}[(P_D^K - \chi_D) P_{f \mid D}^K S^K(x,P_{f \mid D}^K)]\]
+
+Applying Proposition~\ref{prp:thm__cond__lemma} to the first term on the right-hand side and the fact $P_D^K$ is an $\ESG$-optimal predictor for $(\mu,\chi_D)$ to the second term on the right-hand side,
+
+\[\E_{\mu_{PS}^K}[\chi_D (P_{f \mid D}^K - f)S^K(x,P_{f \mid D}^K)] \equiv 0 \pmod \Fall\]
+
+\[\mu^{K_0}(D) \E_{(\mu^{K_0} \mid D)\times \U_{P_D}^K \times \U_{P_{\chi f}}^K \times \U_S^K}[(P_{f \mid D}^K - f)S^K(x,P_{f \mid D}^K)] \equiv 0 \pmod \Fall\]
+
+\[\E_{(\mu^{K_0} \mid D)\times \U_{P_D}^K \times \U_{P_{\chi f}}^K \times \U_S^K}[(P_{f \mid D}^K - f)S^K(x,P_{f \mid D}^K)] \equiv 0 \pmod {\Fall_D}\]
+%
+\end{proof}
+\subsection{\texorpdfstring{$\MGrow$}{M}-Schemes and Samplers}
 
 The next subsection and subsequent sections will require several new concepts. Here, we introduce these concepts and discuss some of their properties.
 
@@ -1060,7 +1229,7 @@ Consider $X_1$, $X_2$ measurable spaces, $\{\mu_1^K\}_{K \in \Nats^n}$, $\{\nu_1
 Total variation distance is subadditive w.r.t. direct products therefore $\Dtv(\mu_1^K \times \mu_2^K, \nu_1^K \times \nu_2^K) \leq \Dtv(\mu_1^K, \nu_1^K) + \Dtv(\mu_2^K, \nu_2^K)$.
 \end{proof}
 
-\subsubsection{\texorpdfstring{$\MGrow$}{MGamma}-Schemes}
+\subsubsection{\texorpdfstring{$\MGrow$}{M}-Schemes}
 
 The concept of a $\Gamma$-scheme can be generalized in a way which allows the advice to become random in itself.
 
@@ -1376,13 +1545,17 @@ By construction of $w^{K}$, the absolute value of the left hand side is no less 
 
 Consider $K \in \Nats^n$, $x \in \Supp \mu^{K_0}$, $z_1 \in \WordsLen{\R_{P_1}(K)}$, ${z_2 \in \WordsLen{\R_{P_2}(K)}}$ and $z_3 \in \WordsLen{\R_\pi(K)}$.
 
-$$P^{K}(x,z_1 z_2 z_3)-f_1(x)f_2(x)=(P_1^{K}(\pi^{K}(x,z_3),z_1)-f_1(x))f_2(x)+P_1^{K}(\pi^{K}(x,z_3),z_1)(P_2^{K}(x,z_2)-f_2(x))$$
+\[P^{K}(x,z_1 z_2 z_3)-f_1(x)f_2(x)=P_1^{K}(\pi^{K}(x,z_3),z_1) P_2^{K}(x,z_2) - f_1(x) f_2(x)\]
+
+Adding and subtracting $P_1^{K}(\pi^{K}(x,z_3),z_1) f_2(x)$ from the right hand side and grouping variables, we get
+
+\[P^{K}(x,z_1 z_2 z_3)-f_1(x)f_2(x)=P_1^{K}(\pi^{K}(x,z_3),z_1)(P_2^{K}(x,z_2)-f_2(x))+(P_1^{K}(\pi^{K}(x,z_3),z_1)-f_1(x))f_2(x)\]
 
 Denote $\bar{P}_1^{K}:=P_1^{K} \circ \pi^{K}$. For any bounded $S: \Words \times \Rats \Scheme \Rats$ we get
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]} + \Abs{\E[(P_2^{K}-f_2) \bar{P}_1^{K} S^{K}]}$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_2^{K}-f_2) \bar{P}_1^{K} S^{K}]} + \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]}$$
 
-$P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$ therefore the second term on the right hand side is in $\Fall$.
+$P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$ therefore the first term on the right hand side is in $\Fall$.
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]} \pmod \Fall$$
 
