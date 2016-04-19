@@ -5,7 +5,6 @@
 \usepackage{cite}
 \usepackage[unicode]{hyperref}
 \usepackage[utf8]{inputenc}
-%\usepackage[greek,english]{babel}
 \usepackage[english]{babel}
 \usepackage{csquotes}
 \usepackage{amsmath,amssymb,amsthm}
@@ -1787,7 +1786,46 @@ In this subsection we study notions of Karp reduction between distributional est
 
 First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose. 
 
-Consider the setting of Corollary~\ref{crl:one_way}. Denote $\mu^k:=\Un^{2k}$ and define ${\chi: \Supp \mu \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$,  $\pi_f^k(xy) = \Chev{f(x),y}$. $\pi_f$ can be regarded as a Karp reduction of $(\mu, \chi)$ to $(\mu_{(f)},\chi_f)$ since for any $z \in \Supp \mu^k$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*(\mu)=\mu_{(f)}$. However, the pull-back of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal predictor for $(\mu,\chi)$ since its error is $\frac{1}{4}$ whereas we can construct a $\Gamma$-scheme that simply evaluates $\chi$ with an error of 0...
+Consider the setting of Corollary~\ref{crl:one_way}. Denote $\mu^k:=\Un^{2k}$ and define ${\chi: \Supp \mu \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$,  $\pi_f^k(xy) = \Chev{f(x),y}$. $\pi_f$ can be regarded as a Karp reduction of $(\mu, \chi)$ to $(\mu_{(f)},\chi_f)$ since for any $z \in \Supp \mu^k$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*(\mu)=\mu_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pull-back of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal predictor for $(\mu,\chi)$ since its error is $\E_{z \sim \mu^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \mu^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \mu^k}[(Q^k(z)-\chi(z))^2]=0$.
+
+We will describe several types of reductions that preserve optimal predictors. After that, we will characterize reductions that can be constructed by composing those types.
+
+\begin{samepage}
+\begin{definition}
+
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi: \Words \Scheme \Words$. $\pi$ is called a \emph{precise strict pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when
+
+\begin{enumerate}[(i)]
+
+\item $\pi_*^K(\mu^{K_0}) \equiv \nu \pmod \Fall$
+
+\item $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f(x)-g(\pi^{K}(x,z))}] \in \Fall$
+
+\item $\mu$ is $\EMG$-samplable relative to $\pi$.
+
+\end{enumerate}
+
+\end{definition}
+\end{samepage}
+
+Note that condition (iii) is violated in the one-way function example above.
+
+Precise strict pseudo-invertible $\EG$-reductions preserve $\ESG$-optimal predictors as a simple corollary of Theorem~\ref{thm:mult}:
+
+\begin{samepage}
+\begin{corollary}
+%\label{crl:tbd}
+
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi: \Words \Scheme \Words$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, f)$. Suppose $P_g$ is an $\ESG$-optimal predictor of $(\nu, g)$. Construct $P_f: \Words \Scheme \Rats$ s.t. $\R_{P_f} = \R_{P_g} + \R_\pi$ and for any $z \in \BoolR{P_g}$ and $w \in \BoolR{\pi}$, $P_f^K(x,zw)=P_g^K(\pi^K(x,w),z)$. Then, $P_f$ is an $\ESG$-optimal predictor of $(\mu, f)$.
+
+\end{corollary}
+\end{samepage}
+
+\begin{proof}
+
+Follows directly from Theorem~\ref{thm:mult} for $f_1 = f$, ${f_2 \equiv 1}$, $P_2 \equiv 1$. This relies on the trivial observation that $(\mu, 1)$ is samplable relative to $\pi$ iff $\mu$ is samplable relative to $\pi$.
+%
+\end{proof}
 
 TBD
 
