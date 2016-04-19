@@ -814,7 +814,7 @@ This contradicts the definition of hard-core predicate.
 \end{proof}
 
 \begin{corollary}
-\label{thm:one_way}
+\label{crl:one_way}
 
 Consider $f: \Words \Alg \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_{(f)}^k:=f_*^{(k)}(\Un^k \times \Un^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
 
@@ -1781,6 +1781,14 @@ We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of
 \section{Reductions and Completeness}
 \label{sec:reductions}
 
+\subsection{Reductions}
+
+In this subsection we study notions of Karp reduction between distributional estimation problems such that the pull-back of an optimal predictor is an optimal predictor. It is also interesting to study Cook reductions but we avoid it in the present work.
+
+First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose. Consider $f$ a one-to-one one-way function, $\mu^k:=U^{2k}$, (Corollary~\ref{crl:one_way})...
+
+\subsection{Completeness}
+
 TBD
 
 \section{Existence and Uniqueness}
@@ -1809,10 +1817,10 @@ We will use the notation $\Gamma_{\text{det}}:=(\Gamma_0^1,\Gamma_0^1)$, $\Gamma
 \begin{samepage}
 \begin{definition}
 
-Given $\mu$ a word ensemble\footnote{The standard definition of a hard-core predicate corresponds to the case $\mu^k=\Un^k$. Here we allow for slightly greater generality.}, $f: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{hard-core predicate} of $(\mu,f)$ when for any $S: \Words \xrightarrow{\Gamma_{\textnormal{rand}}} \Bool$ there is $\varepsilon \in \Fall_{\text{neg}}^1$ s.t. 
+Given $\mu$ a word ensemble\footnote{The standard definition of a hard-core predicate corresponds to the case $\mu^k=\Un^k$. Here we allow for slightly greater generality.}, $f: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{hard-core predicate} of $(\mu,f)$ when for any $S: \Words \xrightarrow{\Gamma_{\textnormal{rand}}} \Bool$
 
 \begin{equation}
-\Prb_{(x,y) \sim \mu^k \times \Un_S^k}[S^k(f(x),y)=B^k(x)] \leq \frac{1}{2} + \varepsilon(k)
+\Prb_{(x,y) \sim \mu^k \times \Un_S^k}[S^k(f(x),y)=B^k(x)] \leq \frac{1}{2} \pmod {\Fall_{\text{neg}}}
 \end{equation}
 
 \end{definition}
@@ -1821,10 +1829,10 @@ Given $\mu$ a word ensemble\footnote{The standard definition of a hard-core pred
 \begin{samepage}
 \begin{definition}
 
-Given $\mu$ a word ensemble, $f: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{non-uniformly hard-core predicate} of $(\mu,f)$ when for any ${S: \Words \xrightarrow{\Gamma_{\textnormal{circ}}} \Bool}$ there is $\varepsilon \in \Fall_{\text{neg}}^1$ s.t. 
+Given $\mu$ a word ensemble, $f: \Supp \mu \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{non-uniformly hard-core predicate} of $(\mu,f)$ when for any ${S: \Words \xrightarrow{\Gamma_{\textnormal{circ}}} \Bool}$ 
 
 \begin{equation}
-\Prb_{x \sim \mu^k}[S^k(f(x),y)=B^k(x)] \leq \frac{1}{2} + \varepsilon(k)
+\Prb_{x \sim \mu^k}[S^k(f(x),y)=B^k(x)] \leq \frac{1}{2} \pmod {\Fall_{\text{neg}}}
 \end{equation}
 
 \end{definition}
