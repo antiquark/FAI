@@ -816,7 +816,7 @@ This contradicts the definition of hard-core predicate.
 \begin{corollary}
 \label{crl:one_way}
 
-Consider $f: \Words \Alg \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_{(f)}^k:=f_*^{(k)}(\Un^k \times \Un^k).$ Finally, define $\chi_f: \Supp \mu \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
+Consider $f: \Words \Alg \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_{(f)}^k:=f_*^{(k)}(\Un^k \times \Un^k).$ Finally, define $\chi_f: \Supp \mu_{(f)} \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
 
 Let $\Gamma:=(\Gamma_{\textnormal{poly}}^1,\Gamma_0^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal predictor for $(\mu_{(f)}, \chi_f)$.
 
@@ -1785,7 +1785,11 @@ We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of
 
 In this subsection we study notions of Karp reduction between distributional estimation problems such that the pull-back of an optimal predictor is an optimal predictor. It is also interesting to study Cook reductions but we avoid it in the present work.
 
-First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose. Consider $f$ a one-to-one one-way function, $\mu^k:=U^{2k}$, (Corollary~\ref{crl:one_way})...
+First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose. 
+
+Consider the setting of Corollary~\ref{crl:one_way}. Denote $\mu^k:=\Un^{2k}$ and define ${\chi: \Supp \mu \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$,  $\pi_f^k(xy) = \Chev{f(x),y}$. $\pi_f$ can be regarded as a Karp reduction of $(\mu, \chi)$ to $(\mu_{(f)},\chi_f)$ since for any $z \in \Supp \mu^k$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*(\mu)=\mu_{(f)}$. However, the pull-back of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal predictor for $(\mu,\chi)$ since its error is $\frac{1}{4}$ whereas we can construct a $\Gamma$-scheme that simply evaluates $\chi$ with an error of 0...
+
+TBD
 
 \subsection{Completeness}
 
