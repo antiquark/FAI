@@ -591,7 +591,11 @@ Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation
 
 $${\Fall_W:=\{\varepsilon_W: \Nats^2 \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid  \E_{\mu^k \times \Un_W^k}[W^k]\varepsilon_W(K) \in \Fall\}}$$
 
-It is easy to see $\Fall_W$ is a fall space. Define the word ensemble $\nu$ by ${\nu^k(x):=\frac{\E_{\Un_W^k}[W^k(x)] \mu^k(x)}{\E_{\mu^k \times \Un_W^k}[W^k(x)]}}$. Then, $P$ is an $\Fall_W(\Gamma)$-optimal predictor for $(\nu,f)$.
+It is easy to see $\Fall_W$ is a fall space. Define the word ensemble $\nu$ by 
+
+\[\nu^k(x):=\frac{\E_{y \sim \Un_W^k}[W^k(x,y)] \mu^k(x)}{\E_{(x',y) \sim \mu^k \times \Un_W^k}[W^k(x',y)]}\]
+
+Then, $P$ is an $\Fall_W(\Gamma)$-optimal predictor for $(\nu,f)$.
 
 \end{corollary}
 \end{samepage}
