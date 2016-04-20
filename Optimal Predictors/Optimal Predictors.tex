@@ -101,7 +101,6 @@
 
 \title{Optimal Predictors: A Bayesian Notion of Approximation Algorithm (Draft)}
 
-
 \author{Vadim Kosoy}
 \affil{Affiliation TBD}
 
@@ -115,11 +114,21 @@ The concept of an \enquote{approximation algorithm} is usually only applied to o
 
 \section*{Introduction}
 %
-Imagine you are strolling in the city with a friend when a car passes by with the license plate number \enquote{7614829}. Your friend proposes a wager, claiming that the number is composite and offering 10 : 1 odds in your favor. Knowing that your friend has no exceptional ability in mental arithmetic and that it's highly unlikely they saw this car before, you realize they are just guessing. Your mental arithmetic is also insufficient to test the number for primality, but is sufficient to check that $7614829 \equiv 1 \pmod{3}$ and $\frac{1}{\ln 7614829} \approx 0.06$. Arguing from the prime number theorem and observing that 7614829 is odd and is divisible neither by 3 nor by 5, you conclude that the probability 7614829 is prime is $\frac{1}{\ln 7614829} \times 2 \times \frac{3}{2} \times \frac{5}{4} \approx 22\%$. Convinced that the odds are in your favor you accept the bet\footnote{Alas, $7614829 = 271 \times 28099$.}.
+Imagine you are strolling in the city with a friend when a car passes by with the license plate number \enquote{7614829}. Your friend proposes a wager, claiming that the number is composite and offering 10 : 1 odds in your favor. Knowing that your friend has no exceptional ability in mental arithmetic and that it's highly unlikely they saw this car before, you realize they are just guessing. Your mental arithmetic is also insufficient to test the number for primality, but is sufficient to check that $7614829 \equiv 1 \pmod{3}$ and $\frac{1}{\ln 7614829} \approx 0.06$. Arguing from the prime number theorem and observing that 7614829 is odd and is divisible neither by 3 nor by 5, you conclude that the probability 7614829 is prime is ${\frac{1}{\ln 7614829} \times 2 \times \frac{3}{2} \times \frac{5}{4} \approx 22\%}$. Convinced that the odds are in your favor you accept the bet\footnote{Alas, $7614829 = 271 \times 28099$.}.
 
 From the perspective of frequentist probability the question \enquote{what is the probability 7614829 is prime?} seems meaningless, since it is either prime or not so there is no frequency to observe (unless the frequency is 0 or 1). From a Bayesian perspective, probability represents a degree of confidence, however in classical Bayesian probability theory it is assumed the only source of uncertainty is lack of information. The number 7614829 already contains all information needed to determine whether it's prime so the probability again has to be 0 or 1. However, real life uncertainty is not only information-theoretic but also complexity-theoretic. Even when we have all information to obtain the answer, out computational resources are limited so we remain uncertain. The rigorous formalization of this idea is the main goal of the present work.
 
-The idea of assigning probabilities to purely mathematical questions was studied by several authors\cite{Gaifman_2004,Hutter_2013,Demski_2012,Christiano_2014,Garrabrant_2015}, mainly in the setting of formal logic. That is, their approach was looking for functions from the set of sentences in some formal logical language to $[0,1]$. However, although there is a strong intuitive case for assigning probabilities to sentences like $\varphi_1:=\text{\enquote{7614829 is prime}}$ it is much less clear there is a meaningful assignment of probabilities to sentences like $\varphi_2 := \text{\enquote{there are no odd perfect numbers}}$ or (even worse) $\varphi_3 := \text{``there is no cardinality } \kappa \text{ s.t. } \aleph_0 < \kappa < 2^{\aleph_0} \text{."}$.
+The idea of assigning probabilities to purely mathematical questions was studied by several authors\cite{Gaifman_2004,Hutter_2013,Demski_2012,Christiano_2014,Garrabrant_2015}, mainly in the setting of formal logic. That is, their approach was looking for functions from the set of sentences in some formal logical language to $[0,1]$. However, although there is a strong intuitive case for assigning probabilities to sentences like
+
+\[\varphi_1:=\text{\enquote{7614829 is prime}}\]
+
+it is much less clear there is a meaningful assignment of probabilities to sentences like 
+
+\[\varphi_2 := \text{\enquote{there are no odd perfect numbers}}\] 
+
+or (even worse) 
+
+\[\varphi_3 := \text{``there is no cardinality } \kappa \text{ s.t. } \aleph_0 < \kappa < 2^{\aleph_0} \text{"}\].
 
 A wager on $\varphi_1$ can be resolved in a predetermined finite amount of time (the amount of time it takes to test it directly). On the other hand, it is unknown how long the resolution of $\varphi_2$ will take. It is possible that there is an odd perfect number but finding it (or otherwise becoming certain of its existence) will take a very long time. It is also possible there is no odd perfect number, a fact that cannot be directly verified because of its infinite nature. It is possible that there a proof of $\varphi_1$ within some formal theory, but accepting such a proof as resolution requires us to be completely certain of the consistency of the theory (whereas it is arguable that the consistency of formal mathematical theories, especially more abstract theories like ZFC, is itself only known empirically and in particular with less than absolute certainty). Moreover, there is no knowing a priori whether a proof exists or how long it will take to find it. For $\varphi_3$ there is no way to \enquote{directly} verify neither the sentence nor its negation, and it is actually known to be independent of ZFC.
 
@@ -163,7 +172,9 @@ $\theta: \Reals \rightarrow \Bool$ will denote the Heaviside step function $\the
 
 For $X$ a measurable space, $\mu$ a probability measure on $X$, $V$ a finite dimensional vector space over $\Reals$ and $f: X \rightarrow V$, $\E_{x \sim \mu}[f(x)]$ will denote the expected value of $f$ with respect to $\mu$, i.e. $\E_{x \sim \mu}[f(x)] := \int_X f(x) d\mu(x)$. We will the abbreviated notations $\E_\mu[f(x)]$, $\E[f(x)]$, $\E_\mu[f]$, $\E[f]$ when no confusion is likely to occur.
 
-Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Supp \mu$ will denote the support of $\mu$. In particular when $X$ is discrete, ${\Supp \mu = \{x \in X \mid \mu(x) > 0\}}$.
+Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Supp \mu$ will denote the support of $\mu$. In particular when $X$ is discrete
+
+\[\Supp \mu = \{x \in X \mid \mu(x) > 0\}\]
 
 Given $X,Y$ measurable spaces, $\mu$ a measure on $X$ and $f: X \rightarrow Y$ a measurable mapping, $f_*(\mu)$ will denote the corresponding pushforward measure on $Y$.
 
@@ -271,15 +282,20 @@ For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\
 
 We now introduce our notion of an \enquote{efficient} algorithm.
 
+\begin{samepage}
 \begin{definition}
 
 Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{$\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where $S: \Nats^n \times X \times \Words^2 \Alg Y$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \Nats^n \rightarrow \Words$ are s.t.
 
 \begin{enumerate}[(i)]
 
-\item There is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$, $\T_S(K,x,y,\A_S(K)) \leq p(K)$.
+\item There is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$ 
 
-\item There is a polynomial $q: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, ${\T_{\R_S}(K,\A_S(K)) \leq q(K)}$.
+\[T_S(K,x,y,\A_S(K)) \leq p(K)\]
+
+\item There is a polynomial $q: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$
+
+\[\T_{\R_S}(K,\A_S(K)) \leq q(K)\]
 
 \item The function $r: \Nats^n \rightarrow n$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\GrowR$.
 
@@ -292,6 +308,7 @@ Abusing notation, we denote the $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y
 We will use the notation $S: X \Scheme Y$ to signify $S$ is a $\Gamma$-scheme of signature $X \rightarrow Y$.
 
 \end{definition}
+\end{samepage}
 
 There is a natural notion of composition for $\Gamma$-schemes.
 
@@ -306,7 +323,7 @@ Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of ran
 U^K(x,vw,\Chev{a,b}) &= T^K(S^K(x,v,a),w,b)
 \end{align}
 
-Such a $U$ is called the \emph{composition} of $T$ and $S$ and denoted $U = T \circ S$. There is a slight abuse of notation due to the freedoms in the construction of $U$ but these freedoms have no real significance.
+Such a $U$ is called the \emph{composition} of $T$ and $S$ and denoted $U = T \circ S$. There is a slight abuse of notation due to the freedoms in the construction of $U$ but these freedoms have no real significance since all versions of $T \circ S$ induce the same Markov kernel from $X$ to $Z$.
 
 \end{definition}
 \end{samepage}
@@ -319,13 +336,19 @@ Fix $n \in \Nats$, $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $
 
 \begin{enumerate}[(i)]
 
-\item There is a polynomial $p_1: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$, $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$, $\T_S(K,x,y,\A_S(K)) \leq p_1(K)$.
+\item There is a polynomial $p_1: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$, $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$
 
-\item There is a polynomial $p_2: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$ and $K \in \Nats^n$, $\T_{\R_S}(K,\A_S(K)) \leq p_2(K)$.
+\[\T_S(K,x,y,\A_S(K)) \leq p_1(K)\]
+
+\item There is a polynomial $p_2: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$ and $K \in \Nats^n$
+
+\[\T_{\R_S}(K,\A_S(K)) \leq p_2(K)\]
 
 \item $\max_{S \in F} \R_S \in \GrowR$
 
-\item There is $l \in \GrowA$ s.t. for any $S \in F$ and $K \in \Nats^n$, ${\Abs{\Quote{S}} + \Abs{\Quote{\R_S}} + \Abs{\A_S(K)} \leq l(K)}$.
+\item There is $l \in \GrowA$ s.t. for any $S \in F$ and $K \in \Nats^n$
+
+\[\Abs{\Quote{S}} + \Abs{\Quote{\R_S}} + \Abs{\A_S(K)} \leq l(K)\]
 
 \end{enumerate}
 
@@ -523,7 +546,11 @@ Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\EG$-optimal pre
 
 \begin{proof}
 
-For any $K \in \Nats^n$, $\{\E_{\mu^{K_0} \times \Un_Q^{K}}[(Q^{K} - f)^2] \mid Q \in F\}$ is a finite set because $F$ is a uniform family so the runtime of $Q^{K}$ is bounded by a polynomial in $K$ that doesn't depend on $Q$. Therefore we can choose ${Q_{K} \in \Argmin{Q \in F} \E_{\mu^{K_0} \times \Un_Q^{K}}[(Q^{K} - f)^2]}$. By Proposition~\ref{prp:fam_diag}, there is $\bar{Q}: \Words \Scheme \Rats$ s.t. $\bar{Q}^{K}(x)$ is distributed the same as $Q_{K}^{K}(x)$.
+For any $K \in \Nats^n$, $\{\E_{\mu^{K_0} \times \Un_Q^{K}}[(Q^{K} - f)^2] \mid Q \in F\}$ is a finite set because $F$ is a uniform family so the runtime of $Q^{K}$ is bounded by a polynomial in $K$ that doesn't depend on $Q$. Therefore we can choose 
+
+\[Q_{K} \in \Argmin{Q \in F} \E_{\mu^{K_0} \times \Un_Q^{K}}[(Q^{K} - f)^2]\]
+
+By Proposition~\ref{prp:fam_diag}, there is $\bar{Q}: \Words \Scheme \Rats$ s.t. $\bar{Q}^{K}(x)$ is distributed the same as $Q_{K}^{K}(x)$.
 
 Since $P$ is an $\EG$-optimal predictor, there is $\varepsilon \in \Fall$ s.t.
 
@@ -556,7 +583,10 @@ Observe that $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ is a growth space and 
 
 \begin{proof}
 
-Consider any $Q: \Words \xrightarrow{\bar{\Gamma}} \Rats$. Suppose $\R_Q=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any $K \in \Nats^n$, choose ${\bar{\A}_Q(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \mu^{K_0} \times U^{r_{\mathfrak{R}}(K)}}[(Q^{K}(x,yz) - f(x))^2]}$. As easy to see, there is $\bar{Q}: \Words \Scheme \Rats$ s.t. for all $K \in \Nats^n$, $\R_{\bar{Q}}(K) = r_{\mathfrak{R}}(K)$, $\A_{\bar{Q}}(K):=\Chev{\A_Q(K),\bar{\A}_Q(K)}$ and for any $x \in \Supp \mu^{K_0}$ and $z \in \WordsLen{r_{\mathfrak{R}}(K)}$, ${\bar{Q}^{K}(x,z)=Q^{K}(x,\bar{\A}_Q(K)z)}$.
+Consider any $Q: \Words \xrightarrow{\bar{\Gamma}} \Rats$. Suppose $\R_Q=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any $K \in \Nats^n$, choose 
+\[\bar{\A}_Q(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \mu^{K_0} \times U^{r_{\mathfrak{R}}(K)}}[(Q^{K}(x,yz) - f(x))^2]\]
+
+As easy to see, there is $\bar{Q}: \Words \Scheme \Rats$ s.t. for all $K \in \Nats^n$, $\R_{\bar{Q}}(K) = r_{\mathfrak{R}}(K)$, $\A_{\bar{Q}}(K):=\Chev{\A_Q(K),\bar{\A}_Q(K)}$ and for any $x \in \Supp \mu^{K_0}$ and $z \in \WordsLen{r_{\mathfrak{R}}(K)}$, ${\bar{Q}^{K}(x,z)=Q^{K}(x,\bar{\A}_Q(K)z)}$.
 
 It follows that there is $\varepsilon \in \Fall$ s.t.
 
@@ -575,7 +605,15 @@ Denote $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ and $\bar{\Gamma}:=(\bar{\Ga
 
 \begin{proof}
 
-Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any ${K \in \Nats^n}$, choose ${\bar{\A}_P(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \mu^{K_0} \times \Un^{r_{\mathfrak{R}}(K)}}[(\bar{P}^{K}(x,yz) - f(x))^2]}$. We can construct $P: \Words \Scheme \Rats$ so that for all $K \in \Nats^n$, $\R_P(K) = r_{\mathfrak{R}}(K)$, ${\A_P(K):=\Chev{\A_{\bar{P}}(K),\bar{\A}_P(K)}}$ and for any $x \in \Supp \mu^{K_0}$ and $z \in \WordsLen{r_{\mathfrak{R}}(K)}$, ${P^{K}(x,z)=\bar{P}^{K}(x,\bar{\A}_P(K)z)}$. Clearly ${\E_{\mu^{K_0} \times \Un^{r_{\mathfrak{R}}(K)}}[(P^{K} - f)^2] \leq \E_{\mu^{K_0} \times \Un_{\bar{P}}^{K}}[(\bar{P}^{K} - f)^2]}$ and therefore $P$ is an $\EG$-optimal predictor for $(\mu,f)$.
+Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any ${K \in \Nats^n}$, choose ${\bar{\A}_P(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \mu^{K_0} \times \Un^{r_{\mathfrak{R}}(K)}}[(\bar{P}^{K}(x,yz) - f(x))^2]}$. We can construct $P: \Words \Scheme \Rats$ so that for all $K \in \Nats^n$, $x \in \Supp \mu^{K_0}$ and ${z \in \WordsLen{r_{\mathfrak{R}}(K)}}$
+
+\begin{align*}
+\R_P(K) &= r_{\mathfrak{R}}(K) \\
+\A_P(K) &:=\Chev{\A_{\bar{P}}(K),\bar{\A}_P(K)} \\
+P^{K}(x,z) &=\bar{P}^{K}(x,\bar{\A}_P(K)z)
+\end{align*}
+
+Clearly ${\E_{\mu^{K_0} \times \Un^{r_{\mathfrak{R}}(K)}}[(P^{K} - f)^2] \leq \E_{\mu^{K_0} \times \Un_{\bar{P}}^{K}}[(\bar{P}^{K} - f)^2]}$ and therefore $P$ is an $\EG$-optimal predictor for $(\mu,f)$.
 \end{proof}
 
 \subsubsection{Optimality of Weighted Error}
@@ -591,7 +629,14 @@ Given a growth space $\Gamma^n$ of rank $n$, $\Fall$ is called \emph{$\Gamma^n$-
 \begin{proposition}
 \label{prp:weight}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\EG$-optimal predictor for $(\mu,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote ${\mu^{K}_{P,W}:=\mu^{K_0} \times \Un_P^{K} \times U^{\R_W(K)-\R_P(K)}}$, ${\mu^{K}_{Q,W}:=\mu^{K_0} \times \Un_Q^{K} \times U^{\R_W(K)-\R_Q(K)}}$. Then
+Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\EG$-optimal predictor for $(\mu,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \max(\R_P, \R_Q)$. Denote 
+
+\begin{align*}
+\mu^{K}_{P,W} &:=\mu^{K_0} \times \Un_P^{K} \times \Un^{\R_W(K)-\R_P(K)} \\
+\mu^{K}_{Q,W} &:=\mu^{K_0} \times \Un_Q^{K} \times \Un^{\R_W(K)-\R_Q(K)}
+\end{align*}
+
+Then
 
 \begin{equation}
 \E_{\mu^{K}_{P,W}}[W^{K}(P^{K} - f)^2] \leq \\ \E_{\mu^{K}_{Q,W}}[W^{K}(Q^{K} - f)^2] \pmod \Fall
@@ -642,7 +687,7 @@ We now give the proof of Proposition~\ref{prp:weight}.
 
 Consider $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho_\zeta^{K}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \GrowA$ s.t. for any $t \in [0, M]$, ${\Abs{\En_\Rats(\rho_\zeta^{K}(t))} \leq \gamma(K)}$.
 
-For any $t \in \Reals$ there is $Q_t: \Words \Scheme \Rats$ s.t. $\R_Q=\R_W$ and for any $x \in \Supp \mu^{K_0}$ and ${y \in \WordsLen{\R_W(K)}}$
+For any $t \in \Reals$ there is $Q_t: \Words \Scheme \Rats$ s.t. $\R_Q=\R_W$ and for any ${x \in \Supp \mu^{K_0}}$ and ${y \in \WordsLen{\R_W(K)}}$
 
 $$Q_t^{K}(x,y)=\begin{cases}Q^{K}(x,y_{\leq \R_Q(K)}) \text{ if } W^{K}(x,y) \geq \rho^{K}_\zeta(t) \\ P^{K}(x,y_{\leq \R_P(K)}) \text{ if } W^{K}(x,y) < \rho^{K}_\zeta(t)\end{cases}$$
 
@@ -801,7 +846,15 @@ $$ \forall k \in I: \E_{\mu_f^k \times \Un_Q^{k}}[(Q^{k}-\chi_B)^2] \leq \frac{1
 
 $$ \forall k \in I: \E_{\mu_f^k}[(\E_{\Un_Q^{k}}[Q^{k}]-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
-There is $G: \Words \xrightarrow{\Gamma} \Bool$ s.t. for all ${x \in \Words}$, ${\Abs{\E[Q^{k}(x)]-\Pr[G^k(x)=1]}\leq 2^{-k}}$ ($G^k$ works by evaluating ${\alpha \leftarrow Q^{k}}$ and then returning 1 with probability $\alpha \pm 2^{-k}$ and 0 with probability $1-\alpha \pm 2^{-k}$, where the $2^{-k}$ error comes from rounding a rational number to a binary fraction). Denoting $\delta(x):=\E[Q^{k}(x)]-\Pr[G^k(x)=1]$
+There is $G: \Words \xrightarrow{\Gamma} \Bool$ s.t. for all ${x \in \Words}$, 
+
+\[\Abs{\E[Q^{k}(x)]-\Pr[G^k(x)=1]}\leq 2^{-k}\] 
+
+$G^k$ works by evaluating ${\alpha \leftarrow Q^{k}}$ and then returning 1 with probability ${\alpha \pm 2^{-k}}$ and 0 with probability $1-\alpha \pm 2^{-k}$, where the $2^{-k}$ error comes from rounding a rational number to a binary fraction. Denoting 
+
+\[\delta(x):=\E[Q^{k}(x)]-\Pr[G^k(x)=1]\]
+
+we get
 
 $$ \forall k \in I: \E_{\mu_f^k}[(\Prb_{\Un_G^k}[G^k=1]+\delta-\chi_B)^2] \leq \frac{1}{4} - \frac{\epsilon}{k^d} $$
 
@@ -833,7 +886,9 @@ This contradicts the definition of hard-core predicate.
 \begin{corollary}
 \label{crl:one_way}
 
-Consider $f: \Words \Alg \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_{(f)}^k:=f_*^{(k)}(\Un^k \times \Un^k).$ Finally, define $\chi_f: \Supp \mu_{(f)} \rightarrow \Bool$ by ${\chi_f(\Chev{f(x),y}):=x \cdot y}$.
+Consider $f: \Words \Alg \Words$ a one-to-one one-way function. For every $k \in \Nats$, define $f^{(k)}: \WordsLen{k} \times \WordsLen{k} \rightarrow \Words$ by ${f^{(k)}(x,y):=\Chev{f(x),y}}$. Define $\mu_{(f)}^k:=f_*^{(k)}(\Un^k \times \Un^k).$ Finally, define $\chi_f: \Supp \mu_{(f)} \rightarrow \Bool$ by 
+
+\[\chi_f(\Chev{f(x),y}):=x \cdot y\]
 
 Let $\Gamma:=(\Gamma_{\textnormal{poly}}^1,\Gamma_0^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal predictor for $(\mu_{(f)}, \chi_f)$.
 
@@ -880,7 +935,14 @@ We will now show that optimal predictors satisfy an analogous property.
 \begin{theorem}
 \label{thm:calib}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\EG$-optimal predictor for $(\mu,f)$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \R_P$ and for every $K \in \Nats^n$ there is $x \in \Supp \mu^{K_0}$ and $y \in \Un_W^{K}$ with $W^{K}(x,y) > 0$. Denote ${\alpha(K):=\E_{\mu^{K_0} \times \Un_W^{K}}[W^{K}]}$ and ${\delta(K):=\E_{\mu^{K_0} \times \Un_W^{K}}[W^{K}(P^{K}-f)]}$. Then, $\frac{\delta^2}{\alpha} \in \Fall$.
+Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem, $P$ an $\EG$-optimal predictor for $(\mu,f)$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. $\R_W \geq \R_P$ and for every $K \in \Nats^n$ there is $x \in \Supp \mu^{K_0}$ and $y \in \Un_W^{K}$ with $W^{K}(x,y) > 0$. Denote
+
+\begin{align*}
+\alpha(K)&:=\E_{\mu^{K_0} \times \Un_W^{K}}[W^{K}] \\ 
+\delta(K)&:=\E_{\mu^{K_0} \times \Un_W^{K}}[W^{K}(P^{K}-f)]
+\end{align*} 
+
+Then, $\frac{\delta^2}{\alpha} \in \Fall$.
 
 \end{theorem}
 
@@ -904,7 +966,11 @@ We now proceed with the proofs.
 
 \begin{proof}[Proof of Corollary \ref{crl:calib}]
 
-Construct $W: \Words \Scheme \Bool$ s.t. ${W^{K}(x,y)=\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))}$. Denote $\delta(K):=\E_{\mu^{K_0} \times \Un_W^{K}}[W^{K}(P^{K}-f)]$ and $\varepsilon:=\frac{\delta^2}{\alpha}$. According to Theorem~\ref{thm:calib}, $\varepsilon \in \Fall$.
+Construct $W: \Words \Scheme \Bool$ s.t. 
+
+\[W^{K}(x,y)=\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))\] 
+
+Denote $\delta(K):=\E_{\mu^{K_0} \times \Un_W^{K}}[W^{K}(P^{K}-f)]$ and $\varepsilon:=\frac{\delta^2}{\alpha}$. According to Theorem~\ref{thm:calib}, $\varepsilon \in \Fall$.
 We get
 
 $$\frac{\E_{\mu^{K_0} \times \Un_W^{K}}[W^{K}(P^{K}-f)]^2}{\alpha(K)} = \varepsilon(K)$$
@@ -1158,7 +1224,14 @@ Applying \ref{eqn:thm__cond__lemma__prf5} we conclude that
 
 \begin{proof}[Proof of Theorem \ref{thm:cond}]
 
-Construct $\tilde{P}_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{\tilde{P}_{\chi f}} = \R_{P_D} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$, ${\tilde{P}_{\chi f}^K(x,yz)=\min(\max(P_{\chi f}^K(x,z),-P_D^K(x,y) M),P_D^K(x,y) M)}$. For any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$, we have $\tilde{P}_{\chi f}^K(x,yz) = P_D^K(x,y) P_{f \mid D}^K(x,yz)$.
+Construct $\tilde{P}_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{\tilde{P}_{\chi f}} = \R_{P_D} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$
+
+\[\tilde{P}_{\chi f}^K(x,yz)=\min(\max(P_{\chi f}^K(x,z),-P_D^K(x,y) M),P_D^K(x,y) M)\] 
+
+For any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$, we have 
+
+\[
+\tilde{P}_{\chi f}^K(x,yz) = P_D^K(x,y) P_{f \mid D}^K(x,yz)\]
 
 \[\tilde{P}_{\chi f}^K(x,yz) - \chi_D(x) f(x) = P_D^K(x,y) P_{f \mid D}^K(x,yz) - \chi_D(x) f(x)\]
 
@@ -1168,7 +1241,11 @@ Construct $\tilde{P}_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{\tilde{P}_{\chi f
 
 \[\chi_D(x) (P_{f \mid D}^K(x,yz) - f(x)) = \tilde{P}_{\chi f}^K(x,yz) - \chi_D(x) f(x) - (P_D^K(x,y) - \chi_D(x)) P_{f \mid D}^K(x,yz)\]
 
-Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote ${\mu_{PS}^K:=\mu^{K_0} \times \Un_{P_D}^K \times \Un_{P_{\chi f}}^K \times \Un_S^K}$.
+Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote 
+
+\[\mu_{PS}^K:=\mu^{K_0} \times \Un_{P_D}^K \times \Un_{P_{\chi f}}^K \times \Un_S^K\]
+
+We have
 
 \[\E_{\mu_{PS}^K}[\chi_D (P_{f \mid D}^K - f)S^K(x,P_{f \mid D}^K)] = E_{\mu_{PS}^K}[(\tilde{P}_{\chi f}^K - \chi_D f)S^K(x,P_{f \mid D}^K)] - E_{\mu_{PS}^K}[(P_D^K - \chi_D) P_{f \mid D}^K S^K(x,P_{f \mid D}^K)]\]
 
@@ -1252,7 +1329,7 @@ Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K 
 
 \begin{proof}
 
-Total variation distance is contracted by pushforward therefore ${\Dtv(f_*(\mu^K), f_*(\nu^K)) \leq \Dtv(\mu^K, \nu^K)}$.
+Total variation distance is contracted by pushforward therefore \[\Dtv(f_*(\mu^K), f_*(\nu^K)) \leq \Dtv(\mu^K, \nu^K)\]
 \end{proof}
 
 \begin{samepage}
@@ -1347,7 +1424,14 @@ For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability and $\EM
 \begin{proposition}
 \label{prp:adv_mgamma_smp}
 
-Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$, ${\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall}$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}}$. Consider ${L: \bm{1} \MScheme \Words}$ s.t. for any $K \in I$, $\M_L^K:=\mu^{K_0} \mid \Bool^{\leq l(K)}$ and ${L^K(y,z)=z}$.  Then, $L$ is an $\EMG$-sampler of $\mu$. In particular, since such an $L$ can always be constructed, $\mu$ is $\EMG$-samplable.
+Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$
+
+\begin{equation}
+%\label{eqn:tbd}
+\mu^{K_0}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall
+\end{equation}
+
+Denote ${I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}}$. Consider ${L: \bm{1} \MScheme \Words}$ s.t. for any $K \in I$, $\M_L^K:=\mu^{K_0} \mid \Bool^{\leq l(K)}$ and ${L^K(y,z)=z}$.  Then, $L$ is an $\EMG$-sampler of $\mu$. In particular, since such an $L$ can always be constructed, $\mu$ is $\EMG$-samplable.
 
 \end{proposition}
 \end{samepage}
@@ -1392,7 +1476,16 @@ Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $
 
 \begin{proof}
 
-Consider $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by $\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}$. Denote ${I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}}$. Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$, $\M_G^K:=\alpha_*^K(\mu^{K_0} \mid \Bool^{\leq l(K)})$ and ${G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)}$.
+Consider $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by $\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}$. Denote 
+
+\[I:=\{K \in \Nats^n \mid \mu^{K_0}(\Bool^{\leq l(K)}) > 0\}\]
+
+Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$
+
+\begin{align*}
+\M_G^K:=\alpha_*^K(\mu^{K_0} \mid \Bool^{\leq l(K)}) \\
+G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)
+\end{align*}
 
 Let $L$ be an $\EMG$-sampler of $\mu$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $L_{\bullet}^K=G_{0\bullet}^K$ therefore $G_0$ is also an $\EMG$-sampler of $\mu$.
 
@@ -1572,7 +1665,14 @@ For any $K \in \Nats^n$, choose
 
 $$w^{K} \in \Argmax{w \in \Supp \M_S^{K}} \Abs{\E_{\mu^{K_0} \times \Un_P^{K} \times \Un^{\R_S^{K}(w)}}[(P^{K}(x,y) - f(x))S^{K}(x,P^{K}(x,y),z,w)]}$$
 
-Construct $\bar{S}: \Words \times \Rats \Scheme \Rats$ s.t. $\R_{\bar{S}}(K)=\R_S^{K}(w^{K})$ and ${\bar{S}^{K}(x,t,z)=S^{K}(x,t,z,w^{K})}$. $P$ is an $\ESG$-optimal predictor for $(\mu,f)$, therefore
+Construct $\bar{S}: \Words \times \Rats \Scheme \Rats$ s.t. 
+
+\begin{align*}
+\R_{\bar{S}}(K)&=\R_S^{K}(w^{K}) \\
+\bar{S}^{K}(x,t,z)&=S^{K}(x,t,z,w^{K})
+\end{align*}
+
+$P$ is an $\ESG$-optimal predictor for $(\mu,f)$, therefore
 
 $$\E_{\mu^{K_0} \times \Un_P^{K} \times \Un_{\bar{S}}^{K}}[(P^{K}(x,y) - f(x))\bar{S}^{K}(x,P^{K}(x,y),z)] \equiv 0 \pmod \Fall$$
 
@@ -1660,7 +1760,11 @@ Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\EMG$-sampl
 
 \begin{proof}
 
-$L_{1\bullet}^{K} \equiv \mu_1^{K_0} \pmod \Fall$ and $L_{2\bullet}^{K} \equiv \mu_2^{K_0} \pmod \Fall$ therefore ${L_{1\bullet}^{K} \times L_{2\bullet}^{K} \equiv \mu_1^{K_0} \times \mu_2^{K_0} \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_dir}). Denote $\mu_L^{K}:=\En_*^2(L_{1\bullet}^{K} \times L_{2\bullet}^{K})$. We get ${\mu_L^{K} \equiv \mu^{K_0} \pmod \Fall}$ and therefore $\pi_*^K(\mu_L^{K}) \equiv \pi_*^K(\mu^{K_0}) \pmod \Fall$ (by Proposition~\ref{prp:prob_cong_push}). Obviously $\pi_*^K(\mu_L^{K})=L_{1\bullet}^{K}$. We conclude that ${\pi_*^K(\mu^{K_0}) \equiv L_{1\bullet}^{K} \pmod \Fall}$ and therefore ${\pi_*^K(\mu^{K_0}) \equiv \mu_1 \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_eq}).
+$L_{1\bullet}^{K} \equiv \mu_1^{K_0} \pmod \Fall$ and $L_{2\bullet}^{K} \equiv \mu_2^{K_0} \pmod \Fall$.  By Proposition~\ref{prp:prob_cong_dir},
+
+\[L_{1\bullet}^{K} \times L_{2\bullet}^{K} \equiv \mu_1^{K_0} \times \mu_2^{K_0} \pmod \Fall\]
+
+Denote $\mu_L^{K}:=\En_*^2(L_{1\bullet}^{K} \times L_{2\bullet}^{K})$. We get ${\mu_L^{K} \equiv \mu^{K_0} \pmod \Fall}$ and therefore $\pi_*^K(\mu_L^{K}) \equiv \pi_*^K(\mu^{K_0}) \pmod \Fall$ (by Proposition~\ref{prp:prob_cong_push}). Obviously $\pi_*^K(\mu_L^{K})=L_{1\bullet}^{K}$. We conclude that ${\pi_*^K(\mu^{K_0}) \equiv L_{1\bullet}^{K} \pmod \Fall}$ and therefore ${\pi_*^K(\mu^{K_0}) \equiv \mu_1 \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_eq}).
 \end{proof}
 
 \begin{samepage}
@@ -1720,7 +1824,7 @@ For any $x \in \Supp L_{1\bullet}^{K}$, $\mu_x^K = \En_*^2(\delta_x \times \mu_2
 \begin{proposition}
 \label{prp:thm__mult__cond3}
 
-Consider $\mu_1$ a word ensemble with $\EMG$-sampler $L$ and $(\mu_2, f)$ a distribution estimation problem with $\EMG$-sampler $G$. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and $\bar{f}: \Supp \mu \rightarrow \Reals$ given by ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp L_\bullet^{K}}$, $x_2 \in \Words$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\mu,\bar{f})$ is $\EMG$-samplable relative to $\pi$.
+Consider $\mu_1$ a word ensemble with $\EMG$-sampler $L$ and $(\mu_2, f)$ a distribution estimation problem with $\EMG$-sampler $G$. Define the distributional estimation problem $(\mu,\bar{f})$ by ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$ and ${\bar{f}(\Chev{x_1,x_2})=f(x_2)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp L_\bullet^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\mu,\bar{f})$ is $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
@@ -1791,7 +1895,9 @@ Construct $\pi: \Words \Scheme \Words$ s.t. $\R_\pi \equiv 0$ and for any ${x_1 
 
 Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\ESG$-optimal predictor for $(\mu,\bar{f}_2)$. 
 
-We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\mu_1, f_1)$ plays the role of $(\nu,g)$: condition (i) holds due to Proposition~\ref{prp:thm__mult__cond1}, condition (ii) holds due to Proposition~\ref{prp:thm__mult__cond2} and condition (iii) holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal predictor for $(\mu, f)$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$, $P^K(x, z_1 z_2) = P_1^K(\pi^K(x),z_1) \bar{P}^K(x,z_2)$. In particular, for any ${x_1 \in \Supp L_\bullet^K}$ and $x_2 \in \Words$, ${P^K(\Chev{x_1,x_2}, z_1 z_2)=P_1^K(x_1,z_2)P_2^K(x_2,z_2)}$.
+We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\mu_1, f_1)$ plays the role of $(\nu,g)$: condition (i) holds due to Proposition~\ref{prp:thm__mult__cond1}, condition (ii) holds due to Proposition~\ref{prp:thm__mult__cond2} and condition (iii) holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal predictor for $(\mu, f)$ s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$, $P^K(x, z_1 z_2) = P_1^K(\pi^K(x),z_1) \bar{P}^K(x,z_2)$. In particular, for any ${x_1 \in \Supp L_\bullet^K}$ and $x_2 \in \Words$
+
+\[P^K(\Chev{x_1,x_2}, z_1 z_2)=P_1^K(x_1,z_2)P_2^K(x_2,z_2)\]
 %
 \end{proof}
 
