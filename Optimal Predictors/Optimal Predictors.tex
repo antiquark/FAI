@@ -293,6 +293,24 @@ We will use the notation $S: X \Scheme Y$ to signify $S$ is a $\Gamma$-scheme of
 
 \end{definition}
 
+There is a natural notion of composition for $\Gamma$-schemes.
+
+\begin{samepage}
+\begin{definition}
+
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
+
+\begin{align}
+\A_U(K) &= \Chev{\A_S(K),\A_T(K)} \\
+\R_U(K, \Chev{a,b}) &= \R_S(K,a)+\R_S(K,b) \\
+U^K(x,vw,\Chev{a,b}) &= T^K(S^K(x,v,a),w,b)
+\end{align}
+
+Such a $U$ is called the \emph{composition} of $T$ and $S$ and denoted $U = T \circ S$. There is a slight abuse of notation due to the freedoms in the construction of $U$ but these freedoms have no real significance.
+
+\end{definition}
+\end{samepage}
+
 It will also be useful to consider families of $\Gamma$-schemes satisfying uniform resource bounds.
 
 \begin{definition}
@@ -1457,10 +1475,10 @@ Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded
 
 \end{enumerate}
 
-Suppose $P_1$ is an $\ESG$-optimal predictor for $(g,\nu)$ and $P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P=\R_{P_1}+\R_{P_2}+\R_{\pi}$ and for any $z_1 \in \WordsLen{\R_{P_1}(K)}$, $z_2 \in \WordsLen{\R_{P_2}(K)}$ and $z_3 \in \WordsLen{\R_\pi(K)}$
+Suppose $P_1$ is an $\ESG$-optimal predictor for $(g,\nu)$ and $P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$. Denote $\bar{P}_1 := P_1 \circ \pi$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{\bar{P}_1}+\R_{P_2}$ and for any $z_1 \in \WordsLen{\R_{\bar{P}_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
-P^{K}(x,z_1 z_2 z_3)=P_1^{K}(\pi^{K}(x,z_3),z_1) P_2^{K}(x,z_2)
+P^{K}(x,z_1 z_2)=\bar{P}_1^{K}(x,z_1) P_2^{K}(x,z_2)
 \end{equation}
 
 Then, $P$ is an $\ESG$-optimal predictor for $(\mu,f_1 f_2)$.
@@ -1567,13 +1585,13 @@ By construction of $w^{K}$, the absolute value of the left hand side is no less 
 
 Consider $K \in \Nats^n$, $x \in \Supp \mu^{K_0}$, $z_1 \in \WordsLen{\R_{P_1}(K)}$, ${z_2 \in \WordsLen{\R_{P_2}(K)}}$ and $z_3 \in \WordsLen{\R_\pi(K)}$.
 
-\[P^{K}(x,z_1 z_2 z_3)-f_1(x)f_2(x)=P_1^{K}(\pi^{K}(x,z_3),z_1) P_2^{K}(x,z_2) - f_1(x) f_2(x)\]
+\[P^{K}(x,z_1 z_3 z_2)-f_1(x)f_2(x)=\bar{P}_1^{K}(x, z_1 z_3) P_2^{K}(x,z_2) - f_1(x) f_2(x)\]
 
-Adding and subtracting $P_1^{K}(\pi^{K}(x,z_3),z_1) f_2(x)$ from the right hand side and grouping variables, we get
+Adding and subtracting $\bar{P}_1^{K}(x, z_1 z_3) f_2(x)$ from the right hand side and grouping variables, we get
 
-\[P^{K}(x,z_1 z_2 z_3)-f_1(x)f_2(x)=P_1^{K}(\pi^{K}(x,z_3),z_1)(P_2^{K}(x,z_2)-f_2(x))+(P_1^{K}(\pi^{K}(x,z_3),z_1)-f_1(x))f_2(x)\]
+\[P^{K}(x,z_1 z_3 z_2)-f_1(x)f_2(x)=\bar{P}_1^{K}(x, z_1 z_3)(P_2^{K}(x,z_2)-f_2(x))+(\bar{P}_1^{K}(x, z_1 z_3)-f_1(x))f_2(x)\]
 
-Denote $\bar{P}_1^{K}:=P_1^{K} \circ \pi^{K}$. For any bounded $S: \Words \times \Rats \Scheme \Rats$ we get
+For any bounded $S: \Words \times \Rats \Scheme \Rats$ we get
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_2^{K}-f_2) \bar{P}_1^{K} S^{K}]} + \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]}$$
 
@@ -1814,9 +1832,9 @@ Precise strict pseudo-invertible $\EG$-reductions preserve $\ESG$-optimal predic
 
 \begin{samepage}
 \begin{corollary}
-%\label{crl:tbd}
+\label{crl:psp_reduce_sharp}
 
-Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi: \Words \Scheme \Words$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, f)$. Suppose $P_g$ is an $\ESG$-optimal predictor of $(\nu, g)$. Construct $P_f: \Words \Scheme \Rats$ s.t. $\R_{P_f} = \R_{P_g} + \R_\pi$ and for any $z \in \BoolR{P_g}$ and $w \in \BoolR{\pi}$, $P_f^K(x,zw)=P_g^K(\pi^K(x,w),z)$. Then, $P_f$ is an $\ESG$-optimal predictor of $(\mu, f)$.
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi: \Words \Scheme \Words$ a precise strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, f)$. Suppose $P$ is an $\ESG$-optimal predictor of $(\nu, g)$. Then, $P \circ \pi$ is an $\ESG$-optimal predictor of $(\mu, f)$.
 
 \end{corollary}
 \end{samepage}
@@ -1824,6 +1842,23 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi: \Word
 \begin{proof}
 
 Follows directly from Theorem~\ref{thm:mult} for $f_1 = f$, ${f_2 \equiv 1}$, $P_2 \equiv 1$. This relies on the trivial observation that $(\mu, 1)$ is samplable relative to $\pi$ iff $\mu$ is samplable relative to $\pi$.
+%
+\end{proof}
+
+$\EG$-optimal predictors are also preserved.
+
+\begin{samepage}
+\begin{theorem}
+%\label{thm:tbd}
+
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi: \Words \Scheme \Words$ a precise strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, f)$. Suppose $P$ is an $\EG$-optimal predictor of $(\nu, g)$. Then, $P \circ \pi$ is an $\EG$-optimal predictor of $(\mu, f)$.
+
+\end{theorem}
+\end{samepage}
+
+\begin{proof}
+
+BAR
 %
 \end{proof}
 
