@@ -328,9 +328,9 @@ There is a natural notion of composition for $\Gamma$-schemes.
 Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
 
 \begin{align}
-\A_U(K) &= \Chev{\A_S(K),\A_T(K)} \\
-\R_U(K, \Chev{a,b}) &= \R_S(K,a)+\R_S(K,b) \\
-U^K(x,vw,\Chev{a,b}) &= T^K(S^K(x,v,a),w,b)
+\A_U(K) &= \Chev{\A_T(K),\A_S(K)} \\
+\R_U(K, \Chev{a,b}) &= \R_T(K,a)+\R_S(K,b) \\
+U^K(x,vw,\Chev{a,b}) &= T^K(S^K(x,w,b),v,a)
 \end{align}
 
 Such a $U$ is called the \emph{composition} of $T$ and $S$ and denoted $U = T \circ S$. There is a slight abuse of notation due to the freedoms in the construction of $U$ but these freedoms have no real significance since all versions of $T \circ S$ induce the same Markov kernel from $X$ to $Z$.
@@ -1434,6 +1434,24 @@ We will use the notation $S: X \MScheme Y$ to signify $S$ is an $\MGrow$-scheme 
 \end{definition}
 \end{samepage}
 
+We introduce composition of ${\MGrow}$-schemes as well.
+
+\begin{samepage}
+\begin{definition}
+
+Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\Supp \UM_S^K \subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)}$ and $\Supp \UM_T^K \subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)}$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
+
+\begin{align}
+\M_U^K &= \En_*^2(\M_S^K \times \M_T^K) \\
+\R_U(K, \Chev{a,b}) &= \R_T(K,a)+\R_S(K,b) \\
+U^K(x,vw,\Chev{a,b}) &= T^K(S^K(x,w,b),v,a)
+\end{align}
+
+Such a $U$ is called the \emph{composition} of $T$ and $S$ and denoted $U = T \circ S$.
+
+\end{definition}
+\end{samepage}
+
 \subsubsection{Samplers and Samplability}
 
 The concept of a \emph{samplable} word ensemble is commonly used in average-case complexity theory. Here we introduce a relaxation of this concept which allows approximate sampling with an error compatible with the given fall space. We then proceed to introduce samplable distributional estimation problems.
@@ -2059,7 +2077,13 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi$ a pre
 
 \begin{proof}
 
-BAR
+Let ${\sigma}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. $P$ is is an $\EG$-optimal predictor of $(\nu, g)$, therefore
+
+\[\E_{\nu^K \times \Un_P^K}[(P^K-g)^2] \leq \E_{\nu^K \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma)^K - g)^2] \pmod \Fall\]
+
+
+
+TBD
 %
 \end{proof}
 
