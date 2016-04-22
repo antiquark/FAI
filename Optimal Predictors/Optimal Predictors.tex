@@ -2029,12 +2029,13 @@ We will describe several types of reductions that preserve optimal predictors. A
 
 \begin{samepage}
 \begin{definition}
+\label{def:psp_reduce}
 
 Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise strict pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when
 
 \begin{enumerate}[(i)]
 
-\item $\pi_*^K(\mu^{K_0}) \equiv \nu \pmod \Fall$
+\item $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
 
 \item $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f(x)-g(\pi^{K}(x,z))}] \in \Fall$
 
@@ -2068,20 +2069,55 @@ $\EG$-optimal predictors are also preserved.
 
 \begin{samepage}
 \begin{theorem}
-%\label{thm:tbd}
+\label{thm:psp_reduce}
 
 Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi$ a precise strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, f)$. Suppose $P$ is an $\EG$-optimal predictor of $(\nu, g)$. Then, $P \circ \pi$ is an $\EG$-optimal predictor of $(\mu, f)$.
 
 \end{theorem}
 \end{samepage}
 
+\begin{samepage}
+\begin{proposition}
+\label{prp:mixed_opt}
+
+Consider ${(\mu,f)}$ a distributional estimation problem and ${P}$ an ${\EG}$-optimal predictor for ${(\mu,f)}$. Then, for any $Q: \Words \MScheme \Rats$ bounded
+
+\begin{equation}
+\label{eqn:prp__mixed_ort}
+\E_{(x,y) \sim \mu^{K_0} \times \Un_P^K}[(P^K(x,y) - f(x))^2] \leq \E_{(x,y) \sim \mu^{K_0} \times \UM_Q^K}[(Q^K(x,y)-f(x))^2] \pmod \Fall
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
 \begin{proof}
 
-Let ${\sigma}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. $P$ is is an $\EG$-optimal predictor of $(\nu, g)$, therefore
+For any ${K \in \Nats^n}$, choose 
 
-\[\E_{\nu^K \times \Un_P^K}[(P^K-g)^2] \leq \E_{\nu^K \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma)^K - g)^2] \pmod \Fall\]
+\[w^K \in \Argmax{w \in \Supp \M_Q^K} \E_{(x,z) \sim \mu^{K_0} \times \Un^{\R_Q^K(w)}}[(Q^K(x,z,w)-f(x))^2]\]
 
+Construct ${\bar{Q}: \Words \Scheme \Rats}$ s.t.
 
+\begin{align*}
+\R_{\bar{Q}}(K) &= \R_Q^K(w^K) \\
+\bar{Q}^K(x,z) &= \bar{Q}^K(x,z,w)
+\end{align*}
+
+Equation \ref{eqn:op} for ${\bar{Q}}$ implies \ref{eqn:prp__mixed_ort}.
+%
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:psp_reduce}]
+
+Let ${\sigma}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. By Proposition~\ref{prp:mixed_opt}
+
+\[\E_{\nu^{K_0} \times \Un_P^K}[(P^K-g)^2] \leq \E_{\nu^{K_0} \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma)^K - g)^2] \pmod \Fall\]
+
+Using condition (i) of Definition~\ref{def:psp_reduce}
+
+\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-g)^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma)^K - g)^2] \pmod \Fall\]
+
+\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-g \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma \circ \pi)^K - g \circ \pi^K)^2] \pmod \Fall\]
 
 TBD
 %
