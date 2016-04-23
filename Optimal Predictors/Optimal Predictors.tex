@@ -2131,19 +2131,25 @@ Consider $\{F^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \
 
 \begin{proof}[Proof of Theorem \ref{thm:psp_reduce}]
 
-Let ${\sigma}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. By Proposition~\ref{prp:mixed_opt}
+Let ${L}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. By Proposition~\ref{prp:mixed_opt}
 
-\[\E_{\nu^{K_0} \times \Un_P^K}[(P^K-g)^2] \leq \E_{\nu^{K_0} \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma)^K - g)^2] \pmod \Fall\]
+\[\E_{\nu^{K_0} \times \Un_P^K}[(P^K-g)^2] \leq \E_{\nu^{K_0} \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - g)^2] \pmod \Fall\]
 
 Using condition (i) of Definition~\ref{def:psp_reduce}
 
-\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-g)^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma)^K - g)^2] \pmod \Fall\]
+\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-g)^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - g)^2] \pmod \Fall\]
 
-\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-g \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma \circ \pi)^K - g \circ \pi^K)^2] \pmod \Fall\]
+\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-g)^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[\E_{\Un_Q^K}[((Q \circ L)^K - g)^2]] \pmod \Fall\]
+
+The right hand side has the form of the right hand side in \ref{?} enabling us to apply Proposition~\ref{?} and get
+
+\[?\]
+
+\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-g \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K \times \UM_L^K}[((Q \circ L \circ \pi)^K - g \circ \pi^K)^2] \pmod \Fall\]
 
 By Proposition~\ref{prp:sq_diff_cong} and condition (ii) of Definition~\ref{def:psp_reduce}
 
-\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-f)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma \circ \pi)^K - f)^2] \pmod \Fall\]
+\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-f)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K \times \UM_L^K}[((Q \circ L \circ \pi)^K - f)^2] \pmod \Fall\]
 
 TBD
 %
