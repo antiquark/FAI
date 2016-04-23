@@ -2156,6 +2156,26 @@ By Proposition~\ref{prp:sq_diff_cong} and condition (ii) of Definition~\ref{def:
 %
 \end{proof}
 
+We now consider a more general type of reduction which only preserves the function on average (the only difference is in condition (ii)):
+
+\begin{samepage}
+\begin{definition}
+
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{strict pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when
+
+\begin{enumerate}[(i)]
+
+\item $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
+
+\item $\E_{(x,z) \sim \mu^{K_0}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
+
+\item $\mu$ is $\EMG$-samplable relative to $\pi$.
+
+\end{enumerate}
+
+\end{definition}
+\end{samepage}
+
 TBD
 
 \subsection{Completeness}
