@@ -1622,51 +1622,7 @@ When $\sup{\Abs{G_1}} < \infty$, $G$ is called an \emph{$\EMG$-sampler (resp. $\
 
 Note that relative samplability reduces to absolute (ordinary) samplability when $Y=\bm{1}$.
 
-\subsection{Independent Variables}
-\label{subsec:indep_var}
-
-Independent random variables $F_1, F_2$ satisfy 
-
-\begin{equation}
-\label{eqn:ev_mult}
-\E[F_1 F_2] = \E[F_1] \E[F_2]
-\end{equation}
-
-To formulate an analogous property for optimal predictors, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_1$ is \enquote{independent} of $f_2$ when learning the value of $f_2(x)$ provides no efficiently accessible information about $f_1(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
-
-We start with an informal description. Suppose that $f_1(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_1(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ for which $f_2(x')$ is known. Then, the knowledge of $f_2(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
- Moreover, if we can only efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ together with $\tilde{f}_2(x')$ an \emph{unbiased estimate} of $f_2(x')$, we still expect the analogue of \ref{eqn:ev_mult} to hold since the expected value of $\tilde{f}_2(x') - f_2(x')$ vanishes for any given $x'$ so it is uncorrelated with $f_1(x)$.
- 
-The following theorem formalises this setting.
-
-\begin{samepage}
-\begin{theorem}
-\label{thm:mult}
-
-Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded, $(\nu,g)$ a distributional estimation problem and $\pi: \Words \Scheme \Words$. Assume the following conditions:
-
-\begin{enumerate}[(i)]
-
-\item $\pi_*^{K}(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
-
-\item $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f_1(x)-g(\pi^{K}(x,z))}] \in \Fall$
-
-\item $(\mu, f_2)$ is $\EMG$-samplable relative to $\pi$.
-
-\end{enumerate}
-
-Suppose $P_1$ is an $\ESG$-optimal predictor for $(g,\nu)$ and $P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$. Denote $\bar{P}_1 := P_1 \circ \pi$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{\bar{P}_1}+\R_{P_2}$ and for any $z_1 \in \WordsLen{\R_{\bar{P}_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
-
-\begin{equation}
-P^{K}(x,z_1 z_2)=\bar{P}_1^{K}(x,z_1) P_2^{K}(x,z_2)
-\end{equation}
-
-Then, $P$ is an $\ESG$-optimal predictor for $(\mu,f_1 f_2)$.
-
-\end{theorem}
-\end{samepage}
-
-In order to prove Theorem~\ref{thm:mult} we will need the following propositions.
+The following propositions are basic properties of samplable ensembles and problems which often come in handy.
 
 \begin{samepage}
 \begin{proposition}
@@ -1675,6 +1631,7 @@ In order to prove Theorem~\ref{thm:mult} we will need the following propositions
 Consider a word ensemble $\mu$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $L$ is an $\EMG$-sampler of $\mu$ relative to $\pi$. Then
 
 \begin{equation}
+\label{eqn:prp__smp}
 \E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] \equiv \E_{(y,z) \sim \pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
 \end{equation}
 
@@ -1731,6 +1688,52 @@ $$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K
 
 $$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y) G^K(y,z)_1] \pmod \Fall$$
 \end{proof}
+
+\subsection{Independent Variables}
+\label{subsec:indep_var}
+
+Independent random variables $F_1, F_2$ satisfy 
+
+\begin{equation}
+\label{eqn:ev_mult}
+\E[F_1 F_2] = \E[F_1] \E[F_2]
+\end{equation}
+
+To formulate an analogous property for optimal predictors, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_1$ is \enquote{independent} of $f_2$ when learning the value of $f_2(x)$ provides no efficiently accessible information about $f_1(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
+
+We start with an informal description. Suppose that $f_1(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_1(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ for which $f_2(x')$ is known. Then, the knowledge of $f_2(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
+ Moreover, if we can only efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ together with $\tilde{f}_2(x')$ an \emph{unbiased estimate} of $f_2(x')$, we still expect the analogue of \ref{eqn:ev_mult} to hold since the expected value of $\tilde{f}_2(x') - f_2(x')$ vanishes for any given $x'$ so it is uncorrelated with $f_1(x)$.
+ 
+The following theorem formalises this setting.
+
+\begin{samepage}
+\begin{theorem}
+\label{thm:mult}
+
+Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded, $(\nu,g)$ a distributional estimation problem and $\pi: \Words \Scheme \Words$. Assume the following conditions:
+
+\begin{enumerate}[(i)]
+
+\item $\pi_*^{K}(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
+
+\item $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f_1(x)-g(\pi^{K}(x,z))}] \in \Fall$
+
+\item $(\mu, f_2)$ is $\EMG$-samplable relative to $\pi$.
+
+\end{enumerate}
+
+Suppose $P_1$ is an $\ESG$-optimal predictor for $(g,\nu)$ and $P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$. Denote $\bar{P}_1 := P_1 \circ \pi$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{\bar{P}_1}+\R_{P_2}$ and for any $z_1 \in \WordsLen{\R_{\bar{P}_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+
+\begin{equation}
+P^{K}(x,z_1 z_2)=\bar{P}_1^{K}(x,z_1) P_2^{K}(x,z_2)
+\end{equation}
+
+Then, $P$ is an $\ESG$-optimal predictor for $(\mu,f_1 f_2)$.
+
+\end{theorem}
+\end{samepage}
+
+In order to prove Theorem~\ref{thm:mult} we will need the following proposition.
 
 \begin{samepage}
 \begin{proposition}
@@ -2131,7 +2134,7 @@ Consider $\{F^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \
 
 \begin{proof}[Proof of Theorem \ref{thm:psp_reduce}]
 
-Let ${L}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. By Proposition~\ref{prp:mixed_opt}
+Let ${L}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. Applying Proposition~\ref{prp:mixed_opt} for ${P}$ and ${Q \circ L}$, we get
 
 \[\E_{\nu^{K_0} \times \Un_P^K}[(P^K-g)^2] \leq \E_{\nu^{K_0} \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - g)^2] \pmod \Fall\]
 
@@ -2141,17 +2144,15 @@ Using condition (i) of Definition~\ref{def:psp_reduce}
 
 \[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-g)^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[\E_{\Un_Q^K}[((Q \circ L)^K - g)^2]] \pmod \Fall\]
 
-The right hand side has the form of the right hand side in \ref{?} enabling us to apply Proposition~\ref{?} and get
+The right hand side has the form of the right hand side in \ref{eqn:prp__smp} enabling us to apply Proposition~\ref{prp:smp} and get
 
-\[?\]
+\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-g)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K}[\E_{\Un_Q^K}[(Q^K - g \circ \pi^K)^2]] \pmod \Fall\]
 
-\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-g \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K \times \UM_L^K}[((Q \circ L \circ \pi)^K - g \circ \pi^K)^2] \pmod \Fall\]
+\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-g \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K}[(Q^K - g \circ \pi^K)^2] \pmod \Fall\]
 
 By Proposition~\ref{prp:sq_diff_cong} and condition (ii) of Definition~\ref{def:psp_reduce}
 
-\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-f)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K \times \UM_L^K}[((Q \circ L \circ \pi)^K - f)^2] \pmod \Fall\]
-
-TBD
+\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-f)^2] \leq \E_{\mu^{K_0} \times \Un_Q^K}[(Q^K - f)^2] \pmod \Fall\]
 %
 \end{proof}
 
