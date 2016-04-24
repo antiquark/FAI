@@ -200,7 +200,7 @@ For $X$ a discrete measurable space, a probability measure on $X$ can be represe
 
 \subsection{Algorithms}
 
-$\Words$ is the set of all finite binary strings (words), i.e. $\Words:=\bigsqcup_{n \in \Nats} \Bool^n$. For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. For any $n \in \Nats$, $\Bool^{\leq n}:=\{x \in \Words \mid \Abs{x} \leq n\}$, $\Bool^{>n}:=\{x \in \Words \mid \Abs{x} > n\}$. For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i \in [n]} x_i y_i$. For any $n \in \Nats$, $\Un^n$ is the uniform probability distribution on $\WordsLen{n}$.
+$\Words$ is the set of all finite binary strings (words), i.e. $\Words:=\bigsqcup_{n \in \Nats} \Bool^n$. For any $x \in \Words$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. For any $n \in \Nats$, $\Bool^{\leq n}:=\{x \in \Words \mid \Abs{x} \leq n\}$, ${\Bool^{>n}:=\{x \in \Words \mid \Abs{x} > n\}}$. For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given ${n \in \Nats}$ and ${x_0, x_1 \ldots x_{n-1} \in \Words}$, ${\prod_{i \in [n]} x_i}$ is also concatenation. Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i \in [n]} x_i y_i$. For any $n \in \Nats$, $\Un^n$ is the uniform probability distribution on $\WordsLen{n}$.
 
 Given $n \in \Nats$ and ${x_0, x_1 \ldots x_{n-1} \in \Words}$, $\Chev{x_0,x_1 \ldots x_{n-1}} \in \Words$ denotes the encoding of $(x_0,x_1 \ldots x_{n-1})$ obtained by repeating each bit of $x_0, x_1 \ldots x_{n-1}$ twice and inserting the separators 01.
 \begin{definition}
@@ -1716,16 +1716,16 @@ Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded
 
 \item $\pi_*^{K}(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
 
-\item $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f_1(x)-g(\pi^{K}(x,z))}] \in \Fall$
+\item Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by $0$.  We require ${\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f_1(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall}$
 
 \item $(\mu, f_2)$ is $\EMG$-samplable relative to $\pi$.
 
 \end{enumerate}
 
-Suppose $P_1$ is an $\ESG$-optimal predictor for $(g,\nu)$ and $P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$. Denote $\bar{P}_1 := P_1 \circ \pi$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{\bar{P}_1}+\R_{P_2}$ and for any $z_1 \in \WordsLen{\R_{\bar{P}_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Suppose $P_1$ is an $\ESG$-optimal predictor for $(g,\nu)$ and $P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$. Denote $P_\pi := P_1 \circ \pi$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{P_\pi}+\R_{P_2}$ and for any $z_1 \in \WordsLen{\R_{P_\pi}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
-P^{K}(x,z_1 z_2)=\bar{P}_1^{K}(x,z_1) P_2^{K}(x,z_2)
+P^{K}(x,z_1 z_2)=P_\pi^{K}(x,z_1) P_2^{K}(x,z_2)
 \end{equation}
 
 Then, $P$ is an $\ESG$-optimal predictor for $(\mu,f_1 f_2)$.
@@ -1775,41 +1775,41 @@ By construction of $w^{K}$, the absolute value of the left hand side is no less 
 
 Consider $K \in \Nats^n$, $x \in \Supp \mu^{K_0}$, $z_1 \in \WordsLen{\R_{P_1}(K)}$, ${z_2 \in \WordsLen{\R_{P_2}(K)}}$ and ${z_3 \in \WordsLen{\R_\pi(K)}}$.
 
-\[P^{K}(x,z_1 z_3 z_2)-f_1(x)f_2(x)=\bar{P}_1^{K}(x, z_1 z_3) P_2^{K}(x,z_2) - f_1(x) f_2(x)\]
+\[P^{K}(x,z_1 z_3 z_2)-f_1(x)f_2(x)=P_\pi^{K}(x, z_1 z_3) P_2^{K}(x,z_2) - f_1(x) f_2(x)\]
 
-Adding and subtracting $\bar{P}_1^{K}(x, z_1 z_3) f_2(x)$ from the right hand side and grouping variables, we get
+Adding and subtracting $P_\pi^{K}(x, z_1 z_3) f_2(x)$ from the right hand side and grouping variables, we get
 
-\[P^{K}(x,z_1 z_3 z_2)-f_1(x)f_2(x)=\bar{P}_1^{K}(x, z_1 z_3)(P_2^{K}(x,z_2)-f_2(x))+(\bar{P}_1^{K}(x, z_1 z_3)-f_1(x))f_2(x)\]
+\[P^{K}(x,z_1 z_3 z_2)-f_1(x)f_2(x)=P_\pi^{K}(x, z_1 z_3)(P_2^{K}(x,z_2)-f_2(x))+(P_\pi^{K}(x, z_1 z_3)-f_1(x))f_2(x)\]
 
 For any bounded $S: \Words \times \Rats \Scheme \Rats$ we get
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_2^{K}-f_2) \bar{P}_1^{K} S^{K}]} + \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]}$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_2^{K}-f_2) P_\pi^{K} S^{K}]} + \Abs{\E[(P_\pi^{K}-f_1)f_2 S^{K}]}$$
 
 $P_2$ is an $\ESG$-optimal predictor for $(\mu,f_2)$ therefore the first term on the right hand side is in $\Fall$.
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-f_1)f_2 S^{K}]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}] - \E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}] + \E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-f_1)f_2 S^{K}] - \E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}] + \E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-f_1)f_2 S^{K}] - \E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} + \Abs{\E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-f_1)f_2 S^{K}] - \E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} + \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(g \circ \pi^{K}-f_1)f_2 S^{K}]} + \Abs{\E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{g} \circ \pi^{K}-f_1)f_2 S^{K}]} + \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq (\sup \Abs{f_2}) (\sup \Abs{S}) \E[\Abs{g \circ \pi^{K} - f_1}] + \Abs{\E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq (\sup \Abs{f_2}) (\sup \Abs{S}) \E[\Abs{\bar{g} \circ \pi^{K} - f_1}] + \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
 Condition (ii) implies the first term on the right hand side is in $\Fall$.
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{P}_1^{K}-g \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
 Denote $\Un_{\text{tot}}^{K}:= \Un_{P_1}^{K} \times \Un_{P_2}^{K} \times \Un_S^{K}$. We change variables inside the expected value on the right hand side by $y:=\pi^{K}(x,z_3)$. Observing that $(x,y)$ obeys the distribution $\mu^{K_0} \ltimes \pi^{K}$ we get
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K} \times \Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-g(y))f_2(x) S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K} \times \Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-\bar{g}(y))f_2(x) S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K}}[\E_{\Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-g(y))S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]f_2(x)]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K}}[\E_{\Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-\bar{g}(y))S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]f_2(x)]} \pmod \Fall$$
 
 Let $G$ be an $\EMG$-sampler of $(\mu,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K(\mu^{K_0}) \times \UM_G^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K(\mu^{K_0}) \times \UM_G^{K}}[\E[(P_1^{K}(y)-\bar{g}(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
 
 Using condition (i) we conclude that
 
@@ -1861,9 +1861,9 @@ Denote $\mu_L^{K}:=\En_*^2(L_{1\bullet}^{K} \times L_{2\bullet}^{K})$. We get ${
 \begin{proposition}
 \label{prp:thm__mult__cond2}
 
-Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \mu_1 \rightarrow \Reals$ bounded we have 
+Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \mu_1 \rightarrow \Reals$ bounded and ${\bar{g}: \Words \rightarrow \Reals}$ its extension by ${0}$, we have 
 
-$$\E_{(x_1,x_2,z) \sim\mu_1^{K_0} \times \mu_2^{K_0} \times \Un_\pi^{K}}[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2},z))}] \in \Fall$$
+$$\E_{(x_1,x_2,z) \sim\mu_1^{K_0} \times \mu_2^{K_0} \times \Un_\pi^{K}}[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2},z))}] \in \Fall$$
 
 \end{proposition}
 \end{samepage}
@@ -1872,11 +1872,11 @@ $$\E_{(x_1,x_2,z) \sim\mu_1^{K_0} \times \mu_2^{K_0} \times \Un_\pi^{K}}[\Abs{g(
 
 Denote $M:= \sup g - \inf g$.
 
-$$\E[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2}))}] \leq M \Prb_{ \mu_1^{K_0} \times \mu_2^{K_0}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}]$$
+$$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \leq M \Prb_{ \mu_1^{K_0} \times \mu_2^{K_0}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}]$$
 
-$$\E[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2}))}] \leq M\Prb_{ L_{1\bullet}^{K} \times L_{2\bullet}^{K}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}] \pmod \Fall$$
+$$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \leq M\Prb_{ L_{1\bullet}^{K} \times L_{2\bullet}^{K}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}] \pmod \Fall$$
 
-$$\E[\Abs{g(x_1)-g(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
+$$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
 \end{proof}
 \begin{samepage}
 \begin{proposition}
@@ -2040,7 +2040,7 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \item $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
 
-\item $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f(x)-g(\pi^{K}(x,z))}] \in \Fall$
+\item Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
 
 \item $\mu$ is $\EMG$-samplable relative to $\pi$.
 
@@ -2057,7 +2057,7 @@ Precise strict pseudo-invertible $\EG$-reductions preserve $\ESG$-optimal predic
 \begin{corollary}
 \label{crl:psp_reduce_sharp}
 
-Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi$ a precise strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, f)$. Suppose $P$ is an $\ESG$-optimal predictor of $(\nu, g)$. Then, $P \circ \pi$ is an $\ESG$-optimal predictor of $(\mu, f)$.
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi$ a precise strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$. Suppose $P$ is an $\ESG$-optimal predictor for $(\nu, g)$. Then, $P \circ \pi$ is an $\ESG$-optimal predictor for $(\mu, f)$.
 
 \end{corollary}
 \end{samepage}
@@ -2074,7 +2074,7 @@ $\EG$-optimal predictors are also preserved.
 \begin{theorem}
 \label{thm:psp_reduce}
 
-Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi$ a precise strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, f)$. Suppose $P$ is an $\EG$-optimal predictor of $(\nu, g)$. Then, $P \circ \pi$ is an $\EG$-optimal predictor of $(\mu, f)$.
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi$ a precise strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$. Suppose $P$ is an $\EG$-optimal predictor for $(\nu, g)$. Then, $P \circ \pi$ is an $\EG$-optimal predictor for $(\mu, f)$.
 
 \end{theorem}
 \end{samepage}
@@ -2140,15 +2140,15 @@ Let ${L}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${
 
 Using condition (i) of Definition~\ref{def:psp_reduce}
 
-\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-g)^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - g)^2] \pmod \Fall\]
+\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - \bar{g})^2] \pmod \Fall\]
 
-\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-g)^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[\E_{\Un_Q^K}[((Q \circ L)^K - g)^2]] \pmod \Fall\]
+\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[\E_{\Un_Q^K}[((Q \circ L)^K - \bar{g})^2]] \pmod \Fall\]
 
 The right hand side has the form of the right hand side in \ref{eqn:prp__smp} enabling us to apply Proposition~\ref{prp:smp} and get
 
-\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-g)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K}[\E_{\Un_Q^K}[(Q^K - g \circ \pi^K)^2]] \pmod \Fall\]
+\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K}[\E_{\Un_Q^K}[(Q^K - \bar{g} \circ \pi^K)^2]] \pmod \Fall\]
 
-\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-g \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K}[(Q^K - g \circ \pi^K)^2] \pmod \Fall\]
+\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-\bar{g} \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K}[(Q^K - \bar{g} \circ \pi^K)^2] \pmod \Fall\]
 
 By Proposition~\ref{prp:sq_diff_cong} and condition (ii) of Definition~\ref{def:psp_reduce}
 
@@ -2167,7 +2167,7 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \item $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
 
-\item $\E_{(x,z) \sim \mu^{K_0}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
+\item Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
 
 \item $\mu$ is $\EMG$-samplable relative to $\pi$.
 
@@ -2175,6 +2175,67 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \end{definition}
 \end{samepage}
+
+\begin{samepage}
+\begin{theorem}
+\label{thm:sp_reduce}
+
+Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-1} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\ESG$-optimal predictor for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ s.t.
+
+\begin{align}
+\R_{P_f}(K) &= \gamma(K) (\R_{P_g}(K) + \R_\pi(K)) \\
+P_f^K(x, \prod_{i \in [\gamma(K)]} y_i z_i) &= \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),y_i)
+\end{align}
+
+Then, $P_f$ is an $\ESG$-optimal predictor for $(\mu, f)$.
+
+\end{theorem}
+\end{samepage}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-1} \in \Fall$. Consider $(\mu,f)$ a distributional estimation problem, $\bar{g}: \Words \rightarrow \Reals$, $\pi: \Words \Scheme \Words$. Assume ${\E_{(x,z) \sim \mu^{K_0}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[\bar{g}(\pi^{K}(x,z))]}] \in \Fall}$. Then,
+
+\begin{equation}
+%\label{eqn:tbd}
+\E_{(x,z_0, z_1 \ldots z_{\gamma(K)-1}) \sim \mu^{K_0} \times \prod_{i \in [\gamma(K)]} U_\pi^K}[\Abs{f(x)-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} g(\pi^K(x,z_i))}] \in \Fall
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+FOO
+%
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:sp_reduce}]
+
+Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded.
+
+\[\E_{\mu^{K_0} \times \Un_{P_f}^K \times \Un_S^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] = \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} \E_{\mu^{K_0} \times \Un_{P_f}^K \times \Un_S^K}[(P_g^K(\pi^K(x,z_i),y_i)-f(x))S(x,P_f^K(x))]\]
+
+FOO
+%
+\end{proof}
+
+\begin{samepage}
+\begin{theorem}
+%\label{thm:tbd}
+
+?
+
+\end{theorem}
+\end{samepage}
+
+\begin{proof}
+
+FOO
+%
+\end{proof}
 
 TBD
 
