@@ -2168,11 +2168,11 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \begin{enumerate}[(i)]
 
-\item $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
+\item\label{con:def__sp_reduce__dist} $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
 
 \item\label{con:def__sp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
 
-\item $\mu$ is $\EMG$-samplable relative to $\pi$.
+\item\label{con:def__sp_reduce__smp} $\mu$ is $\EMG$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2183,11 +2183,11 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 \begin{theorem}
 \label{thm:sp_reduce}
 
-Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\ESG$-optimal predictor for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ s.t.
+Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\ESG$-optimal predictor for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ s.t. for any ${\{z_i \in \BoolR{\pi}\}_{i \in [\gamma(K)]}}$ and ${\{w_i \in \BoolR{P_g}\}_{i \in [\gamma(K)]}}$
 
 \begin{align}
 \R_{P_f}(K) &= \gamma(K) (\R_{P_g}(K) + \R_\pi(K)) \\
-P_f^K(x, \prod_{i \in [\gamma(K)]} y_i z_i) &= \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),y_i)
+P_f^K(x, \prod_{i \in [\gamma(K)]} w_i z_i) &= \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i)
 \end{align}
 
 Then, $P_f$ is an $\ESG$-optimal predictor for $(\mu, f)$.
@@ -2197,7 +2197,7 @@ Then, $P_f$ is an $\ESG$-optimal predictor for $(\mu, f)$.
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:ev_equiv_mean}
 
 Consider $\mu$ a word ensemble, $\bar{g}: \Words \rightarrow \Reals$ bounded and $\pi: \Words \Scheme \Words$. Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Then,
 
@@ -2221,11 +2221,35 @@ Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$.
 
 \begin{proof}[Proof of Theorem \ref{thm:sp_reduce}]
 
-Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Using condition~\ref{con:def__sp_reduce__fun} of Definition~\ref{def:sp_reduce}
+Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote ${\Un_{PS}^K:=\Un_{P_f}^K \times \Un_S^K}$. Using condition~\ref{con:def__sp_reduce__fun} of Definition~\ref{def:sp_reduce}
 
-\[\E_{\mu^{K_0} \times \Un_{P_f}^K \times \Un_S^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] \equiv \E_{\mu^{K_0} \times \Un_{P_f}^K \times \Un_S^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] \pmod \Fall\]
+\[\E_{\mu^{K_0} \times \Un_{PS}^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] \equiv \E_{\mu^{K_0} \times \Un_{PS}^K}[(P_f^K(x) - \E_{\Un_\pi^{K}}[g(\pi^{K}(x))])S(x,P_f^K(x))] \pmod \Fall\]
 
-FOO
+Using the construction of $P_f$ and Proposition~\ref{prp:ev_equiv_mean}, we get
+
+\[\E[(P_f^K - f)S] \equiv \E_{\mu^{K_0} \times \Un_{PS}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i) - \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
+
+\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\mu^{K_0} \times \Un_{PS}^K}[(P_g^K(\pi^K(x,z_i),w_i) - \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
+
+Let $L$ be an $\EMG$-sampler of $\mu$ relative to ${\pi}$. Denote 
+
+\begin{align*}
+\mu_\pi^K &:= \pi_*^K(\mu^{K_0}) \\
+\Un_i^K&:=\prod_{j \in [\gamma(K)]} \Un_{P_g}^K \times \prod_{j \in [\gamma(K)] \setminus i} \Un_{\pi}^K \times \Un_S^K \times \UM_L^K 
+\end{align*}
+
+Applying Proposition~\ref{prp:smp} we get
+%Denoting ${y_i:=\pi^K(x,z_i)}$
+
+\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\mu_\pi^K \times \Un_i^K}[(P_g^K(y) - \bar{g}(y))S(L^K(y),\frac{1}{\gamma(K)}(P_g^K(y)+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(L^K(y),z_j))))] \pmod \Fall\]
+
+Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}, we get
+
+\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\nu^{K_0} \times \Un_i^K}[(P_g^K - g)S(L^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(L^K,z_j))))] \pmod \Fall\]
+
+$P_g$ is a $\ESG$-optimal predictor for $(\nu,g)$, therefore
+
+\[\E[(P_f^K - f)S] \equiv 0 \pmod \Fall\]
 %
 \end{proof}
 
