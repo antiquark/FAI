@@ -2181,7 +2181,7 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \begin{samepage}
 \begin{theorem}
-\label{thm:sp_reduce}
+\label{thm:sp_reduce_sharp}
 
 Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\ESG$-optimal predictor for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ s.t. for any ${\{z_i \in \BoolR{\pi}\}_{i \in [\gamma(K)]}}$ and ${\{w_i \in \BoolR{P_g}\}_{i \in [\gamma(K)]}}$
 
@@ -2219,7 +2219,7 @@ Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$.
 %
 \end{proof}
 
-\begin{proof}[Proof of Theorem \ref{thm:sp_reduce}]
+\begin{proof}[Proof of Theorem \ref{thm:sp_reduce_sharp}]
 
 Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote ${\Un_{PS}^K:=\Un_{P_f}^K \times \Un_S^K}$. Using condition~\ref{con:def__sp_reduce__fun} of Definition~\ref{def:sp_reduce}
 
@@ -2255,14 +2255,70 @@ $P_g$ is a $\ESG$-optimal predictor for $(\nu,g)$, therefore
 
 \begin{samepage}
 \begin{theorem}
-%\label{thm:tbd}
+\label{thm:sp_reduce}
 
 Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\EG$-optimal predictor for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ according to \ref{eqn:thm__sp_reduce__rpf} and \ref{eqn:thm__sp_reduce__pf}. Then, $P_f$ is an $\EG$-optimal predictor for ${(\mu,g)}$.
 
 \end{theorem}
 \end{samepage}
 
+\begin{samepage}
+\begin{proposition}
+\label{prp:ev_diff_sq}
+
+Consider ${F}$ a bounded random variable and ${s,t \in \Reals}$. Then
+
+\begin{equation}
+%\label{eqn:tbd}
+\E[(F - s)^2 - (F - t)^2] = (\E[F] - s)^2 - (\E[F] - t)^2
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
 \begin{proof}
+
+\[\E[(F - s)^2 - (F - t)^2] = \E[(2F - s - t)(t-s)]\]
+
+\[\E[(F - s)^2 - (F - t)^2] = (2\E[F] - s - t)(t-s)\]
+
+\[\E[(F - s)^2 - (F - t)^2] = (\E[F] - s)^2 - (\E[F] - t)^2\]
+%
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:sp_reduce}]
+
+Let ${L}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q_f: \Words \Scheme \Rats}$ bounded. Construct ${Q_g: \Words \MScheme \Rats}$ s.t. for any ${z_L \in \UM_L^K}$, ${z_Q \in \Supp \UM_{Q_f }^K}$, ${z_f \in \Supp \UM_{P_f}^K}$ and ${z_g \in \Supp \UM_{P_g}^K}$
+
+\begin{align*}
+\M_{Q_g}^K &= c_*^4(\M_L^K \times \M_{Q_f}^K \times \M_{P_f}^K \times \M_{P_g}^K) \\
+\R_{Q_g}^K(\Chev{z_{L1}, z_{Q1},z_{f1},z_{g1}}) &= \R_L^K(z_{L1}) + \R_{Q_f}^K(z_{Q1}) + \R_{P_f}^K(z_{f1}) + \R_{P_g}^K(z_{g1}) \\
+Q_g^K(x,z_{L0} z_{Q0} z_{f0} z_{g0}, \Chev{z_{L1}, z_{Q1},z_{f1},z_{g1}}) &= Q_f^K(L^K(x,z_L),z_Q)-P_f^K(L^K(x,z_L),z_f)+P_g^K(x,z_g)
+\end{align*}
+
+Applying Proposition~\ref{prp:mixed_opt} for ${P_g}$ and ${Q_g}$, we get
+
+\[\E_{\nu^{K_0} \times \Un_{P_g}^K}[(P^K - g)^2] \leq \E_{\nu^{K_0} \times \UM_{Q_g}^K}[(Q_g^K - g)^2] \pmod \Fall\]
+
+Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}
+
+\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_{P_g}^K}[(P_g^K-\bar{g})^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \UM_{Q_g}^K}[(Q_g^K - \bar{g})^2] \pmod \Fall\]
+
+\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_{P_g}^K}[(P_g^K-\bar{g})^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \UM_{Q_g}^K}[((Q_f \circ L)^K - (P_f \circ L)^K + P_g^K - \bar{g})^2] \pmod \Fall\]
+
+The right hand side has the form of the right hand side in \ref{eqn:prp__smp} enabling us to apply Proposition~\ref{prp:smp} and get
+
+\[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_{P_g}^K}[((P_g \circ \pi)^K-\bar{g} \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_{Q_f}^K \times \Un_{P_f}^K \times \Un_{P_g}^K}[(Q_f ^K - P_f^K+(P_g \circ \pi)^K - \bar{g} \circ \pi^K)^2] \pmod \Fall\]
+
+We can consider the expressions within the expected values on both sides as random variables w.r.t. $\Un_\pi^K$ while fixing the other components of the distribution. This allows us applying Proposition~\ref{prp:ev_diff_sq} to the difference between the right hand side and the left hand side (with the terms that don't depend on $\Un_\pi^K$ playing the role of the constants), which results in moving the expected value over $\Un_\pi^K$ inside the squares:
+
+\[\E_{\mu^{K_0} \times \Un_{P_g}^K}[\E_{\Un_\pi^K}[(P_g \circ \pi)^K-\bar{g} \circ \pi^K]^2] \leq \E_{\mu^{K_0} \times \Un_{Q_f}^K \times \Un_{P_f}^K \times \Un_{P_g}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K - \bar{g} \circ \pi^K])^2] \pmod \Fall\]
+
+Denote $y_i:=\pi^K(x,z_i)$ where the ${z_i}$ are sampled independently from ${\Un_\pi^K}$. Applying Proposition~\ref{prp:sq_diff_cong} via Proposition~\ref{prp:ev_equiv_mean} we get
+
+% TODO: Don't multisample P_g's coin-flips in definition P_f (only \pi's coinflips)
+
+\[\E[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}(P_g^K(y_i,w_i???)-\bar{g}(y_i)))^2] \leq \E[(Q_f ^K - P_f^K+\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}(P_g^K(y_i,w_i???)-\bar{g}(y_i)))^2] \pmod \Fall\]
 
 FOO
 %
