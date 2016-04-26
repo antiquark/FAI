@@ -2186,8 +2186,8 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\ESG$-optimal predictor for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ s.t. for any ${\{z_i \in \BoolR{\pi}\}_{i \in [\gamma(K)]}}$ and ${\{w_i \in \BoolR{P_g}\}_{i \in [\gamma(K)]}}$
 
 \begin{align}
-\R_{P_f}(K) &= \gamma(K) (\R_{P_g}(K) + \R_\pi(K)) \\
-P_f^K(x, \prod_{i \in [\gamma(K)]} w_i z_i) &= \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i)
+\label{eqn:thm__sp_reduce__rpf}\R_{P_f}(K) &= \gamma(K) (\R_{P_g}(K) + \R_\pi(K)) \\
+\label{eqn:thm__sp_reduce__pf}P_f^K(x, \prod_{i \in [\gamma(K)]} w_i z_i) &= \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i)
 \end{align}
 
 Then, $P_f$ is an $\ESG$-optimal predictor for $(\mu, f)$.
@@ -2257,7 +2257,7 @@ $P_g$ is a $\ESG$-optimal predictor for $(\nu,g)$, therefore
 \begin{theorem}
 %\label{thm:tbd}
 
-?
+Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\EG$-optimal predictor for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ according to \ref{eqn:thm__sp_reduce__rpf} and \ref{eqn:thm__sp_reduce__pf}. Then, $P_f$ is an $\EG$-optimal predictor for ${(\mu,g)}$.
 
 \end{theorem}
 \end{samepage}
