@@ -341,22 +341,23 @@ Such a $U$ is called the \emph{composition} of $T$ and $S$ and denoted $U = T \c
 It will also be useful to consider families of $\Gamma$-schemes satisfying uniform resource bounds.
 
 \begin{definition}
+\label{def:family}
 
 Fix $n \in \Nats$, $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ and encoded sets $X$, $Y$. A set $F$ of $\Gamma$-schemes of signature $X \rightarrow Y$ is called a \emph{uniform family} when
 
 \begin{enumerate}[(i)]
 
-\item There is a polynomial $p_1: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$, $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$
+\item\label{con:def__family__time} There is a polynomial $p_1: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$, $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$
 
 \[\T_S(K,x,y,\A_S(K)) \leq p_1(K)\]
 
-\item There is a polynomial $p_2: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$ and $K \in \Nats^n$
+\item\label{con:def__family__rtime} There is a polynomial $p_2: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$ and $K \in \Nats^n$
 
 \[\T_{\R_S}(K,\A_S(K)) \leq p_2(K)\]
 
-\item $\max_{S \in F} \R_S \in \GrowR$
+\item\label{con:def__family__rand} $\max_{S \in F} \R_S \in \GrowR$
 
-\item There is $l \in \GrowA$ s.t. for any $S \in F$ and $K \in \Nats^n$
+\item\label{con:def__family__adv} There is $l \in \GrowA$ s.t. for any $S \in F$ and $K \in \Nats^n$
 
 \[\Abs{\Quote{S}} + \Abs{\Quote{\R_S}} + \Abs{\A_S(K)} \leq l(K)\]
 
@@ -379,7 +380,7 @@ Fix $n \in \Nats$, $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $
 We take $\A_{\Delta_{\mathcal{S}}}(K):=\Chev{\Quote{\mathcal{S}_K},\Quote{\R_{\mathcal{S}_K}},\A_{\mathcal{S}_K}(K)}$. $\R_{\Delta_{\mathcal{S}}}$ is constructed so that ${\R_{\Delta_{\mathcal{S}}}(K)=\R_{\mathcal{S}_K}(K)}$. $\Delta_{\mathcal{S}}$ is constructed so that $\Delta_{\mathcal{S}}^K(x,z)=\mathcal{S}_K^K(x,z)$.
 \end{proof}
 
-Note that the concept of a uniform family is non-trivial only when $1 \in \GrowA$, otherwise condition (iv) allows only families of at most one member.
+Note that the concept of a uniform family is non-trivial only when $1 \in \GrowA$, otherwise condition~\ref{con:def__family__adv} allows only families of at most one member.
 
 \subsubsection{Fall Spaces}
 
@@ -388,16 +389,17 @@ Fix $n \in \Nats$ and $\Gamma$ a pair of growth spaces of rank $n$. The 0th para
 Given a distributional estimation problem $(\mu,f)$ and $Q: \Words \Scheme \Rats$, we can consider the estimation error $\E_{(x,y) \sim \mu^{K_0} \times \Un_Q^K}[(Q^K(x,y) - f(x))^2]$. It makes little sense to require this error to be minimal for every $K \in \Nats^n$, since we can always hard-code a finite number of answers into $Q$ without violating the resource restrictions. Instead we require minimization up to an asymptotically small error. Since it makes sense to consider different kind of asymptotic requirements, we introduce an abstraction that corresponds to this choice.
 
 \begin{definition}
+\label{def:fall}
 
 Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded functions $\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}$ s.t.
 
 \begin{enumerate}[(i)]
 
-\item If $\varepsilon_1, \varepsilon_2 \in \Fall$ then $\varepsilon_1 + \varepsilon_2 \in \Fall$.
+\item\label{con:def__fall__add} If $\varepsilon_1, \varepsilon_2 \in \Fall$ then $\varepsilon_1 + \varepsilon_2 \in \Fall$.
 
-\item If $\varepsilon_1 \in \Fall$, $\varepsilon_2: \Nats^n \rightarrow \Reals^{\geq 0}$ and $\forall K \in \Nats^n: \varepsilon_2(K) \leq \varepsilon_1(K)$ then $\varepsilon_2 \in \Fall$.
+\item\label{con:def__fall__ineq} If $\varepsilon_1 \in \Fall$, $\varepsilon_2: \Nats^n \rightarrow \Reals^{\geq 0}$ and $\forall K \in \Nats^n: \varepsilon_2(K) \leq \varepsilon_1(K)$ then $\varepsilon_2 \in \Fall$.
 
-\item There is a polynomial $h: \Nats^n \rightarrow \Nats$ s.t. $2^{-h} \in \Fall$.
+\item\label{con:def__fall__pol} There is a polynomial $h: \Nats^n \rightarrow \Nats$ s.t. $2^{-h} \in \Fall$.
 
 \end{enumerate}
 
@@ -422,7 +424,7 @@ For any fall space $\Fall$, $0 \in \Fall$.
 
 \begin{proof}
 
-Follows from conditions (ii) and (iii), since $0 \leq 2^{-h}$.
+Follows from conditions \ref{con:def__fall__ineq} and \ref{con:def__fall__pol}, since $0 \leq 2^{-h}$.
 \end{proof}
 
 \begin{proposition}
@@ -433,7 +435,7 @@ For any fall space $\Fall$, $\varepsilon \in \Fall$ and $c \in \Reals^{\geq 0}$,
 
 \begin{proof}
 
-By induction, condition (i) implies that for any $m \in \Nats$, $m\varepsilon \in \Fall$. It follows that $c\varepsilon \in \Fall$ since $c\varepsilon \leq \Ceil{c}\varepsilon$.
+By induction, condition~\ref{con:def__fall__add} implies that for any $m \in \Nats$, $m\varepsilon \in \Fall$. It follows that $c\varepsilon \in \Fall$ since $c\varepsilon \leq \Ceil{c}\varepsilon$.
 \end{proof}
 
 \begin{proposition}
@@ -472,13 +474,13 @@ Consider $\Fall$ a fall space and $\alpha \in \Reals^{>0}$. Then, $\Fall^\alpha$
 
 \begin{proof}
 
-To check condition (i), consider $\varepsilon_1, \varepsilon_2 \in \Fall$. 
+To check condition~\ref{con:def__fall__add}, consider $\varepsilon_1, \varepsilon_2 \in \Fall$. 
 
 If $\alpha > 1$, $(\varepsilon_1^\alpha + \varepsilon_2^\alpha)^\frac{1}{\alpha} \leq \varepsilon_1 + \varepsilon_2 \in \Fall$ hence $(\varepsilon_1^\alpha + \varepsilon_2^\alpha)^\frac{1}{\alpha} \in \Fall$ and $\varepsilon_1^\alpha + \varepsilon_2^\alpha \in \Fall^\alpha$.
 
 If $\alpha \leq 1$, $(\varepsilon_1^\alpha + \varepsilon_2^\alpha)^\frac{1}{\alpha} = 2^\frac{1}{\alpha}(\frac{\varepsilon_1^\alpha + \varepsilon_2^\alpha}{2})^\frac{1}{\alpha} \leq 2^\frac{1}{\alpha} \frac{\varepsilon_1+\varepsilon_2}{2} \in \Fall$ hence $(\varepsilon_1^\alpha + \varepsilon_2^\alpha)^\frac{1}{\alpha} \in \Fall$ and $\varepsilon_1^\alpha + \varepsilon_2^\alpha \in \Fall^\alpha$.
 
-Conditions (ii) and (iii) are obvious.
+Conditions \ref{con:def__fall__ineq} and \ref{con:def__fall__pol} are obvious.
 \end{proof}
 
 \begin{proposition}
@@ -511,7 +513,7 @@ For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \Nats^n \righ
 
 \begin{proof}
 
-Conditions (i) and (ii) are obvious. To verify condition (iii) note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h$ is a polynomial s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h$ is a polynomial s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
 %
 \end{proof}
 
@@ -1714,11 +1716,11 @@ Consider $\mu$ a word ensemble, $f_1, f_2: \Supp \mu \rightarrow \Reals$ bounded
 
 \begin{enumerate}[(i)]
 
-\item $\pi_*^{K}(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
+\item\label{con:thm__mult__dist} $\pi_*^{K}(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
 
-\item Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by $0$.  We require ${\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f_1(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall}$
+\item\label{con:thm__mult__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by $0$.  We require ${\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f_1(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall}$
 
-\item $(\mu, f_2)$ is $\EMG$-samplable relative to $\pi$.
+\item\label{con:thm__mult__smp} $(\mu, f_2)$ is $\EMG$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -1797,7 +1799,7 @@ $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{g} \circ \pi^{K}-f_1)f_2 S^{
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq (\sup \Abs{f_2}) (\sup \Abs{S}) \E[\Abs{\bar{g} \circ \pi^{K} - f_1}] + \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
-Condition (ii) implies the first term on the right hand side is in $\Fall$.
+Condition~\ref{con:thm__mult__fun} implies the first term on the right hand side is in $\Fall$.
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
@@ -1811,7 +1813,7 @@ Let $G$ be an $\EMG$-sampler of $(\mu,f_2)$ relative to $\pi$. Applying Proposit
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K(\mu^{K_0}) \times \UM_G^{K}}[\E[(P_1^{K}(y)-\bar{g}(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
 
-Using condition (i) we conclude that
+Using condition~\ref{con:thm__mult__dist} we conclude that
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\nu^k \times \UM_G^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
 
@@ -2007,7 +2009,7 @@ This is possible because the runtime of $L^K$ is bounded by a polynomial in $K$ 
 
 Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\ESG$-optimal predictor for $(\mu,\bar{f}_2)$. 
 
-We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\mu_1, f_1)$ plays the role of $(\nu,g)$: condition (i) holds due to Proposition~\ref{prp:thm__mult__cond1}, condition (ii) holds due to Proposition~\ref{prp:thm__mult__cond2} and condition (iii) holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal predictor for $(\mu, f)$ s.t. ${\R_P=\R_{P_1}+\R_{P_2}}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$ 
+We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\mu_1, f_1)$ plays the role of $(\nu,g)$: condition~\ref{con:thm__mult__dist} holds due to Proposition~\ref{prp:thm__mult__cond1}, condition~\ref{con:thm__mult__fun} holds due to Proposition~\ref{prp:thm__mult__cond2} and condition~\ref{con:thm__mult__smp} holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal predictor for $(\mu, f)$ s.t. ${\R_P=\R_{P_1}+\R_{P_2}}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$ 
 
 \[P^K(x, z_1 z_2) = P_1^K(\pi^K(x),z_1) \bar{P}^K(x,z_2)\]
 
@@ -2038,18 +2040,18 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \begin{enumerate}[(i)]
 
-\item $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
+\item\label{con:def__psp_reduce__dist} $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
 
-\item Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
+\item\label{con:def__psp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
 
-\item $\mu$ is $\EMG$-samplable relative to $\pi$.
+\item\label{con:def__psp_reduce__smp} $\mu$ is $\EMG$-samplable relative to $\pi$.
 
 \end{enumerate}
 
 \end{definition}
 \end{samepage}
 
-Note that condition (iii) is violated in the one-way function example above.
+Note that condition~\ref{con:def__psp_reduce__smp} is violated in the one-way function example above.
 
 Precise strict pseudo-invertible $\EG$-reductions preserve $\ESG$-optimal predictors as a simple corollary of Theorem~\ref{thm:mult}:
 
@@ -2138,7 +2140,7 @@ Let ${L}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${
 
 \[\E_{\nu^{K_0} \times \Un_P^K}[(P^K-g)^2] \leq \E_{\nu^{K_0} \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - g)^2] \pmod \Fall\]
 
-Using condition (i) of Definition~\ref{def:psp_reduce}
+Using condition~\ref{con:def__psp_reduce__dist} of Definition~\ref{def:psp_reduce}
 
 \[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - \bar{g})^2] \pmod \Fall\]
 
@@ -2150,16 +2152,17 @@ The right hand side has the form of the right hand side in \ref{eqn:prp__smp} en
 
 \[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-\bar{g} \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K}[(Q^K - \bar{g} \circ \pi^K)^2] \pmod \Fall\]
 
-By Proposition~\ref{prp:sq_diff_cong} and condition (ii) of Definition~\ref{def:psp_reduce}
+By Proposition~\ref{prp:sq_diff_cong} and condition~\ref{con:def__psp_reduce__fun} of Definition~\ref{def:psp_reduce}
 
 \[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-f)^2] \leq \E_{\mu^{K_0} \times \Un_Q^K}[(Q^K - f)^2] \pmod \Fall\]
 %
 \end{proof}
 
-We now consider a more general type of reduction which only preserves the function on average (the only difference is in condition (ii)):
+We now consider a more general type of reduction which only preserves the function on average (the only difference is in condition~\ref{con:def__sp_reduce__fun}):
 
 \begin{samepage}
 \begin{definition}
+\label{def:sp_reduce}
 
 Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{strict pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when
 
@@ -2167,7 +2170,7 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \item $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
 
-\item Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
+\item\label{con:def__sp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
 
 \item $\mu$ is $\EMG$-samplable relative to $\pi$.
 
@@ -2180,7 +2183,7 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 \begin{theorem}
 \label{thm:sp_reduce}
 
-Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-1} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\ESG$-optimal predictor for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ s.t.
+Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\ESG$-optimal predictor for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ s.t.
 
 \begin{align}
 \R_{P_f}(K) &= \gamma(K) (\R_{P_g}(K) + \R_\pi(K)) \\
@@ -2196,11 +2199,11 @@ Then, $P_f$ is an $\ESG$-optimal predictor for $(\mu, f)$.
 \begin{proposition}
 \label{prp:tbd}
 
-Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-1} \in \Fall$. Consider $(\mu,f)$ a distributional estimation problem, $\bar{g}: \Words \rightarrow \Reals$, $\pi: \Words \Scheme \Words$. Assume ${\E_{(x,z) \sim \mu^{K_0}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[\bar{g}(\pi^{K}(x,z))]}] \in \Fall}$. Then,
+Consider $\mu$ a word ensemble, $\bar{g}: \Words \rightarrow \Reals$ bounded and $\pi: \Words \Scheme \Words$. Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Then,
 
 \begin{equation}
 %\label{eqn:tbd}
-\E_{(x,z_0, z_1 \ldots z_{\gamma(K)-1}) \sim \mu^{K_0} \times \prod_{i \in [\gamma(K)]} U_\pi^K}[\Abs{f(x)-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} g(\pi^K(x,z_i))}] \in \Fall
+\E_{(x,z_0, z_1 \ldots z_{\gamma(K)-1}) \sim \mu^{K_0} \times \prod_{i \in [\gamma(K)]} \Un_\pi^K}[\Abs{\E_{z \sim \Un_\pi^{K}}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \in \Fall
 \end{equation}
 
 \end{proposition}
@@ -2208,15 +2211,19 @@ Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-1} \in \Fall
 
 \begin{proof}
 
-FOO
+Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$.
+
+\[\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \E_{\mu^{K_0}}[\E_{\Un_\gamma^K}[(\E_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))^2]^{\frac{1}{2}}]\]
+
+\[\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \frac{1}{\gamma(K)^{\frac{1}{2}}} \E_{\mu^{K_0}}[\Var_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]^{\frac{1}{2}}]\]
 %
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm:sp_reduce}]
 
-Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded.
+Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Using condition~\ref{con:def__sp_reduce__fun} of Definition~\ref{def:sp_reduce}
 
-\[\E_{\mu^{K_0} \times \Un_{P_f}^K \times \Un_S^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] = \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} \E_{\mu^{K_0} \times \Un_{P_f}^K \times \Un_S^K}[(P_g^K(\pi^K(x,z_i),y_i)-f(x))S(x,P_f^K(x))]\]
+\[\E_{\mu^{K_0} \times \Un_{P_f}^K \times \Un_S^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] \equiv \E_{\mu^{K_0} \times \Un_{P_f}^K \times \Un_S^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] \pmod \Fall\]
 
 FOO
 %
@@ -2246,10 +2253,14 @@ TBD
 \section{Existence and Uniqueness}
 \label{sec:e_and_u}
 
+% Including stability of conditional expectations
+
 TBD
 
 \section{Reflective Systems and Game Theory}
 \label{sec:reflective}
+
+% Consider dropping
 
 TBD
 
