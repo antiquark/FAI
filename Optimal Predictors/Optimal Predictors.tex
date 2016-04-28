@@ -664,6 +664,7 @@ To relationship to the role of the word ensemble is as follows.
 
 \begin{samepage}
 \begin{corollary}
+\label{crl:weight}
 
 Assume $\Fall$ is $\GrowA$-ample. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal predictor for $(\mu,f)$. Suppose ${\Gamma^1:=(\GrowR^1,\GrowA^2)}$ is a pair of growth spaces of rank $1$ s.t. for any $\gamma \in \GrowR^1$ the function ${\gamma^2(K):=\gamma(k)}$ is in $\GrowR$ and for any $\gamma \in \GrowA^1$ the function $\gamma^2(K):=\gamma(k)$ is in $\GrowA$. Consider ${W: \Words \xrightarrow{\Gamma^1} \Rats^{\geq 0}}$ bounded s.t. for any $k \in \Nats$ there is $x \in \Supp \mu^k$ and $y \in \WordsLen{\R_W(k)}$ s.t. $W^k(x,y) > 0$. Define 
 
@@ -2335,6 +2336,42 @@ Denote $y_i:=\pi^K(x,z_i)$ where the ${z_i}$ are sampled independently from ${\U
 \[\E_{\mu^{K_0} \times \Un_{P_f}^K}[(P_f^K-f)^2] \leq \E_{\mu^{K_0} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+P_f^K - f)^2] \pmod \Fall\]
 
 \[\E_{\mu^{K_0} \times \Un_{P_f}^K}[(P_f^K-f)^2] \leq \E_{\mu^{K_0} \times \Un_{Q_f}^K}[(Q_f ^K - f)^2] \pmod \Fall\]
+%
+\end{proof}
+
+Next, we consider a scenario in which the identity mapping can be regarded as a reduction between distributional estimation problems that have the same function but different word ensembles.
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+Consider ${\mu}$, ${\nu}$ word ensembles. ${\mu}$ is said to be \emph{${\EG}$-dominated by ${\nu}$} when
+
+\begin{enumerate}[(i)]
+
+\item ${\mu^{K_0}(\Supp \nu^{K_0}) \equiv 1 \pmod \Fall}$
+
+\item There is ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. ${\E_{\nu^{K_0} \times \Un_W^K}[\Abs{W^K(x)-\frac{\mu^{K_0}(x)}{\nu^{K_0}(x)}}] \in \Fall}$
+
+\end{enumerate}
+
+In this case, ${W}$ is called the \emph{Radon-Nikodym ${\EG}$-derivative of ${\mu}$ w.r.t. ${\nu}$}.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{theorem}
+%\label{thm:tbd}
+
+?
+
+\end{theorem}
+\end{samepage}
+
+\begin{proof}
+
+FOO
 %
 \end{proof}
 
