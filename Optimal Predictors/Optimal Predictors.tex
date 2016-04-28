@@ -2199,11 +2199,11 @@ Then, $P_f$ is an $\ESG$-optimal predictor for $(\mu, f)$.
 \begin{proposition}
 \label{prp:ev_equiv_mean}
 
-Consider $\mu$ a word ensemble, $\bar{g}: \Words \rightarrow \Reals$ bounded and $\pi: \Words \Scheme \Words$. Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Then,
+Consider $\gamma \in \Gamma_{\textnormal{poly}}^n$, $\mu$ a word ensemble and $\bar{g}: \Words \rightarrow \Reals$ bounded. Then,
 
 \begin{equation}
 %\label{eqn:tbd}
-\E_{(x,z_0, z_1 \ldots z_{\gamma(K)-1}) \sim \mu^{K_0} \times \prod_{i \in [\gamma(K)]} \Un_\pi^K}[\Abs{\E_{z \sim \Un_\pi^{K}}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \in \Fall
+\E_{(x,z_0, z_1 \ldots z_{\gamma(K)-1}) \sim \mu^{K_0} \times \prod_{i \in [\gamma(K)]} \Un_\pi^K}[\Abs{\E_{z \sim \Un_\pi^{K}}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \frac{\sup \Abs{\bar{g}}}{\gamma(K)^{\frac{1}{2}}}
 \end{equation}
 
 \end{proposition}
@@ -2225,7 +2225,7 @@ Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote ${\Un_{PS}^K
 
 \[\E_{\mu^{K_0} \times \Un_{PS}^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] \equiv \E_{\mu^{K_0} \times \Un_{PS}^K}[(P_f^K(x) - \E_{\Un_\pi^{K}}[g(\pi^{K}(x))])S(x,P_f^K(x))] \pmod \Fall\]
 
-Using the construction of $P_f$ and Proposition~\ref{prp:ev_equiv_mean}, we get
+Using the construction of $P_f$, the assumption on $\gamma$ and Proposition~\ref{prp:ev_equiv_mean}, we get
 
 \[\E[(P_f^K - f)S] \equiv \E_{\mu^{K_0} \times \Un_{PS}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i) - \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
 
@@ -2328,11 +2328,13 @@ We now apply Proposition~\ref{prp:sq_diff_cong} via condition \ref{con:def__sp_r
 
 \[\E_{\mu^{K_0} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-f)^2] \leq \E_{\mu^{K_0} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - f)^2] \pmod \Fall\]
 
-Denote $y_i:=\pi^K(x,z_i)$ where the ${z_i}$ are sampled independently from ${\Un_\pi^K}$. Applying Proposition~\ref{prp:sq_diff_cong} via Proposition~\ref{prp:ev_equiv_mean} we get
+Denote $y_i:=\pi^K(x,z_i)$ where the ${z_i}$ are sampled independently from ${\Un_\pi^K}$. Applying Proposition~\ref{prp:sq_diff_cong} via Proposition~\ref{prp:ev_equiv_mean} and the assumption on $\gamma$, we get
 
-\[\E[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}(P_g^K(y_i)-\bar{g}(y_i)))^2] \leq \E[(Q_f ^K - P_f^K+\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}(P_g^K(y_i)-\bar{g}(y_i)))^2] \pmod \Fall\]
+\[\E_{\mu^{K_0} \times \Un_{P_f}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i)-f)^2] \leq \E_{\mu^{K_0} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i) - f)^2] \pmod \Fall\]
 
-FOO
+\[\E_{\mu^{K_0} \times \Un_{P_f}^K}[(P_f^K-f)^2] \leq \E_{\mu^{K_0} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+P_f^K - f)^2] \pmod \Fall\]
+
+\[\E_{\mu^{K_0} \times \Un_{P_f}^K}[(P_f^K-f)^2] \leq \E_{\mu^{K_0} \times \Un_{Q_f}^K}[(Q_f ^K - f)^2] \pmod \Fall\]
 %
 \end{proof}
 
