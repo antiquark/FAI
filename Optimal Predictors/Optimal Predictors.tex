@@ -299,13 +299,9 @@ Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of ran
 
 \begin{enumerate}[(i)]
 
-\item There is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$ 
+\item $\max_{x \in X} \max_{y \in \BoolR{S}} \T_S(K,x,y,\A_S(K)) \in \Gamma_{\text{poly}}^n$
 
-\[T_S(K,x,y,\A_S(K)) \leq p(K)\]
-
-\item There is a polynomial $q: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$
-
-\[\T_{\R_S}(K,\A_S(K)) \leq q(K)\]
+\item $\T_{\R_S}(K,\A_S(K)) \in \Gamma_{\text{poly}}^n$
 
 \item The function $r: \Nats^n \rightarrow n$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\GrowR$.
 
@@ -347,19 +343,15 @@ Fix $n \in \Nats$, $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $
 
 \begin{enumerate}[(i)]
 
-\item\label{con:def__family__time} There is a polynomial $p_1: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$, $K \in \Nats^n$, $x \in X$ and $y \in \WordsLen{\R_S(K)}$
+\item\label{con:def__family__time} $\max_{S \in F} \max_{x \in X} \max_{y \in \BoolR{S}} \T_S(K,x,y,\A_S(K)) \in \Gamma_{\text{poly}}^n$
 
-\[\T_S(K,x,y,\A_S(K)) \leq p_1(K)\]
-
-\item\label{con:def__family__rtime} There is a polynomial $p_2: \Nats^n \rightarrow \Nats$ s.t. for any $S \in F$ and $K \in \Nats^n$
-
-\[\T_{\R_S}(K,\A_S(K)) \leq p_2(K)\]
+\item\label{con:def__family__rtime} $\max_{S \in F}\T_{\R_S}(K,\A_S(K))) \in \Gamma_{\text{poly}}^n$
 
 \item\label{con:def__family__rand} $\max_{S \in F} \R_S \in \GrowR$
 
-\item\label{con:def__family__adv} There is $l \in \GrowA$ s.t. for any $S \in F$ and $K \in \Nats^n$
+\item\label{con:def__family__adv} $\max_{S \in F} \Abs{\A_S(K)} \in \GrowA$
 
-\[\Abs{\Quote{S}} + \Abs{\Quote{\R_S}} + \Abs{\A_S(K)} \leq l(K)\]
+\item There are only finitely many different machines ${S}$ and ${\R_S}$ for ${S \in F}$.
 
 \end{enumerate}
 
@@ -370,8 +362,8 @@ The details of this definition are motivated by the following proposition.
 \begin{proposition}
 \label{prp:fam_diag}
 
-Fix $n \in \Nats$, $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ and encoded sets $X$, $Y$. Consider $F$ a uniform family of $\Gamma$-schemes of signature $X \rightarrow Y$ and a collection $\{\mathcal{S}_K \in F\}_{K \in \Nats^n}$. Then, there is $\Delta_\mathcal{S}: X \xrightarrow{
-\Gamma} Y$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in Y$, $\Pr[\Delta_\mathcal{S}^K(x)=y] = \Pr[\mathcal{S}_K^K(x)=y]$.
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ s.t. $1 \in \GrowA$. Consider $X$, $Y$ encoded sets, $F$ a uniform family of $\Gamma$-schemes of signature $X \rightarrow Y$ and a collection ${\{\mathcal{S}_K \in F\}_{K \in \Nats^n}}$. Then, there is $\Delta_\mathcal{S}: X \xrightarrow{
+\Gamma} Y$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in Y$, ${\Pr[\Delta_\mathcal{S}^K(x)=y] = \Pr[\mathcal{S}_K^K(x)=y]}$.
 
 \end{proposition}
 
@@ -379,8 +371,6 @@ Fix $n \in \Nats$, $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $
 
 We take $\A_{\Delta_{\mathcal{S}}}(K):=\Chev{\Quote{\mathcal{S}_K},\Quote{\R_{\mathcal{S}_K}},\A_{\mathcal{S}_K}(K)}$. $\R_{\Delta_{\mathcal{S}}}$ is constructed so that ${\R_{\Delta_{\mathcal{S}}}(K)=\R_{\mathcal{S}_K}(K)}$. $\Delta_{\mathcal{S}}$ is constructed so that $\Delta_{\mathcal{S}}^K(x,z)=\mathcal{S}_K^K(x,z)$.
 \end{proof}
-
-Note that the concept of a uniform family is non-trivial only when $1 \in \GrowA$, otherwise condition~\ref{con:def__family__adv} allows only families of at most one member.
 
 \subsubsection{Fall Spaces}
 
@@ -1414,9 +1404,9 @@ Given encoded sets $X$ and $Y$, an \emph{$\MGrow$-scheme of signature ${X \right
 
 \begin{enumerate}[(i)]
 
-\item There is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$, $x \in X$, ${y \in \WordsLen{\R_S(K)}}$ and $z \in \Supp \M_S^K$, $\T_S(K,x,y,z) \leq p(K)$.
+\item $\max_{x \in X} \max_{y \in \BoolR{S}} \max_{z \in \Supp \M_S^K} \T_S(K,x,y,z) \in \Gamma_{\text{poly}}^n$
 
-\item There is a polynomial $q: \Nats^n \rightarrow \Nats$ s.t. for any $K \in \Nats^n$ and $z \in \Supp \M_S^K$, ${\T_{\R_S}(K,z) \leq q(K)}$.
+\item ${\max_{z \in \Supp \M_S^K} \T_{\R_S}(K,z) \in \Gamma_{\text{poly}}^n}$
 
 \item There is $r \in \GrowR$ s.t. for any $K \in \Nats^n$ and $z \in \Supp \M_S^K$, $\R_S(K,z) \leq r(K)$.
 
