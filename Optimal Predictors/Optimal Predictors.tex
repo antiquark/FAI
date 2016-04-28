@@ -2345,28 +2345,56 @@ Next, we consider a scenario in which the identity mapping can be regarded as a 
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${\mu}$, ${\nu}$ word ensembles. ${\mu}$ is said to be \emph{${\EG}$-dominated by ${\nu}$} when
+Consider ${\mu}$, ${\nu}$ word ensembles. ${\mu}$ is said to be \emph{${\EG}$-dominated by ${\nu}$} when there is ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t.
 
-\begin{enumerate}[(i)]
+\begin{equation}
+%\label{eqn:tbd}
+\sum_{x \in \Words} \Abs{\nu^{K_0}(x)\E_{\Un_W^K}[W^K(x)]-\mu^{K_0}(x)} \in \Fall
+\end{equation}
 
-\item ${\mu^{K_0}(\Supp \nu^{K_0}) \equiv 1 \pmod \Fall}$
-
-\item There is ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. ${\E_{\nu^{K_0} \times \Un_W^K}[\Abs{W^K(x)-\frac{\mu^{K_0}(x)}{\nu^{K_0}(x)}}] \in \Fall}$
-
-\end{enumerate}
-
-In this case, ${W}$ is called the \emph{Radon-Nikodym ${\EG}$-derivative of ${\mu}$ w.r.t. ${\nu}$}.
+In this case, ${W}$ is called a \emph{Radon-Nikodym ${\EG}$-derivative of ${\mu}$ w.r.t. ${\nu}$}.
 
 \end{definition}
 \end{samepage}
 
 \begin{samepage}
-\begin{theorem}
-%\label{thm:tbd}
+\begin{proposition}
+\label{prp:tbd}
 
-?
+Consider ${\mu}$, ${\nu}$ word ensembles, ${f: \Supp \mu \cup \Supp \nu \rightarrow \Reals}$ bounded and ${P}$ an ${\ESG}$-optimal predictor for ${(\nu,f)}$. Suppose ${\mu}$ is ${\EG}$-dominated by ${\nu}$. Then, ${P}$ is an ${\ESG}$-optimal predictor for ${(\mu,f)}$.
 
-\end{theorem}
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Let ${W}$ be a Radon-Nikodym ${\EG}$-derivative of ${\mu}$ w.r.t. ${\nu}$. Consider any ${S: \Words \times \Rats \Scheme \Rats}$ bounded.
+
+\[\E_{\nu^{K_0} \times \Un_P^K \times \Un_W^K \times \Un_S^K}[(P^K(x)-f(x))W^K(x)S^K(x,P^K(x))] \equiv 0 \pmod \Fall\]
+
+\[\sum_{x \in \Words} \nu^{K_0}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_P^K \times \Un_S^K}[(P^K(x)-f(x))S^K(x,P^K(x))] \equiv 0 \pmod \Fall\]
+
+\[\sum_{x \in \Words} (\nu^{K_0}(x) \E_{\Un_W^K}[W^K(x)] - \mu^{K_0}(x) + \mu^{K_0}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K(x)-f(x))S^K(x,P^K(x))] \equiv 0 \pmod \Fall\]
+
+\[\sum_{x \in \Words} (\nu^{K_0}(x) \E_{\Un_W^K}[W^K(x)] - \mu^{K_0}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] + \sum_{x \in \Words} \ \mu^{K_0}(x) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv 0 \pmod \Fall\]
+
+\[\E_{\mu^{K_0} \times \Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv \sum_{x \in \Words} (\nu^{K_0}(x) \E_{\Un_W^K}[W^K(x)] - \mu^{K_0}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] \pmod \Fall\]
+
+\[\Abs{\E_{\mu^{K_0} \times \Un_P^K \times \Un_S^K}[(P^K-f)S]} \leq (\sup \Abs{P} + \sup \Abs{f}) \sup \Abs{S} \sum_{x \in \Words} \Abs{\nu^{K_0}(x) \E_{\Un_W^K}[W^K(x)] - \mu^{K_0}(x)} \pmod \Fall\]
+
+\[\E_{\mu^{K_0} \times \Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv 0 \pmod \Fall\]
+%
+\end{proof}
+
+The corresponding statement for ${\EG}$-optimal predictors may be regarded as a generalization of Corollary~\ref{crl:weight}.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Assume ${\Fall}$ is ${\GrowA}$-ample. Consider ${\mu}$, ${\nu}$ word ensembles, ${f: \Supp \mu \cup \Supp \nu \rightarrow \Reals}$ bounded and ${P}$ an ${\EG}$-optimal predictor for ${(\nu,f)}$. Suppose ${\mu}$ is ${\EG}$-dominated by ${\nu}$. Then, ${P}$ is an ${\EG}$-optimal predictor for ${(\mu,f)}$.
+
+\end{proposition}
 \end{samepage}
 
 \begin{proof}
