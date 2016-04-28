@@ -2339,7 +2339,7 @@ Denote $y_i:=\pi^K(x,z_i)$ where the ${z_i}$ are sampled independently from ${\U
 %
 \end{proof}
 
-Next, we consider a scenario in which the identity mapping can be regarded as a reduction between distributional estimation problems that have the same function but different word ensembles.
+Next, we consider a scenario in which the identity mapping can be regarded as a valid reduction between distributional estimation problems that have the same function but different word ensembles.
 
 \begin{samepage}
 \begin{definition}
@@ -2399,9 +2399,21 @@ Assume ${\Fall}$ is ${\GrowA}$-ample. Consider ${\mu}$, ${\nu}$ word ensembles, 
 
 \begin{proof}
 
-FOO
+Let ${W}$ be a Radon-Nikodym ${\EG}$-derivative of ${\mu}$ w.r.t. ${\nu}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. According to Proposition~\ref{prp:weight}
+
+\[\E_{\nu^{K_0} \times \Un_W^K \times \Un_P^K}[W^K(x)(P^K(x)-f(x))^2] \leq \E_{\nu^{K_0} \times \Un_W^K \times \Un_Q^K}[W^K(x)(Q^K(x)-f(x))^2] \pmod \Fall\]
+
+\[\sum_{x \in \Words} \nu^{K_0}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_P^K}[(P^K(x)-f(x))^2] \leq \sum_{x \in \Words} \nu^{K_0}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall\]
+
+Using the assumption on ${W}$
+
+\[\sum_{x \in \Words} \mu^{K_0}(x) \E_{\Un_P^K}[(P^K(x)-f(x))^2] \leq \sum_{x \in \Words} \mu^{K_0}(x) \E_{\Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall\]
+
+\[\E_{\mu^{K_0} \times \Un_P^K}[(P^K(x)-f(x))^2] \leq \E_{\mu^{K_0} \times \Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall\]
 %
 \end{proof}
+
+Finally, we consider another scenario in which the identity mapping is a valid reduction. This scenario is a simple re-indexing of the word ensemble.
 
 TBD
 
