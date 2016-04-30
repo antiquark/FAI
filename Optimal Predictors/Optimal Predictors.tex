@@ -97,6 +97,7 @@
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
 \newcommand{\Scheme}{\xrightarrow{\Gamma}}
 \newcommand{\MScheme}{\xrightarrow{\MGrow}}
+\usepackage[normalem]{ulem}
 
 \begin{document}
 
@@ -2407,20 +2408,99 @@ Finally, we consider another scenario in which the identity mapping is a valid r
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:idx_reduce_sharp}
 
-Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\ESG}$-optimal predictor for ${(\mu,f)}$ and ${d \in \Gamma_{\textnormal{poly}}^1$ s.t...
+Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\ESG}$-optimal predictor for ${(\mu,f)}$ and ${d,l: \Nats \Alg \Nats}$. Assume that ${d \in \Gamma_{\textnormal{poly}}^1}$ as a function, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^1}$ and ${l(d(k))=k}$. Define ${d^n: \Nats^n \rightarrow \Nats^n}$ by ${d^n(K):=(d(K_0),K_1 \ldots K_{n-1})}$. Define ${\mu_d^k:=\mu^{d(k)}}$ and
+
+\begin{equation}
+\label{eqn:tbd}
+\Fall_d:=\{\varepsilon_d: \Nats^n \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid \exists \varepsilon \in \Fall: \varepsilon_d \leq \varepsilon \circ d^n\}
+\end{equation}
+
+Construct ${P_d: \Words \Scheme \Rats}$ s.t.
+
+\begin{align}
+\R_{P_d}(K) &= \R_P(d^n(K)) \\
+P_d^K(x,y) &= P^{d^n(K)}(x,y)
+\end{align}
+
+Then, ${P_d}$ is an ${\Fall_d^\sharp(\Gamma)}$-optimal predictor for ${(\mu_d,f)}$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-FOO
+It is easy to verify that ${\Fall_d}$ is a fall space.
+
+Define ${l^n: \Nats^n \rightarrow \Nats^n}$ by ${l^n(K):=(l(K_0),K_1 \ldots K_{n-1})}$. Consider any ${S: \Words \times \Rats \Scheme \Rats}$ bounded. Define ${S_l: \Words \times \Rats \Scheme \Rats}$ by
+
+\begin{align*}
+\R_{S_l}(K) &= \R_S(l^n(K)) \\
+S_l^K(x,t,y) &= S^{l^n(K)}(x,t,y)
+\end{align*}
+
+There is ${\varepsilon \in \Fall}$ s.t.
+
+\[\Abs{\E_{\mu^{K_0} \times \Un_P^K \times \Un_{S_l}^K}[(P^K(x,y) - f(x))S_l^K(x,P^K(x,y),z)]}=\varepsilon(K)\]
+
+Substituting ${d^n(K)}$ for ${K}$, we get
+
+\[\Abs{\E_{\mu^{d(K_0)} \times \Un_P^{d^n(K)} \times \Un_{S_l}^{d^n(K)}}[(P^{d^n(K)}(x,y) - f(x))S_l^{d^n(K)}(x,P^{d^n(K)}(x,y),z)]}=\varepsilon(d^n(K))\]
+
+\[\Abs{\E_{\mu_d^{K_0} \times \Un_{P_d}^{K} \times \Un_{S}^{K}}[(P_d^{K}(x,y) - f(x))S^{K}(x,P_d^{K}(x,y),z)]}=\varepsilon(d^n(K))\]
 %
 \end{proof}
 
-TBD
+\begin{samepage}
+\begin{proposition}
+\label{prp:idx_reduce}
+
+Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\EG}$-optimal predictor for ${(\mu,f)}$ and ${d,l: \Nats \Alg \Nats}$. Assume that ${d \in \Gamma_{\textnormal{poly}}^1}$ as a function, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^1}$ and ${l(d(k))=k}$. Then, using the same notation as in Proposition~\ref{prp:idx_reduce_sharp}, ${P_d}$ is an ${\Fall_d(\Gamma)}$-optimal predictor for ${(\mu_d,f)}$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Consider any ${Q: \Words \Alg \Rats}$ bounded. Define ${Q_l}$ in the obvious way. There is ${\varepsilon \in \Fall}$ s.t.
+
+\[\E_{\mu^{K_0} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \E_{\mu^{K_0} \times \Un_{Q_l}^K}[(Q_l^K(x,y)-f(x))^2] + \varepsilon(K)\]
+
+Substituting ${d^n(K)}$ for ${K}$, we get
+
+\[\E_{\mu^{d(K_0)} \times \Un_P^{d^n(K)}}[(P^{d^n(K)}(x,y)-f(x))^2] \leq \E_{\mu^{d(K_0)} \times \Un_{Q_l}^{d^n(K)}}[(Q_l^{d^n(K)}(x,y)-f(x))^2] + \varepsilon({d^n(K)})\]
+
+\[\E_{\mu_d^{K_0} \times \Un_{P_d}^K}[(P_d^K(x,y)-f(x))^2] \leq \E_{\mu_d^{K_0} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2] + \varepsilon(d^n(K))\]
+%
+\end{proof}
+
+We now consider compositions of reductions of different types.
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when there are ${d,l: \Nats \Alg \Nats}$ s.t.
+
+\begin{enumerate}[(i)]
+
+\item As a function, ${d \in \Gamma_{\textnormal{poly}}^1}$
+
+\item ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^1}$
+
+\item $\forall k \in \Nats: l(d(k))=k$
+
+\item\label{con:def__psp_reduce__dist} ${\pi_*(\mu)}$ is ${\EG}$-dominated by ${\nu_d}$?
+
+\item\label{con:def__psp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
+
+\item\label{con:def__psp_reduce__smp} $\mu$ is $\EMG$-samplable relative to $\pi$.
+
+\end{enumerate}
+
+\end{definition}
+\end{samepage}
 
 \subsection{Completeness}
 
