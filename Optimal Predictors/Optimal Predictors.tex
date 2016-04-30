@@ -183,9 +183,9 @@ Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Su
 
 \[\Supp \mu = \{x \in X \mid \mu(x) > 0\}\]
 
-Given $X,Y$ measurable spaces, $\mu$ a measure on $X$ and $f: X \rightarrow Y$ a measurable mapping, $f_*(\mu)$ will denote the corresponding pushforward measure on $Y$.
+Given $X,Y$ measurable spaces, $\mu$ a measure on $X$ and $f: X \rightarrow Y$ a measurable mapping, $f_*\mu$ will denote the corresponding pushforward measure on $Y$.
 
-Given $X,Y$ measurable spaces, the notation $f: X \xrightarrow{\textnormal{mk}} Y$ signifies $f$ is a Markov kernel with source $X$ and target $Y$. Given $x \in X$, $f_x$ is the corresponding probability measure on $Y$ and $f(x)$ is a random variable sampled from $f_x$. Given $\mu$ a probability measure on $X$, $\mu \ltimes f$ (resp. $f \rtimes \mu$) is the semidirect product measure on $X \times Y$ (resp. $Y \times X$). $f_*(\mu)$ is the pushforward measure on $Y$, i.e. $f_*(\mu):=\pi_*(\mu \ltimes f)$ where $\pi: X \times Y \rightarrow Y$ is the projection.
+Given $X,Y$ measurable spaces, the notation $f: X \xrightarrow{\textnormal{mk}} Y$ signifies $f$ is a Markov kernel with source $X$ and target $Y$. Given $x \in X$, $f_x$ is the corresponding probability measure on $Y$ and $f(x)$ is a random variable sampled from $f_x$. Given $\mu$ a probability measure on $X$, $\mu \ltimes f$ (resp. $f \rtimes \mu$) is the semidirect product measure on $X \times Y$ (resp. $Y \times X$). $f_*\mu$ is the pushforward measure on $Y$, i.e. $f_*\mu:=\pi_*(\mu \ltimes f)$ where $\pi: X \times Y \rightarrow Y$ is the projection.
 
 For $X$ a measurable space, $\mu$ a probability measure on $X$ and $A$ a measurable subset of $X$ s.t. ${\mu(A) > 0}$, $\mu \mid A$ will denote the corresponding conditional probability measure, i.e. $(\mu \mid A)(B):=\frac{\mu(B \cap A)}{\mu(A)}$. Given $Y$ another measurable space, $f: X \Markov Y$ and $A$ a measurable subset of $Y$ s.t. $(\mu \ltimes f)(X \times A) > 0$, $\mu \mid f^{-1}(A)$ will denote the probability measure on $X$ defined by 
 
@@ -845,7 +845,7 @@ Consider $\mu$ a word ensemble s.t. for any different $k,l \in \Nats$, ${\Supp \
 
 \[\forall x \in \Supp \mu^k: m(x):=k\]
 
-For every $k \in \Nats$, define ${\mu_f^k:=f_*^k(\mu^k)}$.  Finally, define ${\chi_B: \Supp \mu_f \rightarrow \Bool}$ by ${\chi_B(f(x)):=B^{m(x)}(x)}$.
+For every $k \in \Nats$, define ${\mu_f^k:=f_*^k\mu^k}$.  Finally, define ${\chi_B: \Supp \mu_f \rightarrow \Bool}$ by ${\chi_B(f(x)):=B^{m(x)}(x)}$.
 
 Let $\Gamma:=(\Gamma_{\textnormal{poly}}^1,\Gamma_0^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal predictor for $(\mu_f, \chi_B)$.
 
@@ -1368,14 +1368,14 @@ Total variation distance is contracted by semi-direct product with a fixed Marko
 \begin{proposition}
 \label{prp:prob_cong_push}
 
-Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and $f: X \Markov Y$. Then, $\mu \equiv \nu \pmod \Fall$ implies $f_*(\mu^K) \equiv f_*(\nu^K) \pmod \Fall$.
+Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and $f: X \Markov Y$. Then, $\mu \equiv \nu \pmod \Fall$ implies $f_*\mu^K \equiv f_*\nu^K \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Total variation distance is contracted by pushforward therefore \[\Dtv(f_*(\mu^K), f_*(\nu^K)) \leq \Dtv(\mu^K, \nu^K)\]
+Total variation distance is contracted by pushforward therefore \[\Dtv(f_*\mu^K, f_*\nu^K) \leq \Dtv(\mu^K, \nu^K)\]
 \end{proof}
 
 \begin{samepage}
@@ -1585,7 +1585,7 @@ We now introduce the notions of samplability of samplability over a given \enquo
 
 \begin{definition}
 
-Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)] \in \Fall}$.
+Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\mu^{K_0}}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)] \in \Fall}$.
 
 In this case, $L$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\mu$ relative to $\pi$}.
 
@@ -1626,7 +1626,7 @@ Consider a word ensemble $\mu$, an encoded set $Y$, a family ${\{\pi^K: \Supp \m
 
 \begin{equation}
 \label{eqn:prp__smp}
-\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] \equiv \E_{(y,z) \sim \pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
+\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] \equiv \E_{(y,z) \sim \pi_*^K\mu^{K_0} \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1638,15 +1638,15 @@ If we sample $(x,y)$ from $\mu^{K_0} \ltimes \pi^K$ and then sample $x'$ from ${
 
 $$\E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[h(x,y)] = \E_{(x,y) \sim \mu^{K_0} \ltimes \pi^K}[\E_{x' \sim \mu_y^K}[h(x',y)]]$$
 
-$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)]$$
+$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K_0} \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]] - \E_{\pi_*^K\mu^{K_0} \times \UM_L^K}[h(L^K(y,z),y)]$$
 
-$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\UM_L^K}[h(L^K(y,z),y)]]$$
+$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K_0} \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\UM_L^K}[h(L^K(y,z),y)]]$$
 
-$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]]$$
+$$\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K_0} \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K_0} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]]$$
 
-$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)]} \leq \E_{\mu^{K_0} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]}]$$
+$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K_0} \times \UM_L^K}[h(L^K(y,z),y)]} \leq \E_{\mu^{K_0} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]}]$$
 
-$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[h(L^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K_0} \ltimes \pi^K}[\Dtv(\mu_y^K,L_y^K)]$$
+$$\Abs{\E_{\mu^{K_0} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K_0} \times \UM_L^K}[h(L^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K_0} \ltimes \pi^K}[\Dtv(\mu_y^K,L_y^K)]$$
 
 Using the defining property of $L$, we get the desired result.
 \end{proof}
@@ -1657,7 +1657,7 @@ Using the defining property of $L$, we get the desired result.
 Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K_0} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Denote $\mu_\pi^K:=\mu^{K_0} \ltimes \pi^K$. Suppose $G$ is an $\EMG$-sampler of $(\mu,f)$ relative to $\pi$. Then
 
 \begin{equation}
-\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y)G^K(y,z)_1] \pmod \Fall
+\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K\mu^{K_0} \times \UM_G^K}[h(G^K(y,z)_0,y)G^K(y,z)_1] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1676,11 +1676,11 @@ $$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\mu_\pi^K}[h(x,y)f_G^K(x,y)] \pmod \Fall
 
 Using property (i) of Definition~\ref{def:gen_rel} we can apply Proposition~\ref{prp:smp} to the second term and get
 
-$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y) f_G^K(G^K(y,z)_0,y)] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K\mu^{K_0} \times \UM_G^K}[h(G^K(y,z)_0,y) f_G^K(G^K(y,z)_0,y)] \pmod \Fall$$
 
-$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y) \E_{z' \sim\UM_G^K}[G^K(y,z')_1 \mid G^K(y,z')_0 = G^K(y,z)_0]] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K\mu^{K_0} \times \UM_G^K}[h(G^K(y,z)_0,y) \E_{z' \sim\UM_G^K}[G^K(y,z')_1 \mid G^K(y,z')_0 = G^K(y,z)_0]] \pmod \Fall$$
 
-$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K(\mu^{K_0}) \times \UM_G^K}[h(G^K(y,z)_0,y) G^K(y,z)_1] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h(x,y)f(x)] \equiv \E_{\pi_*^K\mu^{K_0} \times \UM_G^K}[h(G^K(y,z)_0,y) G^K(y,z)_1] \pmod \Fall$$
 \end{proof}
 
 \subsection{Independent Variables}
@@ -1803,7 +1803,7 @@ $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mu^{K_0} \ltimes \pi^{K}}[\E_{\U
 
 Let $G$ be an $\EMG$-sampler of $(\mu,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K(\mu^{K_0}) \times \UM_G^{K}}[\E[(P_1^{K}(y)-\bar{g}(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K\mu^{K_0} \times \UM_G^{K}}[\E[(P_1^{K}(y)-\bar{g}(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
 
 Using condition~\ref{con:thm__mult__dist} we conclude that
 
@@ -1837,7 +1837,7 @@ In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following proposi
 \begin{proposition}
 \label{prp:thm__mult__cond1}
 
-Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K(\mu^{K_0}) \equiv \mu_1^{K_0} \pmod \Fall$
+Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K\mu^{K_0} \equiv \mu_1^{K_0} \pmod \Fall$
 
 \end{proposition}
 \end{samepage}
@@ -1848,7 +1848,7 @@ $L_{1\bullet}^{K} \equiv \mu_1^{K_0} \pmod \Fall$ and $L_{2\bullet}^{K} \equiv \
 
 \[L_{1\bullet}^{K} \times L_{2\bullet}^{K} \equiv \mu_1^{K_0} \times \mu_2^{K_0} \pmod \Fall\]
 
-Denote $\mu_L^{K}:=\En_*^2(L_{1\bullet}^{K} \times L_{2\bullet}^{K})$. We get ${\mu_L^{K} \equiv \mu^{K_0} \pmod \Fall}$ and therefore ${\pi_*^K(\mu_L^{K}) \equiv \pi_*^K(\mu^{K_0}) \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_push}). Obviously $\pi_*^K(\mu_L^{K})=L_{1\bullet}^{K}$. We conclude that ${\pi_*^K(\mu^{K_0}) \equiv L_{1\bullet}^{K} \pmod \Fall}$ and therefore ${\pi_*^K(\mu^{K_0}) \equiv \mu_1 \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_eq}).
+Denote $\mu_L^{K}:=\En_*^2(L_{1\bullet}^{K} \times L_{2\bullet}^{K})$. We get ${\mu_L^{K} \equiv \mu^{K_0} \pmod \Fall}$ and therefore ${\pi_*^K\mu_L^{K} \equiv \pi_*^K\mu^{K_0} \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_push}). Obviously $\pi_*^K\mu_L^{K}=L_{1\bullet}^{K}$. We conclude that ${\pi_*^K\mu^{K_0} \equiv L_{1\bullet}^{K} \pmod \Fall}$ and therefore ${\pi_*^K\mu^{K_0} \equiv \mu_1 \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_eq}).
 \end{proof}
 
 \begin{samepage}
@@ -1885,23 +1885,23 @@ Consider word ensembles $\mu_1$ and $\mu_2$ with $\EMG$-samplers $L_1$ and $L_2$
 
 \[\mu^{K_0} \equiv \En_*^2(L_{1\bullet}^K \times L_{2\bullet}^K)\pmod \Fall\]
 
-\[\pi_*^K(\mu^{K_0}) \equiv \pi_*^K(\En_*^2(L_{1\bullet}^K \times L_{2\bullet}^K)) \pmod \Fall\] 
+\[\pi_*^K\mu^{K_0} \equiv \pi_*^K\En_*^2(L_{1\bullet}^K \times L_{2\bullet}^K) \pmod \Fall\] 
 
-\[\pi_*^K(\mu^{K_0}) \equiv  L_{1\bullet}^K \pmod \Fall\]
+\[\pi_*^K\mu^{K_0} \equiv  L_{1\bullet}^K \pmod \Fall\]
 
 Denote $\mu_x^K:=\mu \mid (\pi^K)^{-1}(x)$.
 
-\[\E_{x \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\mu_x^K,L_x^K)] \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K_0}}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\mu_x^K,L_x^K)] \pmod \Fall\]
 
 For any $x \in \Supp L_{1\bullet}^{K}$, $\mu_x^K = \En_*^2(\delta_x \times \mu_2^{K_0})$ and $L_x^K=\En_*^2(\delta_x \times L_{2\bullet}^K)$.
 
-\[\E_{x \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\En_*^2(\delta_x \times \mu_2^{K_0}),\En_*^2(\delta_x \times L_{2\bullet}^K))] \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K_0}}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\En_*^2(\delta_x \times \mu_2^{K_0}),\En_*^2(\delta_x \times L_{2\bullet}^K))] \pmod \Fall\]
 
-\[\E_{x \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\mu_2^{K_0},L_{2\bullet}^K)] \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K_0}}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\mu_2^{K_0},L_{2\bullet}^K)] \pmod \Fall\]
 
-\[\E_{x \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu_x^K,L_x^K)] \equiv \Dtv(\mu_2^{K_0},L_{2\bullet}^K) \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K_0}}[\Dtv(\mu_x^K,L_x^K)] \equiv \Dtv(\mu_2^{K_0},L_{2\bullet}^K) \pmod \Fall\]
 
-\[\E_{x \sim \pi_*^K(\mu^{K_0})}[\Dtv(\mu_x^K,L_x^K)] \equiv 0 \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K_0}}[\Dtv(\mu_x^K,L_x^K)] \equiv 0 \pmod \Fall\]
 \end{proof}
 
 \begin{samepage}
@@ -2020,7 +2020,7 @@ In this subsection we study notions of Karp reduction between distributional est
 
 First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose. 
 
-Consider the setting of Corollary~\ref{crl:one_way}. Denote $\mu^k:=\Un^{2k}$ and define ${\chi: \Supp \mu \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$, ${\pi_f^k(xy) = \Chev{f(x),y}}$. $\pi_f$ can be regarded as a Karp reduction of $(\mu, \chi)$ to $(\mu_{(f)},\chi_f)$ since for any ${z \in \Supp \mu^k}$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*(\mu)=\mu_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pull-back of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal predictor for $(\mu,\chi)$ since its error is $\E_{z \sim \mu^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \mu^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \mu^k}[(Q^k(z)-\chi(z))^2]=0$.
+Consider the setting of Corollary~\ref{crl:one_way}. Denote $\mu^k:=\Un^{2k}$ and define ${\chi: \Supp \mu \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$, ${\pi_f^k(xy) = \Chev{f(x),y}}$. $\pi_f$ can be regarded as a Karp reduction of $(\mu, \chi)$ to $(\mu_{(f)},\chi_f)$ since for any ${z \in \Supp \mu^k}$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*\mu=\mu_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pull-back of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal predictor for $(\mu,\chi)$ since its error is $\E_{z \sim \mu^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \mu^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \mu^k}[(Q^k(z)-\chi(z))^2]=0$.
 
 We will describe several types of reductions that preserve optimal predictors. After that, we will characterize reductions that can be constructed by composing those types.
 
@@ -2032,7 +2032,7 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \begin{enumerate}[(i)]
 
-\item\label{con:def__psp_reduce__dist} $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
+\item\label{con:def__psp_reduce__dist} $\pi_*^K\mu^{K_0} \equiv \nu^{K_0} \pmod \Fall$
 
 \item\label{con:def__psp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
 
@@ -2134,13 +2134,13 @@ Let ${L}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${
 
 Using condition~\ref{con:def__psp_reduce__dist} of Definition~\ref{def:psp_reduce}
 
-\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - \bar{g})^2] \pmod \Fall\]
+\[\E_{\pi_*^K\mu^{K_0} \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K_0} \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - \bar{g})^2] \pmod \Fall\]
 
-\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \UM_L^K}[\E_{\Un_Q^K}[((Q \circ L)^K - \bar{g})^2]] \pmod \Fall\]
+\[\E_{\pi_*^K\mu^{K_0} \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K_0} \times \UM_L^K}[\E_{\Un_Q^K}[((Q \circ L)^K - \bar{g})^2]] \pmod \Fall\]
 
 The right hand side has the form of the right hand side in \ref{eqn:prp__smp} enabling us to apply Proposition~\ref{prp:smp} and get
 
-\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K}[\E_{\Un_Q^K}[(Q^K - \bar{g} \circ \pi^K)^2]] \pmod \Fall\]
+\[\E_{\pi_*^K\mu^{K_0} \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K}[\E_{\Un_Q^K}[(Q^K - \bar{g} \circ \pi^K)^2]] \pmod \Fall\]
 
 \[\E_{\mu^{K_0} \times \Un_\pi^K \times \Un_P^K}[((P \circ \pi)^K-\bar{g} \circ \pi^K)^2] \leq \E_{\mu^{K_0} \times \Un_\pi^K \times \Un_Q^K}[(Q^K - \bar{g} \circ \pi^K)^2] \pmod \Fall\]
 
@@ -2160,7 +2160,7 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \begin{enumerate}[(i)]
 
-\item\label{con:def__sp_reduce__dist} $\pi_*^K(\mu^{K_0}) \equiv \nu^{K_0} \pmod \Fall$
+\item\label{con:def__sp_reduce__dist} $\pi_*^K\mu^{K_0} \equiv \nu^{K_0} \pmod \Fall$
 
 \item\label{con:def__sp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
 
@@ -2226,7 +2226,7 @@ Using the construction of $P_f$, the assumption on $\gamma$ and Proposition~\ref
 Let $L$ be an $\EMG$-sampler of $\mu$ relative to ${\pi}$. Denote 
 
 \begin{align*}
-\mu_\pi^K &:= \pi_*^K(\mu^{K_0}) \\
+\mu_\pi^K &:= \pi_*^K\mu^{K_0} \\
 \Un_i^K&:=\prod_{j \in [\gamma(K)]} \Un_{P_g}^K \times \prod_{j \in [\gamma(K)] \setminus i} \Un_{\pi}^K \times \Un_S^K \times \UM_L^K 
 \end{align*}
 
@@ -2302,9 +2302,9 @@ Applying Proposition~\ref{prp:mixed_opt} for ${P_g}$ and ${Q_g}$, we get
 
 Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}
 
-\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_{P_g}^K}[(P_g^K-\bar{g})^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \UM_{Q_g}^K}[(Q_g^K - \bar{g})^2] \pmod \Fall\]
+\[\E_{\pi_*^K\mu^{K_0} \times \Un_{P_g}^K}[(P_g^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K_0} \times \UM_{Q_g}^K}[(Q_g^K - \bar{g})^2] \pmod \Fall\]
 
-\[\E_{\pi_*^K(\mu^{K_0}) \times \Un_{P_g}^K}[(P_g^K-\bar{g})^2] \leq \E_{\pi_*^K(\mu^{K_0}) \times \UM_{Q_g}^K}[((Q_f \circ L)^K - (P_f \circ L)^K + P_g^K - \bar{g})^2] \pmod \Fall\]
+\[\E_{\pi_*^K\mu^{K_0} \times \Un_{P_g}^K}[(P_g^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K_0} \times \UM_{Q_g}^K}[((Q_f \circ L)^K - (P_f \circ L)^K + P_g^K - \bar{g})^2] \pmod \Fall\]
 
 The right hand side has the form of the right hand side in \ref{eqn:prp__smp} enabling us to apply Proposition~\ref{prp:smp} and get
 
@@ -2522,7 +2522,7 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 
 \item $\forall k \in \Nats: l(d(k))=k$
 
-\item\label{con:def__psp_reduce__dist} ${\pi_*(\mu)}$ is ${\EG}$-dominated by ${d^{-1}\nu}$.
+\item\label{con:def__psp_reduce__dist} ${\pi_*\mu}$ is ${\EG}$-dominated by ${d^{-1}\nu}$.
 
 \item\label{con:def__psp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K_0} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
 
