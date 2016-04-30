@@ -231,13 +231,13 @@ Consider finite sets $X$ and $Y$, a probability distribution $\mu: X \rightarrow
 
 Let $P: X \rightarrow \Reals$ be the function $P(x) := \E_{x' \sim \mu}[f(x') \mid m(x) = m(x)]$. How can we characterize $P$ without referring to the concept of a conditional expected value? For any $Q: X \rightarrow \Reals$ we can consider the \enquote{error} $\E_\mu[(Q - f)^2]$. $Q$ is called \enquote{efficient} when it factors as $Q = q \circ m$ for some $q: Y \rightarrow \Reals$. It is easy to see that $P$ has the least error among all efficient functions.
 
-Note that the characterization of $P$ depends not only on $f$ but also on $\mu$. That is, the accuracy of an estimator depends on the prior probabilities to encounter different questions. In general, we assume that the possible questions are indexed by elements of $\Words$. Thus we need to consider a probability distribution on $\Words$. However, in the spirit of average-complexity theory we will only require our estimators to be \emph{asymptotically} optimal. Therefore instead of considering a single probability distribution we consider a family of probability distribution indexed by an integer parameter, where the role of the parameter is defining the relevant limit. We thereby arrive at the following:
+Note that the characterization of $P$ depends not only on $f$ but also on $\mu$. That is, the accuracy of an estimator depends on the prior probabilities to encounter different questions. In general, we assume that the possible questions are represented by elements of $\Words$. Thus we need to consider a probability distribution on $\Words$. However, in the spirit of average-complexity theory we will only require our estimators to be \emph{asymptotically} optimal. Therefore instead of considering a single probability distribution we consider a family of probability distribution indexed by integer parameters\footnote{It is convenient to allow more than 1 parameter for reasons that will become clear in section~\ref{sec:e_and_u}. Roughly, some parameters represent the complexity of the input whereas other parameters represent the amount of computing resources available for probability estimation.}, where the role of the parameters is defining the relevant limit. We thereby arrive at the following:
 
 \begin{definition}
 
-A \emph{word ensemble} $\mu$ is a family of probability distributions ${\{\mu^{K_0}: \Words \rightarrow [0,1]\}_{k \in \Nats}}$.
+Fix ${n \in \Nats}$. A \emph{word ensemble of rank ${n}$} is a family $\mu$ of probability distributions ${\{\mu^{K}: \Words \rightarrow [0,1]\}_{K \in \Nats^n}}$.
 
-We will use the notation $\Supp \mu := \bigcup_{k \in \Nats} \Supp \mu^k$.
+We will use the notation $\Supp \mu := \bigcup_{K \in \Nats^n} \Supp \mu^K$.
 
 \end{definition}
 
@@ -245,7 +245,7 @@ We now introduce our abstraction for a \enquote{class of mathematical questions}
 
 \begin{definition}
 
-A \emph{distributional estimation problem} is a pair $(\mu,f)$ where $\mu$ is a word ensemble and $f: \Supp \mu \rightarrow \Reals$ is bounded.
+Fix ${n \in \Nats}$. A \emph{distributional estimation problem of rank ${n}$} is a pair $(\mu,f)$ where $\mu$ is a word ensemble of rank ${n}$ and $f: \Supp \mu \rightarrow \Reals$ is bounded.
 
 \end{definition}
 
@@ -375,9 +375,9 @@ We take $\A_{\Delta_{\mathcal{S}}}(K):=\Chev{\Quote{\mathcal{S}_K},\Quote{\R_{\m
 
 \subsubsection{Fall Spaces}
 
-Fix $n \in \Nats$ and $\Gamma$ a pair of growth spaces of rank $n$. The 0th parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The other parameters serve to control the resources available to the predictor. To illustrate the significance of the other parameters using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question \enquote{what is the probability 7614829 is prime?} depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
+%The 0th parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The other parameters serve to control the resources available to the predictor. To illustrate the significance of the other parameters using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question \enquote{what is the probability 7614829 is prime?} depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
 
-Given a distributional estimation problem $(\mu,f)$ and $Q: \Words \Scheme \Rats$, we can consider the estimation error $\E_{(x,y) \sim \mu^{K_0} \times \Un_Q^K}[(Q^K(x,y) - f(x))^2]$. It makes little sense to require this error to be minimal for every $K \in \Nats^n$, since we can always hard-code a finite number of answers into $Q$ without violating the resource restrictions. Instead we require minimization up to an asymptotically small error. Since it makes sense to consider different kind of asymptotic requirements, we introduce an abstraction that corresponds to this choice.
+Fix $n \in \Nats$ and $\Gamma$ a pair of growth spaces of rank $n$. Given a distributional estimation problem $(\mu,f)$ and $Q: \Words \Scheme \Rats$, we can consider the estimation error $\E_{(x,y) \sim \mu^{K} \times \Un_Q^K}[(Q^K(x,y) - f(x))^2]$. It makes little sense to require this error to be minimal for every $K \in \Nats^n$, since we can always hard-code a finite number of answers into $Q$ without violating the resource restrictions. Instead we require minimization up to an asymptotically small error. Since it makes sense to consider different kind of asymptotic requirements, we introduce an abstraction that corresponds to this choice.
 
 \begin{definition}
 \label{def:fall}
@@ -519,7 +519,7 @@ Fix $n \in \Nats$, $\Gamma$ a pair of growth spaces of rank $n$ and $\Fall$ a fa
 
 \begin{equation}
 \label{eqn:op}
-\E_{\mu^{K_0} \times \Un_P^K}[(P^K - f)^2] \leq \E_{\mu^{K_0} \times \Un_Q^K}[(Q^K - f)^2] \pmod \Fall
+\E_{\mu^{K} \times \Un_P^K}[(P^K - f)^2] \leq \E_{\mu^{K} \times \Un_Q^K}[(Q^K - f)^2] \pmod \Fall
 \end{equation}
 
 \end{definition}
@@ -528,7 +528,7 @@ Distributional \emph{decision} problems are the special case when the range of $
 
 \subsection{Basic Properties}
 
-From now on we fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$.
+From now on we fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. All word ensembles and distributional estimation problems will be of rank ${n}$ unless specified otherwise.
 
 In this subsection we discuss some basic properties of optimal predictors which will be used in the following.
 
