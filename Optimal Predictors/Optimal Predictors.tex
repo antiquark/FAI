@@ -2348,7 +2348,7 @@ In this case, ${W}$ is called a \emph{Radon-Nikodym ${\EG}$-derivative of ${\mu}
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:dom_reduce_sharp}
 
 Consider ${\mu}$, ${\nu}$ word ensembles, ${f: \Supp \mu \cup \Supp \nu \rightarrow \Reals}$ bounded and ${P}$ an ${\ESG}$-optimal predictor for ${(\nu,f)}$. Suppose ${\mu}$ is ${\EG}$-dominated by ${\nu}$. Then, ${P}$ is an ${\ESG}$-optimal predictor for ${(\mu,f)}$.
 
@@ -2379,7 +2379,7 @@ The corresponding statement for ${\EG}$-optimal predictors may be regarded as a 
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:dom_reduce}
 
 Assume ${\Fall}$ is ${\GrowA}$-ample. Consider ${\mu}$, ${\nu}$ word ensembles, ${f: \Supp \mu \cup \Supp \nu \rightarrow \Reals}$ bounded and ${P}$ an ${\EG}$-optimal predictor for ${(\nu,f)}$. Suppose ${\mu}$ is ${\EG}$-dominated by ${\nu}$. Then, ${P}$ is an ${\EG}$-optimal predictor for ${(\mu,f)}$.
 
@@ -2471,24 +2471,37 @@ Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${d: \Nats^n \Alg \Na
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:idx_reduce_sharp}
+\label{prp:rev_sch_idx}
 
-Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\ESG}$-optimal predictor for ${(\mu,f)}$ and ${d,l: \Nats \Alg \Nats}$. Assume that ${d,l \in \Gamma_{\textnormal{poly}}^n}$ as functions, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$ and ${l(d(K))=K}$. Then, ${P^d}$ is an ${\Fall d^\sharp(\Gamma d)}$-optimal predictor for ${(\mu^d,f)}$.
+Consider  ${X}$, ${Y}$ encoded sets and ${d,l: \Nats^n \Alg \Nats^n}$. Assume that ${d,l \in \Gamma_{\textnormal{poly}}^n}$ as functions, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$ and ${l(d(K))=K}$. Then, for any  ${S: X \xrightarrow{\Gamma d} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${d(l(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
+
+\begin{align}
+\A_{\tilde{S}}(K)&=\A_S(l(K)) \\
+\R_{\tilde{S}}^K(z)&=\R_S^{l(K)}(z) \\
+\tilde{S}^K(x,y,z)&=S^{l(K)}(x,y,z)
+\end{align}
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Consider any ${S: \Words \times \Rats \xrightarrow{\Gamma d} \Rats}$ bounded. We can construct ${\tilde{S}: \Words \times \Rats \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$ that satisfies ${d(l(K))=K}$, ${x,y,z \in \Words}$ and ${t \in \Rats}$ we have
+There is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t. ${\R_S(K) \leq \gamma_{\mathfrak{R}}(d(K))}$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(K)} \leq \gamma_{\mathfrak{A}}(d(K))}$. In particular, if ${K \in \Nats^n}$ is s.t. ${d(l(K))=K}$ then ${\R_S(l(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(l(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
+%
+\end{proof}
 
-\begin{align*}
-\A_{\tilde{S}}(K)&=\A_S(l(K)) \\
-\R_{\tilde{S}}^K(z)&=\R_S^{l(K)}(z) \\
-\tilde{S}^K(x,t,y,z)&=S^{l(K)}(x,t,y,z)
-\end{align*}
+\begin{samepage}
+\begin{proposition}
+\label{prp:idx_reduce_sharp}
 
-There is ${\varepsilon \in \Fall}$ s.t. for any ${K \in \Nats^n}$
+Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\ESG}$-optimal predictor for ${(\mu,f)}$ and ${d,l: \Nats^n \Alg \Nats^n}$. Assume that ${d,l \in \Gamma_{\textnormal{poly}}^n}$ as functions, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$ and ${l(d(K))=K}$. Then, ${P^d}$ is an ${\Fall d^\sharp(\Gamma d)}$-optimal predictor for ${(\mu^d,f)}$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Consider any ${S: \Words \times \Rats \xrightarrow{\Gamma d} \Rats}$ bounded. Construct ${\tilde{S}: \Words \times \Rats \Scheme \Rats}$ by applying Proposition~\ref{prp:rev_sch_idx} to ${S}$. There is ${\varepsilon \in \Fall}$ s.t. for any ${K \in \Nats^n}$
 
 \[\Abs{\E_{\mu^{K} \times \Un_P^K \times \Un_{\tilde{S}}^K}[(P^K(x,y) - f(x))\tilde{S}^K(x,P^K(x,y),z)]}=\varepsilon(K)\]
 
@@ -2517,15 +2530,7 @@ Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\EG}$-optimal
 
 \begin{proof}
 
-Consider any ${Q: \Words \xrightarrow{\Gamma d} \Rats}$ bounded. We can construct ${\tilde{Q}: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$ that satisfies ${d(l(K))=K}$ and ${x,y,z \in \Words}$ we have
-
-\begin{align*}
-\A_{\tilde{Q}}(K)&=\A_Q(l(K)) \\
-\R_{\tilde{Q}}^K(z)&=\R_Q^{l(K)}(z) \\
-\tilde{Q}^K(x,y,z)&=Q^{l(K)}(x,y,z)
-\end{align*}
-
-There is ${\varepsilon \in \Fall}$ s.t.
+Consider any ${Q: \Words \xrightarrow{\Gamma d} \Rats}$ bounded. Construct ${\tilde{Q}: \Words \Scheme \Rats}$ by applying Proposition~\ref{prp:rev_sch_idx} to ${Q}$. There is ${\varepsilon \in \Fall}$ s.t.
 
 \[\E_{\mu^{K} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \E_{\mu^{K} \times \Un_{\tilde{Q}}^K}[(\tilde{Q}^K(x,y)-f(x))^2] + \varepsilon(K)\]
 
@@ -2547,23 +2552,23 @@ We now consider compositions of reductions of different types.
 
 \begin{samepage}
 \begin{definition}
-%\label{def:tbd}
+\label{def:pp_reduce}
 
-Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when there are ${d,l: \Nats^n \Alg \Nats^n}$ s.t.
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, ${d: \Nats^n \Alg \Nats^n}$ and\\ ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{degree ${d}$ precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when there is ${l: \Nats^n \Alg \Nats^n}$ s.t.
 
 \begin{enumerate}[(i)]
 
-\item As functions, ${d,l \in \Gamma_{\textnormal{poly}}^n}$
+\item\label{con:def__pp_reduce__pol_deg} As functions, ${d,l \in \Gamma_{\textnormal{poly}}^n}$
 
-\item ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$
+\item\label{con:def__pp_reduce__eff_deg} ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$
 
-\item $\forall K \in \Nats^n: l(d(K))=K$
+\item\label{con:def__pp_reduce__inv_deg} $\forall K \in \Nats^n: l(d(K))=K$
 
-\item\label{con:def__psp_reduce__dist} ${\pi_*\mu}$ is ${\EG}$-dominated by ${\nu^d}$.
+\item\label{con:def__pp_reduce__dist} ${(\pi_*\mu)^d}$ is ${\EG}$-dominated by ${\nu}$.
 
-\item\label{con:def__psp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
+\item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
 
-\item\label{con:def__psp_reduce__smp} $\mu$ is $\EMG$-samplable relative to $\pi$.
+\item\label{con:def__pp_reduce__smp} $\mu$ is $\EMG$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2574,16 +2579,14 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 \begin{corollary}
 %\label{crl:tbd}
 
-Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$. Suppose $P$ is an $\ESG$-optimal predictor for $(\nu, g)$. Then, $P^d \circ \pi$ is an $\ESG$-optimal predictor for $(\mu, f)$.
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, ${d: \Nats^n \Alg \Nats^n}$ and $\pi$ a degree ${d}$ precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$. Suppose $P$ is an $\ESG$-optimal predictor for $(\nu, g)$. Then, $(P \circ \pi)^d$ is an $\Fall d^\sharp (\Gamma d)$-optimal predictor for $(\mu, f)$.
 
 \end{corollary}
 \end{samepage}
 
 \begin{proof}
 
-By Corollary~\ref{crl:psp_reduce_sharp}, ${P \circ \pi}$ is an ${\ESG}$-optimal predictor for ???
-
-BAR
+By Corollary~\ref{crl:psp_reduce_sharp} and conditions \ref{con:def__pp_reduce__fun} and \ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, ${P \circ \pi}$ is an ${\ESG}$-optimal predictor for ${(\pi_* \mu, g)}$.   By Proposition~\ref{prp:idx_reduce_sharp} and conditions \ref{con:def__pp_reduce__pol_deg}, \ref{con:def__pp_reduce__eff_deg} and \ref{con:def__pp_reduce__inv_deg} of Definition~\ref{def:pp_reduce}, ${(P \circ \pi)^d}$ is an ${\Fall d^\sharp(\Gamma d)}$-optimal predictor for ${((\pi_* \mu)^d, g)}$. By Proposition~\ref{prp:dom_reduce_sharp} and condition \ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, ${(P \circ \pi)^d}$ is also an ${\ESG}$-optimal predictor for ${(\nu, g)}$.
 %
 \end{proof}
 
