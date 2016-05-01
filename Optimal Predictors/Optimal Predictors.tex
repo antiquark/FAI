@@ -2480,15 +2480,29 @@ Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\ESG}$-optima
 
 \begin{proof}
 
-Consider any ${S: \Words \times \Rats \xrightarrow{\Gamma d} \Rats}$ bounded. We can construct ${\tilde{S}: \Words \times \Rats \Scheme \Rats}$ s.t. if ${d(l(K))=K}$ then ${\R_{\tilde{S}}(K)=\R_S(l(K))}$ and ${\tilde{S}^K(x,y)=S^{l(K)}(x,y)}$? There is ${\varepsilon \in \Fall}$ s.t.
+Consider any ${S: \Words \times \Rats \xrightarrow{\Gamma d} \Rats}$ bounded. We can construct ${\tilde{S}: \Words \times \Rats \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$ that satisfies ${d(l(K))=K}$, ${x,y,z \in \Words}$ and ${t \in \Rats}$ we have
 
-\[\Abs{\E_{\mu^{K} \times \Un_P^K \times \Un_{S^l}^K}[(P^K(x,y) - f(x))(S^l)^K(x,P^K(x,y),z)]}=\varepsilon(K)\]
+\begin{align*}
+\A_{\tilde{S}}(K)&=\A_S(l(K)) \\
+\R_{\tilde{S}}^K(z)&=\R_S^{l(K)}(z) \\
+\tilde{S}^K(x,t,y,z)&=S^{l(K)}(x,t,y,z)
+\end{align*}
+
+There is ${\varepsilon \in \Fall}$ s.t. for any ${K \in \Nats^n}$
+
+\[\Abs{\E_{\mu^{K} \times \Un_P^K \times \Un_{\tilde{S}}^K}[(P^K(x,y) - f(x))\tilde{S}^K(x,P^K(x,y),z)]}=\varepsilon(K)\]
 
 Substituting ${d(K)}$ for ${K}$, we get
 
-\[\Abs{\E_{\mu^{d(K)} \times \Un_P^{d^n(K)} \times \Un_{S^l}^{d^n(K)}}[(P^{d^n(K)}(x,y) - f(x))(S^l)^{d^n(K)}(x,P^{d^n(K)}(x,y),z)]}=\varepsilon(d^n(K))\]
+\[\Abs{\E_{\mu^{d(K)} \times \Un_P^{d(K)} \times \Un_{\tilde{S}}^{d(K)}}[(P^{d(K)}(x,y) - f(x))\tilde{S}^{d(K)}(x,P^{d(K)}(x,y),z)]}=\varepsilon(d(K))\]
 
-\[\Abs{\E_{(\mu^d)^{K} \times \Un_{P^d}^{K} \times \Un_{S}^{K}}[((P^d)^{K}(x,y) - f(x))S^{K}(x,(P^d)^{K}(x,y),z)]}=\varepsilon(d^n(K))\]
+\[\Abs{\E_{(\mu^d)^{K} \times \Un_{P^d}^{K} \times \Un_{\tilde{S}}^{d(K)}}[((P^d)^{K}(x,y) - f(x))\tilde{S}^{d(K)}(x,(P^d)^{K}(x,y),z)]}=\varepsilon(d(K))\]
+
+We have ${d(l(d(K))=d(K)}$, therefore
+
+\[\Abs{\E_{(\mu^d)^{K} \times \Un_{P^d}^{K} \times \Un_{S}^{l(d(K))}}[((P^d)^{K}(x,y) - f(x))S^{l(d(K))}(x,(P^d)^{K}(x,y),z)]}=\varepsilon(d(K))\]
+
+\[\Abs{\E_{(\mu^d)^{K} \times \Un_{P^d}^{K} \times \Un_{S}^{K}}[((P^d)^{K}(x,y) - f(x))S^{K}(x,(P^d)^{K}(x,y),z)]}=\varepsilon(d(K))\]
 %
 \end{proof}
 
@@ -2496,22 +2510,36 @@ Substituting ${d(K)}$ for ${K}$, we get
 \begin{proposition}
 \label{prp:idx_reduce}
 
-Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\EG}$-optimal predictor for ${(\mu,f)}$ and ${d,l: \Nats \Alg \Nats}$. Assume that ${d,l \in \Gamma_{\textnormal{poly}}^1}$ as functions, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^1}$ and ${l(d(k))=k}$. Then, ${P^d}$ is an ${(\Fall \circ d)(\Gamma)}$-optimal predictor for ${(\mu^d,f)}$.
+Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\EG}$-optimal predictor for ${(\mu,f)}$ and ${d,l: \Nats^n \Alg \Nats^n}$. Assume that ${d,l \in \Gamma_{\textnormal{poly}}^n}$ as functions, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$ and ${l(d(K))=K}$. Then, ${P^d}$ is an ${\Fall d(\Gamma d)}$-optimal predictor for ${(\mu^d,f)}$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Consider any ${Q: \Words \Alg \Rats}$ bounded. There is ${\varepsilon \in \Fall}$ s.t.
+Consider any ${Q: \Words \xrightarrow{\Gamma d} \Rats}$ bounded. We can construct ${\tilde{Q}: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$ that satisfies ${d(l(K))=K}$ and ${x,y,z \in \Words}$ we have
 
-\[\E_{\mu^{K} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \E_{\mu^{K} \times \Un_{Q^l}^K}[((Q^l)^K(x,y)-f(x))^2] + \varepsilon(K)\]
+\begin{align*}
+\A_{\tilde{Q}}(K)&=\A_Q(l(K)) \\
+\R_{\tilde{Q}}^K(z)&=\R_Q^{l(K)}(z) \\
+\tilde{Q}^K(x,y,z)&=Q^{l(K)}(x,y,z)
+\end{align*}
 
-Substituting ${d^n(K)}$ for ${K}$, we get
+There is ${\varepsilon \in \Fall}$ s.t.
 
-\[\E_{\mu^{d(K)} \times \Un_P^{d^n(K)}}[(P^{d^n(K)}(x,y)-f(x))^2] \leq \E_{\mu^{d(K)} \times \Un_{Q^l}^{d^n(K)}}[((Q^l)^{d^n(K)}(x,y)-f(x))^2] + \varepsilon({d^n(K)})\]
+\[\E_{\mu^{K} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \E_{\mu^{K} \times \Un_{\tilde{Q}}^K}[(\tilde{Q}^K(x,y)-f(x))^2] + \varepsilon(K)\]
 
-\[\E_{(\mu^d)^{K} \times \Un_{P^d}^K}[((P^d)^K(x,y)-f(x))^2] \leq \E_{(\mu^d)^{K} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2] + \varepsilon(d^n(K))\]
+Substituting ${d(K)}$ for ${K}$, we get
+
+\[\E_{\mu^{d(K)} \times \Un_P^{d(K)}}[(P^{d(K)}(x,y)-f(x))^2] \leq \E_{\mu^{d(K)} \times \Un_{\tilde{Q}}^{d(K)}}[(\tilde{Q}^{d(K)}(x,y)-f(x))^2] + \varepsilon({d(K)})\]
+
+\[\E_{(\mu^d)^{K} \times \Un_{P^d}^K}[((P^d)^K(x,y)-f(x))^2] \leq \E_{(\mu^d)^{K} \times \Un_{\tilde{Q}}^{d(K)}}[(\tilde{Q}^{d(K)}(x,y)-f(x))^2] + \varepsilon(d(K))\]
+
+We have ${d(l(d(K))=d(K)}$, therefore
+
+\[\E_{(\mu^d)^{K} \times \Un_{P^d}^K}[((P^d)^K(x,y)-f(x))^2] \leq \E_{(\mu^d)^{K} \times \Un_Q^{l(d(K))}}[(Q^{l(d(K))}(x,y)-f(x))^2] + \varepsilon(d(K))\]
+
+\[\E_{(\mu^d)^{K} \times \Un_{P^d}^K}[((P^d)^K(x,y)-f(x))^2] \leq \E_{(\mu^d)^{K} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2] + \varepsilon(d(K))\]
 %
 \end{proof}
 
@@ -2521,17 +2549,17 @@ We now consider compositions of reductions of different types.
 \begin{definition}
 %\label{def:tbd}
 
-Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when there are ${d,l: \Nats \Alg \Nats}$ s.t.
+Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when there are ${d,l: \Nats^n \Alg \Nats^n}$ s.t.
 
 \begin{enumerate}[(i)]
 
-\item As functions, ${d,l \in \Gamma_{\textnormal{poly}}^1}$
+\item As functions, ${d,l \in \Gamma_{\textnormal{poly}}^n}$
 
-\item ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^1}$
+\item ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$
 
-\item $\forall k \in \Nats: l(d(k))=k$
+\item $\forall K \in \Nats^n: l(d(K))=K$
 
-\item\label{con:def__psp_reduce__dist} ${\pi_*\mu}$ is ${\EG}$-dominated by ${\nu^d}$???
+\item\label{con:def__psp_reduce__dist} ${\pi_*\mu}$ is ${\EG}$-dominated by ${\nu^d}$.
 
 \item\label{con:def__psp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
 
@@ -2559,7 +2587,9 @@ BAR
 %
 \end{proof}
 
-%In many cases of interest, ${\Fall d \subseteq \Fall}$, ${\GrowR d = \GrowR}$ and ${\GrowA d = \GrowA}$ for \emph{any} admissible ${d}$ so ${P^d}$ is actually an ${\ESG}$-optimal predictor for ${(\mu^d,f)}$. Naturally, the same remark applies to the subsequent results of this form.
+%When \Gamma is invariant under any appropriate ${d}$, it follows that ${\Gamma d = d}$
+%Often \Fall d = \Fall as well
+
 TBD
 
 \subsection{Completeness}
