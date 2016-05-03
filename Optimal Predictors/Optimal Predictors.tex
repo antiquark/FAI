@@ -2402,22 +2402,13 @@ Using the assumption on ${W}$
 %
 \end{proof}
 
-Finally, we consider another scenario in which the identity mapping is a valid reduction. This scenario is a simple re-indexing of the word ensemble.
+Finally, we consider another scenario in which the identity mapping is a valid reduction. This scenario is a simple re-indexing of the word ensemble. For the remainder of subsection, we fix some ${m \in \Nats}$.
 
 \begin{samepage}
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${\Gamma_*}$ a growth space of rank ${n}$ and ${d \in \Gamma_{\textnormal{poly}}^n}$. We introduce the notation
-
-\begin{equation}
-\label{eqn:tbd}
-\Gamma_*d:=\{\gamma_d: \Nats^n \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid \exists \gamma \in \Gamma_*: \gamma_d \leq \gamma \circ d\}
-\end{equation}
-
-Obviously ${\Gamma_*d}$ is also a growth space of rank ${n}$.
-
-We also denote ${\Gamma d := (\GrowR d, \GrowA d)}$.
+We denote ${\Gamma_{\text{poly}}^{mn}:=\{\gamma: \Nats^m \rightarrow \Nats^n \mid \forall i \in [n]: \gamma_i \in \Gamma_{\text{poly}}^m \}}$.
 
 \end{definition}
 \end{samepage}
@@ -2426,11 +2417,29 @@ We also denote ${\Gamma d := (\GrowR d, \GrowA d)}$.
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${d \in \Gamma_{\textnormal{poly}}^n}$. We introduce the notation
+Consider ${\Gamma_*}$ a growth space of rank ${n}$ and ${\alpha \in \Gamma_{\text{poly}}^{mn}}$. We introduce the notation
 
 \begin{equation}
 \label{eqn:tbd}
-\Fall d:=\{\varepsilon_d: \Nats^n \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid \exists \varepsilon \in \Fall: \varepsilon_d \leq \varepsilon \circ d\}
+\Gamma_*\alpha:=\{\gamma_\alpha: \Nats^m \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid \exists \gamma \in \Gamma_*: \gamma_\alpha \leq \gamma \circ \alpha\}
+\end{equation}
+
+Obviously ${\Gamma_*\alpha}$ is a growth space of rank ${m}$.
+
+We also denote ${\Gamma \alpha := (\GrowR \alpha, \GrowA \alpha)}$.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+Consider ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$. We introduce the notation
+
+\begin{equation}
+\label{eqn:tbd}
+\Fall \alpha:=\{\varepsilon_\alpha: \Nats^m \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid \exists \varepsilon \in \Fall: \varepsilon_\alpha \leq \varepsilon \circ \alpha\}
 \end{equation}
 
 \end{definition}
@@ -2440,14 +2449,14 @@ Consider ${d \in \Gamma_{\textnormal{poly}}^n}$. We introduce the notation
 \begin{proposition}
 \label{prp:tbd}
 
-For any ${d \in \Gamma_{\textnormal{poly}}^1}$, ${\Fall d}$ is a fall space
+For any ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$, ${\Fall \alpha}$ is a fall space
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider a polynomial ${h: \Nats^n \rightarrow \Nats}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^n \rightarrow \Nats^n}$ polynomial s.t. ${d \leq p}$. Clearly, ${2^{-h \circ p} \in \Fall d}$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider a polynomial ${h: \Nats^n \rightarrow \Nats}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
 %
 \end{proof}
 
@@ -2455,7 +2464,7 @@ Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. T
 \begin{definition}
 %\label{def:tbd}
 
-Consider a ${\mu}$ word ensemble and ${d: \Nats^n \rightarrow \Nats^n}$. We denote ${\mu^d}$ the word ensemble defined by ${(\mu^d)^k:=\mu^{d(k)}}$.
+Consider ${\mu}$ a word ensemble of rank ${n}$ and ${\alpha: \Nats^m \rightarrow \Nats^n}$. We denote ${\mu^\alpha}$ the word ensemble of rank ${m}$ defined by ${(\mu^\alpha)^k:=\mu^{\alpha(k)}}$.
 
 \end{definition}
 \end{samepage}
@@ -2464,7 +2473,7 @@ Consider a ${\mu}$ word ensemble and ${d: \Nats^n \rightarrow \Nats^n}$. We deno
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${d: \Nats^n \Alg \Nats^n}$ s.t. ${d \in \Gamma_{\textnormal{poly}}^n}$ as a function and ${\T_d \in \Gamma_{\textnormal{poly}}^n}$. We define ${S^d: X \xrightarrow{\Gamma d} Y}$ by ${\R_{S^d}(K)=\R_S(d(K))}$ and ${(S^d)^K(x,y)=S^{d(K)}(x,y)}$.
+Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${\alpha: \Nats^m \Alg \Nats^n}$ s.t. ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ as a function and ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$. We define ${S^\alpha: X \xrightarrow{\Gamma \alpha} Y}$ by requiring that for any ${L \in \Nats^m}$, ${\R_{S^\alpha}(L)=\R_S(\alpha(L))}$ and ${(S^\alpha)^L(x,y)=S^{\alpha(L)}(x,y)}$.
 
 \end{definition}
 \end{samepage}
@@ -2473,12 +2482,12 @@ Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${d: \Nats^n \Alg \Na
 \begin{proposition}
 \label{prp:rev_sch_idx}
 
-Consider  ${X}$, ${Y}$ encoded sets and ${d,l: \Nats^n \Alg \Nats^n}$. Assume that ${d,l \in \Gamma_{\textnormal{poly}}^n}$ as functions, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$ and ${l(d(K))=K}$. Then, for any  ${S: X \xrightarrow{\Gamma d} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${d(l(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
+Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta: \Nats^n \Alg \Nats^m}$. Assume that ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$ as functions, ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$ and ${\beta(\alpha(L))=L}$. Then, for any  ${S: X \xrightarrow{\Gamma \alpha} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${\alpha(\beta(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
 
 \begin{align}
-\A_{\tilde{S}}(K)&=\A_S(l(K)) \\
-\R_{\tilde{S}}^K(z)&=\R_S^{l(K)}(z) \\
-\tilde{S}^K(x,y,z)&=S^{l(K)}(x,y,z)
+\A_{\tilde{S}}(K)&=\A_S(\beta(K)) \\
+\R_{\tilde{S}}^K(z)&=\R_S^{\beta(K)}(z) \\
+\tilde{S}^K(x,y,z)&=S^{\beta(K)}(x,y,z)
 \end{align}
 
 \end{proposition}
@@ -2486,7 +2495,7 @@ Consider  ${X}$, ${Y}$ encoded sets and ${d,l: \Nats^n \Alg \Nats^n}$. Assume th
 
 \begin{proof}
 
-There is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t. ${\R_S(K) \leq \gamma_{\mathfrak{R}}(d(K))}$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(K)} \leq \gamma_{\mathfrak{A}}(d(K))}$. In particular, if ${K \in \Nats^n}$ is s.t. ${d(l(K))=K}$ then ${\R_S(l(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(l(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
+There is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t. ${\R_S(L) \leq \gamma_{\mathfrak{R}}(\alpha(L))}$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(L)} \leq \gamma_{\mathfrak{A}}(\alpha(L))}$. In particular, if ${K \in \Nats^n}$ is s.t. ${\alpha(\beta(K))=K}$ then ${\R_S(\beta(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(\beta(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
 %
 \end{proof}
 
@@ -2494,28 +2503,28 @@ There is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t. ${\R_S(K) \leq \gamma_{\mathf
 \begin{proposition}
 \label{prp:idx_reduce_sharp}
 
-Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\ESG}$-optimal predictor for ${(\mu,f)}$ and ${d,l: \Nats^n \Alg \Nats^n}$. Assume that ${d,l \in \Gamma_{\textnormal{poly}}^n}$ as functions, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$ and ${l(d(K))=K}$. Then, ${P^d}$ is an ${\Fall d^\sharp(\Gamma d)}$-optimal predictor for ${(\mu^d,f)}$.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${n}$, ${P}$ an ${\ESG}$-optimal predictor for ${(\mu,f)}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta: \Nats^n \Alg \Nats^m}$. Assume that ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$ as functions, ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$ and ${\beta(\alpha(L))=L}$. Then, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\mu^\alpha,f)}$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Consider any ${S: \Words \times \Rats \xrightarrow{\Gamma d} \Rats}$ bounded. Construct ${\tilde{S}: \Words \times \Rats \Scheme \Rats}$ by applying Proposition~\ref{prp:rev_sch_idx} to ${S}$. There is ${\varepsilon \in \Fall}$ s.t. for any ${K \in \Nats^n}$
+Consider any ${S: \Words \times \Rats \xrightarrow{\Gamma \alpha} \Rats}$ bounded. Construct ${\tilde{S}: \Words \times \Rats \Scheme \Rats}$ by applying Proposition~\ref{prp:rev_sch_idx} to ${S}$. There is ${\varepsilon \in \Fall}$ s.t. for any ${K \in \Nats^n}$
 
 \[\Abs{\E_{\mu^{K} \times \Un_P^K \times \Un_{\tilde{S}}^K}[(P^K(x,y) - f(x))\tilde{S}^K(x,P^K(x,y),z)]}=\varepsilon(K)\]
 
-Substituting ${d(K)}$ for ${K}$, we get
+Substituting ${\alpha(L)}$ for ${K}$, we get
 
-\[\Abs{\E_{\mu^{d(K)} \times \Un_P^{d(K)} \times \Un_{\tilde{S}}^{d(K)}}[(P^{d(K)}(x,y) - f(x))\tilde{S}^{d(K)}(x,P^{d(K)}(x,y),z)]}=\varepsilon(d(K))\]
+\[\Abs{\E_{\mu^{\alpha(L)} \times \Un_P^{\alpha(L)} \times \Un_{\tilde{S}}^{\alpha(L)}}[(P^{\alpha(L)}(x,y) - f(x))\tilde{S}^{\alpha(L)}(x,P^{\alpha(L)}(x,y),z)]}=\varepsilon(\alpha(L))\]
 
-\[\Abs{\E_{(\mu^d)^{K} \times \Un_{P^d}^{K} \times \Un_{\tilde{S}}^{d(K)}}[((P^d)^{K}(x,y) - f(x))\tilde{S}^{d(K)}(x,(P^d)^{K}(x,y),z)]}=\varepsilon(d(K))\]
+\[\Abs{\E_{(\mu^\alpha)^{L} \times \Un_{P^\alpha}^{L} \times \Un_{\tilde{S}}^{\alpha(L)}}[((P^\alpha)^{L}(x,y) - f(x))\tilde{S}^{\alpha(L)}(x,(P^\alpha)^{L}(x,y),z)]}=\varepsilon(\alpha(L))\]
 
-We have ${d(l(d(K))=d(K)}$, therefore
+We have ${\alpha(\beta(\alpha(L))=\alpha(L)}$, therefore
 
-\[\Abs{\E_{(\mu^d)^{K} \times \Un_{P^d}^{K} \times \Un_{S}^{l(d(K))}}[((P^d)^{K}(x,y) - f(x))S^{l(d(K))}(x,(P^d)^{K}(x,y),z)]}=\varepsilon(d(K))\]
+\[\Abs{\E_{(\mu^\alpha)^{L} \times \Un_{P^\alpha}^{L} \times \Un_{S}^{\beta(\alpha(L))}}[((P^\alpha)^{L}(x,y) - f(x))S^{\beta(\alpha(L))}(x,(P^\alpha)^{L}(x,y),z)]}=\varepsilon(\alpha(L))\]
 
-\[\Abs{\E_{(\mu^d)^{K} \times \Un_{P^d}^{K} \times \Un_{S}^{K}}[((P^d)^{K}(x,y) - f(x))S^{K}(x,(P^d)^{K}(x,y),z)]}=\varepsilon(d(K))\]
+\[\Abs{\E_{(\mu^\alpha)^{L} \times \Un_{P^\alpha}^{L} \times \Un_{S}^{L}}[((P^\alpha)^{L}(x,y) - f(x))S^{L}(x,(P^\alpha)^{L}(x,y),z)]}=\varepsilon(\alpha(L))\]
 %
 \end{proof}
 
@@ -2523,28 +2532,28 @@ We have ${d(l(d(K))=d(K)}$, therefore
 \begin{proposition}
 \label{prp:idx_reduce}
 
-Consider $(\mu,f)$ a distributional estimation problem, ${P}$ an ${\EG}$-optimal predictor for ${(\mu,f)}$ and ${d,l: \Nats^n \Alg \Nats^n}$. Assume that ${d,l \in \Gamma_{\textnormal{poly}}^n}$ as functions, ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$ and ${l(d(K))=K}$. Then, ${P^d}$ is an ${\Fall d(\Gamma d)}$-optimal predictor for ${(\mu^d,f)}$.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${n}$, ${P}$ an ${\EG}$-optimal predictor for ${(\mu,f)}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta: \Nats^n \Alg \Nats^m}$. Assume that ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$ as functions, ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$ and ${\beta(\alpha(L))=L}$. Then, ${P^\alpha}$ is an ${\Fall \alpha(\Gamma \alpha)}$-optimal predictor for ${(\mu^\alpha,f)}$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Consider any ${Q: \Words \xrightarrow{\Gamma d} \Rats}$ bounded. Construct ${\tilde{Q}: \Words \Scheme \Rats}$ by applying Proposition~\ref{prp:rev_sch_idx} to ${Q}$. There is ${\varepsilon \in \Fall}$ s.t.
+Consider any ${Q: \Words \xrightarrow{\Gamma \alpha} \Rats}$ bounded. Construct ${\tilde{Q}: \Words \Scheme \Rats}$ by applying Proposition~\ref{prp:rev_sch_idx} to ${Q}$. There is ${\varepsilon \in \Fall}$ s.t.
 
 \[\E_{\mu^{K} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \E_{\mu^{K} \times \Un_{\tilde{Q}}^K}[(\tilde{Q}^K(x,y)-f(x))^2] + \varepsilon(K)\]
 
-Substituting ${d(K)}$ for ${K}$, we get
+Substituting ${\alpha(L)}$ for ${K}$, we get
 
-\[\E_{\mu^{d(K)} \times \Un_P^{d(K)}}[(P^{d(K)}(x,y)-f(x))^2] \leq \E_{\mu^{d(K)} \times \Un_{\tilde{Q}}^{d(K)}}[(\tilde{Q}^{d(K)}(x,y)-f(x))^2] + \varepsilon({d(K)})\]
+\[\E_{\mu^{\alpha(L)} \times \Un_P^{\alpha(L)}}[(P^{\alpha(L)}(x,y)-f(x))^2] \leq \E_{\mu^{\alpha(L)} \times \Un_{\tilde{Q}}^{\alpha(K)}}[(\tilde{Q}^{\alpha(L)}(x,y)-f(x))^2] + \varepsilon({\alpha(L)})\]
 
-\[\E_{(\mu^d)^{K} \times \Un_{P^d}^K}[((P^d)^K(x,y)-f(x))^2] \leq \E_{(\mu^d)^{K} \times \Un_{\tilde{Q}}^{d(K)}}[(\tilde{Q}^{d(K)}(x,y)-f(x))^2] + \varepsilon(d(K))\]
+\[\E_{(\mu^\alpha)^{L} \times \Un_{P^\alpha}^L}[((P^\alpha)^L(x,y)-f(x))^2] \leq \E_{(\mu^\alpha)^{L} \times \Un_{\tilde{Q}}^{\alpha(L)}}[(\tilde{Q}^{\alpha(L)}(x,y)-f(x))^2] + \varepsilon(\alpha(L))\]
 
-We have ${d(l(d(K))=d(K)}$, therefore
+We have ${\alpha(\beta(\alpha(L))=\alpha(L)}$, therefore
 
-\[\E_{(\mu^d)^{K} \times \Un_{P^d}^K}[((P^d)^K(x,y)-f(x))^2] \leq \E_{(\mu^d)^{K} \times \Un_Q^{l(d(K))}}[(Q^{l(d(K))}(x,y)-f(x))^2] + \varepsilon(d(K))\]
+\[\E_{(\mu^\alpha)^{L} \times \Un_{P^\alpha}^L}[((P^\alpha)^L(x,y)-f(x))^2] \leq \E_{(\mu^\alpha)^{L} \times \Un_Q^{\beta(\alpha(L))}}[(Q^{\beta(\alpha(L))}(x,y)-f(x))^2] + \varepsilon(\alpha(L))\]
 
-\[\E_{(\mu^d)^{K} \times \Un_{P^d}^K}[((P^d)^K(x,y)-f(x))^2] \leq \E_{(\mu^d)^{K} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2] + \varepsilon(d(K))\]
+\[\E_{(\mu^\alpha)^{L} \times \Un_{P^\alpha}^L}[((P^\alpha)^L(x,y)-f(x))^2] \leq \E_{(\mu^\alpha)^{L} \times \Un_Q^L}[(Q^L(x,y)-f(x))^2] + \varepsilon(\alpha(L))\]
 %
 \end{proof}
 
@@ -2554,17 +2563,17 @@ We now consider compositions of reductions of different types.
 \begin{definition}
 \label{def:pp_reduce}
 
-Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, ${d: \Nats^n \Alg \Nats^n}$ and\\ ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{degree ${d}$ precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$} when there is ${l: \Nats^n \Alg \Nats^n}$ s.t.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
 
 \begin{enumerate}[(i)]
 
-\item\label{con:def__pp_reduce__pol_deg} As functions, ${d,l \in \Gamma_{\textnormal{poly}}^n}$
+\item\label{con:def__pp_reduce__pol_deg} As functions, ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$.
 
-\item\label{con:def__pp_reduce__eff_deg} ${\T_d, \T_l \in \Gamma_{\textnormal{poly}}^n}$
+\item\label{con:def__pp_reduce__eff_deg} ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$
 
-\item\label{con:def__pp_reduce__inv_deg} $\forall K \in \Nats^n: l(d(K))=K$
+\item\label{con:def__pp_reduce__inv_deg} $\forall L \in \Nats^m: \beta(\alpha(L))=L$
 
-\item\label{con:def__pp_reduce__dist} ${(\pi_*\mu)^d}$ is ${\EG}$-dominated by ${\nu}$.
+\item\label{con:def__pp_reduce__dist} ${\pi_*\mu}$ is ${\EG}$-dominated by ${\nu^\alpha}$.
 
 \item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
 
@@ -2579,19 +2588,19 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, ${d: \Nats^n \
 \begin{corollary}
 %\label{crl:tbd}
 
-Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, ${d: \Nats^n \Alg \Nats^n}$ and $\pi$ a degree ${d}$ precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$. Suppose $P$ is an $\ESG$-optimal predictor for $(\nu, g)$. Then, $(P \circ \pi)^d$ is an $\Fall d^\sharp (\Gamma d)$-optimal predictor for $(\mu, f)$.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose $P$ is an $\ESG$-optimal predictor for $(\nu, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
 
 \end{corollary}
 \end{samepage}
 
 \begin{proof}
 
-By Corollary~\ref{crl:psp_reduce_sharp} and conditions \ref{con:def__pp_reduce__fun} and \ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, ${P \circ \pi}$ is an ${\ESG}$-optimal predictor for ${(\pi_* \mu, g)}$.   By Proposition~\ref{prp:idx_reduce_sharp} and conditions \ref{con:def__pp_reduce__pol_deg}, \ref{con:def__pp_reduce__eff_deg} and \ref{con:def__pp_reduce__inv_deg} of Definition~\ref{def:pp_reduce}, ${(P \circ \pi)^d}$ is an ${\Fall d^\sharp(\Gamma d)}$-optimal predictor for ${((\pi_* \mu)^d, g)}$. By Proposition~\ref{prp:dom_reduce_sharp} and condition \ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, ${(P \circ \pi)^d}$ is also an ${\ESG}$-optimal predictor for ${(\nu, g)}$.
+By Proposition~\ref{prp:idx_reduce_sharp} and conditions \ref{con:def__pp_reduce__pol_deg}, \ref{con:def__pp_reduce__eff_deg} and \ref{con:def__pp_reduce__inv_deg} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\nu^\alpha, g)}$. By Proposition~\ref{prp:dom_reduce_sharp} and condition \ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is also an ${\ESG}$-optimal predictor for ${(\pi_* \mu, g)}$. By Corollary~\ref{crl:psp_reduce_sharp} and conditions \ref{con:def__pp_reduce__fun} and \ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, ${P^\alpha \circ \pi}$ is an ${\ESG}$-optimal predictor for ${(\mu, f)}$.
 %
 \end{proof}
 
-%When \Gamma is invariant under any appropriate ${d}$, it follows that ${\Gamma d = d}$
-%Often \Fall d = \Fall as well
+%When \Gamma is invariant under any appropriate ${\alpha}$, it follows that ${\Gamma \alpha = \alpha}$
+%Often \Fall \alpha = \Fall as well
 
 TBD
 
