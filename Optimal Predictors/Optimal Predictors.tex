@@ -210,7 +210,7 @@ An \emph{encoded set} is a set $X$ together with an injection ${\En_X: X \righta
 
 \end{definition}
 
-There are standard encodings we implicitly use throughout. $\bm{1}$ denotes an encoded set with 1 element $\bullet$ whose encoding is the empty string. $\Words$ is an encoded set with the trivial encoding ${\En_\Words(x):=x}$. $\Nats$ is an encoded set where $\En_\Nats(n)$ is the binary representation of $n$. $\Rats$ is an encoded set where ${\En_\Rats(\frac{n}{m}):=\Chev{n,m}}$ for an irreducible fraction $\frac{n}{m}$. For any encoded set $X$ and $L \in \textsc{P}$, $\{x \in X \mid \En_X(x) \in L\}$ is an encoded set whose encoding is the restriction of $\En_X$. For $X_0,X_1 \ldots X_{n-1}$ encoded sets, $\prod_{i \in [n]} X_i$ is an encoded set with encoding $\En_{\prod_{i \in [n]} X_i}(x_0,x_1 \ldots x_{n-1}):=\Chev{\En_{X_0}(x_0),\En_{X_1}(x_1) \ldots \En_{X_{n-1}}(x_{n-1})}$. For any $n \in \Nats$ we use the shorthand notation $\En^n:=\En_{(\Words)^n}$.
+There are standard encodings we implicitly use throughout. $\bm{1}$ denotes an encoded set with 1 element $\bullet$ whose encoding is the empty string. $\Words$ is an encoded set with the trivial encoding ${\En_\Words(x):=x}$. $\Nats$ is an encoded set where $\En_\Nats(n)$ is the binary representation of $n$. $\Rats$ is an encoded set where ${\En_\Rats(\frac{n}{m}):=\Chev{n,m}}$ for an irreducible fraction $\frac{n}{m}$. For any encoded set $X$ and $D \in \textsc{P}$, $\{x \in X \mid \En_X(x) \in D\}$ is an encoded set whose encoding is the restriction of $\En_X$. For $X_0,X_1 \ldots X_{n-1}$ encoded sets, $\prod_{i \in [n]} X_i$ is an encoded set with encoding $\En_{\prod_{i \in [n]} X_i}(x_0,x_1 \ldots x_{n-1}):=\Chev{\En_{X_0}(x_0),\En_{X_1}(x_1) \ldots \En_{X_{n-1}}(x_{n-1})}$. For any $n \in \Nats$ we use the shorthand notation $\En^n:=\En_{(\Words)^n}$.
 
 Given $n \in \Nats$, encoded sets $X_0, X_1 \ldots X_{n-1}$ and encoded set $Y$ we use the notation ${A: \prod_{i \in [n]} X_i \Alg Y}$ to mean a Turing machine with $n$ input tapes that halts on every input for which the $i$-th tape is initialized to a value in $\Img \En_X$ and produces an output in $\Img \En_Y$. Given $\{x_i \in X_i\}_{i \in [n]}$ the notation $A(x_0, x_1 \ldots x_{n-1})$ stands for the unique $y \in Y$ s.t. applying $A$ to the input composed of $\En_{X_i}(x_i)$ results in output $\En_Y(y)$. We use different input tapes for different components of the input instead of encoding the $n$-tuple as a single word in order to allow $A$ to process some components of the input in time smaller than the length of other components. This involves abuse of notation since a Cartesian product of encoded sets is naturally an encoded set, but hopefully this won't cause much confusion.
 
@@ -1453,9 +1453,9 @@ Samplable word ensembles can be thought of as those ensembles which can be produ
 \begin{samepage}
 \begin{definition}
 
-A word ensemble $\mu$ is called \emph{$\EMG$-samplable} (resp. \emph{$\EG$-samplable}) when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature ${\bm{1} \rightarrow \Words}$  s.t. $\mu^{K} \equiv L_\bullet^K \pmod \Fall$.
+A word ensemble $\mu$ is called \emph{$\EMG$-samplable} (resp. \emph{$\EG$-samplable}) when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $\sigma$ of signature ${\bm{1} \rightarrow \Words}$  s.t. $\mu^{K} \equiv \sigma_\bullet^K \pmod \Fall$.
 
-In this case, $L$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\mu$}.
+In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\mu$}.
 
 \end{definition}
 \end{samepage}
@@ -1495,14 +1495,14 @@ Consider a word ensemble $\mu$ s.t. for some $l \in \GrowA$
 \mu^{K}(\Bool^{\leq l(K)}) \equiv 1 \pmod \Fall
 \end{equation}
 
-Denote ${I:=\{K \in \Nats^n \mid \mu^{K}(\Bool^{\leq l(K)}) > 0\}}$. Consider ${L: \bm{1} \MScheme \Words}$ s.t. for any ${K \in I}$
+Denote ${I:=\{K \in \Nats^n \mid \mu^{K}(\Bool^{\leq l(K)}) > 0\}}$. Consider ${\sigma: \bm{1} \MScheme \Words}$ s.t. for any ${K \in I}$
 
 \begin{align*}
-\M_L^K&:=\mu^{K} \mid \Bool^{\leq l(K)} \\
-L^K(y,z)&=z
+\M_\sigma^K&:=\mu^{K} \mid \Bool^{\leq l(K)} \\
+\sigma^K(y,z)&=z
 \end{align*}
 
-Then, $L$ is an $\EMG$-sampler of $\mu$. In particular, since such an $L$ can always be constructed, $\mu$ is $\EMG$-samplable.
+Then, $\sigma$ is an $\EMG$-sampler of $\mu$. In particular, since such an $\sigma$ can always be constructed, $\mu$ is $\EMG$-samplable.
 
 \end{proposition}
 \end{samepage}
@@ -1511,29 +1511,29 @@ Then, $L$ is an $\EMG$-sampler of $\mu$. In particular, since such an $L$ can al
 
 $\chi_I \geq \mu^{K}(\Bool^{\leq l(K)})$, $1 - \chi_{I} \leq 1 - \mu^{K}(\Bool^{\leq l(K)})$ and therefore $1 - \chi_I \in \Fall$.
 
-Given $K \in I$, ${L_\bullet^K = \mu^{K} \mid \Bool^{\leq l(K)}}$ and we get
+Given $K \in I$, ${\sigma_\bullet^K = \mu^{K} \mid \Bool^{\leq l(K)}}$ and we get
 
-$$\Dtv(\mu^{K}, L_\bullet^K) = \Dtv(\mu^{K}, \mu^{K} \mid \Bool^{\leq l(K)})$$
+$$\Dtv(\mu^{K}, \sigma_\bullet^K) = \Dtv(\mu^{K}, \mu^{K} \mid \Bool^{\leq l(K)})$$
 
-$$\Dtv(\mu^{K}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K}(x)-(\mu^{K} \mid \WordsLen{\leq l(K)})(x)}$$
+$$\Dtv(\mu^{K}, \sigma_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K}(x)-(\mu^{K} \mid \WordsLen{\leq l(K)})(x)}$$
 
 Denote $\chi^K:=\chi_{\WordsLen{\leq l(K)}}$.
 
-$$\Dtv(\mu^{K}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K}(x)-\frac{\chi^K(x)\mu^{K}(x)}{\mu^{K}(\WordsLen{\leq l(K)})}}$$
+$$\Dtv(\mu^{K}, \sigma_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\mu^{K}(x)-\frac{\chi^K(x)\mu^{K}(x)}{\mu^{K}(\WordsLen{\leq l(K)})}}$$
 
-$$\Dtv(\mu^{K}, L_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \mu^{K}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K}(\Bool^{\leq l(K)})}}$$
+$$\Dtv(\mu^{K}, \sigma_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \mu^{K}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K}(\Bool^{\leq l(K)})}}$$
 
-$$\Dtv(\mu^{K}, L_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K}(\Bool^{\leq l(K)})}}+\sum_{x \in \Bool^{>l(K)}} \mu^{K}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K}(\Bool^{\leq l(K)})}})$$
+$$\Dtv(\mu^{K}, \sigma_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K}(\Bool^{\leq l(K)})}}+\sum_{x \in \Bool^{>l(K)}} \mu^{K}(x) \Abs{1-\frac{\chi^K(x)}{\mu^{K}(\Bool^{\leq l(K)})}})$$
 
-$$\Dtv(\mu^{K}, L_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K}(x)(\frac{1}{\mu^{K}(\Bool^{\leq l(K)})}-1)+\sum_{x \in \Bool^{>l(K)}} \mu^{K}(x))$$
+$$\Dtv(\mu^{K}, \sigma_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \mu^{K}(x)(\frac{1}{\mu^{K}(\Bool^{\leq l(K)})}-1)+\sum_{x \in \Bool^{>l(K)}} \mu^{K}(x))$$
 
-$$\Dtv(\mu^{K}, L_\bullet^K) = \frac{1}{2} (\mu^{K}(\Bool^{\leq l(K)})(\frac{1}{\mu^{K}(\Bool^{\leq l(K)})}-1)+1 - \mu^{K}(\Bool^{\leq l(K)}))$$
+$$\Dtv(\mu^{K}, \sigma_\bullet^K) = \frac{1}{2} (\mu^{K}(\Bool^{\leq l(K)})(\frac{1}{\mu^{K}(\Bool^{\leq l(K)})}-1)+1 - \mu^{K}(\Bool^{\leq l(K)}))$$
 
-$$\Dtv(\mu^{K}, L_\bullet^K) = 1-\mu^{K}(\Bool^{\leq l(K)})$$
+$$\Dtv(\mu^{K}, \sigma_\bullet^K) = 1-\mu^{K}(\Bool^{\leq l(K)})$$
 
 Given arbitrary $K \in \Nats^n$,
 
-$$\Dtv(\mu^{K}, L_\bullet^K) \leq \max(1-\mu^{K}(\Bool^{\leq l(K)}), 1-\chi_I)$$
+$$\Dtv(\mu^{K}, \sigma_\bullet^K) \leq \max(1-\mu^{K}(\Bool^{\leq l(K)}), 1-\chi_I)$$
 \end{proof}
 
 \begin{samepage}
@@ -1562,7 +1562,7 @@ Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$
 G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)
 \end{align*}
 
-Let $L$ be an $\EMG$-sampler of $\mu$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $L_{\bullet}^K=G_{0\bullet}^K$ therefore $G_0$ is also an $\EMG$-sampler of $\mu$.
+Let $\sigma$ be an $\EMG$-sampler of $\mu$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $\sigma_{\bullet}^K=G_{0\bullet}^K$ therefore $G_0$ is also an $\EMG$-sampler of $\mu$.
 
 Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \mu^{K} \cap \Bool^{\leq l(K)}}$, ${f_G^K(x)=\rho^K(f(x))}$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_G^K(x)=0$. Denote 
 
@@ -1583,9 +1583,9 @@ We now introduce the notions of samplability of samplability over a given \enquo
 
 \begin{definition}
 
-Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $L$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\mu^{K}}[\Dtv(\mu \mid (\pi^K)^{-1}(y),L_y^K)] \in \Fall}$.
+Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\mu^{K}}[\Dtv(\mu \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
 
-In this case, $L$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\mu$ relative to $\pi$}.
+In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\mu$ relative to $\pi$}.
 
 \end{definition}
 
@@ -1620,11 +1620,11 @@ The following propositions are basic properties of samplable ensembles and probl
 \begin{proposition}
 \label{prp:smp}
 
-Consider a word ensemble $\mu$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $L$ is an $\EMG$-sampler of $\mu$ relative to $\pi$. Then
+Consider a word ensemble $\mu$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$ and ${h: (\Supp \mu) \times Y \rightarrow \Reals}$ bounded. Suppose $\sigma$ is an $\EMG$-sampler of $\mu$ relative to $\pi$. Then
 
 \begin{equation}
 \label{eqn:prp__smp}
-\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[h(x,y)] \equiv \E_{(y,z) \sim \pi_*^K\mu^{K} \times \UM_L^K}[h(L^K(y,z),y)] \pmod \Fall
+\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[h(x,y)] \equiv \E_{(y,z) \sim \pi_*^K\mu^{K} \times \UM_\sigma^K}[h(\sigma^K(y,z),y)] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1636,17 +1636,17 @@ If we sample $(x,y)$ from $\mu^{K} \ltimes \pi^K$ and then sample $x'$ from ${\m
 
 $$\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[h(x,y)] = \E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\E_{x' \sim \mu_y^K}[h(x',y)]]$$
 
-$$\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]] - \E_{\pi_*^K\mu^{K} \times \UM_L^K}[h(L^K(y,z),y)]$$
+$$\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h(\sigma^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h(\sigma^K(y,z),y)]$$
 
-$$\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\UM_L^K}[h(L^K(y,z),y)]]$$
+$$\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h(\sigma^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\UM_\sigma^K}[h(\sigma^K(y,z),y)]]$$
 
-$$\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_L^K}[h(L^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]]$$
+$$\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h(\sigma^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h(x',y)]-\E_{\sigma_y^K}[h(x',y)]]$$
 
-$$\Abs{\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_L^K}[h(L^K(y,z),y)]} \leq \E_{\mu^{K} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h(x',y)]-\E_{L_y^K}[h(x',y)]}]$$
+$$\Abs{\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h(\sigma^K(y,z),y)]} \leq \E_{\mu^{K} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h(x',y)]-\E_{\sigma_y^K}[h(x',y)]}]$$
 
-$$\Abs{\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_L^K}[h(L^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K} \ltimes \pi^K}[\Dtv(\mu_y^K,L_y^K)]$$
+$$\Abs{\E_{\mu^{K} \ltimes \pi^K}[h(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h(\sigma^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K} \ltimes \pi^K}[\Dtv(\mu_y^K,\sigma_y^K)]$$
 
-Using the defining property of $L$, we get the desired result.
+Using the defining property of $\sigma$, we get the desired result.
 \end{proof}
 
 \begin{proposition}
@@ -1820,7 +1820,7 @@ The following corollary demonstrates one natural scenario in which the condition
 \begin{corollary}
 \label{crl:dir_prod}
 
-Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\ESG$-optimal predictor for $(\mu_2,f_2)$, $L$ is an $\EMG$-sampler for $\mu_1$ and $G$ is an $\EMG$-sampler for $(\mu_2,f_2)$. Define ${\mu^{K}:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal predictor for $(\mu,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Consider $(\mu_1,f_1)$, $(\mu_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal predictor for $(\mu_1,f_1)$, $P_2$ is an $\ESG$-optimal predictor for $(\mu_2,f_2)$, $\sigma$ is an $\EMG$-sampler for $\mu_1$ and $G$ is an $\EMG$-sampler for $(\mu_2,f_2)$. Define ${\mu^{K}:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal predictor for $(\mu,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
@@ -1835,25 +1835,25 @@ In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following proposi
 \begin{proposition}
 \label{prp:thm__mult__cond1}
 
-Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K\mu^{K} \equiv \mu_1^{K} \pmod \Fall$
+Consider $\mu_1$, $\mu_2$ word ensembles and $\sigma_1$, $\sigma_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_{1\bullet}^{K}$, ${x_2 \in \Supp \sigma_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K\mu^{K} \equiv \mu_1^{K} \pmod \Fall$
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-$L_{1\bullet}^{K} \equiv \mu_1^{K} \pmod \Fall$ and $L_{2\bullet}^{K} \equiv \mu_2^{K} \pmod \Fall$.  By Proposition~\ref{prp:prob_cong_dir},
+$\sigma_{1\bullet}^{K} \equiv \mu_1^{K} \pmod \Fall$ and $\sigma_{2\bullet}^{K} \equiv \mu_2^{K} \pmod \Fall$.  By Proposition~\ref{prp:prob_cong_dir},
 
-\[L_{1\bullet}^{K} \times L_{2\bullet}^{K} \equiv \mu_1^{K} \times \mu_2^{K} \pmod \Fall\]
+\[\sigma_{1\bullet}^{K} \times \sigma_{2\bullet}^{K} \equiv \mu_1^{K} \times \mu_2^{K} \pmod \Fall\]
 
-Denote $\mu_L^{K}:=\En_*^2(L_{1\bullet}^{K} \times L_{2\bullet}^{K})$. We get ${\mu_L^{K} \equiv \mu^{K} \pmod \Fall}$ and therefore ${\pi_*^K\mu_L^{K} \equiv \pi_*^K\mu^{K} \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_push}). Obviously $\pi_*^K\mu_L^{K}=L_{1\bullet}^{K}$. We conclude that ${\pi_*^K\mu^{K} \equiv L_{1\bullet}^{K} \pmod \Fall}$ and therefore ${\pi_*^K\mu^{K} \equiv \mu_1 \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_eq}).
+Denote $\mu_\sigma^{K}:=\En_*^2(\sigma_{1\bullet}^{K} \times \sigma_{2\bullet}^{K})$. We get ${\mu_\sigma^{K} \equiv \mu^{K} \pmod \Fall}$ and therefore ${\pi_*^K\mu_\sigma^{K} \equiv \pi_*^K\mu^{K} \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_push}). Obviously $\pi_*^K\mu_\sigma^{K}=\sigma_{1\bullet}^{K}$. We conclude that ${\pi_*^K\mu^{K} \equiv \sigma_{1\bullet}^{K} \pmod \Fall}$ and therefore ${\pi_*^K\mu^{K} \equiv \mu_1 \pmod \Fall}$ (by Proposition~\ref{prp:prob_cong_eq}).
 \end{proof}
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:thm__mult__cond2}
 
-Consider $\mu_1$, $\mu_2$ word ensembles and $L_1$, $L_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp L_{1\bullet}^{K}$, ${x_2 \in \Supp L_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \mu_1 \rightarrow \Reals$ bounded and ${\bar{g}: \Words \rightarrow \Reals}$ its extension by ${0}$, we have 
+Consider $\mu_1$, $\mu_2$ word ensembles and $\sigma_1$, $\sigma_2$ which are $\EMG$-samplers for $\mu_1$ and $\mu_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_{1\bullet}^{K}$, ${x_2 \in \Supp \sigma_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \mu_1 \rightarrow \Reals$ bounded and ${\bar{g}: \Words \rightarrow \Reals}$ its extension by ${0}$, we have 
 
 $$\E_{(x_1,x_2,z) \sim\mu_1^{K} \times \mu_2^{K} \times \Un_\pi^{K}}[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2},z))}] \in \Fall$$
 
@@ -1864,9 +1864,9 @@ $$\E_{(x_1,x_2,z) \sim\mu_1^{K} \times \mu_2^{K} \times \Un_\pi^{K}}[\Abs{g(x_1)
 
 Denote $M:= \sup g - \inf g$.
 
-$$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \leq M \Prb_{ \mu_1^{K} \times \mu_2^{K}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}]$$
+$$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \leq M \Prb_{ \mu_1^{K} \times \mu_2^{K}}[(x_1,x_2) \not\in \Supp \sigma_{1\bullet}^{K} \times \Supp \sigma_{2\bullet}^{K}]$$
 
-$$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \leq M\Prb_{ L_{1\bullet}^{K} \times L_{2\bullet}^{K}}[(x_1,x_2) \not\in \Supp L_{1\bullet}^{K} \times \Supp L_{2\bullet}^{K}] \pmod \Fall$$
+$$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \leq M\Prb_{ \sigma_{1\bullet}^{K} \times \sigma_{2\bullet}^{K}}[(x_1,x_2) \not\in \Supp \sigma_{1\bullet}^{K} \times \Supp \sigma_{2\bullet}^{K}] \pmod \Fall$$
 
 $$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
 \end{proof}
@@ -1874,71 +1874,71 @@ $$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
 \begin{proposition}
 \label{prp:smp_base_change}
 
-Consider word ensembles $\mu_1$ and $\mu_2$ with $\EMG$-samplers $L_1$ and $L_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp L_{1\bullet}^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x_1,x_2},z)=x_1}$. Consider ${L: \Words \MScheme \Words}$ s.t. $\UM_L^{K}=\UM_{L_2}^{K}$ and for any $x \in \Supp L_{1\bullet}^{K}$, ${L^{K}(x,z,w)=\Chev{x,L_2^{K}(z,w)}}$. Then, $L$ is an $\EMG$-sampler of $\mu$ relative to $\pi$. In particular, since such an $L$ can always be constructed, $\mu$ is $\EMG$-samplable relative to $\pi$.
+Consider word ensembles $\mu_1$ and $\mu_2$ with $\EMG$-samplers $\sigma_1$ and $\sigma_2$ respectively. Define ${\mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{1\bullet}^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x_1,x_2},z)=x_1}$. Consider ${\sigma: \Words \MScheme \Words}$ s.t. $\UM_\sigma^{K}=\UM_{\sigma_2}^{K}$ and for any $x \in \Supp \sigma_{1\bullet}^{K}$, ${\sigma^{K}(x,z,w)=\Chev{x,\sigma_2^{K}(z,w)}}$. Then, $\sigma$ is an $\EMG$-sampler of $\mu$ relative to $\pi$. In particular, since such an $\sigma$ can always be constructed, $\mu$ is $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-\[\mu^{K} \equiv \En_*^2(L_{1\bullet}^K \times L_{2\bullet}^K)\pmod \Fall\]
+\[\mu^{K} \equiv \En_*^2(\sigma_{1\bullet}^K \times \sigma_{2\bullet}^K)\pmod \Fall\]
 
-\[\pi_*^K\mu^{K} \equiv \pi_*^K\En_*^2(L_{1\bullet}^K \times L_{2\bullet}^K) \pmod \Fall\] 
+\[\pi_*^K\mu^{K} \equiv \pi_*^K\En_*^2(\sigma_{1\bullet}^K \times \sigma_{2\bullet}^K) \pmod \Fall\] 
 
-\[\pi_*^K\mu^{K} \equiv  L_{1\bullet}^K \pmod \Fall\]
+\[\pi_*^K\mu^{K} \equiv  \sigma_{1\bullet}^K \pmod \Fall\]
 
 Denote $\mu_x^K:=\mu \mid (\pi^K)^{-1}(x)$.
 
-\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\mu_x^K,L_x^K)] \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,\sigma_x^K)] \equiv \E_{x \sim \sigma_{1\bullet}^K}[\Dtv(\mu_x^K,\sigma_x^K)] \pmod \Fall\]
 
-For any $x \in \Supp L_{1\bullet}^{K}$, $\mu_x^K = \En_*^2(\delta_x \times \mu_2^{K})$ and $L_x^K=\En_*^2(\delta_x \times L_{2\bullet}^K)$.
+For any $x \in \Supp \sigma_{1\bullet}^{K}$, $\mu_x^K = \En_*^2(\delta_x \times \mu_2^{K})$ and $\sigma_x^K=\En_*^2(\delta_x \times \sigma_{2\bullet}^K)$.
 
-\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\En_*^2(\delta_x \times \mu_2^{K}),\En_*^2(\delta_x \times L_{2\bullet}^K))] \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,\sigma_x^K)] \equiv \E_{x \sim \sigma_{1\bullet}^K}[\Dtv(\En_*^2(\delta_x \times \mu_2^{K}),\En_*^2(\delta_x \times \sigma_{2\bullet}^K))] \pmod \Fall\]
 
-\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,L_x^K)] \equiv \E_{x \sim L_{1\bullet}^K}[\Dtv(\mu_2^{K},L_{2\bullet}^K)] \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,\sigma_x^K)] \equiv \E_{x \sim \sigma_{1\bullet}^K}[\Dtv(\mu_2^{K},\sigma_{2\bullet}^K)] \pmod \Fall\]
 
-\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,L_x^K)] \equiv \Dtv(\mu_2^{K},L_{2\bullet}^K) \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,\sigma_x^K)] \equiv \Dtv(\mu_2^{K},\sigma_{2\bullet}^K) \pmod \Fall\]
 
-\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,L_x^K)] \equiv 0 \pmod \Fall\]
+\[\E_{x \sim \pi_*^K\mu^{K}}[\Dtv(\mu_x^K,\sigma_x^K)] \equiv 0 \pmod \Fall\]
 \end{proof}
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:thm__mult__cond3}
 
-Consider $\mu_1$ a word ensemble with $\EMG$-sampler $L$ and $(\mu_2, f)$ a distribution estimation problem with $\EMG$-sampler $G$. Define the distributional estimation problem $(\mu,\bar{f})$ by 
+Consider $\mu_1$ a word ensemble with $\EMG$-sampler $\sigma$ and $(\mu_2, f)$ a distribution estimation problem with $\EMG$-sampler $G$. Define the distributional estimation problem $(\mu,\bar{f})$ by 
 
 \begin{align*}
 \mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)\\
 \bar{f}(\Chev{x_1,x_2})=f(x_2)
 \end{align*}
 
-Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp L_\bullet^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\mu,\bar{f})$ is $\EMG$-samplable relative to $\pi$.
+Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_\bullet^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\mu,\bar{f})$ is $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Construct $\bar{G}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{G}}^K=\UM_G^K$ and for any ${x \in \Supp L_\bullet^K}$
+Construct $\bar{G}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{G}}^K=\UM_G^K$ and for any ${x \in \Supp \sigma_\bullet^K}$
 
 \[\bar{G}^K(x,y,z)=(\Chev{x,G^K(y,z,w)_0},G^K(y,z,w)_1)\] 
 
 By Proposition~\ref{prp:smp_base_change}, $\bar{G}_0$ is an $\EMG$-sampler of $\mu$ relative to $\pi$.
 
-\[\mu^{K} \equiv \En_*^2(L_\bullet^K \times G_{0\bullet}^K)\pmod \Fall\]
+\[\mu^{K} \equiv \En_*^2(\sigma_\bullet^K \times G_{0\bullet}^K)\pmod \Fall\]
 
-\[\mu^{K} \ltimes \pi^K \equiv \En_*^2(L_\bullet^K \times G_{0\bullet}^K) \ltimes \pi^K \pmod \Fall\]
+\[\mu^{K} \ltimes \pi^K \equiv \En_*^2(\sigma_\bullet^K \times G_{0\bullet}^K) \ltimes \pi^K \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x,y) \sim \En_*^2(L_\bullet^K \times G_{0\bullet}^K) \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x,y) \sim \En_*^2(\sigma_\bullet^K \times G_{0\bullet}^K) \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim L_\bullet^K \times G_{0\bullet}^K}[\Abs{f_{\bar{G}}^K(\Chev{x_1,x_2},x_1)-\bar{f}(\Chev{x_1,x_2})}] \pmod \Fall\]
+\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times G_{0\bullet}^K}[\Abs{f_{\bar{G}}^K(\Chev{x_1,x_2},x_1)-\bar{f}(\Chev{x_1,x_2})}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim L_\bullet^K \times G_{0\bullet}^K}[\Abs{\E_{\UM_{\bar{G}}^K}[\bar{G}_1^K(x_1) \mid \bar{G}^K(x_1)_0 = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times G_{0\bullet}^K}[\Abs{\E_{\UM_{\bar{G}}^K}[\bar{G}_1^K(x_1) \mid \bar{G}^K(x_1)_0 = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim L_\bullet^K \times G_{0\bullet}^K}[\Abs{\E_{\UM_G^K}[G_1^K \mid \Chev{x_1,G^K} = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times G_{0\bullet}^K}[\Abs{\E_{\UM_G^K}[G_1^K \mid \Chev{x_1,G^K} = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim L_\bullet^K \times G_{0\bullet}^K}[\Abs{\E_{\UM_G^K}[G_1^K \mid G^K = x_2]-f(x_2)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times G_{0\bullet}^K}[\Abs{\E_{\UM_G^K}[G_1^K \mid G^K = x_2]-f(x_2)}] \pmod \Fall\]
 
 \[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{x_2 \sim G_{0\bullet}^K}[\Abs{f_G^K(x_2)-f(x_2)}] \pmod \Fall\]
 
@@ -1951,14 +1951,14 @@ By Proposition~\ref{prp:smp_base_change}, $\bar{G}_0$ is an $\EMG$-sampler of $\
 \begin{proposition}
 \label{prp:thm__mult__op}
 
-Consider word ensemble $\mu_1$  with $\EMG$-sampler $L$ and $(\mu_2,f)$ a distributional estimation problem. Define the distributional estimation problem $(\mu,\bar{f})$ by 
+Consider word ensemble $\mu_1$  with $\EMG$-sampler $\sigma$ and $(\mu_2,f)$ a distributional estimation problem. Define the distributional estimation problem $(\mu,\bar{f})$ by 
 
 \begin{align*}
 \mu^k:=\En_*^2(\mu_1^k \times \mu_2^k)\\
 \bar{f}(\Chev{x_1,x_2})=f(x_2)
 \end{align*}
 
-Suppose $P$ is an $\ESG$-optimal predictor for $(\mu_2,f)$. Let ${\bar{P}: \Words \Scheme \Rats}$ be s.t. $\R_{\bar{P}}=\R_P$ and for any $K \in \Nats^n$, $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Supp \mu_2^K$ and $z \in \Bool^{\R_P(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P^K(x_2,z)$. Then, $\bar{P}$ is an $\ESG$-optimal predictor for $(\mu,\bar{f})$.
+Suppose $P$ is an $\ESG$-optimal predictor for $(\mu_2,f)$. Let ${\bar{P}: \Words \Scheme \Rats}$ be s.t. $\R_{\bar{P}}=\R_P$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_\bullet^K$, $x_2 \in \Supp \mu_2^K$ and $z \in \Bool^{\R_P(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P^K(x_2,z)$. Then, $\bar{P}$ is an $\ESG$-optimal predictor for $(\mu,\bar{f})$.
 
 \end{proposition}
 \end{samepage}
@@ -1975,11 +1975,11 @@ Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote $\Un_{PS}^K:
 
 Applying Proposition~\ref{prp:smp} (with $Y = \bm{1}$) to the right hand side, we get
 
-\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\UM_L^K}[\E_{\mu_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{L^K,x_2}) - f(x_2))S^K(\Chev{L^K,x_2},\bar{P}^K(\Chev{L^K,x_2}))]] \pmod \Fall\]
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\UM_\sigma^K}[\E_{\mu_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{\sigma^K,x_2}) - f(x_2))S^K(\Chev{\sigma^K,x_2},\bar{P}^K(\Chev{\sigma^K,x_2}))]] \pmod \Fall\]
 
-\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\UM_L^K}[\E_{\mu_2^{K} \times \Un_{PS}^K}[(P^K(x_2) - f(x_2))S^K(\Chev{L^K,x_2},P^K(x_2))]] \pmod \Fall\]
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\UM_\sigma^K}[\E_{\mu_2^{K} \times \Un_{PS}^K}[(P^K(x_2) - f(x_2))S^K(\Chev{\sigma^K,x_2},P^K(x_2))]] \pmod \Fall\]
 
-\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\mu_2^{K} \times \Un_{PS}^K \times \UM_L^K}[(P^K(x_2) - f(x_2))S^K(\Chev{L^K,x_2},P^K(x_2))] \pmod \Fall\]
+\[\E_{\mu_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\mu_2^{K} \times \Un_{PS}^K \times \UM_\sigma^K}[(P^K(x_2) - f(x_2))S^K(\Chev{\sigma^K,x_2},P^K(x_2))] \pmod \Fall\]
 
 Using the fact $P$ is an $\ESG$-optimal predictor for $(\mu_2,f)$, we conclude
 
@@ -1991,19 +1991,19 @@ Using the fact $P$ is an $\ESG$-optimal predictor for $(\mu_2,f)$, we conclude
 
 Define $\bar{f}_1, \bar{f}_2: \Supp \mu \rightarrow \Reals$ by $\bar{f}_1(\Chev{x_1,x_2})=f_1(x_1)$, $\bar{f}_2(\Chev{x_1,x_2})=f_2(x_2)$. 
 
-Construct $\pi: \Words \Scheme \Words$ s.t. $\R_\pi \equiv 0$ and for any ${x_1 \in \Supp L_\bullet^K}$ and $x_2 \in \Words$ 
+Construct $\pi: \Words \Scheme \Words$ s.t. $\R_\pi \equiv 0$ and for any ${x_1 \in \Supp \sigma_\bullet^K}$ and $x_2 \in \Words$ 
 
 \[\pi^K(\Chev{x_1,x_2})=x_1\]
 
-This is possible because the runtime of $L^K$ is bounded by a polynomial in $K$ so the length of $L^K$'s output is also bounded by a polynomial in $K$, implying $\pi^K$ only has to read a polynomial size prefix of its input in order to output $x_1$.
+This is possible because the runtime of $\sigma^K$ is bounded by a polynomial in $K$ so the length of $\sigma^K$'s output is also bounded by a polynomial in $K$, implying $\pi^K$ only has to read a polynomial size prefix of its input in order to output $x_1$.
 
-Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp L_\bullet^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\ESG$-optimal predictor for $(\mu,\bar{f}_2)$. 
+Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp \sigma_\bullet^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\ESG$-optimal predictor for $(\mu,\bar{f}_2)$. 
 
 We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\mu_1, f_1)$ plays the role of $(\nu,g)$: condition~\ref{con:thm__mult__dist} holds due to Proposition~\ref{prp:thm__mult__cond1}, condition~\ref{con:thm__mult__fun} holds due to Proposition~\ref{prp:thm__mult__cond2} and condition~\ref{con:thm__mult__smp} holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal predictor for $(\mu, f)$ s.t. ${\R_P=\R_{P_1}+\R_{P_2}}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$ 
 
 \[P^K(x, z_1 z_2) = P_1^K(\pi^K(x),z_1) \bar{P}^K(x,z_2)\]
 
-In particular, for any ${x_1 \in \Supp L_\bullet^K}$ and $x_2 \in \Words$
+In particular, for any ${x_1 \in \Supp \sigma_\bullet^K}$ and $x_2 \in \Words$
 
 \[P^K(\Chev{x_1,x_2}, z_1 z_2)=P_1^K(x_1,z_2)P_2^K(x_2,z_2)\]
 %
@@ -2129,15 +2129,15 @@ Consider $\{F^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \
 
 \begin{proof}[Proof of Theorem \ref{thm:psp_reduce}]
 
-Let ${L}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. Applying Proposition~\ref{prp:mixed_opt} for ${P}$ and ${Q \circ L}$, we get
+Let ${\sigma}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. Applying Proposition~\ref{prp:mixed_opt} for ${P}$ and ${Q \circ \sigma}$, we get
 
-\[\E_{\nu^{K} \times \Un_P^K}[(P^K-g)^2] \leq \E_{\nu^{K} \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - g)^2] \pmod \Fall\]
+\[\E_{\nu^{K} \times \Un_P^K}[(P^K-g)^2] \leq \E_{\nu^{K} \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma)^K - g)^2] \pmod \Fall\]
 
 Using condition~\ref{con:def__psp_reduce__dist} of Definition~\ref{def:psp_reduce}
 
-\[\E_{\pi_*^K\mu^{K} \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K} \times \Un_Q^K \times \UM_L^K}[((Q \circ L)^K - \bar{g})^2] \pmod \Fall\]
+\[\E_{\pi_*^K\mu^{K} \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K} \times \Un_Q^K \times \UM_\sigma^K}[((Q \circ \sigma)^K - \bar{g})^2] \pmod \Fall\]
 
-\[\E_{\pi_*^K\mu^{K} \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K} \times \UM_L^K}[\E_{\Un_Q^K}[((Q \circ L)^K - \bar{g})^2]] \pmod \Fall\]
+\[\E_{\pi_*^K\mu^{K} \times \Un_P^K}[(P^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[\E_{\Un_Q^K}[((Q \circ \sigma)^K - \bar{g})^2]] \pmod \Fall\]
 
 The right hand side has the form of the right hand side in \ref{eqn:prp__smp} enabling us to apply Proposition~\ref{prp:smp} and get
 
@@ -2224,21 +2224,21 @@ Using the construction of $P_f$, the assumption on $\gamma$ and Proposition~\ref
 
 \[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\mu^{K} \times \Un_{PS}^K}[(P_g^K(\pi^K(x,z_i),w_i) - \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
 
-Let $L$ be an $\EMG$-sampler of $\mu$ relative to ${\pi}$. Denote 
+Let $\sigma$ be an $\EMG$-sampler of $\mu$ relative to ${\pi}$. Denote 
 
 \begin{align*}
 \mu_\pi^K &:= \pi_*^K\mu^{K} \\
-\Un_i^K&:=\prod_{j \in [\gamma(K)]} \Un_{P_g}^K \times \prod_{j \in [\gamma(K)] \setminus i} \Un_{\pi}^K \times \Un_S^K \times \UM_L^K 
+\Un_i^K&:=\prod_{j \in [\gamma(K)]} \Un_{P_g}^K \times \prod_{j \in [\gamma(K)] \setminus i} \Un_{\pi}^K \times \Un_S^K \times \UM_\sigma^K 
 \end{align*}
 
 Applying Proposition~\ref{prp:smp} we get
 %Denoting ${y_i:=\pi^K(x,z_i)}$
 
-\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\mu_\pi^K \times \Un_i^K}[(P_g^K(y) - \bar{g}(y))S(L^K(y),\frac{1}{\gamma(K)}(P_g^K(y)+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(L^K(y),z_j))))] \pmod \Fall\]
+\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\mu_\pi^K \times \Un_i^K}[(P_g^K(y) - \bar{g}(y))S(\sigma^K(y),\frac{1}{\gamma(K)}(P_g^K(y)+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(\sigma^K(y),z_j))))] \pmod \Fall\]
 
 Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}, we get
 
-\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\nu^{K} \times \Un_i^K}[(P_g^K - g)S(L^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(L^K,z_j))))] \pmod \Fall\]
+\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\nu^{K} \times \Un_i^K}[(P_g^K - g)S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
 
 $P_g$ is a $\ESG$-optimal predictor for $(\nu,g)$, therefore
 
@@ -2289,12 +2289,12 @@ Consider ${F}$ a bounded random variable and ${s,t \in \Reals}$. Then
 
 \begin{proof}[Proof of Theorem \ref{thm:sp_reduce}]
 
-Let ${L}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q_f: \Words \Scheme \Rats}$ bounded. Construct ${Q_g: \Words \MScheme \Rats}$ s.t. for any ${z_L \in \UM_L^K}$, ${z_Q \in \BoolR{Q_f}}$, ${z_\pi \in \Bool^{\gamma(K) \R_\pi(K)}}$ and ${z_g \in \BoolR{P_g}}$
+Let ${\sigma}$ be an ${\EMG}$-sampler of ${\mu}$ relative to ${\pi}$. Consider any ${Q_f: \Words \Scheme \Rats}$ bounded. Construct ${Q_g: \Words \MScheme \Rats}$ s.t. for any ${z_\sigma \in \UM_\sigma^K}$, ${z_Q \in \BoolR{Q_f}}$, ${z_\pi \in \Bool^{\gamma(K) \R_\pi(K)}}$ and ${z_g \in \BoolR{P_g}}$
 
 \begin{align*}
-\M_{Q_g}^K &= c_*^4(\M_L^K \times \M_{Q_f}^K \times \M_{\pi}^K \times \M_{P_g}^K) \\
-\R_{Q_g}^K(\Chev{z_{L1}, \A_{Q_f}(K),\A_{\pi}(K),\A_{P_g}(K)}) &= \R_L^K(z_{L1}) + \R_{Q_f}(K) + \gamma(K)\R_{\pi}(K) + \R_{P_g}(K) \\
-Q_g^K(x,z_{L0} z_{Q} z_{\pi} z_{g}, \Chev{z_{L1}, \A_{Q_f}(K),\A_{\pi}(K),\A_{P_g}(K)}) &= Q_f^K(L^K(x,z_L),z_{Q})-P_f^K(L^K(x,z_L),z_g z_\pi)+P_g^K(x,z_g)
+\M_{Q_g}^K &= c_*^4(\M_\sigma^K \times \M_{Q_f}^K \times \M_{\pi}^K \times \M_{P_g}^K) \\
+\R_{Q_g}^K(\Chev{z_{\sigma1}, \A_{Q_f}(K),\A_{\pi}(K),\A_{P_g}(K)}) &= \R_\sigma^K(z_{\sigma1}) + \R_{Q_f}(K) + \gamma(K)\R_{\pi}(K) + \R_{P_g}(K) \\
+Q_g^K(x,z_{\sigma0} z_{Q} z_{\pi} z_{g}, \Chev{z_{\sigma1}, \A_{Q_f}(K),\A_{\pi}(K),\A_{P_g}(K)}) &= Q_f^K(\sigma^K(x,z_\sigma),z_{Q})-P_f^K(\sigma^K(x,z_\sigma),z_g z_\pi)+P_g^K(x,z_g)
 \end{align*}
 
 Applying Proposition~\ref{prp:mixed_opt} for ${P_g}$ and ${Q_g}$, we get
@@ -2305,7 +2305,7 @@ Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}
 
 \[\E_{\pi_*^K\mu^{K} \times \Un_{P_g}^K}[(P_g^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K} \times \UM_{Q_g}^K}[(Q_g^K - \bar{g})^2] \pmod \Fall\]
 
-\[\E_{\pi_*^K\mu^{K} \times \Un_{P_g}^K}[(P_g^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K} \times \UM_{Q_g}^K}[((Q_f \circ L)^K - (P_f \circ L)^K + P_g^K - \bar{g})^2] \pmod \Fall\]
+\[\E_{\pi_*^K\mu^{K} \times \Un_{P_g}^K}[(P_g^K-\bar{g})^2] \leq \E_{\pi_*^K\mu^{K} \times \UM_{Q_g}^K}[((Q_f \circ \sigma)^K - (P_f \circ \sigma)^K + P_g^K - \bar{g})^2] \pmod \Fall\]
 
 The right hand side has the form of the right hand side in \ref{eqn:prp__smp} enabling us to apply Proposition~\ref{prp:smp} and get
 
