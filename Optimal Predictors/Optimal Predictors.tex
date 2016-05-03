@@ -2013,6 +2013,7 @@ In particular, for any ${x_1 \in \Supp L_\bullet^K}$ and $x_2 \in \Words$
 \label{sec:reductions}
 
 \subsection{Reductions}
+\label{sub:reductions}
 
 In this subsection we study notions of Karp reduction between distributional estimation problems such that the pull-back of an optimal predictor is an optimal predictor. It is also interesting to study Cook reductions but we avoid it in the present work.
 
@@ -2021,6 +2022,8 @@ First, we demonstrate that the notion of Karp reduction used in average-case com
 Consider the setting of Corollary~\ref{crl:one_way}. Denote $\mu^k:=\Un^{2k}$ and define ${\chi: \Supp \mu \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$, ${\pi_f^k(xy) = \Chev{f(x),y}}$. $\pi_f$ can be regarded as a Karp reduction of $(\mu, \chi)$ to $(\mu_{(f)},\chi_f)$ since for any ${z \in \Supp \mu^k}$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*\mu=\mu_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pull-back of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal predictor for $(\mu,\chi)$ since its error is $\E_{z \sim \mu^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \mu^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \mu^k}[(Q^k(z)-\chi(z))^2]=0$.
 
 We will describe several types of reductions that preserve optimal predictors. After that, we will characterize reductions that can be constructed by composing those types.
+
+\subsubsection{Pseudo-invertibility}
 
 \begin{samepage}
 \begin{definition}
@@ -2328,6 +2331,8 @@ Denote $y_i:=\pi^K(x,z_i)$ where the ${z_i}$ are sampled independently from ${\U
 %
 \end{proof}
 
+\subsubsection{Dominance}
+
 Next, we consider a scenario in which the identity mapping can be regarded as a valid reduction between distributional estimation problems that have the same function but different word ensembles.
 
 \begin{samepage}
@@ -2402,7 +2407,9 @@ Using the assumption on ${W}$
 %
 \end{proof}
 
-Finally, we consider another scenario in which the identity mapping is a valid reduction. This scenario is a simple re-indexing of the word ensemble. For the remainder of subsection, we fix some ${m \in \Nats}$.
+\subsubsection{Pullbacks}
+
+Finally, we consider another scenario in which the identity mapping is a valid reduction. This scenario is a simple re-indexing of the word ensemble. For the remainder of subsection~\ref{sub:reductions}, we fix some ${m \in \Nats}$.
 
 \begin{samepage}
 \begin{definition}
@@ -2464,7 +2471,7 @@ Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. T
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${\mu}$ a word ensemble of rank ${n}$ and ${\alpha: \Nats^m \rightarrow \Nats^n}$. We denote ${\mu^\alpha}$ the word ensemble of rank ${m}$ defined by ${(\mu^\alpha)^k:=\mu^{\alpha(k)}}$.
+Consider ${\mu}$ a word ensemble of rank ${n}$ and ${\alpha: \Nats^m \rightarrow \Nats^n}$. The \emph{pullback of ${\mu}$ by ${\alpha}$}, denoted ${\mu^\alpha}$, is the word ensemble of rank ${m}$ given by ${(\mu^\alpha)^k:=\mu^{\alpha(k)}}$.
 
 \end{definition}
 \end{samepage}
@@ -2557,7 +2564,11 @@ We have ${\alpha(\beta(\alpha(L))=\alpha(L)}$, therefore
 %
 \end{proof}
 
+\subsubsection{Composite Reductions}
+
 We now consider compositions of reductions of different types.
+
+%BLAH
 
 \begin{samepage}
 \begin{definition}
@@ -2660,8 +2671,6 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 \end{samepage}
 
 Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\Fall \alpha}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\Fall \alpha \subseteq \Fall}$ and ${\Gamma \alpha = \Gamma}$ so an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor (resp. ${\Fall \alpha(\Gamma \alpha)}$-optimal predictor) is in particular an ${\ESG}$-optimal predictor (resp. ${\EG}$-optimal predictor).
-
-TBD
 
 \subsection{Completeness}
 
