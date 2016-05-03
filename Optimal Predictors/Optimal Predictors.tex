@@ -2656,7 +2656,9 @@ The following corollaries are completely analogous to Corollary~\ref{crl:pp_redu
 \begin{corollary}
 %\label{crl:tbd}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exists an $\ESG$-optimal predictor for $(\nu, g)$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exists an $\ESG$-optimal predictor for $(\nu, g)$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$???
+
+% Conditions on \gamma
 
 \end{corollary}
 \end{samepage}
@@ -2665,7 +2667,9 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 \begin{corollary}
 %\label{crl:tbd}
 
-Assume ${\Fall}$ is ${\GrowA}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exists an $\EG$-optimal predictor for $(\nu, g)$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+Assume ${\Fall}$ is ${\GrowA}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exists an $\EG$-optimal predictor for $(\nu, g)$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$???
+
+% Conditions on \gamma
 
 \end{corollary}
 \end{samepage}
@@ -2673,6 +2677,39 @@ Assume ${\Fall}$ is ${\GrowA}$-ample. Consider $(\mu,f)$ a distributional estima
 Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\Fall \alpha}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\Fall \alpha \subseteq \Fall}$ and ${\Gamma \alpha = \Gamma}$ so an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor (resp. ${\Fall \alpha(\Gamma \alpha)}$-optimal predictor) is in particular an ${\ESG}$-optimal predictor (resp. ${\EG}$-optimal predictor).
 
 \subsection{Completeness}
+
+In this subsection we show that in any class of problems which has a complete problem in the sense of worst-case complexity, there is a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\EG}$-reductions for this class paired with ${\EG}$-samplable word ensembles. In particular, ${\ESG}$-optimal predictors (resp. ${\EG}$-optimal predictors) exist for all problems in the latter class iff one exists for the complete problem.
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+A \emph{word family of rank ${n}$} is a family ${M}$ of sets ${\{M^K \subseteq \Words\}_{K \in \Nats^n}}$.
+
+We will use the notation ${\Supp M := \bigcup_{K \in \Nats^n} M^K}$.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+A \emph{worst-case estimation problem of rank ${n}$} is a pair ${(M,f)}$ where ${M}$ is a word family of rank ${n}$ and ${f: \Supp M \rightarrow \Reals}$ is bounded.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+% worst-case reductions...
+
+\end{definition}
+\end{samepage}
+
+% Don't forget to fix the last two corollaries in 3.1!
 
 TBD
 
