@@ -2573,7 +2573,7 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 
 \item\label{con:def__pp_reduce__inv_deg} $\forall L \in \Nats^m: \beta(\alpha(L))=L$
 
-\item\label{con:def__pp_reduce__dist} ${\pi_*\mu}$ is ${\EG}$-dominated by ${\nu^\alpha}$.
+\item\label{con:def__pp_reduce__dist} ${\pi_*\mu}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\nu^\alpha}$.
 
 \item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
 
@@ -2586,7 +2586,7 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 
 \begin{samepage}
 \begin{corollary}
-%\label{crl:tbd}
+\label{crl:pp_reduce_sharp}
 
 Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose $P$ is an $\ESG$-optimal predictor for $(\nu, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
 
@@ -2595,12 +2595,71 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 
 \begin{proof}
 
-By Proposition~\ref{prp:idx_reduce_sharp} and conditions \ref{con:def__pp_reduce__pol_deg}, \ref{con:def__pp_reduce__eff_deg} and \ref{con:def__pp_reduce__inv_deg} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\nu^\alpha, g)}$. By Proposition~\ref{prp:dom_reduce_sharp} and condition \ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is also an ${\ESG}$-optimal predictor for ${(\pi_* \mu, g)}$. By Corollary~\ref{crl:psp_reduce_sharp} and conditions \ref{con:def__pp_reduce__fun} and \ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, ${P^\alpha \circ \pi}$ is an ${\ESG}$-optimal predictor for ${(\mu, f)}$.
+By Proposition~\ref{prp:idx_reduce_sharp} and conditions \ref{con:def__pp_reduce__pol_deg}, \ref{con:def__pp_reduce__eff_deg} and \ref{con:def__pp_reduce__inv_deg} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\nu^\alpha, g)}$. By Proposition~\ref{prp:dom_reduce_sharp} and condition \ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is also an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\pi_* \mu, g)}$. By Corollary~\ref{crl:psp_reduce_sharp} and conditions \ref{con:def__pp_reduce__fun} and \ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, ${P^\alpha \circ \pi}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\mu, f)}$.
 %
 \end{proof}
 
-%When \Gamma is invariant under any appropriate ${\alpha}$, it follows that ${\Gamma \alpha = \alpha}$
-%Often \Fall \alpha = \Fall as well
+\begin{samepage}
+\begin{corollary}
+%\label{crl:tbd}
+
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose $P$ is an $\EG$-optimal predictor for $(\nu, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+
+\end{corollary}
+\end{samepage}
+
+\begin{proof}
+
+Completely analogous to proof of Corollary~\ref{crl:pp_reduce_sharp}.
+%
+\end{proof}
+
+\begin{samepage}
+\begin{definition}
+\label{def:p_reduce}
+
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
+
+\begin{enumerate}[(i)]
+
+\item\label{con:def__p_reduce__pol_deg} As functions, ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$.
+
+\item\label{con:def__p_reduce__eff_deg} ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$
+
+\item\label{con:def__p_reduce__inv_deg} $\forall L \in \Nats^m: \beta(\alpha(L))=L$
+
+\item\label{con:def__p_reduce__dist} ${\pi_*\mu}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\nu^\alpha}$.
+
+\item\label{con:def__p_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
+
+\item\label{con:def__p_reduce__smp} $\mu$ is $\EMG$-samplable relative to $\pi$.
+
+\end{enumerate}
+
+\end{definition}
+\end{samepage}
+
+The following corollaries are completely analogous to Corollary~\ref{crl:pp_reduce_sharp} and therefore given without proof. We also drop the explicit constructions of the optimal predictors which are obviously modeled on Theorem~\ref{thm:sp_reduce_sharp} and Theorem~\ref{thm:sp_reduce}.
+
+\begin{samepage}
+\begin{corollary}
+%\label{crl:tbd}
+
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exists an $\ESG$-optimal predictor for $(\nu, g)$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+
+\end{corollary}
+\end{samepage}
+
+\begin{samepage}
+\begin{corollary}
+%\label{crl:tbd}
+
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exists an $\EG$-optimal predictor for $(\nu, g)$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+
+\end{corollary}
+\end{samepage}
+
+Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\Fall \alpha}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\Fall \alpha \subseteq \Fall}$ and ${\Gamma \alpha = \Gamma}$ so an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor (resp. ${\Fall \alpha(\Gamma \alpha)}$-optimal predictor) is in particular an ${\ESG}$-optimal predictor (resp. ${\EG}$-optimal predictor).
 
 TBD
 
