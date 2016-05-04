@@ -2715,9 +2715,9 @@ We start by fixing a notation for worst-case complexity of function approximatio
 \begin{definition}
 %\label{def:tbd}
 
-A \emph{word family of rank ${n}$} is a family ${M}$ of sets ${\{M^K \subseteq \Words\}_{K \in \Nats^n}}$.
+A \emph{word family of rank ${n}$} is a family ${D}$ of sets ${\{D^K \subseteq \Words\}_{K \in \Nats^n}}$.
 
-We will use the notation ${\Supp M := \bigcup_{K \in \Nats^n} M^K}$.
+We will use the notation ${\Supp D := \bigcup_{K \in \Nats^n} D^K}$.
 
 \end{definition}
 \end{samepage}
@@ -2726,7 +2726,7 @@ We will use the notation ${\Supp M := \bigcup_{K \in \Nats^n} M^K}$.
 \begin{definition}
 %\label{def:tbd}
 
-A \emph{worst-case estimation problem of rank ${n}$} is a pair ${(M,f)}$ where ${M}$ is a word family of rank ${n}$ and ${f: \Supp M \rightarrow \Reals}$ is bounded.
+A \emph{worst-case estimation problem of rank ${n}$} is a pair ${(D,f)}$ where ${D}$ is a word family of rank ${n}$ and ${f: \Supp D \rightarrow \Reals}$ is bounded.
 
 \end{definition}
 \end{samepage}
@@ -2737,7 +2737,12 @@ In the following, all word families and worst-case estimation problems will be o
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${(M,f)}$ a worst-case estimation problem. ${A: \Words \Scheme \Rats}$ is said to be an \emph{${\EG}$-solution to ${(M,f)}$} when...
+Consider ${(D,f)}$ a worst-case estimation problem. ${A: \Words \Scheme \Rats}$ is said to be an \emph{${\EG}$-solution to ${(D,f)}$} when it is bounded and
+
+\begin{equation}
+%\label{eqn:tbd}
+\sup_{x \in D^K} \E_{y \sim \Un_A^K}[(A^K(x,y)-f(x))^2] \in \Fall
+\end{equation}
 
 \end{definition}
 \end{samepage}
@@ -2746,9 +2751,13 @@ Consider ${(M,f)}$ a worst-case estimation problem. ${A: \Words \Scheme \Rats}$ 
 \begin{definition}
 %\label{def:tbd}
 
-Consider $(M,f)$, $(N,g)$ worst-case estimation problems and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise $\EG$-reduction of $(M,f)$ to $(N,g)$} when there is ${\alpha: \Nats^n \Alg \Nats^n}$ s.t.
+${\alpha: \Nats^n \Alg \Nats^n}$ is said to be an \emph{${\EG}$-re-indexing} when
 
 \begin{enumerate}[(i)]
+
+\item\label{con:def__wc_reduce__pol_deg} As a function, ${\alpha \in \Gamma_{\textnormal{poly}}^{nn}}$.
+
+\item\label{con:def__wc_reduce__eff_deg} ${\T_\alpha \in \Gamma_{\textnormal{poly}}^n}$
 
 \item $\Fall \alpha \subseteq \Fall$
 
@@ -2756,13 +2765,22 @@ Consider $(M,f)$, $(N,g)$ worst-case estimation problems and ${\pi: \Words \Sche
 
 \item $\GrowA \alpha \subseteq \GrowA \alpha$
 
-\item\label{con:def__wc_reduce__pol_deg} As a function, ${\alpha \in \Gamma_{\textnormal{poly}}^{nn}}$.
+\end{enumerate}
 
-\item\label{con:def__wc_reduce__eff_deg} ${\T_\alpha \in \Gamma_{\textnormal{poly}}^n}$
+\end{definition}
+\end{samepage}
 
-\item\label{con:def__wc_reduce__dist} $\sup_{x \in M^K} \Prb_{z \sim \Un_\pi^{K}}[\pi^K(x,z) \not\in N^{\alpha(K)}] \in \Fall$
+\begin{samepage}
+\begin{definition}
+\label{def:wc_reduce}
 
-\item\label{con:def__wc_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\sup_{x \in M^K} \E_{z \sim \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall\]
+Consider $(D,f)$, $(E,g)$ worst-case estimation problems, ${\alpha}$ an ${\EG}$-re-indexing and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise $\EG$-reduction of $(D,f)$ to $(E,g)$ over ${\alpha}$} when
+
+\begin{enumerate}[(i)]
+
+\item\label{con:def__wc_reduce__fam} $\sup_{x \in D^K} \Prb_{z \sim \Un_\pi^{K}}[\pi^K(x,z) \not\in E^{\alpha(K)}] \in \Fall$
+
+\item\label{con:def__wc_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\sup_{x \in D^K} \E_{z \sim \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall\]
 
 \end{enumerate}
 
@@ -2775,14 +2793,39 @@ This definition is motivated by the following.
 \begin{proposition}
 \label{prp:tbd}
 
-Consider $(M,f)$, $(N,g)$ worst-case estimation problems and $\pi$ a precise $\EG$-reduction of $(M,f)$ to $(N,g)$.
+Consider $(D,f)$, $(E,g)$ worst-case estimation problems, ${\alpha}$ an ${\EG}$-re-indexing and $\pi$ a precise $\EG$-reduction of $(D,f)$ to $(E,g)$ over ${\alpha}$. Suppose ${A}$ is an ${\EG}$-solution to ${(E,g)}$. Then, ${A^\alpha \circ \pi}$ is an ${\EG}$-solution to ${(D,f)}$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-FOO
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] = \sup_{x \in D^K} \E_{\Un_A^{\alpha(K)} \times \Un_\pi^K}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)) + g(\pi^K(x))-f(x)))^2]\]
+
+For some ${M \in \Reals^{>0}}$,
+
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} (\E_{\Un_A^{\alpha(K)} \times \Un_\pi^K}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)) )^2] + M\E_{\Un_\pi^K}[\Abs{g(\pi^K(x)) -f(x)}])\]
+
+By condition~\ref{con:def__wc_reduce__fun} of Definition~\ref{def:wc_reduce}
+
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} \E_{\Un_A^{\alpha(K)} \times \Un_\pi^K}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)))^2] \pmod \Fall\]
+
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} \E_{\Un_\pi^K}[\E_{\Un_A^{\alpha(K)}}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)))^2]] \pmod \Fall\]
+
+Denoting ${\lambda^K(x,z):=\E_{y \sim \Un_A^{\alpha(K)}}[(A^{\alpha(K)}(\pi^K(x,z),y)-g(\pi^K(x,z)))^2}]$
+
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} \E_{\Un_\pi^K}[\lambda^K] \pmod \Fall\]
+
+\[\sup_{D^K} \E[((A^\alpha \circ \pi^K) - f)^2] \leq \sup_{D^K} (\Prb[\pi^K \in E^{\alpha(K)}] \E[\lambda^K \mid \pi^K \in E^{\alpha(K)}] + \Prb[\pi^K \not\in E^{\alpha(K)}] \E[\lambda^K \mid \pi^K \not\in E^{\alpha(K)}]) \pmod \Fall\]
+
+${A}$ is an ${\EG}$-solution for ${(E,g)}$, therefore there is ${\varepsilon \in \Fall}$ s.t. ${\pi^K(x,z) \in E^{\alpha(K)}}$ implies\\ $\lambda^K(x,z) \leq \varepsilon(K)$.
+
+\[\sup_{D^K} \E[((A^\alpha \circ \pi^K) - f)^2] \leq \sup_{D^K} \Prb[\pi^K \not\in E^{\alpha(K)}] \E[\lambda^K \mid \pi^K \not\in E^{\alpha(K)}] \pmod \Fall\]
+
+Using condition~\ref{con:def__wc_reduce__fam} of Definition~\ref{def:wc_reduce}, we get
+
+\[\sup_{D^K} \E[((A^\alpha \circ \pi^K) - f)^2] \equiv 0 \pmod \Fall\]
+
 %
 \end{proof}
 
