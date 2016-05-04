@@ -2489,7 +2489,7 @@ Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${\alpha: \Nats^m \Al
 \begin{proposition}
 \label{prp:rev_sch_idx}
 
-Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta: \Nats^n \Alg \Nats^m}$. Assume that ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$ as functions, ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$ and ${\beta(\alpha(L))=L}$. Then, for any  ${S: X \xrightarrow{\Gamma \alpha} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${\alpha(\beta(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
+Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$. Assume that ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$ and ${\beta(\alpha(L))=L}$. Then, for any  ${S: X \xrightarrow{\Gamma \alpha} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${\alpha(\beta(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
 
 \begin{align}
 \A_{\tilde{S}}(K)&=\A_S(\beta(K)) \\
@@ -2502,7 +2502,9 @@ Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\bet
 
 \begin{proof}
 
-There is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t. ${\R_S(L) \leq \gamma_{\mathfrak{R}}(\alpha(L))}$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(L)} \leq \gamma_{\mathfrak{A}}(\alpha(L))}$. In particular, if ${K \in \Nats^n}$ is s.t. ${\alpha(\beta(K))=K}$ then ${\R_S(\beta(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(\beta(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
+To see there is no obstruction of time complexity, note that ${\beta}$ can be computed by some\\ ${\beta^*: \Nats^n \Alg \Nats^m}$ s.t. ${\T_{\beta^*} \in \Gamma_{\text{poly}}^n}$. Given input ${K}$, ${\beta^*}$ works by iterating over all ${L}$ within some polynomial size range (thanks to the assumption ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$) and checking the condition ${\alpha(L)=K}$.
+
+To see there are no obstructions of random and advice complexity, note there is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t. ${\R_S(L) \leq \gamma_{\mathfrak{R}}(\alpha(L))}$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(L)} \leq \gamma_{\mathfrak{A}}(\alpha(L))}$. In particular, if ${K \in \Nats^n}$ is s.t. ${\alpha(\beta(K))=K}$ then ${\R_S(\beta(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(\beta(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
 %
 \end{proof}
 
@@ -2574,7 +2576,7 @@ We now consider compositions of reductions of different types.
 \begin{definition}
 \label{def:pp_reduce}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -2629,7 +2631,7 @@ Completely analogous to proof of Corollary~\ref{crl:pp_reduce_sharp}.
 \begin{definition}
 \label{def:p_reduce}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -2708,7 +2710,7 @@ Completely analogous to Proposition~\ref{prp:stable_growth_space}.
 
 \subsection{Completeness}
 
-In this subsection we show that in any class of problems which has a complete problem in the sense of worst-case complexity, there is a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\EG}$-reductions for this class paired with ${\EG}$-samplable word ensembles. In particular, ${\ESG}$-optimal predictors (resp. ${\EG}$-optimal predictors) exist for all problems in the latter class iff one exists for the complete problem.
+In this subsection we show that in any class of problems which has a complete problem in the sense of worst-case complexity, there is a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\EG}$-reductions for this class paired with ${\EG}$-samplable word ensembles. In particular, ${\ESG}$-optimal predictors (or, assuming ${\Fall}$ is ${\GrowA}$-ample, ${\EG}$-optimal predictors) exist for all problems in the latter class iff one exists for the complete problem.
 
 \begin{samepage}
 \begin{definition}
@@ -2730,18 +2732,34 @@ A \emph{worst-case estimation problem of rank ${n}$} is a pair ${(M,f)}$ where $
 \end{definition}
 \end{samepage}
 
+In the following, all word families and worst-case estimation problems will be of rank ${n}$ unless specified otherwise.
+
 \begin{samepage}
 \begin{definition}
 %\label{def:tbd}
 
-% worst-case reductions...
+Consider $(M,f)$, $(N,g)$ worst-case estimation problems and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise $\EG$-reduction of $(M,f)$ to $(N,g)$} when there is ${\alpha: \Nats^n \Alg \Nats^n}$ s.t.
+
+\begin{enumerate}[(i)]
+
+\item $\Fall \alpha \subseteq \Fall$
+
+\item $\GrowR \alpha \subseteq \GrowR \alpha$
+
+\item $\GrowA \alpha \subseteq \GrowA \alpha$
+
+\item\label{con:def__wc_reduce__pol_deg} As a function, ${\alpha \in \Gamma_{\textnormal{poly}}^{nn}}$.
+
+\item\label{con:def__wc_reduce__eff_deg} ${\T_\alpha \in \Gamma_{\textnormal{poly}}^n}$
+
+\item\label{con:def__wc_reduce__dist} $\sup_{x \in M^K} \Prb_{z \sim \Un_\pi^{K}}[\pi^K(x,z) \not\in N^{\alpha(K)}] \in \Fall$
+
+\item\label{con:def__wc_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\sup_{x \in M^K} \E_{z \sim \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall\]
+
+\end{enumerate}
 
 \end{definition}
 \end{samepage}
-
-% Don't forget to fix the last two corollaries in 3.1!
-
-TBD
 
 \section{Existence and Uniqueness}
 \label{sec:e_and_u}
