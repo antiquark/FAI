@@ -2489,7 +2489,7 @@ Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${\alpha: \Nats^m \Al
 \begin{proposition}
 \label{prp:rev_sch_idx}
 
-Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$. Assume that ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$ and ${\beta(\alpha(L))=L}$. Then, for any  ${S: X \xrightarrow{\Gamma \alpha} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${\alpha(\beta(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
+Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$. Assume that ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$ and ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$. Then, for any  ${S: X \xrightarrow{\Gamma \alpha} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${\alpha(\beta(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
 
 \begin{align}
 \A_{\tilde{S}}(K)&=\A_S(\beta(K)) \\
@@ -2504,15 +2504,24 @@ Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\bet
 
 To see there is no obstruction of time complexity, note that ${\beta}$ can be computed by some\\ ${\beta^*: \Nats^n \Alg \Nats^m}$ s.t. ${\T_{\beta^*} \in \Gamma_{\text{poly}}^n}$. Given input ${K}$, ${\beta^*}$ works by iterating over all ${L}$ within some polynomial size range (thanks to the assumption ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$) and checking the condition ${\alpha(L)=K}$.
 
-To see there are no obstructions of random and advice complexity, note there is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t. ${\R_S(L) \leq \gamma_{\mathfrak{R}}(\alpha(L))}$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(L)} \leq \gamma_{\mathfrak{A}}(\alpha(L))}$. In particular, if ${K \in \Nats^n}$ is s.t. ${\alpha(\beta(K))=K}$ then ${\R_S(\beta(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(\beta(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
+To see there are no obstructions of random or advice complexity, note there is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t.\\ $\R_S(L) \leq \gamma_{\mathfrak{R}}(\alpha(L))$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(L)} \leq \gamma_{\mathfrak{A}}(\alpha(L))}$. In particular, if ${K \in \Nats^n}$ is s.t. ${\alpha(\beta(K))=K}$ then ${\R_S(\beta(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(\beta(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
 %
 \end{proof}
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+${\alpha: \Nats^m \Alg \Nats^n}$ is called an \emph{efficient injection} when ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ as a function, ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$ and there is ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$ s.t. ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$.
+
+\end{definition}
+\end{samepage}
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:idx_reduce_sharp}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${n}$, ${P}$ an ${\ESG}$-optimal predictor for ${(\mu,f)}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta: \Nats^n \Alg \Nats^m}$. Assume that ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$ as functions, ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$ and ${\beta(\alpha(L))=L}$. Then, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\mu^\alpha,f)}$.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${n}$, ${P}$ an ${\ESG}$-optimal predictor for ${(\mu,f)}$ and ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection. Then, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\mu^\alpha,f)}$.
 
 \end{proposition}
 \end{samepage}
@@ -2541,7 +2550,7 @@ We have ${\alpha(\beta(\alpha(L))=\alpha(L)}$, therefore
 \begin{proposition}
 \label{prp:idx_reduce}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${n}$, ${P}$ an ${\EG}$-optimal predictor for ${(\mu,f)}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta: \Nats^n \Alg \Nats^m}$. Assume that ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$ as functions, ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$ and ${\beta(\alpha(L))=L}$. Then, ${P^\alpha}$ is an ${\Fall \alpha(\Gamma \alpha)}$-optimal predictor for ${(\mu^\alpha,f)}$.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${n}$, ${P}$ an ${\EG}$-optimal predictor for ${(\mu,f)}$ and ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection. Then, ${P^\alpha}$ is an ${\Fall \alpha(\Gamma \alpha)}$-optimal predictor for ${(\mu^\alpha,f)}$.
 
 \end{proposition}
 \end{samepage}
@@ -2576,15 +2585,9 @@ We now consider compositions of reductions of different types.
 \begin{definition}
 \label{def:pp_reduce}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when
 
 \begin{enumerate}[(i)]
-
-\item\label{con:def__pp_reduce__pol_deg} As functions, ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$.
-
-\item\label{con:def__pp_reduce__eff_deg} ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$
-
-\item\label{con:def__pp_reduce__inv_deg} $\forall L \in \Nats^m: \beta(\alpha(L))=L$
 
 \item\label{con:def__pp_reduce__dist} ${\pi_*\mu}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\nu^\alpha}$.
 
@@ -2601,14 +2604,14 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 \begin{corollary}
 \label{crl:pp_reduce_sharp}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose $P$ is an $\ESG$-optimal predictor for $(\nu, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose $P$ is an $\ESG$-optimal predictor for $(\nu, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
 
 \end{corollary}
 \end{samepage}
 
 \begin{proof}
 
-By Proposition~\ref{prp:idx_reduce_sharp} and conditions \ref{con:def__pp_reduce__pol_deg}, \ref{con:def__pp_reduce__eff_deg} and \ref{con:def__pp_reduce__inv_deg} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\nu^\alpha, g)}$. By Proposition~\ref{prp:dom_reduce_sharp} and condition \ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is also an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\pi_* \mu, g)}$. By Corollary~\ref{crl:psp_reduce_sharp} and conditions \ref{con:def__pp_reduce__fun} and \ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, ${P^\alpha \circ \pi}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\mu, f)}$.
+By Proposition~\ref{prp:idx_reduce_sharp}, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\nu^\alpha, g)}$. By Proposition~\ref{prp:dom_reduce_sharp} and condition \ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is also an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\pi_* \mu, g)}$. By Corollary~\ref{crl:psp_reduce_sharp} and conditions \ref{con:def__pp_reduce__fun} and \ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, ${P^\alpha \circ \pi}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor for ${(\mu, f)}$.
 %
 \end{proof}
 
@@ -2616,7 +2619,7 @@ By Proposition~\ref{prp:idx_reduce_sharp} and conditions \ref{con:def__pp_reduce
 \begin{corollary}
 %\label{crl:tbd}
 
-Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose $P$ is an $\EG$-optimal predictor for $(\nu, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose $P$ is an $\EG$-optimal predictor for $(\nu, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
 
 \end{corollary}
 \end{samepage}
@@ -2631,15 +2634,9 @@ Completely analogous to proof of Corollary~\ref{crl:pp_reduce_sharp}.
 \begin{definition}
 \label{def:p_reduce}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when
 
 \begin{enumerate}[(i)]
-
-\item\label{con:def__p_reduce__pol_deg} As functions, ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$.
-
-\item\label{con:def__p_reduce__eff_deg} ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$, ${\T_\beta \in \Gamma_{\textnormal{poly}}^n}$
-
-\item\label{con:def__p_reduce__inv_deg} $\forall L \in \Nats^m: \beta(\alpha(L))=L$
 
 \item\label{con:def__p_reduce__dist} ${\pi_*\mu}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\nu^\alpha}$.
 
@@ -2658,7 +2655,7 @@ The following corollaries are completely analogous to Corollary~\ref{crl:pp_redu
 \begin{corollary}
 %\label{crl:tbd}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\ESG$-optimal predictor for $(\nu, g)$ and ${\gamma \in \Gamma_{\textnormal{poly}}^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\ESG$-optimal predictor for $(\nu, g)$ and ${\gamma \in \Gamma_{\textnormal{poly}}^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
 
 % Conditions on \gamma
 
@@ -2669,7 +2666,7 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 \begin{corollary}
 %\label{crl:tbd}
 
-Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\EG$-optimal predictor for $(\nu, g)$ and ${\gamma \in \Gamma_{\textnormal{poly}}^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\EG$-optimal predictor for $(\nu, g)$ and ${\gamma \in \Gamma_{\textnormal{poly}}^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
 
 % Conditions on \gamma
 
