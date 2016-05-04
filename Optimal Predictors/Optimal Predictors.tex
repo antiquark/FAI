@@ -2019,11 +2019,11 @@ In this subsection we study notions of Karp reduction between distributional est
 
 First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose. 
 
-Consider the setting of Corollary~\ref{crl:one_way}. Denote $\mu^k:=\Un^{2k}$ and define ${\chi: \Supp \mu \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$, ${\pi_f^k(xy) = \Chev{f(x),y}}$. $\pi_f$ can be regarded as a Karp reduction of $(\mu, \chi)$ to $(\mu_{(f)},\chi_f)$ since for any ${z \in \Supp \mu^k}$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*\mu=\mu_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pull-back of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal predictor for $(\mu,\chi)$ since its error is $\E_{z \sim \mu^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \mu^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \mu^k}[(Q^k(z)-\chi(z))^2]=0$.
+Consider the setting of Corollary~\ref{crl:one_way}. Denote $\mu^k:=\Un^{2k}$ and define ${\chi: \Supp \mu \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$, ${\pi_f^k(xy) = \Chev{f(x),y}}$. $\pi_f$ can be regarded as a Karp reduction of $(\mu, \chi)$ to $(\mu_{(f)},\chi_f)$ since for any ${z \in \Supp \mu^k}$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*\mu=\mu_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pullback of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal predictor for $(\mu,\chi)$ since its error is $\E_{z \sim \mu^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \mu^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \mu^k}[(Q^k(z)-\chi(z))^2]=0$.
 
 We will describe several types of reductions that preserve optimal predictors. After that, we will characterize reductions that can be constructed by composing those types.
 
-\subsubsection{Pseudo-invertibility}
+\subsubsection{Strict Pseudo-Invertible Reductions}
 
 \begin{samepage}
 \begin{definition}
@@ -2407,7 +2407,7 @@ Using the assumption on ${W}$
 %
 \end{proof}
 
-\subsubsection{Pullbacks}
+\subsubsection{Ensemble Pullbacks}
 
 Finally, we consider another scenario in which the identity mapping is a valid reduction. This scenario is a simple re-indexing of the word ensemble. For the remainder of subsection~\ref{sub:reductions}, we fix some ${m \in \Nats}$.
 
@@ -2564,7 +2564,7 @@ We have ${\alpha(\beta(\alpha(L))=\alpha(L)}$, therefore
 %
 \end{proof}
 
-\subsubsection{Lax Pseudo-invertible Reductions}
+\subsubsection{Lax Pseudo-Invertible Reductions}
 
 We now consider compositions of reductions of different types.
 
@@ -2574,7 +2574,7 @@ We now consider compositions of reductions of different types.
 \begin{definition}
 \label{def:pp_reduce}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -2586,9 +2586,9 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 
 \item\label{con:def__pp_reduce__dist} ${\pi_*\mu}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\nu^\alpha}$.
 
-\item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
+\item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall \alpha$
 
-\item\label{con:def__pp_reduce__smp} $\mu$ is $\EMG$-samplable relative to $\pi$.
+\item\label{con:def__pp_reduce__smp} $\mu$ is $\Fall(\MGrow \alpha)$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2614,7 +2614,7 @@ By Proposition~\ref{prp:idx_reduce_sharp} and conditions \ref{con:def__pp_reduce
 \begin{corollary}
 %\label{crl:tbd}
 
-Assume ${\Fall}$ is ${\GrowA}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose $P$ is an $\EG$-optimal predictor for $(\nu, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
+Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose $P$ is an $\EG$-optimal predictor for $(\nu, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
 
 \end{corollary}
 \end{samepage}
@@ -2629,7 +2629,7 @@ Completely analogous to proof of Corollary~\ref{crl:pp_reduce_sharp}.
 \begin{definition}
 \label{def:p_reduce}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\nu,g)$ over ${\alpha}$} when there is ${\beta: \Nats^n \Alg \Nats^m}$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -2641,9 +2641,9 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 
 \item\label{con:def__p_reduce__dist} ${\pi_*\mu}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\nu^\alpha}$.
 
-\item\label{con:def__p_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
+\item\label{con:def__p_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\E_{(x,z) \sim \mu^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall \alpha\]
 
-\item\label{con:def__p_reduce__smp} $\mu$ is $\EMG$-samplable relative to $\pi$.
+\item\label{con:def__p_reduce__smp} $\mu$ is $\Fall(\MGrow \alpha)$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2656,7 +2656,7 @@ The following corollaries are completely analogous to Corollary~\ref{crl:pp_redu
 \begin{corollary}
 %\label{crl:tbd}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exists an $\ESG$-optimal predictor for $(\nu, g)$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$???
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\ESG$-optimal predictor for $(\nu, g)$ and ${\gamma \in \Gamma_{\textnormal{poly}}^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
 
 % Conditions on \gamma
 
@@ -2667,14 +2667,44 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 \begin{corollary}
 %\label{crl:tbd}
 
-Assume ${\Fall}$ is ${\GrowA}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exists an $\EG$-optimal predictor for $(\nu, g)$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$???
+Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\EG$-optimal predictor for $(\nu, g)$ and ${\gamma \in \Gamma_{\textnormal{poly}}^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal predictor for $(\mu, f)$.
 
 % Conditions on \gamma
 
 \end{corollary}
 \end{samepage}
 
-Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\Fall \alpha}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\Fall \alpha \subseteq \Fall}$ and ${\Gamma \alpha = \Gamma}$ so an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal predictor (resp. ${\Fall \alpha(\Gamma \alpha)}$-optimal predictor) is in particular an ${\ESG}$-optimal predictor (resp. ${\EG}$-optimal predictor).
+Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\Fall \alpha}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\Fall \alpha = \Fall}$ and ${\Gamma \alpha = \Gamma}$. In particular, we have the following:
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:stable_growth_space}
+
+Assume ${\Gamma_*}$ is a growth space of rank ${n}$ s.t. for any ${\gamma \in \Gamma_*}$ and ${\alpha \in \Gamma_{\textnormal{poly}}^{nn}}$, ${\gamma \circ \alpha \in \Gamma_*}$. Let ${\alpha^*, \beta^* \in \Gamma_{\textnormal{poly}}^{nn}}$ be s.t. ${\beta^*(\alpha^*(K))=K}$. Then, ${\Gamma_* \alpha^* = \Gamma_*}$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+For any ${\gamma_\alpha \in \Gamma_* \alpha^*}$ there is ${\gamma \in \Gamma_*}$ s.t. ${\gamma_\alpha \leq \gamma \circ \alpha \in \Gamma_*}$. Conversely, for any ${\gamma \in \Gamma_*}$ we have ${\gamma = \gamma \circ \beta \circ \alpha \in \Gamma_* \alpha^*}$.
+%
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Assume that for any ${\varepsilon \in \Fall}$ and ${\alpha \in \Gamma_{\textnormal{poly}}^{nn}}$, ${\varepsilon \circ \alpha \in \Gamma_*}$. Let ${\alpha^*, \beta^* \in \Gamma_{\textnormal{poly}}^{nn}}$ be s.t. ${\beta^*(\alpha^*(K))=K}$. Then, ${\Fall \alpha^* = \Fall}$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Completely analogous to Proposition~\ref{prp:stable_growth_space}.
+%
+\end{proof}
 
 \subsection{Completeness}
 
