@@ -1,0 +1,256 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+\usepackage{bm}
+
+\numberwithin{equation}{section}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+%\newtheorem{conjecture}{Conjecture}[section]
+
+%\theoremstyle{remark}
+%\newtheorem{note}{Note}[section]
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+\newcommand{\WordsLen}[1]{{\Bool^{#1}}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Var}{Var}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+
+% special symbols that are not really operators
+\DeclareMathOperator{\T}{T}
+\DeclareMathOperator{\R}{r}
+\DeclareMathOperator{\A}{a}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\UM}{UM}
+\DeclareMathOperator{\Un}{U}
+\DeclareMathOperator{\En}{c}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\GrowR}{\Gamma_{\mathfrak{R}}}
+\newcommand{\GrowA}{\Gamma_{\mathfrak{A}}}
+\newcommand{\Grow}{\Gamma:=(\GrowR,\GrowA)}
+\newcommand{\MGrow}{\mathrm{M}\Gamma}
+\newcommand{\Fall}{\mathcal{E}}
+\newcommand{\EG}{\Fall(\Gamma)}
+\newcommand{\ESG}{\Fall^\sharp(\Gamma)}
+\newcommand{\EMG}{\Fall(\MGrow)}
+\newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
+\newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+\newcommand{\Scheme}{\xrightarrow{\Gamma}}
+\newcommand{\MScheme}{\xrightarrow{\MGrow}}
+\usepackage[normalem]{ulem}
+
+\begin{document}
+
+\section{TBD}
+
+In this subsection we show that in any class of problems which has a complete problem in the sense of worst-case complexity, there is a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\EG}$-reductions for this class paired with ${\EG}$-samplable word ensembles. In particular, ${\ESG}$-optimal estimators (or, assuming ${\Fall}$ is ${\GrowA}$-ample, ${\EG}$-optimal estimators) exist for all problems in the latter class iff one exists for the complete problem.
+
+We start by fixing a notation for worst-case complexity of function approximation which is naturally compatible with the notation of distributional estimation problems.
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+A \emph{word family of rank ${n}$} is a family ${D}$ of sets ${\{D^K \subseteq \Words\}_{K \in \Nats^n}}$.
+
+We will use the notation ${\Supp D := \bigcup_{K \in \Nats^n} D^K}$.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+A \emph{worst-case estimation problem of rank ${n}$} is a pair ${(D,f)}$ where ${D}$ is a word family of rank ${n}$ and ${f: \Supp D \rightarrow \Reals}$ is bounded.
+
+\end{definition}
+\end{samepage}
+
+In the following, all word families and worst-case estimation problems will be of rank ${n}$ unless specified otherwise.
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+Consider ${(D,f)}$ a worst-case estimation problem. ${A: \Words \Scheme \Rats}$ is said to be an \emph{${\EG}$-solution to ${(D,f)}$} when it is bounded and
+
+\begin{equation}
+%\label{eqn:tbd}
+\sup_{x \in D^K} \E_{y \sim \Un_A^K}[(A^K(x,y)-f(x))^2] \in \Fall
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+${\alpha: \Nats^n \Alg \Nats^n}$ is said to be an \emph{${\EG}$-re-indexing} when
+
+\begin{enumerate}[(i)]
+
+\item\label{con:def__wc_reduce__pol_deg} As a function, ${\alpha \in \Gamma_{\textnormal{poly}}^{nn}}$.
+
+\item\label{con:def__wc_reduce__eff_deg} ${\T_\alpha \in \Gamma_{\textnormal{poly}}^n}$
+
+\item $\Fall \alpha \subseteq \Fall$
+
+\item $\GrowR \alpha \subseteq \GrowR \alpha$
+
+\item $\GrowA \alpha \subseteq \GrowA \alpha$
+
+\end{enumerate}
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+\label{def:wc_reduce}
+
+Consider $(D,f)$, $(E,g)$ worst-case estimation problems, ${\alpha}$ an ${\EG}$-re-indexing and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise $\EG$-reduction of $(D,f)$ to $(E,g)$ over ${\alpha}$} when
+
+\begin{enumerate}[(i)]
+
+\item\label{con:def__wc_reduce__fam} $\sup_{x \in D^K} \Prb_{z \sim \Un_\pi^{K}}[\pi^K(x,z) \not\in E^{\alpha(K)}] \in \Fall$
+
+\item\label{con:def__wc_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\sup_{x \in D^K} \E_{z \sim \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall\]
+
+\end{enumerate}
+
+\end{definition}
+\end{samepage}
+
+This definition is motivated by the following.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Consider $(D,f)$, $(E,g)$ worst-case estimation problems, ${\alpha}$ an ${\EG}$-re-indexing and $\pi$ a precise $\EG$-reduction of $(D,f)$ to $(E,g)$ over ${\alpha}$. Suppose ${A}$ is an ${\EG}$-solution to ${(E,g)}$. Then, ${A^\alpha \circ \pi}$ is an ${\EG}$-solution to ${(D,f)}$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] = \sup_{x \in D^K} \E_{\Un_A^{\alpha(K)} \times \Un_\pi^K}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)) + g(\pi^K(x))-f(x)))^2]\]
+
+For some ${M \in \Reals^{>0}}$,
+
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} (\E_{\Un_A^{\alpha(K)} \times \Un_\pi^K}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)) )^2] + M\E_{\Un_\pi^K}[\Abs{g(\pi^K(x)) -f(x)}])\]
+
+By condition~\ref{con:def__wc_reduce__fun} of Definition~\ref{def:wc_reduce}
+
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} \E_{\Un_A^{\alpha(K)} \times \Un_\pi^K}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)))^2] \pmod \Fall\]
+
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} \E_{\Un_\pi^K}[\E_{\Un_A^{\alpha(K)}}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)))^2]] \pmod \Fall\]
+
+Denoting ${\lambda^K(x,z):=\E_{y \sim \Un_A^{\alpha(K)}}[(A^{\alpha(K)}(\pi^K(x,z),y)-g(\pi^K(x,z)))^2}]$
+
+\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} \E_{\Un_\pi^K}[\lambda^K] \pmod \Fall\]
+
+\[\sup_{D^K} \E[((A^\alpha \circ \pi^K) - f)^2] \leq \sup_{D^K} (\Prb[\pi^K \in E^{\alpha(K)}] \E[\lambda^K \mid \pi^K \in E^{\alpha(K)}] + \Prb[\pi^K \not\in E^{\alpha(K)}] \E[\lambda^K \mid \pi^K \not\in E^{\alpha(K)}]) \pmod \Fall\]
+
+${A}$ is an ${\EG}$-solution for ${(E,g)}$, therefore there is ${\varepsilon \in \Fall}$ s.t. ${\pi^K(x,z) \in E^{\alpha(K)}}$ implies\\ $\lambda^K(x,z) \leq \varepsilon(K)$.
+
+\[\sup_{D^K} \E[((A^\alpha \circ \pi^K) - f)^2] \leq \sup_{D^K} \Prb[\pi^K \not\in E^{\alpha(K)}] \E[\lambda^K \mid \pi^K \not\in E^{\alpha(K)}] \pmod \Fall\]
+
+Using condition~\ref{con:def__wc_reduce__fam} of Definition~\ref{def:wc_reduce}, we get
+
+\[\sup_{D^K} \E[((A^\alpha \circ \pi^K) - f)^2] \equiv 0 \pmod \Fall\]
+
+%
+\end{proof}
+
+We are now ready to formulate the completeness theorem.
+
+\begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+Given a word ensemble ${\mu}$, the notation ${\Supp \mu^*}$ will refer to the word family defined by ${(\Supp \mu^*)^K:=\Supp \mu^K}$.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{theorem}
+%\label{thm:tbd}
+
+Let $\mathsf{C}$ be a set of worst-case estimation problems. Suppose there is $(D_{\mathsf{C}},f_{\mathsf{C}}) \in \mathsf{C}$ s.t. for any $(D,f) \in \mathsf{C}$ there is a precise $\EG$-reduction of $(D,f)$ to $(D_{\mathsf{C}},f_{\mathsf{C}})$ over some $\EG$-re-indexing. Then, there is an $\EG$-samplable word ensemble $\mu_{\mathsf{C}}$ and $\bar{f}_{\mathsf{C}}: \Supp \mu_{\mathsf{C}} \rightarrow \Reals$ bounded s.t. ${(\Supp \mu_{\mathsf{C}}^*, \bar{f}_{\mathsf{C}}) \in \mathsf{C}}$ and for any $\EG$-samplable word ensemble $\mu$ and $f: \Supp \mu \rightarrow \Reals$ bounded, if ${(\Supp \mu^*, f) \in \mathsf{C}}$ then there is a precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\mu_{\mathsf{C}},\bar{f}_{\mathsf{C}})$ over some $\EG$-re-indexing.
+
+\end{theorem}
+\end{samepage}
+
+\begin{proof}
+
+FOO
+%
+\end{proof}
+
+\end{document}
+
+

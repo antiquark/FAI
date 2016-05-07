@@ -49,6 +49,7 @@
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\End}{End}
 \DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Ev}{ev}
 
 % special symbols that are not really operators
 \DeclareMathOperator{\T}{T}
@@ -216,7 +217,7 @@ Given $n \in \Nats$, encoded sets $X_0, X_1 \ldots X_{n-1}$ and encoded set $Y$ 
 
 Given $A: X \Alg Y$ and $x \in X$, $\T_A(x)$ stands for the number of time steps in the computation of $A(x)$.
 
-For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing machine with $n+1$ input tapes: 1 program tape and $n$ tapes that serve as input to the program. Given $A: \prod_{i \in [n]} X_i \Alg\ Y$, $\Quote{A} \in \Words$ denotes the corresponding program for $\mathcal{U}_n$.
+For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing machine with $n+1$ input tapes: 1 program tape and $n$ tapes that serve as input to the program. Given ${n,k \in \Nats}$, ${a \in \Words}$ and ${\{x_i \in \Words\}_{i \in [n]}}$, ${\Ev^k(a;x_0,x_1 \ldots x_{n-1})}$ stands for the output of ${\mathcal{U}_n}$ when executed for ${k}$ time steps on program ${a}$ (continued by an infinite sequence of 0s) and inputs ${\{x_i \in \Words\}_{i \in [n]}}$. Given $A: \prod_{i \in [n]} X_i \Alg\ Y$, $\Quote{A} \in \Words$ denotes the corresponding program for $\mathcal{U}_n$. In particular, whenever ${t \geq \T_A(x_0,x_1 \ldots x_{n-1})}$, we have ${\Ev^t(\Quote{A};\En_{X_0}(x_0),\En_{X_1}(x_1) \ldots \En_{X_{n-1}}(x_{n-1}))=\En_Y(A(x_0,x_1 \ldots x_{n-1}))}$.
 
 \section{Fundamentals}
 \label{sec:fundamentals}
@@ -2707,135 +2708,13 @@ Completely analogous to Proposition~\ref{prp:stable_growth_space}.
 
 \subsection{Completeness}
 
-In this subsection we show that in any class of problems which has a complete problem in the sense of worst-case complexity, there is a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\EG}$-reductions for this class paired with ${\EG}$-samplable word ensembles. In particular, ${\ESG}$-optimal estimators (or, assuming ${\Fall}$ is ${\GrowA}$-ample, ${\EG}$-optimal estimators) exist for all problems in the latter class iff one exists for the complete problem.
-
-We start by fixing a notation for worst-case complexity of function approximation which is naturally compatible with the notation of distributional estimation problems.
+In this subsection we show that certain classes of functions paired with ${\EG}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\EG}$-reductions. In particular, ${\ESG}$-optimal estimators (or, assuming ${\Fall}$ is ${\GrowA}$-ample, ${\EG}$-optimal estimators) exist for all problems in this class iff one exists for the complete problem.
 
 \begin{samepage}
 \begin{definition}
 %\label{def:tbd}
 
-A \emph{word family of rank ${n}$} is a family ${D}$ of sets ${\{D^K \subseteq \Words\}_{K \in \Nats^n}}$.
-
-We will use the notation ${\Supp D := \bigcup_{K \in \Nats^n} D^K}$.
-
-\end{definition}
-\end{samepage}
-
-\begin{samepage}
-\begin{definition}
-%\label{def:tbd}
-
-A \emph{worst-case estimation problem of rank ${n}$} is a pair ${(D,f)}$ where ${D}$ is a word family of rank ${n}$ and ${f: \Supp D \rightarrow \Reals}$ is bounded.
-
-\end{definition}
-\end{samepage}
-
-In the following, all word families and worst-case estimation problems will be of rank ${n}$ unless specified otherwise.
-
-\begin{samepage}
-\begin{definition}
-%\label{def:tbd}
-
-Consider ${(D,f)}$ a worst-case estimation problem. ${A: \Words \Scheme \Rats}$ is said to be an \emph{${\EG}$-solution to ${(D,f)}$} when it is bounded and
-
-\begin{equation}
-%\label{eqn:tbd}
-\sup_{x \in D^K} \E_{y \sim \Un_A^K}[(A^K(x,y)-f(x))^2] \in \Fall
-\end{equation}
-
-\end{definition}
-\end{samepage}
-
-\begin{samepage}
-\begin{definition}
-%\label{def:tbd}
-
-${\alpha: \Nats^n \Alg \Nats^n}$ is said to be an \emph{${\EG}$-re-indexing} when
-
-\begin{enumerate}[(i)]
-
-\item\label{con:def__wc_reduce__pol_deg} As a function, ${\alpha \in \Gamma_{\textnormal{poly}}^{nn}}$.
-
-\item\label{con:def__wc_reduce__eff_deg} ${\T_\alpha \in \Gamma_{\textnormal{poly}}^n}$
-
-\item $\Fall \alpha \subseteq \Fall$
-
-\item $\GrowR \alpha \subseteq \GrowR \alpha$
-
-\item $\GrowA \alpha \subseteq \GrowA \alpha$
-
-\end{enumerate}
-
-\end{definition}
-\end{samepage}
-
-\begin{samepage}
-\begin{definition}
-\label{def:wc_reduce}
-
-Consider $(D,f)$, $(E,g)$ worst-case estimation problems, ${\alpha}$ an ${\EG}$-re-indexing and ${\pi: \Words \Scheme \Words}$. $\pi$ is called a \emph{precise $\EG$-reduction of $(D,f)$ to $(E,g)$ over ${\alpha}$} when
-
-\begin{enumerate}[(i)]
-
-\item\label{con:def__wc_reduce__fam} $\sup_{x \in D^K} \Prb_{z \sim \Un_\pi^{K}}[\pi^K(x,z) \not\in E^{\alpha(K)}] \in \Fall$
-
-\item\label{con:def__wc_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\sup_{x \in D^K} \E_{z \sim \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall\]
-
-\end{enumerate}
-
-\end{definition}
-\end{samepage}
-
-This definition is motivated by the following.
-
-\begin{samepage}
-\begin{proposition}
-\label{prp:tbd}
-
-Consider $(D,f)$, $(E,g)$ worst-case estimation problems, ${\alpha}$ an ${\EG}$-re-indexing and $\pi$ a precise $\EG$-reduction of $(D,f)$ to $(E,g)$ over ${\alpha}$. Suppose ${A}$ is an ${\EG}$-solution to ${(E,g)}$. Then, ${A^\alpha \circ \pi}$ is an ${\EG}$-solution to ${(D,f)}$.
-
-\end{proposition}
-\end{samepage}
-
-\begin{proof}
-
-\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] = \sup_{x \in D^K} \E_{\Un_A^{\alpha(K)} \times \Un_\pi^K}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)) + g(\pi^K(x))-f(x)))^2]\]
-
-For some ${M \in \Reals^{>0}}$,
-
-\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} (\E_{\Un_A^{\alpha(K)} \times \Un_\pi^K}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)) )^2] + M\E_{\Un_\pi^K}[\Abs{g(\pi^K(x)) -f(x)}])\]
-
-By condition~\ref{con:def__wc_reduce__fun} of Definition~\ref{def:wc_reduce}
-
-\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} \E_{\Un_A^{\alpha(K)} \times \Un_\pi^K}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)))^2] \pmod \Fall\]
-
-\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} \E_{\Un_\pi^K}[\E_{\Un_A^{\alpha(K)}}[(A^{\alpha(K)}(\pi^K(x))-g(\pi^K(x)))^2]] \pmod \Fall\]
-
-Denoting ${\lambda^K(x,z):=\E_{y \sim \Un_A^{\alpha(K)}}[(A^{\alpha(K)}(\pi^K(x,z),y)-g(\pi^K(x,z)))^2}]$
-
-\[\sup_{x \in D^K} \E_{\Un_{A^\alpha}^K}[((A^\alpha \circ \pi^K)(x) - f(x))^2] \leq \sup_{x \in D^K} \E_{\Un_\pi^K}[\lambda^K] \pmod \Fall\]
-
-\[\sup_{D^K} \E[((A^\alpha \circ \pi^K) - f)^2] \leq \sup_{D^K} (\Prb[\pi^K \in E^{\alpha(K)}] \E[\lambda^K \mid \pi^K \in E^{\alpha(K)}] + \Prb[\pi^K \not\in E^{\alpha(K)}] \E[\lambda^K \mid \pi^K \not\in E^{\alpha(K)}]) \pmod \Fall\]
-
-${A}$ is an ${\EG}$-solution for ${(E,g)}$, therefore there is ${\varepsilon \in \Fall}$ s.t. ${\pi^K(x,z) \in E^{\alpha(K)}}$ implies\\ $\lambda^K(x,z) \leq \varepsilon(K)$.
-
-\[\sup_{D^K} \E[((A^\alpha \circ \pi^K) - f)^2] \leq \sup_{D^K} \Prb[\pi^K \not\in E^{\alpha(K)}] \E[\lambda^K \mid \pi^K \not\in E^{\alpha(K)}] \pmod \Fall\]
-
-Using condition~\ref{con:def__wc_reduce__fam} of Definition~\ref{def:wc_reduce}, we get
-
-\[\sup_{D^K} \E[((A^\alpha \circ \pi^K) - f)^2] \equiv 0 \pmod \Fall\]
-
-%
-\end{proof}
-
-We are now ready to formulate the completeness theorem.
-
-\begin{samepage}
-\begin{definition}
-%\label{def:tbd}
-
-Given a word ensemble ${\mu}$, the notation ${\Supp \mu^*}$ will refer to the word family defined by ${(\Supp \mu^*)^K:=\Supp \mu^K}$.
+${\alpha: \Nats^n \Alg \Nats^n}$ is called an \emph{${\EG}$-re-indexing} when it is an efficient injection, ${\Gamma \alpha = \Gamma}$ and ${\Fall \alpha \subseteq \Fall}$.
 
 \end{definition}
 \end{samepage}
@@ -2844,7 +2723,14 @@ Given a word ensemble ${\mu}$, the notation ${\Supp \mu^*}$ will refer to the wo
 \begin{theorem}
 %\label{thm:tbd}
 
-Let $\mathsf{C}$ be a set of worst-case estimation problems. Suppose there is $(D_{\mathsf{C}},f_{\mathsf{C}}) \in \mathsf{C}$ s.t. for any $(D,f) \in \mathsf{C}$ there is a precise $\EG$-reduction of $(D,f)$ to $(D_{\mathsf{C}},f_{\mathsf{C}})$ over some $\EG$-re-indexing. Then, there is an $\EG$-samplable word ensemble $\mu_{\mathsf{C}}$ and $\bar{f}_{\mathsf{C}}: \Supp \mu_{\mathsf{C}} \rightarrow \Reals$ bounded s.t. ${(\Supp \mu_{\mathsf{C}}^*, \bar{f}_{\mathsf{C}}) \in \mathsf{C}}$ and for any $\EG$-samplable word ensemble $\mu$ and $f: \Supp \mu \rightarrow \Reals$ bounded, if ${(\Supp \mu^*, f) \in \mathsf{C}}$ then there is a precise pseudo-invertible $\EG$-reduction of $(\mu,f)$ to $(\mu_{\mathsf{C}},\bar{f}_{\mathsf{C}})$ over some $\EG$-re-indexing.
+Assume ${\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]}$ is s.t. ${\zeta \in \Fall}$ and ${\Floor{\log \frac{1}{\zeta}} \in \GrowR}$ (i.e. ${\Fall}$ is ${\GrowR}$-ample), ${\gamma \in \GrowR}$ is s.t. for any ${\gamma' \in \GrowR}$ there is an ${\EG}$-re-indexing ${\alpha}$ with ${\gamma' \leq \gamma \circ \alpha}$ and ${p: \Nats^n \rightarrow \Nats}$ is a polynomial s.t. for any polynomial ${p': \Nats^n \rightarrow \Nats}$ there is an ${\EG}$-re-indexing ${\alpha}$ with ${p' \leq p \circ \alpha}$. Consider an encoded set ${X}$ which is prefix-free, i.e. for all ${x,y \in X}$ and ${z \in \Bool^{>0}}$, ${\En_X(x) \ne \En_X(y)z}$. Consider ${\mathfrak{F}: X \times \Words \rightarrow \Reals}$ bounded. Define ${\tau^K: \Words^3 \rightarrow \Words^3}$ by ${\tau^K(x,y,z)=(x,y,\Ev^{p(K)}(x;\En_\Nats(K),z))}$. Define the distributional estimation problem $({\mu_{\mathfrak{F}}},f_{\mathfrak{F}})$ by 
+
+\begin{align}
+\mu_{\mathfrak{F}}^K&:=\En_*^3 \tau_*^K(\Un^{\Floor{\log \frac{1}{\zeta(K)}}} \times \Un^{\Floor{\log \frac{1}{\zeta(K)}}} \times \Un^{\gamma(K)}) \\
+f_{\mathfrak{F}}(\Chev{x,y,z}) &:= \mathfrak{F}(y???, z) 
+\end{align}
+
+TBD
 
 \end{theorem}
 \end{samepage}
@@ -2854,10 +2740,6 @@ Let $\mathsf{C}$ be a set of worst-case estimation problems. Suppose there is $(
 FOO
 %
 \end{proof}
-
-% Reformulate this entire subsection: for any family of total functions on words indexed by encodable labels, there is a complete problem for the corresponding samplable class, where each instance of the complete problems consists of K, a label, a sampler and an instance of the problem corresponding to the label
-
-% $\mu_{\mathsf{C}}$ is samplable with less advice than ${\GrowA}$?
 
 TBD
 
