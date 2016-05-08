@@ -157,6 +157,8 @@ $\Ints$ is the ring of integers, $\Rats$ is the field of rational numbers, $\Rea
 
 For $F \in \{\Rats,\Reals\}$, $F^{>0} := \{x \in F \mid x > 0\}$, $F^{\geq 0} := \{x \in F \mid x \geq 0\}$.
 
+Given ${n \in \Nats}$, ${\Nats[K_0, K_1 \ldots K_{n-1}]}$ will stand for the set of polynomials with natural coefficients in the ${n}$ variables ${K_0, K_1 \ldots K_{n-1}}$.
+
 For any $t \in \Reals$, $\Floor{t} := \max \{n \in \Ints \mid n \leq t\}$, $\Ceil{t} := \min \{n \in \Ints \mid n \geq t\}$.
 
 $\log: \Reals^{\geq 0} \rightarrow \Reals \sqcup \{-\infty\}$ will denote the logarithm in base 2.
@@ -267,7 +269,7 @@ Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gam
 
 \item If $\gamma_1 \in \Gamma$, $\gamma_2: \Nats^n \rightarrow \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
 
-\item For any $\gamma \in \Gamma$ there is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\gamma \leq p$.
+\item For any $\gamma \in \Gamma$ there is a $p \in \Nats[K_0, K_1 \ldots K_{n-1}]$ s.t. $\gamma \leq p$.
 
 \end{enumerate}
 
@@ -282,7 +284,9 @@ For any $n \in \Nats$, $\Gamma_0^n$ is a growth space of rank $n$. $\gamma \in \
 
 \begin{example}
 
-For any $n \in \Nats$, $\Gamma_{\text{poly}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{poly}}^n$ iff there is a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\gamma(K) \leq p(K)$.
+For any $n \in \Nats$, $\Gamma_{\text{poly}}^n$ is a growth space of rank $n$. 
+
+\[\Gamma_{\text{poly}}^n := \{\gamma: \Nats^n \rightarrow \Nats \mid \exists p \in \Nats[K_0, K_1 \ldots K_{n-1}]: \gamma \leq p\}\]
 
 \end{example}
 
@@ -323,7 +327,7 @@ There is a natural notion of composition for $\Gamma$-schemes.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose $p \in \Nats[K_0, K_1 \ldots K_{n-1}]$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
 
 \begin{align}
 \A_U(K) &= \Chev{\A_T(K),\A_S(K)} \\
@@ -389,7 +393,7 @@ Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded
 
 \item\label{con:def__fall__ineq} If $\varepsilon_1 \in \Fall$, $\varepsilon_2: \Nats^n \rightarrow \Reals^{\geq 0}$ and $\forall K \in \Nats^n: \varepsilon_2(K) \leq \varepsilon_1(K)$ then $\varepsilon_2 \in \Fall$.
 
-\item\label{con:def__fall__pol} There is a polynomial $h: \Nats^n \rightarrow \Nats$ s.t. $2^{-h} \in \Fall$.
+\item\label{con:def__fall__pol} There is $h \in \Nats[K_0, K_1 \ldots K_{n-1}]$ s.t. $2^{-h} \in \Fall$.
 
 \end{enumerate}
 
@@ -503,7 +507,7 @@ For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \Nats^n \righ
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h$ is a polynomial s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \Nats[K_0, K_1 \ldots K_{n-1}]$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
 %
 \end{proof}
 
@@ -762,13 +766,13 @@ The following theorem is the analogue in our language of the previous fact about
 \begin{theorem}
 \label{thm:ort}
 
-Assume there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h$ polynomial.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
+Assume there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \Nats[K_0, K_1 \ldots K_{n-1}]$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
 
 \end{theorem}
 
 \begin{proof}
 
-Assume without loss of generality that there is a polynomial ${h: \Nats^n \rightarrow \Nats}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any polynomial $h$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \Nats^n \rightarrow \{ \pm 1 \}}$ and $m: \Nats^n \rightarrow \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
+Assume without loss of generality that there is ${h \in \Nats[K_0, K_1 \ldots K_{n-1}]}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \Nats[K_0, K_1 \ldots K_{n-1}]$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \Nats^n \rightarrow \{ \pm 1 \}}$ and $m: \Nats^n \rightarrow \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
 
 $$Q_t^{K}(x,yz) = P^{K}(x,y) + t(K) S^{K}(x,P^{K}(x,y),z)$$
 
@@ -1432,7 +1436,14 @@ We introduce composition of ${\MGrow}$-schemes as well.
 \begin{samepage}
 \begin{definition}
 
-Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose a polynomial $p: \Nats^n \rightarrow \Nats$ s.t. $\Supp \UM_S^K \subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)}$ and $\Supp \UM_T^K \subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)}$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
+Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose\\ ${p \in \Nats[K_0, K_1 \ldots K_{n-1}]}$ s.t. 
+
+\begin{align*}
+\Supp \UM_S^K &\subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)} \\
+\Supp \UM_T^K &\subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)}
+\end{align*}
+
+We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
 
 \begin{align}
 \M_U^K &= \En_*^2(\M_S^K \times \M_T^K) \\
@@ -2464,7 +2475,7 @@ For any ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$, ${\Fall \alpha}$ is a fa
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider a polynomial ${h: \Nats^n \rightarrow \Nats}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider ${h \in \Nats[K_0, K_1 \ldots K_{n-1}]}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
 %
 \end{proof}
 
@@ -2674,7 +2685,7 @@ Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\mu,f)$ a distrib
 \end{corollary}
 \end{samepage}
 
-Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\Fall \alpha}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\Fall \alpha = \Fall}$ and ${\Gamma \alpha = \Gamma}$. In particular, we have the following:
+Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\Fall \alpha}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\Fall \alpha \subseteq \Fall}$ and ${\Gamma \alpha = \Gamma}$. In these conditions an ${\Fall \alpha (\Gamma \alpha)}$-optimal estimator (resp. ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal estimator) is in also an ${\EG}$-optimal estimator (resp. ${\ESG}$-optimal estimator). In particular, the following proposition is often applicable.
 
 \begin{samepage}
 \begin{proposition}
@@ -2691,21 +2702,6 @@ For any ${\gamma_\alpha \in \Gamma_* \alpha^*}$ there is ${\gamma \in \Gamma_*}$
 %
 \end{proof}
 
-\begin{samepage}
-\begin{proposition}
-\label{prp:tbd}
-
-Assume that for any ${\varepsilon \in \Fall}$ and ${\alpha \in \Gamma_{\textnormal{poly}}^{nn}}$, ${\varepsilon \circ \alpha \in \Gamma_*}$. Let ${\alpha^*, \beta^* \in \Gamma_{\textnormal{poly}}^{nn}}$ be s.t. ${\beta^*(\alpha^*(K))=K}$. Then, ${\Fall \alpha^* = \Fall}$.
-
-\end{proposition}
-\end{samepage}
-
-\begin{proof}
-
-Completely analogous to Proposition~\ref{prp:stable_growth_space}.
-%
-\end{proof}
-
 \subsection{Completeness}
 
 In this subsection we show that certain classes of functions paired with ${\EG}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\EG}$-reductions. In particular, ${\ESG}$-optimal estimators (or, assuming ${\Fall}$ is ${\GrowA}$-ample, ${\EG}$-optimal estimators) exist for all problems in this class iff one exists for the complete problem.
@@ -2714,30 +2710,74 @@ In this subsection we show that certain classes of functions paired with ${\EG}$
 \begin{definition}
 %\label{def:tbd}
 
-${\alpha: \Nats^n \Alg \Nats^n}$ is called an \emph{${\EG}$-re-indexing} when it is an efficient injection, ${\Gamma \alpha = \Gamma}$ and ${\Fall \alpha \subseteq \Fall}$.
+${\alpha: \Nats^n \Alg \Nats^n}$ is called an \emph{${\Fall}$-re-indexing} when
+
+\begin{enumerate}[(i)]
+
+\item If ${K,L \in \Nats^n}$ are s.t. ${\forall i \in [n]: K_i \leq L_i}$ then ${\forall i \in [n]: \alpha(K)_i \leq \alpha(L)_i}$
+
+\item ${\alpha}$ is an efficient injection
+
+\item ${\Fall \alpha \subseteq \Fall}$
+
+\end{enumerate}
 
 \end{definition}
 \end{samepage}
 
 \begin{samepage}
+\begin{definition}
+%\label{def:tbd}
+
+For any ${r \in \Gamma_{\textnormal{poly}}^1}$, we define ${\Gamma_{r}}$ by 
+\begin{equation}
+%\label{eqn:tbd}
+\Gamma_{r}:=\{\gamma \in \Gamma_{\textnormal{poly}}^n \mid \exists p \in \Nats[k] \forall k \in \Nats: \gamma(k) \leq r(p(k)) \}
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Consider any ${r \in \Gamma_{\textnormal{poly}}^1}$ non-decreasing. Then, ${\Gamma_{r}}$ is a growth space???
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+FOO
+%
+\end{proof}
+
+\begin{samepage}
 \begin{theorem}
 %\label{thm:tbd}
 
-Assume ${\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]}$ is s.t. ${\zeta \in \Fall}$ and ${\Floor{\log \frac{1}{\zeta}} \in \GrowR}$ (i.e. ${\Fall}$ is ${\GrowR}$-ample), ${\gamma \in \GrowR}$ is s.t. for any ${\gamma' \in \GrowR}$ there is an ${\EG}$-re-indexing ${\alpha}$ with ${\gamma' \leq \gamma \circ \alpha}$ and ${p: \Nats^n \rightarrow \Nats}$ is a polynomial s.t. for any polynomial ${p': \Nats^n \rightarrow \Nats}$ there is an ${\EG}$-re-indexing ${\alpha}$ with ${p' \leq p \circ \alpha}$. Consider an encoded set ${X}$ which is prefix-free, i.e. for all ${x,y \in X}$ and ${z \in \Bool^{>0}}$, ${\En_X(x) \ne \En_X(y)z}$. Consider ${\mathfrak{F}: X \times \Words \rightarrow \Reals}$ bounded. Define ${\tau^K: \Words^3 \rightarrow \Words^3}$ by ${\tau^K(x,y,z)=(x,y,\Ev^{p(K)}(x;\En_\Nats(K),z))}$. Define the distributional estimation problem $({\mu_{\mathfrak{F}}},f_{\mathfrak{F}})$ by 
+For any polynomial ${p: \Nats \rightarrow \Nats}$, define ${\alpha_p: \Nats^n \rightarrow \Nats^n}$ by ${\alpha_p(K)=(p(K_0),K_1,K_2 \ldots K_{n-1})}$. Assume that for any non-constant polynomial ${p: \Nats \rightarrow \Nats}$, ${\Fall \alpha_p \subseteq \Fall}$.
+
+Fix  ${r \in \Gamma_{\textnormal{poly}}^n}$ non-decreasing in all arguments and ${t \in \Gamma_{\textnormal{poly}}^n}$. Let ${\Gamma:=(\Gamma_{\Fall,r},\Gamma_0^n)}$. Assume ${\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]}$ is s.t. ${\zeta \in \Fall}$ and ${\Floor{\log \frac{1}{\zeta}} \in \Gamma_{\Fall,r}}$ (i.e. ${\Fall}$ is ${\Gamma_{\Fall,r}}$-ample). Consider an encoded set ${E}$ which is prefix-free, i.e. for all ${\phi,\psi \in E}$ and ${z \in \Bool^{>0}}$, ${\En_E(\phi) \ne \En_E(\psi)z}$. Consider ${\mathfrak{F}: E \times \Words \rightarrow \Reals}$ bounded. Define ${\tau^K: \Words^3 \rightarrow \Words^3}$ by ${\tau^K(a,z,w)=(a,z,\Ev^{t(K)}(a;\En_\Nats(K),w))}$. Define the distributional estimation problem $({\mu_{\mathfrak{F}}},f_{\mathfrak{F}})$ by 
 
 \begin{align}
-\mu_{\mathfrak{F}}^K&:=\En_*^3 \tau_*^K(\Un^{\Floor{\log \frac{1}{\zeta(K)}}} \times \Un^{\Floor{\log \frac{1}{\zeta(K)}}} \times \Un^{\gamma(K)}) \\
-f_{\mathfrak{F}}(\Chev{x,y,z}) &:= \mathfrak{F}(y???, z) 
+\mu_{\mathfrak{F}}^K&:=\En_*^3 \tau_*^K(\Un^{\Floor{\log \frac{1}{\zeta(K)}}} \times \Un^{\Floor{\log \frac{1}{\zeta(K)}}} \times \Un^{r(K)}) \\
+f_{\mathfrak{F}}(\Chev{a,z,x}) &:= \begin{cases}\mathfrak{F}(\phi, x) \textnormal{ if } z=\En_E(\phi) \\ 0 \textnormal{ if } z \not\in \Img \En_E\end{cases}
 \end{align}
 
-TBD
+For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\EG}$-samplable world ensemble ${\mu}$???, there is a precise pseudo-invertible ${\EG}$-reduction from ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F}}, f_{\mathfrak{F}})}$ over an ${\EG}$-re-indexing.
 
 \end{theorem}
 \end{samepage}
 
 \begin{proof}
 
-FOO
+We start by constructing the reduction ${\pi}$ and the re-indexing ${\alpha}$. 
+
+Let ${\sigma}$ be an ${\EG}$-sampler of ${\mu}$.
+
+TBD
 %
 \end{proof}
 
@@ -2747,7 +2787,9 @@ TBD
 \label{sec:e_and_u}
 
 % Including stability of conditional expectations
- 
+% 
+% Add to previous sections analysis of the properties of ${\mathcal{E}_{\text{ll},\phi}}$ and ${\mathcal{E}_{\text{poly}}$ after each fall space property is introduced. 
+% 
 % The 0th parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The other parameters serve to control the resources available to the predictor. To illustrate the significance of the other parameters using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question \enquote{what is the probability 7614829 is prime?} depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
 
 TBD
