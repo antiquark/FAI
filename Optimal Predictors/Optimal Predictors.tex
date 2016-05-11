@@ -71,6 +71,7 @@
 \newcommand{\Rats}{\mathbb{Q}}
 \newcommand{\Reals}{\mathbb{R}}
 \newcommand{\Coms}{\mathbb{C}}
+\newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
 
 \newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
 \newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
@@ -92,13 +93,14 @@
 \newcommand{\ESG}{\Fall^\sharp(\Gamma)}
 \newcommand{\EMG}{\Fall(\MGrow)}
 \newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
+\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
 \newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
 \newcommand{\Scheme}{\xrightarrow{\Gamma}}
 \newcommand{\MScheme}{\xrightarrow{\MGrow}}
-\usepackage[normalem]{ulem}
+\usepackage{color}
 
 \begin{document}
 
@@ -157,7 +159,7 @@ $\Ints$ is the ring of integers, $\Rats$ is the field of rational numbers, $\Rea
 
 For $F \in \{\Rats,\Reals\}$, $F^{>0} := \{x \in F \mid x > 0\}$, $F^{\geq 0} := \{x \in F \mid x \geq 0\}$.
 
-Given ${n \in \Nats}$, ${\Nats[K_0, K_1 \ldots K_{n-1}]}$ will stand for the set of polynomials with natural coefficients in the ${n}$ variables ${K_0, K_1 \ldots K_{n-1}}$.
+Given ${n \in \Nats}$, ${\NatPoly}$ will stand for the set of polynomials with natural coefficients in the ${n}$ variables ${K_0, K_1 \ldots K_{n-1}}$.
 
 For any $t \in \Reals$, $\Floor{t} := \max \{n \in \Ints \mid n \leq t\}$, $\Ceil{t} := \min \{n \in \Ints \mid n \geq t\}$.
 
@@ -269,7 +271,7 @@ Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gam
 
 \item If $\gamma_1 \in \Gamma$, $\gamma_2: \Nats^n \rightarrow \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
 
-\item For any $\gamma \in \Gamma$ there is a $p \in \Nats[K_0, K_1 \ldots K_{n-1}]$ s.t. $\gamma \leq p$.
+\item For any $\gamma \in \Gamma$ there is a $p \in \NatPoly$ s.t. $\gamma \leq p$.
 
 \end{enumerate}
 
@@ -284,9 +286,9 @@ For any $n \in \Nats$, $\Gamma_0^n$ is a growth space of rank $n$. $\gamma \in \
 
 \begin{example}
 
-For any $n \in \Nats$, $\Gamma_{\text{poly}}^n$ is a growth space of rank $n$. 
+For any $n \in \Nats$, $\GammaPoly^n$ is a growth space of rank $n$. 
 
-\[\Gamma_{\text{poly}}^n := \{\gamma: \Nats^n \rightarrow \Nats \mid \exists p \in \Nats[K_0, K_1 \ldots K_{n-1}]: \gamma \leq p\}\]
+\[\GammaPoly^n := \{\gamma: \Nats^n \rightarrow \Nats \mid \exists p \in \NatPoly: \gamma \leq p\}\]
 
 \end{example}
 
@@ -305,9 +307,9 @@ Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of ran
 
 \begin{enumerate}[(i)]
 
-\item $\max_{x \in X} \max_{y \in \BoolR{S}} \T_S(K,x,y,\A_S(K)) \in \Gamma_{\text{poly}}^n$
+\item $\max_{x \in X} \max_{y \in \BoolR{S}} \T_S(K,x,y,\A_S(K)) \in \GammaPoly^n$
 
-\item $\T_{\R_S}(K,\A_S(K)) \in \Gamma_{\text{poly}}^n$
+\item $\T_{\R_S}(K,\A_S(K)) \in \GammaPoly^n$
 
 \item The function $r: \Nats^n \rightarrow n$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\GrowR$.
 
@@ -327,7 +329,7 @@ There is a natural notion of composition for $\Gamma$-schemes.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose $p \in \Nats[K_0, K_1 \ldots K_{n-1}]$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose $p \in \NatPoly$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
 
 \begin{align}
 \A_U(K) &= \Chev{\A_T(K),\A_S(K)} \\
@@ -349,9 +351,9 @@ Fix $n \in \Nats$, $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $
 
 \begin{enumerate}[(i)]
 
-\item\label{con:def__family__time} $\max_{S \in F} \max_{x \in X} \max_{y \in \BoolR{S}} \T_S(K,x,y,\A_S(K)) \in \Gamma_{\text{poly}}^n$
+\item\label{con:def__family__time} $\max_{S \in F} \max_{x \in X} \max_{y \in \BoolR{S}} \T_S(K,x,y,\A_S(K)) \in \GammaPoly^n$
 
-\item\label{con:def__family__rtime} $\max_{S \in F}\T_{\R_S}(K,\A_S(K))) \in \Gamma_{\text{poly}}^n$
+\item\label{con:def__family__rtime} $\max_{S \in F}\T_{\R_S}(K,\A_S(K))) \in \GammaPoly^n$
 
 \item\label{con:def__family__rand} $\max_{S \in F} \R_S \in \GrowR$
 
@@ -393,7 +395,7 @@ Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded
 
 \item\label{con:def__fall__ineq} If $\varepsilon_1 \in \Fall$, $\varepsilon_2: \Nats^n \rightarrow \Reals^{\geq 0}$ and $\forall K \in \Nats^n: \varepsilon_2(K) \leq \varepsilon_1(K)$ then $\varepsilon_2 \in \Fall$.
 
-\item\label{con:def__fall__pol} There is $h \in \Nats[K_0, K_1 \ldots K_{n-1}]$ s.t. $2^{-h} \in \Fall$.
+\item\label{con:def__fall__pol} There is $h \in \NatPoly$ s.t. $2^{-h} \in \Fall$.
 
 \end{enumerate}
 
@@ -507,7 +509,7 @@ For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \Nats^n \righ
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \Nats[K_0, K_1 \ldots K_{n-1}]$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \NatPoly$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
 %
 \end{proof}
 
@@ -766,13 +768,13 @@ The following theorem is the analogue in our language of the previous fact about
 \begin{theorem}
 \label{thm:ort}
 
-Assume there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \Nats[K_0, K_1 \ldots K_{n-1}]$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
+Assume there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \NatPoly$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
 
 \end{theorem}
 
 \begin{proof}
 
-Assume without loss of generality that there is ${h \in \Nats[K_0, K_1 \ldots K_{n-1}]}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \Nats[K_0, K_1 \ldots K_{n-1}]$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \Nats^n \rightarrow \{ \pm 1 \}}$ and $m: \Nats^n \rightarrow \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
+Assume without loss of generality that there is ${h \in \NatPoly}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \NatPoly$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \Nats^n \rightarrow \{ \pm 1 \}}$ and $m: \Nats^n \rightarrow \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
 
 $$Q_t^{K}(x,yz) = P^{K}(x,y) + t(K) S^{K}(x,P^{K}(x,y),z)$$
 
@@ -850,7 +852,7 @@ Consider $\mu$ a word ensemble of rank ${1}$ s.t. for any different $k,l \in \Na
 
 For every $k \in \Nats$, define ${\mu_f^k:=f_*^k\mu^k}$.  Finally, define ${\chi_B: \Supp \mu_f \rightarrow \Bool}$ by ${\chi_B(f(x)):=B^{m(x)}(x)}$.
 
-Let $\Gamma:=(\Gamma_{\textnormal{poly}}^1,\Gamma_0^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\mu_f, \chi_B)$.
+Let $\Gamma:=(\GammaPoly^1,\Gamma_0^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\mu_f, \chi_B)$.
 
 \end{theorem}
 
@@ -911,7 +913,7 @@ Consider $f: \Words \Alg \Words$ a one-to-one one-way function. For every ${k \i
 \chi_f(\Chev{f(x),y}):=x \cdot y
 \end{align*}
 
-Let $\Gamma:=(\Gamma_{\textnormal{poly}}^1,\Gamma_0^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\mu_{(f)}, \chi_f)$.
+Let $\Gamma:=(\GammaPoly^1,\Gamma_0^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\mu_{(f)}, \chi_f)$.
 
 \end{corollary}
 
@@ -927,7 +929,7 @@ The following is the non-uniform version of Theorem~\ref{thm:hard_core} which we
 
 Consider $\mu$ a word ensemble s.t. for any different $k,l \in \Nats$, $\Supp \mu^k \cap \Supp \mu^l = \varnothing$, $f: \Supp \mu \rightarrow \Words$ one-to-one and $B$ a non-uniformly hard-core predicate of $(\mu,f)$. 
 
-Let $\Gamma:=(\Gamma_{\textnormal{poly}}^1,\Gamma_{\textnormal{poly}}^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\mu_f, \chi_B)$.
+Let $\Gamma:=(\GammaPoly^1,\GammaPoly^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\mu_f, \chi_B)$.
 
 \end{theorem}
 
@@ -935,7 +937,7 @@ Let $\Gamma:=(\Gamma_{\textnormal{poly}}^1,\Gamma_{\textnormal{poly}}^1)$. Let $
 
 Consider $f: \Words \Alg \Words$ a one-to-one non-uniformly hard to invert one-way function.
 
-Let $\Gamma:=(\Gamma_{\textnormal{poly}}^1,\Gamma_{\textnormal{poly}}^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\mu_f, \chi_f)$.
+Let $\Gamma:=(\GammaPoly^1,\GammaPoly^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\mu_f, \chi_f)$.
 
 \end{corollary}
 
@@ -1343,42 +1345,42 @@ Obvious since $\Dtv$ is a metric.
 \begin{proposition}
 \label{prp:prob_cong_ev}
 
-Consider $X$ a measurable space, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and $f: X \rightarrow \Reals$ bounded and measurable. Then, $\mu \equiv \nu \pmod \Fall$ implies $\E_{x \sim \mu^K}[f(x)] \equiv \E_{x \sim \nu^K}[f(x)] \pmod \Fall$.
+Consider $X$ a measurable space, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and ${\{f^K: X \rightarrow \Reals\}_{K \in \Nats^n}}$ a uniformly bounded family of measurable functions. Assume ${\mu \equiv \nu \pmod \Fall}$. Then, $\E_{x \sim \mu^K}[f^K(x)] \equiv \E_{x \sim \nu^K}[f^K(x)] \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-$\Abs{\E_{x \sim \mu^K}[f(x)] - \E_{x \sim \nu^K}[f(x)]} \leq  (\sup f - \inf f)\Dtv(\mu^K, \nu^K)$
+$\Abs{\E_{x \sim \mu^K}[f^K(x)] - \E_{x \sim \nu^K}[f^K(x)]} \leq  (\sup f - \inf f)\Dtv(\mu^K, \nu^K)$
 \end{proof}
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:prob_cong_semidir}
 
-Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and $f: X \Markov Y$. Then, $\mu \equiv \nu \pmod \Fall$ implies $\mu^K \ltimes f \equiv \nu^K \ltimes f \pmod \Fall$.
+Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\mu \equiv \nu \pmod \Fall$ implies $\mu^K \ltimes f^K \equiv \nu^K \ltimes f^K \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Total variation distance is contracted by semi-direct product with a fixed Markov kernel therefore $\Dtv(\mu^K \ltimes f, \nu^K \ltimes f) \leq \Dtv(\mu^K, \nu^K)$.
+Total variation distance is contracted by semi-direct product with a Markov kernel therefore $\Dtv(\mu^K \ltimes f^K, \nu^K \ltimes f^K) \leq \Dtv(\mu^K, \nu^K)$.
 \end{proof}
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:prob_cong_push}
 
-Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and $f: X \Markov Y$. Then, $\mu \equiv \nu \pmod \Fall$ implies $f_*\mu^K \equiv f_*\nu^K \pmod \Fall$.
+Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\mu \equiv \nu \pmod \Fall$ implies $f_*^K\mu^K \equiv f_*^K\nu^K \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Total variation distance is contracted by pushforward therefore \[\Dtv(f_*\mu^K, f_*\nu^K) \leq \Dtv(\mu^K, \nu^K)\]
+Total variation distance is contracted by pushforward therefore \[\Dtv(f_*^K\mu^K, f_*^K\nu^K) \leq \Dtv(\mu^K, \nu^K)\]
 \end{proof}
 
 \begin{samepage}
@@ -1408,9 +1410,9 @@ Given encoded sets $X$ and $Y$, an \emph{$\MGrow$-scheme of signature ${X \right
 
 \begin{enumerate}[(i)]
 
-\item $\max_{x \in X} \max_{y \in \BoolR{S}} \max_{z \in \Supp \M_S^K} \T_S(K,x,y,z) \in \Gamma_{\text{poly}}^n$
+\item $\max_{x \in X} \max_{y \in \BoolR{S}} \max_{z \in \Supp \M_S^K} \T_S(K,x,y,z) \in \GammaPoly^n$
 
-\item ${\max_{z \in \Supp \M_S^K} \T_{\R_S}(K,z) \in \Gamma_{\text{poly}}^n}$
+\item ${\max_{z \in \Supp \M_S^K} \T_{\R_S}(K,z) \in \GammaPoly^n}$
 
 \item There is $r \in \GrowR$ s.t. for any $K \in \Nats^n$ and $z \in \Supp \M_S^K$, $\R_S(K,z) \leq r(K)$.
 
@@ -1436,7 +1438,7 @@ We introduce composition of ${\MGrow}$-schemes as well.
 \begin{samepage}
 \begin{definition}
 
-Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose\\ ${p \in \Nats[K_0, K_1 \ldots K_{n-1}]}$ s.t. 
+Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose\\ ${p \in \NatPoly}$ s.t. 
 
 \begin{align*}
 \Supp \UM_S^K &\subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)} \\
@@ -1595,7 +1597,7 @@ We now introduce the notions of samplability of samplability over a given \enquo
 
 \begin{definition}
 
-Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\mu^{K}}[\Dtv(\mu \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
+Consider a word ensemble $\mu$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$. $\mu$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\mu^{K}}[\Dtv(\mu^K \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
 
 In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\mu$ relative to $\pi$}.
 
@@ -2188,7 +2190,7 @@ Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems and ${\pi: \Wor
 \begin{theorem}
 \label{thm:sp_reduce_sharp}
 
-Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\ESG$-optimal estimator for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ s.t. for any ${\{z_i \in \BoolR{\pi}\}_{i \in [\gamma(K)]}}$ and ${\{w_i \in \BoolR{P_g}\}_{i \in [\gamma(K)]}}$
+Suppose $\gamma \in \GammaPoly^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\ESG$-optimal estimator for $(\nu, g)$. Assume $\gamma (\R_P + \R_\pi) \in \GrowR$. Construct ${P_f}$ s.t. for any ${\{z_i \in \BoolR{\pi}\}_{i \in [\gamma(K)]}}$ and ${\{w_i \in \BoolR{P_g}\}_{i \in [\gamma(K)]}}$
 
 \begin{align}
 \label{eqn:thm__sp_reduce__rpf}\R_{P_f}(K) &= \gamma(K) (\R_{P_g}(K) + \R_\pi(K)) \\
@@ -2204,7 +2206,7 @@ Then, $P_f$ is an $\ESG$-optimal estimator for $(\mu, f)$.
 \begin{proposition}
 \label{prp:ev_equiv_mean}
 
-Consider $\gamma \in \Gamma_{\textnormal{poly}}^n$, $\mu$ a word ensemble and $\bar{g}: \Words \rightarrow \Reals$ bounded. Then,
+Consider $\gamma \in \GammaPoly^n$, $\mu$ a word ensemble and $\bar{g}: \Words \rightarrow \Reals$ bounded. Then,
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -2262,7 +2264,7 @@ $P_g$ is a $\ESG$-optimal estimator for $(\nu,g)$, therefore
 \begin{theorem}
 \label{thm:sp_reduce}
 
-Suppose $\gamma \in \Gamma_{\textnormal{poly}}^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\EG$-optimal estimator for $(\nu, g)$. Assume $\R_P + \gamma \R_\pi \in \GrowR$. Construct ${P_f}$  s.t. for any ${\{z_i \in \BoolR{\pi}\}_{i \in [\gamma(K)]}}$ and ${w \in \BoolR{P_g}}$
+Suppose $\gamma \in \GammaPoly^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Consider $(\mu,f)$, $(\nu,g)$ distributional estimation problems, $\pi$ a strict pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ and $P_g$ an $\EG$-optimal estimator for $(\nu, g)$. Assume $\R_P + \gamma \R_\pi \in \GrowR$. Construct ${P_f}$  s.t. for any ${\{z_i \in \BoolR{\pi}\}_{i \in [\gamma(K)]}}$ and ${w \in \BoolR{P_g}}$
 
 \begin{align}
 \label{eqn:thm__sp_reduce__rpf}\R_{P_f}(K) &= \R_{P_g}(K) + \gamma(K) \R_\pi(K) \\
@@ -2427,7 +2429,7 @@ Finally, we consider another scenario in which the identity mapping is a valid r
 \begin{definition}
 %\label{def:tbd}
 
-We denote ${\Gamma_{\text{poly}}^{mn}:=\{\gamma: \Nats^m \rightarrow \Nats^n \mid \forall i \in [n]: \gamma_i \in \Gamma_{\text{poly}}^m \}}$.
+We denote ${\GammaPoly^{mn}:=\{\gamma: \Nats^m \rightarrow \Nats^n \mid \forall i \in [n]: \gamma_i \in \GammaPoly^m \}}$.
 
 \end{definition}
 \end{samepage}
@@ -2436,7 +2438,7 @@ We denote ${\Gamma_{\text{poly}}^{mn}:=\{\gamma: \Nats^m \rightarrow \Nats^n \mi
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${\Gamma_*}$ a growth space of rank ${n}$ and ${\alpha \in \Gamma_{\text{poly}}^{mn}}$. We introduce the notation
+Consider ${\Gamma_*}$ a growth space of rank ${n}$ and ${\alpha \in \GammaPoly^{mn}}$. We introduce the notation
 
 \begin{equation}
 \label{eqn:tbd}
@@ -2454,7 +2456,7 @@ We also denote ${\Gamma \alpha := (\GrowR \alpha, \GrowA \alpha)}$.
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$. We introduce the notation
+Consider ${\alpha \in \GammaPoly^{mn}}$. We introduce the notation
 
 \begin{equation}
 \label{eqn:tbd}
@@ -2468,14 +2470,14 @@ Consider ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$. We introduce the notati
 \begin{proposition}
 \label{prp:tbd}
 
-For any ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$, ${\Fall \alpha}$ is a fall space
+For any ${\alpha \in \GammaPoly^{mn}}$, ${\Fall \alpha}$ is a fall space
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider ${h \in \Nats[K_0, K_1 \ldots K_{n-1}]}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider ${h \in \NatPoly}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
 %
 \end{proof}
 
@@ -2492,7 +2494,7 @@ Consider ${\mu}$ a word ensemble of rank ${n}$ and ${\alpha: \Nats^m \rightarrow
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${\alpha: \Nats^m \Alg \Nats^n}$ s.t. ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ as a function and ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$. We define ${S^\alpha: X \xrightarrow{\Gamma \alpha} Y}$ by requiring that for any ${L \in \Nats^m}$, ${\R_{S^\alpha}(L)=\R_S(\alpha(L))}$ and ${(S^\alpha)^L(x,y)=S^{\alpha(L)}(x,y)}$.
+Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${\alpha: \Nats^m \Alg \Nats^n}$ s.t. ${\alpha \in \GammaPoly^{mn}}$ as a function and ${\T_\alpha \in \GammaPoly^m}$. We define ${S^\alpha: X \xrightarrow{\Gamma \alpha} Y}$ by requiring that for any ${L \in \Nats^m}$, ${\R_{S^\alpha}(L)=\R_S(\alpha(L))}$ and ${(S^\alpha)^L(x,y)=S^{\alpha(L)}(x,y)}$.
 
 \end{definition}
 \end{samepage}
@@ -2501,7 +2503,7 @@ Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${\alpha: \Nats^m \Al
 \begin{proposition}
 \label{prp:rev_sch_idx}
 
-Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$. Assume that ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$ and ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$. Then, for any  ${S: X \xrightarrow{\Gamma \alpha} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${\alpha(\beta(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
+Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta \in \GammaPoly^{nm}}$. Assume that ${\T_\alpha \in \GammaPoly^m}$ and ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$. Then, for any  ${S: X \xrightarrow{\Gamma \alpha} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${\alpha(\beta(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
 
 \begin{align}
 \A_{\tilde{S}}(K)&=\A_S(\beta(K)) \\
@@ -2514,7 +2516,7 @@ Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\bet
 
 \begin{proof}
 
-To see there is no obstruction of time complexity, note that ${\beta}$ can be computed by some\\ ${\beta^*: \Nats^n \Alg \Nats^m}$ s.t. ${\T_{\beta^*} \in \Gamma_{\text{poly}}^n}$. Given input ${K}$, ${\beta^*}$ works by iterating over all ${L}$ within some polynomial size range (thanks to the assumption ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$) and checking the condition ${\alpha(L)=K}$.
+To see there is no obstruction of time complexity, note that ${\beta}$ can be computed by some\\ ${\beta^*: \Nats^n \Alg \Nats^m}$ s.t. ${\T_{\beta^*} \in \GammaPoly^n}$. Given input ${K}$, ${\beta^*}$ works by iterating over all ${L}$ within some polynomial size range (thanks to the assumption ${\beta \in \GammaPoly^{nm}}$) and checking the condition ${\alpha(L)=K}$.
 
 To see there are no obstructions of random or advice complexity, note there is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t.\\ $\R_S(L) \leq \gamma_{\mathfrak{R}}(\alpha(L))$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(L)} \leq \gamma_{\mathfrak{A}}(\alpha(L))}$. In particular, if ${K \in \Nats^n}$ is s.t. ${\alpha(\beta(K))=K}$ then ${\R_S(\beta(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(\beta(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
 %
@@ -2524,7 +2526,7 @@ To see there are no obstructions of random or advice complexity, note there is $
 \begin{definition}
 %\label{def:tbd}
 
-${\alpha: \Nats^m \Alg \Nats^n}$ is called an \emph{efficient injection} when ${\alpha \in \Gamma_{\textnormal{poly}}^{mn}}$ as a function, ${\T_\alpha \in \Gamma_{\textnormal{poly}}^m}$ and there is ${\beta \in \Gamma_{\textnormal{poly}}^{nm}}$ s.t. ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$.
+${\alpha: \Nats^m \Alg \Nats^n}$ is called an \emph{efficient injection} when ${\alpha \in \GammaPoly^{mn}}$ as a function, ${\T_\alpha \in \GammaPoly^m}$ and there is ${\beta \in \GammaPoly^{nm}}$ s.t. ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$.
 
 \end{definition}
 \end{samepage}
@@ -2603,7 +2605,7 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 
 \item\label{con:def__pp_reduce__dist} ${\pi_*\mu}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\nu^\alpha}$.
 
-\item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall \alpha$
+\item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \mu^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall \alpha$.
 
 \item\label{con:def__pp_reduce__smp} $\mu$ is $\Fall(\MGrow \alpha)$-samplable relative to $\pi$.
 
@@ -2667,7 +2669,7 @@ The following corollaries are completely analogous to Corollary~\ref{crl:pp_redu
 \begin{corollary}
 %\label{crl:tbd}
 
-Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\ESG$-optimal estimator for $(\nu, g)$ and ${\gamma \in \Gamma_{\textnormal{poly}}^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal estimator for $(\mu, f)$.
+Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\ESG$-optimal estimator for $(\nu, g)$ and ${\gamma \in \GammaPoly^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal estimator for $(\mu, f)$.
 
 % Conditions on \gamma
 
@@ -2678,7 +2680,7 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 \begin{corollary}
 %\label{crl:tbd}
 
-Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\EG$-optimal estimator for $(\nu, g)$ and ${\gamma \in \Gamma_{\textnormal{poly}}^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal estimator for $(\mu, f)$.
+Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\mu, f)$ to $(\nu, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\EG$-optimal estimator for $(\nu, g)$ and ${\gamma \in \GammaPoly^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal estimator for $(\mu, f)$.
 
 % Conditions on \gamma
 
@@ -2691,7 +2693,7 @@ Note that the last results involved passing from fall space ${\Fall}$ and growth
 \begin{proposition}
 \label{prp:stable_growth_space}
 
-Assume ${\Gamma_*}$ is a growth space of rank ${n}$ s.t. for any ${\gamma \in \Gamma_*}$ and ${\alpha \in \Gamma_{\textnormal{poly}}^{nn}}$, ${\gamma \circ \alpha \in \Gamma_*}$. Let ${\alpha^*, \beta^* \in \Gamma_{\textnormal{poly}}^{nn}}$ be s.t. ${\beta^*(\alpha^*(K))=K}$. Then, ${\Gamma_* \alpha^* = \Gamma_*}$.
+Assume ${\Gamma_*}$ is a growth space of rank ${n}$ s.t. for any ${\gamma \in \Gamma_*}$ and ${\alpha \in \GammaPoly^{nn}}$, ${\gamma \circ \alpha \in \Gamma_*}$. Let ${\alpha^*, \beta^* \in \GammaPoly^{nn}}$ be s.t. ${\beta^*(\alpha^*(K))=K}$. Then, ${\Gamma_* \alpha^* = \Gamma_*}$.
 
 \end{proposition}
 \end{samepage}
@@ -2704,82 +2706,82 @@ For any ${\gamma_\alpha \in \Gamma_* \alpha^*}$ there is ${\gamma \in \Gamma_*}$
 
 \subsection{Completeness}
 
-In this subsection we show that certain classes of functions paired with ${\EG}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\EG}$-reductions. In particular, ${\ESG}$-optimal estimators (or, assuming ${\Fall}$ is ${\GrowA}$-ample, ${\EG}$-optimal estimators) exist for all problems in this class iff one exists for the complete problem.
+In this subsection we assume ${n = 1}$ and $\Gamma=(\GammaPoly^1,\Gamma_0^1)$.
 
-\begin{samepage}
-\begin{definition}
-%\label{def:tbd}
-
-${\alpha: \Nats^n \Alg \Nats^n}$ is called an \emph{${\Fall}$-re-indexing} when
-
-\begin{enumerate}[(i)]
-
-\item If ${K,L \in \Nats^n}$ are s.t. ${\forall i \in [n]: K_i \leq L_i}$ then ${\forall i \in [n]: \alpha(K)_i \leq \alpha(L)_i}$
-
-\item ${\alpha}$ is an efficient injection
-
-\item ${\Fall \alpha \subseteq \Fall}$
-
-\end{enumerate}
-
-\end{definition}
-\end{samepage}
-
-\begin{samepage}
-\begin{definition}
-%\label{def:tbd}
-
-For any ${r \in \Gamma_{\textnormal{poly}}^1}$, we define ${\Gamma_{r}}$ by 
-\begin{equation}
-%\label{eqn:tbd}
-\Gamma_{r}:=\{\gamma \in \Gamma_{\textnormal{poly}}^n \mid \exists p \in \Nats[k] \forall k \in \Nats: \gamma(k) \leq r(p(k)) \}
-\end{equation}
-
-\end{definition}
-\end{samepage}
-
-\begin{samepage}
-\begin{proposition}
-\label{prp:tbd}
-
-Consider any ${r \in \Gamma_{\textnormal{poly}}^1}$ non-decreasing. Then, ${\Gamma_{r}}$ is a growth space???
-
-\end{proposition}
-\end{samepage}
-
-\begin{proof}
-
-FOO
-%
-\end{proof}
+We will show that certain classes of functions paired with ${\EG}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\EG}$-reductions. In particular, ${\ESG}$-optimal estimators (or, assuming ${\Fall}$ is ${\GrowA}$-ample, ${\EG}$-optimal estimators) exist for all problems in this class iff one exists for the complete problem.
 
 \begin{samepage}
 \begin{theorem}
-%\label{thm:tbd}
+\label{thm:complete}
 
-For any polynomial ${p: \Nats \rightarrow \Nats}$, define ${\alpha_p: \Nats^n \rightarrow \Nats^n}$ by ${\alpha_p(K)=(p(K_0),K_1,K_2 \ldots K_{n-1})}$. Assume that for any non-constant polynomial ${p: \Nats \rightarrow \Nats}$, ${\Fall \alpha_p \subseteq \Fall}$.
-
-Fix  ${r \in \Gamma_{\textnormal{poly}}^n}$ non-decreasing in all arguments and ${t \in \Gamma_{\textnormal{poly}}^n}$. Let ${\Gamma:=(\Gamma_{\Fall,r},\Gamma_0^n)}$. Assume ${\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]}$ is s.t. ${\zeta \in \Fall}$ and ${\Floor{\log \frac{1}{\zeta}} \in \Gamma_{\Fall,r}}$ (i.e. ${\Fall}$ is ${\Gamma_{\Fall,r}}$-ample). Consider an encoded set ${E}$ which is prefix-free, i.e. for all ${\phi,\psi \in E}$ and ${z \in \Bool^{>0}}$, ${\En_E(\phi) \ne \En_E(\psi)z}$. Consider ${\mathfrak{F}: E \times \Words \rightarrow \Reals}$ bounded. Define ${\tau^K: \Words^3 \rightarrow \Words^3}$ by ${\tau^K(a,z,w)=(a,z,\Ev^{t(K)}(a;\En_\Nats(K),w))}$. Define the distributional estimation problem $({\mu_{\mathfrak{F}}},f_{\mathfrak{F}})$ by 
+Assume that for any non-constant ${p \in \Nats[k]}$, ${\Fall p \subseteq \Fall}$. Consider an encoded set ${E}$ which is prefix-free, i.e. for all ${\phi,\psi \in E}$ and ${z \in \Bool^{>0}}$, ${\En_E(\phi) \ne \En_E(\psi)z}$. Consider ${\mathfrak{F}: E \times \Words \rightarrow \Reals}$ bounded. Define ${\eta^k: \Words^3 \rightarrow \Words^3}$ by ${\eta^k(a,b,w)=(a,b,\Ev^{k}(a;\En_\Nats(k),w))}$. Define the distributional estimation problem $({\mu_{\mathfrak{F}}},f_{\mathfrak{F}})$ by 
 
 \begin{align}
-\mu_{\mathfrak{F}}^K&:=\En_*^3 \tau_*^K(\Un^{\Floor{\log \frac{1}{\zeta(K)}}} \times \Un^{\Floor{\log \frac{1}{\zeta(K)}}} \times \Un^{r(K)}) \\
-f_{\mathfrak{F}}(\Chev{a,z,x}) &:= \begin{cases}\mathfrak{F}(\phi, x) \textnormal{ if } z=\En_E(\phi) \\ 0 \textnormal{ if } z \not\in \Img \En_E\end{cases}
+\mu_{\mathfrak{F}}^k&:=\En_*^3 \eta_*^k(\Un^k \times \Un^k \times \Un^{k}) \\
+f_{\mathfrak{F}}(\Chev{a,b,x}) &:= \begin{cases}\mathfrak{F}(\phi, x) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ 0 \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
 \end{align}
 
-For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\EG}$-samplable world ensemble ${\mu}$???, there is a precise pseudo-invertible ${\EG}$-reduction from ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F}}, f_{\mathfrak{F}})}$ over an ${\EG}$-re-indexing.
+For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\EG}$-samplable world ensemble ${\mu}$, there is a precise pseudo-invertible ${\EG}$-reduction from ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F}}, f_{\mathfrak{F}})}$ over a polynomial.
 
 \end{theorem}
 \end{samepage}
 
 \begin{proof}
 
-We start by constructing the reduction ${\pi}$ and the re-indexing ${\alpha}$. 
+Let ${\sigma}$ be an ${\EG}$-sampler of ${\mu}$. Choose ${p \in \Nats[k]}$ and ${a \in \Words}$ s.t. for any ${k \in \Nats}$, ${z \in \Words}$, ${w_1 \in \Bool^{\R_\sigma(k)}}$ and ${w_2 \in \Words}$, ${\R_\sigma(k) \leq p(k)}$ and ${\Ev^{p(k)}(az;\En_\Nats(p(k)),w_1 w_2)=\sigma^k(w_1)}$. Denote ${b=\En_E(\phi)}$. We construct ${\pi: \Words \Scheme \Words}$ s.t. for any ${k \gg 0}$, ${x \in \Supp \sigma_{\bullet}^k}$, ${z_1 \in \Bool^{p(k)-\Abs{a}}}$ and ${z_2 \in \Bool^{p(k)-\Abs{b}}}$
 
-Let ${\sigma}$ be an ${\EG}$-sampler of ${\mu}$.
+\begin{align}
+\R_\pi(k) &= 2p(k)-\Abs{a}-\Abs{b} \\
+\label{eqn:thm__complete__red}\pi^k(x,z_1 z_2)&=\Chev{az_1,bz_2,x} 
+\end{align}
 
-TBD
+We also ensure that for any ${k \gg 0}$, ${x \in \Words}$ and ${z_1,z_2}$ as above, either \ref{eqn:thm__complete__red} holds or ${\Abs{\pi^k(x,z_1 z_2)}=0}$.
+
+To verify condition~\ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, construct ${W: \Words \Scheme \Rats^{\geq 0}}$ s.t. 
+
+\[W^k(y)=\begin{cases}2^{\Abs{a}+\Abs{b}} \text{ if } \exists z_1,z_2,x \in \Bool^{\leq p(k)}: y=\Chev{az_1, bz_2,x}\\0 \text{ otherwise}\end{cases}\]
+
+${\mu^k \equiv \sigma_\bullet^k \pmod \Fall}$ since ${\sigma}$ is an ${\EG}$-sampler of ${\mu}$. By Proposition~\ref{prp:prob_cong_push}, ${\pi_*^k\mu^k \equiv \pi_*^k\sigma_\bullet^k \pmod \Fall}$. It follows that
+
+\[\sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-(\pi_*^k\mu^k)(y)} \equiv \sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-(\pi_*^k\sigma_\bullet^k)(y)} \pmod \Fall\]
+
+Given ${k \gg 0}$, for any ${y \in \Words}$, if ${W^k(y)=0}$ then ${(\pi_*^k\sigma_\bullet^k)(y) = 0}$. We get
+
+\[\sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-(\pi_*^k\mu^k)(y)} \equiv \sum_{z_1,z_2,x \in \Bool^{\leq p(k)}} \Abs{\mu_{\mathfrak{F}}^{p(k)}(\Chev{az_1, bz_2,x})2^{\Abs{a}+\Abs{b}}-(\pi_*^k\sigma_\bullet^k)(\Chev{az_1, bz_2,x})} \pmod \Fall\]
+
+\[\sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-\pi_*^k\mu^k(y)} \equiv \sum_{\substack{z_1 \in \Bool^{p(k)-\Abs{a}}\\z_2 \in \Bool^{p(k)-\Abs{b}}\\x \in \Bool^{\leq p(k)}}} \Abs{2^{-p(k)}2^{-p(k)}\sigma_\bullet^k(x) 2^{\Abs{a}+\Abs{b}}-(\pi_*^k\sigma_\bullet^k)(\Chev{az_1, bz_2,x})} \pmod \Fall\]
+
+\[\sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-\pi_*^k\mu^k(y)} \equiv \sum_{\substack{z_1 \in \Bool^{p(k)-\Abs{a}}\\z_2 \in \Bool^{p(k)-\Abs{b}}\\x \in \Bool^{\leq p(k)}}} \Abs{2^{-2p(k)+\Abs{a}+\Abs{b}}\sigma_\bullet^k(x) -(\pi_*^k\sigma_\bullet^k)(\Chev{az_1, bz_2,x})} \pmod \Fall\]
+
+\[\sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-\pi_*^k\mu^k(y)} \equiv \sum_{\substack{z_1 \in \Bool^{p(k)-\Abs{a}}\\z_2 \in \Bool^{p(k)-\Abs{b}}\\x \in \Bool^{\leq p(k)}}} \Abs{2^{-2p(k)+\Abs{a}+\Abs{b}}\sigma_\bullet^k(x) -2^{-(p(k)-\Abs{a})}2^{-(p(k)-\Abs{b})}\sigma_\bullet^k(x)} \pmod \Fall\]
+
+\[\sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-\pi_*^k\mu^k(y)} \equiv 0 \pmod \Fall\]
+
+To verify condition~\ref{con:def__pp_reduce__fun} of Definition~\ref{def:pp_reduce}, use Proposition~\ref{prp:prob_cong_ev} to get
+
+\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv \E_{\sigma_\bullet^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \pmod \Fall\]
+
+\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv \E_{\sigma_\bullet^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\Chev{az_1,bz_2,x})}] \pmod \Fall\]
+
+\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv \E_{\sigma_\bullet^k \times \Un_\pi^k}[\Abs{\mathfrak{F}(\phi,x)-\mathfrak{F}(\phi,x)}] \pmod \Fall\]
+
+\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv 0 \pmod \Fall\]
+
+To verify condition~\ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, construct ${\tau: \Words \Scheme \Words}$ s.t. for any ${z_1,z_2 \in \Bool^{p(k)}}$ and ${x \in \Supp \sigma_\bullet^k}$, ${\tau^k(\Chev{z_1,z_2,x})=x}$. By Proposition~\ref{prp:prob_cong_push} and Proposition~\ref{prp:prob_cong_ev}
+
+\[\E_{y \sim \pi_*^k\mu^k}[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv \E_{y \sim \pi_*^k\sigma_\bullet^k}[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \pmod \Fall\]
+
+\[\E[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv \E_{(x,z_1,z_2) \sim \sigma_\bullet^k \times \Un^{p(k)-\Abs{a}} \times \Un^{p(k)-\Abs{b}}}[\Dtv(\mu^k \mid (\pi^k)^{-1}(\Chev{az_1,bz_2,x}),\tau_{\Chev{az_1,bz_2,x}}^k)] \pmod \Fall\]
+
+\[\E[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv \E_{(x,z_1,z_2) \sim \sigma_\bullet^k \times \Un^{p(k)-\Abs{a}} \times \Un^{p(k)-\Abs{b}}}[\Dtv(\delta_x,\delta_x)] \pmod \Fall\]
+
+\[\E[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv 0 \pmod \Fall\]
 %
 \end{proof}
+
+% Lifting to rank n and non-trivial advice
+% 
+% Examples of classes
 
 TBD
 
@@ -2788,8 +2790,8 @@ TBD
 
 % Including stability of conditional expectations
 % 
-% Add to previous sections analysis of the properties of ${\mathcal{E}_{\text{ll},\phi}}$ and ${\mathcal{E}_{\text{poly}}$ after each fall space property is introduced. 
-% 
+% Add to previous sections analysis of the properties of ${\mathcal{E}_{\text{ll},\phi}}$ and ${\mathcal{E}_{\text{poly}}$ after each fall space property is introduced.
+%
 % The 0th parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The other parameters serve to control the resources available to the predictor. To illustrate the significance of the other parameters using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question \enquote{what is the probability 7614829 is prime?} depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
 
 TBD
@@ -2812,7 +2814,7 @@ TBD
 
 We review the definitions of hard-core predicate and one-way function and state the Goldreich-Levin theorem.
 
-We will use the notation $\Gamma_{\text{det}}:=(\Gamma_0^1,\Gamma_0^1)$, $\Gamma_{\text{rand}}:=(\Gamma_{\text{poly}}^1,\Gamma_0^1)$, ${\Gamma_{\text{circ}}:=(\Gamma_0^1,\Gamma_{\text{poly}}^1)}$.
+We will use the notation $\Gamma_{\text{det}}:=(\Gamma_0^1,\Gamma_0^1)$, $\Gamma_{\text{rand}}:=(\GammaPoly^1,\Gamma_0^1)$, ${\Gamma_{\text{circ}}:=(\Gamma_0^1,\GammaPoly^1)}$.
 
 \begin{samepage}
 \begin{definition}
@@ -2907,3 +2909,4 @@ TBD
 \bibliography{Optimal_Predictors}
 
 \end{document}
+
