@@ -73,6 +73,9 @@
 \newcommand{\Coms}{\mathbb{C}}
 \newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
 
+\newcommand{\Estr}{\bm{\lambda}}
+\newcommand{\LLU}{\mathbf{LLU}}
+
 \newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
 \newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
 \newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
@@ -93,8 +96,10 @@
 \newcommand{\ESG}{\Fall^\sharp(\Gamma)}
 \newcommand{\EMG}{\Fall(\MGrow)}
 \newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
-\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
 \newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
+
+\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
+\newcommand{\FallU}{\Fall_{\textnormal{uni}}^{(n)}}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
@@ -205,7 +210,7 @@ For $X$ a discrete measurable space, a probability measure on $X$ can be represe
 
 \subsection{Algorithms}
 
-$\Words$ is the set of all finite binary strings (words), i.e. $\Words:=\bigsqcup_{n \in \Nats} \Bool^n$. For any ${x \in \Words}$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. ${\lambda \in \Words}$ is the empty string. For any $n \in \Nats$
+$\Words$ is the set of all finite binary strings (words), i.e. $\Words:=\bigsqcup_{n \in \Nats} \Bool^n$. For any ${x \in \Words}$, $\Abs{x}$ is the length of $x$ i.e. $x \in \WordsLen{\Abs{x}}$. ${\Estr \in \Words}$ is the empty string. For any $n \in \Nats$
 
 \begin{align*}
 \Bool^{\leq n}&:=\{x \in \Words \mid \Abs{x} \leq n\} \\
@@ -414,6 +419,34 @@ Given $f,g: \Nats^n \rightarrow \Reals$, the notation $f(K) \equiv g(K) \pmod \F
 We define $\Fall_{\text{neg}}$, a fall space of rank $1$. For any $\varepsilon: \Nats \rightarrow \Reals^{\geq 0}$ bounded, $\varepsilon \in \Fall_{\text{neg}}$ iff for any $d \in \Nats$, $\Lim{k} k^d \varepsilon(k) = 0$.
 
 \end{example}
+
+\begin{samepage}
+\begin{example}
+
+For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. 
+
+Given any ${l \in \Nats \setminus [2]}$, we denote ${\LLU^l}$ the probability measure on ${\Nats}$ given by
+
+\begin{equation}
+%\label{eqn:tbd}
+\LLU^l(j):=\begin{cases}\frac{\log\log (j+1) - \log\log j}{\log\log l} \text{ if } 2 \leq j \leq l-1 \\ 0 \text{ if } j < 2 \text{ or } j \geq l\end{cases}
+\end{equation}
+
+${h: \Nats^{n-1} \rightarrow \Nats}$ is called \emph{superquasi-polynomial} when for every ${p \in \Nats[K_0, K_1 \ldots K_{n-2}]}$ and ${\epsilon \in \Reals^{>0}}$, there are only finitely many ${K \in \Nats^{n-1}}$ s.t. ${\frac{\log\log p(K)}{\log\log h(K)} > \epsilon}$.
+
+For any ${\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff for every ${h: \Nats^{n-1} \rightarrow \Nats \setminus [2]}$ superquasi-polynomial there is ${M \in \Reals^{>0}}$ s.t.
+
+\begin{equation}
+%\label{eqn:tbd}
+\forall K \in \Nats^{n-1}: \E_{j \sim \LLU^{h(K)}}[\varepsilon(K,j)] \leq \frac{M}{h(K)}
+\end{equation}
+
+To see ${\FallU}$ is indeed a fall space, note...
+
+\end{example}
+\end{samepage}
+
+The definition of ${\FallU}$ might seem poorly motivated. Its justification lies in the existence theorems proven in Section \ref{sec:e_and_u}.
 
 We note a few simple properties of fall spaces which will be useful in the following.
 
@@ -761,6 +794,7 @@ There is a variant of Definition~\ref{def:op} which is nearly equivalent in many
 We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real inner product space with inner product $\Chev{f,g}:=\E_\mu[fg]$. Informally, we can think of $\Gamma$-schemes as a subspace (although a $\Gamma$-scheme is not even a function) and an $\EG$-optimal estimator for $(\mu,f)$ as the nearest point to $f$ in this subspace. Now, given an inner product space $V$, a vector $f \in V$, an actual subspace $W \subseteq V$ and $p = \Argmin{q \in W} \Norm{q - f}^2$, we have $\forall v \in W: \Chev{p-f,v}=0$. This motivates the following:
 
 \begin {definition}
+\label{def:obe_sharp}
 
 Consider $(\mu,f)$ a distributional estimation problem and ${P: \Words \Scheme \Rats}$ with bounded range. Denote $\mu_P^{K}:=\mu^{K} \times \Un_P^{K}$. $P$ is called an \emph{$\ESG$-optimal bounded estimator for $(\mu,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats\footnote{The $\Rats$-valued argument of $S$ is only important for non-trivial $\GrowR$, otherwise we can absorb it into the definition of $S$ using $P$ as a subroutine.}$
 
@@ -825,7 +859,9 @@ $$\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max(\varepsilon(K)^{\fr
 The right hand side is obviously in $\Fall^{\frac{1}{2}}$.
 \end{proof}
 
-Conversely, we have the following:
+Note that it would still be possible to prove Theorem~\ref{thm:ort} if in Definition~\ref{def:obe_sharp} we allowed ${S}$ to depend on ${y}$ directly instead of only through ${P}$. However, the definition as given appears more natural since it seems necessary to prove Theorem~\ref{thm:mult} in full generality.
+
+Conversely to Theorem~\ref{thm:ort}, we have the following:
 
 \begin{theorem}
 
@@ -2713,9 +2749,9 @@ For any ${\gamma_\alpha \in \Gamma_* \alpha^*}$ there is ${\gamma \in \Gamma_*}$
 
 \subsection{Completeness}
 
-Fix ${\Fall^1}$, a fall space of rank 1. Assume that for any non-constant ${p \in \Nats[k]}$, ${\Fall^1 p \subseteq \Fall^1}$. Denote\\ ${\Gamma_{\text{rand}}^1:=(\GammaPoly^1,\Gamma_0^1)}$.
+Fix ${\Fall^{(1)}}$, a fall space of rank 1. Assume that for any non-constant ${p \in \Nats[k]}$, ${\Fall^{(1)} p \subseteq \Fall^{(1)}}$. Denote\\ ${\Gamma_{\text{rand}}^1:=(\GammaPoly^1,\Gamma_0^1)}$.
 
-We will show that certain classes of functions paired with ${\Fall^1(\Gamma_{\text{rand}}^1)}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\Fall^1(\Gamma_{\text{rand}}^1)}$-reductions. The construction is an adaption of the usual construction of a complete problem for ${\mathsf{SampNP}}$.
+We will show that certain classes of functions paired with ${\Fall^{(1)}(\Gamma_{\text{rand}}^1)}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\Fall^{(1)}(\Gamma_{\text{rand}}^1)}$-reductions. The construction is an adaption of the usual construction of a complete problem for ${\mathsf{SampNP}}$.
 
 \begin{samepage}
 \begin{theorem}
@@ -2726,7 +2762,7 @@ Consider an encoded set ${E}$ which is prefix-free, i.e. for all ${\phi,\psi \in
 \begin{align}
 %\label{eqn:tbd}
 \zeta^k(a,w)&=(a,\Ev^{k}(a;\En_\Nats(k),w))\\
-\xi^k(b)&=\begin{cases}(b,D_\phi(k)) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ (b,\lambda) \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
+\xi^k(b)&=\begin{cases}(b,D_\phi(k)) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ (b,\Estr) \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
 \end{align}
 
 Define the distributional estimation problem $({\mu_{\mathfrak{F},D}},f_{\mathfrak{F}})$ by 
@@ -2736,7 +2772,7 @@ Define the distributional estimation problem $({\mu_{\mathfrak{F},D}},f_{\mathfr
 f_{\mathfrak{F}}(\Chev{b,d,a,x}) &:= \begin{cases}\mathfrak{F}(\phi, x) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ 0 \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
 \end{align}
 
-For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\Fall^1(\Gamma_{\textnormal{rand}}^1)}$-samplable world ensemble ${\mu}$, there is a precise pseudo-invertible ${\Fall^1(\Gamma_{\textnormal{rand}}^1)}$-reduction from ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F},D}, f_{\mathfrak{F}})}$ over a polynomial.
+For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\Fall^{(1)}(\Gamma_{\textnormal{rand}}^1)}$-samplable world ensemble ${\mu}$, there is a precise pseudo-invertible ${\Fall^{(1)}(\Gamma_{\textnormal{rand}}^1)}$-reduction from ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F},D}, f_{\mathfrak{F}})}$ over a polynomial.
 
 \end{theorem}
 \end{samepage}
@@ -2752,7 +2788,7 @@ Let ${\sigma}$ be an ${\EG}$-sampler of ${\mu}$. Choose ${p \in \Nats[k]}$ one-t
 
 We also ensure that for any ${k \gg 0}$, ${x \in \Words}$ and ${z_b,z_a}$ as above, either \ref{eqn:thm__complete__red} holds or 
 
-\[\pi^k(x,z_b z_a)=\lambda\]
+\[\pi^k(x,z_b z_a)=\Estr\]
 
 To verify condition~\ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce} (with ${p}$ playing the role of the efficient injection), fix ${q \in \Nats[k]}$ s.t.
 
@@ -2765,47 +2801,47 @@ Construct ${W: \Words \xrightarrow{\Gamma_{\textnormal{rand}}^1} \Rats^{\geq 0}}
 
 \[W^k(y)=\begin{cases}2^{\Abs{a}+\Abs{b}} \text{ if } \exists z_b,z_a,x \in \Bool^{\leq q(k)}: y=\Chev{bz_b,D_\phi(p(k)), az_a,x}\\0 \text{ otherwise}\end{cases}\]
 
-${\mu^k \equiv \sigma_\bullet^k \pmod{\Fall^1}}$ since ${\sigma}$ is an ${\Fall^1(\Gamma_{\textnormal{rand}}^1)}$-sampler of ${\mu}$. By Proposition~\ref{prp:prob_cong_push}, ${\pi_*^k\mu^k \equiv \pi_*^k\sigma_\bullet^k \pmod{\Fall^1}}$. It follows that
+${\mu^k \equiv \sigma_\bullet^k \pmod{\Fall^{(1)}}}$ since ${\sigma}$ is an ${\Fall^{(1)}(\Gamma_{\textnormal{rand}}^1)}$-sampler of ${\mu}$. By Proposition~\ref{prp:prob_cong_push}, ${\pi_*^k\mu^k \equiv \pi_*^k\sigma_\bullet^k \pmod{\Fall^{(1)}}}$. It follows that
 
-\[\sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-(\pi_*^k\mu^k)(y)} \equiv \sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-(\pi_*^k\sigma_\bullet^k)(y)} \pmod{\Fall^1}\]
+\[\sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-(\pi_*^k\mu^k)(y)} \equiv \sum_{y \in \Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}(y)W^k(y)-(\pi_*^k\sigma_\bullet^k)(y)} \pmod{\Fall^{(1)}}\]
 
 Given ${k \gg 0}$, for any ${y \in \Words}$, if ${W^k(y)=0}$ then ${(\pi_*^k\sigma_\bullet^k)(y) = 0}$. We get
 
-\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-(\pi_*^k\mu^k)} \equiv \sum_{\substack{z_b \in \Bool^{\leq q(k)}\\z_a \in \Bool^{\leq q(k)}\\x \in \Bool^{\leq q(k)}}} \Abs{\mu_{\mathfrak{F}}^{p(k)}(\Chev{bz_b, D_\phi(p(k)), az_a, x})2^{\Abs{a}+\Abs{b}}-(\pi_*^k\sigma_\bullet^k)(\Chev{bz_b,D_\phi(p(k)),az_a,x})} \pmod{\Fall^1}\]
+\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-(\pi_*^k\mu^k)} \equiv \sum_{\substack{z_b \in \Bool^{\leq q(k)}\\z_a \in \Bool^{\leq q(k)}\\x \in \Bool^{\leq q(k)}}} \Abs{\mu_{\mathfrak{F}}^{p(k)}(\Chev{bz_b, D_\phi(p(k)), az_a, x})2^{\Abs{a}+\Abs{b}}-(\pi_*^k\sigma_\bullet^k)(\Chev{bz_b,D_\phi(p(k)),az_a,x})} \pmod{\Fall^{(1)}}\]
 
-\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-\pi_*^k\mu^k} \equiv \sum_{\substack{z_b \in \Bool^{p(k)-\Abs{b}}\\z_a \in \Bool^{p(k)-\Abs{a}}\\x \in \Bool^{\leq q(k)}}} \Abs{2^{-p(k)}2^{-p(k)}\sigma_\bullet^k(x) 2^{\Abs{a}+\Abs{b}}-(\pi_*^k\sigma_\bullet^k)(\Chev{bz_b, D_\phi(p(k)),az_a,x})} \pmod{\Fall^1}\]
+\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-\pi_*^k\mu^k} \equiv \sum_{\substack{z_b \in \Bool^{p(k)-\Abs{b}}\\z_a \in \Bool^{p(k)-\Abs{a}}\\x \in \Bool^{\leq q(k)}}} \Abs{2^{-p(k)}2^{-p(k)}\sigma_\bullet^k(x) 2^{\Abs{a}+\Abs{b}}-(\pi_*^k\sigma_\bullet^k)(\Chev{bz_b, D_\phi(p(k)),az_a,x})} \pmod{\Fall^{(1)}}\]
 
-\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-\pi_*^k\mu^k} \equiv \sum_{\substack{z_1 \in \Bool^{p(k)-\Abs{a}}\\z_2 \in \Bool^{p(k)-\Abs{b}}\\x \in \Bool^{\leq q(k)}}} \Abs{2^{-2p(k)+\Abs{a}+\Abs{b}}\sigma_\bullet^k(x) -(\pi_*^k\sigma_\bullet^k)(\Chev{bz_b, D_\phi(p(k)),az_a,x})} \pmod{\Fall^1}\]
+\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-\pi_*^k\mu^k} \equiv \sum_{\substack{z_1 \in \Bool^{p(k)-\Abs{a}}\\z_2 \in \Bool^{p(k)-\Abs{b}}\\x \in \Bool^{\leq q(k)}}} \Abs{2^{-2p(k)+\Abs{a}+\Abs{b}}\sigma_\bullet^k(x) -(\pi_*^k\sigma_\bullet^k)(\Chev{bz_b, D_\phi(p(k)),az_a,x})} \pmod{\Fall^{(1)}}\]
 
-\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-\pi_*^k\mu^k} \equiv \sum_{\substack{z_1 \in \Bool^{p(k)-\Abs{a}}\\z_2 \in \Bool^{p(k)-\Abs{b}}\\x \in \Bool^{\leq q(k)}}} \Abs{2^{-2p(k)+\Abs{a}+\Abs{b}}\sigma_\bullet^k(x) -2^{-(p(k)-\Abs{a})}2^{-(p(k)-\Abs{b})}\sigma_\bullet^k(x)} \pmod{\Fall^1}\]
+\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-\pi_*^k\mu^k} \equiv \sum_{\substack{z_1 \in \Bool^{p(k)-\Abs{a}}\\z_2 \in \Bool^{p(k)-\Abs{b}}\\x \in \Bool^{\leq q(k)}}} \Abs{2^{-2p(k)+\Abs{a}+\Abs{b}}\sigma_\bullet^k(x) -2^{-(p(k)-\Abs{a})}2^{-(p(k)-\Abs{b})}\sigma_\bullet^k(x)} \pmod{\Fall^{(1)}}\]
 
-\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-\pi_*^k\mu^k} \equiv 0 \pmod{\Fall^1}\]
+\[\sum_{\Words} \Abs{\mu_{\mathfrak{F}}^{p(k)}W^k-\pi_*^k\mu^k} \equiv 0 \pmod{\Fall^{(1)}}\]
 
 To verify condition~\ref{con:def__pp_reduce__fun} of Definition~\ref{def:pp_reduce}, use Proposition~\ref{prp:prob_cong_ev} to get
 
-\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv \E_{\sigma_\bullet^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \pmod{\Fall^1}\]
+\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv \E_{\sigma_\bullet^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \pmod{\Fall^{(1)}}\]
 
-\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv \E_{\sigma_\bullet^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\Chev{bz_b,D_\phi(p(k)),az_a,x})}] \pmod{\Fall^1}\]
+\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv \E_{\sigma_\bullet^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\Chev{bz_b,D_\phi(p(k)),az_a,x})}] \pmod{\Fall^{(1)}}\]
 
-\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv \E_{\sigma_\bullet^k \times \Un_\pi^k}[\Abs{\mathfrak{F}(\phi,x)-\mathfrak{F}(\phi,x)}] \pmod{\Fall^1}\]
+\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv \E_{\sigma_\bullet^k \times \Un_\pi^k}[\Abs{\mathfrak{F}(\phi,x)-\mathfrak{F}(\phi,x)}] \pmod{\Fall^{(1)}}\]
 
-\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv 0 \pmod{\Fall^1}\]
+\[\E_{\mu^k \times \Un_\pi^k}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^k(x,z))}] \equiv 0 \pmod{\Fall^{(1)}}\]
 
 To verify condition~\ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, construct ${\tau: \Words \xrightarrow{\Gamma_{\textnormal{rand}}^1} \Words}$ s.t. for any ${z_1,z_2 \in \Bool^{p(k)}}$ and ${x \in \Supp \sigma_\bullet^k}$, ${\tau^k(\Chev{z_1,D_\phi(p(k)),z_2,x})=x}$. By Proposition~\ref{prp:prob_cong_push} and Proposition~\ref{prp:prob_cong_ev}
 
-\[\E_{y \sim \pi_*^k\mu^k}[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv \E_{y \sim \pi_*^k\sigma_\bullet^k}[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \pmod{\Fall^1}\]
+\[\E_{y \sim \pi_*^k\mu^k}[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv \E_{y \sim \pi_*^k\sigma_\bullet^k}[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \pmod{\Fall^{(1)}}\]
 
 Denoting ${\Un_{ba}^k:=\Un^{p(k)-\Abs{b}} \times \Un^{p(k)-\Abs{a}}}$
 
-\[\E[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^k \times \sigma_\bullet^k}[\Dtv(\mu^k \mid (\pi^k)^{-1}(\Chev{bz_b,D_\phi(p(k)),az_a,x}),\tau_{\Chev{bz_b,D_\phi(p(k)),az_a,x}}^k)] \pmod{\Fall^1}\]
+\[\E[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^k \times \sigma_\bullet^k}[\Dtv(\mu^k \mid (\pi^k)^{-1}(\Chev{bz_b,D_\phi(p(k)),az_a,x}),\tau_{\Chev{bz_b,D_\phi(p(k)),az_a,x}}^k)] \pmod{\Fall^{(1)}}\]
 
-\[\E[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^k \times \sigma_\bullet^k}[\Dtv(\delta_x,\delta_x)] \pmod{\Fall^1}\]
+\[\E[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^k \times \sigma_\bullet^k}[\Dtv(\delta_x,\delta_x)] \pmod{\Fall^{(1)}}\]
 
-\[\E[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv 0 \pmod{\Fall^1}\]
+\[\E[\Dtv(\mu^k \mid (\pi^k)^{-1}(y),\tau_y^k)] \equiv 0 \pmod{\Fall^{(1)}}\]
 %
 \end{proof}
 
-Obviously ${\mu_{\mathfrak{F}}}$ is ${\Fall^1(\Gamma_{\text{rand}}^1)}$-samplable. Therefore, if there is ${\phi^* \in E}$ s.t. ${f_{\phi^*}}$ is an extension of ${f_{\mathfrak{F}}}$ then ${(\mu_{\mathfrak{F},D},f_{\phi^*})}$ is complete w.r.t. precise pseudo-invertible ${\Fall^1(\Gamma_{\text{rand}}^1)}$-reductions over polynomials for the class of distributional estimation problems ${(\mu,f_\phi)}$ s.t. ${\mu}$ is ${\Fall^1(\Gamma_{\text{rand}}^1)}$-samplable. 
+Obviously ${\mu_{\mathfrak{F}}}$ is ${\Fall^{(1)}(\Gamma_{\text{rand}}^1)}$-samplable. Therefore, if there is ${\phi^* \in E}$ s.t. ${f_{\phi^*}}$ is an extension of ${f_{\mathfrak{F}}}$ then ${(\mu_{\mathfrak{F},D},f_{\phi^*})}$ is complete w.r.t. precise pseudo-invertible ${\Fall^{(1)}(\Gamma_{\text{rand}}^1)}$-reductions over polynomials for the class of distributional estimation problems ${(\mu,f_\phi)}$ s.t. ${\mu}$ is ${\Fall^{(1)}(\Gamma_{\text{rand}}^1)}$-samplable. 
 
 \begin{samepage}
 \begin{example}
@@ -2847,14 +2883,14 @@ For any ${p \in \Nats[k]}$, define ${\alpha_p: \Nats^{\bar{n}} \rightarrow \Nats
 
 \[\alpha_p(K)=(p(K_0), K_1, K_2 \ldots K_{\bar{n}-1})\]
 
-Define ${\eta: \Nats^{n} \rightarrow \Nats}$ by ${\eta(K)=K_0}$. Assume that ${\Fall^1 \eta \subseteq \Fall}$, ${\GammaPoly^1 \eta \subseteq \GrowR}$ and for any ${p \in \Nats[k]}$ one-to-one, ${\Fall \alpha_p \subseteq \Fall}$, ${\GrowR \alpha_p = \GrowR}$ and ${\GrowA \alpha_p = \GrowA}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\ESG}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall^1(\Gamma_{\textnormal{rand}}^1)}$-samplable word ensemble ${\mu}$, there is an ${\ESG}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
+Define ${\eta: \Nats^{n} \rightarrow \Nats}$ by ${\eta(K)=K_0}$. Assume that ${\Fall^{(1)} \eta \subseteq \Fall}$, ${\GammaPoly^1 \eta \subseteq \GrowR}$ and for any ${p \in \Nats[k]}$ one-to-one, ${\Fall \alpha_p \subseteq \Fall}$, ${\GrowR \alpha_p = \GrowR}$ and ${\GrowA \alpha_p = \GrowA}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\ESG}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall^{(1)}(\Gamma_{\textnormal{rand}}^1)}$-samplable word ensemble ${\mu}$, there is an ${\ESG}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
 
 \end{corollary}
 \end{samepage}
 
 \begin{proof}
 
-According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-invertible ${\Fall^1(\Gamma_{\textnormal{rand}}^1)}$-reduction of ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F}},f_{\mathfrak{F}})}$ over some ${p \in \Nats[k]}$ one-to-one. This implies ${\pi^\eta}$ is a precise pseudo-invertible ${\EG}$-reduction of ${(\mu^\eta,f_\phi)}$ to ${(\mu_{\mathfrak{F}}^\eta,f_{\mathfrak{F}})}$ over ${\alpha_p}$. Applying Corollary~\ref{crl:pp_reduce_sharp}, we get the desired result. 
+According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-invertible ${\Fall^{(1)}(\Gamma_{\textnormal{rand}}^1)}$-reduction of ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F}},f_{\mathfrak{F}})}$ over some ${p \in \Nats[k]}$ one-to-one. This implies ${\pi^\eta}$ is a precise pseudo-invertible ${\EG}$-reduction of ${(\mu^\eta,f_\phi)}$ to ${(\mu_{\mathfrak{F}}^\eta,f_{\mathfrak{F}})}$ over ${\alpha_p}$. Applying Corollary~\ref{crl:pp_reduce_sharp}, we get the desired result. 
 %
 \end{proof}
 
@@ -2866,7 +2902,7 @@ Assume ${\Fall}$ is ${\GrowA}$-ample. For any ${p \in \Nats[k]}$, define ${\alph
 
 \[\alpha_p(K)=(p(K_0), K_1, K_2 \ldots K_{\bar{n}-1})\]
 
-Define ${\eta: \Nats^{n} \rightarrow \Nats}$ by ${\eta(K)=K_0}$. Assume that ${\Fall^1 \eta \subseteq \Fall}$, ${\GammaPoly^1 \eta \subseteq \GrowR}$ and for any ${p \in \Nats[k]}$ one-to-one, ${\Fall \alpha_p \subseteq \Fall}$, ${\GrowR \alpha_p = \GrowR}$ and ${\GrowA \alpha_p = \GrowA}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\EG}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall^1(\Gamma_{\textnormal{rand}}^1)}$-samplable word ensemble ${\mu}$, there is an ${\EG}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
+Define ${\eta: \Nats^{n} \rightarrow \Nats}$ by ${\eta(K)=K_0}$. Assume that ${\Fall^{(1)} \eta \subseteq \Fall}$, ${\GammaPoly^1 \eta \subseteq \GrowR}$ and for any ${p \in \Nats[k]}$ one-to-one, ${\Fall \alpha_p \subseteq \Fall}$, ${\GrowR \alpha_p = \GrowR}$ and ${\GrowA \alpha_p = \GrowA}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\EG}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall^{(1)}(\Gamma_{\textnormal{rand}}^1)}$-samplable word ensemble ${\mu}$, there is an ${\EG}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
 
 \end{corollary}
 \end{samepage}
@@ -2882,11 +2918,17 @@ Completely analogous to proof of Corollary~\ref{crl:complete_sharp}.
 
 \subsection{Existence}
 
+\subsubsection{Positive Results}
 
+
+
+TBD
 
 % Add to previous sections analysis of the properties of ${\mathcal{E}_{\text{ll},\phi}}$ and ${\mathcal{E}_{\text{poly}}$ after each fall space property is introduced.
 % 
 % The 0th parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The other parameters serve to control the resources available to the predictor. To illustrate the significance of the other parameters using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question \enquote{what is the probability 7614829 is prime?} depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
+
+\subsubsection{Negative Results}
 
 TBD
 
