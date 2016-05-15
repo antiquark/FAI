@@ -104,8 +104,7 @@
 
 \begin{document}
 
-%\title[Optimal Estimators]{Optimal Estimators: A Bayesian Notion of Approximation Algorithm (Draft)}
-\title{Optimal Estimators: A Bayesian Notion of Approximation Algorithm (Draft)}
+\title{Optimal Bounded Estimators: A Bayesian Notion of Approximation Algorithm (Draft)}
 
 \author{Vadim Kosoy}
 \affil{Affiliation TBD}
@@ -115,7 +114,7 @@
 \maketitle
 
 \begin{abstract}
-The concept of an \enquote{approximation algorithm} is usually only applied to optimization problems since in optimization problems the performance of the algorithm on any given input is a continuous parameter. We introduce a new concept of approximation applicable to decision problems and functions, inspired by Bayesian probability. From the perspective of a Bayesian reasoner with limited computational resources, the answer to a problem that cannot be solved exactly is uncertain and therefore should be described by a random variable. It thus should make sense to talk about the expected value of this random variable, an idea we formalize in the language of average-case complexity theory by introducing the concept of optimal (resource bounded) estimator. We show that optimal estimators exhibit many parallels with \enquote{classical} probability theory, prove some existence theorems and completeness results.%
+The concept of an \enquote{approximation algorithm} is usually only applied to optimization problems since in optimization problems the performance of the algorithm on any given input is a continuous parameter. We introduce a new concept of approximation applicable to decision problems and functions, inspired by Bayesian probability. From the perspective of a Bayesian reasoner with limited computational resources, the answer to a problem that cannot be solved exactly is uncertain and therefore should be described by a random variable. It thus should make sense to talk about the expected value of this random variable, an idea we formalize in the language of average-case complexity theory by introducing the concept of optimal bounded estimator. We show that optimal bounded estimators exhibit many parallels with \enquote{classical} probability theory, prove some existence theorems and completeness results.%
 \end{abstract}%
 
 \section*{Introduction}
@@ -139,13 +138,13 @@ or (even worse)
 A wager on $\varphi_1$ can be resolved in a predetermined finite amount of time (the amount of time it takes to test it directly). On the other hand, it is unknown how long the resolution of $\varphi_2$ will take. It is possible that there is an odd perfect number but finding it (or otherwise becoming certain of its existence) will take a very long time. It is also possible there is no odd perfect number, a fact that cannot be directly verified because of its infinite nature. It is possible that there a proof of $\varphi_1$ within some formal theory, but accepting such a proof as resolution requires us to be completely certain of the consistency of the theory (whereas it is arguable that the consistency of formal mathematical theories, especially more abstract theories like ZFC, is itself only known empirically and in particular with less than absolute certainty). Moreover, there is no knowing a priori whether a proof exists or how long it will take to find it. For $\varphi_3$ there is no way to \enquote{directly} verify neither the sentence nor its negation, and it is actually known to be independent of ZFC.
 
 In the present work we avoid choosing a specific category of mathematical questions. Instead, we consider the abstract setting of arbitrary distributional decision problems. This leads to the perspective that an assignment of probabilities is a form of \emph{approximate} solution to a problem. This is not the same sense of approximation as used in optimization problems, where the approximation error is the difference between the ideal solution and the actual solution. Instead, the approximation error is the prediction accuracy of our probability assignment. This is also different from average-complexity theory where the solution is required to be exact on most input instances. However the language of average-complexity theory (in particular the concept of a distributional decision problem) turns out to be well-suited to our purpose.
-The concept of \enquote{optimal estimator} that arises from the approach turns out to behave much like probabilities, or more generally expected values, in \enquote{classical} probability theory. They display an appropriate form of calibration. The \enquote{expected values} are linear in general and multiplicative for functions that are independent in an appropriate sense. There is a natural parallel of conditional probabilities. For simple examples constructed from one-way functions we get the probability values we expect. Also they are well behaved in the complexity-theoretic sense that a natural class of reductions transforms optimal estimators into optimal estimators, and complete problems for these reductions exist for important complexity classes.
+The concept of \enquote{optimal bounded estimator} that arises from the approach turns out to behave much like probabilities, or more generally expected values, in \enquote{classical} probability theory. They display an appropriate form of calibration. The \enquote{expected values} are linear in general and multiplicative for functions that are independent in an appropriate sense. There is a natural parallel of conditional probabilities. For simple examples constructed from one-way functions we get the probability values we expect. Also they are well behaved in the complexity-theoretic sense that a natural class of reductions transforms optimal bounded estimators into optimal bounded estimators, and complete problems for these reductions exist for important complexity classes.
 
-Optimal estimators turn out to be unique up to a certain equivalence relation. The existence of optimal estimators depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal estimators that exist for completely arbitrary problems. Uniform optimal estimators of this kind exist for a certain class of problems we call \enquote{samplable} which can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal estimators allows for much further research.
+Optimal bounded estimators turn out to be unique up to a certain equivalence relation. The existence of optimal bounded estimators depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal bounded estimators that exist for completely arbitrary problems. Uniform optimal bounded estimators of this kind exist for a certain class of problems we call \enquote{samplable} which can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal bounded estimators allows for much further research.
 
-Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence\cite{Hutter_2013,Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other \cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal estimators. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal estimators to decision theory and the theory of self-modifying agents.
+Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence\cite{Hutter_2013,Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other \cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal bounded estimators. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal bounded estimators to decision theory and the theory of self-modifying agents.
 
-The structure of the paper is as follows. Section~\ref{sec:fundamentals} introduces the main definitions and gives a simple example using one-way functions. Section~\ref{sec:probability} shows the parallel between properties of optimal estimators and classical probability theory. Section~\ref{sec:reductions} discusses behavior of optimal estimators under reductions and shows certain natural classes have complete problems under reductions that are appropriate. Section~\ref{sec:e_and_u} discusses existence and uniqueness of optimal estimators. Section~\ref{sec:reflective} discusses applications to AGI. Section~\ref{sec:discussion} discusses possible avenues for further research. The Appendix reviews relevant material about hard-core predicates and one-way functions.
+The structure of the paper is as follows. Section~\ref{sec:fundamentals} introduces the main definitions and gives a simple example using one-way functions. Section~\ref{sec:probability} shows the parallel between properties of optimal bounded estimators and classical probability theory. Section~\ref{sec:reductions} discusses behavior of optimal bounded estimators under reductions and shows certain natural classes have complete problems under reductions that are appropriate. Section~\ref{sec:e_and_u} discusses existence and uniqueness of optimal bounded estimators. Section~\ref{sec:reflective} discusses applications to AGI. Section~\ref{sec:discussion} discusses possible avenues for further research. The Appendix reviews relevant material about hard-core predicates and one-way functions.
 
 \setcounter{section}{-1}
 
@@ -520,29 +519,31 @@ Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. T
 %
 \end{proof}
 
-\subsubsection{Optimal Estimators}
+\subsubsection{Optimal Bounded Estimators}
 
 We are now ready to give our central definition, which corresponds to a notion of \enquote{expected value} for distributional estimation problems.
 
 \begin{definition}
 \label{def:op}
 
-Fix $n \in \Nats$, $\Gamma$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. $P$ is called an \emph{$\EG$-optimal estimator for $(\mu,f)$} when for any $Q: \Words \Scheme \Rats$
+Fix $n \in \Nats$, $\Gamma$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. Consider $(\mu,f)$ a distributional estimation problem and $P: \Words \Scheme \Rats$ with bounded range. $P$ is called an \emph{$\EG$-optimal bounded estimator for $(\mu,f)$} when for any $Q: \Words \Scheme \Rats$
 
 \begin{equation}
 \label{eqn:op}
 \E_{\mu^{K} \times \Un_P^K}[(P^K - f)^2] \leq \E_{\mu^{K} \times \Un_Q^K}[(Q^K - f)^2] \pmod \Fall
 \end{equation}
 
+For the sake of brevity, we will say \enquote{${\EG}$-optimal estimator} rather than \enquote{${\EG}$-optimal bounded estimator.}
+
 \end{definition}
 
-Distributional \emph{decision} problems are the special case when the range of $f$ is $\Bool$. In this special case, the outputs of an optimal estimators can be thought of as probabilities\footnote{With some caveats. First, $P$ can take values outside $[0,1]$ but it's easy to see that clipping all values to $[0,1]$ preserves optimality. Second, $P^{K}(x,y)=1$ doesn't imply $f(x) = 1$ and $P^{K}(x,y)=0$ doesn't imply $f(x)=0$. We can try to fix this using a logarithmic error function instead of the squared norm, however this creates other difficulties and is outside the scope of the present work.}.
+Distributional \emph{decision} problems are the special case when the range of $f$ is $\Bool$. In this special case, the outputs of an optimal bounded estimator can be thought of as probabilities\footnote{With some caveats. First, $P$ can take values outside $[0,1]$ but it's easy to see that clipping all values to $[0,1]$ preserves optimality. Second, $P^{K}(x,y)=1$ doesn't imply $f(x) = 1$ and $P^{K}(x,y)=0$ doesn't imply $f(x)=0$. We can try to fix this using a logarithmic error function instead of the squared norm, however this creates other difficulties and is outside the scope of the present work.}.
 
 \subsection{Basic Properties}
 
 From now on we fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. All word ensembles and distributional estimation problems will be of rank ${n}$ unless specified otherwise.
 
-In this subsection we discuss some basic properties of optimal estimators which will be used in the following.
+In this subsection we discuss some basic properties of optimal bounded estimators which will be used in the following.
 
 \subsubsection{Optimality Relatively to Uniform Families}
 
@@ -637,7 +638,7 @@ Clearly ${\E_{\mu^{K} \times \Un^{r_{\mathfrak{R}}(K)}}[(P^{K} - f)^2] \leq \E_{
 
 \subsubsection{Optimality of Weighted Error}
 
-Although the word ensemble plays a central role in the definition of an optimal estimator, the dependence on the word ensemble is lax in some sense. To see this, consider the following proposition.
+Although the word ensemble plays a central role in the definition of an optimal bounded estimator, the dependence on the word ensemble is lax in some sense. To see this, consider the following proposition.
 
 \begin{definition}
 
@@ -761,12 +762,14 @@ We can think of functions $f: \Supp \mu \rightarrow \Reals$ as vectors in a real
 
 \begin {definition}
 
-Consider $(\mu,f)$ a distributional estimation problem and ${P: \Words \Scheme \Rats}$ with bounded range. Denote $\mu_P^{K}:=\mu^{K} \times \Un_P^{K}$. $P$ is called an \emph{$\ESG$-optimal estimator for $(\mu,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats\footnote{The $\Rats$-valued argument of $S$ is only important for non-trivial $\GrowR$, otherwise we can absorb it into the definition of $S$ using $P$ as a subroutine.}$
+Consider $(\mu,f)$ a distributional estimation problem and ${P: \Words \Scheme \Rats}$ with bounded range. Denote $\mu_P^{K}:=\mu^{K} \times \Un_P^{K}$. $P$ is called an \emph{$\ESG$-optimal bounded estimator for $(\mu,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats\footnote{The $\Rats$-valued argument of $S$ is only important for non-trivial $\GrowR$, otherwise we can absorb it into the definition of $S$ using $P$ as a subroutine.}$
 
 \begin{equation}
 \label{eqn:op_sharp}
 \E_{\mu^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K}(x,y) - f(x))S^{K}(x,P^{K}(x,y),z)] \equiv 0 \pmod \Fall
 \end{equation}
+
+For the sake of brevity, we will say \enquote{${\ESG}$-optimal estimator} rather than \enquote{${\ESG}$-optimal bounded estimator.}
 
 \end {definition}
 
@@ -848,7 +851,7 @@ We can assume $Q$ is bounded without loss of generality since given any $Q$ it e
 \subsection{Simple Example}
 \label{sec:fundamentals__one_way}
 
-The concept of an optimal estimator is in some sense complementary to the concept of pseudorandom: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal estimator, we use the concept of a hard-core predicate (which may be regarded as en elementary example of pseudorandom).
+The concept of an optimal bounded estimator is in some sense complementary to the concept of pseudorandom: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal bounded estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal bounded estimator, we use the concept of a hard-core predicate (which may be regarded as en elementary example of pseudorandom).
 
 \begin{theorem}
 \label{thm:hard_core}
@@ -953,14 +956,14 @@ Let $\Gamma:=(\GammaPoly^1,\GammaPoly^1)$. Let $P: \Words \Scheme \Rats$ satisfy
 Follows immediately from Theorem~\ref{thm:hard_core_circ} and Theorem~\ref{thm:goldreich_levin_circ}.
 \end{proof}
 
-\section{Optimal Estimators and Probability Theory}
+\section{Optimal Bounded Estimators and Probability Theory}
 \label{sec:probability}
 
 \subsection{Calibration}
 
 From a Bayesian perspective, a good probability assignment should be calibrated. For example, suppose there 100 people in a room and you assign each person a probability they are married. If there are 60 people you assigned probabilities in the range 70\%-80\%, the number of married people among these 60 should be close to the interval $60 \times [0.7, 0.8] = [42,48]$. The same requirement can be made for expected value assignments. For example, if you now need to assign an expected value to the age of each person and you assigned an expected age in the range 30-40 to some sufficiently large group of people, the mean age in the group should be close to the interval $[30,40]$. 
 
-We will now show that optimal estimators satisfy an analogous property.
+We will now show that optimal bounded estimators satisfy an analogous property.
 
 \begin{theorem}
 \label{thm:calib}
@@ -1081,7 +1084,7 @@ $$\frac{\delta(K)^2}{\alpha(K)} \leq \frac{4}{3}\varepsilon(K)$$
 
 \subsection{Algebraic Properties}
 
-In this subsection and subsection~\ref{subsec:indep_var}, we show that several algebraic identities satisfied by expected values have analogues for optimal estimators.
+In this subsection and subsection~\ref{subsec:indep_var}, we show that several algebraic identities satisfied by expected values have analogues for optimal bounded estimators.
 
 \subsubsection{Linearity}
 
@@ -1091,7 +1094,7 @@ Given $F_1,F_2$ random variables and $t_1,t_2 \in \Reals$, we have
 \E[t_1 F_1 + t_2 F_2] = t_1 \E[F_1] + t_2 \E[F_2]
 \end{equation}
 
-Optimal estimators have an analogous property:
+Optimal bounded estimators have an analogous property:
 
 \begin{proposition}
 \label{prp:linearity}
@@ -1124,7 +1127,7 @@ Consider a random variable $F$ and an event $A$. Denote $\chi_A$ the $\Bool$-val
 
 This identity is tautologous if interpreted as a definition of $\E[F \mid A]$. However, from the perspective of Bayesian probability it is more natural to think of $\E[F \mid A]$ as an atomic entity (the subjective expectation of $F$ after observing $A$). 
 
-The language of optimal estimators provides a natural way to define an analogue of conditional expectation. Namely, consider a distributional estimation problem $(\mu, f)$ and a decision problem ${D \subseteq \Words}$. Then, $P: \Words \Scheme \Rats$ represents the conditional expectation of $f$ given $D$ when it is an optimal estimator for $(\mu \mid D, f)$. That is, the conditional expectation is the best estimate of $f(x)$ when the problem instance $x$ is sampled with the \emph{promise} $x \in D$.
+The language of optimal bounded estimators provides a natural way to define an analogue of conditional expectation. Namely, consider a distributional estimation problem $(\mu, f)$ and a decision problem ${D \subseteq \Words}$. Then, $P: \Words \Scheme \Rats$ represents the conditional expectation of $f$ given $D$ when it is an optimal bounded estimator for $(\mu \mid D, f)$. That is, the conditional expectation is the best estimate of $f(x)$ when the problem instance $x$ is sampled with the \emph{promise} $x \in D$.
 
 The above perspective allows us stating and proving non-tautological theorems analogous to \ref{eqn:cond_ev}. We give two such theorems, corresponding to two different ways to group the variables in \ref{eqn:cond_ev}.
 
@@ -1192,7 +1195,7 @@ Consider $s,t \in \Rats$, an $[s,t]$-valued random variable $F$ and an event $A$
 \Prb[A]s \leq \E[\chi_A F] \leq \Prb[A]t
 \end{equation}
 
-For optimal estimators the analogous inequalities don't have to hold strictly (they only hold within an asymptotically small error), but the following proposition shows they can always be enforced.
+For optimal bounded estimators the analogous inequalities don't have to hold strictly (they only hold within an asymptotically small error), but the following proposition shows they can always be enforced.
 
 \begin{samepage}
 \begin{proposition}
@@ -1712,7 +1715,7 @@ Independent random variables $F_1, F_2$ satisfy
 \E[F_1 F_2] = \E[F_1] \E[F_2]
 \end{equation}
 
-To formulate an analogous property for optimal estimators, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_1$ is \enquote{independent} of $f_2$ when learning the value of $f_2(x)$ provides no efficiently accessible information about $f_1(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
+To formulate an analogous property for optimal bounded estimators, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\mu, f_1)$, $(\mu, f_2)$. Informally, $f_1$ is \enquote{independent} of $f_2$ when learning the value of $f_2(x)$ provides no efficiently accessible information about $f_1(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
 
 We start with an informal description. Suppose that $f_1(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_1(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ for which $f_2(x')$ is known. Then, the knowledge of $f_2(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
  Moreover, if we can only efficiently produce samples $x'$ of $\mu \mid \pi^{-1}(y)$ together with $\tilde{f}_2(x')$ an \emph{unbiased estimate} of $f_2(x')$, we still expect the analogue of \ref{eqn:ev_mult} to hold since the expected value of $\tilde{f}_2(x') - f_2(x')$ vanishes for any given $x'$ so it is uncorrelated with $f_1(x)$.
@@ -2020,7 +2023,7 @@ This is possible because the runtime of $\sigma^K$ is bounded by a polynomial in
 
 Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp \sigma_\bullet^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\ESG$-optimal estimator for $(\mu,\bar{f}_2)$. 
 
-We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\mu_1, f_1)$ plays the role of $(\nu,g)$: condition~\ref{con:thm__mult__dist} holds due to Proposition~\ref{prp:thm__mult__cond1}, condition~\ref{con:thm__mult__fun} holds due to Proposition~\ref{prp:thm__mult__cond2} and condition~\ref{con:thm__mult__smp} holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal estimator for $(\mu, f)$ s.t. ${\R_P=\R_{P_1}+\R_{P_2}}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$ 
+We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\mu_1, f_1)$ plays the role of $(\nu,g)$: condition~\ref{con:thm__mult__dist} holds due to Proposition~\ref{prp:thm__mult__cond1}, condition~\ref{con:thm__mult__fun} holds due to Proposition~\ref{prp:thm__mult__cond2} and condition~\ref{con:thm__mult__smp} holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal bounded estimator for $(\mu, f)$ s.t. ${\R_P=\R_{P_1}+\R_{P_2}}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$ 
 
 \[P^K(x, z_1 z_2) = P_1^K(\pi^K(x),z_1) \bar{P}^K(x,z_2)\]
 
@@ -2033,13 +2036,13 @@ In particular, for any ${x_1 \in \Supp \sigma_\bullet^K}$ and $x_2 \in \Words$
 \section{Reductions and Completeness}
 \label{sec:reductions}
 
-In this section we study notions of Karp reduction between distributional estimation problems such that the pull-back of an optimal estimator is an optimal estimator. It is also interesting to study Cook reductions but we avoid it in the present work.
+In this section we study notions of Karp reduction between distributional estimation problems such that the pull-back of an optimal bounded estimator is an optimal bounded estimator. It is also interesting to study Cook reductions but we avoid it in the present work.
 
 First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose. 
 
 Consider the setting of Corollary~\ref{crl:one_way}. Denote $\mu^k:=\Un^{2k}$ and define ${\chi: \Supp \mu \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$, ${\pi_f^k(xy) = \Chev{f(x),y}}$. $\pi_f$ can be regarded as a Karp reduction of $(\mu, \chi)$ to $(\mu_{(f)},\chi_f)$ since for any ${z \in \Supp \mu^k}$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*\mu=\mu_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pullback of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal estimator for $(\mu,\chi)$ since its error is $\E_{z \sim \mu^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \mu^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \mu^k}[(Q^k(z)-\chi(z))^2]=0$.
 
-We will describe several types of reductions that preserve optimal estimators. After that, we will characterize reductions that can be constructed by composing those types and prove a completeness theorem.
+We will describe several types of reductions that preserve optimal bounded estimators. After that, we will characterize reductions that can be constructed by composing those types and prove a completeness theorem.
 
 \subsection{Strict Pseudo-Invertible Reductions}
 
@@ -2667,7 +2670,7 @@ Consider $(\mu,f)$ a distributional estimation problem of rank ${m}$, $(\nu,g)$ 
 \end{definition}
 \end{samepage}
 
-The following corollaries are completely analogous to Corollary~\ref{crl:pp_reduce_sharp} and therefore given without proof. We also drop the explicit constructions of the optimal estimators which are obviously modeled on Theorem~\ref{thm:sp_reduce_sharp} and Theorem~\ref{thm:sp_reduce}.
+The following corollaries are completely analogous to Corollary~\ref{crl:pp_reduce_sharp} and therefore given without proof. We also drop the explicit constructions of the optimal bounded estimators which are obviously modeled on Theorem~\ref{thm:sp_reduce_sharp} and Theorem~\ref{thm:sp_reduce}.
 
 \begin{samepage}
 \begin{corollary}
@@ -2834,7 +2837,7 @@ ${D_{\mathsf{EXP}}}$ is constructed s.t. ${\Abs{D_{\mathsf{EXP},\phi}(k)}=p_\phi
 \end{example}
 \end{samepage}
 
-This completeness property implies that optimal estimators exist for the entire class if an optimal estimator exists for ${(\mu_{\mathfrak{F},D},f_{\mathfrak{F}})}$. More precisely, we have the following corollaries.
+This completeness property implies that optimal bounded estimators exist for the entire class if an optimal bounded estimator exists for ${(\mu_{\mathfrak{F},D},f_{\mathfrak{F}})}$. More precisely, we have the following corollaries.
 
 \begin{samepage}
 \begin{corollary}
