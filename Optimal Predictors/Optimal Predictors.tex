@@ -71,7 +71,7 @@
 \newcommand{\Rats}{\mathbb{Q}}
 \newcommand{\Reals}{\mathbb{R}}
 \newcommand{\Coms}{\mathbb{C}}
-\newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
+\newcommand{\NatPoly}[1]{\Nats[K_0, K_1 \ldots K_{n-#1}]}
 
 \newcommand{\Estr}{\bm{\lambda}}
 \newcommand{\LLU}{\mathbf{LLU}}
@@ -163,7 +163,7 @@ $\Ints$ is the ring of integers, $\Rats$ is the field of rational numbers, $\Rea
 
 For $F \in \{\Rats,\Reals\}$, $F^{>0} := \{x \in F \mid x > 0\}$, $F^{\geq 0} := \{x \in F \mid x \geq 0\}$.
 
-Given ${n \in \Nats}$, ${\NatPoly}$ will stand for the set of polynomials with natural coefficients in the ${n}$ variables ${K_0, K_1 \ldots K_{n-1}}$.
+Given ${n \in \Nats}$, ${\NatPoly{1}}$ will stand for the set of polynomials with natural coefficients in the ${n}$ variables ${K_0, K_1 \ldots K_{n-1}}$.
 
 For any $t \in \Reals$, $\Floor{t} := \max \{n \in \Ints \mid n \leq t\}$, $\Ceil{t} := \min \{n \in \Ints \mid n \geq t\}$.
 
@@ -271,18 +271,18 @@ In the motivational model, the estimator was restricted to lie in a class of fun
 
 \begin{samepage}
 \begin{definition}
-
+\label{def:grow}
 Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gamma: \Nats^n \rightarrow \Nats}$ s.t.
 
 \begin{enumerate}[(i)]
 
-\item $0 \in \Gamma$
+\item\label{con:def__grow__zero} $0 \in \Gamma$
 
-\item If $\gamma_1, \gamma_2 \in \Gamma$ then $\gamma_1 + \gamma_2 \in \Gamma$.
+\item\label{con:def__grow__add} If $\gamma_1, \gamma_2 \in \Gamma$ then $\gamma_1 + \gamma_2 \in \Gamma$.
 
-\item If $\gamma_1 \in \Gamma$, $\gamma_2: \Nats^n \rightarrow \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
+\item\label{con:def__grow__ineq} If $\gamma_1 \in \Gamma$, $\gamma_2: \Nats^n \rightarrow \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
 
-\item For any $\gamma \in \Gamma$ there is a $p \in \NatPoly$ s.t. $\gamma \leq p$.
+\item\label{con:def__grow__poly} For any $\gamma \in \Gamma$ there is a $p \in \NatPoly{1}$ s.t. $\gamma \leq p$.
 
 \end{enumerate}
 
@@ -299,7 +299,7 @@ For any $n \in \Nats$, $\Gamma_0^n$ is a growth space of rank $n$. $\gamma \in \
 
 For any $n \in \Nats$, $\GammaPoly^n$ is a growth space of rank $n$. 
 
-\[\GammaPoly^n := \{\gamma: \Nats^n \rightarrow \Nats \mid \exists p \in \NatPoly: \gamma \leq p\}\]
+\[\GammaPoly^n := \{\gamma: \Nats^n \rightarrow \Nats \mid \exists p \in \NatPoly{1}: \gamma \leq p\}\]
 
 \end{example}
 
@@ -308,6 +308,31 @@ For any $n \in \Nats$, $\GammaPoly^n$ is a growth space of rank $n$.
 For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{log}}^n$ iff there is $c \in \Nats$ s.t. $\gamma(K_0, K_1 \ldots K_{n-1}) \leq c \sum_{i \in [n]} \log(K_i+1)$.
 
 \end{example}
+
+\begin{samepage}
+\begin{example}
+
+Fix ${n \in \Nats^{>0}}$ and ${g \in \GammaPoly^n}$ s.t. ${g}$ is non-decreasing in the last argument and for some ${q \in \NatPoly{1}}$
+
+\begin{equation}
+%\label{eqn:tbd}
+\forall K \in \Nats^{n-1}, j \in \Nats: g(K,j) \leq \frac{1}{2}g(K,q(K,j))
+\end{equation}
+
+${\Gamma_g}$ is a growth space of rank ${n}$. ${\gamma \in \Gamma_g}$ iff there is ${p \in \NatPoly{1}}$ s.t. ${\gamma(K,j) \leq g(K,p(K,j))}$. 
+
+To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(K,j) \leq g(K,p_1(K,j))}$ and ${\gamma_2(K,j) \leq g(K,p_2(K,j))}$. Then we can choose ${p \in \NatPoly{1}}$ s.t. ${p \geq \max(p_1,p_2)}$ and get 
+
+\[\gamma_1(K,j)+\gamma_2(K,j) \leq g(K,p_1(K,j))+g(K,p_2(K,j))\]
+
+\[\gamma_1(K,j)+\gamma_2(K,j) \leq 2g(K,p(K,j))\]
+
+\[\gamma_1(K,j)+\gamma_2(K,j) \leq g(K,q(K,p(K,j)))\]
+
+In particular taking ${g_{\text{poly}}(K,j):=j}$ and ${g_{\text{log}}(K,j):=\Floor{\log (j+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{g_{\text{poly}}}}$, ${\Gamma_{\text{log}}^n=\Gamma_{g_{\text{log}}}}$.
+
+\end{example}
+\end{samepage}
 
 We now introduce our notion of an \enquote{efficient} algorithm.
 
@@ -340,7 +365,7 @@ There is a natural notion of composition for $\Gamma$-schemes.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose $p \in \NatPoly$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose $p \in \NatPoly{1}$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
 
 \begin{align}
 \A_U(K) &= \Chev{\A_T(K),\A_S(K)} \\
@@ -406,7 +431,7 @@ Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded
 
 \item\label{con:def__fall__ineq} If $\varepsilon_1 \in \Fall$, $\varepsilon_2: \Nats^n \rightarrow \Reals^{\geq 0}$ and $\forall K \in \Nats^n: \varepsilon_2(K) \leq \varepsilon_1(K)$ then $\varepsilon_2 \in \Fall$.
 
-\item\label{con:def__fall__pol} There is $h \in \NatPoly$ s.t. $2^{-h} \in \Fall$.
+\item\label{con:def__fall__pol} There is $h \in \NatPoly{1}$ s.t. $2^{-h} \in \Fall$.
 
 \end{enumerate}
 
@@ -423,20 +448,7 @@ We define $\Fall_{\text{neg}}$, a fall space of rank $1$. For any $\varepsilon: 
 \begin{samepage}
 \begin{example}
 \label{exm:e_uni}
-For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. 
-
-%Given any ${l \in \Nats \setminus [2]}$, we denote ${\LLU^l}$ the probability measure on ${\Nats}$ given by
-
-%\begin{equation}
-%\label{eqn:tbd}
-%\LLU^l(j):=\begin{cases}\frac{\log\log (j+1) - \log\log j}{\log\log l} \text{ if } 2 \leq j \leq l-1 %\\ 0 \text{ if } j < 2 \text{ or } j \geq l\end{cases}
-%\end{equation}
-
-%${h: \Nats^{n-1} \rightarrow \Nats}$ is called \emph{superquasi-polynomial} when for every ${p \in \Nats[K_0, K_1 \ldots K_{n-2}]}$ and ${\epsilon \in \Reals^{>0}}$, there are only finitely many ${K \in \Nats^{n-1}}$ s.t. ${\frac{\log\log p(K)}{\log\log h(K)} > \epsilon}$.
-
-%For any ${\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff for every ${h: \Nats^{n-1} \rightarrow \Nats \setminus [2]}$ superquasi-polynomial there is ${M \in \Reals^{>0}}$ s.t.
-
-For any ${\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff there are ${M \in \Reals^{>0}}$ and ${p \in \Nats[K_0, K_1 \ldots K_{n-2}]}$ s.t.
+For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. For any ${\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff there are ${M \in \Reals^{>0}}$ and ${p \in \NatPoly{2}}$ s.t.
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -550,7 +562,7 @@ For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \Nats^n \righ
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \NatPoly$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \NatPoly{1}$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
 %
 \end{proof}
 
@@ -814,13 +826,13 @@ The following theorem is the analogue in our language of the previous fact about
 \begin{theorem}
 \label{thm:ort}
 
-Assume there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \NatPoly$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
+Assume there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \NatPoly{1}$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
 
 \end{theorem}
 
 \begin{proof}
 
-Assume without loss of generality that there is ${h \in \NatPoly}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \NatPoly$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \Nats^n \rightarrow \{ \pm 1 \}}$ and $m: \Nats^n \rightarrow \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
+Assume without loss of generality that there is ${h \in \NatPoly{1}}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \NatPoly{1}$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \Nats^n \rightarrow \{ \pm 1 \}}$ and $m: \Nats^n \rightarrow \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
 
 $$Q_t^{K}(x,yz) = P^{K}(x,y) + t(K) S^{K}(x,P^{K}(x,y),z)$$
 
@@ -1486,7 +1498,7 @@ We introduce composition of ${\MGrow}$-schemes as well.
 \begin{samepage}
 \begin{definition}
 
-Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose\\ ${p \in \NatPoly}$ s.t. 
+Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose\\ ${p \in \NatPoly{1}}$ s.t. 
 
 \begin{align*}
 \Supp \UM_S^K &\subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)} \\
@@ -2522,7 +2534,7 @@ For any ${\alpha \in \GammaPoly^{mn}}$, ${\Fall \alpha}$ is a fall space
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider ${h \in \NatPoly}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider ${h \in \NatPoly{1}}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
 %
 \end{proof}
 
@@ -2922,13 +2934,47 @@ Completely analogous to proof of Corollary~\ref{crl:complete_sharp}.
 
 \subsubsection{Positive Results}
 
+We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators. Theorem~\ref{thm:exists_all} shows that (under certain assumptions on ${\Gamma}$), \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing bounds on space, but this out of the current scope.} example from the introduction, the question \enquote{what is the probability 7614829 is prime?} depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
 
+However, in general the estimators constructed in Theorem~\ref{thm:exists_all} are non-uniform. Theorem~\ref{thm:exists_smp} shows that for \emph{samplable} distributional estimation problems (and slightly stronger assumptions on ${\Gamma}$) the estimator requires only as much advice as the sampler. In particular, the existence of a uniform sampler implies the existence of a uniform ${\FallU(\Gamma)}$-optimal estimator.
+
+\begin{samepage}
+\begin{theorem}
+\label{thm:exists_all}
+
+?
+
+\end{theorem}
+\end{samepage}
+
+\begin{proof}
+
+FOO
+%
+\end{proof}
+
+TBD
+
+% agnostic PAC learning
+
+\begin{samepage}
+\begin{theorem}
+\label{thm:exists_smp}
+
+?
+
+\end{theorem}
+\end{samepage}
+
+\begin{proof}
+
+FOO
+%
+\end{proof}
 
 TBD
 
 % Add to previous sections analysis of the properties of ${\mathcal{E}_{\text{ll},\phi}}$ and ${\mathcal{E}_{\text{poly}}$ after each fall space property is introduced.
-% 
-% The 0th parameter serves to define asymptotic behavior and can be roughly thought of as determining the size of the input. The other parameters serve to control the resources available to the predictor. To illustrate the significance of the other parameters using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing restrictions on spatial resources, but this out of the current scope.} example from Section 1, the question \enquote{what is the probability 7614829 is prime?} depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$.
 
 \subsubsection{Negative Results}
 
