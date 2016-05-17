@@ -425,31 +425,30 @@ We define $\Fall_{\text{neg}}$, a fall space of rank $1$. For any $\varepsilon: 
 \label{exm:e_uni}
 For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. 
 
-Given any ${l \in \Nats \setminus [2]}$, we denote ${\LLU^l}$ the probability measure on ${\Nats}$ given by
+%Given any ${l \in \Nats \setminus [2]}$, we denote ${\LLU^l}$ the probability measure on ${\Nats}$ given by
+
+%\begin{equation}
+%\label{eqn:tbd}
+%\LLU^l(j):=\begin{cases}\frac{\log\log (j+1) - \log\log j}{\log\log l} \text{ if } 2 \leq j \leq l-1 %\\ 0 \text{ if } j < 2 \text{ or } j \geq l\end{cases}
+%\end{equation}
+
+%${h: \Nats^{n-1} \rightarrow \Nats}$ is called \emph{superquasi-polynomial} when for every ${p \in \Nats[K_0, K_1 \ldots K_{n-2}]}$ and ${\epsilon \in \Reals^{>0}}$, there are only finitely many ${K \in \Nats^{n-1}}$ s.t. ${\frac{\log\log p(K)}{\log\log h(K)} > \epsilon}$.
+
+%For any ${\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff for every ${h: \Nats^{n-1} \rightarrow \Nats \setminus [2]}$ superquasi-polynomial there is ${M \in \Reals^{>0}}$ s.t.
+
+For any ${\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff there are ${M \in \Reals^{>0}}$ and ${p \in \Nats[K_0, K_1 \ldots K_{n-2}]}$ s.t.
 
 \begin{equation}
 %\label{eqn:tbd}
-\LLU^l(j):=\begin{cases}\frac{\log\log (j+1) - \log\log j}{\log\log l} \text{ if } 2 \leq j \leq l-1 \\ 0 \text{ if } j < 2 \text{ or } j \geq l\end{cases}
+\forall K \in \Nats^{n-1}: \sum_{j=2}^\infty\frac{\varepsilon(K,j)}{j \log j} \leq M \log \log p(K)
 \end{equation}
 
-${h: \Nats^{n-1} \rightarrow \Nats}$ is called \emph{superquasi-polynomial} when for every ${p \in \Nats[K_0, K_1 \ldots K_{n-2}]}$ and ${\epsilon \in \Reals^{>0}}$, there are only finitely many ${K \in \Nats^{n-1}}$ s.t. ${\frac{\log\log p(K)}{\log\log h(K)} > \epsilon}$.
-
-For any ${\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff for every ${h: \Nats^{n-1} \rightarrow \Nats \setminus [2]}$ superquasi-polynomial there is ${M \in \Reals^{>0}}$ s.t.
-
-\begin{equation}
-%\label{eqn:tbd}
-\forall K \in \Nats^{n-1}: \E_{j \sim \LLU^{h(K)}}[\varepsilon(K,j)] \leq \frac{M}{h(K)}
-\end{equation}
+To verify condition \ref{con:def__fall__pol} note that ${2^{-K_{n-1}} \in \FallU}$.
 
 \end{example}
 \end{samepage}
 
-\begin{proof}[Proof that Example~\ref{exm:e_uni} is valid]
-
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious... TBD
-\end{proof}
-
-Example~\ref{exm:e_uni} might seem poorly motivated. Its justification lies in the existence theorems proven in Section \ref{sec:e_and_u}.
+The main motivation for Example~\ref{exm:e_uni} are the existence theorems proven in Section \ref{sec:e_and_u}.
 
 We note a few simple properties of fall spaces which will be useful in the following.
 
@@ -2882,9 +2881,9 @@ This completeness property implies that optimal bounded estimators exist for the
 \begin{corollary}
 \label{crl:complete_sharp}
 
-For any ${p \in \Nats[k]}$, define ${\alpha_p: \Nats^{\bar{n}} \rightarrow \Nats^{\bar{n}}}$ by 
+For any ${p \in \Nats[k]}$, define ${\alpha_p: \Nats^n \rightarrow \Nats^n}$ by 
 
-\[\alpha_p(K)=(p(K_0), K_1, K_2 \ldots K_{\bar{n}-1})\]
+\[\alpha_p(K)=(p(K_0), K_1, K_2 \ldots K_{n-1})\]
 
 Define ${\eta: \Nats^{n} \rightarrow \Nats}$ by ${\eta(K)=K_0}$. Assume that ${\Fall^{(1)} \eta \subseteq \Fall}$, ${\GammaPoly^1 \eta \subseteq \GrowR}$ and for any ${p \in \Nats[k]}$ one-to-one, ${\Fall \alpha_p \subseteq \Fall}$, ${\GrowR \alpha_p = \GrowR}$ and ${\GrowA \alpha_p = \GrowA}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\ESG}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall^{(1)}(\Gamma_{\textnormal{rand}}^1)}$-samplable word ensemble ${\mu}$, there is an ${\ESG}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
 
@@ -2901,9 +2900,9 @@ According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-inver
 \begin{corollary}
 %\label{crl:tbd}
 
-Assume ${\Fall}$ is ${\GrowA}$-ample. For any ${p \in \Nats[k]}$, define ${\alpha_p: \Nats^{\bar{n}} \rightarrow \Nats^{\bar{n}}}$ by 
+Assume ${\Fall}$ is ${\GrowA}$-ample. For any ${p \in \Nats[k]}$, define ${\alpha_p: \Nats^n \rightarrow \Nats^n}$ by 
 
-\[\alpha_p(K)=(p(K_0), K_1, K_2 \ldots K_{\bar{n}-1})\]
+\[\alpha_p(K)=(p(K_0), K_1, K_2 \ldots K_{n-1})\]
 
 Define ${\eta: \Nats^{n} \rightarrow \Nats}$ by ${\eta(K)=K_0}$. Assume that ${\Fall^{(1)} \eta \subseteq \Fall}$, ${\GammaPoly^1 \eta \subseteq \GrowR}$ and for any ${p \in \Nats[k]}$ one-to-one, ${\Fall \alpha_p \subseteq \Fall}$, ${\GrowR \alpha_p = \GrowR}$ and ${\GrowA \alpha_p = \GrowA}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\EG}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall^{(1)}(\Gamma_{\textnormal{rand}}^1)}$-samplable word ensemble ${\mu}$, there is an ${\EG}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
 
