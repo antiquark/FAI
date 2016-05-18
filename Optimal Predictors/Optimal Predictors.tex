@@ -310,26 +310,33 @@ For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\
 \end{example}
 
 \begin{samepage}
-\begin{example}
+\begin{definition}
+%\label{def:tbd}
 
-Fix ${n \in \Nats^{>0}}$ and ${g \in \GammaPoly^n}$ s.t. ${g}$ is non-decreasing in the last argument and for some ${q \in \NatPoly{1}}$
+Fix ${n \in \Nats^{>0}}$. ${\gamma \in \GammaPoly^n}$ is called a \emph{pseudologarithm} when it is non-decreasing in the last argument and there is ${q \in \NatPoly{1}}$ s.t.
 
 \begin{equation}
 %\label{eqn:tbd}
-\forall K \in \Nats^{n-1}, j \in \Nats: g(K,j) \leq \frac{1}{2}g(K,q(K,j))
+\forall K \in \Nats^{n-1}, j \in \Nats: \gamma(K,j) \leq \frac{1}{2}\gamma(K,q(K,j))
 \end{equation}
 
-${\Gamma_g}$ is a growth space of rank ${n}$. ${\gamma \in \Gamma_g}$ iff there is ${p \in \NatPoly{1}}$ s.t. ${\gamma(K,j) \leq g(K,p(K,j))}$. 
+\end{definition}
+\end{samepage}
 
-To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(K,j) \leq g(K,p_1(K,j))}$ and ${\gamma_2(K,j) \leq g(K,p_2(K,j))}$. Then we can choose ${p \in \NatPoly{1}}$ s.t. ${p \geq \max(p_1,p_2)}$ and get 
+\begin{samepage}
+\begin{example}
 
-\[\gamma_1(K,j)+\gamma_2(K,j) \leq g(K,p_1(K,j))+g(K,p_2(K,j))\]
+For any ${n \in \Nats^{>0}}$ and ${\gamma^* \in \GammaPoly^n}$ a pseudologarithm, ${\Gamma_{\gamma^*}}$ is a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly{1}}$ s.t. ${\gamma(K,j) \leq \gamma^*(K,p(K,j))}$. 
 
-\[\gamma_1(K,j)+\gamma_2(K,j) \leq 2g(K,p(K,j))\]
+To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(K,j) \leq \gamma^*(K,p_1(K,j))}$ and ${\gamma_2(K,j) \leq \gamma^*(K,p_2(K,j))}$. Then we can choose ${p \in \NatPoly{1}}$ s.t. ${p \geq \max(p_1,p_2)}$ and get 
 
-\[\gamma_1(K,j)+\gamma_2(K,j) \leq g(K,q(K,p(K,j)))\]
+\[\gamma_1(K,j)+\gamma_2(K,j) \leq \gamma^*(K,p_1(K,j))+\gamma^*(K,p_2(K,j))\]
 
-In particular taking ${g_{\text{poly}}(K,j):=j}$ and ${g_{\text{log}}(K,j):=\Floor{\log (j+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{g_{\text{poly}}}}$, ${\Gamma_{\text{log}}^n=\Gamma_{g_{\text{log}}}}$.
+\[\gamma_1(K,j)+\gamma_2(K,j) \leq 2\gamma^*(K,p(K,j))\]
+
+\[\gamma_1(K,j)+\gamma_2(K,j) \leq \gamma^*(K,q(K,p(K,j)))\]
+
+In particular taking ${\gamma^*_{\text{poly}}(K,j):=j}$ and ${\gamma^*_{\text{log}}(K,j):=\Floor{\log (j+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{\gamma^*_{\text{poly}}}}$, ${\Gamma_{\text{log}}^n=\Gamma_{\gamma^*_{\text{log}}}}$.
 
 \end{example}
 \end{samepage}
@@ -2765,7 +2772,7 @@ For any ${\gamma_\alpha \in \Gamma_* \alpha^*}$ there is ${\gamma \in \Gamma_*}$
 
 Fix ${\Fall^{(1)}}$, a fall space of rank 1. Assume that for any non-constant ${p \in \Nats[k]}$, ${\Fall^{(1)} p \subseteq \Fall^{(1)}}$. Denote\\ ${\Gamma_{\text{rand}}^1:=(\GammaPoly^1,\Gamma_0^1)}$.
 
-We will show that certain classes of functions paired with ${\Fall^{(1)}(\Gamma_{\text{rand}}^1)}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\Fall^{(1)}(\Gamma_{\text{rand}}^1)}$-reductions. The construction is an adaption of the usual construction of a complete problem for ${\mathsf{SampNP}}$.
+We will show that certain classes of functions paired with ${\Fall^{(1)}(\Gamma_{\text{rand}}^1)}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\Fall^{(1)}(\Gamma_{\text{rand}}^1)}$-reductions. This construction is an adaption of the standard construction of a complete problem for ${\mathsf{SampNP}}$.
 
 \begin{samepage}
 \begin{theorem}
