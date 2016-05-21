@@ -311,24 +311,22 @@ For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\
 
 \begin{samepage}
 \begin{definition}
-\label{def:plog}
-
-Fix ${n \in \Nats^{>0}}$. ${\gamma \in \GammaPoly^n}$ is said to be \emph{steadily growing} when it is non-decreasing in the last argument and there is ${q \in \NatPoly{1}}$ s.t.
-
-\begin{equation}
-\label{eqn:plog}
-\forall J \in \Nats^{n-1}, k \in \Nats: \gamma(J,k) \leq \frac{1}{2}\gamma(J,q(J,k))
-\end{equation}
-
+\label{def:sgrow}
+Fix ${n \in \Nats^{>0}}$. ${\gamma: \Nats^n \rightarrow \Nats}$ is said to be \emph{steadily growing} when
+\begin{enumerate}[(i)]
+\item ${\gamma \in \GammaPoly^n}$
+\item ${\forall J \in \Nats^{n-1}, k,l \in \Nats: k < l \implies \gamma(J,k) < \gamma(J,l)}$
+\item\label{con:def__sgrow__poly} There is ${q \in \NatPoly{1}}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \gamma(J,k) \leq \frac{1}{2}\gamma(J,q(J,k))}$.
+\end{enumerate}
 \end{definition}
 \end{samepage}
 
 \begin{samepage}
 \begin{example}
 
-For any ${n \in \Nats^{>0}}$ and ${\gamma^* \in \GammaPoly^n}$ steadily growing, ${\Gamma_{\gamma^*}}$ is a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly{1}}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. 
+For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, ${\Gamma_{\gamma^*}}$ is a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly{1}}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. 
 
-To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p_1(J,k))}$ and ${\gamma_2(J,k) \leq \gamma^*(J,p_2(J,k))}$. Then we can choose ${p,q \in \NatPoly{1}}$ s.t. ${p \geq \max(p_1,p_2)}$ and \ref{eqn:plog} holds and get 
+To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p_1(J,k))}$ and ${\gamma_2(J,k) \leq \gamma^*(J,p_2(J,k))}$. Choose ${p,q \in \NatPoly{1}}$ s.t. ${p \geq \max(p_1,p_2)}$ and ${q}$ is as in condition~\ref{con:def__sgrow__poly} of Definition~\ref{def:sgrow}.
 
 \[\gamma_1(J,k)+\gamma_2(J,k) \leq \gamma^*(J,p_1(J,k))+\gamma^*(J,p_2(J,k))\]
 
@@ -2778,8 +2776,6 @@ For this subsection we assume ${n > 0}$. Fix ${r,s: \Nats^n \Alg \Nats}$ s.t.
 
 \item ${\T_r, \T_s \in \GammaPoly^n}$
 
-\item As functions, ${r, s \in \GammaPoly^n}$.
-
 \item ${r}$ and ${s}$ are steadily growing.
 
 \item ${\forall K \in \Nats^n: 1 \leq r(K) \leq s(K)}$
@@ -2968,7 +2964,7 @@ Completely analogous to proof of Corollary~\ref{crl:complete_sharp}.
 
 \subsubsection{Positive Results}
 
-We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators. Theorem~\ref{thm:exists_all} shows that (under certain assumptions on ${\Gamma}$), \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing bounds on space, but this out of the current scope.} example from the introduction, the question \enquote{what is the probability 7614829 is prime?} depends on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
+We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators. Theorem~\ref{thm:exists_all} shows that (under certain assumptions on ${\Gamma}$), \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing bounds on space, but this out of the current scope.} example from the introduction, observe that the question \enquote{what is the probability 7614829 is prime?} should depend on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
 
 However, in general the estimators constructed in Theorem~\ref{thm:exists_all} are non-uniform. Theorem~\ref{thm:exists_smp} shows that for \emph{samplable} distributional estimation problems (and slightly stronger assumptions on ${\Gamma}$) the estimator requires only as much advice as the sampler. In particular, the existence of a uniform sampler implies the existence of a uniform ${\FallU(\Gamma)}$-optimal estimator.
 
@@ -2976,7 +2972,11 @@ However, in general the estimators constructed in Theorem~\ref{thm:exists_all} a
 \begin{theorem}
 \label{thm:exists_all}
 
-?
+Fix ${l: \Nats^n \rightarrow \Nats^{>0}}$ steadily growing. Denote ${\Gamma_{\textnormal{adv}}^n:=(\Gamma_0^n,\Gamma_l)}$. Fix ${r: \bm{1} \xrightarrow{\Gamma_{\textnormal{adv}}}\Nats}$ steadily growing. Assume ${n > 0}$, ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_l}$. Define ${\eta: \Nats^n \rightarrow \Nats^{n-1}}$ by
+
+\[\forall J \in \Nats^{n-1}, k \in \Nats: \eta(J,k)=J\]
+
+Consider ${(\mu,f)}$ a distributional estimation problem of rank ${n-1}$. Then, there exists an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$.
 
 \end{theorem}
 \end{samepage}
