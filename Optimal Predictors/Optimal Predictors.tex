@@ -593,7 +593,7 @@ Distributional \emph{decision} problems are the special case when the range of $
 
 \subsection{Basic Properties}
 
-From now on we fix $n \in \Nats$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. All word ensembles and distributional estimation problems will be of rank ${n}$ unless specified otherwise.
+From now on we fix $n \in \Nats^{>0}$, $\Grow$ a pair of growth spaces of rank $n$ and $\Fall$ a fall space of rank $n$. All word ensembles and distributional estimation problems will be of rank ${n}$ unless specified otherwise.
 
 In this subsection we discuss some basic properties of optimal bounded estimators which will be used in the following.
 
@@ -2770,7 +2770,7 @@ For any ${\gamma_\alpha \in \Gamma_* \alpha^*}$ there is ${\gamma \in \Gamma_*}$
 
 %Fix ${\Fall^{(1)}}$, a fall space of rank 1. Assume that for any non-constant ${p \in \Nats[k]}$, ${\Fall^{(1)} p \subseteq \Fall^{(1)}}$. Denote\\ ${\Gamma_{\text{rand}}^1:=(\GammaPoly^1,\Gamma_0^1)}$.
 
-For this subsection we assume ${n > 0}$. Fix ${r,s: \Nats^n \Alg \Nats}$ s.t.
+Fix ${r,s: \Nats^n \Alg \Nats}$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -2964,7 +2964,7 @@ Completely analogous to proof of Corollary~\ref{crl:complete_sharp}.
 
 \subsubsection{Positive Results}
 
-We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators. Theorem~\ref{thm:exists_all} shows that (under certain assumptions on ${\Gamma}$), \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing bounds on space, but this out of the current scope.} example from the introduction, observe that the question \enquote{what is the probability 7614829 is prime?} should depend on the amount of available resources. For example, we can use additional resources to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
+We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators. Theorem~\ref{thm:exists_all} shows that (under certain assumptions on ${\Gamma}$), \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing bounds on space, but this out of the current scope.} example from the introduction, observe that the question \enquote{what is the probability 7614829 is prime?} should depend on the amount of available time. For example, we can use additional time to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
 
 However, in general the estimators constructed in Theorem~\ref{thm:exists_all} are non-uniform. Theorem~\ref{thm:exists_smp} shows that for \emph{samplable} distributional estimation problems (and slightly stronger assumptions on ${\Gamma}$) the estimator requires only as much advice as the sampler. In particular, the existence of a uniform sampler implies the existence of a uniform ${\FallU(\Gamma)}$-optimal estimator.
 
@@ -2972,7 +2972,7 @@ However, in general the estimators constructed in Theorem~\ref{thm:exists_all} a
 \begin{theorem}
 \label{thm:exists_all}
 
-Fix ${l: \Nats^n \rightarrow \Nats^{>0}}$ steadily growing. Denote ${\Gamma_{\textnormal{adv}}^n:=(\Gamma_0^n,\Gamma_l)}$. Fix ${r: \bm{1} \xrightarrow{\Gamma_{\textnormal{adv}}}\Nats}$ steadily growing. Assume ${n > 0}$, ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_l}$. Define ${\eta: \Nats^n \rightarrow \Nats^{n-1}}$ by
+Fix ${l: \Nats^n \rightarrow \Nats^{>0}}$ steadily growing. Denote ${\Gamma_{\textnormal{adv}}^n:=(\Gamma_0^n,\Gamma_l)}$. Fix ${r: \bm{1} \xrightarrow{\Gamma_{\textnormal{adv}}}\Nats}$ steadily growing. Assume ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_l}$. Define ${\eta: \Nats^n \rightarrow \Nats^{n-1}}$ by
 
 \[\forall J \in \Nats^{n-1}, k \in \Nats: \eta(J,k)=J\]
 
@@ -2981,7 +2981,62 @@ Consider ${(\mu,f)}$ a distributional estimation problem of rank ${n-1}$. Then, 
 \end{theorem}
 \end{samepage}
 
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+For any ${p \in \NatPoly{1}}$ there is ${\{\omega_p^K\}_{K \in \Nats^n}}$ a family of probability measures on ${\Nats}$ s.t. for any ${\zeta: \Nats^n \rightarrow \Reals}$ bounded, if 
+
+\begin{equation}
+%\label{eqn:tbd}
+\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq p(J,k) \implies \zeta(J,k') \leq \zeta(J,k)
+\end{equation}
+
+then
+
+\begin{equation}
+%\label{eqn:tbd}
+\zeta(J,k) \equiv \E_{i \sim \omega_p^{Jk}}[\zeta(J,p(J,k)+i)] \pmod \FallU
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
 \begin{proof}
+
+FOO
+%
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Consider ${p \in \NatPoly{1}}$, ${(\mu,f)}$ a distributional estimation problem and\\ ${P,Q: \Words \Scheme \Rats}$. Suppose that
+
+\begin{align}
+%\label{eqn:tbd}
+\sup_{i \in \Nats} \E_{ \mu^{Jk} \times \Un_P^{Jk}}[(P^{J,p(J,k)+i}(x,y)-f(x))^2] &\leq \E_{ \mu^{Jk} \times \Un_P^{Jk}}[(P^{Jk}(x,y)-f(x))^2] \pmod \FallU \\
+\sup_{i \in \Nats} \E_{\mu^{Jk} \times \Un_P^{Jk}}[(P^{J,p(J,k)+i}(x,y)-f(x))^2] &\leq \E_{\mu^{Jk} \times \Un_Q^{Jk}}[(Q^{Jk}(x,y)-f(x))^2] \pmod \FallU
+\end{align}
+
+Then
+
+\begin{equation}
+%\label{eqn:tbd}
+\E_{\mu^{K} \times \Un_P^{K}}[(P^{K}(x,y)-f(x))^2] \leq \E_{\mu^{K} \times \Un_Q^{K}}[(Q^{K}(x,y)-f(x))^2] \pmod \FallU
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+FOO
+%
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:exists_all}]
 
 FOO
 %
