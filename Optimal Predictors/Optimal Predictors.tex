@@ -2990,18 +2990,18 @@ Consider ${(\mu,f)}$ a distributional estimation problem of rank ${n-1}$. Then, 
 \begin{proposition}
 \label{prp:fall_uni_weak}
 
-For any ${q \in \NatPolyJ}$ s.t. ${q \geq 1}$ there are ${\{\omega_q^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any ${\zeta: \NatFun \Reals}$ bounded, if 
+For any ${q \in \NatPolyJ}$ s.t. ${q \geq 2}$ there are ${\{\omega_q^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any ${\zeta: \NatFun \Reals}$ bounded, if 
 
 \begin{equation}
 \label{eqn:prp__fall_uni_weak__prem}
-\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq (k+2)^{\Floor{\log q(J)}} \implies \zeta(J,k') \leq \zeta(J,k)
+\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq (k+2)^{\Floor{\log q(J)}}-2 \implies \zeta(J,k') \leq \zeta(J,k)
 \end{equation}
 
 then
 
 \begin{equation}
 \label{eqn:prp__fall_uni_weak__conc}
-\zeta(J,k) \equiv \E_{i \sim \omega_p^{Jk}}[\zeta(J,(k+2)^{\Floor{\log q(J)}}+i)] \pmod \FallU
+\zeta(J,k) \equiv \E_{i \sim \omega_p^{Jk}}[\zeta(J,(k+2)^{\Floor{\log q(J)}}-2+i)] \pmod \FallU
 \end{equation}
 
 \end{proposition}
@@ -3009,7 +3009,45 @@ then
 
 \begin{proof}
 
-FOO
+Take any ${a \in \Reals}$ s.t. ${a \geq 2}$.
+
+\[\int_{t = a}^{a^{\Floor{\log q(J)}}} \dif (\log \log t) = \log \log a^{\Floor{\log q(J)}} - \log \log a\]
+
+\[\int_{t = a}^{a^{\Floor{\log q(J)}}} \dif (\log \log t) = \log (\Floor{\log q(J)} \log a) - \log \log a\]
+
+\[\int_{t = a}^{a^{\Floor{\log q(J)}}} \dif (\log \log t) = \log \Floor{\log q(J)} + \log \log a - \log \log a\]
+
+\[\int_{t = a}^{a^{\Floor{\log q(J)}}} \dif (\log \log t) = \log \Floor{\log q(J)}\]
+
+Consider any ${\zeta: \NatFun \Reals}$ bounded.
+
+\[\int_{t = a}^{a^{\Floor{\log q(J)}}} \Abs{\zeta(J,\Floor{t}-2)} \dif (\log \log t) \leq (\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+\[\Abs{\int_{t = a}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t)} \leq (\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+In particular
+
+\[\Abs{\int_{t = 2}^{2^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t)} \leq (\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+Adding the last two inequalities
+
+\[\Abs{\int_{t = 2}^{2^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t)} + \Abs{\int_{t = a}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t)} \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+\[\int_{t = 2}^{2^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t) - \int_{t = a}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+\[\int_{t = 2}^{a} \zeta(J,\Floor{t}-2) \dif (\log \log t) - \int_{t=2^{\Floor{\log q(J)}}}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+We have ${\dif (\log \log t^{\Floor{\log q(J)}}) = \dif(\log \log t)}$ therefore we can substitute in the second term on the left hand side and get
+
+\[\int_{t = 2}^{a} \zeta(J,\Floor{t}-2) \dif (\log \log t) - \int_{t=2}^{a} \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+\[\int_{t = 2}^{a} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+Assume \ref{eqn:prp__fall_uni_weak__prem}. ${\Floor{t^{\Floor{\log q(J)}}}-2 \geq \Floor{t}^{\Floor{\log q(J)}}-2}$ therefore the integrand is non-negative. Taking ${a}$ to ${\infty}$ we get
+
+\[\int_{t = 2}^{\infty} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+TBD
 %
 \end{proof}
 
@@ -3036,13 +3074,13 @@ then
 
 \begin{proof}
 
-Fix ${p \in \NatPoly}$. Choose ${q \in \NatPolyJ}$ s.t. ${p(J,k) \leq (k+2)^{\Floor{\log q(J)}}}$. Let ${\{\omega_q^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ be as in Proposition~\ref{prp:fall_uni_weak}. Define ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ by
+Fix ${p \in \NatPoly}$. Choose ${q \in \NatPolyJ}$ s.t. ${p(J,k) \leq (k+2)^{\Floor{\log q(J)}}}-2$. Let ${\{\omega_q^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ be as in Proposition~\ref{prp:fall_uni_weak}. Define ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ by
 
-\[\Prb_{i \sim \omega_p^{Jk}}[i \geq k] = \Prb_{i \sim \omega_q^{Jk}}[i + (k+2)^{\Floor{\log q(J)}} - p(J,k) \geq k]\]
+\[\Prb_{i \sim \omega_p^{Jk}}[i \geq k] = \Prb_{i \sim \omega_q^{Jk}}[i + (k+2)^{\Floor{\log q(J)}} - 2 - p(J,k) \geq k]\]
 
 Suppose ${\zeta: \NatFun \Reals}$ is bounded and s.t. \ref{eqn:prp__fall_uni__prem} holds. In particular, \ref{eqn:prp__fall_uni_weak__prem} also holds. Therefore, we have \ref{eqn:prp__fall_uni_weak__conc}. We rewrite it as follows
 
-\[\zeta(J,k) \equiv \E_{i \sim \omega_q^{Jk}}[\zeta(J, p(J,k) + i+ (k+2)^{\Floor{\log q(J)}} - p(J,k))] \pmod \FallU\]
+\[\zeta(J,k) \equiv \E_{i \sim \omega_q^{Jk}}[\zeta(J, p(J,k) + i+ (k+2)^{\Floor{\log q(J)}} - 2 - p(J,k))] \pmod \FallU\]
 
 By definition of ${\omega_p}$, \ref{eqn:prp__fall_uni__conc} follows.
 %
@@ -3104,6 +3142,8 @@ FOO
 TBD
 
 % Add to previous sections analysis of the properties of ${\mathcal{E}_{\text{ll},\phi}}$ and ${\mathcal{E}_{\text{poly}}$ after each fall space property is introduced.
+
+% Explain relation between ${\FallUni}$ and quasi-polynomial time (perfect estimators)
 
 \subsubsection{Negative Results}
 
