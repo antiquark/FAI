@@ -72,7 +72,8 @@
 \newcommand{\Reals}{\mathbb{R}}
 \newcommand{\Coms}{\mathbb{C}}
 
-\newcommand{\NatPoly}[1]{\Nats[K_0, K_1 \ldots K_{n-#1}]}
+\newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
+\newcommand{\NatPolyJ}{\Nats[J_0, J_1 \ldots J_{n-2}]}
 \newcommand{\NatFun}{\Nats^n \rightarrow}
 
 \newcommand{\Estr}{\bm{\lambda}}
@@ -164,7 +165,7 @@ $\Ints$ is the ring of integers, $\Rats$ is the field of rational numbers, $\Rea
 
 For $F \in \{\Rats,\Reals\}$, $F^{>0} := \{x \in F \mid x > 0\}$, $F^{\geq 0} := \{x \in F \mid x \geq 0\}$.
 
-Given ${n \in \Nats}$, ${\NatPoly{1}}$ will stand for the set of polynomials with natural coefficients in the ${n}$ variables ${K_0, K_1 \ldots K_{n-1}}$.
+Given ${n \in \Nats}$, ${\NatPoly}$ will stand for the set of polynomials with natural coefficients in the ${n}$ variables ${K_0, K_1 \ldots K_{n-1}}$.
 
 For any $t \in \Reals$, $\Floor{t} := \max \{n \in \Ints \mid n \leq t\}$, $\Ceil{t} := \min \{n \in \Ints \mid n \geq t\}$.
 
@@ -284,7 +285,7 @@ Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gam
 
 \item\label{con:def__grow__ineq} If $\gamma_1 \in \Gamma$, $\gamma_2: \NatFun \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
 
-\item\label{con:def__grow__poly} For any $\gamma \in \Gamma$ there is a $p \in \NatPoly{1}$ s.t. $\gamma \leq p$.
+\item\label{con:def__grow__poly} For any $\gamma \in \Gamma$ there is a $p \in \NatPoly$ s.t. $\gamma \leq p$.
 
 \end{enumerate}
 
@@ -301,7 +302,7 @@ For any $n \in \Nats$, $\Gamma_0^n$ is a growth space of rank $n$. $\gamma \in \
 
 For any $n \in \Nats$, $\GammaPoly^n$ is a growth space of rank $n$. 
 
-\[\GammaPoly^n := \{\gamma: \NatFun \Nats \mid \exists p \in \NatPoly{1}: \gamma \leq p\}\]
+\[\GammaPoly^n := \{\gamma: \NatFun \Nats \mid \exists p \in \NatPoly: \gamma \leq p\}\]
 
 \end{example}
 
@@ -318,7 +319,7 @@ Fix ${n \in \Nats^{>0}}$. ${\gamma: \NatFun \Nats}$ is said to be \emph{steadily
 \begin{enumerate}[(i)]
 \item ${\gamma \in \GammaPoly^n}$
 \item ${\forall J \in \Nats^{n-1}, k,l \in \Nats: k < l \implies \gamma(J,k) < \gamma(J,l)}$
-\item\label{con:def__sgrow__poly} There is ${q \in \NatPoly{1}}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \gamma(J,k) \leq \frac{1}{2}\gamma(J,q(J,k))}$.
+\item\label{con:def__sgrow__poly} There is ${q \in \NatPoly}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \gamma(J,k) \leq \frac{1}{2}\gamma(J,q(J,k))}$.
 \end{enumerate}
 \end{definition}
 \end{samepage}
@@ -326,9 +327,9 @@ Fix ${n \in \Nats^{>0}}$. ${\gamma: \NatFun \Nats}$ is said to be \emph{steadily
 \begin{samepage}
 \begin{example}
 
-For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, ${\Gamma_{\gamma^*}}$ is a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly{1}}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. 
+For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, ${\Gamma_{\gamma^*}}$ is a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. 
 
-To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p_1(J,k))}$ and ${\gamma_2(J,k) \leq \gamma^*(J,p_2(J,k))}$. Choose ${p,q \in \NatPoly{1}}$ s.t. ${p \geq \max(p_1,p_2)}$ and ${q}$ is as in condition~\ref{con:def__sgrow__poly} of Definition~\ref{def:sgrow}.
+To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p_1(J,k))}$ and ${\gamma_2(J,k) \leq \gamma^*(J,p_2(J,k))}$. Choose ${p,q \in \NatPoly}$ s.t. ${p \geq \max(p_1,p_2)}$ and ${q}$ is as in condition~\ref{con:def__sgrow__poly} of Definition~\ref{def:sgrow}.
 
 \[\gamma_1(J,k)+\gamma_2(J,k) \leq \gamma^*(J,p_1(J,k))+\gamma^*(J,p_2(J,k))\]
 
@@ -372,7 +373,7 @@ There is a natural notion of composition for $\Gamma$-schemes.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose $p \in \NatPoly{1}$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose $p \in \NatPoly$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
 
 \begin{align}
 \A_U(K) &= \Chev{\A_T(K),\A_S(K)} \\
@@ -438,7 +439,7 @@ Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded
 
 \item\label{con:def__fall__ineq} If $\varepsilon_1 \in \Fall$, $\varepsilon_2: \NatFun \Reals^{\geq 0}$ and $\forall K \in \Nats^n: \varepsilon_2(K) \leq \varepsilon_1(K)$ then $\varepsilon_2 \in \Fall$.
 
-\item\label{con:def__fall__pol} There is $h \in \NatPoly{1}$ s.t. $2^{-h} \in \Fall$.
+\item\label{con:def__fall__pol} There is $h \in \NatPoly$ s.t. $2^{-h} \in \Fall$.
 
 \end{enumerate}
 
@@ -455,7 +456,7 @@ We define $\Fall_{\text{neg}}$, a fall space of rank $1$. For any $\varepsilon: 
 \begin{samepage}
 \begin{example}
 \label{exm:e_uni}
-For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. For any ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff there are ${M \in \Reals^{>0}}$ and ${p \in \NatPoly{2}}$ s.t.
+For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. For any ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff there are ${M \in \Reals^{>0}}$ and ${p \in \NatPolyJ}$ s.t.
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -569,7 +570,7 @@ For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \NatFun \Real
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \NatPoly{1}$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \NatPoly$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
 %
 \end{proof}
 
@@ -833,13 +834,13 @@ The following theorem is the analogue in our language of the previous fact about
 \begin{theorem}
 \label{thm:ort}
 
-Assume there is $\zeta: \NatFun (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \NatPoly{1}$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
+Assume there is $\zeta: \NatFun (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \NatPoly$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
 
 \end{theorem}
 
 \begin{proof}
 
-Assume without loss of generality that there is ${h \in \NatPoly{1}}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \NatPoly{1}$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \NatFun \{ \pm 1 \}}$ and $m: \NatFun \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
+Assume without loss of generality that there is ${h \in \NatPoly}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \NatPoly$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \NatFun \{ \pm 1 \}}$ and $m: \NatFun \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
 
 $$Q_t^{K}(x,yz) = P^{K}(x,y) + t(K) S^{K}(x,P^{K}(x,y),z)$$
 
@@ -1507,7 +1508,7 @@ We introduce composition of ${\MGrow}$-schemes as well.
 \begin{samepage}
 \begin{definition}
 
-Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose\\ ${p \in \NatPoly{1}}$ s.t. 
+Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose\\ ${p \in \NatPoly}$ s.t. 
 
 \begin{align*}
 \Supp \UM_S^K &\subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)} \\
@@ -2543,7 +2544,7 @@ For any ${\alpha \in \GammaPoly^{mn}}$, ${\Fall \alpha}$ is a fall space
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider ${h \in \NatPoly{1}}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider ${h \in \NatPoly}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
 %
 \end{proof}
 
@@ -2809,21 +2810,21 @@ Define the distributional estimation problem $({\mu_{\mathfrak{F},D}},f_{\mathfr
 f_{\mathfrak{F}}(\Chev{b,d,a,x}) &:= \begin{cases}\mathfrak{F}(\phi, x) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ 0 \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
 \end{align}
 
-For any ${p \in \NatPoly{1}}$, define ${\alpha_p: \NatFun \Nats^n}$ by
+For any ${p \in \NatPoly}$, define ${\alpha_p: \NatFun \Nats^n}$ by
 
 \begin{equation}
 %\label{eqn:tbd}
 \forall J \in \Nats^{n-1}, k \in \Nats: \alpha_p(J,k) = (J,p(J,k))
 \end{equation}
 
-For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable world ensemble ${\mu}$, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F},D}, f_{\mathfrak{F}})}$ over ${\alpha_{\phi}}$ where ${\alpha_\phi:=\alpha_{p_\phi}}$ for some ${p_\phi \in \NatPoly{1}}$ increasing in the last argument.
+For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable world ensemble ${\mu}$, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F},D}, f_{\mathfrak{F}})}$ over ${\alpha_{\phi}}$ where ${\alpha_\phi:=\alpha_{p_\phi}}$ for some ${p_\phi \in \NatPoly}$ increasing in the last argument.
 
 \end{theorem}
 \end{samepage}
 
 \begin{proof}
 
-Let ${\sigma}$ be an ${\Fall(\Gamma_{\text{smp}})}$-sampler of ${\mu}$. Consider some ${\phi \in E}$ and denote ${b=\En_E(\phi)}$. Choose\\ ${p_\phi \in \NatPoly{1}}$ increasing in the last argument and ${a \in \Words}$ s.t. for any ${K \in \Nats^{n}}$, ${z \in \Words}$, ${w_1 \in \Bool^{\R_\sigma(K)}}$ and ${w_2 \in \Words}$: ${r(\alpha_\phi(K)) \geq \Abs{b}}$, ${r(\alpha_\phi(K)) \geq \Abs{a}}$, ${s(\alpha_\phi(K)) \geq \R_\sigma(K)}$ and 
+Let ${\sigma}$ be an ${\Fall(\Gamma_{\text{smp}})}$-sampler of ${\mu}$. Consider some ${\phi \in E}$ and denote ${b=\En_E(\phi)}$. Choose\\ ${p_\phi \in \NatPoly}$ increasing in the last argument and ${a \in \Words}$ s.t. for any ${K \in \Nats^{n}}$, ${z \in \Words}$, ${w_1 \in \Bool^{\R_\sigma(K)}}$ and ${w_2 \in \Words}$: ${r(\alpha_\phi(K)) \geq \Abs{b}}$, ${r(\alpha_\phi(K)) \geq \Abs{a}}$, ${s(\alpha_\phi(K)) \geq \R_\sigma(K)}$ and 
 
 \[\Ev^{p_\phi(K)}(az;\En_{\Nats^n}(\alpha_\phi(K)),w_1 w_2)=\sigma^{K}(w_1)\]
 
@@ -2840,7 +2841,7 @@ We also ensure that for any ${K \in \Nats^n}$, ${x \in \Words}$ and ${z_b,z_a}$ 
 
 \[\pi^K(x,z_b z_a)=\Estr\]
 
-To verify condition~\ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce} (with ${\alpha_\phi}$ playing the role of the efficient injection), fix ${q \in \NatPoly{1}}$ s.t. $q \geq r_\phi$ and $\Supp \sigma_\bullet^K \subseteq \Bool^{q(K)}$. Construct ${W: \Words \xrightarrow{\Gamma_{\textnormal{red}}} \Rats^{\geq 0}}$ s.t. 
+To verify condition~\ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce} (with ${\alpha_\phi}$ playing the role of the efficient injection), fix ${q \in \NatPoly}$ s.t. $q \geq r_\phi$ and $\Supp \sigma_\bullet^K \subseteq \Bool^{q(K)}$. Construct ${W: \Words \xrightarrow{\Gamma_{\textnormal{red}}} \Rats^{\geq 0}}$ s.t. 
 
 \[W^K(y)=\begin{cases}2^{\Abs{a}+\Abs{b}} \text{ if } \exists z_b,z_a,x \in \Bool^{\leq q(K)}: y=\Chev{bz_b,D_\phi^{\alpha_\phi(K)}, az_a,x}\\0 \text{ otherwise}\end{cases}\]
 
@@ -2922,7 +2923,7 @@ This completeness property implies that optimal bounded estimators exist for the
 \begin{corollary}
 \label{crl:complete_sharp}
 
-Fix ${m \in \Nats}$ s.t. ${m \geq n}$, ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$. For any ${p \in \NatPoly{1}}$, define ${\beta_p: \Nats^m \rightarrow \Nats^m}$ by 
+Fix ${m \in \Nats}$ s.t. ${m \geq n}$, ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$. For any ${p \in \NatPoly}$, define ${\beta_p: \Nats^m \rightarrow \Nats^m}$ by 
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -2936,14 +2937,14 @@ Define ${\eta: \Nats^{m} \rightarrow \Nats^n}$ by
 \forall K \in \Nats^n, L \in \Nats^{m-n}: \eta(K,L)=K
 \end{equation}
 
-Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly{1}}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\mu}$, there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
+Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\mu}$, there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
 
 \end{corollary}
 \end{samepage}
 
 \begin{proof}
 
-According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction of ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F}},f_{\mathfrak{F}})}$ over ${\alpha_p}$ for some ${p \in \NatPoly{1}}$  increasing in the last argument. This implies ${\pi^\eta}$ is a precise pseudo-invertible ${\Fall^{(m)}(\Gamma^m)}$-reduction of ${(\mu^\eta,f_\phi)}$ to ${(\mu_{\mathfrak{F}}^\eta,f_{\mathfrak{F}})}$ over ${\beta_p}$. Applying Corollary~\ref{crl:pp_reduce_sharp}, we get the desired result. 
+According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction of ${(\mu,f_\phi)}$ to ${(\mu_{\mathfrak{F}},f_{\mathfrak{F}})}$ over ${\alpha_p}$ for some ${p \in \NatPoly}$  increasing in the last argument. This implies ${\pi^\eta}$ is a precise pseudo-invertible ${\Fall^{(m)}(\Gamma^m)}$-reduction of ${(\mu^\eta,f_\phi)}$ to ${(\mu_{\mathfrak{F}}^\eta,f_{\mathfrak{F}})}$ over ${\beta_p}$. Applying Corollary~\ref{crl:pp_reduce_sharp}, we get the desired result. 
 %
 \end{proof}
 
@@ -2951,7 +2952,7 @@ According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-inver
 \begin{corollary}
 %\label{crl:tbd}
 
-Fix ${m \in \Nats}$ s.t. ${m \geq n}$, ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$ s.t. ${\Fall^{(m)}}$ is ${\GrowA^m}$-ample. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly{1}}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\mu}$, there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
+Fix ${m \in \Nats}$ s.t. ${m \geq n}$, ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$ s.t. ${\Fall^{(m)}}$ is ${\GrowA^m}$-ample. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\mu}$, there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
 \end{corollary}
 \end{samepage}
 
@@ -2987,19 +2988,46 @@ Consider ${(\mu,f)}$ a distributional estimation problem of rank ${n-1}$. Then, 
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:fall_uni_weak}
 
-For any ${p \in \NatPoly{1}}$ there are ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any ${\zeta: \NatFun \Reals}$ bounded, if 
+For any ${q \in \NatPolyJ}$ s.t. ${q \geq 1}$ there are ${\{\omega_q^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any ${\zeta: \NatFun \Reals}$ bounded, if 
 
 \begin{equation}
-%\label{eqn:tbd}
+\label{eqn:prp__fall_uni_weak__prem}
+\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq (k+2)^{\Floor{\log q(J)}} \implies \zeta(J,k') \leq \zeta(J,k)
+\end{equation}
+
+then
+
+\begin{equation}
+\label{eqn:prp__fall_uni_weak__conc}
+\zeta(J,k) \equiv \E_{i \sim \omega_p^{Jk}}[\zeta(J,(k+2)^{\Floor{\log q(J)}}+i)] \pmod \FallU
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+FOO
+%
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:fall_uni}
+
+For any ${p \in \NatPoly}$ there are ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any ${\zeta: \NatFun \Reals}$ bounded, if 
+
+\begin{equation}
+\label{eqn:prp__fall_uni__prem}
 \forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq p(J,k) \implies \zeta(J,k') \leq \zeta(J,k)
 \end{equation}
 
 then
 
 \begin{equation}
-%\label{eqn:tbd}
+\label{eqn:prp__fall_uni__conc}
 \zeta(J,k) \equiv \E_{i \sim \omega_p^{Jk}}[\zeta(J,p(J,k)+i)] \pmod \FallU
 \end{equation}
 
@@ -3008,7 +3036,15 @@ then
 
 \begin{proof}
 
-Consider ${h_1, h_2: \NatFun \Nats}$ (not necessarily polynomial), suppose that ${h_1 \leq h_2}$ and there is ${?}$...
+Fix ${p \in \NatPoly}$. Choose ${q \in \NatPolyJ}$ s.t. ${p(J,k) \leq (k+2)^{\Floor{\log q(J)}}}$. Let ${\{\omega_q^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ be as in Proposition~\ref{prp:fall_uni_weak}. Define ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ by
+
+\[\Prb_{i \sim \omega_p^{Jk}}[i \geq k] = \Prb_{i \sim \omega_q^{Jk}}[i + (k+2)^{\Floor{\log q(J)}} - p(J,k) \geq k]\]
+
+Suppose ${\zeta: \NatFun \Reals}$ is bounded and s.t. \ref{eqn:prp__fall_uni__prem} holds. In particular, \ref{eqn:prp__fall_uni_weak__prem} also holds. Therefore, we have \ref{eqn:prp__fall_uni_weak__conc}. We rewrite it as follows
+
+\[\zeta(J,k) \equiv \E_{i \sim \omega_q^{Jk}}[\zeta(J, p(J,k) + i+ (k+2)^{\Floor{\log q(J)}} - p(J,k))] \pmod \FallU\]
+
+By definition of ${\omega_p}$, \ref{eqn:prp__fall_uni__conc} follows.
 %
 \end{proof}
 
@@ -3016,7 +3052,7 @@ Consider ${h_1, h_2: \NatFun \Nats}$ (not necessarily polynomial), suppose that 
 \begin{proposition}
 \label{prp:tbd}
 
-Consider ${p \in \NatPoly{1}}$, ${(\mu,f)}$ a distributional estimation problem and\\ ${P,Q: \Words \Scheme \Rats}$. Suppose that
+Consider ${p \in \NatPoly}$, ${(\mu,f)}$ a distributional estimation problem and\\ ${P,Q: \Words \Scheme \Rats}$. Suppose that
 
 \begin{align}
 %\label{eqn:tbd}
