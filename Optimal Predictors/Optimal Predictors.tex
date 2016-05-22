@@ -71,7 +71,9 @@
 \newcommand{\Rats}{\mathbb{Q}}
 \newcommand{\Reals}{\mathbb{R}}
 \newcommand{\Coms}{\mathbb{C}}
+
 \newcommand{\NatPoly}[1]{\Nats[K_0, K_1 \ldots K_{n-#1}]}
+\newcommand{\NatFun}{\Nats^n \rightarrow}
 
 \newcommand{\Estr}{\bm{\lambda}}
 \newcommand{\LLU}{\mathbf{LLU}}
@@ -105,7 +107,6 @@
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
 \newcommand{\Scheme}{\xrightarrow{\Gamma}}
 \newcommand{\MScheme}{\xrightarrow{\MGrow}}
-\usepackage{color}
 
 \begin{document}
 
@@ -180,33 +181,34 @@ Given a set $X$ and a subset $Y$, $\chi_Y: X \rightarrow \Bool$ will denote the 
 $$\chi_Y(x):=\begin{cases}1 & \text{if } x \in Y \\ 0 & \text{if } x \not\in Y \end{cases}$$
 
 $\theta: \Reals \rightarrow \Bool$ will denote the Heaviside step function $\theta:=\chi_{[0,\infty)}$. ${\Sgn: \Reals \rightarrow \Bool}$ will denote the function $2 \theta - 1$.
+
 \subsection{Measures and Probabilities}
 
-For $X$ a measurable space, $\mu$ a probability measure on $X$, $V$ a finite dimensional vector space over $\Reals$ and $f: X \rightarrow V$, $\E_{x \sim \mu}[f(x)]$ will denote the expected value of $f$ with respect to $\mu$, i.e. 
+For ${X}$ a measurable space, ${\mathcal{P}(X)}$ will denote the set of probability measures on ${X}$. For ${X}$ an arbitrary set, the notation ${\mathcal{P}(X)}$ suggests ${X}$ is regarded as a discrete measurable space. In the latter case a probability measure on $X$ can be represented by a function $\mu: X \rightarrow [0,1]$ s.t. $\sum_{x \in X} \mu(x) = 1$. Abusing notation, we will use the same symbol to denote the function and the probability measure.
+
+For $X$ a measurable space, $\mu \in \mathcal{P}(X)$, $V$ a finite dimensional vector space over $\Reals$ and $f: X \rightarrow V$, $\E_{x \sim \mu}[f(x)]$ will denote the expected value of $f$ with respect to $\mu$, i.e. 
 
 \[\E_{x \sim \mu}[f(x)] := \int_X f(x) d\mu(x)\]
 
 We will the abbreviated notations $\E_\mu[f(x)]$, $\E[f(x)]$, $\E_\mu[f]$, $\E[f]$ when no confusion is likely to occur.
 
-Given a topological space $X$ and a Borel probability measure $\mu$ on $X$, $\Supp \mu$ will denote the support of $\mu$. In particular when $X$ is discrete
+Given a topological space $X$ and $\mu \in \mathcal{P}(X)$ (defined using the Borel ${\sigma}$-algebra), $\Supp \mu$ will denote the support of $\mu$. In particular when $X$ is discrete
 
 \[\Supp \mu = \{x \in X \mid \mu(x) > 0\}\]
 
-Given $X,Y$ measurable spaces, $\mu$ a measure on $X$ and $f: X \rightarrow Y$ a measurable mapping, $f_*\mu$ will denote the corresponding pushforward measure on $Y$.
+Given $X,Y$ measurable spaces, $\mu \in \mathcal{P}(X)$ and $f: X \rightarrow Y$ a measurable mapping, $f_*\mu \in \mathcal{P}(Y)$ will denote the corresponding pushforward measure.
 
-Given $X,Y$ measurable spaces, the notation $f: X \xrightarrow{\textnormal{mk}} Y$ signifies $f$ is a Markov kernel with source $X$ and target $Y$. Given $x \in X$, $f_x$ is the corresponding probability measure on $Y$ and $f(x)$ is a random variable sampled from $f_x$. Given $\mu$ a probability measure on $X$, $\mu \ltimes f$ (resp. $f \rtimes \mu$) is the semidirect product measure on $X \times Y$ (resp. $Y \times X$). $f_*\mu$ is the pushforward measure on $Y$, i.e. $f_*\mu:=\pi_*(\mu \ltimes f)$ where $\pi: X \times Y \rightarrow Y$ is the projection.
+Given $X,Y$ measurable spaces, the notation $f: X \xrightarrow{\textnormal{mk}} Y$ signifies $f$ is a Markov kernel with source $X$ and target $Y$. Given $x \in X$, $f_x$ is the corresponding probability measure on $Y$ and $f(x)$ is a random variable sampled from $f_x$. Given $\mu \in \mathcal{P}(X)$, $\mu \ltimes f \in \mathcal{P}(X \times Y)$ (resp. $f \rtimes \mu \in \mathcal{P}(Y \times X)$) is the semidirect product measure. $f_*\mu \in \mathcal{P}(Y)$ is the pushforward measure, i.e. $f_*\mu:=\pi_*(\mu \ltimes f)$ where $\pi: X \times Y \rightarrow Y$ is the projection.
 
-For $X$ a measurable space, $\mu$ a probability measure on $X$ and $A$ a measurable subset of $X$ s.t. ${\mu(A) > 0}$, $\mu \mid A$ will denote the corresponding conditional probability measure, i.e. $(\mu \mid A)(B):=\frac{\mu(B \cap A)}{\mu(A)}$. Given $Y$ another measurable space, $f: X \Markov Y$ and $A$ a measurable subset of $Y$ s.t. $(\mu \ltimes f)(X \times A) > 0$, $\mu \mid f^{-1}(A)$ will denote the probability measure on $X$ defined by 
+For $X$ a measurable space, $\mu \in \mathcal{P}(X)$ and $A$ a measurable subset of $X$ s.t. ${\mu(A) > 0}$, $\mu \mid A$ will denote the corresponding conditional probability measure, i.e. $(\mu \mid A)(B):=\frac{\mu(B \cap A)}{\mu(A)}$. Given $Y$ another measurable space, $f: X \Markov Y$ and $A$ a measurable subset of $Y$ s.t. $(\mu \ltimes f)(X \times A) > 0$,\\ $\mu \mid f^{-1}(A) \in \mathcal{P}(X)$ is defined by 
 
 \[(\mu \mid f^{-1}(A))(B):=(\mu \ltimes f \mid X \times A)(B \times Y)\]
 
 Note that when $f$ is deterministic (i.e. $f_x$ is a Dirac measure for every $x$), this corresponds to conditioning by the inverse image of $A$ with respect to $f$. When $A=\{a\}$ we will use the shorthand notation $\mu \mid f^{-1}(a)$.
 
-Given $X$ a measurable space and $\mu$, $\nu$ probability measures on $X$, $\Dtv(\mu,\nu)$ will denote the total variation distance between $\mu$ and $\nu$.
+Given $X$ a measurable space and $\mu,\nu \in \mathcal{P}(X)$, $\Dtv(\mu,\nu)$ will denote the total variation distance between $\mu$ and $\nu$.
 
 For $X$ a measurable space and $x \in X$, $\delta_x$ will denote the Dirac measure associated with $x$, i.e. $\delta_x(A)=1$ iff $x \in A$.
-
-For $X$ a discrete measurable space, a probability measure on $X$ can be represented by a function $\mu: X \rightarrow [0,1]$ s.t. $\sum_{x \in X} \mu(x) = 1$. Abusing notation, we will use the same symbol to denote the function and the probability measure.
 
 \subsection{Algorithms}
 
@@ -217,7 +219,7 @@ $\Words$ is the set of all finite binary strings (words), i.e. $\Words:=\bigsqcu
 \Bool^{>n}&:=\{x \in \Words \mid \Abs{x} > n\}
 \end{align*}
 
-For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given ${n \in \Nats}$ and ${x_0, x_1 \ldots x_{n-1} \in \Words}$, ${\prod_{i \in [n]} x_i}$ is also concatenation. Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i \in [n]} x_i y_i$. For any $n \in \Nats$, $\Un^n$ is the uniform probability distribution on $\WordsLen{n}$.
+For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given ${n \in \Nats}$ and ${x_0, x_1 \ldots x_{n-1} \in \Words}$, ${\prod_{i \in [n]} x_i}$ is also concatenation. Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i \in [n]} x_i y_i$. For any $n \in \Nats$, $\Un^n \in \mathcal{P}(\WordsLen{n})$ is the uniform probability distribution.
 
 Given $n \in \Nats$ and ${x_0, x_1 \ldots x_{n-1} \in \Words}$, $\Chev{x_0,x_1 \ldots x_{n-1}} \in \Words$ denotes the encoding of\\ $(x_0,x_1 \ldots x_{n-1})$ obtained by repeating each bit of $x_0, x_1 \ldots x_{n-1}$ twice and inserting the separators 01.
 \begin{definition}
@@ -243,7 +245,7 @@ For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing ma
 
 We start with a simple model to help build intuition and motivate the following definitions.
 
-Consider finite sets $X$ and $Y$, a probability distribution $\mu: X \rightarrow [0,1]$, a mapping $m: X \rightarrow Y$ and a function $f: X \rightarrow \Reals$. Suppose $x$ was sampled from $\mu$ and we were told $y := m(x)$ (but not told $x$ itself). Our expected value of $f(x)$ in these conditions is ${\E[f(x)] = \E_{x' \sim \mu}[f(x') \mid m(x') = y]}$.
+Consider finite sets $X$ and $Y$, $\mu \in \mathcal{P}(X)$, a mapping $m: X \rightarrow Y$ and a function $f: X \rightarrow \Reals$. Suppose $x$ was sampled from $\mu$ and we were told $y := m(x)$ (but not told $x$ itself). Our expected value of $f(x)$ in these conditions is ${\E[f(x)] = \E_{x' \sim \mu}[f(x') \mid m(x') = y]}$.
 
 Let $P: X \rightarrow \Reals$ be the function $P(x) := \E_{x' \sim \mu}[f(x') \mid m(x) = m(x)]$. How can we characterize $P$ without referring to the concept of a conditional expected value? For any $Q: X \rightarrow \Reals$ we can consider the \enquote{error} $\E_\mu[(Q - f)^2]$. $Q$ is called \enquote{efficient} when it factors as $Q = q \circ m$ for some $q: Y \rightarrow \Reals$. It is easy to see that $P$ has the least error among all efficient functions.
 
@@ -251,7 +253,7 @@ Note that the characterization of $P$ depends not only on $f$ but also on $\mu$.
 
 \begin{definition}
 
-Fix ${n \in \Nats}$. A \emph{word ensemble of rank ${n}$} is a family $\mu$ of probability distributions ${\{\mu^{K}: \Words \rightarrow [0,1]\}_{K \in \Nats^n}}$.
+Fix ${n \in \Nats}$. A \emph{word ensemble of rank ${n}$} is a family ${\{\mu^{K} \in \mathcal{P}(\Words)\}_{K \in \Nats^n}}$.
 
 We will use the notation $\Supp \mu := \bigcup_{K \in \Nats^n} \Supp \mu^K$.
 
@@ -272,7 +274,7 @@ In the motivational model, the estimator was restricted to lie in a class of fun
 \begin{samepage}
 \begin{definition}
 \label{def:grow}
-Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gamma: \Nats^n \rightarrow \Nats}$ s.t.
+Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gamma: \NatFun \Nats}$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -280,7 +282,7 @@ Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gam
 
 \item\label{con:def__grow__add} If $\gamma_1, \gamma_2 \in \Gamma$ then $\gamma_1 + \gamma_2 \in \Gamma$.
 
-\item\label{con:def__grow__ineq} If $\gamma_1 \in \Gamma$, $\gamma_2: \Nats^n \rightarrow \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
+\item\label{con:def__grow__ineq} If $\gamma_1 \in \Gamma$, $\gamma_2: \NatFun \Nats$ and $\forall K \in \Nats^n: \gamma_2(K) \leq \gamma_1(K)$ then $\gamma_2 \in \Gamma$.
 
 \item\label{con:def__grow__poly} For any $\gamma \in \Gamma$ there is a $p \in \NatPoly{1}$ s.t. $\gamma \leq p$.
 
@@ -299,7 +301,7 @@ For any $n \in \Nats$, $\Gamma_0^n$ is a growth space of rank $n$. $\gamma \in \
 
 For any $n \in \Nats$, $\GammaPoly^n$ is a growth space of rank $n$. 
 
-\[\GammaPoly^n := \{\gamma: \Nats^n \rightarrow \Nats \mid \exists p \in \NatPoly{1}: \gamma \leq p\}\]
+\[\GammaPoly^n := \{\gamma: \NatFun \Nats \mid \exists p \in \NatPoly{1}: \gamma \leq p\}\]
 
 \end{example}
 
@@ -312,7 +314,7 @@ For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\
 \begin{samepage}
 \begin{definition}
 \label{def:sgrow}
-Fix ${n \in \Nats^{>0}}$. ${\gamma: \Nats^n \rightarrow \Nats}$ is said to be \emph{steadily growing} when
+Fix ${n \in \Nats^{>0}}$. ${\gamma: \NatFun \Nats}$ is said to be \emph{steadily growing} when
 \begin{enumerate}[(i)]
 \item ${\gamma \in \GammaPoly^n}$
 \item ${\forall J \in \Nats^{n-1}, k,l \in \Nats: k < l \implies \gamma(J,k) < \gamma(J,l)}$
@@ -344,7 +346,7 @@ We now introduce our notion of an \enquote{efficient} algorithm.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{$\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where ${S: \Nats^n \times X \times \Words^2 \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \Nats^n \rightarrow \Words$ are s.t.
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{$\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where ${S: \Nats^n \times X \times \Words^2 \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \NatFun \Words$ are s.t.
 
 \begin{enumerate}[(i)]
 
@@ -352,7 +354,7 @@ Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of ran
 
 \item $\T_{\R_S}(K,\A_S(K)) \in \GammaPoly^n$
 
-\item The function $r: \Nats^n \rightarrow n$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\GrowR$.
+\item The function $r: \NatFun n$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\GrowR$.
 
 \item $\Abs{\A_S} \in \GrowA$
 
@@ -428,19 +430,19 @@ Fix $n \in \Nats$ and $\Gamma$ a pair of growth spaces of rank $n$. Given a dist
 \begin{definition}
 \label{def:fall}
 
-Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded functions $\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}$ s.t.
+Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded functions $\varepsilon: \NatFun \Reals^{\geq 0}$ s.t.
 
 \begin{enumerate}[(i)]
 
 \item\label{con:def__fall__add} If $\varepsilon_1, \varepsilon_2 \in \Fall$ then $\varepsilon_1 + \varepsilon_2 \in \Fall$.
 
-\item\label{con:def__fall__ineq} If $\varepsilon_1 \in \Fall$, $\varepsilon_2: \Nats^n \rightarrow \Reals^{\geq 0}$ and $\forall K \in \Nats^n: \varepsilon_2(K) \leq \varepsilon_1(K)$ then $\varepsilon_2 \in \Fall$.
+\item\label{con:def__fall__ineq} If $\varepsilon_1 \in \Fall$, $\varepsilon_2: \NatFun \Reals^{\geq 0}$ and $\forall K \in \Nats^n: \varepsilon_2(K) \leq \varepsilon_1(K)$ then $\varepsilon_2 \in \Fall$.
 
 \item\label{con:def__fall__pol} There is $h \in \NatPoly{1}$ s.t. $2^{-h} \in \Fall$.
 
 \end{enumerate}
 
-Given $f,g: \Nats^n \rightarrow \Reals$, the notation $f(K) \equiv g(K) \pmod \Fall$ means $\Abs{f-g} \in \Fall$. $f(K) \leq g(K) \pmod \Fall$ means $\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \leq g(K) + \varepsilon(K)$. Similarly, $f(K) \geq g(K) \pmod \Fall$ means $\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \geq g(K) - \varepsilon(K)$.
+Given $f,g: \NatFun \Reals$, the notation $f(K) \equiv g(K) \pmod \Fall$ means $\Abs{f-g} \in \Fall$. $f(K) \leq g(K) \pmod \Fall$ means $\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \leq g(K) + \varepsilon(K)$. Similarly, $f(K) \geq g(K) \pmod \Fall$ means $\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \geq g(K) - \varepsilon(K)$.
 
 \end{definition}
 
@@ -453,7 +455,7 @@ We define $\Fall_{\text{neg}}$, a fall space of rank $1$. For any $\varepsilon: 
 \begin{samepage}
 \begin{example}
 \label{exm:e_uni}
-For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. For any ${\varepsilon: \Nats^n \rightarrow \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff there are ${M \in \Reals^{>0}}$ and ${p \in \NatPoly{2}}$ s.t.
+For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. For any ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff there are ${M \in \Reals^{>0}}$ and ${p \in \NatPoly{2}}$ s.t.
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -551,7 +553,7 @@ Follows from Proposition~\ref{prp:fall_space_closed_wrt_power}.
 \begin{samepage}
 \begin{definition}
 
-For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \Nats^n \rightarrow \Reals$ s.t. $\inf \gamma > 0$, we define $\gamma \Fall := \{\gamma \varepsilon \text{ bounded} \mid \varepsilon \in \Fall\}$.
+For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \NatFun \Reals$ s.t. $\inf \gamma > 0$, we define $\gamma \Fall := \{\gamma \varepsilon \text{ bounded} \mid \varepsilon \in \Fall\}$.
 
 \end{definition}
 \end{samepage}
@@ -560,7 +562,7 @@ For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \Nats^n \righ
 \begin{proposition}
 \label{prp:tbd}
 
-For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \Nats^n \rightarrow \Reals$ s.t. $\inf \gamma > 0$, $\gamma \Fall$ is a fall space.
+For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \NatFun \Reals$ s.t. $\inf \gamma > 0$, $\gamma \Fall$ is a fall space.
 
 \end{proposition}
 \end{samepage}
@@ -694,7 +696,7 @@ Although the word ensemble plays a central role in the definition of an optimal 
 
 \begin{definition}
 
-Given a growth space $\Gamma_*$ of rank $n$, $\Fall$ is called \emph{$\Gamma_*$-ample} when there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_*$.
+Given a growth space $\Gamma_*$ of rank $n$, $\Fall$ is called \emph{$\Gamma_*$-ample} when there is $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_*$.
 
 \end{definition}
 
@@ -758,7 +760,7 @@ We now give the proof of Proposition~\ref{prp:weight}.
 
 \begin{proof}[Proof of \ref{prp:weight}]
 
-Consider $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho_\zeta^{K}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \GrowA$ s.t. for any $t \in [0, M]$, ${\Abs{\En_\Rats(\rho_\zeta^{K}(t))} \leq \gamma(K)}$.
+Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho_\zeta^{K}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \GrowA$ s.t. for any $t \in [0, M]$, ${\Abs{\En_\Rats(\rho_\zeta^{K}(t))} \leq \gamma(K)}$.
 
 For any $t \in \Reals$ there is $Q_t: \Words \Scheme \Rats$ s.t. $\R_Q=\R_W$ and for any ${x \in \Supp \mu^{K}}$ and ${y \in \WordsLen{\R_W(K)}}$
 
@@ -831,13 +833,13 @@ The following theorem is the analogue in our language of the previous fact about
 \begin{theorem}
 \label{thm:ort}
 
-Assume there is $\zeta: \Nats^n \rightarrow (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \NatPoly{1}$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
+Assume there is $\zeta: \NatFun (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \NatPoly{1}$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
 
 \end{theorem}
 
 \begin{proof}
 
-Assume without loss of generality that there is ${h \in \NatPoly{1}}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \NatPoly{1}$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \Nats^n \rightarrow \{ \pm 1 \}}$ and $m: \Nats^n \rightarrow \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
+Assume without loss of generality that there is ${h \in \NatPoly{1}}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \NatPoly{1}$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \NatFun \{ \pm 1 \}}$ and $m: \NatFun \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \mu^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
 
 $$Q_t^{K}(x,yz) = P^{K}(x,y) + t(K) S^{K}(x,P^{K}(x,y),z)$$
 
@@ -1100,7 +1102,7 @@ $$\E[f \mid A^{K} \leq P^{K} \leq B^{K}] \geq A^{K} - \sqrt{\frac{\varepsilon(K)
 
 \begin{proof}[Proof of Theorem \ref{thm:calib}]
 
-Consider $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. Define 
+Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. Define 
 
 \begin{align*}
 I&:=\{K \in \Nats^n \mid \frac{\Abs{\delta(K)}}{\alpha(K)} \geq \zeta(K)\} \\
@@ -1190,7 +1192,7 @@ The above perspective allows us stating and proving non-tautological theorems an
 \begin{theorem}
 %\label{thm:tbd}
 
-Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $k \in \Nats$, $\mu^k(D) > 0$. Define $\gamma_D: \Nats^n \rightarrow \Reals$ by $\gamma(K):=\mu^{K}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal estimator for $(\mu, \chi_D)$ and $P_{f \mid D}$ be an $\Fall_D^\sharp(\Gamma)$-optimal estimator for ${(\mu \mid D, f)}$. Construct ${P_{\chi f}: \Words \Scheme \Rats}$ s.t. $\R_{P_{\chi f}}=\R_{P_D} + \R_{P_{f \mid D}}$ and for any $y \in \BoolR{P_D}$ and ${z \in \BoolR{P_{f \mid D}}}$
+Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $k \in \Nats$, $\mu^k(D) > 0$. Define $\gamma_D: \NatFun \Reals$ by $\gamma(K):=\mu^{K}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal estimator for $(\mu, \chi_D)$ and $P_{f \mid D}$ be an $\Fall_D^\sharp(\Gamma)$-optimal estimator for ${(\mu \mid D, f)}$. Construct ${P_{\chi f}: \Words \Scheme \Rats}$ s.t. $\R_{P_{\chi f}}=\R_{P_D} + \R_{P_{f \mid D}}$ and for any $y \in \BoolR{P_D}$ and ${z \in \BoolR{P_{f \mid D}}}$
 
 \begin{equation}
 P_{\chi f}^K(x,yz)=P_D^K(x,y) P_{f \mid D}^K(x,z)
@@ -1231,7 +1233,7 @@ Using the fact $P_{f \mid D}^K$ is $\Fall_D^\sharp(\Gamma)$-optimal for $(\mu \m
 \begin{theorem}
 \label{thm:cond}
 
-Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $k \in \Nats$, $\mu^k(D) > 0$. Define $\gamma_D: \Nats^n \rightarrow \Reals$ by $\gamma(K):=\mu^{K}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal estimator for $(\mu, \chi_D)$ and $P_{\chi f}$ be an $\ESG$-optimal estimator for $(\mu, \chi_D f)$. Choose any $M \in \Rats$ s.t. ${M \geq \sup \Abs{f}}$ and construct $P_{f \mid D}: \Words \Scheme \Rats$ s.t. $\R_{P_{f \mid D}} = \R_{P_D} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$ 
+Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $k \in \Nats$, $\mu^k(D) > 0$. Define $\gamma_D: \NatFun \Reals$ by $\gamma(K):=\mu^{K}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal estimator for $(\mu, \chi_D)$ and $P_{\chi f}$ be an $\ESG$-optimal estimator for $(\mu, \chi_D f)$. Choose any $M \in \Rats$ s.t. ${M \geq \sup \Abs{f}}$ and construct $P_{f \mid D}: \Words \Scheme \Rats$ s.t. $\R_{P_{f \mid D}} = \R_{P_D} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$ 
 
 \begin{equation}
 P_{f \mid D}^K(x,yz)=\begin{cases}P_D^K(x,y)^{-1} P_{\chi f}^K(x,z) \textnormal{ if this number is in } [-M,M] \\ M \textnormal{ if } P_D^K(x,y)=0 \textnormal{ or } P_D^K(x,y)^{-1} P_{\chi f}^K(x,z) > M\\ -M \textnormal{ if } P_D^K(x,y)^{-1} P_{\chi f}^K(x,z) < -M\end{cases}
@@ -1385,7 +1387,7 @@ The notation $f(K) \equiv g(K) \pmod \Fall$ can be conveniently generalized from
 \begin{samepage}
 \begin{definition}
 
-Consider a measurable space $X$ and two families of probability measures on $X$: $\{\mu^K\}_{K \in \Nats^n}$ and $\{\nu^K\}_{K \in \Nats^n}$. We say that \emph{$\mu$ is congruent to $\nu$ modulo $\Fall$} when $\Dtv(\mu^K,\nu^K) \in \Fall$. In this case we write $\mu^K \equiv \nu^K \pmod \Fall$ or $\mu \equiv \nu \pmod \Fall$.
+Consider a measurable space $X$ and two families $\{\mu^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and\\ $\{\nu^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$. We say that \emph{$\mu$ is congruent to $\nu$ modulo $\Fall$} when $\Dtv(\mu^K,\nu^K) \in \Fall$. In this case we write $\mu^K \equiv \nu^K \pmod \Fall$ or $\mu \equiv \nu \pmod \Fall$.
 
 \end{definition}
 \end{samepage}
@@ -1410,7 +1412,7 @@ Obvious since $\Dtv$ is a metric.
 \begin{proposition}
 \label{prp:prob_cong_ev}
 
-Consider $X$ a measurable space, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and ${\{f^K: X \rightarrow \Reals\}_{K \in \Nats^n}}$ a uniformly bounded family of measurable functions. Assume ${\mu \equiv \nu \pmod \Fall}$. Then, $\E_{x \sim \mu^K}[f^K(x)] \equiv \E_{x \sim \nu^K}[f^K(x)] \pmod \Fall$.
+Consider $X$ a measurable space, $\{\mu^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\nu^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \rightarrow \Reals\}_{K \in \Nats^n}}$ a uniformly bounded family of measurable functions. Assume ${\mu \equiv \nu \pmod \Fall}$. Then, $\E_{x \sim \mu^K}[f^K(x)] \equiv \E_{x \sim \nu^K}[f^K(x)] \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
@@ -1424,7 +1426,7 @@ $\Abs{\E_{x \sim \mu^K}[f^K(x)] - \E_{x \sim \nu^K}[f^K(x)]} \leq  (\sup f - \in
 \begin{proposition}
 \label{prp:prob_cong_semidir}
 
-Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\mu \equiv \nu \pmod \Fall$ implies $\mu^K \ltimes f^K \equiv \nu^K \ltimes f^K \pmod \Fall$.
+Consider $X$, $Y$ measurable spaces, $\{\mu^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\nu^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\mu \equiv \nu \pmod \Fall$ implies $\mu^K \ltimes f^K \equiv \nu^K \ltimes f^K \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
@@ -1438,7 +1440,7 @@ Total variation distance is contracted by semi-direct product with a Markov kern
 \begin{proposition}
 \label{prp:prob_cong_push}
 
-Consider $X$, $Y$ measurable spaces, $\{\mu^K\}_{K \in \Nats^n}$, $\{\nu^K\}_{K \in \Nats^n}$ families of probability measures on $X$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\mu \equiv \nu \pmod \Fall$ implies $f_*^K\mu^K \equiv f_*^K\nu^K \pmod \Fall$.
+Consider $X$, $Y$ measurable spaces, $\{\mu^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\nu^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\mu \equiv \nu \pmod \Fall$ implies $f_*^K\mu^K \equiv f_*^K\nu^K \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
@@ -1452,7 +1454,7 @@ Total variation distance is contracted by pushforward therefore \[\Dtv(f_*^K\mu^
 \begin{proposition}
 \label{prp:prob_cong_dir}
 
-Consider $X_1$, $X_2$ measurable spaces, $\{\mu_1^K\}_{K \in \Nats^n}$, $\{\nu_1^K\}_{K \in \Nats^n}$ families of probability measures on $X_1$ and $\{\mu_2^K\}_{K \in \Nats^n}$, $\{\nu_2^K\}_{K \in \Nats^n}$ families of probability measures on $X_2$. Then, $\mu_1 \equiv \nu_1 \pmod \Fall$ and $\mu_2 \equiv \nu_2 \pmod \Fall$ imply $\mu_1^K \times \mu_2^K \equiv \nu_1^K \times \nu_2^K \pmod \Fall$. 
+Consider $X_1$, $X_2$ measurable spaces, $\{\mu_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\nu_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\mu_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$ and $\{\nu_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$. Then, $\mu_1 \equiv \nu_1 \pmod \Fall$ and $\mu_2 \equiv \nu_2 \pmod \Fall$ imply $\mu_1^K \times \mu_2^K \equiv \nu_1^K \times \nu_2^K \pmod \Fall$. 
 
 \end{proposition}
 \end{samepage}
@@ -1471,7 +1473,7 @@ The concept of a $\Gamma$-scheme can be generalized in a way which allows the ad
 \begin{samepage}
 \begin{definition}
 
-Given encoded sets $X$ and $Y$, an \emph{$\MGrow$-scheme of signature ${X \rightarrow Y}$} is a triple $(S,\R_S,\M_S)$ where $S: \Nats^n \times X \times \Words^2 \Alg Y$, ${\R_S: \Nats^n \times \Words \Alg \Nats}$ and a family of probability distributions $\{\M_S^K: \Words \rightarrow [0,1]\}_{K \in \Nats^n}$ are s.t.
+Given encoded sets $X$ and $Y$, an \emph{$\MGrow$-scheme of signature ${X \rightarrow Y}$} is a triple $(S,\R_S,\M_S)$ where $S: \Nats^n \times X \times \Words^2 \Alg Y$, ${\R_S: \Nats^n \times \Words \Alg \Nats}$ and $\{\M_S^K \in \mathcal{P}(\Words)\}_{K \in \Nats^n}$ are s.t.
 
 \begin{enumerate}[(i)]
 
@@ -1487,7 +1489,9 @@ Given encoded sets $X$ and $Y$, an \emph{$\MGrow$-scheme of signature ${X \right
 
 Abusing notation, we denote the $\MGrow$-scheme $(S,\R_S,\M_S)$ by $S$.
 
-$\R_S^K(z)$ will denote $\R_S(K,z)$. $\UM_S^K$ will denote the probability distribution on ${\Words \times \Words}$ given by $\UM_S^K(y,z):= \M_S^K(z) \delta_{\Abs{y},\R_S^K(z)} 2^{-\R_S^K(z)}$.
+$\R_S^K(z)$ will denote $\R_S(K,z)$. $\UM_S^K \in \mathcal{P}(\Words \times \Words)$ is given by 
+
+\[\UM_S^K(y,z):= \M_S^K(z) \delta_{\Abs{y},\R_S^K(z)} 2^{-\R_S^K(z)}\]
 
 $S^K(x,y,z)$ will denote $S(K,x,y,z)$. Given $w=(y,z)$, $S^K(x,w)$ will denote $S(K,x,y,z)$. $S^K(x)$ will denote the $Y$-valued random variable which equals $S(K,x,y,z)$ for $(y,z)$ sampled from $\UM_S^K$. $S_x^K$ will denote the probability distribution of this random variable i.e. $S_x^K$ is the push-forward of $\UM_S^K$ by the mapping $(y,z) \mapsto S(K,x,y,z)$.
 
@@ -1626,7 +1630,7 @@ Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $
 
 \begin{proof}
 
-Consider $\zeta: \Nats^n \rightarrow (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and ${t \in \Reals}$, let ${\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by 
+Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and ${t \in \Reals}$, let ${\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}}$. For any $K \in \Nats^n$, define ${\alpha^K: \Words \rightarrow \Words}$ by 
 
 \[\alpha^K(x):=\Chev{x,c_\Rats(\rho^K(f(x)))}\]
 
@@ -2805,7 +2809,7 @@ Define the distributional estimation problem $({\mu_{\mathfrak{F},D}},f_{\mathfr
 f_{\mathfrak{F}}(\Chev{b,d,a,x}) &:= \begin{cases}\mathfrak{F}(\phi, x) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ 0 \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
 \end{align}
 
-For any ${p \in \NatPoly{1}}$, define ${\alpha_p: \Nats^n \rightarrow \Nats^n}$ by
+For any ${p \in \NatPoly{1}}$, define ${\alpha_p: \NatFun \Nats^n}$ by
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -2972,7 +2976,7 @@ However, in general the estimators constructed in Theorem~\ref{thm:exists_all} a
 \begin{theorem}
 \label{thm:exists_all}
 
-Fix ${l: \Nats^n \rightarrow \Nats^{>0}}$ steadily growing. Denote ${\Gamma_{\textnormal{adv}}^n:=(\Gamma_0^n,\Gamma_l)}$. Fix ${r: \bm{1} \xrightarrow{\Gamma_{\textnormal{adv}}}\Nats}$ steadily growing. Assume ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_l}$. Define ${\eta: \Nats^n \rightarrow \Nats^{n-1}}$ by
+Fix ${l: \NatFun \Nats^{>0}}$ steadily growing. Denote ${\Gamma_{\textnormal{adv}}^n:=(\Gamma_0^n,\Gamma_l)}$. Fix ${r: \bm{1} \xrightarrow{\Gamma_{\textnormal{adv}}}\Nats}$ steadily growing. Assume ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_l}$. Define ${\eta: \NatFun \Nats^{n-1}}$ by
 
 \[\forall J \in \Nats^{n-1}, k \in \Nats: \eta(J,k)=J\]
 
@@ -2985,7 +2989,7 @@ Consider ${(\mu,f)}$ a distributional estimation problem of rank ${n-1}$. Then, 
 \begin{proposition}
 \label{prp:tbd}
 
-For any ${p \in \NatPoly{1}}$ there is ${\{\omega_p^K\}_{K \in \Nats^n}}$ a family of probability measures on ${\Nats}$ s.t. for any ${\zeta: \Nats^n \rightarrow \Reals}$ bounded, if 
+For any ${p \in \NatPoly{1}}$ there are ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any ${\zeta: \NatFun \Reals}$ bounded, if 
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -3004,7 +3008,7 @@ then
 
 \begin{proof}
 
-FOO
+Consider ${h_1, h_2: \NatFun \Nats}$ (not necessarily polynomial), suppose that ${h_1 \leq h_2}$ and there is ${?}$...
 %
 \end{proof}
 
