@@ -3108,12 +3108,12 @@ By definition of ${\omega_p}$, \ref{eqn:prp__fall_uni__conc} follows.
 \begin{proposition}
 \label{prp:tbd}
 
-Consider ${p \in \NatPoly}$, ${(\mu,f)}$ a distributional estimation problem and\\ ${P,Q: \Words \Scheme \Rats}$. Suppose that
+Consider ${p \in \NatPoly}$, ${(\mu,f)}$ a distributional estimation problem and\\ ${P,Q: \Words \Scheme \Rats}$. Denote ${\alpha_{p,i}(J,k):=(J,p(J,k)+i)}$. Suppose that
 
 \begin{align}
 %\label{eqn:tbd}
-\sup_{i \in \Nats} \E_{ \mu^{Jk} \times \Un_P^{Jk}}[(P^{J,p(J,k)+i}(x,y)-f(x))^2] &\leq \E_{ \mu^{Jk} \times \Un_P^{Jk}}[(P^{Jk}(x,y)-f(x))^2] \pmod \FallU \\
-\sup_{i \in \Nats} \E_{\mu^{Jk} \times \Un_P^{Jk}}[(P^{J,p(J,k)+i}(x,y)-f(x))^2] &\leq \E_{\mu^{Jk} \times \Un_Q^{Jk}}[(Q^{Jk}(x,y)-f(x))^2] \pmod \FallU
+\sup_{i \in \Nats} \E_{ \mu^{\alpha_{p,i}(K)} \times \Un_P^{\alpha_{p,i}(K)}}[(P^{\alpha_{p,i}(K)}(x,y)-f(x))^2] &\leq \E_{ \mu^{K} \times \Un_P^{K}}[(P^{K}(x,y)-f(x))^2] \pmod \FallU \\
+\sup_{i \in \Nats} \E_{\mu^{\alpha_{p,i}(K)} \times \Un_P^{\alpha_{p,i}(K)}}[(P^{\alpha_{p,i}(K)}(x,y)-f(x))^2] &\leq \E_{\mu^{K} \times \Un_Q^{K}}[(Q^{K}(x,y)-f(x))^2] \pmod \FallU
 \end{align}
 
 Then
