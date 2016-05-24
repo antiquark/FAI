@@ -3021,8 +3021,6 @@ Take any ${a \in \Reals}$ s.t. ${a \geq 2}$.
 
 Consider any ${\zeta: \NatFun \Reals}$ bounded.
 
-\[\int_{t = a}^{a^{\Floor{\log q(J)}}} \Abs{\zeta(J,\Floor{t}-2)} \dif (\log \log t) \leq (\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
-
 \[\Abs{\int_{t = a}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t)} \leq (\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
 In particular
@@ -3047,7 +3045,27 @@ Assume \ref{eqn:prp__fall_uni_weak__prem}. ${\Floor{t^{\Floor{\log q(J)}}}-2 \ge
 
 \[\int_{t = 2}^{\infty} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-TBD
+\[\int_2^\infty (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \frac{\dif t}{(\ln 2)^2 t \log t} \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+\[\sum_{k=0}^\infty \int_{k+2}^{k+3} \frac{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}{t \log t} \dif t \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+\[\sum_{k=0}^\infty \int_0^1 \frac{\zeta(J,k) - \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)}{(k+t+2) \log (k+t+2)}\dif t \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+For ${k \geq 2}$ we have ${(k + 3) \log (k + 3) \leq \frac{5}{2}k \log \frac{5}{2}k \leq \frac{5}{2}k \log k^{\log 5} = \frac{5}{2} (\log 5) k \log k}$.
+
+\[\sum_{k=2}^\infty \frac{\zeta(J,k) - \int_0^1 \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)\dif t}{\frac{5}{2} (\log 5) k \log k} \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+Define
+
+\[I_q^{Jk}(i):=\{t \in [0,1] \mid (k+t+2)^{\Floor{\log q(J)}} - (k+2)^{\Floor{\log q(J)}} \in [i,i+1)\}\]
+
+\[\omega_q^K(i):=\begin{cases}\sup I_q^K-\inf I_q^K \text{ if } I_q^K \ne \varnothing\\0 \text{ otherwise}\end{cases}\]
+
+We get
+
+\[\sum_{k=2}^\infty \frac{\zeta(J,k) - \sum_{i=0}^\infty \zeta(J,(k+2)^{\Floor{\log q(J)}}-2+i)\omega_q^{Jk}(i) }{k \log k}  \leq \frac{4}{5}(\ln 2)(\ln 5)(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+
+The above obviously implies \ref{eqn:prp__fall_uni_weak__conc}.
 %
 \end{proof}
 
