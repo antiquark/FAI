@@ -3154,24 +3154,28 @@ Construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x_0,y_0,
 P^K(x_0,y_0,\Chev{a_0,b_0}) &= D(\Ev^{K_{n-1}}(a_0;x_0,y_0))
 \end{align}
 
-Consider any ${Q: \Words \Scheme \Rats}$ bounded. Choose ${p \in \NatPoly}$ s.t.
+Consider any ${Q: \Words \Scheme \Rats}$ bounded. Choose ${q \in \NatPoly}$ s.t.
 
 \begin{align*}
-\forall K \in \Nats^n: \R_Q(K) &\leq r(\alpha_p(K)) \\
-\forall K \in \Nats^n \exists a_Q^K \in \Bool^{l(p(K))} \forall i \in \Nats, x,z \in \Words, y \in \BoolR{Q}: D(\Ev^{p(K)+i}(a_Q^K;x,yz))&=Q^K(x,y)
+\forall K \in \Nats^n: \R_Q(K) &\leq r(\alpha_q(K)) \\
+\forall K \in \Nats^n \exists a_Q^K \in \Bool^{l(q(K))} \forall i \in \Nats, x,z \in \Words, y \in \BoolR{Q}: D(\Ev^{q(K)+i}(a_Q^K;x,yz))&=Q^K(x,y)
 \end{align*}
 
 Take any ${i \in \Nats}$.
 
-\[\E_{ \mu^{\eta(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2]=\E_{ \mu^{\eta(K)} \times \Un^{r(\alpha_{p+i}(K))}}[(D(\Ev^{p(K)+i}(a^*(\alpha_{p+i}(K));x,y))-f(x))^2]\]
+\[\E_{ \mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2]=\E_{ \mu^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a^*(\alpha_{q+i}(K));x,y))-f(x))^2]\]
 
 Using \ref{eqn:thm__exists_all__astar}
 
-\[\E_{ \mu^{\eta(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un^{r(\alpha_{p+i}(K))}}[(D(\Ev^{p(K)+i}(a_Q^K;x,y))-f(x))^2]\]
+\[\E_{ \mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a_Q^K;x,y))-f(x))^2]\]
 
-\[\E_{ \mu^{\eta(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un^{r_Q(K)}}[(Q^K(x,y)-f(x))^2]\]
+\[\E_{ \mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2]\]
 
-TBD
+By the same reasoning we can choose ${p \in \NatPoly}$ s.t. ${p \geq q}$ and
+
+\[\E_{ \mu^{\eta(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2]\]
+
+Applying Proposition~\ref{prp:fall_uni_amp}, we conclude that ${P}$ is an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$.
 %
 \end{proof}
 
