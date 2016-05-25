@@ -149,9 +149,7 @@ The concept of \enquote{optimal bounded estimator} that arises from the approach
 
 Optimal bounded estimators turn out to be unique up to a certain equivalence relation. The existence of optimal bounded estimators depends on the specific variety you consider. We show that in the non-uniform case (allowing advice) there is a variety of optimal bounded estimators that exist for completely arbitrary problems. Uniform optimal bounded estimators of this kind exist for a certain class of problems we call \enquote{samplable} which can be very roughly regarded as an average-case analogue of $\textsc{NP} \cap \textsc{coNP}$. More generally mapping the class of problems which admit optimal bounded estimators allows for much further research.
 
-Assignment of probabilities to mathematical questions is interesting in the context of artificial general intelligence\cite{Hutter_2013,Christiano_2014}. In this context is useful to consider situations in which an agent reasons about itself or several agents reason about each other \cite{Fallenstein_2015}. We give a formal model of such situations in our setting and use the Kakutani-Glicksberg-Fan theorem to prove they still admit existence of optimal bounded estimators. We then use this to model agents playing a game in normal form and show that such agents converge to the analogue of Nash equilibrium (or even a proper equilibrium, depending on the precise implementation) in the time bounded case. That is, each agent plays a near-optimal response among those it can find within the allotted time. We suggest more potential applications for optimal bounded estimators to decision theory and the theory of self-modifying agents.
-
-The structure of the paper is as follows. Section~\ref{sec:fundamentals} introduces the main definitions and gives a simple example using one-way functions. Section~\ref{sec:probability} shows the parallel between properties of optimal bounded estimators and classical probability theory. Section~\ref{sec:reductions} discusses behavior of optimal bounded estimators under reductions and shows certain natural classes have complete problems under reductions that are appropriate. Section~\ref{sec:e_and_u} discusses existence and uniqueness of optimal bounded estimators. Section~\ref{sec:reflective} discusses applications to AGI. Section~\ref{sec:discussion} discusses possible avenues for further research. The Appendix reviews relevant material about hard-core predicates and one-way functions.
+The structure of the paper is as follows. Section~\ref{sec:fundamentals} introduces the main definitions and gives a simple example using one-way functions. Section~\ref{sec:probability} shows the parallel between properties of optimal bounded estimators and classical probability theory. Section~\ref{sec:reductions} discusses behavior of optimal bounded estimators under reductions and shows certain natural classes have complete problems under reductions that are appropriate. Section~\ref{sec:e_and_u} discusses existence and uniqueness of optimal bounded estimators. Section~\ref{sec:discussion} discusses possible avenues for further research. The Appendix reviews relevant material about hard-core predicates and one-way functions.
 
 \setcounter{section}{-1}
 
@@ -318,7 +316,7 @@ For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\
 Fix ${n \in \Nats^{>0}}$. ${\gamma: \NatFun \Nats}$ is said to be \emph{steadily growing} when
 \begin{enumerate}[(i)]
 \item ${\gamma \in \GammaPoly^n}$
-\item ${\forall J \in \Nats^{n-1}, k,l \in \Nats: k < l \implies \gamma(J,k) < \gamma(J,l)}$
+\item ${\forall J \in \Nats^{n-1}, k,l \in \Nats: k < l \implies \gamma(J,k) \leq \gamma(J,l)}$
 \item\label{con:def__sgrow__poly} There is ${q \in \NatPoly}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \gamma(J,k) \leq \frac{1}{2}\gamma(J,q(J,k))}$.
 \end{enumerate}
 \end{definition}
@@ -3179,22 +3177,43 @@ Applying Proposition~\ref{prp:fall_uni_amp}, we conclude that ${P}$ is an ${\Fal
 %
 \end{proof}
 
-TBD
-
-% ERM (agnostic PAC learning) and Levin's universal search
+We now proceed to study the special case of samplable problems. These problems admit an optimal bounded estimator which is essentially a brute-force implementation of the empirical risk minimization principle in statistical learning. In particular, the optimality of this algorithm can be regarded as a manifestation of the fundamental theorem of agnostic PAC learning (see e.g. Theorem 6.7 in \cite{Shalev-Shwartz_2014}). In our case the hypothesis space of the space of programs, so this algorithm can also be regarded as a variation on Levin's universal search. The advantage of this optimal bounded estimator on the fully general construction of Theorem~\ref{thm:exists_all} is that the required advice is only the advice of the sampler.
 
 \begin{samepage}
 \begin{theorem}
 \label{thm:exists_smp}
 
-?
+Fix ${r: \Nats^n \Alg \Nats}$ s.t.
+
+\begin{enumerate}[(i)]
+
+\item ${\T_r \in \GammaPoly^n}$
+
+\item As a function, ${r \in \GammaPoly^n}$.
+
+\item ${\forall J \in \Nats^{n-1}, k,l \in \Nats: k < l \implies r(J,k) \leq r(J,l)}$
+
+\item There is ${q \in \NatPoly}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \log(k+4)r(J,k) \leq r(J,q(J,k))}$.
+
+\end{enumerate}
+
+
+Assume ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_\textnormal{log}^n}$. Consider ${(\mu,f)}$ an distributional estimation problem of rank ${n-1}$ and ${G}$ an ${\FallU(\Gamma)}$-sampler for ${(\mu^\eta,f)}$. Then, there exists ${P}$ an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$ s.t. ${\A_P=\A_G}$. In particular, if ${G}$ is uniform (i.e. ${\A_G \equiv \Estr}$) then so is ${P}$.
 
 \end{theorem}
 \end{samepage}
 
 \begin{proof}
 
-FOO
+Construct ${P}$ s.t.
+
+\begin{align}
+\A_P &= \A_G \\
+\R_P(K,a_0) &= \R_G(K,a_0)? \\
+P &= BAR 
+\end{align}
+
+TBD
 %
 \end{proof}
 
@@ -3211,13 +3230,6 @@ TBD
 \subsection{Uniqueness}
 
 % Including stability of conditional expectations
-
-TBD
-
-\section{Reflective Systems and Game Theory}
-\label{sec:reflective}
-
-% Consider dropping
 
 TBD
 
