@@ -3191,28 +3191,69 @@ Fix ${r: \Nats^n \Alg \Nats}$ s.t.
 
 \item As a function, ${r \in \GammaPoly^n}$.
 
-\item ${\forall J \in \Nats^{n-1}, k,l \in \Nats: k < l \implies r(J,k) \leq r(J,l)}$
+\item ${r}$ is non-decreasing in the last argument.
 
-\item There is ${q \in \NatPoly}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \log(k+4)r(J,k) \leq r(J,q(J,k))}$.
+\item There is ${q \in \NatPoly}$ s.t. ${\forall K \in \Nats^n: \log(K_{n-1}+4)r(K) \leq r(\alpha_q(K))}$.
 
 \end{enumerate}
 
-
-Assume ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_\textnormal{log}^n}$. Consider ${(\mu,f)}$ an distributional estimation problem of rank ${n-1}$ and ${G}$ an ${\FallU(\Gamma)}$-sampler for ${(\mu^\eta,f)}$. Then, there exists ${P}$ an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$ s.t. ${\A_P=\A_G}$. In particular, if ${G}$ is uniform (i.e. ${\A_G \equiv \Estr}$) then so is ${P}$.
+In particular, ${r}$ is steadily growing. Assume ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_\textnormal{log}^n}$. Consider ${(\mu,f)}$ an distributional estimation problem of rank ${n-1}$ and ${G}$ an ${\FallU(\Gamma)}$-sampler for ${(\mu^\eta,f)}$. Then, there exists ${P}$ an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$ s.t. ${\A_P=\A_G}$. In particular, if ${G}$ is uniform (i.e. ${\A_G \equiv \Estr}$) then so is ${P}$.
 
 \end{theorem}
 \end{samepage}
 
+\begin{samepage}
+\begin{proposition}
+\label{prp:std_grow_log}
+
+Fix ${r \in \GammaPoly^n}$ s.t.
+
+\begin{enumerate}[(i)]
+
+\item ${r}$ is non-decreasing in the last argument.
+
+\item There is ${q \in \NatPoly}$ s.t. ${\forall K \in \Nats^n: \log(K_{n-1}+4)r(K) \leq r(\alpha_q(K))}$.
+
+\end{enumerate}
+
+In particular, ${r}$ is steadily growing. Consider any ${\gamma \in \Gamma_r}$ and define ${\gamma': \Nats \rightarrow \Nats}$ by 
+
+\[\gamma'(K):=\Floor{\log(K_{n-1}+1)}\gamma(K)\]
+
+Then, ${\gamma' \in \Gamma_r}$
+
+\end{proposition}
+\end{samepage}
+
 \begin{proof}
 
-Construct ${P}$ s.t.
+Choose ${p \in \NatPoly}$ s.t. ${p(K) \geq K_{n-1}}$ and ${r(\alpha_p(K)) \geq \gamma(K)}$. We get 
+
+\[\gamma'(K) \leq \Floor{\log(K_{n-1}+1)} r(\alpha_p(K))\]
+
+\[\gamma'(K) \leq \Floor{\log(p(K)+4)} r(\alpha_p(K))\]
+
+\[\gamma'(K) \leq r(\alpha_q(\alpha_p(K)))\]
+%
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:exists_smp}]
+
+Let ${D: \Words \Alg \Rats}$ be s.t. ${D(\En_\Rats(t))=t}$ and ${\T_D(x) \leq p_D(\Abs{x})}$ for some ${p_D \in \Nats[k]}$. Denote ${l(K):=\Floor{\log (K_{n-1} + 1)}}$. Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in ...\}}$...
 
 \begin{align}
-\A_P &= \A_G \\
-\R_P(K,a_0) &= \R_G(K,a_0)? \\
-P &= BAR 
+\label{eqn:thm__exists_smp__tbd}\A_A(K) &= \A_G(K) \\
+\label{eqn:thm__exists_smp__tbd}\R_A(K,w) &= l(K)^2 (\R_G(K,w) + r(K)) \\
+\label{eqn:thm__exists_smp__tbd}A^K(\prod_{i \in [l(K)^2]}y_i z_i,w) &\in \Argmin{a \in \Bool^{l(K)}} \sum_{i \in [l(K)^2]}(D(\Ev^{K_{n-1}}(a;G^K(y_i,w)_0,z_i))-G^K(y_i,w)_1)^2 
 \end{align}
 
+\ref{eqn:thm__exists_smp__rnd} is legitimate due to Proposition~\ref{prp:std_grow_log}. Construct ${P: \Words \Scheme \Rats}$ s.t.
+
+\begin{align}
+\label{eqn:thm__exists_smp__adv}\A_P(K) &= \A_G(K) \\
+\label{eqn:thm__exists_smp__rnd}\R_P(K,w) &= m(K) (\R_G(K,w) + r(K)) + r(K) \\
+\label{eqn:thm__exists_smp__alg}P^K(x,(\prod_{i \in [m(K)]}y_i z_i)z_{m(K)},w) &= D(\Ev^{K_{n-1}}(A^K(\prod_{i \in [m(K)]}y_i z_i,w);x,z_{m(K)}))
+\end{align}
 TBD
 %
 \end{proof}
