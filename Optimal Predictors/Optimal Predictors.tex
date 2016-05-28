@@ -317,7 +317,7 @@ Fix ${n \in \Nats^{>0}}$. ${\gamma: \NatFun \Nats}$ is said to be \emph{steadily
 \begin{enumerate}[(i)]
 \item ${\gamma \in \GammaPoly^n}$
 \item ${\forall J \in \Nats^{n-1}, k,l \in \Nats: k < l \implies \gamma(J,k) \leq \gamma(J,l)}$
-\item\label{con:def__sgrow__poly} There is ${q \in \NatPoly}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \gamma(J,k) \leq \frac{1}{2}\gamma(J,q(J,k))}$.
+\item\label{con:def__sgrow__poly} There is ${s \in \NatPoly}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \gamma(J,k) \leq \frac{1}{2}\gamma(J,s(J,k))}$.
 \end{enumerate}
 \end{definition}
 \end{samepage}
@@ -327,13 +327,13 @@ Fix ${n \in \Nats^{>0}}$. ${\gamma: \NatFun \Nats}$ is said to be \emph{steadily
 
 For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, ${\Gamma_{\gamma^*}}$ is a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. 
 
-To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p_1(J,k))}$ and ${\gamma_2(J,k) \leq \gamma^*(J,p_2(J,k))}$. Choose ${p,q \in \NatPoly}$ s.t. ${p \geq \max(p_1,p_2)}$ and ${q}$ is as in condition~\ref{con:def__sgrow__poly} of Definition~\ref{def:sgrow}.
+To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p_1(J,k))}$ and ${\gamma_2(J,k) \leq \gamma^*(J,p_2(J,k))}$. Choose ${p,s \in \NatPoly}$ s.t. ${p \geq \max(p_1,p_2)}$ and ${s}$ is as in condition~\ref{con:def__sgrow__poly} of Definition~\ref{def:sgrow}.
 
 \[\gamma_1(J,k)+\gamma_2(J,k) \leq \gamma^*(J,p_1(J,k))+\gamma^*(J,p_2(J,k))\]
 
 \[\gamma_1(J,k)+\gamma_2(J,k) \leq 2\gamma^*(J,p(J,k))\]
 
-\[\gamma_1(J,k)+\gamma_2(J,k) \leq \gamma^*(J,q(J,p(J,k)))\]
+\[\gamma_1(J,k)+\gamma_2(J,k) \leq \gamma^*(J,s(J,p(J,k)))\]
 
 In particular taking ${\gamma^*_{\text{poly}}(J,k):=j}$ and ${\gamma^*_{\text{log}}(J,k):=\Floor{\log (j+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{\gamma^*_{\text{poly}}}}$, ${\Gamma_{\text{log}}^n=\Gamma_{\gamma^*_{\text{log}}}}$.
 
@@ -3137,7 +3137,7 @@ Applying \ref{eqn:prp__fall_uni_amp__q} to the right hand side, we get \ref{eqn:
 
 \begin{proof}[Proof of Theorem \ref{thm:exists_all}]
 
-Let ${D: \Words \Alg \Rats}$ be s.t. ${D(\En_\Rats(t))=t}$ and ${\T_D(x) \leq p_D(\Abs{x})}$ for some ${p_D \in \Nats[k]}$. Choose ${a^*: \Nats^n \rightarrow \Words}$ s.t.
+Let ${D: \Words \Alg \Rats}$ be s.t. ${D(\En_\Rats(t))=t}$ and ${\T_D(x) \leq p_D(\Abs{x})}$ for some\\ $p_D \in \Nats[k]$. Choose ${a^*: \Nats^n \rightarrow \Words}$ s.t.
 
 \begin{equation}
 \label{eqn:thm__exists_all__astar}
@@ -3152,12 +3152,12 @@ Construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x_0,y_0,
 P^K(x_0,y_0,\Chev{a_0,b_0}) &= D(\Ev^{K_{n-1}}(a_0;x_0,y_0))
 \end{align}
 
-Consider any ${Q: \Words \Scheme \Rats}$ bounded. Choose ${q \in \NatPoly}$ s.t.
+Consider any ${Q: \Words \Scheme \Rats}$ bounded. Choose ${q \in \NatPoly}$ s.t. for any ${K \in \Nats^n}$
 
-\begin{align*}
-\forall K \in \Nats^n: \R_Q(K) &\leq r(\alpha_q(K)) \\
-\forall K \in \Nats^n \exists a_Q^K \in \Bool^{l(q(K))} \forall i \in \Nats, x,z \in \Words, y \in \BoolR{Q}: D(\Ev^{q(K)+i}(a_Q^K;x,yz))&=Q^K(x,y)
-\end{align*}
+\begin{align}
+\label{eqn:thm__exists_all__q_rnd}\R_Q(K) &\leq r(\alpha_q(K)) \\
+\label{eqn:thm__exists_all__q_adv}\exists a_Q^K \in \Bool^{l(q(K))} \forall i \in \Nats, x,z \in \Words, y \in \BoolR{Q}: D(\Ev^{q(K)+i}(a_Q^K;x,yz))&=Q^K(x,y)
+\end{align}
 
 Take any ${i \in \Nats}$.
 
@@ -3193,7 +3193,7 @@ Fix ${r: \Nats^n \Alg \Nats}$ s.t.
 
 \item ${r}$ is non-decreasing in the last argument.
 
-\item There is ${q \in \NatPoly}$ s.t. ${\forall K \in \Nats^n: \log(K_{n-1}+4)r(K) \leq r(\alpha_q(K))}$.
+\item There is ${s \in \NatPoly}$ s.t. ${\forall K \in \Nats^n: \log(K_{n-1}+4)r(K) \leq r(\alpha_s(K))}$.
 
 \end{enumerate}
 
@@ -3212,13 +3212,13 @@ Fix ${r \in \GammaPoly^n}$ s.t.
 
 \item ${r}$ is non-decreasing in the last argument.
 
-\item There is ${q \in \NatPoly}$ s.t. ${\forall K \in \Nats^n: \log(K_{n-1}+4)r(K) \leq r(\alpha_q(K))}$.
+\item There is ${s \in \NatPoly}$ s.t. ${\forall K \in \Nats^n: \log(K_{n-1}+4)r(K) \leq r(\alpha_s(K))}$.
 
 \end{enumerate}
 
 In particular, ${r}$ is steadily growing. Consider any ${\gamma \in \Gamma_r}$ and define ${\gamma': \Nats \rightarrow \Nats}$ by 
 
-\[\gamma'(K):=\Floor{\log(K_{n-1}+1)}\gamma(K)\]
+\[\gamma'(K):=\Floor{\log(K_{n-1}+2)}\gamma(K)\]
 
 Then, ${\gamma' \in \Gamma_r}$
 
@@ -3229,31 +3229,52 @@ Then, ${\gamma' \in \Gamma_r}$
 
 Choose ${p \in \NatPoly}$ s.t. ${p(K) \geq K_{n-1}}$ and ${r(\alpha_p(K)) \geq \gamma(K)}$. We get 
 
-\[\gamma'(K) \leq \Floor{\log(K_{n-1}+1)} r(\alpha_p(K))\]
+\[\gamma'(K) \leq \Floor{\log(K_{n-1}+2)} r(\alpha_p(K))\]
 
 \[\gamma'(K) \leq \Floor{\log(p(K)+4)} r(\alpha_p(K))\]
 
-\[\gamma'(K) \leq r(\alpha_q(\alpha_p(K)))\]
+\[\gamma'(K) \leq r(\alpha_s(\alpha_p(K)))\]
 %
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm:exists_smp}]
 
-Let ${D: \Words \Alg \Rats}$ be s.t. ${D(\En_\Rats(t))=t}$ and ${\T_D(x) \leq p_D(\Abs{x})}$ for some ${p_D \in \Nats[k]}$. Denote ${l(K):=\Floor{\log (K_{n-1} + 1)}}$. Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in ...\}}$...
+Let ${D: \Words \Alg \Rats}$ be s.t. ${D(\En_\Rats(t))=t}$ and ${\T_D(x) \leq p_D(\Abs{x})}$ for some\\ $p_D \in \Nats[k]$. Denote ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${L: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$,\\ $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^2]}}$ and ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^2]}}$
 
 \begin{align}
-\label{eqn:thm__exists_smp__tbd}\A_A(K) &= \A_G(K) \\
-\label{eqn:thm__exists_smp__tbd}\R_A(K,w) &= l(K)^2 (\R_G(K,w) + r(K)) \\
-\label{eqn:thm__exists_smp__tbd}A^K(\prod_{i \in [l(K)^2]}y_i z_i,w) &\in \Argmin{a \in \Bool^{l(K)}} \sum_{i \in [l(K)^2]}(D(\Ev^{K_{n-1}}(a;G^K(y_i,w)_0,z_i))-G^K(y_i,w)_1)^2 
+\label{eqn:thm__exists_smp__l_adv}\A_L(K) &= \A_G(K) \\
+\label{eqn:thm__exists_smp__l_rnd}\R_L(K,w) &= l(K)^2 (\R_G(K,w) + r(K)) \\
+\label{eqn:thm__exists_smp__l_alg}L^K(a,\prod_{i \in [l(K)^2]}y_i z_i,w) &= \frac{1}{l(K)^2}\sum_{i \in [l(K)^2]}(D(\Ev^{K_{n-1}}(a;G^K(y_i,w)_0,z_i))-G^K(y_i,w)_1)^2 
 \end{align}
 
-\ref{eqn:thm__exists_smp__rnd} is legitimate due to Proposition~\ref{prp:std_grow_log}. Construct ${P: \Words \Scheme \Rats}$ s.t.
+That is, ${L}$ generates ${l(K)^2}$ estimates of ${f}$ using ${G}$ and computes the \enquote{empirical risk} of the program ${a}$ w.r.t. these estimates. Here, \ref{eqn:thm__exists_smp__l_rnd} is legitimate due to Proposition~\ref{prp:std_grow_log}. 
+
+Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^2]}}$ and\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^2]}}$
 
 \begin{align}
-\label{eqn:thm__exists_smp__adv}\A_P(K) &= \A_G(K) \\
-\label{eqn:thm__exists_smp__rnd}\R_P(K,w) &= m(K) (\R_G(K,w) + r(K)) + r(K) \\
-\label{eqn:thm__exists_smp__alg}P^K(x,(\prod_{i \in [m(K)]}y_i z_i)z_{m(K)},w) &= D(\Ev^{K_{n-1}}(A^K(\prod_{i \in [m(K)]}y_i z_i,w);x,z_{m(K)}))
+\label{eqn:thm__exists_smp__a_adv}\A_A(K) &= \A_G(K) \\
+\label{eqn:thm__exists_smp__a_rnd}\R_A(K,w) &= \R_L(K,w) \\
+\label{eqn:thm__exists_smp__a_alg}A^K(\prod_{i \in [l(K)^2]}y_i z_i,w) &\in \Argmin{a \in \Bool^{l(K)}} L^K(a,\prod_{i \in [l(K)^2]}y_i z_i,w)
 \end{align}
+
+Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^2]}}$,\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^2]}}$ and ${z_* \in \Bool^{r(K)}}$
+
+\begin{align}
+\label{eqn:thm__exists_smp__p_adv}\A_P(K) &= \A_G(K) \\
+\label{eqn:thm__exists_smp__p_rnd}\R_P(K,w) &= \R_L(K,w) + r(K) \\
+\label{eqn:thm__exists_smp__p_alg}P^K(x,(\prod_{i \in [l(K)^2]}y_i z_i)z_{*},w) &= D(\Ev^{K_{n-1}}(A^K(\prod_{i \in [l(K)^2]}y_i z_i,w);x,z_{*}))
+\end{align}
+
+For any ${a \in \Bool^{l(K)}}$
+
+\[?\]
+
+\[\E_{\Un_L^K}[L^K(a)] \equiv \E_{(x,z) \sim \mu^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(a;x,z))-f(x))^2] \pmod \FallU\]
+
+Consider any ${Q: \Words \Scheme \Rats}$ bounded. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold.
+
+\[?\]
+
 TBD
 %
 \end{proof}
@@ -3278,6 +3299,12 @@ TBD
 \label{sec:discussion}
 
 TBD
+
+% Studying the complexity classes
+% Bayesian reasoning and AGI
+% Parellel with reflective oracles
+% Fixed point theorem and game theory
+% AI safety
 
 \appendix
 
