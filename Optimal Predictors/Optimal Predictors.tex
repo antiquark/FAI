@@ -108,6 +108,7 @@
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
 \newcommand{\Scheme}{\xrightarrow{\Gamma}}
 \newcommand{\MScheme}{\xrightarrow{\MGrow}}
+\usepackage[normalem]{ulem}
 
 \begin{document}
 
@@ -1745,7 +1746,7 @@ Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a fa
 
 \begin{proof}
 
-Let ${f_G}$ be defined as in Definition~\ref{def:smp_prob_rel}.
+Let ${f_G^K}$ be defined as in Definition~\ref{def:smp_prob_rel}.
 
 $$\E_{\mu_\pi^K}[h^K(x,y)f(x)]-\E_{\mu_\pi^K}[h^K(x,y)f_G^K(x,y)]=\E_{\mu_\pi^K}[h^K(x,y)(f(x)-f_G^K(x,y))]$$
 
@@ -2015,7 +2016,7 @@ By Proposition~\ref{prp:smp_base_change}, $\bar{G}_0$ is an $\EMG$-sampler of $\
 
 \[\mu^{K} \ltimes \pi^K \equiv \En_*^2(\sigma_\bullet^K \times G_{0\bullet}^K) \ltimes \pi^K \pmod \Fall\]
 
-Let ${f_G}$ and ${f_{\bar{G}}}$ be defined as in Definition~\ref{def:smp_prob_rel}.
+Let ${f_G^K}$ and ${f_{\bar{G}}^K}$ be defined as in Definition~\ref{def:smp_prob_rel}.
 
 \[\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x,y) \sim \En_*^2(\sigma_\bullet^K \times G_{0\bullet}^K) \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \pmod \Fall\]
 
@@ -3326,9 +3327,13 @@ Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $
 \label{eqn:thm__exists_smp__p_alg}P^K(x,(\prod_{i \in [l(K)^2]}y_i z_i)z_{*},w) &= D(\Ev^{K_{n-1}}(A^K(\prod_{i \in [l(K)^2]}y_i z_i,w);x,z_{*}))
 \end{align}
 
-For any ${a: \Nats^n \rightarrow \Words}$ we can use Proposition~\ref{prp:est_err_smp} to show???
+For any ${a: \Nats^n \rightarrow \Words}$ we can use Proposition~\ref{prp:est_err_smp} to show
 
 \[\E_{\Un_L^K}[L^K(a(K),y)] \equiv \E_{\mu^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(a(K);x,z))-f(x))^2]+\E_{\Un_G^K}[(f(G^K(y)_0)-G^K(y)_1)^2] \pmod \Fall\]
+
+Denote the first term on the right hand side ${\epsilon^K(a)}$ and the second term on the right hand side ${\epsilon_0^K}$. Proposition~\ref{prp:est_err_smp} together with Hoeffding's inequality yields
+
+\[\Prb_{\Un_L^K}[L^K(a(K),y) > \epsilon_0^K + \epsilon^K(a) + l(K)^{-1}] \leq ? \pmod \Fall\]
 
 Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ where ${M}$ is as in condition~\ref{con:def__decod__inv} of Definition~\ref{def:decod}. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold.
 
