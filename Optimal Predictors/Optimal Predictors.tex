@@ -3301,39 +3301,49 @@ Applying Proposition~\ref{prp:smp} to the first term on the right hand side and 
 
 \begin{proof}[Proof of Theorem \ref{thm:exists_smp}]
 
-Fix ${D}$ an ${f}$-compatible decoding. Denote ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${L: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^2]}}$ and\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^2]}}$
+Fix ${D}$ an ${f}$-compatible decoding. Denote ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${L: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^3]}}$ and\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^3]}}$
 
 \begin{align}
 \label{eqn:thm__exists_smp__l_adv}\A_L(K) &= \A_G(K) \\
-\label{eqn:thm__exists_smp__l_rnd}\R_L(K,w) &= l(K)^2 (\R_G(K,w) + r(K)) \\
-\label{eqn:thm__exists_smp__l_alg}L^K(a,\prod_{i \in [l(K)^2]}y_i z_i,w) &= \frac{1}{l(K)^2}\sum_{i \in [l(K)^2]}(D(\Ev^{K_{n-1}}(a;G^K(y_i,w)_0,z_i))-G^K(y_i,w)_1)^2 
+\label{eqn:thm__exists_smp__l_rnd}\R_L(K,w) &= l(K)^3 (\R_G(K,w) + r(K)) \\
+\label{eqn:thm__exists_smp__l_alg}L^K(a,\prod_{i \in [l(K)^3]}y_i z_i,w) &= \frac{1}{l(K)^3}\sum_{i \in [l(K)^3]}(D(\Ev^{K_{n-1}}(a;G^K(y_i,w)_0,z_i))-G^K(y_i,w)_1)^2 
 \end{align}
 
-That is, ${L}$ generates ${l(K)^2}$ estimates of ${f}$ using ${G}$ and computes the \enquote{empirical risk} of the program ${a}$ w.r.t. these estimates. Here, \ref{eqn:thm__exists_smp__l_rnd} is legitimate due to Proposition~\ref{prp:std_grow_log}. 
+That is, ${L}$ generates ${l(K)^3}$ estimates of ${f}$ using ${G}$ and computes the \enquote{empirical risk} of the program ${a}$ w.r.t. these estimates. Here, \ref{eqn:thm__exists_smp__l_rnd} is legitimate due to Proposition~\ref{prp:std_grow_log}. 
 
-Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^2]}}$ and\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^2]}}$
+Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^3]}}$ and\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^3]}}$
 
 \begin{align}
 \label{eqn:thm__exists_smp__a_adv}\A_A(K) &= \A_G(K) \\
 \label{eqn:thm__exists_smp__a_rnd}\R_A(K,w) &= \R_L(K,w) \\
-\label{eqn:thm__exists_smp__a_alg}A^K(\prod_{i \in [l(K)^2]}y_i z_i,w) &\in \Argmin{a \in \Bool^{l(K)}} L^K(a,\prod_{i \in [l(K)^2]}y_i z_i,w)
+\label{eqn:thm__exists_smp__a_alg}A^K(\prod_{i \in [l(K)^3]}y_i z_i,w) &\in \Argmin{a \in \Bool^{l(K)}} L^K(a,\prod_{i \in [l(K)^3]}y_i z_i,w)
 \end{align}
 
-Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^2]}}$,\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^2]}}$ and ${z_* \in \Bool^{r(K)}}$
+Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^3]}}$,\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^3]}}$ and ${z_* \in \Bool^{r(K)}}$
 
 \begin{align}
 \label{eqn:thm__exists_smp__p_adv}\A_P(K) &= \A_G(K) \\
 \label{eqn:thm__exists_smp__p_rnd}\R_P(K,w) &= \R_L(K,w) + r(K) \\
-\label{eqn:thm__exists_smp__p_alg}P^K(x,(\prod_{i \in [l(K)^2]}y_i z_i)z_{*},w) &= D(\Ev^{K_{n-1}}(A^K(\prod_{i \in [l(K)^2]}y_i z_i,w);x,z_{*}))
+\label{eqn:thm__exists_smp__p_alg}P^K(x,(\prod_{i \in [l(K)^3]}y_i z_i)z_{*},w) &= D(\Ev^{K_{n-1}}(A^K(\prod_{i \in [l(K)^3]}y_i z_i,w);x,z_{*}))
 \end{align}
 
-For any ${a: \Nats^n \rightarrow \Words}$ we can use Proposition~\ref{prp:est_err_smp} to show
+Consider any ${a: \Nats^n \rightarrow \Words}$ s.t. ${\Abs{a(K)}=l(K)}$. We can use Proposition~\ref{prp:est_err_smp} to show
 
 \[\E_{\Un_L^K}[L^K(a(K),y)] \equiv \E_{\mu^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(a(K);x,z))-f(x))^2]+\E_{\Un_G^K}[(f(G^K(y)_0)-G^K(y)_1)^2] \pmod \Fall\]
 
-Denote the first term on the right hand side ${\epsilon^K(a)}$ and the second term on the right hand side ${\epsilon_0^K}$. Proposition~\ref{prp:est_err_smp} together with Hoeffding's inequality yields
+Denote the first term on the right hand side ${\varrho^K(a)}$ and the second term on the right hand side ${\varrho_0^K}$. ${L^K(a(K),y)}$ is the average of ${l(K)^3}$ independent and identically distributed random variables. By Proposition~\ref{prp:est_err_smp}, there is ${\varepsilon \in \Fall}$ s.t. the expected value of these random variables is at most ${\varrho_0^K + \varrho^K(a) + \varepsilon(K)}$. Applying Hoeffding's inequality we conclude that for some ${\epsilon \in \Reals^{>0}}$
 
-\[\Prb_{\Un_L^K}[L^K(a(K),y) > \epsilon_0^K + \epsilon^K(a) + l(K)^{-1}] \leq ? \pmod \Fall\]
+\[\Prb_{\Un_L^K}[L^K(a(K),y) > \varrho_0^K + \varrho^K(a) + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^3 l(K)^{-2}}\]
+
+\[\Prb_{\Un_L^K}[L^K(a(K),y) > \varrho_0^K + \varrho^K(a) + \varepsilon(K) + l(K)^{-1}] \leq 2^\epsilon (K_{n-1}+2)^{-\epsilon} \pmod \Fall\]
+
+In particular, since ${L^K(A^K(y),y) \leq L^K(a(K),y)}$
+
+\[\Prb_{\Un_L^K}[L^K(A^K(y),y) > \varrho_0^K + \varrho^K(a) + \varepsilon(K) + l(K)^{-1}] \leq 2^\epsilon (K_{n-1}+2)^{-\epsilon} \pmod \Fall\]
+
+Similarly, we have???
+
+\[\Prb_{\Un_L^K}[L^K(a(K),y) < \varrho_0^K + \varrho^K(a) - \varepsilon(K) - l(K)^{-1}] \leq 2^\epsilon (K_{n-1}+2)^{-\epsilon} \pmod \Fall\]
 
 Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ where ${M}$ is as in condition~\ref{con:def__decod__inv} of Definition~\ref{def:decod}. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold.
 
