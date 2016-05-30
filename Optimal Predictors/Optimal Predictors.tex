@@ -115,7 +115,7 @@
 \title{Optimal Bounded Estimators: A Bayesian Notion of Approximation Algorithm (Draft)}
 
 \author{Vadim Kosoy}
-\affil{Affiliation TBD}
+%\affil{Affiliation TBD}
 
 \date{\today}
 
@@ -441,9 +441,6 @@ Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded
 \item\label{con:def__fall__pol} There is $h \in \NatPoly$ s.t. $2^{-h} \in \Fall$.
 
 \end{enumerate}
-
-Given $f,g: \NatFun \Reals$, the notation $f(K) \equiv g(K) \pmod \Fall$ means $\Abs{f-g} \in \Fall$. $f(K) \leq g(K) \pmod \Fall$ means $\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \leq g(K) + \varepsilon(K)$. Similarly, $f(K) \geq g(K) \pmod \Fall$ means $\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \geq g(K) - \varepsilon(K)$.
-
 \end{definition}
 
 \begin{example}
@@ -572,6 +569,22 @@ For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \NatFun \Real
 Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \NatPoly$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
 %
 \end{proof}
+
+We will use several shorthand notations for relations between functions that hold \enquote{up to a function in ${\Fall}$.} Given $f,g: \NatFun \Reals$, the notation ${f(K) \leq g(K) \pmod \Fall}$ means 
+
+\[\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \leq g(K) + \varepsilon(K)\]
+
+Similarly, $f(K) \geq g(K) \pmod \Fall$ means 
+
+\[\exists \varepsilon \in \Fall \forall K \in \Nats^n: f(K) \geq g(K) - \varepsilon(K)\]
+
+$f(K) \equiv g(K) \pmod \Fall$ means $\Abs{f-g} \in \Fall$.
+
+For families ${\{f_\alpha,g_\alpha: \NatFun \Reals\}_{\alpha \in I}}$ (where ${I}$ is some set), ${f_\alpha(K) \overset{\alpha}{\leq} g_\alpha(K) \pmod \Fall}$ means that 
+
+\[\exists \varepsilon \in \Fall \forall \alpha \in I, K \in \Nats^n: f_\alpha(K) \leq g_\alpha(K) + \varepsilon(K)\]
+
+${f_\alpha(K) \overset{\alpha}{\geq} g_\alpha(K) \pmod \Fall}$ and ${f_\alpha(K) \overset{\alpha}{\equiv} g_\alpha(K) \pmod \Fall}$ are defined analogously.
 
 \subsubsection{Optimal Bounded Estimators}
 
@@ -1704,11 +1717,11 @@ The following propositions are basic properties of samplable ensembles and probl
 \begin{proposition}
 \label{prp:smp}
 
-Consider a word ensemble $\mu$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$ and a uniformly bounded family ${\{h^K: (\Supp \mu) \times Y \rightarrow \Reals\}_{K \in \Nats^n}}$. Suppose $\sigma$ is an $\EMG$-sampler of $\mu$ relative to $\pi$. Then
+Consider a word ensemble $\mu$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \mu) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Suppose $\sigma$ is an $\EMG$-sampler of $\mu$ relative to $\pi$. Then
 
 \begin{equation}
 \label{eqn:prp__smp}
-\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[h^K(x,y)] \equiv \E_{(y,z) \sim \pi_*^K\mu^{K} \times \UM_\sigma^K}[h^K(\sigma^K(y,z),y)] \pmod \Fall
+\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] \overset{\alpha}{\equiv} \E_{(y,z) \sim \pi_*^K\mu^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1718,17 +1731,17 @@ Consider a word ensemble $\mu$, an encoded set $Y$, a family ${\{\pi^K: \Supp \m
 
 If we sample $(x,y)$ from $\mu^{K} \ltimes \pi^K$ and then sample $x'$ from ${\mu^{K} \mid (\pi^K)^{-1}(y)}$, $(x',y)$ will obey the distribution $\mu^{K} \ltimes \pi^K$. Denote $\mu_y^K:=\mu^{K} \mid (\pi^K)^{-1}(y)$. We get
 
-$$\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[h^K(x,y)] = \E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\E_{x' \sim \mu_y^K}[h^K(x',y)]]$$
+$$\E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] = \E_{(x,y) \sim \mu^{K} \ltimes \pi^K}[\E_{x' \sim \mu_y^K}[h_\alpha^K(x',y)]]$$
 
-$$\E_{\mu^{K} \ltimes \pi^K}[h^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h^K(\sigma^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h^K(x',y)]] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h^K(\sigma^K(y,z),y)]$$
+$$\E_{\mu^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h_\alpha^K(x',y)]] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]$$
 
-$$\E_{\mu^{K} \ltimes \pi^K}[h^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h^K(\sigma^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h^K(x',y)]-\E_{\UM_\sigma^K}[h^K(\sigma^K(y,z),y)]]$$
+$$\E_{\mu^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h_\alpha^K(x',y)]-\E_{\UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]]$$
 
-$$\E_{\mu^{K} \ltimes \pi^K}[h^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h^K(\sigma^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h^K(x',y)]-\E_{\sigma_y^K}[h^K(x',y)]]$$
+$$\E_{\mu^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] = \E_{\mu^{K} \ltimes \pi^K}[\E_{\mu_y^K}[h_\alpha^K(x',y)]-\E_{\sigma_y^K}[h_\alpha^K(x',y)]]$$
 
-$$\Abs{\E_{\mu^{K} \ltimes \pi^K}[h^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h^K(\sigma^K(y,z),y)]} \leq \E_{\mu^{K} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h^K(x',y)]-\E_{\sigma_y^K}[h^K(x',y)]}]$$
+$$\Abs{\E_{\mu^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]} \leq \E_{\mu^{K} \ltimes \pi^K}[\Abs{\E_{\mu_y^K}[h_\alpha^K(x',y)]-\E_{\sigma_y^K}[h_\alpha^K(x',y)]}]$$
 
-$$\Abs{\E_{\mu^{K} \ltimes \pi^K}[h^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h^K(\sigma^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K} \ltimes \pi^K}[\Dtv(\mu_y^K,\sigma_y^K)]$$
+$$\Abs{\E_{\mu^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\mu^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\mu^{K} \ltimes \pi^K}[\Dtv(\mu_y^K,\sigma_y^K)]$$
 
 Using the defining property of $\sigma$, we get the desired result.
 \end{proof}
@@ -1736,10 +1749,10 @@ Using the defining property of $\sigma$, we get the desired result.
 \begin{proposition}
 \label{prp:gen}
 
-Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$ and a uniformly bounded family ${\{h^K: (\Supp \mu) \times Y \rightarrow \Reals\}_{K \in \Nats^n}}$. Denote $\mu_\pi^K:=\mu^{K} \ltimes \pi^K$. Suppose $G$ is an $\EMG$-sampler of $(\mu,f)$ relative to $\pi$. Then
+Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \mu^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \mu) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Denote $\mu_\pi^K:=\mu^{K} \ltimes \pi^K$. Suppose $G$ is an $\EMG$-sampler of $(\mu,f)$ relative to $\pi$. Then
 
 \begin{equation}
-\E_{\mu_\pi^K}[h^K(x,y)f(x)] \equiv \E_{\pi_*^K\mu^{K} \times \UM_G^K}[h^K(G^K(y,z)_0,y)G^K(y,z)_1] \pmod \Fall
+\E_{\mu_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\mu^{K} \times \UM_G^K}[h_\alpha^K(G^K(y,z)_0,y)G^K(y,z)_1] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1748,23 +1761,23 @@ Consider a distributional estimation problem $(\mu,f)$, an encoded set $Y$, a fa
 
 Let ${f_G^K}$ be defined as in Definition~\ref{def:smp_prob_rel}.
 
-$$\E_{\mu_\pi^K}[h^K(x,y)f(x)]-\E_{\mu_\pi^K}[h^K(x,y)f_G^K(x,y)]=\E_{\mu_\pi^K}[h^K(x,y)(f(x)-f_G^K(x,y))]$$
+$$\E_{\mu_\pi^K}[h_\alpha^K(x,y)f(x)]-\E_{\mu_\pi^K}[h_\alpha^K(x,y)f_G^K(x,y)]=\E_{\mu_\pi^K}[h_\alpha^K(x,y)(f(x)-f_G^K(x,y))]$$
 
-$$\Abs{\E_{\mu_\pi^K}[h^K(x,y)f(x)]-\E_{\mu_\pi^K}[h^K(x,y)f_G^K(x,y)]} \leq \E_{\mu_\pi^K}[\Abs{h^K(x,y)} \cdot \Abs{f(x)-f_G^K(x,y)}]$$
+$$\Abs{\E_{\mu_\pi^K}[h_\alpha^K(x,y)f(x)]-\E_{\mu_\pi^K}[h_\alpha^K(x,y)f_G^K(x,y)]} \leq \E_{\mu_\pi^K}[\Abs{h_\alpha^K(x,y)} \cdot \Abs{f(x)-f_G^K(x,y)}]$$
 
-$$\Abs{\E_{\mu_\pi^K}[h^K(x,y)f(x)]-\E_{\mu_\pi^K}[h^K(x,y)f_G^K(x,y)]} \leq (\sup \Abs{h}) \E_{\mu_\pi^K}[\Abs{f(x)-f_G^K(x,y)}]$$
+$$\Abs{\E_{\mu_\pi^K}[h_\alpha^K(x,y)f(x)]-\E_{\mu_\pi^K}[h_\alpha^K(x,y)f_G^K(x,y)]} \leq (\sup \Abs{h}) \E_{\mu_\pi^K}[\Abs{f(x)-f_G^K(x,y)}]$$
 
 By property (ii) of Definition~\ref{def:smp_prob_rel}
 
-$$\E_{\mu_\pi^K}[h^K(x,y)f(x)] \equiv \E_{\mu_\pi^K}[h^K(x,y)f_G^K(x,y)] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\mu_\pi^K}[h_\alpha^K(x,y)f_G^K(x,y)] \pmod \Fall$$
 
 Using property (i) of Definition~\ref{def:smp_prob_rel} we can apply Proposition~\ref{prp:smp} to the right hand side and get
 
-$$\E_{\mu_\pi^K}[h^K(x,y)f(x)] \equiv \E_{\pi_*^K\mu^{K} \times \UM_G^K}[h^K(G^K(y,z)_0,y) f_G^K(G^K(y,z)_0,y)] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\mu^{K} \times \UM_G^K}[h_\alpha^K(G^K(y,z)_0,y) f_G^K(G^K(y,z)_0,y)] \pmod \Fall$$
 
-$$\E_{\mu_\pi^K}[h^K(x,y)f(x)] \equiv \E_{\pi_*^K\mu^{K} \times \UM_G^K}[h(G^K(y,z)_0,y) \E_{z' \sim\UM_G^K}[G^K(y,z')_1 \mid G^K(y,z')_0 = G^K(y,z)_0]] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\mu^{K} \times \UM_G^K}[h_\alpha^K(G^K(y,z)_0,y) \E_{z' \sim\UM_G^K}[G^K(y,z')_1 \mid G^K(y,z')_0 = G^K(y,z)_0]] \pmod \Fall$$
 
-$$\E_{\mu_\pi^K}[h^K(x,y)f(x)] \equiv \E_{\pi_*^K\mu^{K} \times \UM_G^K}[h^K(G^K(y,z)_0,y) G^K(y,z)_1] \pmod \Fall$$
+$$\E_{\mu_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\mu^{K} \times \UM_G^K}[h_\alpha^K(G^K(y,z)_0,y) G^K(y,z)_1] \pmod \Fall$$
 \end{proof}
 
 \subsection{Independent Variables}
@@ -3222,7 +3235,9 @@ Fix ${r: \Nats^n \Alg \Nats}$ s.t.
 
 \end{enumerate}
 
-In particular, ${r}$ is steadily growing. Assume ${\Fall \supseteq \FallU}$, ${\GrowR=\Gamma_r}$ and ${\GrowA=\Gamma_\textnormal{log}^n}$. Consider ${(\mu,f)}$ an distributional estimation problem of rank ${n-1}$ and ${G}$ an ${\EG}$-sampler of ${(\mu^\eta,f)}$. Then, there exists ${P}$ an ${\EG}$-optimal estimator for ${(\mu^\eta,f)}$ s.t. ${\A_P=\A_G}$. In particular, if ${G}$ is uniform (i.e. ${\A_G \equiv \Estr}$) then so is ${P}$.
+In particular, ${r}$ is steadily growing. Assume ${\Fall \supseteq \FallU}$???, ${\GrowR=\Gamma_r}$ and ${\GrowA=\Gamma_\textnormal{log}^n}$. Consider ${(\mu,f)}$ an distributional estimation problem of rank ${n-1}$ and ${G}$ an ${\EG}$-sampler of ${(\mu^\eta,f)}$. Then, there exists ${P}$ an ${\EG}$-optimal estimator for ${(\mu^\eta,f)}$ s.t. ${\A_P=\A_G}$. In particular, if ${G}$ is uniform (i.e. ${\A_G \equiv \Estr}$) then so is ${P}$.
+
+% The sampler fall space should satisfy some monotonicity requirement
 
 \end{theorem}
 \end{samepage}
@@ -3266,11 +3281,11 @@ Choose ${p \in \NatPoly}$ s.t. ${p(K) \geq K_{n-1}}$ and ${r(\alpha_p(K)) \geq \
 \begin{proposition}
 \label{prp:est_err_smp}
 
-Consider ${(\mu,f)}$ a distributional estimation problem, ${G}$ an ${\EG}$-sampler of ${(\mu,f)}$ and ${\{h^K: \Words \Markov \Reals\}_{K \in \Nats^n}}$ uniformly bounded. Then
+Consider ${(\mu,f)}$ a distributional estimation problem, ${G}$ an ${\EG}$-sampler of ${(\mu,f)}$, ${I}$ a set and ${\{h_\alpha^K: \Words \Markov \Reals\}_{\alpha \in I, K \in \Nats^n}}$ uniformly bounded. Then
 
 \begin{equation}
 \label{eqn:prp__est_err_smp}
-\E_{\Un_G^K}[\E[(h^K \circ G^K_0-G^K_1)^2]] \equiv \E_{\mu^K}[\E[(h^K-f)^2]] + \E_{\Un_G^K}[(f \circ G^K_0-G^K_1)^2] \pmod \Fall
+\E_{\Un_G^K}[\E[(h_\alpha^K \circ G^K_0-G^K_1)^2]] \overset{\alpha}{\equiv} \E_{\mu^K}[\E[(h_\alpha^K-f)^2]] + \E_{\Un_G^K}[(f \circ G^K_0-G^K_1)^2] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -3278,22 +3293,22 @@ Consider ${(\mu,f)}$ a distributional estimation problem, ${G}$ an ${\EG}$-sampl
 
 \begin{proof}
 
-Denote ${h_G^K := h^K \circ G^K_0}$, ${f_G^K := f \circ G^K_0}$. Proposition~\ref{prp:smp} implies
+Denote ${h_{G\alpha }^K := h_\alpha^K \circ G^K_0}$, ${f_G^K := f \circ G^K_0}$. Proposition~\ref{prp:smp} implies
 
-\[\E_{\Un_G^K}[(\E[h_G^K]-f_G^K)f_G^K] \equiv \E_{\mu^K}[(\E[h^K]-f)f] \pmod \Fall\]
+\[\E_{\Un_G^K}[(\E[h_{G\alpha}^K]-f_G^K)f_G^K] \overset{\alpha}{\equiv} \E_{\mu^K}[(\E[h_\alpha^K]-f)f] \pmod \Fall\]
 
 Applying Proposition~\ref{prp:gen} to the right hand side
 
 \begin{equation}
 \label{eqn:prp__est_err_smp__prf}
-\E_{\Un_G^K}[(\E[h_G^K]-f_G^K)f_G^K]] \equiv \E_{\Un_G^K}[(\E[h_G^K]-f_G^K)G^K_1] \pmod \Fall
+\E_{\Un_G^K}[(\E[h_{G\alpha}^K]-f_G^K)f_G^K]] \overset{\alpha}{\equiv} \E_{\Un_G^K}[(\E[h_{G\alpha}^K]-f_G^K)G^K_1] \pmod \Fall
 \end{equation}
 
 On the other hand
 
-\[\E_{\Un_G^K}[\E[(h_G^K-G^K_1)^2]] = \E_{\Un_G^K}[\E[(h_G^K-f_G^K+f_G^K-G^K_1)^2]]\]
+\[\E_{\Un_G^K}[\E[(h_{G\alpha}^K-G^K_1)^2]] = \E_{\Un_G^K}[\E[(h_{G\alpha}^K-f_G^K+f_G^K-G^K_1)^2]]\]
 
-\[\E_{\Un_G^K}[\E[(h_G^K-G^K_1)^2]] = \E_{\Un_G^K}[\E[(h_G^K-f_G^K)^2]]+2\E_{\Un_G^K}[(\E[h_G^K]-f_G^K)(f_G^K-G^K_1)]]+\E_{\Un_G^K}[\E[(f_G^K-G^K_1)^2]]\]
+\[\E_{\Un_G^K}[\E[(h_{G\alpha}^K-G^K_1)^2]] = \E_{\Un_G^K}[\E[(h_{G\alpha}^K-f_G^K)^2]]+2\E_{\Un_G^K}[(\E[h_{G\alpha}^K]-f_G^K)(f_G^K-G^K_1)]]+\E_{\Un_G^K}[\E[(f_G^K-G^K_1)^2]]\]
 
 Applying Proposition~\ref{prp:smp} to the first term on the right hand side and \ref{eqn:prp__est_err_smp__prf} to the second term on the right hand side, we get \ref{eqn:prp__est_err_smp}.
 %
@@ -3329,9 +3344,9 @@ Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $
 
 Consider any ${a: \Nats^n \rightarrow \Words}$ s.t. ${\Abs{a(K)}=l(K)}$. We can use Proposition~\ref{prp:est_err_smp} to show
 
-\[\E_{\Un_L^K}[L^K(a(K),y)] \equiv \E_{\mu^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(a(K);x,z))-f(x))^2]+\E_{\Un_G^K}[(f(G^K(y)_0)-G^K(y)_1)^2] \pmod \Fall\]
+\[\E_{\Un_L^K}[L^K(a(K),y)] \overset{a}{\equiv} \E_{\mu^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(a(K);x,z))-f(x))^2]+\E_{\Un_G^K}[(f(G^K(y)_0)-G^K(y)_1)^2] \pmod \Fall\]
 
-Denote the first term on the right hand side ${\varrho^K(a)}$ and the second term on the right hand side ${\varrho_0^K}$. ${L^K(a(K),y)}$ is the average of ${l(K)^3}$ independent and identically distributed random variables. By Proposition~\ref{prp:est_err_smp}, there is ${\varepsilon \in \Fall}$ s.t. the expected value of these random variables is at most ${\varrho_0^K + \varrho^K(a) + \varepsilon(K)}$. Applying Hoeffding's inequality we conclude that for some ${\epsilon \in \Reals^{>0}}$
+Denote the first term on the right hand side ${\varrho^K(a)}$ and the second term on the right hand side ${\varrho_0^K}$. ${L^K(a(K),y)}$ is the average of ${l(K)^3}$ independent and identically distributed random variables. By Proposition~\ref{prp:est_err_smp}, there is ${\varepsilon \in \Fall}$ that doesn't depend on ${a}$ s.t. the expected value of these random variables is in ${[\varrho_0^K + \varrho^K(a) - \varepsilon(K),\varrho_0^K + \varrho^K(a) + \varepsilon(K)]}$. Applying Hoeffding's inequality we conclude that for some ${\epsilon \in \Reals^{>0}}$
 
 \[\Prb_{\Un_L^K}[L^K(a(K),y) > \varrho_0^K + \varrho^K(a) + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^3 l(K)^{-2}}\]
 
@@ -3341,9 +3356,11 @@ In particular, since ${L^K(A^K(y),y) \leq L^K(a(K),y)}$
 
 \[\Prb_{\Un_L^K}[L^K(A^K(y),y) > \varrho_0^K + \varrho^K(a) + \varepsilon(K) + l(K)^{-1}] \leq 2^\epsilon (K_{n-1}+2)^{-\epsilon} \pmod \Fall\]
 
-Similarly, we have???
+Similarly, we have
 
 \[\Prb_{\Un_L^K}[L^K(a(K),y) < \varrho_0^K + \varrho^K(a) - \varepsilon(K) - l(K)^{-1}] \leq 2^\epsilon (K_{n-1}+2)^{-\epsilon} \pmod \Fall\]
+
+\[\Prb_{\Un_L^K}[\exists b \in \Bool^{l(K)}: L^K(b,y) < \varrho_0^K + \varrho^K(a) - \varepsilon(K) - l(K)^{-1}] \leq 2^\epsilon (K_{n-1}+2)^{-\epsilon} 2^{l(K)} \pmod \Fall\]
 
 Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ where ${M}$ is as in condition~\ref{con:def__decod__inv} of Definition~\ref{def:decod}. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold.
 
