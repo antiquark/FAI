@@ -12,6 +12,7 @@
 \usepackage{enumerate}
 \usepackage{commath}
 \usepackage{bm}
+%\usepackage[normalem]{ulem}
 
 \numberwithin{equation}{section}
 
@@ -103,12 +104,12 @@
 
 \newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
 \newcommand{\FallU}{\Fall_{\textnormal{uni}}^{(n)}}
+\newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
 \newcommand{\Scheme}{\xrightarrow{\Gamma}}
 \newcommand{\MScheme}{\xrightarrow{\MGrow}}
-\usepackage[normalem]{ulem}
 
 \begin{document}
 
@@ -460,6 +461,14 @@ For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. 
 \end{equation}
 
 To verify condition \ref{con:def__fall__pol} note that ${2^{-K_{n-1}} \in \FallU}$.
+
+\end{example}
+\end{samepage}
+
+\begin{samepage}
+\begin{example}
+
+For any ${n \in \Nats^{>0}}$, We define ${\FallM}$, a fall space of rank ${n}$. For any ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallM$ iff the function ${\bar{\varepsilon}: \NatFun \Reals^{\geq 0}}$ defined by ${\bar{\varepsilon}(J,k):=\sup_{l \geq k} \varepsilon(J,l)}$ satisfies ${\bar{\varepsilon} \in \FallU}$.
 
 \end{example}
 \end{samepage}
@@ -3194,7 +3203,7 @@ Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can 
 
 \begin{align}
 \label{eqn:thm__exists_all__q_rnd}\R_Q(K) &\leq r(\alpha_q(K)) \\
-\label{eqn:thm__exists_all__q_adv}\exists a_Q^K \in \Bool^{l(q(K))} \forall i \in \Nats, x,z \in \Words, y \in \BoolR{Q}: D(\Ev^{q(K)+i}(a_Q^K;x,yz))&=Q^K(x,y)
+\label{eqn:thm__exists_all__q_adv}\exists a_Q^K \in \Bool^{l(\alpha_q(K))} \forall i \in \Nats, x,z \in \Words, y \in \BoolR{Q}: D(\Ev^{q(K)+i}(a_Q^K;x,yz))&=Q^K(x,y)
 \end{align}
 
 Take any ${i \in \Nats}$.
@@ -3235,7 +3244,7 @@ Fix ${r: \Nats^n \Alg \Nats}$ s.t.
 
 \end{enumerate}
 
-In particular, ${r}$ is steadily growing. Assume ${\Fall \supseteq \FallU}$???, ${\GrowR=\Gamma_r}$ and ${\GrowA=\Gamma_\textnormal{log}^n}$. Consider ${(\mu,f)}$ an distributional estimation problem of rank ${n-1}$ and ${G}$ an ${\EG}$-sampler of ${(\mu^\eta,f)}$. Then, there exists ${P}$ an ${\EG}$-optimal estimator for ${(\mu^\eta,f)}$ s.t. ${\A_P=\A_G}$. In particular, if ${G}$ is uniform (i.e. ${\A_G \equiv \Estr}$) then so is ${P}$.
+In particular, ${r}$ is steadily growing. Assume ${\GrowR=\Gamma_r}$ and ${\GrowA=\Gamma_\textnormal{log}^n}$. Consider ${(\mu,f)}$ an distributional estimation problem of rank ${n-1}$ and ${G}$ an ${\FallM(\Gamma)}$-sampler of ${(\mu^\eta,f)}$. Then, there exists ${P}$ an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$ s.t. ${\A_P=\A_G}$. In particular, if ${G}$ is uniform (i.e. ${\A_G \equiv \Estr}$) then so is ${P}$.
 
 % The sampler fall space should satisfy some monotonicity requirement
 
@@ -3331,7 +3340,7 @@ Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \
 \begin{align}
 \label{eqn:thm__exists_smp__a_adv}\A_A(K) &= \A_G(K) \\
 \label{eqn:thm__exists_smp__a_rnd}\R_A(K,w) &= \R_L(K,w) \\
-\label{eqn:thm__exists_smp__a_alg}A^K(\prod_{i \in [l(K)^4]}y_i z_i,w) &\in \Argmin{a \in \Bool^{l(K)}} L^K(a,\prod_{i \in [l(K)^4]}y_i z_i,w)
+\label{eqn:thm__exists_smp__a_alg}A^K(\prod_{i \in [l(K)^4]}y_i z_i,w) &\in \Argmin{a \in \Bool^{\leq l(K)}} L^K(a,\prod_{i \in [l(K)^4]}y_i z_i,w)
 \end{align}
 
 Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^4]}}$,\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$ and ${z_* \in \Bool^{r(K)}}$
@@ -3350,52 +3359,68 @@ For any ${b \in \Words}$, define ${\varrho^K(b)}$ by
 
 \[\varrho^K(b):=\E_{\mu^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(b;x,z))-f(x))^2]\]
 
-Consider any ${\alpha: \Nats^n \rightarrow \Words}$ s.t. ${\Abs{\alpha(K)}=l(K)}$. Define ${h_\alpha^K: \Words \Markov \Reals}$ by
+Consider any ${\alpha: \Nats^n \rightarrow \Words}$ s.t. ${\Abs{\alpha(K)} \leq l(K)}$. Define ${h_\alpha^K: \Words \Markov \Reals}$ by
 
 \[\forall s,t \in \Reals: \Pr[h_\alpha^K(x) \in (s,t)]:=\Prb_{z \sim \Un^{r(K)}}[D(\Ev^{K_{n-1}}(\alpha(K);x,z)) \in (s,t)]\]
 
 By Proposition~\ref{prp:est_err_smp}
 
-\[\E_{\Un_G^K}[\E[(h_\alpha^K(G^K(y)_0)-G^K(y)_1)^2]] \overset{\alpha}{\equiv} \E_{\mu^{\eta(K)}}[\E[(h_\alpha^K(x)-f(x))^2]] + \E_{\Un_G^K}[(f(G^K(y)_0)-G^K(y)_1)^2] \pmod \Fall\]
+\[\E_{\Un_G^K}[\E[(h_\alpha^K(G^K(y)_0)-G^K(y)_1)^2]] \overset{\alpha}{\equiv} \E_{\mu^{\eta(K)}}[\E[(h_\alpha^K(x)-f(x))^2]] + \E_{\Un_G^K}[(f(G^K(y)_0)-G^K(y)_1)^2] \pmod \FallM\]
 
 \begin{equation}
 \label{eqn:thm__exists_smp__prf1}
-\E_{\Un_G^K}[\E[(h_\alpha^K(G^K(y)_0)-G^K(y)_1)^2]] \overset{\alpha}{\equiv} \varrho^K(\alpha(K)) + \varrho_0^K \pmod \Fall
+\E_{\Un_G^K}[\E[(h_\alpha^K(G^K(y)_0)-G^K(y)_1)^2]] \overset{\alpha}{\equiv} \varrho^K(\alpha(K)) + \varrho_0^K \pmod \FallM
 \end{equation}
 
-${L^K(\alpha(K),y)}$ is the average of ${l(K)^4}$ independent and and identically distributed random variables. By \ref{eqn:thm__exists_smp__prf1}, there is ${\varepsilon \in \Fall}$ that doesn't depend on ${\alpha}$ s.t. the expected value of these random variables is in ${[\varrho^K(\alpha(K)) + \varrho_0^K - \varepsilon(K), \varrho^K(\alpha(K)) + \varrho_0^K + \varepsilon(K)]}$. Applying Hoeffding's inequality we conclude that for some ${\epsilon \in \Reals^{>0}}$
+${L^K(\alpha(K),y)}$ is the average of ${l(K)^4}$ independent and and identically distributed bounded random variables. By \ref{eqn:thm__exists_smp__prf1}, there is ${\varepsilon \in \FallM}$ that doesn't depend on ${\alpha}$ s.t. the expected value of these random variables is in ${[\varrho^K(\alpha(K)) + \varrho_0^K - \varepsilon(K), \varrho^K(\alpha(K)) + \varrho_0^K + \varepsilon(K)]}$. Applying Hoeffding's inequality we conclude that for some ${\epsilon \in \Reals^{>0}}$
 
-\[\forall b \in \Bool^{l(K)}: \Prb_{\Un_L^K}[L^K(b,y) > \varrho^K(b) + \varrho_0^K  + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2}\]
+\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_L^K}[L^K(b,y) > \varrho^K(b) + \varrho_0^K  + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2}\]
 
 In particular, since for any ${b \in \Bool^{l(K)}}$, ${L^K(A^K(y),y) \leq L^K(b,y)}$
 
 \begin{equation}
 \label{eqn:thm__exists_smp__prf2}
-\forall b \in \Bool^{l(K)}: \Prb_{\Un_L^K}[L^K(A^K(y),y) > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2}
+\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_L^K}[L^K(A^K(y),y) > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2}
 \end{equation}
 
 Similarly, we have
 
-\[\forall b \in \Bool^{l(K)}: \Prb_{\Un_L^K}[L^K(b,y) < \varrho^K(b) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2}\]
+\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_L^K}[L^K(b,y) < \varrho^K(b) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2}\]
 
-\[\Prb_{\Un_L^K}[\exists b \in \Bool^{l(K)}: L^K(b,y) < \varrho^K(b) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2+l(K)}\]
+\[\Prb_{\Un_L^K}[\exists b \in \Bool^{\leq l(K)}: L^K(b,y) < \varrho^K(b) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2+l(K)+1}\]
 
 \begin{equation}
 \label{eqn:thm__exists_smp__prf3}
-\Prb_{\Un_L^K}[L^K(A^K(y),y) < \varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2+l(K)}
+\Prb_{\Un_L^K}[L^K(A^K(y),y) < \varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2+l(K)+1}
 \end{equation}
 
 Combining \ref{eqn:thm__exists_smp__prf2} and \ref{eqn:thm__exists_smp__prf3}, we conclude
 
-\[\forall b \in \Bool^{l(K)}: \Prb_{\Un_L^K}[\varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1} > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2} + 2^{-\epsilon l(K)^2+l(K)}\]
+\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_L^K}[\varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1} > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2} + 2^{-\epsilon l(K)^2+l(K)+1}\]
 
-\[\forall b \in \Bool^{l(K)}: \Prb_{\Un_L^K}[\varrho^K(A^K(y)) > \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1})] \leq 2^{-\epsilon l(K)^2+l(K)+1}\]
+\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_L^K}[\varrho^K(A^K(y)) > \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1})] \leq 2^{-\epsilon l(K)^2+l(K)+2}\]
 
-Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ where ${M}$ is as in condition~\ref{con:def__decod__inv} of Definition~\ref{def:decod}. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold.
+It follows that for some ${M_0 \in \Reals^{>0}}$
 
-\[?\]
+\[\forall b \in \Bool^{\leq l(K)}: \E_{\mu^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+2} M_0\]
 
-TBD
+%\[\E_{\mu^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \overset{\alpha}{\leq} \varrho^K(\alpha(K)) \pmod \FallM\]
+
+Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ where ${M}$ is as in condition~\ref{con:def__decod__inv} of Definition~\ref{def:decod}. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold. Denote ${\varepsilon_1(K):=2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+1} M_0}$. It is easy to see that ${\varepsilon_1 \in \FallM}$.  %Note that ${\varepsilon \in \FallM}$ implies ${\varepsilon \circ \alpha_q \in \FallM}$, therefore
+
+\[\E_{\mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \varrho^{\alpha_{q+i}(K)}(a_Q^K) + \varepsilon_1(\alpha_{q+i}(K))\]
+
+\[\E_{\mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))\]
+
+Define ${\bar{\varepsilon}_1(K):=\sup_{k \geq K_{n-1}}\varepsilon_1(\eta(K),k)}$. We have ${\bar{\varepsilon}_1 \in \FallU}$ and ${\varepsilon_1(\alpha_{q+i}(K)) \leq \bar{\varepsilon}_1(K)}$ therefore
+
+\[\sup_{i \in \Nats} \E_{\mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2] \pmod \FallU\]
+
+By the same reasoning we can choose ${p \in \NatPoly}$ s.t. ${p \geq q}$ and
+
+\[\sup_{i \in \Nats} \E_{ \mu^{\eta(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \pmod \FallU\]
+
+Applying Proposition~\ref{prp:fall_uni_amp}, we conclude that ${P}$ is an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$.
 %
 \end{proof}
 
