@@ -2995,9 +2995,9 @@ Completely analogous to proof of Corollary~\ref{crl:complete_sharp}.
 
 \subsubsection{Positive Results}
 
-We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators. Theorem~\ref{thm:exists_all} shows that (under certain assumptions on ${\Gamma}$), \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{This example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can probably tackle it by introducing bounds on space, but this out of the current scope.} example from the introduction, observe that the question \enquote{what is the probability 7614829 is prime?} should depend on the amount of available time. For example, we can use additional time to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
+We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators. Theorem~\ref{thm:exists_all} shows that, for appropriate steadily growing functions ${r}$ and ${l}$, \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma_r,\Gamma_l)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{Strictly speaking, this example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can tackle it by e.g. taking ${\textsc{NC}}$ instead of ${\textsc{P}}$ as the permissible time complexity for our estimators, but we don't explore this variant in the present work.} example from the introduction, observe that the question \enquote{what is the probability 7614829 is prime?} should depend on the amount of available time. For example, we can use additional time to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
 
-However, in general the estimators constructed in Theorem~\ref{thm:exists_all} are non-uniform. Theorem~\ref{thm:exists_smp} shows that for \emph{samplable} distributional estimation problems (and slightly stronger assumptions on ${\Gamma}$) the estimator requires only as much advice as the sampler. In particular, the existence of a uniform sampler implies the existence of a uniform ${\FallU(\Gamma)}$-optimal estimator.
+However, in general the estimators constructed in Theorem~\ref{thm:exists_all} are non-uniform. Theorem~\ref{thm:exists_smp} shows that, under certain stronger assumptions on ${r}$ and ${l}$, for \emph{samplable} distributional estimation problems there is an estimator which requires only as much advice as the sampler. In particular, the existence of a uniform sampler implies the existence of a uniform ${\FallU(\Gamma_r,\Gamma_l)}$-optimal estimator.
 
 \begin{samepage}
 \begin{theorem}
@@ -3402,19 +3402,25 @@ Combining \ref{eqn:thm__exists_smp__prf2} and \ref{eqn:thm__exists_smp__prf3}, w
 
 It follows that for some ${M_0 \in \Reals^{>0}}$
 
-\[\forall b \in \Bool^{\leq l(K)}: \E_{\mu^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+2} M_0\]
+\[\forall b \in \Bool^{\leq l(K)}: \E_{\Un_L^K}[\varrho^K(A^K(y)] \leq \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+2} M_0\]
 
-%\[\E_{\mu^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \overset{\alpha}{\leq} \varrho^K(\alpha(K)) \pmod \FallM\]
+ Denote ${\varepsilon_1(K):=2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+1} M_0}$. It is easy to see that ${\varepsilon_1 \in \FallM}$.
 
-Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ where ${M}$ is as in condition~\ref{con:def__decod__inv} of Definition~\ref{def:decod}. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold. Denote ${\varepsilon_1(K):=2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+1} M_0}$. It is easy to see that ${\varepsilon_1 \in \FallM}$.  %Note that ${\varepsilon \in \FallM}$ implies ${\varepsilon \circ \alpha_q \in \FallM}$, therefore
+\[\forall b \in \Bool^{\leq l(K)}: \E_{\Un_L^K}[\E_{\mu^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(A^K(y);x,z))-f(x))^2]] \leq \varrho^K(b) + \varepsilon_1(K)\]
+
+\[\forall b \in \Bool^{\leq l(K)}: \E_{\mu^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \varrho^K(b) + \varepsilon_1(K)\]
+
+Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ where ${M}$ is as in condition~\ref{con:def__decod__inv} of Definition~\ref{def:decod}. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold.
 
 \[\E_{\mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \varrho^{\alpha_{q+i}(K)}(a_Q^K) + \varepsilon_1(\alpha_{q+i}(K))\]
 
-\[\E_{\mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))\]
+\[\E_{\mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a_Q^K;x,z))-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))\]
+
+\[\E_{\mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un_Q^K}[(Q^K(x,z)-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))\]
 
 Define ${\bar{\varepsilon}_1(K):=\sup_{k \geq K_{n-1}}\varepsilon_1(\eta(K),k)}$. We have ${\bar{\varepsilon}_1 \in \FallU}$ and ${\varepsilon_1(\alpha_{q+i}(K)) \leq \bar{\varepsilon}_1(K)}$ therefore
 
-\[\sup_{i \in \Nats} \E_{\mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2] \pmod \FallU\]
+\[\sup_{i \in \Nats} \E_{\mu^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\mu^{\eta(K)} \times \Un_Q^K}[(Q^K(x,z)-f(x))^2] \pmod \FallU\]
 
 By the same reasoning we can choose ${p \in \NatPoly}$ s.t. ${p \geq q}$ and
 
@@ -3423,6 +3429,8 @@ By the same reasoning we can choose ${p \in \NatPoly}$ s.t. ${p \geq q}$ and
 Applying Proposition~\ref{prp:fall_uni_amp}, we conclude that ${P}$ is an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$.
 %
 \end{proof}
+
+\iffalse
 
 The above existence theorems employ the fall space ${\FallU}$ whose meaning might seem somewhat obscure. To shed some light on this, consider the following observation. Informally, optimal bounded estimators represent \enquote{expected values} corresponding to the uncertainty resulting from bounding computing resources. When a function can be computed in polynomial time, this \enquote{expected value} has to approximate the function within ${\Fall}$ which corresponds to a state of \enquote{complete certainty.} However, we will now demonstrate that when a function can only be computed in \emph{quasi-polynomial} time, it still corresponds to complete certainty in the context of ${\FallU(\Gamma)}$-optimal estimators.
 
@@ -3440,22 +3448,44 @@ Consider ${(\mu, f)}$ a distributional estimation problem and ${P: \Words \Schem
 \end{definition}
 \end{samepage}
 
-Perfect estimators are essentially objects of \enquote{classical} average-case complexity theory. It is easy to see that existence of perfect estimators for distributional decision problems of rank 1 is equivalent to existence of heuristic algorithms in the sense of \cite{Bogdanov_2006}, whereas perfect estimators for distributional decision problems of rank 2 correspond to heuristic schemes assuming the word ensemble is of the form ${\mu^\eta}$ with ${\mu}$ of rank 1.
+Perfect estimators are essentially objects of \enquote{classical} average-case complexity theory. In particular, perfect estimators for distributional decision problems of rank 1 are closely related to heuristic algorithms in the sense of \cite{Bogdanov_2006} (their existence is equivalent under mild assumptions), whereas perfect estimators for rank 2 problems of the form ${(\mu^\eta,\chi_D)}$ with ${\mu}$ of rank 1 are related to heuristic schemes.
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+%\label{prp:tbd}
+Consider ${(\mu,f)}$ a distributional estimation problem, ${P: \Words \Scheme \Rats}$ bounded,\\ $m \in \Nats^{>0}$ and ${p \in \NatPolyJ}$ s.t. ${p \geq 2}$. Define ${q: \NatFun \Nats}$ by ${q(J,k):=2^{\Floor{\log p(J)\log (k+2)}^m}}$. Suppose that 
 
-?
+\begin{equation}
+%\label{eqn:tbd}
+\sup_{i \in \Nats} \E_{(x,y) \sim \mu^K \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \equiv 0 \pmod \FallU
+\end{equation}
+
+Then, ${P}$ is an ${\FallU(\Gamma)}$-perfect predictor for ${(\mu,f)}$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-FOO
+Define ${\varepsilon: \Nats^n \rightarrow \Reals}$ by
+
+\[\varepsilon(K):=\E_{(x,y) \sim \mu^K \times \Un_P^K}[(P^K(x,y)-f(x))^2]\]
+
+We have
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k}=\int_2^\infty \frac{\varepsilon(J,\Floor{t})}{\Floor{t} \log \Floor{t}} \dif t\]
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} \log 3 \int_2^\infty \frac{\varepsilon(J,\Floor{t})}{t \log t} \dif t\]
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} (\log 3) (\ln 2)^2 \int_0^\infty \varepsilon(J,\Floor{t}) \dif (\log \log t)\]
+
+Substitute ${t=2^{(\log p(J) \log s)^m}}$. For some ${s_0 \in \Reals^{\geq 0}}$
+
+TBD
 %
 \end{proof}
+
+\fi
 
 \subsubsection{Negative Results}
 
