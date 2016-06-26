@@ -103,7 +103,7 @@
 \newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
 
 \newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
-\newcommand{\FallU}{\Fall_{\textnormal{uni}}^{(n)}}
+\newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
 \newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
@@ -780,7 +780,7 @@ The second term on the right hand side is clearly in $\Fall_W$.
 
 We now give the proof of Proposition~\ref{prp:weight}.
 
-\begin{proof}[Proof of \ref{prp:weight}]
+\begin{proof}[Proof of Proposition \ref{prp:weight}]
 
 Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho_\zeta^{K}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \GrowA$ s.t. for any $t \in [0, M]$, ${\Abs{\En_\Rats(\rho_\zeta^{K}(t))} \leq \gamma(K)}$.
 
@@ -3430,8 +3430,6 @@ Applying Proposition~\ref{prp:fall_uni_amp}, we conclude that ${P}$ is an ${\Fal
 %
 \end{proof}
 
-\iffalse
-
 The above existence theorems employ the fall space ${\FallU}$ whose meaning might seem somewhat obscure. To shed some light on this, consider the following observation. Informally, optimal bounded estimators represent \enquote{expected values} corresponding to the uncertainty resulting from bounding computing resources. When a function can be computed in polynomial time, this \enquote{expected value} has to approximate the function within ${\Fall}$ which corresponds to a state of \enquote{complete certainty.} However, we will now demonstrate that when a function can only be computed in \emph{quasi-polynomial} time, it still corresponds to complete certainty in the context of ${\FallU(\Gamma)}$-optimal estimators.
 
 \begin{samepage}
@@ -3452,11 +3450,11 @@ Perfect estimators are essentially objects of \enquote{classical} average-case c
 
 \begin{samepage}
 \begin{proposition}
-%\label{prp:tbd}
-Consider ${(\mu,f)}$ a distributional estimation problem, ${P: \Words \Scheme \Rats}$ bounded,\\ $m \in \Nats^{>0}$ and ${p \in \NatPolyJ}$ s.t. ${p \geq 2}$. Define ${q: \NatFun \Nats}$ by ${q(J,k):=2^{\Floor{\log p(J)\log (k+2)}^m}}$. Suppose that 
+\label{prp:fall_uni_qpoly}
+Consider ${(\mu,f)}$ a distributional estimation problem, ${P: \Words \Scheme \Rats}$ bounded,\\ $m \in \Nats^{>0}$ and ${p \in \NatPolyJ}$ s.t. ${p \geq 2}$. Define ${q: \NatFun \Nats}$ by ${q(J,k):=2^{\Floor{\log p(J)\log \max(k,1)}^m}}$. Suppose that 
 
 \begin{equation}
-%\label{eqn:tbd}
+\label{eqn:prp__fall_uni_qpoly}
 \sup_{i \in \Nats} \E_{(x,y) \sim \mu^K \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \equiv 0 \pmod \FallU
 \end{equation}
 
@@ -3479,15 +3477,124 @@ We have
 
 \[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} (\log 3) (\ln 2)^2 \int_0^\infty \varepsilon(J,\Floor{t}) \dif (\log \log t)\]
 
-Substitute ${t=2^{(\log p(J) \log s)^m}}$. For some ${s_0 \in \Reals^{\geq 0}}$
+Substitute ${t=2^{(\log p(J) \log s)^m}}$. Denoting ${s_0=2^{\frac{1}{\log p(J)}}}$
 
-TBD
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} (\log 3) (\ln 2)^2 m \int_{s=s_0}^\infty \varepsilon(J,\Floor{2^{(\log p(J) \log s)^m}}) \dif (\log \log s)\]
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} (\log 3) m \int_{s_0}^\infty \frac{\varepsilon(J,\Floor{2^{(\log p(J) \log s)^m}})}{s \log s} \dif s\]
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} (\log 3) m \int_{s_0}^\infty \frac{\sup_{i \in \Nats} \varepsilon(J,2^{\Floor{\log p(J) \log \Floor{s}}^m}+i)}{s \log s} \dif s\]
+
+For some ${M \in \Reals}$
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq M + \frac{3}{2} (\log 3) m \int_{2}^\infty \frac{\sup_{i \in \Nats} \varepsilon(J,2^{\Floor{\log p(J) \log \Floor{s}}^m}+i)}{\Floor{s} \log \Floor{s}} \dif s\]
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq M + \frac{3}{2} (\log 3) m \sum_{k=2}^\infty \frac{\sup_{i \in \Nats} \varepsilon(J,2^{\Floor{\log p(J) \log k}^m}+i)}{k \log k}\]
+
+Using \ref{eqn:prp__fall_uni_qpoly} we get that for some ${M_1 \in \Reals^{>0}}$ and ${p_1 \in \NatPolyJ}$
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq M + M_1 \log \log p_1(J)\]
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq M_1 \log \log p_1(J)^{2^{\frac{M}{M_1}}}\]
 %
 \end{proof}
 
-\fi
-
 \subsubsection{Negative Results}
+
+We now demonstrate distributional estimation problems for which ${\EG}$-optimal estimators don't exist.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tally_perfect}
+
+Suppose ${\Fall^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Consider ${h: \Nats^n \rightarrow \Reals}$ bounded and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${f: \Supp \mu \rightarrow \Reals}$ by requiring that for any ${K \in \Nats^n}$ and ${x \in \Supp \mu^K}$, ${f(x)=h(K)}$. Then, there exists an ${\EG}$-perfect estimator for ${(\mu,f)}$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall^{\frac{1}{2}}$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and ${t \in \Reals}$, let ${\rho^K(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}}$. It is easy to see that there is $\gamma \in \GrowA$ s.t. for any ${K \in \Nats^n}$ and $t \in [\inf h - \frac{1}{2}, \sup h + \frac{1}{2}]$, ${\Abs{\En_\Rats(\rho^K(t))} \leq \gamma(K)}$. Construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x \in \Words}$ and ${t \in \Rats}$ s.t. ${\Abs{\En_\Rats(t)} \leq \gamma(K)}$ 
+
+\begin{align*}
+\A_P(K) &= \En_\Rats(\rho^K(h(K))) \\
+\R_P(K) &= 0 \\
+P^K(x,\Estr,\En_\Rats(t)) &= t
+\end{align*}
+
+We have
+
+\[\E_{x \sim \mu^K}[(P^K(x)-f(x))^2] = (\rho^K(h(K))-h(K))^2\]
+
+\[\E_{x \sim \mu^K}[(P^K(x)-f(x))^2] \leq \zeta(K)^2\]
+%
+\end{proof}
+
+In the setting of Proposition~\ref{prp:tally_perfect}, any ${\EG}$-optimal predictor for ${(\mu,f)}$ has to be an ${\EG}$-perfect predictor. In particular, if no ${\EG}$-perfect predictor exists then no ${\EG}$-optimal predictor exists. Similarly, if no \emph{uniform} ${\EG}$-perfect predictor exists then no uniform ${\EG}$-optimal predictor exists (and likewise for any other condition on the predictor).
+
+For distributional decision problems and ${\EG}$-samplable word ensembles we have the following stronger proposition.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Suppose ${\Fall^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Consider ${D \subseteq \Nats^n}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${K \in \Nats^n}$ and ${x \in \Supp \mu^K}$, ${\chi(x)=\chi_D(K)}$. Assume ${L}$ is an ${\EG}$-sampler of ${\mu}$ and ${P}$ is an ${\EG}$-optimal predictor for ${(\mu, \chi)}$. Then there is ${A: \bm{1} \Scheme \Bool}$ s.t. ${\A_A(K)=\Chev{\A_L(K),\A_P(K)}}$ and
+
+\begin{equation}
+%\label{eqn:tbd}
+\Prb_{y \sim \Un_A^K}[A^K(y)=\chi_D(K)] \equiv 1 \pmod \Fall
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Construct ${A}$ s.t. for any ${K \in \Nats^n}$, ${y_1 \in \BoolR{L}}$, ${y_1 \in \BoolR{P}}$
+
+\begin{align*}
+\R_A(K) &= \R_L(K)+\R_P(K) \\
+A^K(y_1 y_2) &= \begin{cases}0 \text{ if } P^K(L^K(y_1),y_2) \leq \frac{1}{2} \\ 1 \text{ if } P^K(L^K(y_1),y_2) > \frac{1}{2} \end{cases}
+\end{align*}
+
+We get
+
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq \Prb_{y_1 \sim \Un_L^K,y_2 \sim \Un_P^K}[\Abs{P^K(L^K(y_1),y_2) - \chi_D(K)} \geq \frac{1}{2}]\]
+
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq \Prb_{y_1 \sim \Un_L^K,y_2 \sim \Un_P^K}[(P^K(L^K(y_1),y_2) - \chi_D(K))^2 \geq \frac{1}{4}]\]
+
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq 4 \E_{y_1 \sim \Un_L^K,y_2 \sim \Un_P^K}[(P^K(L^K(y_1),y_2) - \chi_D(K))^2]\]
+
+By Proposition~\ref{prp:smp}
+
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq 4 \E_{x \sim \mu^K,y_2 \sim \Un_P^K}[(P^K(x,y_2) - \chi_D(K))^2] \pmod \Fall\]
+
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq 4 \E_{x \sim \mu^K,y_2 \sim \Un_P^K}[(P^K(x,y_2) - \chi(x))^2] \pmod \Fall\]
+
+By Proposition~\ref{prp:tally_perfect}, ${P}$ is an ${\EG}$-perfect predictor for ${(\mu,\chi)}$, therefore
+
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \equiv 0 \pmod \Fall\]
+%
+\end{proof}
+
+Again, the statement can be reversed to disprove existence of ${\EG}$-optimal estimators.
+
+Now we consider the special case ${\Fall=\FallU}$, ${\GrowR = \GammaPoly}$. 
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Suppose ${\GrowR = \GammaPoly}$ and ${\FallU^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Consider ${D \subseteq \Nats^n}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${K \in \Nats^n}$ and ${x \in \Supp \mu^K}$, ${\chi(x)=\chi_D(K)}$. Assume ${L}$ is an ${\FallU(\Gamma)}$-sampler of ${\mu}$ and ${P}$ is an ${\FallU(\Gamma)}$-optimal predictor for ${(\mu, \chi)}$. Then...
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+FOO
+%
+\end{proof}
 
 TBD
 
