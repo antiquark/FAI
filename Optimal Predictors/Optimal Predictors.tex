@@ -103,6 +103,7 @@
 \newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
 
 \newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
+\newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
 \newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
 \newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
 
@@ -308,7 +309,7 @@ For any $n \in \Nats$, $\GammaPoly^n$ is a growth space of rank $n$.
 
 \begin{example}
 
-For any $n \in \Nats$, $\Gamma_{\text{log}}^n$ is a growth space of rank $n$. $\gamma \in \Gamma_{\text{log}}^n$ iff there is $c \in \Nats$ s.t. $\gamma(K_0, K_1 \ldots K_{n-1}) \leq c \sum_{i \in [n]} \log(K_i+1)$.
+For any $n \in \Nats$, $\GammaLog^n$ is a growth space of rank $n$. $\gamma \in \GammaLog^n$ iff there is $c \in \Nats$ s.t. $\gamma(K_0, K_1 \ldots K_{n-1}) \leq c \sum_{i \in [n]} \log(K_i+1)$.
 
 \end{example}
 
@@ -337,7 +338,7 @@ To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}
 
 \[\gamma_1(J,k)+\gamma_2(J,k) \leq \gamma^*(J,s(J,p(J,k)))\]
 
-In particular taking ${\gamma^*_{\text{poly}}(J,k):=j}$ and ${\gamma^*_{\text{log}}(J,k):=\Floor{\log (j+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{\gamma^*_{\text{poly}}}}$, ${\Gamma_{\text{log}}^n=\Gamma_{\gamma^*_{\text{log}}}}$.
+In particular taking ${\gamma^*_{\text{poly}}(J,k):=j}$ and ${\gamma^*_{\text{log}}(J,k):=\Floor{\log (j+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{\gamma^*_{\text{poly}}}}$, ${\GammaLog^n=\Gamma_{\gamma^*_{\text{log}}}}$.
 
 \end{example}
 \end{samepage}
@@ -855,7 +856,7 @@ The following theorem is the analogue in our language of the previous fact about
 \begin{theorem}
 \label{thm:ort}
 
-Assume there is $\zeta: \NatFun (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\Gamma_{\text{log}}^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \NatPoly$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
+Assume there is $\zeta: \NatFun (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}{2}}$ and ${\Floor{\log \log \frac{1}{\zeta}} \in \GrowA}$\footnote{If $\GammaLog^n \subseteq \GrowA$ then this condition holds for any $\Fall$ since we can take $\zeta = 2^{-h}$ for $h \in \NatPoly$.}. Consider $(\mu,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\mu,f)$. Then, $P$ is also an $\Fall^{\frac{1}{2}\sharp}(\Gamma)$-optimal estimator for $(\mu,f)$.
 
 \end{theorem}
 
@@ -3579,13 +3580,18 @@ By Proposition~\ref{prp:tally_perfect}, ${P}$ is an ${\EG}$-perfect predictor fo
 
 Again, the statement can be reversed to disprove existence of ${\EG}$-optimal estimators.
 
-Now we consider the special case ${\Fall=\FallU}$, ${\GrowR = \GammaPoly}$. 
+Now we consider the special case ${\Fall=\FallU}$, ${\GrowR \supseteq \GammaLog^n}$. 
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:tbd}
 
-Suppose ${\GrowR = \GammaPoly}$ and ${\FallU^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Consider ${D \subseteq \Nats^n}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${K \in \Nats^n}$ and ${x \in \Supp \mu^K}$, ${\chi(x)=\chi_D(K)}$. Assume ${L}$ is an ${\FallU(\Gamma)}$-sampler of ${\mu}$ and ${P}$ is an ${\FallU(\Gamma)}$-optimal predictor for ${(\mu, \chi)}$. Then...
+Suppose ${\GrowR \supseteq \GammaLog^n}$ and ${\FallU^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Consider ${D \subseteq \Nats^{n-1}}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${x \in \Supp \mu^{Jk}}$, ${\chi(x)=\chi_D(J)}$. Assume ${L}$ is an ${\FallU(\Gamma)}$-sampler of ${\mu}$ and ${P}$ is an ${\FallU(\Gamma)}$-optimal predictor for ${(\mu, \chi)}$ s.t. ${\A_L(J,k)}$ and ${\A_P(J,k)}$ don't depend on ${k}$. Then, there are $m \in \Nats^{>0}$, ${p \in \NatPolyJ}$ and ${A: \bm{1} \Scheme \Bool}$ s.t. ${p \geq 2}$, ${\A_A(K)=\Chev{\A_L(K),\A_P(K)}}$ and, defining ${q: \Nats^{n-1} \rightarrow \Nats}$ by ${q(J):=2^{\Floor{\log p(J)}^m}}$
+
+\begin{equation}
+%\label{eqn:tbd}
+\forall J \in \Nats^{n-1}:\Prb_{y \sim \Un_A^{J,q(J)}}[A^{J,q(J)}(y)=\chi_D(J)] \geq \frac{2}{3}
+\end{equation}
 
 \end{proposition}
 \end{samepage}
