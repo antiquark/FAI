@@ -221,7 +221,7 @@ $\Words$ is the set of all finite binary strings (words), i.e. $\Words:=\bigsqcu
 \Bool^{>n}&:=\{x \in \Words \mid \Abs{x} > n\}
 \end{align*}
 
-For any $x \in \Words$ and $n \in \Nats$, $x_{\leq n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given ${n \in \Nats}$ and ${x_0, x_1 \ldots x_{n-1} \in \Words}$, ${\prod_{i \in [n]} x_i}$ is also concatenation. Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i \in [n]} x_i y_i$. For any $n \in \Nats$, $\Un^n \in \mathcal{P}(\WordsLen{n})$ is the uniform probability distribution.
+For any $x \in \Words$ and $n \in \Nats$, $x_{< n}$ stands for the prefix of $x$ of length $n$ if $\Abs{x} \geq n$ and $x$ otherwise. Given $x,y \in \Words$, $xy$ stands for the concatenation of $x$ and $y$ (in particular $\Abs{xy}=\Abs{x}+\Abs{y}$). Given ${n \in \Nats}$ and ${x_0, x_1 \ldots x_{n-1} \in \Words}$, ${\prod_{i \in [n]} x_i}$ is also concatenation. Given $n \in \Nats$ and $x,y \in \WordsLen{n}$, $x \cdot y$ stands for $\bigoplus_{i \in [n]} x_i y_i$. For any $n \in \Nats$, $\Un^n \in \mathcal{P}(\WordsLen{n})$ is the uniform probability distribution.
 
 Given $n \in \Nats$ and ${x_0, x_1 \ldots x_{n-1} \in \Words}$, $\Chev{x_0,x_1 \ldots x_{n-1}} \in \Words$ denotes the encoding of\\ $(x_0,x_1 \ldots x_{n-1})$ obtained by repeating each bit of $x_0, x_1 \ldots x_{n-1}$ twice and inserting the separators 01.
 \begin{definition}
@@ -787,20 +787,20 @@ Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\l
 
 For any $t \in \Reals$ there is $Q_t: \Words \Scheme \Rats$ s.t. $\R_Q=\R_W$ and for any ${x \in \Supp \mu^{K}}$ and ${y \in \WordsLen{\R_W(K)}}$
 
-$$Q_t^{K}(x,y)=\begin{cases}Q^{K}(x,y_{\leq \R_Q(K)}) \text{ if } W^{K}(x,y) \geq \rho^{K}_\zeta(t) \\ P^{K}(x,y_{\leq \R_P(K)}) \text{ if } W^{K}(x,y) < \rho^{K}_\zeta(t)\end{cases}$$
+$$Q_t^{K}(x,y)=\begin{cases}Q^{K}(x,y_{< \R_Q(K)}) \text{ if } W^{K}(x,y) \geq \rho^{K}_\zeta(t) \\ P^{K}(x,y_{< \R_P(K)}) \text{ if } W^{K}(x,y) < \rho^{K}_\zeta(t)\end{cases}$$
 
 Moreover we can construct the $Q_t$ for all $t \in [0, M]$ s.t. they form a uniform family. By Proposition~\ref{prp:unif} there is $\varepsilon \in \Fall$ s.t. for all $t \in [0, M]$
 
 $$\E_{\mu^{K} \times \Un_P^{K}}[(P^{K}-f)^2] \leq \E_{\mu^{K} \times \Un_W^{K}}[(Q_t^{K}-f)^2] + \varepsilon(K)$$
 
-$$\E_{(x,y) \sim \mu^{K} \times \Un_W^{K}}[(P^{K}(x,y_{\leq \R_P(K)})-f(x))^2-(Q_t^{K}(x,y)-f(x))^2] \leq \varepsilon(K)$$
+$$\E_{(x,y) \sim \mu^{K} \times \Un_W^{K}}[(P^{K}(x,y_{< \R_P(K)})-f(x))^2-(Q_t^{K}(x,y)-f(x))^2] \leq \varepsilon(K)$$
 
 The expression inside the expected values vanishes when $W^{K}(x,y) < \rho^{K}_\zeta(t)$. In other cases, 
-\[Q_t^{K}(x,y) = Q^{K}(x,y_{\leq \R_Q(K)})\]
+\[Q_t^{K}(x,y) = Q^{K}(x,y_{< \R_Q(K)})\]
 
 We get
 
-$$\E_{(x,y) \sim \mu^{K} \times \Un_W^{K}}[\theta(W^{K}(x,y)-\rho_\zeta^{K}(t)) \cdot ((P^{K}(x,y_{\leq \R_P(K)})-f(x))^2-(Q^{K}(x,y_{\leq \R_Q(K)})-f(x))^2)] \leq \varepsilon(K)$$
+$$\E_{(x,y) \sim \mu^{K} \times \Un_W^{K}}[\theta(W^{K}(x,y)-\rho_\zeta^{K}(t)) \cdot ((P^{K}(x,y_{< \R_P(K)})-f(x))^2-(Q^{K}(x,y_{< \R_Q(K)})-f(x))^2)] \leq \varepsilon(K)$$
 
 We integrate both sides of the inequality over $t$ from 0 to $M$.
 
@@ -3000,15 +3000,15 @@ We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators. Theore
 
 However, in general the estimators constructed in Theorem~\ref{thm:exists_all} are non-uniform. Theorem~\ref{thm:exists_smp} shows that, under certain stronger assumptions on ${r}$ and ${l}$, for \emph{samplable} distributional estimation problems there is an estimator which requires only as much advice as the sampler. In particular, the existence of a uniform sampler implies the existence of a uniform ${\FallU(\Gamma_r,\Gamma_l)}$-optimal estimator.
 
+We will use the notation ${\eta: \NatFun \Nats^{n-1}}$ defined by
+
+\[\forall J \in \Nats^{n-1}, k \in \Nats: \eta(J,k)=J\]
+
 \begin{samepage}
 \begin{theorem}
 \label{thm:exists_all}
 
-Fix ${l: \NatFun \Nats^{>0}}$ steadily growing. Denote ${\Gamma_{\textnormal{adv}}^n:=(\Gamma_0^n,\Gamma_l)}$. Fix ${r: \bm{1} \xrightarrow{\Gamma_{\textnormal{adv}}}\Nats}$ steadily growing. Assume ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_l}$. Define ${\eta: \NatFun \Nats^{n-1}}$ by
-
-\[\forall J \in \Nats^{n-1}, k \in \Nats: \eta(J,k)=J\]
-
-Consider ${(\mu,f)}$ a distributional estimation problem of rank ${n-1}$. Then, there exists an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$.
+Fix ${l: \NatFun \Nats^{>0}}$ steadily growing. Denote ${\Gamma_{\textnormal{adv}}^n:=(\Gamma_0^n,\Gamma_l)}$. Fix ${r: \bm{1} \xrightarrow{\Gamma_{\textnormal{adv}}}\Nats}$ steadily growing. Assume ${\GrowR=\Gamma_r}$, ${\GrowA=\Gamma_l}$. Consider ${(\mu,f)}$ a distributional estimation problem of rank ${n-1}$. Then, there exists an ${\FallU(\Gamma)}$-optimal estimator for ${(\mu^\eta,f)}$.
 
 \end{theorem}
 \end{samepage}
@@ -3459,7 +3459,7 @@ Consider ${(\mu,f)}$ a distributional estimation problem, ${P: \Words \Scheme \R
 \sup_{i \in \Nats} \E_{(x,y) \sim \mu^K \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \equiv 0 \pmod \FallU
 \end{equation}
 
-Then, ${P}$ is an ${\FallU(\Gamma)}$-perfect predictor for ${(\mu,f)}$.
+Then, ${P}$ is an ${\FallU(\Gamma)}$-perfect estimator for ${(\mu,f)}$.
 
 \end{proposition}
 \end{samepage}
@@ -3531,15 +3531,15 @@ We have
 %
 \end{proof}
 
-In the setting of Proposition~\ref{prp:tally_perfect}, any ${\EG}$-optimal predictor for ${(\mu,f)}$ has to be an ${\EG}$-perfect predictor. In particular, if no ${\EG}$-perfect predictor exists then no ${\EG}$-optimal predictor exists. Similarly, if no \emph{uniform} ${\EG}$-perfect predictor exists then no uniform ${\EG}$-optimal predictor exists (and likewise for any other condition on the predictor).
+In the setting of Proposition~\ref{prp:tally_perfect}, any ${\EG}$-optimal estimator for ${(\mu,f)}$ has to be an ${\EG}$-perfect estimator. In particular, if no ${\EG}$-perfect estimator exists then no ${\EG}$-optimal estimator exists. Similarly, if no \emph{uniform} ${\EG}$-perfect estimator exists then no uniform ${\EG}$-optimal estimator exists (and likewise for any other condition on the estimator).
 
 For distributional decision problems and ${\EG}$-samplable word ensembles we have the following stronger proposition.
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:tally_smp_bpp}
 
-Suppose ${\Fall^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Consider ${D \subseteq \Nats^n}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${K \in \Nats^n}$ and ${x \in \Supp \mu^K}$, ${\chi(x)=\chi_D(K)}$. Assume ${L}$ is an ${\EG}$-sampler of ${\mu}$ and ${P}$ is an ${\EG}$-optimal predictor for ${(\mu, \chi)}$. Then there is ${A: \bm{1} \Scheme \Bool}$ s.t. ${\A_A(K)=\Chev{\A_L(K),\A_P(K)}}$ and
+Suppose ${\Fall^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Let ${\Delta=(\Delta_{\mathfrak{R}}, \Delta_{\mathfrak{A}})}$ be a pair of growth spaces of rank ${n}$ s.t. ${\Delta_{\mathfrak{R}} \subseteq \GrowR}$ and ${\Delta_{\mathfrak{A}} \subseteq \GrowA}$. Consider ${D \subseteq \Nats^n}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${K \in \Nats^n}$ and $x \in \Supp \mu^K$, ${\chi(x)=\chi_D(K)}$. Assume ${\sigma}$ is an ${\EG}$-sampler of ${\mu}$ and ${P}$ is an ${\Fall(\Delta)}$-optimal estimator for ${(\mu, \chi)}$. Then there is ${A: \bm{1} \Scheme \Bool}$ s.t. ${\A_A(K)=\Chev{\A_\sigma(K),\A_P(K)}}$ and
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -3554,17 +3554,17 @@ Suppose ${\Fall^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Consider ${D \subseteq \Nat
 Construct ${A}$ s.t. for any ${K \in \Nats^n}$, ${y_1 \in \BoolR{L}}$, ${y_1 \in \BoolR{P}}$
 
 \begin{align*}
-\R_A(K) &= \R_L(K)+\R_P(K) \\
-A^K(y_1 y_2) &= \begin{cases}0 \text{ if } P^K(L^K(y_1),y_2) \leq \frac{1}{2} \\ 1 \text{ if } P^K(L^K(y_1),y_2) > \frac{1}{2} \end{cases}
+\R_A(K) &= \R_\sigma(K)+\R_P(K) \\
+A^K(y_1 y_2) &= \begin{cases}0 \text{ if } P^K(\sigma^K(y_1),y_2) \leq \frac{1}{2} \\ 1 \text{ if } P^K(\sigma^K(y_1),y_2) > \frac{1}{2} \end{cases}
 \end{align*}
 
 We get
 
-\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq \Prb_{y_1 \sim \Un_L^K,y_2 \sim \Un_P^K}[\Abs{P^K(L^K(y_1),y_2) - \chi_D(K)} \geq \frac{1}{2}]\]
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq \Prb_{y_1 \sim \Un_\sigma^K,y_2 \sim \Un_P^K}[\Abs{P^K(\sigma^K(y_1),y_2) - \chi_D(K)} \geq \frac{1}{2}]\]
 
-\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq \Prb_{y_1 \sim \Un_L^K,y_2 \sim \Un_P^K}[(P^K(L^K(y_1),y_2) - \chi_D(K))^2 \geq \frac{1}{4}]\]
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq \Prb_{y_1 \sim \Un_\sigma^K,y_2 \sim \Un_P^K}[(P^K(\sigma^K(y_1),y_2) - \chi_D(K))^2 \geq \frac{1}{4}]\]
 
-\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq 4 \E_{y_1 \sim \Un_L^K,y_2 \sim \Un_P^K}[(P^K(L^K(y_1),y_2) - \chi_D(K))^2]\]
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq 4 \E_{y_1 \sim \Un_\sigma^K,y_2 \sim \Un_P^K}[(P^K(\sigma^K(y_1),y_2) - \chi_D(K))^2]\]
 
 By Proposition~\ref{prp:smp}
 
@@ -3572,25 +3572,25 @@ By Proposition~\ref{prp:smp}
 
 \[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \leq 4 \E_{x \sim \mu^K,y_2 \sim \Un_P^K}[(P^K(x,y_2) - \chi(x))^2] \pmod \Fall\]
 
-By Proposition~\ref{prp:tally_perfect}, ${P}$ is an ${\EG}$-perfect predictor for ${(\mu,\chi)}$, therefore
+By Proposition~\ref{prp:tally_perfect}, ${P}$ is an ${\Fall(\Delta)}$-perfect estimator for ${(\mu,\chi)}$, therefore
 
 \[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_D(K)] \equiv 0 \pmod \Fall\]
 %
 \end{proof}
 
-Again, the statement can be reversed to disprove existence of ${\EG}$-optimal estimators.
+Again, the statement can be reversed to disprove existence of ${\Fall(\Delta)}$-optimal estimators.
 
-Now we consider the special case ${\Fall=\FallU}$, ${\GrowR \supseteq \GammaLog^n}$. 
+Now we consider the special case ${\Fall=\FallU}$, ${\GrowR = \GammaPoly^n}$. 
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:tally_fall_uni}
 
-Suppose ${\GrowR \supseteq \GammaLog^n}$ and ${\FallU^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Consider ${D \subseteq \Nats^{n-1}}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${x \in \Supp \mu^{Jk}}$, ${\chi(x)=\chi_D(J)}$. Assume ${L}$ is an ${\FallU(\Gamma)}$-sampler of ${\mu}$ and ${P}$ is an ${\FallU(\Gamma)}$-optimal predictor for ${(\mu, \chi)}$ s.t. ${\A_L(J,k)}$ and ${\A_P(J,k)}$ don't depend on ${k}$. Then, there are $m \in \Nats^{>0}$, ${p \in \NatPolyJ}$ and ${A: \bm{1} \Scheme \Bool}$ s.t. ${p \geq 2}$, ${\A_A(K)=\Chev{\A_L(K),\A_P(K)}}$ and, defining ${q: \Nats^{n-1} \rightarrow \Nats}$ by ${q(J):=2^{\Floor{\log p(J)}^m}}$
+Suppose ${\GrowR  = \GammaPoly^n}$ and ${\FallU^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Let ${\Delta=(\Delta_{\mathfrak{R}}, \Delta_{\mathfrak{A}})}$ be a pair of growth spaces of rank ${n}$ s.t. ${\Delta_{\mathfrak{A}} \subseteq \GrowA}$. Consider ${D \subseteq \Nats^{n-1}}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${x \in \Supp \mu^{Jk}}$, ${\chi(x)=\chi_D(J)}$. Assume ${\sigma}$ is an ${\FallU(\Gamma)}$-sampler of ${\mu}$ and ${P}$ is an ${\FallU(\Delta)}$-optimal estimator for ${(\mu, \chi)}$ s.t. ${\A_\sigma(J,k)}$ and ${\A_P(J,k)}$ don't depend on ${k}$. Then, there are $m \in \Nats$, ${p \in \NatPolyJ}$ and ${B: \bm{1} \Scheme \Bool}$ s.t. ${p \geq 1}$, ${\A_B(K)=\Chev{\A_\sigma(K),\A_P(K)}}$ and, defining ${q: \Nats^{n-1} \rightarrow \Nats}$ by ${q(J):=2^{\Ceil{\log p(J)}^m}}$
 
 \begin{equation}
 %\label{eqn:tbd}
-\forall J \in \Nats^{n-1}:\Prb_{y \sim \Un_A^{J,q(J)}}[A^{J,q(J)}(y)=\chi_D(J)] \geq \frac{2}{3}
+\forall J \in \Nats^{n-1}:\Prb_{y \sim \Un_B^{J,q(J)}}[B^{J,q(J)}(y)=\chi_D(J)] \geq \frac{2}{3}
 \end{equation}
 
 \end{proposition}
@@ -3598,11 +3598,42 @@ Suppose ${\GrowR \supseteq \GammaLog^n}$ and ${\FallU^{\frac{1}{2}}}$ is ${\Grow
 
 \begin{proof}
 
-FOO
+Use Proposition~\ref{prp:tally_smp_bpp} to construct ${A: \bm{1} \Scheme \Bool}$. Given any ${k \in \Nats}$, define ${\omega^k \in \mathcal{P}(\Nats)}$ s.t. for some ${N_l \in \Reals^{>0}}$
+
+\[\omega^k(i):=\begin{cases}\frac{N_l}{i \log i} \text{ if } 2 \leq i < k\\0 \text{ if } i < 2 \text { or } i \geq k\end{cases}\]
+
+Denote ${\Gamma^1:=(\GammaPoly^1,\Gamma_0^1)}$. Adapting the standard argument that any computable distribution is samplable, we can construct ${\tau: \bm{1} \xrightarrow{\Gamma^1} \Nats}$ s.t. ${\Supp \tau_\bullet^{k} \subseteq [k]}$ and ${\Dtv(\tau_\bullet^{k}, \omega^k) \leq \frac{1}{6}}$. Construct ${B: \bm{1} \Scheme \Bool}$ s.t. for any ${J \in \Nats^{n-1}}$, ${k \in \Nats}$, ${y \in \Bool^{\R_\tau(J,k)}}$ and ${z \in \Words}$
+
+\begin{align*}
+\R_B(J,k) &\geq \R_\tau(k) + \max_{i \in [k]} \R_A(J,i) \\
+B^{Jk}(y z) &= A^{J,\tau^{k}(y)}(z_{<\R_A(J,\tau^{k}(y))}) 
+\end{align*}
+
+We know that from some ${M \in \Reals^{\geq 0}}$ and ${p \in \NatPolyJ}$ s.t. ${p \geq 1}$
+
+\[\sum_{k=2}^\infty \frac{\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]}{k \log k} \leq M \log \log p(J)\]
+
+Take ${m = \Ceil{\frac{6M}{(\ln 2)^2}}}$. We get
+
+\[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]]=\frac{\sum_{k=2}^{q(J)-1} \frac{\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]}{k \log k}}{\sum_{k=2}^{q(J)-1} \frac{1}{k \log k}}\]
+
+\[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{M \log \log p(J)}{\int_2^{q(J)} \frac{\dif t}{t \log t}}\]
+
+\[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{M \log \log p(J)}{(\ln 2)^2 \log \log q(J)}\]
+
+\[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{M \log \log p(J)}{(\ln 2)^2 m \log \Ceil{\log p(J)}}\]
+
+\[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{1}{6}\]
+
+\[\E_{y \sim \Un_\tau^{q(J)}}[\Prb_{z \sim \Un_A^{J,\tau^{q(J)}(y)}}[A^{J,\tau^{q(J)}(y)}(z) \neq \chi_D(J)]] \leq \frac{1}{6}+\Dtv(\tau_\bullet^{q(J)},\omega^{q(J)})\]
+
+\[\Prb_{y \sim \Un_B^{J,q(J)}}[B^{J,q(J)}(y) \ne \chi_D(J)] \leq \frac{1}{3}\]
 %
 \end{proof}
 
-TBD
+For ${n=2}$, we can think of ${D}$ as a language using \emph{unary} encoding of natural numbers. Proposition~\ref{prp:tally_fall_uni}  tells us that if this language cannot be decided in quasi-polynomial time by a bounded-error probabilistic algorithm, then there is no ${\FallU(\Delta)}$-optimal estimator for ${(\mu,\chi)}$.
+
+Thanks to the results of section~\ref{sec:reductions}, these negative results are extendable to any distributional estimation problem s.t. a problem admitting a negative result has an appropriate reduction to it.
 
 % Add to previous sections analysis of the properties of ${\FallU}$
 
