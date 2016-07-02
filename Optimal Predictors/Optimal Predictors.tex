@@ -105,6 +105,7 @@
 \newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
 \newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
 \newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
+\newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(t)}}}
 \newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
@@ -453,28 +454,39 @@ We define $\Fall_{\text{neg}}$, a fall space of rank $1$. For any $\varepsilon: 
 
 \begin{samepage}
 \begin{example}
-\label{exm:e_uni}
-For any ${n \in \Nats^{>0}}$, We define ${\FallU}$, a fall space of rank ${n}$. For any ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallU$ iff there are ${M \in \Reals^{>0}}$ and ${p \in \NatPolyJ}$ s.t.
 
-\begin{equation}
-%\label{eqn:tbd}
-\forall J \in \Nats^{n-1}: \sum_{k=2}^\infty\frac{\varepsilon(J,k)}{k \log k} \leq M \log \log p(J)
-\end{equation}
-
-To verify condition \ref{con:def__fall__pol} note that ${2^{-K_{n-1}} \in \FallU}$.
+For any ${n \in \Nats}$ and ${\zeta: \Nats^n \rightarrow \Reals^{\geq 0}}$, we define ${\mathcal{E}_{\zeta}}$ to be the set of ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded s.t. there is ${M \in \Reals}$ for which ${\varepsilon \leq M \zeta}$. If there is ${h \in \NatPoly}$ s.t. ${\zeta \geq 2^{-h}}$ then ${\mathcal{E}_\zeta}$ is a fall space of rank ${n}$.
 
 \end{example}
 \end{samepage}
 
 \begin{samepage}
 \begin{example}
+\label{exm:e_uni}
+For any ${n \in \Nats^{>0}}$ and ${t: \Nats^{n-1} \rightarrow \Nats \sqcup \{ \infty \}}$, we define ${\FallUt{t}}$, a fall space of rank ${n}$. For any ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallUt{t}$ iff there are ${M \in \Reals^{>0}}$ and ${p \in \NatPolyJ}$ s.t.
 
-For any ${n \in \Nats^{>0}}$, We define ${\FallM}$, a fall space of rank ${n}$. For any ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallM$ iff the function ${\bar{\varepsilon}: \NatFun \Reals^{\geq 0}}$ defined by ${\bar{\varepsilon}(J,k):=\sup_{l \geq k} \varepsilon(J,l)}$ satisfies ${\bar{\varepsilon} \in \FallU}$.
+\begin{equation}
+%\label{eqn:tbd}
+\forall J \in \Nats^{n-1}: \sum_{k=2}^{t(J)-1}\frac{\varepsilon(J,k)}{k \log k} \leq M \log \log p(J)
+\end{equation}
+
+To verify condition \ref{con:def__fall__pol} note that ${2^{-K_{n-1}} \in \FallUt{t}}$.
+
+For ${t \equiv \infty}$ we use the notation ${\FallU:=\FallUt{t}}$.
 
 \end{example}
 \end{samepage}
 
-The main motivation for Example~\ref{exm:e_uni} are the existence theorems proven in Section \ref{sec:e_and_u}.
+\begin{samepage}
+\begin{example}
+\label{exm:e_mon}
+
+For any ${n \in \Nats^{>0}}$, we define ${\FallM}$, a fall space of rank ${n}$. For any ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded, $\varepsilon \in \FallM$ iff the function ${\bar{\varepsilon}: \NatFun \Reals^{\geq 0}}$ defined by ${\bar{\varepsilon}(J,k):=\sup_{l \geq k} \varepsilon(J,l)}$ satisfies ${\bar{\varepsilon} \in \FallU}$.
+
+\end{example}
+\end{samepage}
+
+The main motivation for examples \ref{exm:e_uni} and \ref{exm:e_mon} are the existence theorems proven in Section \ref{sec:e_and_u}.
 
 We note a few simple properties of fall spaces which will be useful in the following.
 
@@ -2993,7 +3005,7 @@ According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-inver
 
 \begin{samepage}
 \begin{corollary}
-%\label{crl:tbd}
+\label{crl:complete}
 
 Fix ${m \in \Nats}$ s.t. ${m \geq n}$, ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$ s.t. ${\Fall^{(m)}}$ is ${\GrowA^m}$-ample. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\mu_{\mathfrak{F},D}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\mu}$, there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\mu^\eta,f_\phi)}$.
 \end{corollary}
@@ -3002,6 +3014,26 @@ Fix ${m \in \Nats}$ s.t. ${m \geq n}$, ${\Fall^{(m)}}$ a fall space of rank ${m}
 \begin{proof}
 
 Completely analogous to proof of Corollary~\ref{crl:complete_sharp}.
+%
+\end{proof}
+
+In particular, the conditions of Corollary~\ref{crl:complete_sharp} and Corollary~\ref{crl:complete} can hold for ${\Fall=\Fall_\zeta}$ and ${\Fall^{(m)}=\FallUt{t}}$.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+% t \zeta \leq M \log \log p
+% \beta_p should increase t in a bounded way: t' \leq t^{(\log p)^M}
+
+?
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+FOO
 %
 \end{proof}
 
@@ -3596,16 +3628,16 @@ By Proposition~\ref{prp:tally_perfect}, ${P}$ is an ${\Fall(\Delta)}$-perfect es
 
 Again, the statement can be reversed to disprove existence of ${\Fall(\Delta)}$-optimal estimators.
 
-Now we consider the special case ${\Fall=\FallU}$, ${\GrowR = \GammaPoly^n}$. 
+Now we consider the special case ${\Fall=\FallUt{t}}$, ${\GrowR = \GammaPoly^n}$. 
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:tally_fall_uni}
 
-Suppose ${\GrowR  = \GammaPoly^n}$ and ${\FallU^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Let ${\Delta=(\Delta_{\mathfrak{R}}, \Delta_{\mathfrak{A}})}$ be a pair of growth spaces of rank ${n}$ s.t. ${\Delta_{\mathfrak{A}} \subseteq \GrowA}$. Consider ${D \subseteq \Nats^{n-1}}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${x \in \Supp \mu^{Jk}}$, ${\chi(x)=\chi_D(J)}$. Assume ${\sigma}$ is an ${\FallU(\Gamma)}$-sampler of ${\mu}$ and ${P}$ is an ${\FallU(\Delta)}$-optimal estimator for ${(\mu, \chi)}$ s.t. ${\A_\sigma(J,k)}$ and ${\A_P(J,k)}$ don't depend on ${k}$. Then, there are $m \in \Nats$, ${p \in \NatPolyJ}$ and ${B: \bm{1} \Scheme \Bool}$ s.t. ${p \geq 1}$, ${\A_B(K)=\Chev{\A_\sigma(K),\A_P(K)}}$ and, defining ${q: \Nats^{n-1} \rightarrow \Nats}$ by ${q(J):=2^{\Ceil{\log p(J)}^m}}$
+Consider ${t: \Nats^{n-1} \rightarrow \Nats}$ superquasi-polynomial i.e. for any ${m \in \Nats}$ and\\ ${p \in \NatPolyJ}$ there is at most a finite number of ${J \in \Nats^{n-1}}$ s.t. ${t(J) \leq 2^{\Ceil{\log p(J)}^m}}$. Suppose ${\GrowR  = \GammaPoly^n}$ and ${\mathcal{E}_{\textnormal{uni}}^{(t)\frac{1}{2}}}$ is ${\GrowA}$-ample. Let ${\Delta=(\Delta_{\mathfrak{R}}, \Delta_{\mathfrak{A}})}$ be a pair of growth spaces of rank ${n}$ s.t. ${\Delta_{\mathfrak{A}} \subseteq \GrowA}$. Consider ${D \subseteq \Nats^{n-1}}$ and ${\mu}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then\\ ${\Supp \mu^{K_1} \cap \Supp \mu^{K_2} = \varnothing}$. Define ${\chi: \Supp \mu \rightarrow \Bool}$ by requiring that for any ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${x \in \Supp \mu^{Jk}}$, ${\chi(x)=\chi_D(J)}$. Assume ${\sigma}$ is an ${\FallU(\Gamma)}$-sampler of ${\mu}$ and ${P}$ is an ${\FallU(\Delta)}$-optimal estimator for ${(\mu, \chi)}$ s.t. ${\A_\sigma(J,k)}$ and ${\A_P(J,k)}$ don't depend on ${k}$. Then, there are $m \in \Nats$, ${p \in \NatPolyJ}$ and ${B: \bm{1} \Scheme \Bool}$ s.t. ${p \geq 1}$, ${\A_B(K)=\Chev{\A_\sigma(K),\A_P(K)}}$ and, defining ${q: \Nats^{n-1} \rightarrow \Nats}$ by ${q(J):=2^{\Ceil{\log p(J)}^m}}$
 
 \begin{equation}
-%\label{eqn:tbd}
+\label{eqn:prp__tally_fall_uni}
 \forall J \in \Nats^{n-1}:\Prb_{y \sim \Un_B^{J,q(J)}}[B^{J,q(J)}(y)=\chi_D(J)] \geq \frac{2}{3}
 \end{equation}
 
@@ -3614,7 +3646,7 @@ Suppose ${\GrowR  = \GammaPoly^n}$ and ${\FallU^{\frac{1}{2}}}$ is ${\GrowA}$-am
 
 \begin{proof}
 
-Use Proposition~\ref{prp:tally_smp_bpp} to construct ${A: \bm{1} \Scheme \Bool}$. Given any ${k \in \Nats}$, define ${\omega^k \in \mathcal{P}(\Nats)}$ s.t. for some ${N_l \in \Reals^{>0}}$
+Obviously it is enough to construct ${m}$, ${p}$ and ${B}$ s.t. \ref{eqn:prp__tally_fall_uni} holds for all but a finite number of ${J \in \Nats^{n-1}}$. Use Proposition~\ref{prp:tally_smp_bpp} to construct ${A: \bm{1} \Scheme \Bool}$. Given any ${k \in \Nats}$, define ${\omega^k \in \mathcal{P}(\Nats)}$ s.t. for some ${N_l \in \Reals^{>0}}$
 
 \[\omega^k(i):=\begin{cases}\frac{N_l}{i \log i} \text{ if } 2 \leq i < k\\0 \text{ if } i < 2 \text { or } i \geq k\end{cases}\]
 
@@ -3627,30 +3659,35 @@ B^{Jk}(y z) &= A^{J,\tau^{k}(y)}(z_{<\R_A(J,\tau^{k}(y))})
 
 We know that from some ${M \in \Reals^{\geq 0}}$ and ${p \in \NatPolyJ}$ s.t. ${p \geq 1}$
 
-\[\sum_{k=2}^\infty \frac{\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]}{k \log k} \leq M \log \log p(J)\]
+\[\sum_{k=2}^{t(J)-1} \frac{\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]}{k \log k} \leq M \log \log p(J)\]
 
 Take ${m = \Ceil{\frac{6M}{(\ln 2)^2}}}$. We get
 
 \[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]]=\frac{\sum_{k=2}^{q(J)-1} \frac{\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]}{k \log k}}{\sum_{k=2}^{q(J)-1} \frac{1}{k \log k}}\]
 
-\[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{M \log \log p(J)}{\int_2^{q(J)} \frac{\dif t}{t \log t}}\]
+Denote $I:=\{J \in \Nats^{n-1} \mid t(J) < q(J)\}$. We get
 
-\[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{M \log \log p(J)}{(\ln 2)^2 \log \log q(J)}\]
+\[\forall J \in \Nats^{n-1} \setminus I: \E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{M \log \log p(J)}{\int_2^{q(J)} \frac{\dif t}{t \log t}}\]
 
-\[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{M \log \log p(J)}{(\ln 2)^2 m \log \Ceil{\log p(J)}}\]
+\[\forall J \in \Nats^{n-1} \setminus I:\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{M \log \log p(J)}{(\ln 2)^2 \log \log q(J)}\]
 
-\[\E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{1}{6}\]
+\[\forall J \in \Nats^{n-1} \setminus I: \E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{M \log \log p(J)}{(\ln 2)^2 m \log \Ceil{\log p(J)}}\]
 
-\[\E_{y \sim \Un_\tau^{q(J)}}[\Prb_{z \sim \Un_A^{J,\tau^{q(J)}(y)}}[A^{J,\tau^{q(J)}(y)}(z) \neq \chi_D(J)]] \leq \frac{1}{6}+\Dtv(\tau_\bullet^{q(J)},\omega^{q(J)})\]
+\[\forall J \in \Nats^{n-1} \setminus I: \E_{k \sim \omega^{q(J)}}[\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_D(J)]] \leq \frac{1}{6}\]
 
-\[\Prb_{y \sim \Un_B^{J,q(J)}}[B^{J,q(J)}(y) \ne \chi_D(J)] \leq \frac{1}{3}\]
+\[\forall J \in \Nats^{n-1} \setminus I: \E_{y \sim \Un_\tau^{q(J)}}[\Prb_{z \sim \Un_A^{J,\tau^{q(J)}(y)}}[A^{J,\tau^{q(J)}(y)}(z) \neq \chi_D(J)]] \leq \frac{1}{6}+\Dtv(\tau_\bullet^{q(J)},\omega^{q(J)})\]
+
+\[\forall J \in \Nats^{n-1} \setminus I: \Prb_{y \sim \Un_B^{J,q(J)}}[B^{J,q(J)}(y) \ne \chi_D(J)] \leq \frac{1}{3}\]
+
+By the assumption on ${t}$, ${I}$ is a finite set therefore we got the desired result.
 %
 \end{proof}
 
-For ${n=2}$, we can think of ${D}$ as a language using \emph{unary} encoding of natural numbers. Proposition~\ref{prp:tally_fall_uni}  tells us that if this language cannot be decided in quasi-polynomial time by a bounded-error probabilistic algorithm, then there is no ${\FallU(\Delta)}$-optimal estimator for ${(\mu,\chi)}$.
+For ${n=2}$, we can think of ${D}$ as a language using \emph{unary} encoding of natural numbers. Proposition~\ref{prp:tally_fall_uni}  tells us that if this language cannot be decided in quasi-polynomial time by a bounded-error probabilistic algorithm, then there is no ${\FallUt{t}(\Delta)}$-optimal estimator for ${(\mu,\chi)}$.
 
 Thanks to the results of section~\ref{sec:reductions}, these negative results are extendable to any distributional estimation problem s.t. a problem admitting a negative result has an appropriate reduction to it.
 
+% Add extension of ${\FallU}$ and enhance negative result
 % After Corollary 3.6, add special case of ${\FallU}$ (and extensions of ${\FallU}$?)
 
 \subsection{Uniqueness}
