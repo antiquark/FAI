@@ -3821,7 +3821,15 @@ Theorem~\ref{thm:uniq_cond} implies that in simple scenarios, \enquote{counterfa
 \section{Discussion}
 \label{sec:discussion}
 
-TBD
+The motivation for optimal bounded estimators comes from the desire the quantify the uncertainty originating in computational resource bounds. We used this motivation to arrive at an intuitive definition, and proceeded to show the resulting object has many properties of \enquote{normal} probability theory, justifying its interpretation as a brand of expected value. Moreover, there are associated concepts of reductions and complete problems analogous to standard constructions in average-case complexity theory. 
+
+Thus, the class of distributional estimation problems admitting ${\EG}$-optimal estimators (or ${\ESG}$-optimal estimators) is a natural average-case complexity class. In light of the positive and negative existence results we have demonstrated, these new classes don't seem to trivially coincide with any of the previously known classes. Mapping the boundary of these classes and understanding their relationships with other classes in average-case complexity seems to be ground for much further work. Moreover, it is possible to consider generalizations by including more types of computational resources e.g. space, parallelism and/or non-determinism.
+
+One area where applying these concepts seems natural is Artificial General Intelligence. Indeed, the von Neumann–Morgenstern theorem shows that perfect rational agents are expected utility maximizers but in general the exact evaluation of expected utility is intractable. It is thus natural to substitute an optimal bounded estimator for utility, as the analogue of expected value in the computationally bounded case. Further illuminating the connection, Theorem~\ref{thm:exists_smp} shows how optimal bounded estimators result from agnostic PAC learning. It seems likely that this result can be generalized to obtaining optimal bounded estimators for non-samplable word ensembles from online learning.
+
+Some results we left out of the present work show the existence of systems of optimal bounded estimators that are \enquote{reflective} i.e. estimate systems of functions which depend on the estimators themselves. We constructed such systems using the Kakutani-Glicksberg-Fan theorem which requires the use of random advice strings, as in the definition of ${\EMG}$-samplers. However, it seems likely that such systems can also be constructed using online learning (i.e. by considering a collection of agents which apply online learning to predict each other's behavior). Such systems can be used to model game theoretic behavior of computationally bounded rational agents, similarly to the use of reflective oracles\cite{Fallenstein_2015} for unbounded agents. 
+
+Finally, we wish to express the hope that the present work will lead to incorporating more concepts from complexity theory into the theory of AGI, serving to create a stronger theoretical foundation for AI in general. The importance of building such a theoretical foundation is enormous since it is necessary to predict and control the outcome of the eventual creation of artificial agents with superhuman intelligence, an event which might otherwise trigger a catastrophe\cite{Bostrom_2014}.
 
 % Studying the complexity classes
 % Bayesian reasoning and AGI
