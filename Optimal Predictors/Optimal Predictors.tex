@@ -3712,6 +3712,67 @@ Thanks to the results of section~\ref{sec:reductions}, these negative results ar
 
 \subsection{Uniqueness}
 
+Since we view optimal bounded estimators as computing \enquote{expected values,} it is natural to expect that their values only depend on the distributional estimation problem rather than the particular optimal bounded estimator. However, since they are defined via an asymptotic property exact uniqueness is impossible. Instead, we have uniqueness up to an equivalence relation that means \enquote{asymptotically small difference on average.}
+
+\begin{samepage}
+\begin{theorem}
+\label{thm:uniq}
+
+Consider ${(\mu,f)}$ a distributional estimation problem. Assume there is ${p \in \NatPoly}$ s.t. 
+
+\begin{equation}
+%\label{eqn:tbd}
+\mu^K(\Bool^{\leq p(K)}) \equiv 1 \pmod \Fall
+\end{equation}
+
+Suppose ${P}$ and ${Q}$ are ${\ESG}$-optimal estimators for ${(\mu,f)}$. Then
+
+\begin{equation}
+\label{eqn:thm__uniq}
+\E_{(x,y,z) \sim \mu^K \times \Un_P^K \times \Un_Q^K}[(P^K(x,y)-Q^K(x,z))^2] \equiv 0 \pmod \Fall
+\end{equation}
+
+\end{theorem}
+\end{samepage}
+
+\begin{proof}
+
+Construct ${S: \Words \times \Rats \Scheme \Rats}$ bounded s.t. for any ${K \in \Nats^n}$, ${x \in \Bool^{\leq p(K)}}$, ${t \in \Img P^K}$ and ${z \in \BoolR{Q}}$
+
+\begin{align*}
+\R_{S}(K) &= \R_Q(K) \\
+S^K(x,t,z) &= t-Q^K(x,z) 
+\end{align*}
+
+Construct ${T: \Words \times \Rats \Scheme \Rats}$ bounded s.t. for any ${K \in \Nats^n}$, ${x \in \Bool^{\leq p(K)}}$, ${s \in \Img Q^K}$ and\\ $y \in \BoolR{P}$
+
+\begin{align*}
+\R_{T}(K) &= \R_P(K) \\
+T^K(x,t,y) &= P^K(x,y)-s 
+\end{align*}
+
+${P}$ is an ${\ESG}$-optimal estimator for ${(\mu,f)}$, therefore
+
+\[\E_{(x,y,z) \sim \mu^K \times \Un_P^K \times \Un_S^K}[(P^K(x,y)-f(x))S^K(x,P^K(x,y),z)] \equiv 0 \pmod \Fall\]
+
+\begin{equation}
+\label{eqn:thm__uniq__prf1}
+\E_{(x,y,z) \sim \mu^K \times \Un_P^K \times \Un_Q^K}[(P^K(x,y)-f(x))(P^K(x,y)-Q^K(x,z))] \equiv 0 \pmod \Fall
+\end{equation}
+
+${Q}$ is an ${\ESG}$-optimal estimator for ${(\mu,f)}$, therefore
+
+\[\E_{(x,z,y) \sim \mu^K \times \Un_Q^K \times \Un_T^K}[(Q^K(x,z)-f(x))T^K(x,Q^K(x,z),y)] \equiv 0 \pmod \Fall\]
+
+\begin{equation}
+\label{eqn:thm__uniq__prf2}
+\E_{(x,z,y) \sim \mu^K \times \Un_Q^K \times \Un_P^K}[(Q^K(x,z)-f(x))(P^K(x,y)-Q^K(x,z))] \equiv 0 \pmod \Fall
+\end{equation}
+
+Subtracting \ref{eqn:thm__uniq__prf2} from \ref{eqn:thm__uniq__prf1}, we get \ref{eqn:thm__uniq}.
+%
+\end{proof}
+
 % Including stability of conditional expectations
 
 TBD
