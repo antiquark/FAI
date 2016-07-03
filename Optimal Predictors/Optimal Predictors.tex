@@ -1191,6 +1191,7 @@ $$\frac{\delta(K)^2}{\alpha(K)} \leq \frac{4}{3}\varepsilon(K)$$
 \end{proof}
 
 \subsection{Algebraic Properties}
+\label{subsec:alg}
 
 In this subsection and subsection~\ref{subsec:indep_var}, we show that several algebraic identities satisfied by expected values have analogues for optimal bounded estimators.
 
@@ -1243,7 +1244,7 @@ The above perspective allows us stating and proving non-tautological theorems an
 \begin{theorem}
 %\label{thm:tbd}
 
-Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $k \in \Nats$, $\mu^k(D) > 0$. Define $\gamma_D: \NatFun \Reals$ by $\gamma(K):=\mu^{K}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal estimator for $(\mu, \chi_D)$ and $P_{f \mid D}$ be an $\Fall_D^\sharp(\Gamma)$-optimal estimator for ${(\mu \mid D, f)}$. Construct ${P_{\chi f}: \Words \Scheme \Rats}$ s.t. $\R_{P_{\chi f}}=\R_{P_D} + \R_{P_{f \mid D}}$ and for any $y \in \BoolR{P_D}$ and ${z \in \BoolR{P_{f \mid D}}}$
+Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $K \in \Nats^n$, $\mu^K(D) > 0$. Define $\gamma_D: \NatFun \Reals$ by $\gamma(K):=\mu^{K}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal estimator for $(\mu, \chi_D)$ and $P_{f \mid D}$ be an $\Fall_D^\sharp(\Gamma)$-optimal estimator for ${(\mu \mid D, f)}$. Construct ${P_{\chi f}: \Words \Scheme \Rats}$ s.t. $\R_{P_{\chi f}}=\R_{P_D} + \R_{P_{f \mid D}}$ and for any $y \in \BoolR{P_D}$ and ${z \in \BoolR{P_{f \mid D}}}$
 
 \begin{equation}
 P_{\chi f}^K(x,yz)=P_D^K(x,y) P_{f \mid D}^K(x,z)
@@ -1284,7 +1285,7 @@ Using the fact $P_{f \mid D}^K$ is $\Fall_D^\sharp(\Gamma)$-optimal for $(\mu \m
 \begin{theorem}
 \label{thm:cond}
 
-Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $k \in \Nats$, $\mu^k(D) > 0$. Define $\gamma_D: \NatFun \Reals$ by $\gamma(K):=\mu^{K}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal estimator for $(\mu, \chi_D)$ and $P_{\chi f}$ be an $\ESG$-optimal estimator for $(\mu, \chi_D f)$. Choose any $M \in \Rats$ s.t. ${M \geq \sup \Abs{f}}$ and construct $P_{f \mid D}: \Words \Scheme \Rats$ s.t. $\R_{P_{f \mid D}} = \R_{P_D} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$ 
+Consider $(\mu, f)$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all $K \in \Nats^n$, $\mu^K(D) > 0$. Define $\gamma_D: \NatFun \Reals$ by $\gamma(K):=\mu^{K}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Let $P_D$ be an $\ESG$-optimal estimator for $(\mu, \chi_D)$ and $P_{\chi f}$ be an $\ESG$-optimal estimator for $(\mu, \chi_D f)$. Choose any $M \in \Rats$ s.t. ${M \geq \sup \Abs{f}}$ and construct $P_{f \mid D}: \Words \Scheme \Rats$ s.t. $\R_{P_{f \mid D}} = \R_{P_D} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_D}}$ and $z \in \BoolR{P_{\chi f}}$ 
 
 \begin{equation}
 P_{f \mid D}^K(x,yz)=\begin{cases}P_D^K(x,y)^{-1} P_{\chi f}^K(x,z) \textnormal{ if this number is in } [-M,M] \\ M \textnormal{ if } P_D^K(x,y)=0 \textnormal{ or } P_D^K(x,y)^{-1} P_{\chi f}^K(x,z) > M\\ -M \textnormal{ if } P_D^K(x,y)^{-1} P_{\chi f}^K(x,z) < -M\end{cases}
@@ -3721,7 +3722,7 @@ Since we view optimal bounded estimators as computing \enquote{expected values,}
 Consider ${(\mu,f)}$ a distributional estimation problem. Assume there is ${p \in \NatPoly}$ s.t. 
 
 \begin{equation}
-%\label{eqn:tbd}
+\label{eqn:thm__uniq__dist}
 \mu^K(\Bool^{\leq p(K)}) \equiv 1 \pmod \Fall
 \end{equation}
 
@@ -3755,6 +3756,8 @@ ${P}$ is an ${\ESG}$-optimal estimator for ${(\mu,f)}$, therefore
 
 \[\E_{(x,y,z) \sim \mu^K \times \Un_P^K \times \Un_S^K}[(P^K(x,y)-f(x))S^K(x,P^K(x,y),z)] \equiv 0 \pmod \Fall\]
 
+The construction of ${S}$ and \ref{eqn:thm__uniq__dist} give
+
 \begin{equation}
 \label{eqn:thm__uniq__prf1}
 \E_{(x,y,z) \sim \mu^K \times \Un_P^K \times \Un_Q^K}[(P^K(x,y)-f(x))(P^K(x,y)-Q^K(x,z))] \equiv 0 \pmod \Fall
@@ -3763,6 +3766,8 @@ ${P}$ is an ${\ESG}$-optimal estimator for ${(\mu,f)}$, therefore
 ${Q}$ is an ${\ESG}$-optimal estimator for ${(\mu,f)}$, therefore
 
 \[\E_{(x,z,y) \sim \mu^K \times \Un_Q^K \times \Un_T^K}[(Q^K(x,z)-f(x))T^K(x,Q^K(x,z),y)] \equiv 0 \pmod \Fall\]
+
+The construction of ${T}$ and \ref{eqn:thm__uniq__dist} give
 
 \begin{equation}
 \label{eqn:thm__uniq__prf2}
@@ -3773,9 +3778,45 @@ Subtracting \ref{eqn:thm__uniq__prf2} from \ref{eqn:thm__uniq__prf1}, we get \re
 %
 \end{proof}
 
-% Including stability of conditional expectations
+The notion of \enquote{conditional expected value} introduced in subsection~\ref{subsec:alg} allows conditions which are occasionally \emph{false}. In some sense this provides us with well-defined (probabilistic) answers to \enquote{what if} questions that are meaningless in formal logic due to the principle of explosion, a concept which was hypothesized to be useful for solving paradoxes in decision theory\cite{Soares_2015}. However, Theorem~\ref{thm:uniq} suggests that the values of an optimal bounded estimator are only meaningful inside ${\Supp \mu^K}$ whereas \enquote{conditional expected values} require using the word ensemble ${\mu \mid D}$ (see Theorem~\ref{thm:cond}) so violation of the condition (i.e. ${x \not\in D}$) means falling outside the support of the word ensemble. On the other hand, we will now show that when the condition is unpredictable with the given amount of computational resources, a stronger uniqueness theorem holds that ensures \enquote{counterfactual} values are also stable.
 
-TBD
+\begin{samepage}
+\begin{theorem}
+\label{thm:uniq_cond}
+
+Consider ${(\mu,f)}$ a distributional estimation problem and ${D \subseteq \Words}$ s.t. for all ${K \in \Nats^n}$, $\mu^K(D) > 0$. Define $\gamma_D: \NatFun \Reals$ by $\gamma(K):=\mu^{K}(D)^{-1}$ and $\Fall_D:=\gamma_D \Fall$. Assume there is\\ ${p \in \NatPoly}$ s.t. \ref{eqn:thm__uniq__dist} holds. Let ${R}$ be an ${\ESG}$-optimal estimator for ${(\mu, \chi_D)}$. Assume ${\epsilon: \NatFun \Reals^{>0}}$ is s.t. for all ${x,y \in \Words}$, ${R^K(x,y) \geq \epsilon(K) \mu^K(D)}$. Suppose ${P}$ and ${Q}$ are ${\Fall_D^\sharp(\Gamma)}$-optimal estimators for ${(\mu \mid D,f)}$. Then
+
+\begin{equation}
+%\label{eqn:thm__?}
+\E_{(x,y,z) \sim \mu^K \times \Un_P^K \times \Un_Q^K}[(P^K(x,y)-Q^K(x,z))^2] \equiv 0 \pmod {\epsilon^{-1} \Fall_D}
+\end{equation}
+
+\end{theorem}
+\end{samepage}
+
+\begin{proof}
+
+${R}$ is an ${\ESG}$-optimal estimator for ${(\mu, \chi_D)}$, therefore
+
+\[\E_{(x,y,z,w) \sim \mu^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(R^K(x,w)-\chi_D(x))(P^K(x,y)-Q^K(x,z))^2] = 0 \pmod \Fall\]
+
+\[\E_{\mu^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K(x)(P^K(x)-Q^K(x))^2] = \E_{\mu^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\chi_D(x)(P^K(x)-Q^K(x))^2] \pmod \Fall\]
+
+\[\E_{\mu^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K(x)(P^K(x)-Q^K(x))^2] = \mu^K(D) \E_{\mu^K \mid D \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \pmod \Fall\]
+
+\[\E_{\mu^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\epsilon(K)\mu^K(D)(P^K(x)-Q^K(x))^2] \leq \mu^K(D) \E_{\mu^K \mid D \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \pmod \Fall\]
+
+\[\epsilon(K)\E_{\mu^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \leq \E_{\mu^K \mid D \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \pmod {\Fall_D}\]
+
+Applying Theorem~\ref{thm:uniq} to the right hand side, we conclude
+
+\[\epsilon(K)\E_{\mu^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \equiv 0 \pmod {\Fall_D}\]
+
+\[\E_{\mu^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \equiv 0 \pmod {\epsilon^{-1}\Fall_D}\]
+%
+\end{proof}
+
+Theorem~\ref{thm:uniq_cond} implies that in simple scenarios, \enquote{counterfactual} optimal estimates behave as intuitively expected, assuming ${D}$ is \enquote{sufficiently unpredictable}. For example, if there is an efficient algorithm that evaluates ${f}$ correctly given the promise ${x \in D}$ then a conditional optimal bounded estimator constructed using Theorem~\ref{thm:cond} will produce approximately the same values as this algorithm whether ${x}$ is in ${D}$ or not.
 
 \section{Discussion}
 \label{sec:discussion}
