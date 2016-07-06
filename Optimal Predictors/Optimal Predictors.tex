@@ -1538,7 +1538,7 @@ Total variation distance is subadditive w.r.t. direct products therefore
 \[\Dtv(\Dist_1^K \times \Dist_2^K, \mathcal{E}_1^K \times \mathcal{E}_2^K) \leq \Dtv(\Dist_1^K, \mathcal{E}_1^K) + \Dtv(\Dist_2^K, \mathcal{E}_2^K)\]
 \end{proof}
 
-\subsubsection{\texorpdfstring{Polynomial-Time $\MGrow$}{MΓ}-Schemes}
+\subsubsection{Polynomial-Time \texorpdfstring{$\MGrow$}{MΓ}-Schemes}
 
 The concept of a polynomial-time $\Gamma$-scheme can be generalized in a way which allows the advice to become random in itself.
 
@@ -1608,9 +1608,9 @@ Samplable word ensembles can be thought of as those ensembles which can be produ
 \begin{samepage}
 \begin{definition}
 
-A word ensemble $\Dist$ is called \emph{$\EMG$-samplable} (resp. \emph{$\EG$-samplable}) when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature ${\bm{1} \rightarrow \Words}$  s.t. $\Dist^{K} \equiv \sigma_\bullet^K \pmod \Fall$.
+A word ensemble $\Dist$ is called \emph{polynomial-time $\EMG$-samplable} (resp. \emph{polynomial-time $\EG$-samplable}) when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature ${\bm{1} \rightarrow \Words}$  s.t. $\Dist^{K} \equiv \sigma_\bullet^K \pmod \Fall$.
 
-In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\Dist$}.
+In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$}.
 
 \end{definition}
 \end{samepage}
@@ -1619,11 +1619,11 @@ In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) o
 \begin{definition}
 \label{def:smp_prob}
 
-A distributional estimation problem $(\Dist,f)$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable)} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $G$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
+A distributional estimation problem $(\Dist,f)$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable)} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $G$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
 
 \begin{enumerate}[(i)]
 
-\item $G_0$ is an $\EMG$-sampler (resp. $\EG$-sampler) of $\Dist$.
+\item $G_0$ is a polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$.
 
 \item For any $K \in \Nats^n$, denote $X_{G}^K:=\Supp G_{0\bullet}^K$. For any $x \in \Words$, denote 
 
@@ -1633,7 +1633,7 @@ We require that the function $\varepsilon(K):=\E_{x \sim \Dist^{K}}[\Abs{f_G^K(x
 
 \end{enumerate}
 
-When $\sup{\Abs{G_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $G$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $(\Dist,f)$}.
+When $\sup{\Abs{G_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $G$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $(\Dist,f)$}.
 
 \end{definition}
 \end{samepage}
@@ -1658,7 +1658,7 @@ Denote ${I:=\{K \in \Nats^n \mid \Dist^{K}(\Bool^{\leq l(K)}) > 0\}}$. Consider 
 \sigma^K(y,z)&=z
 \end{align*}
 
-Then, $\sigma$ is an $\EMG$-sampler of $\Dist$. In particular, since such an $\sigma$ can always be constructed, $\Dist$ is $\EMG$-samplable.
+Then, $\sigma$ is a polynomial-time $\EMG$-sampler of $\Dist$. In particular, since such an $\sigma$ can always be constructed, $\Dist$ is polynomial-time $\EMG$-samplable.
 
 \end{proposition}
 \end{samepage}
@@ -1696,7 +1696,7 @@ $$\Dtv(\Dist^{K}, \sigma_\bullet^K) \leq \max(1-\Dist^{K}(\Bool^{\leq l(K)}), 1-
 \begin{proposition}
 \label{prp:adv_mgamma_gen}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $(\Dist,f)$ s.t. for some $l \in \GrowA$, \ref{eqn:prp__adv_mgamma_smp} holds. Then, $(\Dist,f)$ is $\EMG$-samplable. 
+Assume $\Fall$ is $\GrowA$-ample. Consider a distributional estimation problem $(\Dist,f)$ s.t. for some $l \in \GrowA$, \ref{eqn:prp__adv_mgamma_smp} holds. Then, $(\Dist,f)$ is polynomial-time $\EMG$-samplable. 
 
 \end{proposition}
 \end{samepage}
@@ -1718,7 +1718,7 @@ Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$
 G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)
 \end{align*}
 
-Let $\sigma$ be an $\EMG$-sampler of $\Dist$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $\sigma_{\bullet}^K=G_{0\bullet}^K$ therefore $G_0$ is also an $\EMG$-sampler of $\Dist$.
+Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $\sigma_{\bullet}^K=G_{0\bullet}^K$ therefore $G_0$ is also a polynomial-time $\EMG$-sampler of $\Dist$.
 
 Let ${f_G^K}$ be defined as in Definition~\ref{def:smp_prob}. Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \Dist^{K} \cap \Bool^{\leq l(K)}}$, ${f_G^K(x)=\rho^K(f(x))}$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_G^K(x)=0$. Denote 
 
@@ -1739,9 +1739,9 @@ We now introduce the notions of samplability of samplability over a given \enquo
 
 \begin{definition}
 
-Consider a word ensemble $\Dist$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$. $\Dist$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\Dist^{K}}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
+Consider a word ensemble $\Dist$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$. $\Dist$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\Dist^{K}}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
 
-In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\Dist$ relative to $\pi$}.
+In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$ relative to $\pi$}.
 
 \end{definition}
 
@@ -1749,11 +1749,11 @@ In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) o
 \begin{definition}
 \label{def:smp_prob_rel}
 
-Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}$. $(\Dist,f)$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
+Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}$. $(\Dist,f)$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
 
 \begin{enumerate}[(i)]
 
-\item $G_0$ is an $\EMG$-sampler (resp. $\EG$-sampler) of $\Dist$ relative to $\pi$.
+\item $G_0$ is a polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$ relative to $\pi$.
 
 \item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{G,y}^K:=\Supp G_{0y}^K$. For any ${x \in \Words}$, denote 
 
@@ -1763,7 +1763,7 @@ We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \Dist^{K} \ltimes 
 
 \end{enumerate}
 
-When $\sup{\Abs{G_1}} < \infty$, $G$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $(\Dist,f)$ relative to $\pi$}.
+When $\sup{\Abs{G_1}} < \infty$, $G$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $(\Dist,f)$ relative to $\pi$}.
 
 \end{definition}
 \end{samepage}
@@ -1776,7 +1776,7 @@ The following propositions are basic properties of samplable ensembles and probl
 \begin{proposition}
 \label{prp:smp}
 
-Consider a word ensemble $\Dist$, an encoded set $Y$, a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Suppose $\sigma$ is an $\EMG$-sampler of $\Dist$ relative to $\pi$. Then
+Consider a word ensemble $\Dist$, an encoded set $Y$, a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Suppose $\sigma$ is a polynomial-time $\EMG$-sampler of $\Dist$ relative to $\pi$. Then
 
 \begin{equation}
 \label{eqn:prp__smp}
@@ -1808,7 +1808,7 @@ Using the defining property of $\sigma$, we get the desired result.
 \begin{proposition}
 \label{prp:gen}
 
-Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Denote $\Dist_\pi^K:=\Dist^{K} \ltimes \pi^K$. Suppose $G$ is an $\EMG$-sampler of $(\Dist,f)$ relative to $\pi$. Then
+Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Denote $\Dist_\pi^K:=\Dist^{K} \ltimes \pi^K$. Suppose $G$ is a polynomial-time $\EMG$-sampler of $(\Dist,f)$ relative to $\pi$. Then
 
 \begin{equation}
 \E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_G^K}[h_\alpha^K(G^K(y,z)_0,y)G^K(y,z)_1] \pmod \Fall
@@ -1868,7 +1868,7 @@ Consider $\Dist$ a word ensemble, $f_1, f_2: \Supp \Dist \rightarrow \Reals$ bou
 
 \item\label{con:thm__mult__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by $0$.  We require ${\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f_1(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall}$
 
-\item\label{con:thm__mult__smp} $(\Dist, f_2)$ is $\EMG$-samplable relative to $\pi$.
+\item\label{con:thm__mult__smp} $(\Dist, f_2)$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -1957,7 +1957,7 @@ $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\Dist^{K} \ltimes \pi^{K} \times 
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\Dist^{K} \ltimes \pi^{K}}[\E_{\Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-\bar{g}(y))S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]f_2(x)]} \pmod \Fall$$
 
-Let $G$ be an $\EMG$-sampler of $(\Dist,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
+Let $G$ be a polynomial-time $\EMG$-sampler of $(\Dist,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K\Dist^{K} \times \UM_G^{K}}[\E[(P_1^{K}(y)-\bar{g}(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
 
@@ -1978,7 +1978,7 @@ The following corollary demonstrates one natural scenario in which the condition
 \begin{corollary}
 \label{crl:dir_prod}
 
-Consider $(\Dist_1,f_1)$, $(\Dist_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist_1,f_1)$, $P_2$ is an $\ESG$-optimal estimator for $(\Dist_2,f_2)$, $\sigma$ is an $\EMG$-sampler for $\Dist_1$ and $G$ is an $\EMG$-sampler for $(\Dist_2,f_2)$. Define ${\Dist^{K}:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Define ${f: \Supp \Dist \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal estimator for $(\Dist,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Consider $(\Dist_1,f_1)$, $(\Dist_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist_1,f_1)$, $P_2$ is an $\ESG$-optimal estimator for $(\Dist_2,f_2)$, $\sigma$ is a polynomial-time $\EMG$-sampler for $\Dist_1$ and $G$ is a polynomial-time $\EMG$-sampler for $(\Dist_2,f_2)$. Define ${\Dist^{K}:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Define ${f: \Supp \Dist \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal estimator for $(\Dist,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
@@ -1993,7 +1993,7 @@ In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following proposi
 \begin{proposition}
 \label{prp:thm__mult__cond1}
 
-Consider $\Dist_1$, $\Dist_2$ word ensembles and $\sigma_1$, $\sigma_2$ which are $\EMG$-samplers for $\Dist_1$ and $\Dist_2$ respectively. Define ${\Dist^k:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_{1\bullet}^{K}$, ${x_2 \in \Supp \sigma_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K\Dist^{K} \equiv \Dist_1^{K} \pmod \Fall$
+Consider $\Dist_1$, $\Dist_2$ word ensembles and $\sigma_1$, $\sigma_2$ which are polynomial-time $\EMG$-samplers for $\Dist_1$ and $\Dist_2$ respectively. Define ${\Dist^k:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_{1\bullet}^{K}$, ${x_2 \in \Supp \sigma_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then $\pi_*^K\Dist^{K} \equiv \Dist_1^{K} \pmod \Fall$
 
 \end{proposition}
 \end{samepage}
@@ -2011,7 +2011,7 @@ Denote $\Dist_\sigma^{K}:=\En_*^2(\sigma_{1\bullet}^{K} \times \sigma_{2\bullet}
 \begin{proposition}
 \label{prp:thm__mult__cond2}
 
-Consider $\Dist_1$, $\Dist_2$ word ensembles and $\sigma_1$, $\sigma_2$ which are $\EMG$-samplers for $\Dist_1$ and $\Dist_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_{1\bullet}^{K}$, ${x_2 \in \Supp \sigma_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \Dist_1 \rightarrow \Reals$ bounded and ${\bar{g}: \Words \rightarrow \Reals}$ its extension by ${0}$, we have 
+Consider $\Dist_1$, $\Dist_2$ word ensembles and $\sigma_1$, $\sigma_2$ which are polynomial-time $\EMG$-samplers for $\Dist_1$ and $\Dist_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_{1\bullet}^{K}$, ${x_2 \in \Supp \sigma_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \Dist_1 \rightarrow \Reals$ bounded and ${\bar{g}: \Words \rightarrow \Reals}$ its extension by ${0}$, we have 
 
 $$\E_{(x_1,x_2,z) \sim\Dist_1^{K} \times \Dist_2^{K} \times \Un_\pi^{K}}[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2},z))}] \in \Fall$$
 
@@ -2032,7 +2032,7 @@ $$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
 \begin{proposition}
 \label{prp:smp_base_change}
 
-Consider word ensembles $\Dist_1$ and $\Dist_2$ with $\EMG$-samplers $\sigma_1$ and $\sigma_2$ respectively. Define ${\Dist^k:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{1\bullet}^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x_1,x_2},z)=x_1}$. Consider ${\sigma: \Words \MScheme \Words}$ s.t. $\UM_\sigma^{K}=\UM_{\sigma_2}^{K}$ and for any $x \in \Supp \sigma_{1\bullet}^{K}$, ${\sigma^{K}(x,z,w)=\Chev{x,\sigma_2^{K}(z,w)}}$. Then, $\sigma$ is an $\EMG$-sampler of $\Dist$ relative to $\pi$. In particular, since such an $\sigma$ can always be constructed, $\Dist$ is $\EMG$-samplable relative to $\pi$.
+Consider word ensembles $\Dist_1$ and $\Dist_2$ with polynomial-time $\EMG$-samplers $\sigma_1$ and $\sigma_2$ respectively. Define ${\Dist^k:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{1\bullet}^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x_1,x_2},z)=x_1}$. Consider ${\sigma: \Words \MScheme \Words}$ s.t. $\UM_\sigma^{K}=\UM_{\sigma_2}^{K}$ and for any $x \in \Supp \sigma_{1\bullet}^{K}$, ${\sigma^{K}(x,z,w)=\Chev{x,\sigma_2^{K}(z,w)}}$. Then, $\sigma$ is a polynomial-time $\EMG$-sampler of $\Dist$ relative to $\pi$. In particular, since such an $\sigma$ can always be constructed, $\Dist$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
@@ -2064,14 +2064,14 @@ For any $x \in \Supp \sigma_{1\bullet}^{K}$, $\Dist_x^K = \En_*^2(\delta_x \time
 \begin{proposition}
 \label{prp:thm__mult__cond3}
 
-Consider $\Dist_1$ a word ensemble with $\EMG$-sampler $\sigma$ and $(\Dist_2, f)$ a distribution estimation problem with $\EMG$-sampler $G$. Define the distributional estimation problem $(\Dist,\bar{f})$ by 
+Consider $\Dist_1$ a word ensemble with polynomial-time $\EMG$-sampler $\sigma$ and $(\Dist_2, f)$ a distribution estimation problem with polynomial-time $\EMG$-sampler $G$. Define the distributional estimation problem $(\Dist,\bar{f})$ by 
 
 \begin{align*}
 \Dist^k:=\En_*^2(\Dist_1^k \times \Dist_2^k)\\
 \bar{f}(\Chev{x_1,x_2})=f(x_2)
 \end{align*}
 
-Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_\bullet^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\Dist,\bar{f})$ is $\EMG$-samplable relative to $\pi$.
+Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_\bullet^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\Dist,\bar{f})$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
@@ -2082,7 +2082,7 @@ Construct $\bar{G}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{G}}^K=\
 
 \[\bar{G}^K(x,y,z)=(\Chev{x,G^K(y,z,w)_0},G^K(y,z,w)_1)\] 
 
-By Proposition~\ref{prp:smp_base_change}, $\bar{G}_0$ is an $\EMG$-sampler of $\Dist$ relative to $\pi$.
+By Proposition~\ref{prp:smp_base_change}, $\bar{G}_0$ is an polynomial-time $\EMG$-sampler of $\Dist$ relative to $\pi$.
 
 \[\Dist^{K} \equiv \En_*^2(\sigma_\bullet^K \times G_{0\bullet}^K)\pmod \Fall\]
 
@@ -2111,7 +2111,7 @@ Let ${f_G^K}$ and ${f_{\bar{G}}^K}$ be defined as in Definition~\ref{def:smp_pro
 \begin{proposition}
 \label{prp:thm__mult__op}
 
-Consider word ensemble $\Dist_1$  with $\EMG$-sampler $\sigma$ and $(\Dist_2,f)$ a distributional estimation problem. Define the distributional estimation problem $(\Dist,\bar{f})$ by 
+Consider word ensemble $\Dist_1$  with polynomial-time $\EMG$-sampler $\sigma$ and $(\Dist_2,f)$ a distributional estimation problem. Define the distributional estimation problem $(\Dist,\bar{f})$ by 
 
 \begin{align*}
 \Dist^k:=\En_*^2(\Dist_1^k \times \Dist_2^k)\\
@@ -2194,7 +2194,7 @@ Consider $(\Dist,f)$, $(\mathcal{E},g)$ distributional estimation problems and $
 
 \item\label{con:def__psp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
 
-\item\label{con:def__psp_reduce__smp} $\Dist$ is $\EMG$-samplable relative to $\pi$.
+\item\label{con:def__psp_reduce__smp} $\Dist$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2322,7 +2322,7 @@ Consider $(\Dist,f)$, $(\mathcal{E},g)$ distributional estimation problems and $
 
 \item\label{con:def__sp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \Dist^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
 
-\item\label{con:def__sp_reduce__smp} $\Dist$ is $\EMG$-samplable relative to $\pi$.
+\item\label{con:def__sp_reduce__smp} $\Dist$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2381,7 +2381,7 @@ Using the construction of $P_f$, the assumption on $\gamma$ and Proposition~\ref
 
 \[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\Dist^{K} \times \Un_{PS}^K}[(P_g^K(\pi^K(x,z_i),w_i) - \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
 
-Let $\sigma$ be an $\EMG$-sampler of $\Dist$ relative to ${\pi}$. Denote 
+Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ relative to ${\pi}$. Denote 
 
 \begin{align*}
 \Dist_\pi^K &:= \pi_*^K\Dist^{K} \\
