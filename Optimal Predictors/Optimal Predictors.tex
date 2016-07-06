@@ -355,7 +355,7 @@ We now introduce our notion of an \enquote{efficient} algorithm.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where ${S: \Nats^n \times X \times \Words \times \Words \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \NatFun \Words$ are s.t.
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where\\ ${S: \Nats^n \times X \times \Words \times \Words \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \NatFun \Words$ are s.t.
 
 \begin{enumerate}[(i)]
 
@@ -608,7 +608,7 @@ For any $n \in \Nats$, fall space $\Fall$ of rank $n$ and $\gamma: \NatFun \Real
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have $\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \NatPoly$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition~\ref{con:def__fall__pol} note that for any $\varepsilon \in \Fall$ we have ${\frac{\varepsilon}{\gamma} \leq \frac{\varepsilon}{\inf \gamma} \in \Fall}$ and therefore $\varepsilon = \gamma \frac{\varepsilon}{\gamma} \in \gamma \Fall$. In particular if $h \in \NatPoly$ is s.t. $2^{-h} \in \Fall$ then $2^{-h} \in \gamma \Fall$.
 %
 \end{proof}
 
@@ -984,7 +984,7 @@ The concept of an optimal polynomial-time estimator is in some sense complementa
 \begin{theorem}
 \label{thm:hard_core}
 
-Consider $\Dist$ a word ensemble of rank ${1}$ s.t. for any different $k,l \in \Nats$, ${\Supp \Dist^k \cap \Supp \Dist^l = \varnothing}$, ${f: \Supp \Dist \rightarrow \Words}$ one-to-one and $B$ a hard-core predicate of $(\Dist,f)$. Define ${m: \Supp \Dist \rightarrow \Nats}$ by 
+Consider $\Dist$ a word ensemble of rank ${1}$ s.t. for any different $k,l \in \Nats$,\\ ${\Supp \Dist^k \cap \Supp \Dist^l = \varnothing}$, ${f: \Supp \Dist \rightarrow \Words}$ one-to-one and $B$ a hard-core predicate of $(\Dist,f)$. Define ${m: \Supp \Dist \rightarrow \Nats}$ by 
 
 \[\forall x \in \Supp \Dist^k: m(x):=k\]
 
@@ -1228,7 +1228,7 @@ Optimal polynomial-time estimators have an analogous property:
 \begin{proposition}
 \label{prp:linearity}
 
-Consider $\Dist$ a word ensemble, $f_1,f_2: \Supp \Dist \rightarrow \Reals$ bounded and $t_1,t_2 \in \Rats$. Denote $f: = t_1 f_1 + t_2 f_2$. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist,f_1)$ and $P_2$ is an $\ESG$-optimal estimator for $(\Dist,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P(K) = \R_{P_1}(K) + \R_{P_2}(K)$ and for any $x \in \Supp \Dist^{K}$, $y_1 \in \WordsLen{\R_{P_1}(K)}$, $y_2 \in \WordsLen{\R_{P_1}(K)}$, $P^{K}(x,y_1 y_2)=t_1 P_1^{K}(x,y_1) + t_2 P_2^{K}(x, y_2)$. Then, $P$ is an $\ESG$-optimal estimator for $(\Dist, f)$.
+Consider $\Dist$ a word ensemble, $f_1,f_2: \Supp \Dist \rightarrow \Reals$ bounded and $t_1,t_2 \in \Rats$. Denote $f: = t_1 f_1 + t_2 f_2$. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist,f_1)$ and $P_2$ is an $\ESG$-optimal estimator for $(\Dist,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P(K) = \R_{P_1}(K) + \R_{P_2}(K)$ and for any ${x \in \Supp \Dist^{K}}$, $y_1 \in \WordsLen{\R_{P_1}(K)}$, $y_2 \in \WordsLen{\R_{P_1}(K)}$, $P^{K}(x,y_1 y_2)=t_1 P_1^{K}(x,y_1) + t_2 P_2^{K}(x, y_2)$. Then, $P$ is an $\ESG$-optimal estimator for $(\Dist, f)$.
 
 \end{proposition}
 
@@ -1720,7 +1720,7 @@ Construct ${\sigma: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$
 
 Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $\sigma_{\bullet}^K=\sigma_{0\bullet}^K$ therefore $\sigma_0$ is also a polynomial-time $\EMG$-sampler of $\Dist$.
 
-Let ${f_\sigma^K}$ be defined as in Definition~\ref{def:smp_prob}. Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \Dist^{K} \cap \Bool^{\leq l(K)}}$, ${f_\sigma^K(x)=\rho^K(f(x))}$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_\sigma^K(x)=0$. Denote 
+Let ${f_\sigma^K}$ be defined as in Definition~\ref{def:smp_prob}. Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \Dist^{K} \cap \Bool^{\leq l(K)}}$, ${f_\sigma^K(x)=\rho^K(f(x))}$ (for $K \not\in I$ this is vacuously true). Also, for any\\ ${x \in \Bool^{>l(K)}}$, $f_\sigma^K(x)=0$. Denote 
 
 \[p^K:=\Dist^{K}(\Bool^{\leq l(K)})\]
 
@@ -1923,7 +1923,7 @@ By construction of $w^{K}$, the absolute value of the left hand side is no less 
 
 \begin{proof}[Proof of Theorem \ref{thm:mult}]
 
-Consider $K \in \Nats^n$, $x \in \Supp \Dist^{K}$, $z_1 \in \WordsLen{\R_{P_1}(K)}$, ${z_2 \in \WordsLen{\R_{P_2}(K)}}$ and ${z_3 \in \WordsLen{\R_\pi(K)}}$.
+Consider $K \in \Nats^n$, $x \in \Supp \Dist^{K}$, $z_1 \in \WordsLen{\R_{P_1}(K)}$, ${z_2 \in \WordsLen{\R_{P_2}(K)}}$ and\\ ${z_3 \in \WordsLen{\R_\pi(K)}}$.
 
 \[P^{K}(x,z_1 z_3 z_2)-f_1(x)f_2(x)=P_\pi^{K}(x, z_1 z_3) P_2^{K}(x,z_2) - f_1(x) f_2(x)\]
 
@@ -1978,7 +1978,7 @@ The following corollary demonstrates one natural scenario in which the condition
 \begin{corollary}
 \label{crl:dir_prod}
 
-Consider $(\Dist_1,f_1)$, $(\Dist_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist_1,f_1)$, $P_2$ is an $\ESG$-optimal estimator for $(\Dist_2,f_2)$, $\sigma$ is a polynomial-time $\EMG$-sampler for $\Dist_1$ and $\sigma$ is a polynomial-time $\EMG$-sampler for $(\Dist_2,f_2)$. Define ${\Dist^{K}:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Define ${f: \Supp \Dist \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal estimator for $(\Dist,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Consider $(\Dist_1,f_1)$, $(\Dist_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist_1,f_1)$, $P_2$ is an $\ESG$-optimal estimator for $(\Dist_2,f_2)$, $\sigma$ is a polynomial-time $\EMG$-sampler for $\Dist_1$ and $\sigma$ is a polynomial-time $\EMG$-sampler for $(\Dist_2,f_2)$. Define\\ ${\Dist^{K}:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Define ${f: \Supp \Dist \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal estimator for $(\Dist,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
@@ -2192,7 +2192,9 @@ Consider $(\Dist,f)$, $(\mathcal{E},g)$ distributional estimation problems and $
 
 \item\label{con:def__psp_reduce__dist} $\pi_*^K\Dist^{K} \equiv \mathcal{E}^{K} \pmod \Fall$
 
-\item\label{con:def__psp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall$
+\item\label{con:def__psp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require
+
+\[\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \equiv 0 \pmod \Fall\]
 
 \item\label{con:def__psp_reduce__smp} $\Dist$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
@@ -2320,7 +2322,9 @@ Consider $(\Dist,f)$, $(\mathcal{E},g)$ distributional estimation problems and $
 
 \item\label{con:def__sp_reduce__dist} $\pi_*^K\Dist^{K} \equiv \mathcal{E}^{K} \pmod \Fall$
 
-\item\label{con:def__sp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \Dist^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall$
+\item\label{con:def__sp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require
+
+\[\E_{(x,z) \sim \Dist^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \equiv 0 \pmod \Fall\]
 
 \item\label{con:def__sp_reduce__smp} $\Dist$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
@@ -2391,7 +2395,7 @@ Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ relative to ${\pi}$.
 Applying Proposition~\ref{prp:smp} we get
 %Denoting ${y_i:=\pi^K(x,z_i)}$
 
-\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\Dist_\pi^K \times \Un_i^K}[(P_g^K(y) - \bar{g}(y))S(\sigma^K(y),\frac{1}{\gamma(K)}(P_g^K(y)+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(\sigma^K(y),z_j))))] \pmod \Fall\]
+\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\Dist_\pi^K \times \Un_i^K}[(P_g^K - \bar{g})S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
 
 Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}, we get
 
@@ -2748,7 +2752,9 @@ Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathc
 
 \item\label{con:def__pp_reduce__dist} ${\pi_*\Dist}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\mathcal{E}^\alpha}$.
 
-\item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require $\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall \alpha$.
+\item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require
+
+\[\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \equiv 0 \pmod {\Fall \alpha}\]
 
 \item\label{con:def__pp_reduce__smp} $\Dist$ is $\Fall(\MGrow \alpha)$-samplable relative to $\pi$.
 
@@ -2797,7 +2803,7 @@ Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathc
 
 \item\label{con:def__p_reduce__dist} ${\pi_*\Dist}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\mathcal{E}^\alpha}$.
 
-\item\label{con:def__p_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\E_{(x,z) \sim \Dist^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \in \Fall \alpha\]
+\item\label{con:def__p_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\E_{(x,z) \sim \Dist^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \equiv 0 \pmod{\Fall \alpha}\]
 
 \item\label{con:def__p_reduce__smp} $\Dist$ is $\Fall(\MGrow \alpha)$-samplable relative to $\pi$.
 
@@ -3739,7 +3745,7 @@ Since we view optimal polynomial-time estimators as computing \enquote{expected 
 \begin{theorem}
 \label{thm:uniq}
 
-Consider ${(\Dist,f)}$ a distributional estimation problem. Assume there is ${p \in \NatPoly}$ s.t. 
+Consider ${(\Dist,f)}$ a distributional estimation problem. Assume there is\\ ${p \in \NatPoly}$ s.t. 
 
 \begin{equation}
 \label{eqn:thm__uniq__dist}
