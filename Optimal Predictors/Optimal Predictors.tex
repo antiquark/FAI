@@ -185,33 +185,39 @@ $$\chi_Y(x):=\begin{cases}1 & \text{if } x \in Y \\ 0 & \text{if } x \not\in Y \
 
 $\theta: \Reals \rightarrow \Bool$ will denote the Heaviside step function $\theta:=\chi_{[0,\infty)}$. ${\Sgn: \Reals \rightarrow \Bool}$ will denote the function $2 \theta - 1$.
 
-\subsection{Measures and Probabilities}
+\subsection{Probability Distributions}
 
-For ${X}$ a measurable space, ${\mathcal{P}(X)}$ will denote the set of probability measures on ${X}$. For ${X}$ an arbitrary set, the notation ${\mathcal{P}(X)}$ suggests ${X}$ is regarded as a discrete measurable space. In the latter case a probability measure on $X$ can be represented by a function $\Dist: X \rightarrow [0,1]$ s.t. $\sum_{x \in X} \Dist(x) = 1$. Abusing notation, we will use the same symbol to denote the function and the probability measure.
+For ${X}$ a set, ${\mathcal{P}(X)}$ will denote the set of probability distributions on ${X}$. A probability distribution on $X$ can be represented by a function $\Dist: X \rightarrow [0,1]$ s.t. $\sum_{x \in X} \Dist(x) = 1$. Abusing notation, we will use the same symbol to denote the function and the probability distribution. Given ${A}$ a subset of ${X}$, we will use the notation
 
-For $X$ a measurable space, $\Dist \in \mathcal{P}(X)$, $V$ a finite dimensional vector space over $\Reals$ and $f: X \rightarrow V$, $\E_{x \sim \Dist}[f(x)]$ will denote the expected value of $f$ with respect to $\Dist$, i.e. 
+\[\Dist(A):=\Prb_{x \sim \Dist}[x \in A] = \sum_{x \in A} \Dist(x)\]
 
-\[\E_{x \sim \Dist}[f(x)] := \int_X f(x) d\Dist(x)\]
+For $X$ a set, $\Dist \in \mathcal{P}(X)$, $V$ a finite dimensional vector space over $\Reals$ and $f: X \rightarrow V$, $\E_{x \sim \Dist}[f(x)]$ will denote the expected value of $f$ with respect to $\Dist$, i.e. 
+
+\[\E_{x \sim \Dist}[f(x)] := \sum_{x \in X} \Dist(x) f(x)\]
 
 We will the abbreviated notations $\E_\Dist[f(x)]$, $\E[f(x)]$, $\E_\Dist[f]$, $\E[f]$ when no confusion is likely to occur.
 
-Given a topological space $X$ and $\Dist \in \mathcal{P}(X)$ (defined using the Borel ${\sigma}$-algebra), $\Supp \Dist$ will denote the support of $\Dist$. In particular when $X$ is discrete
+Given a set $X$ and $\Dist \in \mathcal{P}(X)$, $\Supp \Dist$ will denote the support of $\Dist$ i.e.
 
 \[\Supp \Dist = \{x \in X \mid \Dist(x) > 0\}\]
 
-Given $X,Y$ measurable spaces, $\Dist \in \mathcal{P}(X)$ and $f: X \rightarrow Y$ a measurable mapping, $f_*\Dist \in \mathcal{P}(Y)$ will denote the corresponding pushforward measure.
+Given $X,Y$ sets, $\Dist \in \mathcal{P}(X)$ and $f: X \rightarrow Y$ a mapping, $f_*\Dist \in \mathcal{P}(Y)$ will denote the corresponding pushforward distribution i.e.
 
-Given $X,Y$ measurable spaces, the notation $f: X \xrightarrow{\textnormal{mk}} Y$ signifies $f$ is a Markov kernel with source $X$ and target $Y$. Given $x \in X$, $f_x$ is the corresponding probability measure on $Y$ and $f(x)$ is a random variable sampled from $f_x$. Given $\Dist \in \mathcal{P}(X)$, $\Dist \ltimes f \in \mathcal{P}(X \times Y)$ (resp. $f \rtimes \Dist \in \mathcal{P}(Y \times X)$) is the semidirect product measure. $f_*\Dist \in \mathcal{P}(Y)$ is the pushforward measure, i.e. $f_*\Dist:=\pi_*(\Dist \ltimes f)$ where $\pi: X \times Y \rightarrow Y$ is the projection.
+\[(f_*\Dist)(y):= \sum_{x \in f^{-1}(y)} \Dist(x)\]
 
-For $X$ a measurable space, $\Dist \in \mathcal{P}(X)$ and $A$ a measurable subset of $X$ s.t. ${\Dist(A) > 0}$, $\Dist \mid A$ will denote the corresponding conditional probability measure, i.e. $(\Dist \mid A)(B):=\frac{\Dist(B \cap A)}{\Dist(A)}$. Given $Y$ another measurable space, $f: X \Markov Y$ and $A$ a measurable subset of $Y$ s.t. $(\Dist \ltimes f)(X \times A) > 0$,\\ $\Dist \mid f^{-1}(A) \in \mathcal{P}(X)$ is defined by 
+Given $X,Y$ sets, the notation $f: X \xrightarrow{\textnormal{mk}} Y$ signifies $f$ is a Markov kernel with source $X$ and target $Y$. Given $x \in X$, $f_x$ is the corresponding probability distribution on $Y$ and $f(x)$ is a random variable sampled from $f_x$. Given $\Dist \in \mathcal{P}(X)$, $\Dist \ltimes f \in \mathcal{P}(X \times Y)$ (resp. $f \rtimes \Dist \in \mathcal{P}(Y \times X)$) is the semidirect product distribution. $f_*\Dist \in \mathcal{P}(Y)$ is the pushforward distribution, i.e. $f_*\Dist:=\pi_*(\Dist \ltimes f)$ where $\pi: X \times Y \rightarrow Y$ is the projection.
+
+For $X$ a set, $\Dist \in \mathcal{P}(X)$ and $A$ a subset of $X$ s.t. ${\Dist(A) > 0}$, $\Dist \mid A$ will denote the corresponding conditional probability distribution, i.e. $(\Dist \mid A)(B):=\frac{\Dist(B \cap A)}{\Dist(A)}$. Given $Y$ another set, $f: X \Markov Y$ and $A$ a subset of $Y$ s.t. $(\Dist \ltimes f)(X \times A) > 0$, $\Dist \mid f^{-1}(A) \in \mathcal{P}(X)$ is defined by 
 
 \[(\Dist \mid f^{-1}(A))(B):=(\Dist \ltimes f \mid X \times A)(B \times Y)\]
 
 Note that when $f$ is deterministic (i.e. $f_x$ is a Dirac measure for every $x$), this corresponds to conditioning by the inverse image of $A$ with respect to $f$. When $A=\{a\}$ we will use the shorthand notation $\Dist \mid f^{-1}(a)$.
 
-Given $X$ a measurable space and $\Dist,\mathcal{E} \in \mathcal{P}(X)$, $\Dtv(\Dist,\mathcal{E})$ will denote the total variation distance between $\Dist$ and $\mathcal{E}$.
+Given $X$ a set and $\Dist,\mathcal{E} \in \mathcal{P}(X)$, $\Dtv(\Dist,\mathcal{E})$ will denote the total variation distance between $\Dist$ and $\mathcal{E}$ i.e.
 
-For $X$ a measurable space and $x \in X$, $\delta_x$ will denote the Dirac measure associated with $x$, i.e. $\delta_x(A)=1$ iff $x \in A$.
+\[\Dtv(\Dist,\mathcal{E}):=\frac{1}{2}\sum_{x \in X} \Abs{\Dist(x) - \mathcal{E}(x)}\]
+
+For $X$ a set and $x \in X$, $\delta_x$ will denote the Dirac measure associated with $x$, i.e. $\delta_x(y):=\delta_{xy}$.
 
 \subsection{Algorithms}
 
@@ -1434,23 +1440,23 @@ The next subsection and subsequent sections will require several new concepts. H
 
 \subsubsection{Congruent Measure Families}
 
-The notation $f(K) \equiv g(K) \pmod \Fall$ can be conveniently generalized from real-valued functions to families of probability measures.
+The notation $f(K) \equiv g(K) \pmod \Fall$ can be conveniently generalized from real-valued functions to families of probability distributions.
 
 \begin{samepage}
 \begin{definition}
 
-Consider a measurable space $X$ and two families $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and\\ $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$. We say that \emph{$\Dist$ is congruent to $\mathcal{E}$ modulo $\Fall$} when $\Dtv(\Dist^K,\mathcal{E}^K) \in \Fall$. In this case we write $\Dist^K \equiv \mathcal{E}^K \pmod \Fall$ or $\Dist \equiv \mathcal{E} \pmod \Fall$.
+Consider a set $X$ and two families $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and\\ $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$. We say that \emph{$\Dist$ is congruent to $\mathcal{E}$ modulo $\Fall$} when $\Dtv(\Dist^K,\mathcal{E}^K) \in \Fall$. In this case we write $\Dist^K \equiv \mathcal{E}^K \pmod \Fall$ or $\Dist \equiv \mathcal{E} \pmod \Fall$.
 
 \end{definition}
 \end{samepage}
 
-Congruence of probability measures modulo $\Fall$ has several convenient properties which follow from elementary properties of total variation distance.
+Congruence of probability distributions modulo $\Fall$ has several convenient properties which follow from elementary properties of total variation distance.
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:prob_cong_eq}
 
-Congruence of probability measures modulo $\Fall$ is an equivalence relation.
+Congruence of probability distributions modulo $\Fall$ is an equivalence relation.
 
 \end{proposition}
 \end{samepage}
@@ -1464,7 +1470,7 @@ Obvious since $\Dtv$ is a metric.
 \begin{proposition}
 \label{prp:prob_cong_ev}
 
-Consider $X$ a measurable space, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \rightarrow \Reals\}_{K \in \Nats^n}}$ a uniformly bounded family of measurable functions. Assume ${\Dist \equiv \mathcal{E} \pmod \Fall}$. Then, $\E_{x \sim \Dist^K}[f^K(x)] \equiv \E_{x \sim \mathcal{E}^K}[f^K(x)] \pmod \Fall$.
+Consider $X$ a set, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \rightarrow \Reals\}_{K \in \Nats^n}}$ a uniformly bounded family of functions. Assume ${\Dist \equiv \mathcal{E} \pmod \Fall}$. Then, $\E_{x \sim \Dist^K}[f^K(x)] \equiv \E_{x \sim \mathcal{E}^K}[f^K(x)] \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
@@ -1478,7 +1484,7 @@ $\Abs{\E_{x \sim \Dist^K}[f^K(x)] - \E_{x \sim \mathcal{E}^K}[f^K(x)]} \leq  (\s
 \begin{proposition}
 \label{prp:prob_cong_semidir}
 
-Consider $X$, $Y$ measurable spaces, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\Dist \equiv \mathcal{E} \pmod \Fall$ implies $\Dist^K \ltimes f^K \equiv \mathcal{E}^K \ltimes f^K \pmod \Fall$.
+Consider $X$, $Y$ sets, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\Dist \equiv \mathcal{E} \pmod \Fall$ implies $\Dist^K \ltimes f^K \equiv \mathcal{E}^K \ltimes f^K \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
@@ -1492,7 +1498,7 @@ Total variation distance is contracted by semi-direct product with a Markov kern
 \begin{proposition}
 \label{prp:prob_cong_push}
 
-Consider $X$, $Y$ measurable spaces, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\Dist \equiv \mathcal{E} \pmod \Fall$ implies $f_*^K\Dist^K \equiv f_*^K\mathcal{E}^K \pmod \Fall$.
+Consider $X$, $Y$ sets, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\Dist \equiv \mathcal{E} \pmod \Fall$ implies $f_*^K\Dist^K \equiv f_*^K\mathcal{E}^K \pmod \Fall$.
 
 \end{proposition}
 \end{samepage}
@@ -1506,7 +1512,7 @@ Total variation distance is contracted by pushforward therefore \[\Dtv(f_*^K\Dis
 \begin{proposition}
 \label{prp:prob_cong_dir}
 
-Consider $X_1$, $X_2$ measurable spaces, $\{\Dist_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\mathcal{E}_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\Dist_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$ and $\{\mathcal{E}_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$. Then, $\Dist_1 \equiv \mathcal{E}_1 \pmod \Fall$ and $\Dist_2 \equiv \mathcal{E}_2 \pmod \Fall$ imply $\Dist_1^K \times \Dist_2^K \equiv \mathcal{E}_1^K \times \mathcal{E}_2^K \pmod \Fall$. 
+Consider $X_1$, $X_2$ sets, $\{\Dist_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\mathcal{E}_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\Dist_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$ and $\{\mathcal{E}_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$. Then, $\Dist_1 \equiv \mathcal{E}_1 \pmod \Fall$ and $\Dist_2 \equiv \mathcal{E}_2 \pmod \Fall$ imply $\Dist_1^K \times \Dist_2^K \equiv \mathcal{E}_1^K \times \mathcal{E}_2^K \pmod \Fall$. 
 
 \end{proposition}
 \end{samepage}
