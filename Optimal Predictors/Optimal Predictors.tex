@@ -1619,21 +1619,21 @@ In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. p
 \begin{definition}
 \label{def:smp_prob}
 
-A distributional estimation problem $(\Dist,f)$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable)} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $G$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
+A distributional estimation problem $(\Dist,f)$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable)} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
 
 \begin{enumerate}[(i)]
 
-\item $G_0$ is a polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$.
+\item $\sigma_0$ is a polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$.
 
-\item For any $K \in \Nats^n$, denote $X_{G}^K:=\Supp G_{0\bullet}^K$. For any $x \in \Words$, denote 
+\item For any $K \in \Nats^n$, denote $X_{\sigma}^K:=\Supp \sigma_{0\bullet}^K$. For any $x \in \Words$, denote 
 
-$$f_G^K(x):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(z)_1 \mid G^K(z)_0 = x] \text{ if } x \in X_{G}^K \\ 0 \text{ if } x \not\in X_{G}^K \end{cases}$$
+$$f_\sigma^K(x):=\begin{cases}\E_{z \sim\UM_\sigma^K}[\sigma^K(z)_1 \mid \sigma^K(z)_0 = x] \text{ if } x \in X_{\sigma}^K \\ 0 \text{ if } x \not\in X_{\sigma}^K \end{cases}$$
 
-We require that the function $\varepsilon(K):=\E_{x \sim \Dist^{K}}[\Abs{f_G^K(x)-f(x)}]$ is in $\Fall$.
+We require that the function $\varepsilon(K):=\E_{x \sim \Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}]$ is in $\Fall$.
 
 \end{enumerate}
 
-When $\sup{\Abs{G_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $G$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $(\Dist,f)$}.
+When $\sup{\Abs{\sigma_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $(\Dist,f)$}.
 
 \end{definition}
 \end{samepage}
@@ -1711,26 +1711,26 @@ Denote
 
 \[I:=\{K \in \Nats^n \mid \Dist^{K}(\Bool^{\leq l(K)}) > 0\}\]
 
-Construct ${G: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$
+Construct ${\sigma: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$
 
 \begin{align*}
-\M_G^K:=\alpha_*^K(\Dist^{K} \mid \Bool^{\leq l(K)}) \\
-G^K(y,\Chev{z,\En_\Rats(t)})=(z,t)
+\M_\sigma^K:=\alpha_*^K(\Dist^{K} \mid \Bool^{\leq l(K)}) \\
+\sigma^K(y,\Chev{z,\En_\Rats(t)})=(z,t)
 \end{align*}
 
-Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $\sigma_{\bullet}^K=G_{0\bullet}^K$ therefore $G_0$ is also a polynomial-time $\EMG$-sampler of $\Dist$.
+Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $\sigma_{\bullet}^K=\sigma_{0\bullet}^K$ therefore $\sigma_0$ is also a polynomial-time $\EMG$-sampler of $\Dist$.
 
-Let ${f_G^K}$ be defined as in Definition~\ref{def:smp_prob}. Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \Dist^{K} \cap \Bool^{\leq l(K)}}$, ${f_G^K(x)=\rho^K(f(x))}$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_G^K(x)=0$. Denote 
+Let ${f_\sigma^K}$ be defined as in Definition~\ref{def:smp_prob}. Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \Dist^{K} \cap \Bool^{\leq l(K)}}$, ${f_\sigma^K(x)=\rho^K(f(x))}$ (for $K \not\in I$ this is vacuously true). Also, for any ${x \in \Bool^{>l(K)}}$, $f_\sigma^K(x)=0$. Denote 
 
 \[p^K:=\Dist^{K}(\Bool^{\leq l(K)})\]
 
 We get
 
-$$\E_{\Dist^{K}}[\Abs{f_G^K(x)-f(x)}]=p^K \E_{\Dist^{K}}[\Abs{f_G^K(x)-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\Dist^{K}}[\Abs{f_G^K(x)-f(x)} \mid \Abs{x} > l(K)]$$
+$$\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}]=p^K \E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)} \mid \Abs{x} > l(K)]$$
 
-$$\E_{\Dist^{K}}[\Abs{f_G^K(x)-f(x)}]=p^K \E_{\Dist^{K}}[\Abs{\rho^K(f(x))-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\Dist^{K}}[\Abs{f(x)} \mid \Abs{x} > l(K)]$$
+$$\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}]=p^K \E_{\Dist^{K}}[\Abs{\rho^K(f(x))-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\Dist^{K}}[\Abs{f(x)} \mid \Abs{x} > l(K)]$$
 
-$$\E_{\Dist^{K}}[\Abs{f_G^K(x)-f(x)}] \leq p^K \zeta(K) + (1 - p^K)\sup \Abs{f}$$
+$$\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}] \leq p^K \zeta(K) + (1 - p^K)\sup \Abs{f}$$
 
 The right hand side is obviously in $\Fall$.
 \end{proof}
@@ -1749,21 +1749,21 @@ In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. p
 \begin{definition}
 \label{def:smp_prob_rel}
 
-Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}$. $(\Dist,f)$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
+Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}$. $(\Dist,f)$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
 
 \begin{enumerate}[(i)]
 
-\item $G_0$ is a polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$ relative to $\pi$.
+\item $\sigma_0$ is a polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$ relative to $\pi$.
 
-\item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{G,y}^K:=\Supp G_{0y}^K$. For any ${x \in \Words}$, denote 
+\item For any $K \in \Nats^n$, $y \in Y$, Denote $X_{\sigma,y}^K:=\Supp \sigma_{0y}^K$. For any ${x \in \Words}$, denote 
 
-$$f_G^K(x,y):=\begin{cases}\E_{z \sim\UM_G^K}[G^K(y,z)_1 \mid G^K(y,z)_0 = x] \text{ if } x \in X_{G,y}^K \\ 0 \text{ if } x \not\in X_{G,y}^K \end{cases}$$
+$$f_\sigma^K(x,y):=\begin{cases}\E_{z \sim\UM_\sigma^K}[\sigma^K(y,z)_1 \mid \sigma^K(y,z)_0 = x] \text{ if } x \in X_{\sigma,y}^K \\ 0 \text{ if } x \not\in X_{\sigma,y}^K \end{cases}$$
 
-We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_G^K(x,y)-f(x)}]}$ is in $\Fall$.
+We require that the function ${\varepsilon(K):=\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_\sigma^K(x,y)-f(x)}]}$ is in $\Fall$.
 
 \end{enumerate}
 
-When $\sup{\Abs{G_1}} < \infty$, $G$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $(\Dist,f)$ relative to $\pi$}.
+When $\sup{\Abs{\sigma_1}} < \infty$, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $(\Dist,f)$ relative to $\pi$}.
 
 \end{definition}
 \end{samepage}
@@ -1808,35 +1808,35 @@ Using the defining property of $\sigma$, we get the desired result.
 \begin{proposition}
 \label{prp:gen}
 
-Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Denote $\Dist_\pi^K:=\Dist^{K} \ltimes \pi^K$. Suppose $G$ is a polynomial-time $\EMG$-sampler of $(\Dist,f)$ relative to $\pi$. Then
+Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Denote $\Dist_\pi^K:=\Dist^{K} \ltimes \pi^K$. Suppose $\sigma$ is a polynomial-time $\EMG$-sampler of $(\Dist,f)$ relative to $\pi$. Then
 
 \begin{equation}
-\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_G^K}[h_\alpha^K(G^K(y,z)_0,y)G^K(y,z)_1] \pmod \Fall
+\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y)\sigma^K(y,z)_1] \pmod \Fall
 \end{equation}
 
 \end{proposition}
 
 \begin{proof}
 
-Let ${f_G^K}$ be defined as in Definition~\ref{def:smp_prob_rel}.
+Let ${f_\sigma^K}$ be defined as in Definition~\ref{def:smp_prob_rel}.
 
-$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)]-\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f_G^K(x,y)]=\E_{\Dist_\pi^K}[h_\alpha^K(x,y)(f(x)-f_G^K(x,y))]$$
+$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)]-\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f_\sigma^K(x,y)]=\E_{\Dist_\pi^K}[h_\alpha^K(x,y)(f(x)-f_\sigma^K(x,y))]$$
 
-$$\Abs{\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)]-\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f_G^K(x,y)]} \leq \E_{\Dist_\pi^K}[\Abs{h_\alpha^K(x,y)} \cdot \Abs{f(x)-f_G^K(x,y)}]$$
+$$\Abs{\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)]-\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f_\sigma^K(x,y)]} \leq \E_{\Dist_\pi^K}[\Abs{h_\alpha^K(x,y)} \cdot \Abs{f(x)-f_\sigma^K(x,y)}]$$
 
-$$\Abs{\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)]-\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f_G^K(x,y)]} \leq (\sup \Abs{h}) \E_{\Dist_\pi^K}[\Abs{f(x)-f_G^K(x,y)}]$$
+$$\Abs{\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)]-\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f_\sigma^K(x,y)]} \leq (\sup \Abs{h}) \E_{\Dist_\pi^K}[\Abs{f(x)-f_\sigma^K(x,y)}]$$
 
 By property (ii) of Definition~\ref{def:smp_prob_rel}
 
-$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\Dist_\pi^K}[h_\alpha^K(x,y)f_G^K(x,y)] \pmod \Fall$$
+$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\Dist_\pi^K}[h_\alpha^K(x,y)f_\sigma^K(x,y)] \pmod \Fall$$
 
 Using property (i) of Definition~\ref{def:smp_prob_rel} we can apply Proposition~\ref{prp:smp} to the right hand side and get
 
-$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_G^K}[h_\alpha^K(G^K(y,z)_0,y) f_G^K(G^K(y,z)_0,y)] \pmod \Fall$$
+$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) f_\sigma^K(\sigma^K(y,z)_0,y)] \pmod \Fall$$
 
-$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_G^K}[h_\alpha^K(G^K(y,z)_0,y) \E_{z' \sim\UM_G^K}[G^K(y,z')_1 \mid G^K(y,z')_0 = G^K(y,z)_0]] \pmod \Fall$$
+$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) \E_{z' \sim\UM_\sigma^K}[\sigma^K(y,z')_1 \mid \sigma^K(y,z')_0 = \sigma^K(y,z)_0]] \pmod \Fall$$
 
-$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_G^K}[h_\alpha^K(G^K(y,z)_0,y) G^K(y,z)_1] \pmod \Fall$$
+$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) \sigma^K(y,z)_1] \pmod \Fall$$
 \end{proof}
 
 \subsection{Independent Variables}
@@ -1957,15 +1957,15 @@ $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\Dist^{K} \ltimes \pi^{K} \times 
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\Dist^{K} \ltimes \pi^{K}}[\E_{\Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-\bar{g}(y))S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]f_2(x)]} \pmod \Fall$$
 
-Let $G$ be a polynomial-time $\EMG$-sampler of $(\Dist,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
+Let $\sigma$ be a polynomial-time $\EMG$-sampler of $(\Dist,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K\Dist^{K} \times \UM_G^{K}}[\E[(P_1^{K}(y)-\bar{g}(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K\Dist^{K} \times \UM_\sigma^{K}}[\E[(P_1^{K}(y)-\bar{g}(y))S^{K}(\sigma^{K}(y)_0,P_1^{K}(y)P_2^{K}(\sigma^{K}(y)_0))]\sigma^{K}(y)_1]} \pmod \Fall$$
 
 Using condition~\ref{con:thm__mult__dist} we conclude that
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mathcal{E}^k \times \UM_G^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))]G^{K}(y)_1]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mathcal{E}^k \times \UM_\sigma^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(\sigma^{K}(y)_0,P_1^{K}(y)P_2^{K}(\sigma^{K}(y)_0))]\sigma^{K}(y)_1]} \pmod \Fall$$
 
-$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mathcal{E}^k \times \Un_{\text{tot}}^{K} \times \UM_G^{K}}[(P_1^{K}(y)-g(y))S^{K}(G^{K}(y)_0,P_1^{K}(y)P_2^{K}(G^{K}(y)_0))G^{K}(y)_1]} \pmod \Fall$$
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mathcal{E}^k \times \Un_{\text{tot}}^{K} \times \UM_\sigma^{K}}[(P_1^{K}(y)-g(y))S^{K}(\sigma^{K}(y)_0,P_1^{K}(y)P_2^{K}(\sigma^{K}(y)_0))\sigma^{K}(y)_1]} \pmod \Fall$$
 
 By Proposition~\ref{prp:mixed_ort}, this implies
 
@@ -1978,7 +1978,7 @@ The following corollary demonstrates one natural scenario in which the condition
 \begin{corollary}
 \label{crl:dir_prod}
 
-Consider $(\Dist_1,f_1)$, $(\Dist_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist_1,f_1)$, $P_2$ is an $\ESG$-optimal estimator for $(\Dist_2,f_2)$, $\sigma$ is a polynomial-time $\EMG$-sampler for $\Dist_1$ and $G$ is a polynomial-time $\EMG$-sampler for $(\Dist_2,f_2)$. Define ${\Dist^{K}:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Define ${f: \Supp \Dist \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal estimator for $(\Dist,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Consider $(\Dist_1,f_1)$, $(\Dist_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist_1,f_1)$, $P_2$ is an $\ESG$-optimal estimator for $(\Dist_2,f_2)$, $\sigma$ is a polynomial-time $\EMG$-sampler for $\Dist_1$ and $\sigma$ is a polynomial-time $\EMG$-sampler for $(\Dist_2,f_2)$. Define ${\Dist^{K}:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Define ${f: \Supp \Dist \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal estimator for $(\Dist,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_\bullet^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
@@ -2064,7 +2064,7 @@ For any $x \in \Supp \sigma_{1\bullet}^{K}$, $\Dist_x^K = \En_*^2(\delta_x \time
 \begin{proposition}
 \label{prp:thm__mult__cond3}
 
-Consider $\Dist_1$ a word ensemble with polynomial-time $\EMG$-sampler $\sigma$ and $(\Dist_2, f)$ a distribution estimation problem with polynomial-time $\EMG$-sampler $G$. Define the distributional estimation problem $(\Dist,\bar{f})$ by 
+Consider $\Dist_1$ a word ensemble with polynomial-time $\EMG$-sampler $\sigma$ and $(\Dist_2, f)$ a distribution estimation problem with polynomial-time $\EMG$-sampler $\sigma$. Define the distributional estimation problem $(\Dist,\bar{f})$ by 
 
 \begin{align*}
 \Dist^k:=\En_*^2(\Dist_1^k \times \Dist_2^k)\\
@@ -2078,33 +2078,33 @@ Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in 
 
 \begin{proof}
 
-Construct $\bar{G}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{G}}^K=\UM_G^K$ and for any ${x \in \Supp \sigma_\bullet^K}$
+Construct $\bar{\sigma}: \Words \MScheme \Words \times \Rats$ s.t. $\UM_{\bar{\sigma}}^K=\UM_\sigma^K$ and for any ${x \in \Supp \sigma_\bullet^K}$
 
-\[\bar{G}^K(x,y,z)=(\Chev{x,G^K(y,z,w)_0},G^K(y,z,w)_1)\] 
+\[\bar{\sigma}^K(x,y,z)=(\Chev{x,\sigma^K(y,z,w)_0},\sigma^K(y,z,w)_1)\] 
 
-By Proposition~\ref{prp:smp_base_change}, $\bar{G}_0$ is an polynomial-time $\EMG$-sampler of $\Dist$ relative to $\pi$.
+By Proposition~\ref{prp:smp_base_change}, $\bar{\sigma}_0$ is an polynomial-time $\EMG$-sampler of $\Dist$ relative to $\pi$.
 
-\[\Dist^{K} \equiv \En_*^2(\sigma_\bullet^K \times G_{0\bullet}^K)\pmod \Fall\]
+\[\Dist^{K} \equiv \En_*^2(\sigma_\bullet^K \times \sigma_{0\bullet}^K)\pmod \Fall\]
 
-\[\Dist^{K} \ltimes \pi^K \equiv \En_*^2(\sigma_\bullet^K \times G_{0\bullet}^K) \ltimes \pi^K \pmod \Fall\]
+\[\Dist^{K} \ltimes \pi^K \equiv \En_*^2(\sigma_\bullet^K \times \sigma_{0\bullet}^K) \ltimes \pi^K \pmod \Fall\]
 
-Let ${f_G^K}$ and ${f_{\bar{G}}^K}$ be defined as in Definition~\ref{def:smp_prob_rel}.
+Let ${f_\sigma^K}$ and ${f_{\bar{\sigma}}^K}$ be defined as in Definition~\ref{def:smp_prob_rel}.
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x,y) \sim \En_*^2(\sigma_\bullet^K \times G_{0\bullet}^K) \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\sigma}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x,y) \sim \En_*^2(\sigma_\bullet^K \times \sigma_{0\bullet}^K) \ltimes \pi^K}[\Abs{f_{\bar{\sigma}}^K(x,y)-\bar{f}(x)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times G_{0\bullet}^K}[\Abs{f_{\bar{G}}^K(\Chev{x_1,x_2},x_1)-\bar{f}(\Chev{x_1,x_2})}] \pmod \Fall\]
+\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\sigma}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \sigma_{0\bullet}^K}[\Abs{f_{\bar{\sigma}}^K(\Chev{x_1,x_2},x_1)-\bar{f}(\Chev{x_1,x_2})}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times G_{0\bullet}^K}[\Abs{\E_{\UM_{\bar{G}}^K}[\bar{G}_1^K(x_1) \mid \bar{G}^K(x_1)_0 = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\sigma}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \sigma_{0\bullet}^K}[\Abs{\E_{\UM_{\bar{\sigma}}^K}[\bar{\sigma}_1^K(x_1) \mid \bar{\sigma}^K(x_1)_0 = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times G_{0\bullet}^K}[\Abs{\E_{\UM_G^K}[G_1^K \mid \Chev{x_1,G^K} = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\sigma}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \sigma_{0\bullet}^K}[\Abs{\E_{\UM_\sigma^K}[\sigma_1^K \mid \Chev{x_1,\sigma^K} = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times G_{0\bullet}^K}[\Abs{\E_{\UM_G^K}[G_1^K \mid G^K = x_2]-f(x_2)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\sigma}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \sigma_{0\bullet}^K}[\Abs{\E_{\UM_\sigma^K}[\sigma_1^K \mid \sigma^K = x_2]-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{x_2 \sim G_{0\bullet}^K}[\Abs{f_G^K(x_2)-f(x_2)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\sigma}}^K(x,y)-\bar{f}(x)}] \equiv \E_{x_2 \sim \sigma_{0\bullet}^K}[\Abs{f_\sigma^K(x_2)-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv \E_{x_2 \sim \Dist_2^{K}}[\Abs{f_G^K(x_2)-f(x_2)}] \pmod \Fall\]
+\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\sigma}}^K(x,y)-\bar{f}(x)}] \equiv \E_{x_2 \sim \Dist_2^{K}}[\Abs{f_\sigma^K(x_2)-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{G}}^K(x,y)-\bar{f}(x)}] \equiv 0 \pmod \Fall\]
+\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\sigma}}^K(x,y)-\bar{f}(x)}] \equiv 0 \pmod \Fall\]
 \end{proof}
 
 \begin{samepage}
@@ -2266,11 +2266,11 @@ Equation \ref{eqn:op} for ${\bar{Q}}$ implies \ref{eqn:prp__mixed_ort}.
 \begin{proposition}
 \label{prp:sq_diff_cong}
 
-Consider $\{F^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \in \Nats^n}$ uniformly bounded families of random variables and suppose ${\E[\Abs{G_1^K - G_2^K}] \in \Fall}$. Then
+Consider $\{F^K\}_{K \in \Nats^n}$, $\{\sigma_1^K\}_{K \in \Nats^n}$, $\{\sigma_1^K\}_{K \in \Nats^n}$ uniformly bounded families of random variables and suppose ${\E[\Abs{\sigma_1^K - \sigma_2^K}] \in \Fall}$. Then
 
 \begin{equation}
 %\label{eqn:tbd}
-\E[(F^K + G_1^K)^2] \equiv \E[(F^K + G_2^K)^2] \pmod \Fall
+\E[(F^K + \sigma_1^K)^2] \equiv \E[(F^K + \sigma_2^K)^2] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -2278,9 +2278,9 @@ Consider $\{F^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \
 
 \begin{proof}
 
-\[\E[(F^K + G_1^K)^2] - \E[(F^K + G_2^K)^2] = \E[(2 F^K + G_1^K + G_2^K)(G_1^K - G_2^K)]\]
+\[\E[(F^K + \sigma_1^K)^2] - \E[(F^K + \sigma_2^K)^2] = \E[(2 F^K + \sigma_1^K + \sigma_2^K)(\sigma_1^K - \sigma_2^K)]\]
 
-\[\Abs{\E[(F^K + G_1^K)^2] - \E[(F^K + G_2^K)^2]} \leq (2 \sup F + \sup G_1 + \sup G_2) \E[\Abs{G_1^K - G_2^K}]\]
+\[\Abs{\E[(F^K + \sigma_1^K)^2] - \E[(F^K + \sigma_2^K)^2]} \leq (2 \sup F + \sup \sigma_1 + \sup \sigma_2) \E[\Abs{\sigma_1^K - \sigma_2^K}]\]
 %
 \end{proof}
 
@@ -3337,7 +3337,7 @@ Fix ${r: \Nats^n \Alg \Nats}$ s.t.
 
 \end{enumerate}
 
-In particular, ${r}$ is steadily growing. Assume ${\GrowR=\Gamma_r}$ and ${\GrowA=\Gamma_\textnormal{log}^n}$. Consider ${(\Dist,f)}$ an distributional estimation problem of rank ${n-1}$ and ${G}$ an ${\FallM(\Gamma)}$-sampler of ${(\Dist^\eta,f)}$. Then, there exists ${P}$ an ${\FallU(\Gamma)}$-optimal estimator for ${(\Dist^\eta,f)}$ s.t. ${\A_P=\A_G}$. In particular, if ${G}$ is uniform (i.e. ${\A_G \equiv \Estr}$) then so is ${P}$.
+In particular, ${r}$ is steadily growing. Assume ${\GrowR=\Gamma_r}$ and ${\GrowA=\Gamma_\textnormal{log}^n}$. Consider ${(\Dist,f)}$ an distributional estimation problem of rank ${n-1}$ and ${\sigma}$ an ${\FallM(\Gamma)}$-sampler of ${(\Dist^\eta,f)}$. Then, there exists ${P}$ an ${\FallU(\Gamma)}$-optimal estimator for ${(\Dist^\eta,f)}$ s.t. ${\A_P=\A_\sigma}$. In particular, if ${\sigma}$ is uniform (i.e. ${\A_\sigma \equiv \Estr}$) then so is ${P}$.
 
 % The sampler fall space should satisfy some monotonicity requirement
 
@@ -3383,11 +3383,11 @@ Choose ${p \in \NatPoly}$ s.t. ${p(K) \geq K_{n-1}}$ and ${r(\alpha_p(K)) \geq \
 \begin{proposition}
 \label{prp:est_err_smp}
 
-Consider ${(\Dist,f)}$ a distributional estimation problem, ${G}$ an ${\EG}$-sampler of ${(\Dist,f)}$, ${I}$ a set and ${\{h_\alpha^K: \Words \Markov \Reals\}_{\alpha \in I, K \in \Nats^n}}$ uniformly bounded. Then
+Consider ${(\Dist,f)}$ a distributional estimation problem, ${\sigma}$ an ${\EG}$-sampler of ${(\Dist,f)}$, ${I}$ a set and ${\{h_\alpha^K: \Words \Markov \Reals\}_{\alpha \in I, K \in \Nats^n}}$ uniformly bounded. Then
 
 \begin{equation}
 \label{eqn:prp__est_err_smp}
-\E_{\Un_G^K}[\E[(h_\alpha^K \circ G^K_0-G^K_1)^2]] \overset{\alpha}{\equiv} \E_{\Dist^K}[\E[(h_\alpha^K-f)^2]] + \E_{\Un_G^K}[(f \circ G^K_0-G^K_1)^2] \pmod \Fall
+\E_{\Un_\sigma^K}[\E[(h_\alpha^K \circ \sigma^K_0-\sigma^K_1)^2]] \overset{\alpha}{\equiv} \E_{\Dist^K}[\E[(h_\alpha^K-f)^2]] + \E_{\Un_\sigma^K}[(f \circ \sigma^K_0-\sigma^K_1)^2] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -3395,22 +3395,22 @@ Consider ${(\Dist,f)}$ a distributional estimation problem, ${G}$ an ${\EG}$-sam
 
 \begin{proof}
 
-Denote ${h_{G\alpha }^K := h_\alpha^K \circ G^K_0}$, ${f_G^K := f \circ G^K_0}$. Proposition~\ref{prp:smp} implies
+Denote ${h_{\sigma\alpha }^K := h_\alpha^K \circ \sigma^K_0}$, ${f_\sigma^K := f \circ \sigma^K_0}$. Proposition~\ref{prp:smp} implies
 
-\[\E_{\Un_G^K}[(\E[h_{G\alpha}^K]-f_G^K)f_G^K] \overset{\alpha}{\equiv} \E_{\Dist^K}[(\E[h_\alpha^K]-f)f] \pmod \Fall\]
+\[\E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)f_\sigma^K] \overset{\alpha}{\equiv} \E_{\Dist^K}[(\E[h_\alpha^K]-f)f] \pmod \Fall\]
 
 Applying Proposition~\ref{prp:gen} to the right hand side
 
 \begin{equation}
 \label{eqn:prp__est_err_smp__prf}
-\E_{\Un_G^K}[(\E[h_{G\alpha}^K]-f_G^K)f_G^K]] \overset{\alpha}{\equiv} \E_{\Un_G^K}[(\E[h_{G\alpha}^K]-f_G^K)G^K_1] \pmod \Fall
+\E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)f_\sigma^K]] \overset{\alpha}{\equiv} \E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)\sigma^K_1] \pmod \Fall
 \end{equation}
 
 On the other hand
 
-\[\E_{\Un_G^K}[\E[(h_{G\alpha}^K-G^K_1)^2]] = \E_{\Un_G^K}[\E[(h_{G\alpha}^K-f_G^K+f_G^K-G^K_1)^2]]\]
+\[\E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-\sigma^K_1)^2]] = \E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-f_\sigma^K+f_\sigma^K-\sigma^K_1)^2]]\]
 
-\[\E_{\Un_G^K}[\E[(h_{G\alpha}^K-G^K_1)^2]] = \E_{\Un_G^K}[\E[(h_{G\alpha}^K-f_G^K)^2]]+2\E_{\Un_G^K}[(\E[h_{G\alpha}^K]-f_G^K)(f_G^K-G^K_1)]]+\E_{\Un_G^K}[\E[(f_G^K-G^K_1)^2]]\]
+\[\E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-\sigma^K_1)^2]] = \E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-f_\sigma^K)^2]]+2\E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)(f_\sigma^K-\sigma^K_1)]]+\E_{\Un_\sigma^K}[\E[(f_\sigma^K-\sigma^K_1)^2]]\]
 
 Applying Proposition~\ref{prp:smp} to the first term on the right hand side and \ref{eqn:prp__est_err_smp__prf} to the second term on the right hand side, we get \ref{eqn:prp__est_err_smp}.
 %
@@ -3418,35 +3418,35 @@ Applying Proposition~\ref{prp:smp} to the first term on the right hand side and 
 
 \begin{proof}[Proof of Theorem \ref{thm:exists_smp}]
 
-Fix ${D}$ an ${f}$-compatible decoding. Denote\\ ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${R: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^4]}}$ and ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
+Fix ${D}$ an ${f}$-compatible decoding. Denote\\ ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${R: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$ and ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
 
 \begin{align}
-\label{eqn:thm__exists_smp__l_adv}\A_R(K) &= \A_G(K) \\
-\label{eqn:thm__exists_smp__l_rnd}\R_R(K,w) &= l(K)^4 (\R_G(K,w) + r(K)) \\
-\label{eqn:thm__exists_smp__l_alg}R^K(a,\prod_{i \in [l(K)^4]}y_i z_i,w) &= \frac{1}{l(K)^4}\sum_{i \in [l(K)^4]}(D(\Ev^{K_{n-1}}(a;G^K(y_i,w)_0,z_i))-G^K(y_i,w)_1)^2 
+\label{eqn:thm__exists_smp__l_adv}\A_R(K) &= \A_\sigma(K) \\
+\label{eqn:thm__exists_smp__l_rnd}\R_R(K,w) &= l(K)^4 (\R_\sigma(K,w) + r(K)) \\
+\label{eqn:thm__exists_smp__l_alg}R^K(a,\prod_{i \in [l(K)^4]}y_i z_i,w) &= \frac{1}{l(K)^4}\sum_{i \in [l(K)^4]}(D(\Ev^{K_{n-1}}(a;\sigma^K(y_i,w)_0,z_i))-\sigma^K(y_i,w)_1)^2 
 \end{align}
 
-That is, ${R}$ generates ${l(K)^4}$ estimates of ${f}$ using ${G}$ and computes the \enquote{empirical risk} of the program ${a}$ w.r.t. these estimates. Here, \ref{eqn:thm__exists_smp__l_rnd} is legitimate due to Proposition~\ref{prp:std_grow_log}. 
+That is, ${R}$ generates ${l(K)^4}$ estimates of ${f}$ using ${\sigma}$ and computes the \enquote{empirical risk} of the program ${a}$ w.r.t. these estimates. Here, \ref{eqn:thm__exists_smp__l_rnd} is legitimate due to Proposition~\ref{prp:std_grow_log}. 
 
-Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^4]}}$ and\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
+Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$ and\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
 
 \begin{align}
-\label{eqn:thm__exists_smp__a_adv}\A_A(K) &= \A_G(K) \\
+\label{eqn:thm__exists_smp__a_adv}\A_A(K) &= \A_\sigma(K) \\
 \label{eqn:thm__exists_smp__a_rnd}\R_A(K,w) &= \R_R(K,w) \\
 \label{eqn:thm__exists_smp__a_alg}A^K(\prod_{i \in [l(K)^4]}y_i z_i,w) &\in \Argmin{a \in \Bool^{\leq l(K)}} R^K(a,\prod_{i \in [l(K)^4]}y_i z_i,w)
 \end{align}
 
-Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_G(K,w)}\}_{i \in [l(K)^4]}}$,\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$ and ${z_* \in \Bool^{r(K)}}$
+Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$,\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$ and ${z_* \in \Bool^{r(K)}}$
 
 \begin{align}
-\label{eqn:thm__exists_smp__p_adv}\A_P(K) &= \A_G(K) \\
+\label{eqn:thm__exists_smp__p_adv}\A_P(K) &= \A_\sigma(K) \\
 \label{eqn:thm__exists_smp__p_rnd}\R_P(K,w) &= \R_R(K,w) + r(K) \\
 \label{eqn:thm__exists_smp__p_alg}P^K(x,(\prod_{i \in [l(K)^4]}y_i z_i)z_{*},w) &= D(\Ev^{K_{n-1}}(A^K(\prod_{i \in [l(K)^4]}y_i z_i,w);x,z_{*}))
 \end{align}
 
 Define ${\varrho_0^K \in \Reals}$ by
 
-\[\varrho_0^K:=\E_{\Un_G^K}[(f(G^K(y)_0)-G^K(y)_1)^2]\]
+\[\varrho_0^K:=\E_{\Un_\sigma^K}[(f(\sigma^K(y)_0)-\sigma^K(y)_1)^2]\]
 
 For any ${b \in \Words}$, define ${\varrho^K(b)}$ by
 
@@ -3458,11 +3458,11 @@ Consider any ${\alpha: \Nats^n \rightarrow \Words}$ s.t. ${\Abs{\alpha(K)} \leq 
 
 By Proposition~\ref{prp:est_err_smp}
 
-\[\E_{\Un_G^K}[\E[(h_\alpha^K(G^K(y)_0)-G^K(y)_1)^2]] \overset{\alpha}{\equiv} \E_{\Dist^{\eta(K)}}[\E[(h_\alpha^K(x)-f(x))^2]] + \E_{\Un_G^K}[(f(G^K(y)_0)-G^K(y)_1)^2] \pmod \FallM\]
+\[\E_{\Un_\sigma^K}[\E[(h_\alpha^K(\sigma^K(y)_0)-\sigma^K(y)_1)^2]] \overset{\alpha}{\equiv} \E_{\Dist^{\eta(K)}}[\E[(h_\alpha^K(x)-f(x))^2]] + \E_{\Un_\sigma^K}[(f(\sigma^K(y)_0)-\sigma^K(y)_1)^2] \pmod \FallM\]
 
 \begin{equation}
 \label{eqn:thm__exists_smp__prf1}
-\E_{\Un_G^K}[\E[(h_\alpha^K(G^K(y)_0)-G^K(y)_1)^2]] \overset{\alpha}{\equiv} \varrho^K(\alpha(K)) + \varrho_0^K \pmod \FallM
+\E_{\Un_\sigma^K}[\E[(h_\alpha^K(\sigma^K(y)_0)-\sigma^K(y)_1)^2]] \overset{\alpha}{\equiv} \varrho^K(\alpha(K)) + \varrho_0^K \pmod \FallM
 \end{equation}
 
 ${R^K(\alpha(K),y)}$ is the average of ${l(K)^4}$ independent and and identically distributed bounded random variables. By \ref{eqn:thm__exists_smp__prf1}, there is ${\varepsilon \in \FallM}$ that doesn't depend on ${\alpha}$ s.t. the expected value of these random variables is in ${[\varrho^K(\alpha(K)) + \varrho_0^K - \varepsilon(K), \varrho^K(\alpha(K)) + \varrho_0^K + \varepsilon(K)]}$. Applying Hoeffding's inequality we conclude that for some ${\epsilon \in \Reals^{>0}}$
