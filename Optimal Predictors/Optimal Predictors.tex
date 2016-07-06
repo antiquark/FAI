@@ -243,7 +243,7 @@ Given $n \in \Nats$, encoded sets $X_0, X_1 \ldots X_{n-1}$ and encoded set $Y$ 
 
 Given $A: X \Alg Y$ and $x \in X$, $\T_A(x)$ stands for the number of time steps in the computation of $A(x)$.
 
-For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing machine with $n+1$ input tapes: 1 program tape and $n$ tapes that serve as input to the program. Given ${n,k \in \Nats}$, ${a \in \Words}$ and ${\{x_i \in \Words\}_{i \in [n]}}$, ${\Ev^k(a;x_0,x_1 \ldots x_{n-1})}$ stands for the output of ${\mathcal{U}_n}$ when executed for ${k}$ time steps on program ${a}$ (continued by an infinite sequence of 0s) and inputs ${\{x_i \in \Words\}_{i \in [n]}}$. Given $A: \prod_{i \in [n]} X_i \Alg\ Y$, $\Quote{A} \in \Words$ denotes the corresponding program for $\mathcal{U}_n$. In particular, whenever ${t \geq \T_A(x_0,x_1 \ldots x_{n-1})}$, we have ${\Ev^t(\Quote{A};\En_{X_0}(x_0),\En_{X_1}(x_1) \ldots \En_{X_{n-1}}(x_{n-1}))=\En_Y(A(x_0,x_1 \ldots x_{n-1}))}$.
+For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing machine with $n+1$ input tapes: 1 program tape and $n$ tapes that serve as input to the program. Given ${n,k \in \Nats}$, ${a \in \Words}$ and ${\{x_i \in \Words\}_{i \in [n]}}$, ${\Ev^k(a;x_0,x_1 \ldots x_{n-1})}$ stands for the output of ${\mathcal{U}_n}$ when executed for ${k}$ time steps on program ${a}$ (continued by an infinite sequence of 0s) and inputs ${\{x_i \in \Words\}_{i \in [n]}}$.
 
 \section{Fundamentals}
 \label{sec:fundamentals}
@@ -276,7 +276,7 @@ Fix ${n \in \Nats}$. A \emph{distributional estimation problem of rank ${n}$} is
 
 \end{definition}
 
-\subsubsection{Growth Spaces and \texorpdfstring{$\Gamma$}{Γ}-Schemes}
+\subsubsection{Growth Spaces and Polynomial-Time \texorpdfstring{$\Gamma$}{Γ}-Schemes}
 
 In the motivational model, the estimator was restricted to lie in a class of functions that factor through a fixed mapping. Of course we are interested in more realistic notions of efficiency. In the present work we consider restrictions on time complexity, access to random bits and size of advice strings. Spatial complexity is also of interest but treating it is out of our current scope. It is possible to consider weaker or stronger restrictions which we represent using the following abstraction:
 
@@ -355,13 +355,13 @@ We now introduce our notion of an \enquote{efficient} algorithm.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{$\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where ${S: \Nats^n \times X \times \Words^2 \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \NatFun \Words$ are s.t.
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where ${S: \Nats^n \times X \times \Words \times \Words \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \NatFun \Words$ are s.t.
 
 \begin{enumerate}[(i)]
 
-\item $\max_{x \in X} \max_{y \in \BoolR{S}} \T_S(K,x,y,\A_S(K)) \in \GammaPoly^n$
+\item $\max_{x \in X} \max_{y,z \in \Words} \T_S(K,x,y,z) \in \GammaPoly^n$
 
-\item $\T_{\R_S}(K,\A_S(K)) \in \GammaPoly^n$
+\item $\max_{z \in \Words} \T_{\R_S}(K,z) \in \GammaPoly^n$
 
 \item The function $r: \NatFun n$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\GrowR$.
 
@@ -369,14 +369,14 @@ Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of ran
 
 \end{enumerate}
 
-Abusing notation, we denote the $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y,z)$ will denote $S(K,x,y,z)$, $S^K(x,y)$ will denote $S(K,x,y,\A_S(K))$ and $S^K(x)$ will denote the $Y$-valued random variable which equals $S(K,x,y,a(K))$ for $y$ sampled from $\Un^{\R_S(K)}$. $\Un_S^K$ will denote $\Un^{\R_S(K)}$. We think of $S$ as a randomized algorithm with advice where $y$ are the internal coin tosses and $\A_S$ is the advice\footnote{Note that the number of random bits $\R_S(K)$ has to be efficiently computable modulo the advice $\A_S(K)$ rather than being an arbitrary function. This requirement is needed to prevent using the function $\R_S$ as advice in itself. In particular, when $\GrowA=\Gamma_0^2$, $S$ represents a uniform randomized algorithm.}. Similarly, $\R_S(K)$ will denote $\R_S(K,\A_S(K))$.
+Abusing notation, we denote the polynomial-time $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y,z)$ will denote $S(K,x,y,z)$, $S^K(x,y)$ will denote $S(K,x,y,\A_S(K))$ and $S^K(x)$ will denote the $Y$-valued random variable which equals $S(K,x,y,a(K))$ for $y$ sampled from $\Un^{\R_S(K)}$. $\Un_S^K$ will denote $\Un^{\R_S(K)}$. We think of $S$ as a randomized algorithm with advice where $y$ are the internal coin tosses and $\A_S$ is the advice\footnote{Note that the number of random bits $\R_S(K)$ has to be efficiently computable modulo the advice $\A_S(K)$ rather than being an arbitrary function. This requirement is needed to prevent using the function $\R_S$ as advice in itself. In particular, when $\GrowA=\Gamma_0^2$, $S$ represents a uniform randomized algorithm.}. Similarly, $\R_S(K)$ will denote $\R_S(K,\A_S(K))$.
 
-We will use the notation $S: X \Scheme Y$ to signify $S$ is a $\Gamma$-scheme of signature $X \rightarrow Y$.
+We will use the notation $S: X \Scheme Y$ to signify $S$ is a polynomial-time $\Gamma$-scheme of signature $X \rightarrow Y$.
 
 \end{definition}
 \end{samepage}
 
-There is a natural notion of composition for $\Gamma$-schemes.
+There is a natural notion of composition for polynomial-time $\Gamma$-schemes.
 
 \begin{samepage}
 \begin{definition}
@@ -394,18 +394,18 @@ Such a $U$ is called the \emph{composition} of $T$ and $S$ and denoted $U = T \c
 \end{definition}
 \end{samepage}
 
-It will also be useful to consider families of $\Gamma$-schemes satisfying uniform resource bounds.
+It will also be useful to consider families of polynomial-time $\Gamma$-schemes satisfying uniform resource bounds.
 
 \begin{definition}
 \label{def:family}
 
-Fix $n \in \Nats$, $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ and encoded sets $X$, $Y$. A set $F$ of $\Gamma$-schemes of signature $X \rightarrow Y$ is called a \emph{uniform family} when
+Fix $n \in \Nats$, $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ and encoded sets $X$, $Y$. A set $F$ of polynomial-time $\Gamma$-schemes of signature $X \rightarrow Y$ is called a \emph{uniform family} when
 
 \begin{enumerate}[(i)]
 
-\item\label{con:def__family__time} $\max_{S \in F} \max_{x \in X} \max_{y \in \BoolR{S}} \T_S(K,x,y,\A_S(K)) \in \GammaPoly^n$
+\item\label{con:def__family__time} $\max_{S \in F} \max_{x \in X} \max_{y,z \in \Words} \T_S(K,x,y,z) \in \GammaPoly^n$
 
-\item\label{con:def__family__rtime} $\max_{S \in F}\T_{\R_S}(K,\A_S(K))) \in \GammaPoly^n$
+\item\label{con:def__family__rtime} $\max_{S \in F} \max_{z \in \Words} \T_{\R_S}(K,z) \in \GammaPoly^n$
 
 \item\label{con:def__family__rand} $\max_{S \in F} \R_S \in \GrowR$
 
@@ -422,14 +422,28 @@ The details of this definition are motivated by the following proposition.
 \begin{proposition}
 \label{prp:fam_diag}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ s.t. $1 \in \GrowA$. Consider $X$, $Y$ encoded sets, $F$ a uniform family of $\Gamma$-schemes of signature $X \rightarrow Y$ and a collection ${\{\mathcal{S}_K \in F\}_{K \in \Nats^n}}$. Then, there is $\Delta_\mathcal{S}: X \xrightarrow{
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ s.t. $1 \in \GrowA$. Consider $X$, $Y$ encoded sets, $F$ a uniform family of polynomial-time $\Gamma$-schemes of signature $X \rightarrow Y$ and a collection ${\{\mathcal{S}_K \in F\}_{K \in \Nats^n}}$. Then, there is $\Delta_\mathcal{S}: X \xrightarrow{
 \Gamma} Y$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in Y$, ${\Pr[\Delta_\mathcal{S}^K(x)=y] = \Pr[\mathcal{S}_K^K(x)=y]}$.
 
 \end{proposition}
 
 \begin{proof}
 
-We take $\A_{\Delta_{\mathcal{S}}}(K):=\Chev{\Quote{\mathcal{S}_K},\Quote{\R_{\mathcal{S}_K}},\A_{\mathcal{S}_K}(K)}$. $\R_{\Delta_{\mathcal{S}}}$ is constructed so that ${\R_{\Delta_{\mathcal{S}}}(K)=\R_{\mathcal{S}_K}(K)}$. $\Delta_{\mathcal{S}}$ is constructed so that $\Delta_{\mathcal{S}}^K(x,z)=\mathcal{S}_K^K(x,z)$.
+Choose ${p,q \in \NatPoly}$ and ${\{a_K, b_K \in \Words\}}_{K \in \Nats^n}$ s.t. there is only a finite number of different words ${a_K}$ and ${b_K}$ and for any ${K,L \in \Nats^n}$, ${x \in X}$ and ${y,z \in \Words}$
+
+\begin{align*}
+\Ev^{q(L)}(b_K;\En_{\Nats^n}(L),z) &= \R_{S_K}(L,z) \\
+\Ev^{p(L)}(a_K;\En_{\Nats^n}(L),x,y,z) &= S_K^L(x,y,z) 
+\end{align*}
+
+Construct ${\Delta_{\mathcal{S}}}$ s.t. for any ${K \in \Nats^n}$, ${x \in X}$, ${y, w \in \Words}$, ${u \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{a_K}}}$ and\\ ${v \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{b_K}}}$
+
+\begin{align*}
+\A_{\Delta_{\mathcal{S}}}(K)&=\Chev{a_K,b_K,\A_{\mathcal{S}_K}(K)} \\
+\R_{\Delta_{\mathcal{S}}}(K,\Chev{u,v,w})&=\Ev^{q(K)}(v;\En_{\Nats^n}(K),w) \\
+\Delta_{\mathcal{S}}^K(x,y,\Chev{u,v,w})&=\Ev^{p(K)}(u;\En_{\Nats^n}(K),x,y,w)
+\end{align*}
+%
 \end{proof}
 
 \subsubsection{Fall Spaces}
@@ -647,7 +661,7 @@ Note that $\varepsilon$ in \ref{eqn:op} depends on $Q$. However in some sense th
 \begin{proposition}
 \label{prp:unif}
 
-Consider $(\Dist,f)$ a distributional estimation problem, $P$ an $\EG$-optimal estimator for $(\Dist,f)$ and $F$ a uniform family of $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \Fall$ s.t. for any $Q \in F$
+Consider $(\Dist,f)$ a distributional estimation problem, $P$ an $\EG$-optimal estimator for $(\Dist,f)$ and $F$ a uniform family of polynomial-time $\Gamma$-schemes of signature $\Words \rightarrow \Rats$. Then there is $\varepsilon \in \Fall$ s.t. for any $Q \in F$
 
 \begin{equation}
 \E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_Q^{K}}[(Q^{K} - f)^2] + \varepsilon(K)
@@ -869,7 +883,7 @@ $$\E[W^{K} \cdot ((P^{K}-f)^2-(Q^{K}-f)^2)] \leq M \varepsilon(K) + M'\zeta(K)$$
 
 There is a variant of Definition~\ref{def:op} which is nearly equivalent in many cases and often useful.
 
-We can think of functions $f: \Supp \Dist \rightarrow \Reals$ as vectors in a real inner product space with inner product $\Chev{f,g}:=\E_\Dist[fg]$. Informally, we can think of $\Gamma$-schemes as a subspace (although a $\Gamma$-scheme is not even a function) and an $\EG$-optimal estimator for $(\Dist,f)$ as the nearest point to $f$ in this subspace. Now, given an inner product space $V$, a vector $f \in V$, an actual subspace $W \subseteq V$ and $p = \Argmin{q \in W} \Norm{q - f}^2$, we have $\forall v \in W: \Chev{p-f,v}=0$. This motivates the following:
+We can think of functions $f: \Supp \Dist \rightarrow \Reals$ as vectors in a real inner product space with inner product $\Chev{f,g}:=\E_\Dist[fg]$. Informally, we can think of polynomial-time $\Gamma$-schemes as a subspace (although a polynomial-time $\Gamma$-scheme is not even a function) and an $\EG$-optimal estimator for $(\Dist,f)$ as the nearest point to $f$ in this subspace. Now, given an inner product space $V$, a vector $f \in V$, an actual subspace $W \subseteq V$ and $p = \Argmin{q \in W} \Norm{q - f}^2$, we have $\forall v \in W: \Chev{p-f,v}=0$. This motivates the following:
 
 \begin {definition}
 \label{def:obe_sharp}
@@ -1434,7 +1448,7 @@ Applying Proposition~\ref{prp:thm__cond__lemma} to the first term on the right-h
 \[\E_{(\Dist^{K} \mid L)\times \Un_{P_L}^K \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{f \mid L}^K - f)S^K(x,P_{f \mid L}^K)] \equiv 0 \pmod {\Fall_L}\]
 %
 \end{proof}
-\subsection{\texorpdfstring{$\MGrow$}{MΓ}-Schemes and Samplers}
+\subsection{Polynomial-Time \texorpdfstring{$\MGrow$}{MΓ}-Schemes and Samplers}
 
 The next subsection and subsequent sections will require several new concepts. Here, we introduce these concepts and discuss some of their properties.
 
@@ -1524,14 +1538,14 @@ Total variation distance is subadditive w.r.t. direct products therefore
 \[\Dtv(\Dist_1^K \times \Dist_2^K, \mathcal{E}_1^K \times \mathcal{E}_2^K) \leq \Dtv(\Dist_1^K, \mathcal{E}_1^K) + \Dtv(\Dist_2^K, \mathcal{E}_2^K)\]
 \end{proof}
 
-\subsubsection{\texorpdfstring{$\MGrow$}{MΓ}-Schemes}
+\subsubsection{\texorpdfstring{Polynomial-Time $\MGrow$}{MΓ}-Schemes}
 
-The concept of a $\Gamma$-scheme can be generalized in a way which allows the advice to become random in itself.
+The concept of a polynomial-time $\Gamma$-scheme can be generalized in a way which allows the advice to become random in itself.
 
 \begin{samepage}
 \begin{definition}
 
-Given encoded sets $X$ and $Y$, an \emph{$\MGrow$-scheme of signature ${X \rightarrow Y}$} is a triple $(S,\R_S,\M_S)$ where $S: \Nats^n \times X \times \Words^2 \Alg Y$, ${\R_S: \Nats^n \times \Words \Alg \Nats}$ and $\{\M_S^K \in \mathcal{P}(\Words)\}_{K \in \Nats^n}$ are s.t.
+Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\MGrow$-scheme of signature ${X \rightarrow Y}$} is a triple $(S,\R_S,\M_S)$ where $S: \Nats^n \times X \times \Words^2 \Alg Y$, ${\R_S: \Nats^n \times \Words \Alg \Nats}$ and $\{\M_S^K \in \mathcal{P}(\Words)\}_{K \in \Nats^n}$ are s.t.
 
 \begin{enumerate}[(i)]
 
@@ -1545,7 +1559,7 @@ Given encoded sets $X$ and $Y$, an \emph{$\MGrow$-scheme of signature ${X \right
 
 \end{enumerate}
 
-Abusing notation, we denote the $\MGrow$-scheme $(S,\R_S,\M_S)$ by $S$.
+Abusing notation, we denote the polynomial-time $\MGrow$-scheme $(S,\R_S,\M_S)$ by $S$.
 
 $\R_S^K(z)$ will denote $\R_S(K,z)$. $\UM_S^K \in \mathcal{P}(\Words \times \Words)$ is given by 
 
@@ -1553,9 +1567,9 @@ $\R_S^K(z)$ will denote $\R_S(K,z)$. $\UM_S^K \in \mathcal{P}(\Words \times \Wor
 
 $S^K(x,y,z)$ will denote $S(K,x,y,z)$. Given $w=(y,z)$, $S^K(x,w)$ will denote $S(K,x,y,z)$. $S^K(x)$ will denote the $Y$-valued random variable which equals $S(K,x,y,z)$ for $(y,z)$ sampled from $\UM_S^K$. $S_x^K$ will denote the probability distribution of this random variable i.e. $S_x^K$ is the push-forward of $\UM_S^K$ by the mapping $(y,z) \mapsto S(K,x,y,z)$.
 
-We think of $S$ as a randomized algorithm with advice which is random in itself. In particular any $\Gamma$-scheme can $S$ can be regarded as an $\MGrow$-scheme with $\M_S^K(z):=\delta_{z\A_S^K}$.
+We think of $S$ as a randomized algorithm with advice which is random in itself. In particular any polynomial-time $\Gamma$-scheme can $S$ can be regarded as a polynomial-time $\MGrow$-scheme with $\M_S^K(z):=\delta_{z\A_S^K}$.
 
-We will use the notation $S: X \MScheme Y$ to signify $S$ is an $\MGrow$-scheme of signature $X \rightarrow Y$.
+We will use the notation $S: X \MScheme Y$ to signify $S$ is a polynomial-time $\MGrow$-scheme of signature $X \rightarrow Y$.
 
 \end{definition}
 \end{samepage}
@@ -1594,7 +1608,7 @@ Samplable word ensembles can be thought of as those ensembles which can be produ
 \begin{samepage}
 \begin{definition}
 
-A word ensemble $\Dist$ is called \emph{$\EMG$-samplable} (resp. \emph{$\EG$-samplable}) when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $\sigma$ of signature ${\bm{1} \rightarrow \Words}$  s.t. $\Dist^{K} \equiv \sigma_\bullet^K \pmod \Fall$.
+A word ensemble $\Dist$ is called \emph{$\EMG$-samplable} (resp. \emph{$\EG$-samplable}) when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature ${\bm{1} \rightarrow \Words}$  s.t. $\Dist^{K} \equiv \sigma_\bullet^K \pmod \Fall$.
 
 In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\Dist$}.
 
@@ -1605,7 +1619,7 @@ In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) o
 \begin{definition}
 \label{def:smp_prob}
 
-A distributional estimation problem $(\Dist,f)$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable)} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
+A distributional estimation problem $(\Dist,f)$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable)} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $G$ of signature $\bm{1} \rightarrow \Words \times \Rats$ s.t. 
 
 \begin{enumerate}[(i)]
 
@@ -1725,7 +1739,7 @@ We now introduce the notions of samplability of samplability over a given \enquo
 
 \begin{definition}
 
-Consider a word ensemble $\Dist$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$. $\Dist$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\Dist^{K}}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
+Consider a word ensemble $\Dist$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$. $\Dist$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\Dist^{K}}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
 
 In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) of $\Dist$ relative to $\pi$}.
 
@@ -1735,7 +1749,7 @@ In this case, $\sigma$ is called an \emph{$\EMG$-sampler (resp. $\EG$-sampler) o
 \begin{definition}
 \label{def:smp_prob_rel}
 
-Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}$. $(\Dist,f)$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is an $\MGrow$-scheme (resp. $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
+Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}$. $(\Dist,f)$ is called \emph{$\EMG$-samplable (resp. $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $G$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
 
 \begin{enumerate}[(i)]
 
