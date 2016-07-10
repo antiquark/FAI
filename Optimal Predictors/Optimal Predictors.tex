@@ -133,6 +133,7 @@ The concept of an \enquote{approximation algorithm} is usually only applied to o
 \section{Introduction}
 
 \subsection{Motivation}
+\label{subsec:mot}
 
 Imagine you are strolling in the city with a friend when a car passes by with the license plate number \enquote{7614829}. Your friend proposes a wager, claiming that the number is composite and offering 10 : 1 odds in your favor. Knowing that your friend has no exceptional ability in mental arithmetic and that it's highly unlikely they saw this car before, you realize they are just guessing. Your mental arithmetic is also insufficient to test the number for primality, but is sufficient to check that ${7614829 \equiv 1 \pmod{3}}$ and $\frac{1}{\ln 7614829} \approx 0.06$. Arguing from the prime number theorem and observing that 7614829 is odd and is divisible neither by 3 nor by 5, you conclude that the probability 7614829 is prime is ${\frac{1}{\ln 7614829} \times 2 \times \frac{3}{2} \times \frac{5}{4} \approx 22\%}$. Convinced that the odds are in your favor you accept the bet\footnote{Alas, $7614829 = 271 \times 28099$.}.
 
@@ -161,7 +162,7 @@ Optimal polynomial-time estimators turn out to be unique up to a certain equival
 
 Consider a language ${L \subseteq \Words}$ and a family ${\{\Dist^k\}}_{k \in \Nats}$ where each ${\Dist^k}$ is a probability distribution on ${\Words}$. A pair ${(\Dist,L)}$ is called a \emph{distributional decision problem}\cite{Bogdanov_2006}. Our goal is defining and studying the probabilities of \enquote{events} of the form ${x \in L}$\footnote{We will actually consider the more general case of a function ${f: \Words \rightarrow \Reals}$ and the \enquote{expected value} of ${f(x)}$, but there is no difference of principle.}  associated with the uncertainty resulting from limited computational resources (specifically we will consider the resources of time, random and advice).
 
-The distributional complexity class ${\textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ is defined as the set of distributional decision problems with admit a polynomial-time heuristic algorithm with negligible error probability\cite{Bogdanov_2006}. That is, ${(\Dist, L) \in \textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ iff there ${A: \Nats \times \Words \Alg \Bool}$ (an algorithm which takes input in ${\Nats \times \Words}$ and produces output in ${\Bool}$) s.t. ${A(k,x)}$ runs in time polynomial in ${k}$ and ${\Prb_{x \sim \Dist^k}[A(k,x) \ne \chi_L(x)]}$ is a negligible function of ${k}$. We have the following equivalent condition. ${(\Dist, L) \in \textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ iff there is ${P: \Nats \times \Words \Alg \Rats}$ s.t. ${P(k,x)}$ runs in time polynomial in ${k}$ and ${\E_{x \sim \Dist^k}[(P(k,x)-\chi_L(x))^2]}$ is a negligible function of ${k}$. In the language of the present work, such a ${P}$ is a called an \enquote{${\Fall_{\text{neg}}(\Gamma_0^1, \Gamma_0^1)}$-perfect polynomial-time estimator for ${(\Dist,\chi_L)}$.}
+The distributional complexity class ${\textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ is defined as the set of distributional decision problems with admit a polynomial-time heuristic algorithm with negligible error probability\cite{Bogdanov_2006}. That is, ${(\Dist, L) \in \textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ iff there is ${A: \Nats \times \Words \Alg \Bool}$ (an algorithm which takes input in ${\Nats \times \Words}$ and produces output in ${\Bool}$) s.t. ${A(k,x)}$ runs in time polynomial in ${k}$ and ${\Prb_{x \sim \Dist^k}[A(k,x) \ne \chi_L(x)]}$ is a negligible function of ${k}$. We have the following equivalent condition. ${(\Dist, L) \in \textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ iff there is ${P: \Nats \times \Words \Alg \Rats}$ s.t. ${P(k,x)}$ runs in time polynomial in ${k}$ and ${\E_{x \sim \Dist^k}[(P(k,x)-\chi_L(x))^2]}$ is a negligible function of ${k}$. In the language of the present work, such a ${P}$ is a called an \enquote{${\Fall_{\text{neg}}(\Gamma_0^1, \Gamma_0^1)}$-perfect polynomial-time estimator for ${(\Dist,\chi_L)}$.}
 
 Our main object of study are algorithms satisfying a related but weaker condition. Namely, we consider ${P}$ s.t. its error w.r.t. ${\chi_L}$ is not negligible but is \emph{minimal up to a negligible function}. That is, we require that for any ${Q: \Nats \times \Words \Alg \Rats}$ s.t. ${Q(k,x)}$ also runs in time polynomial in ${k}$, there is a negligible function ${\varepsilon(k)}$ s.t. 
 
@@ -169,8 +170,27 @@ Our main object of study are algorithms satisfying a related but weaker conditio
 
 Such a ${P}$ is called an \enquote{${\Fall_{neg}(\Gamma_0^1,\Gamma_0^1)}$-optimal polynomial-time estimator for ${(\Dist,\chi_L)}$.} More generally, we replace negligible functions by functions that lie in some space ${\Fall}$ which can represent different asymptotic conditions and we consider algorithms that use certain amounts of random and advice represented by a pair ${\Gamma}$ of function spaces. This brings us to the concept of an \enquote{${\EG}$-optimal polynomial-time estimator.}
 
-% Heuristic schemes and rank 2
-% Rename "perfect estimator" to "perfect polynomial-time estimator"
+Denote ${\textsc{OP}[{\EG}]}$ the set of distributional decision problems that admit ${\EG}$-optimal polynomial-time estimators. Obviously ${\textsc{OP}[\Fall_{neg}(\Gamma_0^1,\Gamma_0^1)] \supseteq \textsc{Heur}_\text{neg}\textsc{P}}$. Moreover, if one-way functions exist the inclusion is proper since it is possible to use any function with a hard-core predicate to construct an example where the constant ${\frac{1}{2}}$ is an ${\Fall_{neg}(\Gamma_0^1,\Gamma_0^1)}$-optimal polynomial-time estimator (see Theorem~\ref{thm:hard_core}). Thus, it seems that we constructed novel natural distributional complexity classes.
+
+% Ampleness is not needed in negative result section, Proposition 5.8!
+
+The distributional complexity class ${\textsc{HeurP}}$ is defined as defined as the set of distributional decision problems with admit a polynomial-time heuristic scheme\cite{Bogdanov_2006}. That is, ${(\Dist,L) \in \textsc{HeurP}}$ iff there is ${S: \Nats^2 \times \Words \Alg \Bool}$ s.t. ${S(K_0,K_1,x)}$ runs in time polynomial in ${K_0, K_1}$ and\footnote{We slightly reformulated the definition given in \cite{Bogdanov_2006}: replaced the rational input parameter ${\delta}$ by the integer input parameter ${K_1}$. The equivalence of the two formulations may be observed via the substitution ${\delta=K_1^{-1}}$.}\\ ${\Prb_{x \sim \Dist^{K_0}}[S(K_0,K_1,x) \ne \chi_L(x)] \leq (K_1+1)^{-1}}$. Analogously to before, we have the following equivalent condition. ${(\Dist,L) \in \textsc{HeurP}}$ iff there is ${P: \Nats^2 \times \Words \Alg \Rats}$ s.t. ${P(K_0,K_1,x)}$ runs in time polynomial in ${K_0,K_1}$ and for some ${M > 0}$, ${\E_{x \sim \Dist^{K_0}}[(P(K_0,K_1,x)-\chi_L(x))^2] \leq M (K_1+1)^{-1}}$. In the language of the present work, such a ${P}$ is a called an \enquote{${\Fall_{(K_1+1)^{-1}}(\Gamma_0^2, \Gamma_0^2)}$-perfect polynomial-time estimator for ${(\Dist^\eta,\chi_L)}$,} where ${\Dist^\eta}$ is a two-parameter (${K_0,K_1 \in \Nats}$) family of distributions which is constant along the parameter ${K_1}$.
+
+Again we can consider the corresponding weaker condition
+
+\[\E_{x \sim \Dist^{K_0}}[(P(K_0,K_1,x)-\chi_L(x))^2] \leq \E_{x \sim \Dist^{K_0}}[(Q(K_0,K_1,x)-\chi_L(x))^2] + M (K_1+1)^{-1}\]
+
+Such a ${P}$ is called an \enquote{${\Fall_{(K_1+1)^{-1}}(\Gamma_0^2,\Gamma_0^2)}$-optimal polynomial-time estimator for ${(\Dist^\eta,\chi_L)}$.}
+
+It is also useful to introduce the closely related concept of an \enquote{${\ESG}$-optimal polynomial-time estimator.} For example, an ${\Fall_{(K_1+1)^{-1}}^\sharp(\Gamma_0^2,\Gamma_0^2)}$-optimal polynomial-time estimator ${P}$ has to satisfy that for each ${S: \Nats^n \times \Words \Alg \Rats}$ that is also polynomial-time there is ${M > 0}$ s.t.
+
+\[\Abs{\E_{x \sim \Dist^{K_0}}[(P(K_0,K_1,x)-\chi_L(x))S(K_0,K_1,x)]} \leq M (K_1+1)^{-1}\]
+
+We show that e.g. every ${\Fall_{(K_1+1)^{-1}}^\sharp(\Gamma_0^2,\GammaLog^2)}$-optimal polynomial-time estimator is in particular an ${\Fall_{(K_1+1)^{-1}}(\Gamma_0^2,\GammaLog^2)}$-optimal polynomial-time estimator (see Theorem~\ref{thm:con_ort}) whereas every\\ ${\Fall_{(K_1+1)^{-1}}(\Gamma_0^2,\GammaLog^2)}$-optimal polynomial-time estimator is in particular an ${\Fall_{(K_1+1)^{-\frac{1}{2}}}^\sharp(\Gamma_0^2,\GammaLog^2)}$-optimal polynomial-time estimator (see Theorem~\ref{thm:ort}). Here, ${\GammaLog^2}$ indicates that we consider algorithms with advice of logarithmic length.
+
+We claim that the concept of an optimal polynomial-time estimator is a formalisation of the intuition outlined in \ref{subsec:mot}. To support this claim, we prove a number of results that form a parallel between probability theory and the theory of optimal polynomial-time estimators.
+
+% calibration... (law of large numbers?)
 
 TBD
 
@@ -976,6 +996,7 @@ Note that it would still be possible to prove Theorem~\ref{thm:ort} if in Defini
 Conversely to Theorem~\ref{thm:ort}, we have the following:
 
 \begin{theorem}
+\label{thm:con_ort}
 
 Consider $(\Dist,f)$ a distributional estimation problem and $P$ an $\ESG$-optimal estimator for $(\Dist,f)$. Then, $P$ is also an $\EG$-optimal estimator for $(\Dist,f)$.
 
@@ -3930,7 +3951,7 @@ when
 \item For any $S: \Words \xrightarrow{\Gamma_{\text{rand}}} \Words$
 
 \begin{equation}
-\Prb_{(x,y) \sim \Un^k \times \Un_S^k}[f(S^k(f(x),y))=x] \in \Fall_{\text{neg}}
+\Prb_{(x,y) \sim \Un^k \times \Un_S^k}[f(S^k(f(x),y))=x] \equiv 0 \pmod {\Fall_{\textnormal{neg}}}
 \end{equation}
 
 \end{enumerate}
@@ -3951,7 +3972,7 @@ when
 \item For any $S: \Words \xrightarrow{\Gamma_{\text{circ}}} \Words$
 
 \begin{equation}
-\Prb_{x \sim \Un^k}[f(S^k(f(x)))=x] \in \Fall_{\text{neg}}
+\Prb_{x \sim \Un^k}[f(S^k(f(x)))=x] \equiv 0 \pmod {\Fall_{\textnormal{neg}}}
 \end{equation}
 
 \end{enumerate}
