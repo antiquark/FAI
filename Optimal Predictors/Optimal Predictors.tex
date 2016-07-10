@@ -274,9 +274,9 @@ For any $n \in \Nats$, we fix $\mathcal{U}_n$, a prefix free universal Turing ma
 
 We start with a simple model to help build intuition and motivate the following definitions.
 
-Consider finite sets $X$ and $Y$, $\Dist \in \mathcal{P}(X)$, a mapping $m: X \rightarrow Y$ and a function $f: X \rightarrow \Reals$. Suppose $x$ was sampled from $\Dist$ and we were told $y := m(x)$ (but not told $x$ itself). Our expected value of $f(x)$ in these conditions is ${\E[f(x)] = \E_{x' \sim \Dist}[f(x') \mid m(x') = y]}$.
+Consider finite sets $X$ and $Y$, $\Dist \in \mathcal{P}(X)$, a mapping $m: X \rightarrow Y$ and a function $f: X \rightarrow \Reals$. Suppose $x$ was sampled from $\Dist$ and we were told $y := m(x)$ (but not told $x$ itself). Our expected value of $f(x)$ in these conditions is ${\E_{x \sim \Dist}[f(x) \mid m(x) = y]}$.
 
-Let $P: X \rightarrow \Reals$ be the function $P(x) := \E_{x' \sim \Dist}[f(x') \mid m(x) = m(x)]$. How can we characterize $P$ without referring to the concept of a conditional expected value? For any $Q: X \rightarrow \Reals$ we can consider the \enquote{error} $\E_\Dist[(Q - f)^2]$. $Q$ is called \enquote{efficient} when it factors as $Q = q \circ m$ for some $q: Y \rightarrow \Reals$. It is easy to see that $P$ has the least error among all efficient functions.
+Let $P: X \rightarrow \Reals$ be the function $P(x) := \E_{x' \sim \Dist}[f(x') \mid m(x') = m(x)]$. How can we characterize $P$ without referring to the concept of a conditional expected value? For any $Q: X \rightarrow \Reals$ we can consider the \enquote{error} $\E_\Dist[(Q - f)^2]$. $Q$ is called \enquote{efficient} when it factors as $Q = q \circ m$ for some $q: Y \rightarrow \Reals$. It is easy to see that $P$ has the least error among all efficient functions.
 
 Note that the characterization of $P$ depends not only on $f$ but also on $\Dist$. That is, the accuracy of an estimator depends on the prior probabilities to encounter different questions. In general, we assume that the possible questions are represented by elements of $\Words$. Thus we need to consider a probability distribution on $\Words$. However, in the spirit of average-case complexity theory we will only require our estimators to be \emph{asymptotically} optimal. Therefore instead of considering a single probability distribution we consider a family of probability distribution indexed by integer parameters\footnote{It is convenient to allow more than 1 parameter for reasons that will become clear in section~\ref{sec:e_and_u}. Roughly, some parameters represent the complexity of the input whereas other parameters represent the amount of computing resources available for probability estimation.}, where the role of the parameters is defining the relevant limit. We thereby arrive at the following:
 
@@ -3555,17 +3555,19 @@ The above existence theorems employ the fall space ${\FallU}$ whose meaning migh
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${(\Dist, f)}$ a distributional estimation problem and ${P: \Words \Scheme \Rats}$ bounded. ${P}$ is called an \emph{${\EG}$-perfect estimator for ${(\Dist,f)}$} when 
+Consider ${(\Dist, f)}$ a distributional estimation problem and ${P: \Words \Scheme \Rats}$ bounded. ${P}$ is called an \emph{${\EG}$-perfect polynomial-time estimator for ${(\Dist,f)}$} when 
 
 \begin{equation}
 %\label{eqn:tbd}
 \E_{(x,y) \sim \Dist^K \times \Un_P^K}[(P^K(x,y)-f(x))^2] \equiv 0 \pmod \Fall
 \end{equation}
 
+For the sake of brevity, we will say \enquote{${\EG}$-perfect estimator} rather than \enquote{${\EG}$-perfect polynomial-time estimator.}
+
 \end{definition}
 \end{samepage}
 
-Perfect estimators are essentially objects of \enquote{classical} average-case complexity theory. In particular, perfect estimators for distributional decision problems of rank 1 are closely related to heuristic algorithms in the sense of \cite{Bogdanov_2006} (their existence is equivalent under mild assumptions), whereas perfect estimators for rank 2 problems of the form ${(\Dist^\eta,\chi_D)}$ with ${\Dist}$ of rank 1 are related to heuristic schemes.
+Perfect polynomial-time estimators are essentially objects of \enquote{classical} average-case complexity theory. In particular, perfect polynomial-time estimators for distributional decision problems of rank 1 are closely related to heuristic algorithms in the sense of \cite{Bogdanov_2006} (their existence is equivalent under mild assumptions), whereas perfect polynomial-time estimators for rank 2 problems of the form ${(\Dist^\eta,\chi_D)}$ with ${\Dist}$ of rank 1 are related to heuristic schemes.
 
 \begin{samepage}
 \begin{proposition}
@@ -3577,7 +3579,7 @@ Consider ${(\Dist,f)}$ a distributional estimation problem, ${P: \Words \Scheme 
 \sup_{i \in \Nats} \E_{(x,y) \sim \Dist^K \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \equiv 0 \pmod \FallU
 \end{equation}
 
-Then, ${P}$ is an ${\FallU(\Gamma)}$-perfect estimator for ${(\Dist,f)}$.
+Then, ${P}$ is an ${\FallU(\Gamma)}$-perfect polynomial-time estimator for ${(\Dist,f)}$.
 
 \end{proposition}
 \end{samepage}
