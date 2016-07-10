@@ -190,7 +190,9 @@ We show that e.g. every ${\Fall_{(K_1+1)^{-1}}^\sharp(\Gamma_0^2,\GammaLog^2)}$-
 
 We claim that the concept of an optimal polynomial-time estimator is a formalisation of the intuition outlined in \ref{subsec:mot}. To support this claim, we prove a number of results that form a parallel between probability theory and the theory of optimal polynomial-time estimators.
 
-% calibration... (law of large numbers?)
+According to Borel's law of large numbers, every event of probability ${p}$ occurs with asymptotic frequency ${p}$. Therefore, if some algorithm ${P}$ represents a notion of probability for ${x \in L}$, we expect that given ${a,b \in \Rats}$ and considering ${x \sim \Dist^k}$ s.t. ${a \leq P(x) \leq b}$, the frequency with which ${x \in L}$ is asymptotically (in ${k}$) between ${a}$ and ${b}$. With some assumptions about allowed advice, this turns out to be the case for ${P}$ an ${\EG}$-optimal polynomial-time estimator (see Corollary~\ref{crl:calib}).
+
+Given ${L_1, L_2 \subseteq \Words}$ s.t. ${L_1 \cap L_2 = \varnothing}$ we expect a reasonable notion of probability to satisfy something like ${\Prb[x \in L_1 \cup L_2] = \Prb[x \in L_1] + \Prb[x \in L_2]}$.
 
 TBD
 
