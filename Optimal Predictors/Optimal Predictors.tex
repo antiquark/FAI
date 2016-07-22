@@ -3670,7 +3670,7 @@ Using \ref{eqn:prp__fall_uni_qpoly} we get that for some ${M_1 \in \Reals^{>0}}$
 
 \subsubsection{Negative Results}
 
-We now demonstrate distributional estimation problems for which ${\EG}$-optimal estimators don't exist.
+In the present work, we don't refute the existence of optimal polynomial-time estimators for any given distributional estimation problem. However, we do demonstrate distributional estimation problems for which \emph{uniform} ${\EG}$-optimal estimators don't exist.
 
 \begin{samepage}
 \begin{proposition}
@@ -3746,7 +3746,7 @@ By Proposition~\ref{prp:tally_perfect}, ${P}$ is an ${\Fall(\Delta)}$-perfect es
 %
 \end{proof}
 
-Again, the statement can be reversed to disprove existence of ${\Fall(\Delta)}$-optimal estimators.
+Again, the statement can be reversed to disprove existence of uniform ${\Fall(\Delta)}$-optimal estimators.
 
 Now we consider the special case ${\Fall=\FallUt{\varphi}}$, ${\GrowR = \GammaPoly^n}$. 
 
@@ -3919,7 +3919,7 @@ Theorem~\ref{thm:uniq_cond} implies that in simple scenarios, \enquote{counterfa
 
 The motivation for optimal polynomial-time estimators comes from the desire the quantify the uncertainty originating in computational resource bounds. We used this motivation to arrive at an intuitive definition, and proceeded to show the resulting object has many properties of \enquote{normal} probability theory, justifying its interpretation as a brand of expected value. Moreover, there are associated concepts of reductions and complete problems analogous to standard constructions in average-case complexity theory. 
 
-Thus, the class of distributional estimation problems admitting ${\EG}$-optimal estimators (or ${\ESG}$-optimal estimators) is a natural average-case complexity class. In light of the positive and negative existence results we have demonstrated, these new classes don't seem to trivially coincide with any of the previously known classes. Mapping the boundary of these classes and understanding their relationships with other classes in average-case complexity seems to be ground for much further work. Moreover, it is possible to consider generalizations by including more types of computational resources e.g. space, parallelism and/or non-determinism.
+Thus, the class of distributional estimation problems admitting ${\EG}$-optimal estimators (or ${\ESG}$-optimal estimators) is a natural distributional complexity class. In light of the existence results we have demonstrated, these new classes are unlikely to trivially coincide with any of the previously known classes. Mapping the boundary of these classes and understanding their relationships with other classes in average-case complexity theory seems to be ground for much further work. Moreover, it is possible to consider generalizations by including more types of computational resources e.g. space, parallelism and/or non-determinism.
 
 One area where applying these concepts seems natural is Artificial General Intelligence. Indeed, the von Neumann–Morgenstern theorem shows that perfect rational agents are expected utility maximizers but in general the exact evaluation of expected utility is intractable. It is thus natural to substitute an optimal polynomial-time estimator for utility, as the analogue of expected value in the computationally bounded case. Further illuminating the connection, Theorem~\ref{thm:exists_smp} shows how optimal polynomial-time estimators result from agnostic PAC learning. It seems likely that this result can be generalized to obtaining optimal polynomial-time estimators for non-samplable word ensembles from online learning.
 
