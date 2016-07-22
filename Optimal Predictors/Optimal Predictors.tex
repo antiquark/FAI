@@ -1338,7 +1338,7 @@ Consider $(\Dist, f)$ a distributional estimation problem and ${L \subseteq \Wor
 P_{\chi f}^K(x,yz)=P_L^K(x,y) P_{f \mid L}^K(x,z)
 \end{equation}
 
-Then, $P_{\chi f}$ is an $\ESG$-optimal estimator for $(\Dist, \chi_Df)$.
+Then, $P_{\chi f}$ is an $\ESG$-optimal estimator for $(\Dist, \chi_L f)$.
 
 \end{theorem}
 \end{samepage}
@@ -1464,9 +1464,9 @@ Subtracting \ref{eqn:thm__cond__lemma__prf3} from \ref{eqn:thm__cond__lemma__prf
 
 Consider any $S: \Words \times \Rats^2 \Scheme \Rats$ bounded.
 
-\[\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - \chi_Df) S^K(x,P_L^K,P_{\chi f}^K)]=\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K + P_{\chi f}^K - \chi_Df) S^K(x,P_L^K,P_{\chi f}^K)]\]
+\[\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - \chi_L f) S^K(x,P_L^K,P_{\chi f}^K)]=\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K + P_{\chi f}^K - \chi_L f) S^K(x,P_L^K,P_{\chi f}^K)]\]
 
-\[\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - \chi_L f) S^K]=\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) S^K]+\E_{\Dist_P^K \times \Un_S^K}[( P_{\chi f}^K - \chi_Df) S^K]\]
+\[\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - \chi_L f) S^K]=\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) S^K]+\E_{\Dist_P^K \times \Un_S^K}[( P_{\chi f}^K - \chi_L f) S^K]\]
 
 Using the fact $P_{\chi f}$ is an $\ESG$-optimal estimator for $(\Dist, \chi_L f)$, we get
 
@@ -3615,7 +3615,7 @@ For the sake of brevity, we will say \enquote{${\EG}$-perfect estimator} rather 
 \end{definition}
 \end{samepage}
 
-Perfect polynomial-time estimators are essentially objects of \enquote{classical} average-case complexity theory. In particular, perfect polynomial-time estimators for distributional decision problems of rank 1 are closely related to heuristic algorithms in the sense of \cite{Bogdanov_2006} (their existence is equivalent under mild assumptions), whereas perfect polynomial-time estimators for rank 2 problems of the form ${(\Dist^\eta,\chi_D)}$ with ${\Dist}$ of rank 1 are related to heuristic schemes.
+Perfect polynomial-time estimators are essentially objects of \enquote{classical} average-case complexity theory. In particular, perfect polynomial-time estimators for distributional decision problems of rank 1 are closely related to heuristic algorithms in the sense of \cite{Bogdanov_2006} (their existence is equivalent under mild assumptions), whereas perfect polynomial-time estimators for rank 2 problems of the form ${(\Dist^\eta,\chi_L)}$ with ${\Dist}$ of rank 1 are related to heuristic schemes.
 
 \begin{samepage}
 \begin{proposition}
