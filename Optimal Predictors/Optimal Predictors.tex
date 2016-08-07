@@ -1043,7 +1043,7 @@ $$\E[(P^{K}-f)^2]+\E[(Q^{K}-P^{K})^2]=\E[(Q^{K}-f)^2]+2\E[(P^{K}-Q^{K})(P^{K}-f)
 
 $$\E[(P^{K}-f)^2] \leq \E[(Q^{K}-f)^2] + 2\E[(P^{K}-Q^{K})(P^{K}-f)]$$
 
-We can assume $Q$ is bounded without loss of generality since given any $Q$ it easy to construct bounded $\tilde{Q}$ s.t. $\E[(\tilde{Q}^{K}-f)^2] \leq \E[(Q^{K}-f)^2]$. Applying \ref{eqn:op_sharp}, we conclude that there is $\varepsilon \in \Fall$ s.t. \ref{eqn:op} holds.
+We can assume $Q$ is bounded without loss of generality since given any $Q$ it easy to construct bounded $\tilde{Q}$ s.t. $\E[(\tilde{Q}^{K}-f)^2] \leq \E[(Q^{K}-f)^2]$. Applying \ref{eqn:op_sharp}, we get \ref{eqn:op}.
 \end{proof}
 
 \subsection{Simple Example}
@@ -1054,7 +1054,7 @@ The concept of an optimal polynomial-time estimator is in some sense complementa
 \begin{theorem}
 \label{thm:hard_core}
 
-Consider $\Dist$ a word ensemble of rank ${1}$ s.t. for any different $k,l \in \Nats$,\\ ${\Supp \Dist^k \cap \Supp \Dist^l = \varnothing}$, ${f: \Supp \Dist \rightarrow \Words}$ one-to-one and $B$ a hard-core predicate of $(\Dist,f)$. Define ${m: \Supp \Dist \rightarrow \Nats}$ by 
+Consider $\Dist$ a word ensemble of rank ${1}$ s.t. for any different $k,l \in \Nats$,\\ ${\Supp \Dist^k \cap \Supp \Dist^l = \varnothing}$, ${f: \Supp \Dist \rightarrow \Words}$ one-to-one and $B$ a hard-core predicate of $(\Dist,f)$ (see Definition~\ref{def:hard_core}). Define ${m: \Supp \Dist \rightarrow \Nats}$ by 
 
 \[\forall x \in \Supp \Dist^k: m(x):=k\]
 
@@ -1102,13 +1102,13 @@ $$ \forall k \in I_1: \E_{x \sim \Dist^k}[\Prb_{\Un_G^k}[G^k(f(x)) \ne B^k(x)]] 
 
 $$ \forall k \in I_1: \Prb_{\Dist^{k} \times \Un_G^k}[G^k(f(x)) \ne B^k(x)] \leq \sqrt{\frac{1}{4} - \frac{\epsilon_1}{k^d}} $$
 
-Since $\sqrt{t}$ is a concave function and the derivative of $\sqrt{t}$ is $\frac{1}{2\sqrt{t}}$, we have $\sqrt{t} \leq \sqrt{t_0} + \frac{t-t_0}{2\sqrt{t_0}}$. We get
+Since $\sqrt{t}$ is a concave function and the derivative of $\sqrt{t}$ is $\frac{1}{2\sqrt{t}}$, we have $\sqrt{t} \leq \sqrt{t_0} + \frac{t-t_0}{2\sqrt{t_0}}$. Taking ${t_0}=\frac{1}{4}$ we get
 
 $$ \forall k \in I_1: \Prb_{\Dist^{k} \times \Un_G^k}[G^k(f(x)) \ne B^k(x)] \leq \frac{1}{2}-\frac{\epsilon_1}{k^d}$$
 
 $$ \forall k \in I_1: \Prb_{\Dist^{k} \times \Un_G^k}[G^k(f(x)) = B^k(x)] \geq \frac{1}{2}+\frac{\epsilon_1}{k^d}$$
 
-This contradicts the definition of hard-core predicate.
+This contradicts the definition of a hard-core predicate.
 \end{proof}
 
 \begin{corollary}
@@ -1135,7 +1135,7 @@ The following is the non-uniform version of Theorem~\ref{thm:hard_core} which we
 \begin{theorem}
 \label{thm:hard_core_circ}
 
-Consider $\Dist$ a word ensemble s.t. for any different $k,l \in \Nats$, $\Supp \Dist^k \cap \Supp \Dist^l = \varnothing$, $f: \Supp \Dist \rightarrow \Words$ one-to-one and $B$ a non-uniformly hard-core predicate of $(\Dist,f)$. 
+Consider $\Dist$ a word ensemble s.t. for any different $k,l \in \Nats$, $\Supp \Dist^k \cap \Supp \Dist^l = \varnothing$, $f: \Supp \Dist \rightarrow \Words$ one-to-one and $B$ a non-uniformly hard-core predicate of $(\Dist,f)$ (see Definition~\ref{def:hard_core_adv}). 
 
 Let $\Gamma:=(\GammaPoly^1,\GammaPoly^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\Dist_f, \chi_B)$.
 
@@ -1159,7 +1159,7 @@ Follows immediately from Theorem~\ref{thm:hard_core_circ} and Theorem~\ref{thm:g
 
 \subsection{Calibration}
 
-From a Bayesian perspective, a good probability assignment should be calibrated. For example, suppose there 100 people in a room and you assign each person a probability they are married. If there are 60 people you assigned probabilities in the range 70\%-80\%, the number of married people among these 60 should be close to the interval $60 \times [0.7, 0.8] = [42,48]$. The same requirement can be made for expected value assignments. For example, if you now need to assign an expected value to the age of each person and you assigned an expected age in the range 30-40 to some sufficiently large group of people, the mean age in the group should be close to the interval $[30,40]$. 
+From a Bayesian perspective, a good probability assignment should be calibrated. For example, suppose there are 100 people in a room and you assign each person a probability they are married. If there are 60 people you assigned probabilities in the range 70\%-80\%, the number of married people among these 60 should be close to the interval $60 \times [0.7, 0.8] = [42,48]$. The same requirement can be made for expected value assignments. For example, if you now need to assign an expected value to the age of each person and you assigned an expected age in the range 30-40 to some sufficiently large group of people, the mean age in the group should be close to the interval $[30,40]$. 
 
 We will now show that optimal polynomial-time estimators satisfy an analogous property.
 
@@ -1203,16 +1203,19 @@ We now proceed with the proofs.
 
 Construct $W: \Words \Scheme \Bool$ s.t. 
 
-\[W^{K}(x,y)=\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))\] 
+\begin{align*}
+\R_W(K) &= \R_P(K) \\
+W^{K}(x,y)&=\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))
+\end{align*}
 
-Denote $\delta(K):=\E_{\Dist^{K} \times \Un_W^{K}}[W^{K}(P^{K}-f)]$ and $\varepsilon:=\frac{\delta^2}{\alpha}$. According to Theorem~\ref{thm:calib}, $\varepsilon \in \Fall$.
+Denote $\delta(K):=\E_{\Dist^{K} \times \Un_P^{K}}[W^{K}(P^{K}-f)]$ and $\varepsilon:=\frac{\delta^2}{\alpha}$. According to Theorem~\ref{thm:calib}, $\varepsilon \in \Fall$.
 We get
 
-$$\frac{\E_{\Dist^{K} \times \Un_W^{K}}[W^{K}(P^{K}-f)]^2}{\alpha(K)} = \varepsilon(K)$$
+$$\frac{\E_{\Dist^{K} \times \Un_P^{K}}[W^{K}(P^{K}-f)]^2}{\alpha(K)} = \varepsilon(K)$$
 
-$$\frac{\E_{\Dist^{K} \times \Un_W^{K}}[\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))(P^{K}-f)]^2}{\alpha(K)} = \varepsilon(K)$$
+$$\frac{\E_{\Dist^{K} \times \Un_P^{K}}[\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))(P^{K}-f)]^2}{\alpha(K)} = \varepsilon(K)$$
 
-$$\frac{(\E_{\Dist^{K} \times \Un_W^{K}}[\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))]\E[P^{K}-f \mid A^{K} \leq P^{K} \leq B^{K}])^2}{\alpha(K)} = \varepsilon(K)$$
+$$\frac{(\E_{\Dist^{K} \times \Un_P^{K}}[\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))]\E[P^{K}-f \mid A^{K} \leq P^{K} \leq B^{K}])^2}{\alpha(K)} = \varepsilon(K)$$
 
 $$\frac{(\alpha(K)\E[P^{K}-f \mid A^{K} \leq P^{K} \leq B^{K}])^2}{\alpha(K)} = \varepsilon(K)$$
 
@@ -1247,11 +1250,19 @@ Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\l
 
 \begin{align*}
 I&:=\{K \in \Nats^n \mid \frac{\Abs{\delta(K)}}{\alpha(K)} \geq \zeta(K)\} \\
-L^{K}&:=\Rats \cap [\frac{\Abs{\delta(K)}}{2\alpha(K)},\frac{\Abs{\delta(K)}}{\alpha(K)}] \\
-\epsilon(K) &\in (\Sgn \delta(K)) \cdot \Argmin{t \in L^{K}} \Abs{\En_\Rats(t)}
+E^{K}&:=\Rats \cap [\frac{\Abs{\delta(K)}}{2\alpha(K)},\frac{\Abs{\delta(K)}}{\alpha(K)}] \\
+\epsilon(K) &\in (\Sgn \delta(K)) \cdot \Argmin{t \in E^{K}} \Abs{\En_\Rats(t)}
 \end{align*}
 
-It is easy to see that ${\Abs{\En_\Rats(\epsilon)} = O(\log \frac{\alpha}{\Abs{\delta}})}$, hence we can construct $Q: \Words \Scheme \Rats$ s.t. $\R_Q=\R_P$ and for any $(K) \in I$, and $x,y \in \Words$, $Q^{K}(x,y)=P^{K}(x,y)-\epsilon(K)$ (we supply $\epsilon$ as advice for $Q$). Applying Proposition~\ref{prp:weight} to $P$, $Q$ and $W$, we conclude there is $\varepsilon \in \Fall$ s.t.
+It is easy to see that ${\Abs{\En_\Rats(\epsilon)} = O(\log \frac{\alpha}{\Abs{\delta}})}$, hence we can construct $Q: \Words \Scheme \Rats$ s.t. for any $K \in I$ and $x,y \in \Words$
+
+\begin{align*}
+\A_Q(K) &= \En_\Rats(\epsilon(K)) \\
+\R_Q(K) &= \R_P(K) \\
+Q^{K}(x,y) &= P^{K}(x,y)-\epsilon(K)
+\end{align*}
+
+Applying Proposition~\ref{prp:weight} to $P$, $Q$ and $W$, we conclude there is $\varepsilon \in \Fall$ s.t.
 
 $$\E_{\Dist^{K} \times \Un_W^{K}}[W^{K}(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_W^{K}}[W^{K}(Q^{K}-f)^2] + \varepsilon(K)$$
 
@@ -1298,7 +1309,15 @@ Optimal polynomial-time estimators have an analogous property:
 \begin{proposition}
 \label{prp:linearity}
 
-Consider $\Dist$ a word ensemble, $f_1,f_2: \Supp \Dist \rightarrow \Reals$ bounded and $t_1,t_2 \in \Rats$. Denote $f: = t_1 f_1 + t_2 f_2$. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist,f_1)$ and $P_2$ is an $\ESG$-optimal estimator for $(\Dist,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. $\R_P(K) = \R_{P_1}(K) + \R_{P_2}(K)$ and for any ${x \in \Supp \Dist^{K}}$, $y_1 \in \WordsLen{\R_{P_1}(K)}$, $y_2 \in \WordsLen{\R_{P_1}(K)}$, $P^{K}(x,y_1 y_2)=t_1 P_1^{K}(x,y_1) + t_2 P_2^{K}(x, y_2)$. Then, $P$ is an $\ESG$-optimal estimator for $(\Dist, f)$.
+Consider $\Dist$ a word ensemble, $f_1,f_2: \Supp \Dist \rightarrow \Reals$ bounded and $t_1,t_2 \in \Rats$. Denote $f: = t_1 f_1 + t_2 f_2$. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist,f_1)$ and $P_2$ is an $\ESG$-optimal estimator for $(\Dist,f_2)$. Construct $P: \Words \Scheme \Rats$ s.t. for any ${x \in \Supp \Dist^{K}}$, ${y_1 \in \WordsLen{\R_{P_1}(K)}}$ and $y_2 \in \WordsLen{\R_{P_1}(K)}$
+
+\begin{align}
+\A_P(K) &= \Chev{\A_{P_1}(K),\A_{P_2}(K)} \\
+\R_P(K) &= \R_{P_1}(K) + \R_{P_2}(K) \\
+P^{K}(x,y_1 y_2) &= t_1 P_1^{K}(x,y_1) + t_2 P_2^{K}(x, y_2)
+\end{align}
+
+Then, $P$ is an $\ESG$-optimal estimator for $(\Dist, f)$.
 
 \end{proposition}
 
@@ -1334,7 +1353,7 @@ The above perspective allows us stating and proving non-tautological theorems an
 \begin{theorem}
 \label{thm:con_cond}
 
-Consider $(\Dist, f)$ a distributional estimation problem and ${L \subseteq \Words}$ s.t. for all $K \in \Nats^n$, $\Dist^K(L) > 0$. Define $\gamma_L: \NatFun \Reals$ by $\gamma_L(K):=\Dist^{K}(L)^{-1}$ and $\Fall_L:=\gamma_L \Fall$. Let $P_L$ be an $\ESG$-optimal estimator for $(\Dist, \chi_L)$ and $P_{f \mid L}$ be an $\Fall_L^\sharp(\Gamma)$-optimal estimator for ${(\Dist \mid L, f)}$. Construct ${P_{\chi f}: \Words \Scheme \Rats}$ s.t. $\R_{P_{\chi f}}=\R_{P_L} + \R_{P_{f \mid L}}$ and for any $y \in \BoolR{P_L}$ and ${z \in \BoolR{P_{f \mid L}}}$
+Consider $(\Dist, f)$ a distributional estimation problem and ${L \subseteq \Words}$ s.t. for all $K \in \Nats^n$, $\Dist^K(L) > 0$. Define $\gamma_L: \NatFun \Reals$ by $\gamma_L(K):=\Dist^{K}(L)^{-1}$ and $\Fall_L:=\gamma_L \Fall$. Let $P_L$ be an $\ESG$-optimal estimator for $(\Dist, \chi_L)$ and $P_{f \mid L}$ be an $\Fall_L^\sharp(\Gamma)$-optimal estimator for ${(\Dist \mid L, f)}$. Construct ${P_{\chi f}: \Words \Scheme \Rats}$ s.t. $\R_{P_{\chi f}}=\R_{P_L} + \R_{P_{f \mid L}}$ and for any ${x \in \Words}$, $y \in \BoolR{P_L}$ and ${z \in \BoolR{P_{f \mid L}}}$
 
 \begin{equation}
 P_{\chi f}^K(x,yz)=P_L^K(x,y) P_{f \mid L}^K(x,z)
@@ -1375,7 +1394,7 @@ Using the fact $P_{f \mid L}^K$ is $\Fall_L^\sharp(\Gamma)$-optimal for $(\Dist 
 \begin{theorem}
 \label{thm:cond}
 
-Consider $(\Dist, f)$ a distributional estimation problem and ${L \subseteq \Words}$ s.t. for all $K \in \Nats^n$, $\Dist^K(L) > 0$. Define $\gamma_L: \NatFun \Reals$ by $\gamma(K):=\Dist^{K}(L)^{-1}$ and $\Fall_L:=\gamma_L \Fall$. Let $P_L$ be an $\ESG$-optimal estimator for $(\Dist, \chi_L)$ and $P_{\chi f}$ be an $\ESG$-optimal estimator for $(\Dist, \chi_L f)$. Choose any $M \in \Rats$ s.t. ${M \geq \sup \Abs{f}}$ and construct $P_{f \mid L}: \Words \Scheme \Rats$ s.t. $\R_{P_{f \mid L}} = \R_{P_L} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_L}}$ and $z \in \BoolR{P_{\chi f}}$ 
+Consider $(\Dist, f)$ a distributional estimation problem and ${L \subseteq \Words}$ s.t. for all $K \in \Nats^n$, $\Dist^K(L) > 0$. Define $\gamma_L: \NatFun \Reals$ by $\gamma(K):=\Dist^{K}(L)^{-1}$ and $\Fall_L:=\gamma_L \Fall$. Let $P_L$ be an $\ESG$-optimal estimator for $(\Dist, \chi_L)$ and $P_{\chi f}$ be an $\ESG$-optimal estimator for $(\Dist, \chi_L f)$. Choose any $M \in \Rats$ s.t. ${M \geq \sup \Abs{f}}$ and construct $P_{f \mid L}: \Words \Scheme \Rats$ s.t. $\R_{P_{f \mid L}} = \R_{P_L} + \R_{P_{\chi f}}$ and for any ${x \in \Words}$, ${y \in \BoolR{P_L}}$ and $z \in \BoolR{P_{\chi f}}$ 
 
 \begin{equation}
 P_{f \mid L}^K(x,yz)=\begin{cases}P_L^K(x,y)^{-1} P_{\chi f}^K(x,z) \textnormal{ if this number is in } [-M,M] \\ M \textnormal{ if } P_L^K(x,y)=0 \textnormal{ or } P_L^K(x,y)^{-1} P_{\chi f}^K(x,z) > M\\ -M \textnormal{ if } P_L^K(x,y)^{-1} P_{\chi f}^K(x,z) < -M\end{cases}
@@ -1484,11 +1503,11 @@ Applying \ref{eqn:thm__cond__lemma__prf5} we conclude that
 
 \begin{proof}[Proof of Theorem \ref{thm:cond}]
 
-Construct $\tilde{P}_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{\tilde{P}_{\chi f}} = \R_{P_L} + \R_{P_{\chi f}}$ and for any ${y \in \BoolR{P_L}}$ and $z \in \BoolR{P_{\chi f}}$
+Construct $\tilde{P}_{\chi f}: \Words \Scheme \Rats$ s.t. $\R_{\tilde{P}_{\chi f}} = \R_{P_L} + \R_{P_{\chi f}}$ and for any ${x \in \Words}$, ${y \in \BoolR{P_L}}$ and $z \in \BoolR{P_{\chi f}}$
 
 \[\tilde{P}_{\chi f}^K(x,yz)=\min(\max(P_{\chi f}^K(x,z),-P_L^K(x,y) M),P_L^K(x,y) M)\] 
 
-For any ${y \in \BoolR{P_L}}$ and $z \in \BoolR{P_{\chi f}}$, we have 
+For any ${x \in \Words}$, ${y \in \BoolR{P_L}}$ and $z \in \BoolR{P_{\chi f}}$, we have 
 
 \[
 \tilde{P}_{\chi f}^K(x,yz) = P_L^K(x,y) P_{f \mid L}^K(x,yz)\]
@@ -1529,7 +1548,7 @@ The notation $f(K) \equiv g(K) \pmod \Fall$ can be conveniently generalized from
 \begin{samepage}
 \begin{definition}
 
-Consider a set $X$ and two families $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and\\ $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$. We say that \emph{$\Dist$ is congruent to $\mathcal{E}$ modulo $\Fall$} when $\Dtv(\Dist^K,\mathcal{E}^K) \in \Fall$. In this case we write $\Dist^K \equiv \mathcal{E}^K \pmod \Fall$ or $\Dist \equiv \mathcal{E} \pmod \Fall$.
+Consider a set $X$ and two families $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$. We say that \emph{$\Dist$ is congruent to $\mathcal{E}$ modulo $\Fall$} when $\Dtv(\Dist^K,\mathcal{E}^K) \in \Fall$. In this case we write $\Dist^K \equiv \mathcal{E}^K \pmod \Fall$ or $\Dist \equiv \mathcal{E} \pmod \Fall$.
 
 \end{definition}
 \end{samepage}
@@ -1554,7 +1573,7 @@ Obvious since $\Dtv$ is a metric.
 \begin{proposition}
 \label{prp:prob_cong_ev}
 
-Consider $X$ a set, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \rightarrow \Reals\}_{K \in \Nats^n}}$ a uniformly bounded family of functions. Assume ${\Dist \equiv \mathcal{E} \pmod \Fall}$. Then, $\E_{x \sim \Dist^K}[f^K(x)] \equiv \E_{x \sim \mathcal{E}^K}[f^K(x)] \pmod \Fall$.
+Consider $X$ a set, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \rightarrow \Reals\}_{K \in \Nats^n}}$ a uniformly bounded family of functions. Assume ${\Dist \equiv \mathcal{E} \pmod \Fall}$. Then,\\ ${\E_{x \sim \Dist^K}[f^K(x)] \equiv \E_{x \sim \mathcal{E}^K}[f^K(x)] \pmod \Fall}$.
 
 \end{proposition}
 \end{samepage}
@@ -1596,7 +1615,7 @@ Total variation distance is contracted by pushforward therefore \[\Dtv(f_*^K\Dis
 \begin{proposition}
 \label{prp:prob_cong_dir}
 
-Consider $X_1$, $X_2$ sets, $\{\Dist_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\mathcal{E}_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\Dist_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$ and $\{\mathcal{E}_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$. Then, $\Dist_1 \equiv \mathcal{E}_1 \pmod \Fall$ and $\Dist_2 \equiv \mathcal{E}_2 \pmod \Fall$ imply $\Dist_1^K \times \Dist_2^K \equiv \mathcal{E}_1^K \times \mathcal{E}_2^K \pmod \Fall$. 
+Consider $X_1$, $X_2$ sets, $\{\Dist_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\mathcal{E}_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\Dist_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$ and $\{\mathcal{E}_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$. Then, $\Dist_1 \equiv \mathcal{E}_1 \pmod \Fall$ and $\Dist_2 \equiv \mathcal{E}_2 \pmod \Fall$ imply\\ ${\Dist_1^K \times \Dist_2^K \equiv \mathcal{E}_1^K \times \mathcal{E}_2^K \pmod \Fall}$. 
 
 \end{proposition}
 \end{samepage}
@@ -1615,13 +1634,13 @@ The concept of a polynomial-time $\Gamma$-scheme can be generalized in a way whi
 \begin{samepage}
 \begin{definition}
 
-Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\MGrow$-scheme of signature ${X \rightarrow Y}$} is a triple $(S,\R_S,\M_S)$ where $S: \Nats^n \times X \times \Words^2 \Alg Y$, ${\R_S: \Nats^n \times \Words \Alg \Nats}$ and $\{\M_S^K \in \mathcal{P}(\Words)\}_{K \in \Nats^n}$ are s.t.
+Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\MGrow$-scheme of signature ${X \rightarrow Y}$} is a triple $(S,\R_S,\M_S)$ where $S: \Nats^n \times X \times \Words \times \Words \Alg Y$, ${\R_S: \Nats^n \times \Words \Alg \Nats}$ and\\ ${\{\M_S^K \in \mathcal{P}(\Words)\}_{K \in \Nats^n}}$ are s.t.
 
 \begin{enumerate}[(i)]
 
-\item $\max_{x \in X} \max_{y \in \BoolR{S}} \max_{z \in \Supp \M_S^K} \T_S(K,x,y,z) \in \GammaPoly^n$
+\item $\max_{x \in X} \max_{y,z \in \Words} \T_S(K,x,y,z) \in \GammaPoly^n$
 
-\item ${\max_{z \in \Supp \M_S^K} \T_{\R_S}(K,z) \in \GammaPoly^n}$
+\item ${\max_{z \in \Words} \T_{\R_S}(K,z) \in \GammaPoly^n}$
 
 \item There is $r \in \GrowR$ s.t. for any $K \in \Nats^n$ and $z \in \Supp \M_S^K$, $\R_S(K,z) \leq r(K)$.
 
@@ -1652,11 +1671,11 @@ We introduce composition of ${\MGrow}$-schemes as well.
 Consider encoded sets $X$, $Y$, $Z$ and $S: X \MScheme Y$, $T: Y \MScheme Z$. Choose\\ ${p \in \NatPoly}$ s.t. 
 
 \begin{align*}
-\Supp \UM_S^K &\subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)} \\
-\Supp \UM_T^K &\subseteq \Bool^{\leq p(K)} \times \Bool^{\leq p(K)}
+\Supp \M_S^K &\subseteq \Bool^{\leq p(K)} \\
+\Supp \M_T^K &\subseteq \Bool^{\leq p(K)}
 \end{align*}
 
-We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
+We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b \in \Bool^{\leq p(K)}$, ${v \in \Bool^{\R_S(K,a)}}$, ${w \in \Bool^{\R_T(K,b)}}$ and $x \in X$
 
 \begin{align}
 \M_U^K &= \En_*^2(\M_S^K \times \M_T^K) \\
@@ -1708,7 +1727,7 @@ When $\sup{\Abs{\sigma_1}} < \infty$ (since $f$ is bounded, this can always be a
 \end{definition}
 \end{samepage}
 
-For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability and $\EMG$-samplability become very weak, as seen in the following propositions.
+For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability become very weak, as seen in the following propositions.
 
 \begin{samepage}
 \begin{proposition}
@@ -1788,7 +1807,7 @@ Construct ${\sigma: \bm{1} \MScheme \Words \times \Rats}$ s.t. for any $K \in I$
 \sigma^K(y,\Chev{z,\En_\Rats(t)})=(z,t)
 \end{align*}
 
-Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ from Proposition~\ref{prp:adv_mgamma_smp}. Clearly $\sigma_{\bullet}^K=\sigma_{0\bullet}^K$ therefore $\sigma_0$ is also a polynomial-time $\EMG$-sampler of $\Dist$.
+By Proposition~\ref{prp:adv_mgamma_smp}, $\sigma_0$ is a polynomial-time $\EMG$-sampler of $\Dist$.
 
 Let ${f_\sigma^K}$ be defined as in Definition~\ref{def:smp_prob}. Consider any $K \in \Nats^n$. It is easy to see that for any ${x \in \Supp \Dist^{K} \cap \Bool^{\leq l(K)}}$, ${f_\sigma^K(x)=\rho^K(f(x))}$ (for $K \not\in I$ this is vacuously true). Also, for any\\ ${x \in \Bool^{>l(K)}}$, $f_\sigma^K(x)=0$. Denote 
 
@@ -1805,7 +1824,7 @@ $$\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}] \leq p^K \zeta(K) + (1 - p^K)\sup \Ab
 The right hand side is obviously in $\Fall$.
 \end{proof}
 
-We now introduce the notions of samplability of samplability over a given \enquote{base space} $Y$.
+We now introduce the notions of samplability over a given \enquote{base space} $Y$.
 
 \begin{definition}
 
@@ -1942,7 +1961,7 @@ Consider $\Dist$ a word ensemble, $f_1, f_2: \Supp \Dist \rightarrow \Reals$ bou
 
 \end{enumerate}
 
-Suppose $P_1$ is an $\ESG$-optimal estimator for $(g,\mathcal{E})$ and $P_2$ is an $\ESG$-optimal estimator for $(\Dist,f_2)$. Denote $P_\pi := P_1 \circ \pi$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{P_\pi}+\R_{P_2}$ and for any $z_1 \in \WordsLen{\R_{P_\pi}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Suppose $P_1$ is an $\ESG$-optimal estimator for $(g,\mathcal{E})$ and $P_2$ is an $\ESG$-optimal estimator for $(\Dist,f_2)$. Denote $P_\pi := P_1 \circ \pi$. Construct ${P: \Words \Scheme \Rats}$ s.t. $\R_P=\R_{P_\pi}+\R_{P_2}$ and for any ${x \in \Words}$, ${z_1 \in \WordsLen{\R_{P_\pi}(K)}}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(x,z_1 z_2)=P_\pi^{K}(x,z_1) P_2^{K}(x,z_2)
@@ -1988,7 +2007,7 @@ $$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_{\bar{S}}^{K}}[(P^{K}(x,y) - f(x))\b
 
 $$\E_{\Dist^{K} \times \Un_P^{K} \times \Un^{\R_S^{K}(w)}}[(P^{K}(x,y) - f(x))S^{K}(x,P^{K}(x,y),z,w^{K})] \equiv 0 \pmod \Fall$$
 
-By construction of $w^{K}$, the absolute value of the left hand side is no less than the absolute value of the left hand side in \ref{eqn:prp__mixed_ort}.
+By construction of $w^{K}$, the absolute value of the left hand side is no less than the absolute value of the left hand side of \ref{eqn:prp__mixed_ort}.
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm:mult}]
@@ -2102,7 +2121,7 @@ $$\E[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2}))}] \equiv 0 \pmod \Fall$$
 \begin{proposition}
 \label{prp:smp_base_change}
 
-Consider word ensembles $\Dist_1$ and $\Dist_2$ with polynomial-time $\EMG$-samplers $\sigma_1$ and $\sigma_2$ respectively. Define ${\Dist^k:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{1\bullet}^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x_1,x_2},z)=x_1}$. Consider ${\sigma: \Words \MScheme \Words}$ s.t. $\UM_\sigma^{K}=\UM_{\sigma_2}^{K}$ and for any $x \in \Supp \sigma_{1\bullet}^{K}$, ${\sigma^{K}(x,z,w)=\Chev{x,\sigma_2^{K}(z,w)}}$. Then, $\sigma$ is a polynomial-time $\EMG$-sampler of $\Dist$ relative to $\pi$. In particular, since such an $\sigma$ can always be constructed, $\Dist$ is polynomial-time $\EMG$-samplable relative to $\pi$.
+Consider word ensembles $\Dist_1$ and $\Dist_2$ with polynomial-time $\EMG$-samplers $\sigma_1$ and $\sigma_2$ respectively. Define ${\Dist^k:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Suppose ${\pi: \Words \Scheme \Words}$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{1\bullet}^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, ${\pi^{K}(\Chev{x_1,x_2},z)=x_1}$ and, conversely, if ${x \in \Words}$ is s.t. ${\pi^K(x,z)=x_1}$ then ${x}$ is of the form ${\Chev{x_1,x_2'}}$ for some ${x_2' \in \Words}$. Consider ${\sigma: \Words \MScheme \Words}$ s.t. $\UM_\sigma^{K}=\UM_{\sigma_2}^{K}$ and for any $x \in \Supp \sigma_{1\bullet}^{K}$, ${\sigma^{K}(x,z,w)=\Chev{x,\sigma_2^{K}(z,w)}}$. Then, $\sigma$ is a polynomial-time $\EMG$-sampler of $\Dist$ relative to $\pi$. In particular, since such an $\sigma$ can always be constructed, $\Dist$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
@@ -2141,7 +2160,7 @@ Consider $\Dist_1$ a word ensemble with polynomial-time $\EMG$-sampler $\sigma$ 
 \bar{f}(\Chev{x_1,x_2})=f(x_2)
 \end{align*}
 
-Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{\bullet}^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, $(\Dist,\bar{f})$ is polynomial-time $\EMG$-samplable relative to $\pi$.
+Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{\bullet}^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$ and, conversely, if ${x \in \Words}$ is s.t. ${\pi^K(x,z)=x_1}$ then ${x}$ is of the form ${\Chev{x_1,x_2'}}$ for some ${x_2' \in \Words}$. Then, $(\Dist,\bar{f})$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
@@ -3945,6 +3964,7 @@ We will use the notation $\Gamma_{\text{det}}:=(\Gamma_0^1,\Gamma_0^1)$, $\Gamma
 
 \begin{samepage}
 \begin{definition}
+\label{def:hard_core}
 
 Given $\Dist$ a word ensemble\footnote{The standard definition of a hard-core predicate corresponds to the case $\Dist^k=\Un^k$. Here we allow for slightly greater generality.}, $f: \Supp \Dist \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{hard-core predicate} of $(\Dist,f)$ when for any $S: \Words \xrightarrow{\Gamma_{\textnormal{rand}}} \Bool$
 
@@ -3957,6 +3977,7 @@ Given $\Dist$ a word ensemble\footnote{The standard definition of a hard-core pr
 
 \begin{samepage}
 \begin{definition}
+\label{def:hard_core_adv}
 
 Given $\Dist$ a word ensemble, $f: \Supp \Dist \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{non-uniformly hard-core predicate} of $(\Dist,f)$ when for any ${S: \Words \xrightarrow{\Gamma_{\textnormal{circ}}} \Bool}$ 
 
