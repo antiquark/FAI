@@ -868,13 +868,9 @@ To relationship to the role of the word ensemble is as follows.
 \begin{corollary}
 \label{crl:weight}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\Dist,f)$. Suppose ${\Gamma^1:=(\GrowR^1,\GrowA^2)}$ is a pair of growth spaces of rank $1$ s.t. for any $\gamma \in \GrowR^1$ the function ${\gamma^2(K):=\gamma(k)}$ is in $\GrowR$ and for any $\gamma \in \GrowA^1$ the function $\gamma^2(K):=\gamma(k)$ is in $\GrowA$. Consider ${W: \Words \xrightarrow{\Gamma^1} \Rats^{\geq 0}}$ bounded s.t. for any $k \in \Nats$ there is $x \in \Supp \Dist^k$ and $y \in \WordsLen{\R_W(k)}$ s.t. $W^k(x,y) > 0$. Define 
+Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimation problem and $P$ an $\EG$-optimal estimator for $(\Dist,f)$. Consider ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. for any $K \in \Nats^n$ there is $x \in \Supp \Dist^K$ and $y \in \WordsLen{\R_W(K)}$ s.t. $W^K(x,y) > 0$. Define ${\gamma: \NatFun \Reals}$ by ${\gamma(K):=\E_{\Dist^K \times \Un_W^K}[W^K]^{-1}}$ and denote ${\Fall_W:= \gamma\Fall}$. Define the word ensemble $\mathcal{E}$ by 
 
-$${\Fall_W:=\{\varepsilon_W: \Nats^2 \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid  \E_{\Dist^k \times \Un_W^k}[W^k]\varepsilon_W(K) \in \Fall\}}$$
-
-It is easy to see $\Fall_W$ is a fall space. Define the word ensemble $\mathcal{E}$ by 
-
-\[\mathcal{E}^k(x):=\frac{\E_{y \sim \Un_W^k}[W^k(x,y)] \Dist^k(x)}{\E_{(x',y) \sim \Dist^k \times \Un_W^k}[W^k(x',y)]}\]
+\[\mathcal{E}^K(x):=\frac{\E_{y \sim \Un_W^K}[W^K(x,y)] \Dist^K(x)}{\E_{(x',y) \sim \Dist^K \times \Un_W^K}[W^K(x',y)]}\]
 
 Then, $P$ is an $\Fall_W(\Gamma)$-optimal estimator for $(\mathcal{E},f)$.
 
@@ -883,7 +879,7 @@ Then, $P$ is an $\Fall_W(\Gamma)$-optimal estimator for $(\mathcal{E},f)$.
 
 \begin{proof}
 
-Consider any $Q: \Words \Alg \Rats$. Proposition~\ref{prp:weight} implies there is $\varepsilon \in \Fall$ s.t.
+Consider any $Q: \Words \Scheme \Rats$. Proposition~\ref{prp:weight} implies there is $\varepsilon \in \Fall$ s.t.
 
 $$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_W^{K}}[W^{K}(P^{K} - f)^2] \leq \\ \E_{\Dist^{K} \times \Un_Q^{K} \times \Un_W^{K}}[W^{K}(Q^{K} - f)^2] + \varepsilon(K)$$
 
@@ -961,11 +957,11 @@ We can think of functions $f: \Supp \Dist \rightarrow \Reals$ as vectors in a re
 \begin {definition}
 \label{def:obe_sharp}
 
-Consider $(\Dist,f)$ a distributional estimation problem and ${P: \Words \Scheme \Rats}$ with bounded range. Denote $\Dist_P^{K}:=\Dist^{K} \times \Un_P^{K}$. $P$ is called an \emph{$\ESG$-optimal polynomial-time estimator for $(\Dist,f)$} when for any bounded $S: \Words \times \Rats \Scheme \Rats\footnote{The $\Rats$-valued argument of $S$ is only important for non-trivial $\GrowR$, otherwise we can absorb it into the definition of $S$ using $P$ as a subroutine.}$
+Consider $(\Dist,f)$ a distributional estimation problem and ${P: \Words \Scheme \Rats}$ with bounded range. $P$ is called an \emph{$\ESG$-optimal polynomial-time estimator for $(\Dist,f)$} when for any\\ ${S: \Words \times \Rats \Scheme \Rats}$ with bounded range\footnote{The $\Rats$-valued argument of $S$ is only important for non-trivial $\GrowR$, otherwise we can absorb it into the definition of $S$ using $P$ as a subroutine.}
 
 \begin{equation}
 \label{eqn:op_sharp}
-\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K}(x,y) - f(x))S^{K}(x,P^{K}(x,y),z)] \equiv 0 \pmod \Fall
+\E_{(x,y,z) \sim \Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K}(x,y) - f(x))S^{K}(x,P^{K}(x,y),z)] \equiv 0 \pmod \Fall
 \end{equation}
 
 For the sake of brevity, we will say \enquote{${\ESG}$-optimal estimator} rather than \enquote{${\ESG}$-optimal polynomial-time estimator.}
@@ -985,7 +981,7 @@ Assume there is $\zeta: \NatFun (0,\frac{1}{4}]$ s.t. $\zeta \in \Fall^{\frac{1}
 
 Assume without loss of generality that there is ${h \in \NatPoly}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \NatPoly$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix $S: \Words \times \Rats \Scheme \Rats$ bounded. Consider any ${\sigma: \NatFun \{ \pm 1 \}}$ and $m: \NatFun \Nats$ s.t. $m \leq \log \frac{1}{\zeta}$ (in particular ${m \leq h}$). Define ${t(K) := \sigma(K) 2^{-m(K)}}$. It is easy to see there is ${Q_t: \Words \Scheme \Rats}$ s.t. ${\R_{Q_t}=\R_P+\R_S}$ and given $K \in \Nats^n$, $x \in \Supp \Dist^{K}$, ${y \in \WordsLen{\R_P(K)}}$ and ${z \in \WordsLen{ \R_S(K)}}$
 
-$$Q_t^{K}(x,yz) = P^{K}(x,y) + t(K) S^{K}(x,P^{K}(x,y),z)$$
+$$Q_t^{K}(x,yz) = P^{K}(x,y) - t(K) S^{K}(x,P^{K}(x,y),z)$$
 
 Moreover, we can construct $Q_t$ for all admissible choices of $t$ (but fixed $S$) to get a uniform family.
 
@@ -993,11 +989,11 @@ Applying Proposition~\ref{prp:unif}, we conclude that there is $\varepsilon \in 
 
 $$\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(Q_t^{K} - f)^2] + \varepsilon(K)$$
 
-$$\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} + t(K)S^{K}  - f)^2] + \varepsilon(K)$$
+$$\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - t(K)S^{K}  - f)^2] + \varepsilon(K)$$
 
-$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f)^2 - (P^{K} + t(K)S^{K} - f)^2] \leq \varepsilon(K)$$
+$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f)^2 - (P^{K} - t(K)S^{K} - f)^2] \leq \varepsilon(K)$$
 
-$$-\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(t(K)S^{K} + 2 (P^{K} - f)) S^{K}] t(K) \leq \varepsilon(K)$$
+$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(-t(K)S^{K} + 2 (P^{K} - f)) S^{K}] t(K) \leq \varepsilon(K)$$
 
 $$-\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(S^{K})^2] t(K)^2 + 2 \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] t(K) \leq \varepsilon(K)$$
 
