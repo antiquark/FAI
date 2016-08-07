@@ -2240,11 +2240,7 @@ Using the fact $P$ is an $\ESG$-optimal estimator for $(\Dist_2,f)$, we conclude
 
 Define $\bar{f}_1, \bar{f}_2: \Supp \Dist \rightarrow \Reals$ by $\bar{f}_1(\Chev{x_1,x_2})=f_1(x_1)$, $\bar{f}_2(\Chev{x_1,x_2})=f_2(x_2)$. 
 
-Construct $\pi: \Words \Scheme \Words$ s.t. $\R_\pi \equiv 0$ and for any ${x_1 \in \Supp \sigma_{1\bullet}^K}$ and $x_2 \in \Words$ 
-
-\[\pi^K(\Chev{x_1,x_2})=x_1\]
-
-This is possible because the runtime of $\sigma_1^K$ is bounded by a polynomial in $K$ so the length of $\sigma_{1}^K$'s output is also bounded by a polynomial in $K$, implying $\pi^K$ only has to read a polynomial size prefix of its input in order to output $x_1$.
+Construct $\pi: \Words \Scheme \Words$ s.t. $\R_\pi \equiv 0$, for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{1\bullet}^{K}}$ and ${x_2 \in \Words}$, ${\pi^{K}(\Chev{x_1,x_2})=x_1}$ and, conversely, if ${x \in \Words}$ is s.t. ${\pi^K(x)=x_1}$ then ${x}$ is of the form ${\Chev{x_1,x_2'}}$ for some ${x_2' \in \Words}$. This is possible because the runtime of $\sigma_1^K$ is bounded by a polynomial in $K$ so the length of $\sigma_{1}^K$'s output is also bounded by a polynomial in $K$, implying $\pi^K$ only has to read a polynomial size prefix of its input in order to output $x_1$. On the other hand, if the input is not of the form ${\Chev{x_1,x_2}}$ for ${x_1}$ sufficiently short to be in ${\Supp \sigma_{1\bullet}^{K}}$, ${\pi}$ may output a string too long to be in ${\Supp \sigma_{1\bullet}^{K}}$.
 
 Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp \sigma_{1\bullet}^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\ESG$-optimal estimator for $(\Dist,\bar{f}_2)$. 
 
@@ -2357,11 +2353,11 @@ Equation \ref{eqn:op} for ${\bar{Q}}$ implies \ref{eqn:prp__mixed_ort}.
 \begin{proposition}
 \label{prp:sq_diff_cong}
 
-Consider $\{F^K\}_{K \in \Nats^n}$, $\{\sigma_1^K\}_{K \in \Nats^n}$, $\{\sigma_1^K\}_{K \in \Nats^n}$ uniformly bounded families of random variables and suppose ${\E[\Abs{\sigma_1^K - \sigma_2^K}] \in \Fall}$. Then
+Consider $\{F^K\}_{K \in \Nats^n}$, $\{G_1^K\}_{K \in \Nats^n}$, $\{G_2^K\}_{K \in \Nats^n}$ uniformly bounded families of random variables and suppose ${\E[\Abs{G_1^K - G_2^K}] \in \Fall}$. Then
 
 \begin{equation}
 %\label{eqn:tbd}
-\E[(F^K + \sigma_1^K)^2] \equiv \E[(F^K + \sigma_2^K)^2] \pmod \Fall
+\E[(F^K + G_1^K)^2] \equiv \E[(F^K + G_2^K)^2] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -2369,9 +2365,9 @@ Consider $\{F^K\}_{K \in \Nats^n}$, $\{\sigma_1^K\}_{K \in \Nats^n}$, $\{\sigma_
 
 \begin{proof}
 
-\[\E[(F^K + \sigma_1^K)^2] - \E[(F^K + \sigma_2^K)^2] = \E[(2 F^K + \sigma_1^K + \sigma_2^K)(\sigma_1^K - \sigma_2^K)]\]
+\[\E[(F^K + G_1^K)^2] - \E[(F^K + G_2^K)^2] = \E[(2 F^K + G_1^K + G_2^K)(G_1^K - G_2^K)]\]
 
-\[\Abs{\E[(F^K + \sigma_1^K)^2] - \E[(F^K + \sigma_2^K)^2]} \leq (2 \sup F + \sup \sigma_1 + \sup \sigma_2) \E[\Abs{\sigma_1^K - \sigma_2^K}]\]
+\[\Abs{\E[(F^K + G_1^K)^2] - \E[(F^K + G_2^K)^2]} \leq (2 \sup F + \sup G_1 + \sup G_2) \E[\Abs{G_1^K - G_2^K}]\]
 %
 \end{proof}
 
@@ -2474,21 +2470,25 @@ Using the construction of $P_f$, the assumption on $\gamma$ and Proposition~\ref
 
 \[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\Dist^{K} \times \Un_{PS}^K}[(P_g^K(\pi^K(x,z_i),w_i) - \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
 
+All the terms in the sum are equal, therefore
+
+\[\E[(P_f^K - f)S] \equiv \E_{\Dist^{K} \times \Un_{PS}^K}[(P_g^K(\pi^K(x,z_0),w_0) - \bar{g}(\pi^K(x,z_0)))S(x,P_f^K(x))] \pmod \Fall\]
+
 Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ relative to ${\pi}$. Denote 
 
 \begin{align*}
 \Dist_\pi^K &:= \pi_*^K\Dist^{K} \\
-\Un_i^K&:=\prod_{j \in [\gamma(K)]} \Un_{P_g}^K \times \prod_{j \in [\gamma(K)] \setminus i} \Un_{\pi}^K \times \Un_S^K \times \UM_\sigma^K 
+\Un_0^K&:=(\prod_{i \in [\gamma(K)]} \Un_{P_g}^K) \times (\prod_{i \in [\gamma(K)] \setminus 0} \Un_{\pi}^K) \times \Un_S^K \times \UM_\sigma^K 
 \end{align*}
 
 Applying Proposition~\ref{prp:smp} we get
 %Denoting ${y_i:=\pi^K(x,z_i)}$
 
-\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\Dist_\pi^K \times \Un_i^K}[(P_g^K - \bar{g})S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
+\[\E[(P_f^K - f)S] \equiv\E_{\Dist_\pi^K \times \Un_0^K}[(P_g^K - \bar{g})S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
 
 Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}, we get
 
-\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\mathcal{E}^{K} \times \Un_i^K}[(P_g^K - g)S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{j \in [\gamma(K)] \setminus i} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
+\[\E[(P_f^K - f)S] \equiv \E_{\mathcal{E}^{K} \times \Un_0^K}[(P_g^K - g)S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
 
 $P_g$ is a $\ESG$-optimal estimator for $(\mathcal{E},g)$, therefore
 
