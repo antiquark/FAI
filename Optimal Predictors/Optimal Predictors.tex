@@ -213,7 +213,7 @@ The first (Theorem~\ref{thm:exists_all}) shows that for suitable ${\Gamma}$ (in 
 
 The second (Theorem~\ref{thm:exists_smp}), which is another central result, shows that for suitable ${\Gamma}$ (logarithmic advice and enough random e.g. logarithmic amount of random bits is sufficient), any distributional decision\footnote{All of the theorems are described for decision problems in the overview for the sake of simplicity but we actually prove them for \enquote{estimation} problems i.e. ${f: \Words \rightarrow \Reals}$ instead of ${L \subseteq \Words}$. Here this generalisation is more important since any efficient algorithm producing ${(x,t)}$ pairs is the sampler of some distributional estimation problem.} problem ${(\Dist,L)}$ which is \emph{samplable} (i.e. it is possible to efficiently sample pairs ${(x,t)}$ where ${x \in \Words}$ is distributed approximately according to ${\Dist}$ and ${t \in \Rats}$ is an estimate of ${\chi_L(x)}$ which is approximately unbiased on average) admits an ${\FallU(\Gamma)}$-optimal polynomial-time estimator with the same advice strings as the sampler. In particular, if the sampler is uniform the estimator is also uniform.
 
-The samplability property allows recasting the estimation problem as a learning problem. That is, we use the sampler to generate a number (we use ${l(K_0,K_1)^4}$) of problem instances for which an unbiased estimate of the correct answer is known, and we should now generalize from these instances to the a instance for which the correct answer is unknown. The optimal polynomial-time estimator we construct accomplishes this using the empirical risk minimization principle from statical learning theory, applied to a hypothesis space which consists of programs. Specifically, the estimator iterates over all programs of length at most ${l(K_0,K_1)}$, runs each of them on the samples ${\{(x_i,t_i)\}_{i \in [l(K_0,K_1)^4]}}$ for time ${K_1}$ getting estimates ${\{p_i\}_{i \in [l(K_0,K_1)^4}}$ and computes the empirical risk ${\sum_{i \in [l(K_0,K_1)^4]}(p_i-t_i)^2}$. It then selects the program with the minimal risk and runs it on the input for time ${K_1}$ to get the desired estimate. This is similar to Levin's universal search which dovetails all programs to get optimality. The optimality of this estimator is also closely related to the fundamental theorem of statistical learning theory for agnostic PAC learning\cite{Shalev-Shwartz_2014}: like in agnostic PAC learning we get an estimate which is not perfect but is optimal within the hypothesis space (which in our case is the space of efficient estimators).
+The samplability property allows recasting the estimation problem as a learning problem. That is, we use the sampler to generate a number (we use ${l(K_0,K_1)^4}$) of problem instances for which an unbiased estimate of the correct answer is known, and we should now generalize from these instances to the a instance for which the correct answer is unknown. The optimal polynomial-time estimator we construct accomplishes this using the empirical risk minimization principle from statical learning theory, applied to a hypothesis space which consists of programs. Specifically, the estimator iterates over all programs of length at most ${l(K_0,K_1)}$, runs each of them on the samples ${\{(x_i,t_i)\}_{i \in [l(K_0,K_1)^4]}}$ for time ${K_1}$ getting estimates ${\{p_i\}_{i \in [l(K_0,K_1)^4]}}$ and computes the empirical risk ${\sum_{i \in [l(K_0,K_1)^4]}(p_i-t_i)^2}$. It then selects the program with the minimal risk and runs it on the input for time ${K_1}$ to get the desired estimate. This is similar to Levin's universal search which dovetails all programs to get optimality. The optimality of this estimator is also closely related to the fundamental theorem of statistical learning theory for agnostic PAC learning\cite{Shalev-Shwartz_2014}: like in agnostic PAC learning we get an estimate which is not perfect but is optimal within the hypothesis space (which in our case is the space of efficient estimators).
 
 On the other hand, we rule out the existence of uniform optimal polynomial-time estimators for certain problems. These negative results rely on the simple observation that if the veracity of ${x \in L}$ for ${x \sim \Dist^k}$ depends only on ${k}$, then advice strings enable storing the exact answer to all such questions. This means any optimal polynomial-time estimator has to be a perfect polynomial-time estimator. So, any problem of this form that doesn't have uniform perfect polynomial-time estimators also doesn't have uniform optimal polynomial-time estimators. Consequently, any problem that is reducible to the former sort of problem also doesn't have uniform optimal polynomial-time estimators.
 
@@ -369,13 +369,13 @@ Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gam
 
 \begin{example}
 
-For any $n \in \Nats$, $\Gamma_0^n$ is a growth space of rank $n$. $\gamma \in \Gamma_0^n$ iff $\gamma \equiv 0$.
+For any $n \in \Nats$, we define $\Gamma_0^n$, a growth space of rank $n$. $\gamma \in \Gamma_0^n$ iff $\gamma \equiv 0$.
 
 \end{example}
 
 \begin{example}
 
-For any $n \in \Nats$, $\GammaPoly^n$ is a growth space of rank $n$. 
+For any $n \in \Nats$, we define $\GammaPoly^n$, a growth space of rank $n$. 
 
 \[\GammaPoly^n := \{\gamma: \NatFun \Nats \mid \exists p \in \NatPoly: \gamma \leq p\}\]
 
@@ -383,7 +383,7 @@ For any $n \in \Nats$, $\GammaPoly^n$ is a growth space of rank $n$.
 
 \begin{example}
 
-For any $n \in \Nats$, $\GammaLog^n$ is a growth space of rank $n$. $\gamma \in \GammaLog^n$ iff there is $c \in \Nats$ s.t. $\gamma(K_0, K_1 \ldots K_{n-1}) \leq c \sum_{i \in [n]} \log(K_i+1)$.
+For any $n \in \Nats$, we define $\GammaLog^n$, a growth space of rank $n$. $\gamma \in \GammaLog^n$ iff there is $c \in \Nats$ s.t. $\gamma(K_0, K_1 \ldots K_{n-1}) \leq c \sum_{i \in [n]} \log(K_i+1)$.
 
 \end{example}
 
@@ -402,7 +402,7 @@ Fix ${n \in \Nats^{>0}}$. ${\gamma: \NatFun \Nats}$ is said to be \emph{steadily
 \begin{samepage}
 \begin{example}
 
-For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, ${\Gamma_{\gamma^*}}$ is a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. 
+For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, we define ${\Gamma_{\gamma^*}}$, a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. 
 
 To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p_1(J,k))}$ and ${\gamma_2(J,k) \leq \gamma^*(J,p_2(J,k))}$. Choose ${p,s \in \NatPoly}$ s.t. ${p \geq \max(p_1,p_2)}$ and ${s}$ is as in condition~\ref{con:def__sgrow__poly} of Definition~\ref{def:sgrow}.
 
@@ -412,7 +412,7 @@ To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}
 
 \[\gamma_1(J,k)+\gamma_2(J,k) \leq \gamma^*(J,s(J,p(J,k)))\]
 
-In particular taking ${\gamma^*_{\text{poly}}(J,k):=j}$ and ${\gamma^*_{\text{log}}(J,k):=\Floor{\log (j+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{\gamma^*_{\text{poly}}}}$, ${\GammaLog^n=\Gamma_{\gamma^*_{\text{log}}}}$.
+In particular taking ${\gamma^*_{\text{poly}}(J,k):=k}$ and ${\gamma^*_{\text{log}}(J,k):=\Floor{\log (k+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{\gamma^*_{\text{poly}}}}$, ${\GammaLog^n=\Gamma_{\gamma^*_{\text{log}}}}$.
 
 \end{example}
 \end{samepage}
@@ -448,7 +448,7 @@ There is a natural notion of composition for polynomial-time $\Gamma$-schemes.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose $p \in \NatPoly$ s.t. $\Abs{\A_S(K)} \leq p(K)$, $\Abs{\A_T(K)} \leq p(K)$, $\R_S(K) \leq p(K)$ and $\R_T(K) \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b,v,w \in \Bool^{\leq p(K)}$ and $x \in X$
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Consider encoded sets $X$, $Y$, $Z$ and $S: X \Scheme Y$, $T: Y \Scheme Z$. Choose $p \in \NatPoly$ s.t. $\Abs{\A_S(K)} \leq p(K)$ and $\Abs{\A_T(K)} \leq p(K)$. We can then construct $U: X \Scheme Z$ s.t. for any $K \in \Nats^n$, $a,b \in \Bool^{\leq p(K)}$, ${v \in \Bool^{\R_T(K,a)}}$, ${w \in \Bool^{\R_S(K,b)}}$ and $x \in X$
 
 \begin{align}
 \A_U(K) &= \Chev{\A_T(K),\A_S(K)} \\
@@ -763,7 +763,7 @@ $$\E_{\Dist^{K} \times \Un_{\bar{Q}}^{K}}[(\bar{Q}^{K} - f)^2]=\E_{\Dist^{K} \ti
 Combining \ref{eqn:prp__unif__prf1} and \ref{eqn:prp__unif__prf2} we get the desired result.
 \end{proof}
 
-\subsubsection{Random vs. Advice}
+\subsubsection{Random versus Advice}
 
 As usual, random is no more powerful than advice. This is demonstrated by the following two propositions.
 
@@ -778,7 +778,13 @@ Observe that $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ is a growth space and 
 Consider any $Q: \Words \xrightarrow{\bar{\Gamma}} \Rats$. Suppose $\R_Q=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any $K \in \Nats^n$, choose 
 \[\bar{\A}_Q(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \Dist^{K} \times U^{r_{\mathfrak{R}}(K)}}[(Q^{K}(x,yz) - f(x))^2]\]
 
-As easy to see, there is $\bar{Q}: \Words \Scheme \Rats$ s.t. for all $K \in \Nats^n$, $x \in \Supp \Dist^{K}$ and $z \in \WordsLen{r_{\mathfrak{R}}(K)}$, $\R_{\bar{Q}}(K) = r_{\mathfrak{R}}(K)$, ${\A_{\bar{Q}}(K):=\Chev{\A_Q(K),\bar{\A}_Q(K)}}$ and ${\bar{Q}^{K}(x,z)=Q^{K}(x,\bar{\A}_Q(K)z)}$.
+As easy to see, there is $\bar{Q}: \Words \Scheme \Rats$ s.t. for all $K \in \Nats^n$, $x \in \Supp \Dist^{K}$ and $z \in \WordsLen{r_{\mathfrak{R}}(K)}$
+
+\begin{align*}
+\A_{\bar{Q}}(K)&=\Chev{\A_Q(K),\bar{\A}_Q(K)} \\
+\R_{\bar{Q}}(K) &= r_{\mathfrak{R}}(K) \\
+\bar{Q}^{K}(x,z)&=Q^{K}(x,\bar{\A}_Q(K)z)
+\end{align*}
 
 It follows that there is $\varepsilon \in \Fall$ s.t.
 
@@ -804,8 +810,8 @@ Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}}
 We can construct $P: \Words \Scheme \Rats$ so that for all $K \in \Nats^n$, $x \in \Supp \Dist^{K}$ and ${z \in \WordsLen{r_{\mathfrak{R}}(K)}}$
 
 \begin{align*}
-\R_P(K) &= r_{\mathfrak{R}}(K) \\
 \A_P(K) &:=\Chev{\A_{\bar{P}}(K),\bar{\A}_P(K)} \\
+\R_P(K) &= r_{\mathfrak{R}}(K) \\
 P^{K}(x,z) &=\bar{P}^{K}(x,\bar{\A}_P(K)z)
 \end{align*}
 
