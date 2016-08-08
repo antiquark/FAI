@@ -2827,25 +2827,23 @@ We have ${\alpha(\beta(\alpha(L))=\alpha(L)}$, therefore
 
 \subsection{Lax Pseudo-Invertible Reductions}
 
-We now consider compositions of reductions of different types.
-
-%BLAH
+We now consider compositions of reductions of different types. For the remainder of the section, we fix ${\mathcal{G}}$, a fall space of rank ${m}$. 
 
 \begin{samepage}
 \begin{definition}
 \label{def:pp_reduce}
 
-Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\EG$-reduction of $(\Dist,f)$ to $(\mathcal{E},g)$ over ${\alpha}$} when
+Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{precise pseudo-invertible $\mathcal{G}(\Gamma)$-reduction of $(\Dist,f)$ to $(\mathcal{E},g)$ over ${\alpha}$} when
 
 \begin{enumerate}[(i)]
 
-\item\label{con:def__pp_reduce__dist} ${\pi_*\Dist}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\mathcal{E}^\alpha}$.
+\item\label{con:def__pp_reduce__dist} ${\pi_*\Dist}$ is ${\mathcal{G}(\Gamma \alpha)}$-dominated by ${\mathcal{E}^\alpha}$.
 
 \item\label{con:def__pp_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require
 
-\[\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \equiv 0 \pmod {\Fall \alpha}\]
+\[\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \equiv 0 \pmod {\mathcal{G}}\]
 
-\item\label{con:def__pp_reduce__smp} $\Dist$ is $\Fall\alpha(\MGrow \alpha)$-samplable relative to $\pi$.
+\item\label{con:def__pp_reduce__smp} $\Dist$ is $\mathcal{G}(\MGrow \alpha)$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2856,14 +2854,14 @@ Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathc
 \begin{corollary}
 \label{crl:pp_reduce_sharp}
 
-Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Suppose $P$ is an $\ESG$-optimal estimator for $(\mathcal{E}, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
+Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a precise pseudo-invertible $\mathcal{G}(\Gamma)$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Assume ${\Fall\alpha \subseteq \mathcal{G}}$. Suppose $P$ is an $\ESG$-optimal estimator for $(\mathcal{E}, g)$. Then, $P^\alpha \circ \pi$ is a $\mathcal{G}^\sharp (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
 
 \end{corollary}
 \end{samepage}
 
 \begin{proof}
 
-By Proposition~\ref{prp:idx_reduce_sharp}, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal estimator for ${(\mathcal{E}^\alpha, g)}$. By Proposition~\ref{prp:dom_reduce_sharp} and condition \ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is also an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal estimator for ${(\pi_* \Dist, g)}$. By Corollary~\ref{crl:psp_reduce_sharp} and conditions \ref{con:def__pp_reduce__fun} and \ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, ${P^\alpha \circ \pi}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal estimator for ${(\Dist, f)}$.
+By Proposition~\ref{prp:idx_reduce_sharp}, ${P^\alpha}$ is an ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal estimator (and in particular a ${\mathcal{G}^\sharp (\Gamma \alpha)}$-optimal estimator) for ${(\mathcal{E}^\alpha, g)}$. By Proposition~\ref{prp:dom_reduce_sharp} and condition \ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce}, ${P^\alpha}$ is also a ${\mathcal{G}^\sharp (\Gamma \alpha)}$-optimal estimator for ${(\pi_* \Dist, g)}$. By Corollary~\ref{crl:psp_reduce_sharp} and conditions \ref{con:def__pp_reduce__fun} and \ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, ${P^\alpha \circ \pi}$ is a ${\mathcal{G}^\sharp (\Gamma \alpha)}$-optimal estimator for ${(\Dist, f)}$.
 %
 \end{proof}
 
@@ -2871,7 +2869,7 @@ By Proposition~\ref{prp:idx_reduce_sharp}, ${P^\alpha}$ is an ${\Fall \alpha^\sh
 \begin{corollary}
 %\label{crl:tbd}
 
-Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a precise pseudo-invertible $\EG$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Suppose $P$ is an $\EG$-optimal estimator for $(\mathcal{E}, g)$. Then, $P^\alpha \circ \pi$ is an $\Fall \alpha (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
+Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a precise pseudo-invertible $\mathcal{G}(\Gamma)$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Assume ${\Fall\alpha \subseteq \mathcal{G}}$ and ${\mathcal{G}}$ is ${\GrowA \alpha}$-ample. Suppose $P$ is an $\EG$-optimal estimator for $(\mathcal{E}, g)$. Then, $P^\alpha \circ \pi$ is a $\mathcal{G} (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
 
 \end{corollary}
 \end{samepage}
@@ -2886,15 +2884,15 @@ Completely analogous to proof of Corollary~\ref{crl:pp_reduce_sharp}.
 \begin{definition}
 \label{def:p_reduce}
 
-Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{pseudo-invertible $\EG$-reduction of $(\Dist,f)$ to $(\mathcal{E},g)$ over ${\alpha}$} when
+Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ a distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and ${\pi: \Words \xrightarrow{\Gamma \alpha} \Words}$. $\pi$ is called a \emph{pseudo-invertible $\mathcal{G}(\Gamma)$-reduction of $(\Dist,f)$ to $(\mathcal{E},g)$ over ${\alpha}$} when
 
 \begin{enumerate}[(i)]
 
-\item\label{con:def__p_reduce__dist} ${\pi_*\Dist}$ is ${\Fall \alpha(\Gamma \alpha)}$-dominated by ${\mathcal{E}^\alpha}$.
+\item\label{con:def__p_reduce__dist} ${\pi_*\Dist}$ is ${\mathcal{G}(\Gamma \alpha)}$-dominated by ${\mathcal{E}^\alpha}$.
 
-\item\label{con:def__p_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\E_{(x,z) \sim \Dist^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \equiv 0 \pmod{\Fall \alpha}\]
+\item\label{con:def__p_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\E_{(x,z) \sim \Dist^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \equiv 0 \pmod{\mathcal{G}}\]
 
-\item\label{con:def__p_reduce__smp} $\Dist$ is $\Fall\alpha(\MGrow \alpha)$-samplable relative to $\pi$.
+\item\label{con:def__p_reduce__smp} $\Dist$ is $\mathcal{G}(\MGrow \alpha)$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2907,7 +2905,7 @@ The following corollaries are completely analogous to Corollary~\ref{crl:pp_redu
 \begin{corollary}
 \label{crl:p_reduce_sharp}
 
-Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\ESG$-optimal estimator for $(\mathcal{E}, g)$ and ${\gamma \in \GammaPoly^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha^\sharp (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
+Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\mathcal{G}(\Gamma)$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Assume ${\Fall\alpha \subseteq \mathcal{G}}$. Suppose there exist ${P}$ an $\ESG$-optimal estimator for $(\mathcal{E}, g)$ and ${\gamma \in \GammaPoly^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \mathcal{G}}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists a $\mathcal{G}^\sharp (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
 
 % Conditions on \gamma
 
@@ -2918,14 +2916,14 @@ Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathc
 \begin{corollary}
 \label{crl:p_reduce}
 
-Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\EG$-optimal estimator for $(\mathcal{E}, g)$ and ${\gamma \in \GammaPoly^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\R_P \circ \alpha + \gamma\R_\pi \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
+Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\mathcal{G}(\Gamma)$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Assume ${\Fall\alpha \subseteq \mathcal{G}}$ and ${\mathcal{G}}$ is ${\GrowA \alpha}$-ample. Suppose there exist ${P}$ an $\EG$-optimal estimator for $(\mathcal{E}, g)$ and ${\gamma \in \GammaPoly^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \mathcal{G}}$ and ${\R_P \circ \alpha + \gamma\R_\pi \in \GrowR \alpha}$. Then, there exists a $\mathcal{G} (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
 
 % Conditions on \gamma
 
 \end{corollary}
 \end{samepage}
 
-Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\Fall \alpha}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\Fall \alpha \subseteq \Fall}$ and ${\Gamma \alpha = \Gamma}$. In these conditions an ${\Fall \alpha (\Gamma \alpha)}$-optimal estimator (resp. ${\Fall \alpha^\sharp(\Gamma \alpha)}$-optimal estimator) is in also an ${\EG}$-optimal estimator (resp. ${\ESG}$-optimal estimator). In particular, the following proposition is often applicable.
+Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\mathcal{G}}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\mathcal{G} = \Fall}$ and ${\Gamma \alpha = \Gamma}$. In particular, the following proposition is often applicable.
 
 \begin{samepage}
 \begin{proposition}
