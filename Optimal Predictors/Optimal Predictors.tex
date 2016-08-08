@@ -2923,7 +2923,7 @@ Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathc
 \end{corollary}
 \end{samepage}
 
-Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\mathcal{G}}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\mathcal{G} = \Fall}$ and ${\Gamma \alpha = \Gamma}$. In particular, the following proposition is often applicable.
+Note that the last results involved passing from fall space ${\Fall}$ and growth spaces ${\Gamma}$ to fall space ${\mathcal{G}}$ and growth spaces ${\Gamma \alpha}$, however in many natural examples ${m = n}$, ${\mathcal{G} = \Fall}$ and ${\Gamma \alpha = \Gamma}$. In particular, the following propositions are often applicable.
 
 \begin{samepage}
 \begin{proposition}
@@ -2937,6 +2937,21 @@ Assume ${\Gamma_*}$ is a growth space of rank ${n}$ s.t. for any ${\gamma \in \G
 \begin{proof}
 
 For any ${\gamma_\alpha \in \Gamma_* \alpha^*}$ there is ${\gamma \in \Gamma_*}$ s.t. ${\gamma_\alpha \leq \gamma \circ \alpha \in \Gamma_*}$. Conversely, for any ${\gamma \in \Gamma_*}$ we have ${\gamma = \gamma \circ \beta \circ \alpha \in \Gamma_* \alpha^*}$.
+%
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:tbd}
+
+Consider ${r: \NatFun \Nats}$ steadily growing and ${p \in \NatPoly}$ increasing in the last argument. Define ${\alpha_p: \NatFun \Nats}$ by ${\forall J \in \Nats^{n-1}, k \in \Nats: \alpha_p(J,k)=(J,p(J,k))}$. Then, ${\Gamma_r \alpha_p = \Gamma_r}$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Consider ${\gamma_\alpha \in \Gamma_r \alpha_p}$. There is ${\gamma \in \Gamma_r}$ s.t. ${\gamma_\alpha \leq \gamma \circ \alpha_p}$. There is ${q \in \NatPoly}$ s.t. ${\gamma(J,k) \leq r(J,q(J,k))}$. We get ${\gamma_\alpha(J,k) \leq \gamma(J,p(J,k)) \leq r(J,q(J,p(J,k)))}$ and therefore ${\gamma_\alpha \in \Gamma_r}$. Conversely, consider ${\gamma' \in \Gamma_r}$. There is ${q' \in \NatPoly}$ s..t ${\gamma'(J,k) \leq r(J,q'(J,k))}$. ${p(J,k) \geq k}$ and ${r}$ is non-decreasing in the last argument, implying that ${r \leq r \circ \alpha_p}$. We conclude that\\ ${\gamma'(J,k) \leq r(J,p(J,q'(J,k)))}$ and therefore ${\gamma' \in \Gamma_r \alpha_p}$.
 %
 \end{proof}
 
