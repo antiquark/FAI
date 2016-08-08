@@ -2549,7 +2549,7 @@ Q_g^K(x,z_{\sigma0} z_{Q} z_{\pi} z_{g}, \Chev{z_{\sigma1}, \A_{Q_f}(K),\A_{\pi}
 
 Applying Proposition~\ref{prp:mixed_opt} for ${P_g}$ and ${Q_g}$, we get
 
-\[\E_{\mathcal{E}^{K} \times \Un_{P_g}^K}[(P^K - g)^2] \leq \E_{\mathcal{E}^{K} \times \UM_{Q_g}^K}[(Q_g^K - g)^2] \pmod \Fall\]
+\[\E_{\mathcal{E}^{K} \times \Un_{P_g}^K}[(P_g^K - g)^2] \leq \E_{\mathcal{E}^{K} \times \UM_{Q_g}^K}[(Q_g^K - g)^2] \pmod \Fall\]
 
 Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}
 
@@ -2622,7 +2622,7 @@ Let ${W}$ be a Radon-Nikodym ${\EG}$-derivative of ${\Dist}$ w.r.t. ${\mathcal{E
 
 \[\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] + \sum_{x \in \Words} \ \Dist^{K}(x) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv 0 \pmod \Fall\]
 
-\[\E_{\Dist^{K} \times \Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv \sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] \pmod \Fall\]
+\[\E_{\Dist^{K} \times \Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv -\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] \pmod \Fall\]
 
 \[\Abs{\E_{\Dist^{K} \times \Un_P^K \times \Un_S^K}[(P^K-f)S]} \leq (\sup \Abs{P} + \sup \Abs{f}) \sup \Abs{S} \sum_{x \in \Words} \Abs{\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)} \pmod \Fall\]
 
@@ -2713,7 +2713,7 @@ For any ${\alpha \in \GammaPoly^{mn}}$, ${\Fall \alpha}$ is a fall space
 
 \begin{proof}
 
-Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider ${h \in \NatPoly}$ s.t. ${2^{-h} \in \Fall}$. Without loss of generality, we can assume all the coefficients of ${h}$ are non-negative and in particular, it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. Clearly, ${2^{-h \circ p} \in \Fall \alpha}$.
+Conditions \ref{con:def__fall__add} and \ref{con:def__fall__ineq} are obvious. To verify condition \ref{con:def__fall__pol}, consider ${h \in \NatPoly}$ s.t. ${2^{-h} \in \Fall}$. Note that since the coefficients of ${h}$ are non-negative it is non-decreasing in all arguments. Consider ${p: \Nats^m \rightarrow \Nats^n}$ a polynomial map s.t. for any ${i \in [n]}$, ${\alpha_i \leq p_i}$. We have ${2^{-h \circ p} \leq 2^{-h \circ \alpha}}$ and therefore ${2^{-h \circ p} \in \Fall \alpha}$.
 %
 \end{proof}
 
@@ -2813,7 +2813,7 @@ Consider any ${Q: \Words \xrightarrow{\Gamma \alpha} \Rats}$ bounded. Construct 
 
 Substituting ${\alpha(L)}$ for ${K}$, we get
 
-\[\E_{\Dist^{\alpha(L)} \times \Un_P^{\alpha(L)}}[(P^{\alpha(L)}(x,y)-f(x))^2] \leq \E_{\Dist^{\alpha(L)} \times \Un_{\tilde{Q}}^{\alpha(K)}}[(\tilde{Q}^{\alpha(L)}(x,y)-f(x))^2] + \varepsilon({\alpha(L)})\]
+\[\E_{\Dist^{\alpha(L)} \times \Un_P^{\alpha(L)}}[(P^{\alpha(L)}(x,y)-f(x))^2] \leq \E_{\Dist^{\alpha(L)} \times \Un_{\tilde{Q}}^{\alpha(L)}}[(\tilde{Q}^{\alpha(L)}(x,y)-f(x))^2] + \varepsilon({\alpha(L)})\]
 
 \[\E_{(\Dist^\alpha)^{L} \times \Un_{P^\alpha}^L}[((P^\alpha)^L(x,y)-f(x))^2] \leq \E_{(\Dist^\alpha)^{L} \times \Un_{\tilde{Q}}^{\alpha(L)}}[(\tilde{Q}^{\alpha(L)}(x,y)-f(x))^2] + \varepsilon(\alpha(L))\]
 
@@ -2845,7 +2845,7 @@ Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathc
 
 \[\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f(x)-\bar{g}(\pi^{K}(x,z))}] \equiv 0 \pmod {\Fall \alpha}\]
 
-\item\label{con:def__pp_reduce__smp} $\Dist$ is $\Fall(\MGrow \alpha)$-samplable relative to $\pi$.
+\item\label{con:def__pp_reduce__smp} $\Dist$ is $\Fall\alpha(\MGrow \alpha)$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2894,7 +2894,7 @@ Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathc
 
 \item\label{con:def__p_reduce__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by 0. We require \[\E_{(x,z) \sim \Dist^{K}}[\Abs{f(x)-\E_{\Un_\pi^{K}}[g(\pi^{K}(x,z))]}] \equiv 0 \pmod{\Fall \alpha}\]
 
-\item\label{con:def__p_reduce__smp} $\Dist$ is $\Fall(\MGrow \alpha)$-samplable relative to $\pi$.
+\item\label{con:def__p_reduce__smp} $\Dist$ is $\Fall\alpha(\MGrow \alpha)$-samplable relative to $\pi$.
 
 \end{enumerate}
 
@@ -2918,7 +2918,7 @@ Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathc
 \begin{corollary}
 \label{crl:p_reduce}
 
-Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\EG$-optimal estimator for $(\mathcal{E}, g)$ and ${\gamma \in \GammaPoly^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\gamma(\R_P \circ \alpha + \R_\pi) \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
+Assume ${\Fall \alpha}$ is ${\GrowA \alpha}$-ample. Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathcal{E},g)$ distributional estimation problem of rank ${n}$, ${\alpha: \Nats^m \Alg \Nats^n}$ an efficient injection and $\pi$ a pseudo-invertible $\EG$-reduction of $(\Dist, f)$ to $(\mathcal{E}, g)$ over ${\alpha}$. Suppose there exist ${P}$ an $\EG$-optimal estimator for $(\mathcal{E}, g)$ and ${\gamma \in \GammaPoly^m}$ s.t. ${\gamma^{-\frac{1}{2}} \in \Fall \alpha}$ and ${\R_P \circ \alpha + \gamma\R_\pi \in \GrowR \alpha}$. Then, there exists an $\Fall \alpha (\Gamma \alpha)$-optimal estimator for $(\Dist, f)$.
 
 % Conditions on \gamma
 
@@ -2974,10 +2974,10 @@ Consider an encoded set ${E}$ which is prefix-free, i.e. for all ${\phi,\psi \in
 \xi^K(b)&=\begin{cases}(b,N_\phi^K) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ (b,\Estr) \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
 \end{align}
 
-Define the distributional estimation problem $({\Dist_{\mathfrak{F},L}},f_{\mathfrak{F}})$ by 
+Define the distributional estimation problem $({\Dist_{\mathfrak{F},N}},f_{\mathfrak{F}})$ by 
 
 \begin{align}
-\Dist_{\mathfrak{F},L}^K&:=\En_*^4 (\xi_*^K(\Un^{r(K)}) \times \zeta_*^k(\Un^{r(K)} \times \Un^{s(K)})) \\
+\Dist_{\mathfrak{F},N}^K&:=\En_*^4 (\xi_*^K(\Un^{r(K)}) \times \zeta_*^k(\Un^{r(K)} \times \Un^{s(K)})) \\
 f_{\mathfrak{F}}(\Chev{b,d,a,x}) &:= \begin{cases}\mathfrak{F}(\phi, x) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ 0 \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
 \end{align}
 
@@ -2988,7 +2988,7 @@ For any ${p \in \NatPoly}$, define ${\alpha_p: \NatFun \Nats^n}$ by
 \forall J \in \Nats^{n-1}, k \in \Nats: \alpha_p(J,k) = (J,p(J,k))
 \end{equation}
 
-For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable world ensemble ${\Dist}$, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\Dist,f_\phi)}$ to ${(\Dist_{\mathfrak{F},L}, f_{\mathfrak{F}})}$ over ${\alpha_{\phi}}$ where ${\alpha_\phi:=\alpha_{p_\phi}}$ for some ${p_\phi \in \NatPoly}$ increasing in the last argument.
+For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable world ensemble ${\Dist}$, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\Dist,f_\phi)}$ to ${(\Dist_{\mathfrak{F},N}, f_{\mathfrak{F}})}$ over ${\alpha_{\phi}}$ where ${\alpha_\phi:=\alpha_{p_\phi}}$ for some ${p_\phi \in \NatPoly}$ increasing in the last argument.
 
 \end{theorem}
 \end{samepage}
@@ -3020,7 +3020,7 @@ ${\Dist^K \equiv \sigma_\bullet^K \pmod{\Fall}}$ since ${\sigma}$ is an ${\Fall(
 
 \[\sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}(y)W^K(y)-(\pi_*^K\Dist^K)(y)} \equiv \sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}(y)W^K(y)-(\pi_*^K\sigma_\bullet^K)(y)} \pmod{\Fall}\]
 
-For any ${y \in \Words}$, if ${W^K(y)=0}$ then ${(\pi_*^K\sigma_\bullet^K)(y) = 0}$. Denote ${\bar{\pi}^K(x,z_b,z_a):=\Chev{bz_b,N_\phi^{\alpha_\phi(K)},az_a,x}}$.
+For any ${y \in \Words}$, if ${W^K(y)=0}$ then ${(\pi_*^K\sigma_\bullet^K)(y) = 0}$, so the corresponding terms contribute nothing to the sum on the right hand side. Denote ${\bar{\pi}^K(x,z_b,z_a):=\Chev{bz_b,N_\phi^{\alpha_\phi(K)},az_a,x}}$.
 
 \[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}W^K-(\pi_*^K\Dist^K)} \equiv \sum_{\substack{z_b \in \Bool^{\leq q(K)}\\z_a \in \Bool^{\leq q(K)}\\x \in \Bool^{\leq q(K)}}} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}(\bar{\pi}^K(x,z_b,z_a))2^{\Abs{a}+\Abs{b}}-(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
 
