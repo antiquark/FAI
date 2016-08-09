@@ -2942,7 +2942,7 @@ For any ${\gamma_\alpha \in \Gamma_* \alpha^*}$ there is ${\gamma \in \Gamma_*}$
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:tbd}
+\label{prp:gamma_r_alpha_p}
 
 Consider ${r: \NatFun \Nats}$ steadily growing and ${p \in \NatPoly}$ increasing in the last argument. Define ${\alpha_p: \NatFun \Nats}$ by ${\forall J \in \Nats^{n-1}, k \in \Nats: \alpha_p(J,k)=(J,p(J,k))}$. Then, ${\Gamma_r \alpha_p = \Gamma_r}$.
 
@@ -3014,7 +3014,7 @@ Let ${\sigma}$ be an ${\Fall(\Gamma_{\text{smp}})}$-sampler of ${\Dist}$. Consid
 
 The latter is possible because ${\alpha_\phi}$ can be efficiently inverted using binary search over ${K_{n-1}}$.
 
-Denote ${r_\phi := r \circ \alpha_\phi}$. We construct ${\pi: \Words \xrightarrow{\Gamma_{\textnormal{red}}} \Words}$ s.t. for any ${K \in \Nats^{n}}$, ${x \in \Supp \sigma_{\bullet}^{K}}$,\\  ${z_b \in \Bool^{r_\phi(K)-\Abs{b}}}$ and ${z_a \in \Bool^{r_\phi(K)-\Abs{a}}}$
+Denote ${r_\phi := r \circ \alpha_\phi}$. Note that ${\Gamma_{\textnormal{red}} \alpha_\phi = \Gamma_{\textnormal{red}}}$ by Proposition~\ref{prp:gamma_r_alpha_p}. We construct ${\pi: \Words \xrightarrow{\Gamma_{\textnormal{red}}} \Words}$ s.t. for any ${K \in \Nats^{n}}$, ${x \in \Supp \sigma_{\bullet}^{K}}$, ${z_b \in \Bool^{r_\phi(K)-\Abs{b}}}$ and ${z_a \in \Bool^{r_\phi(K)-\Abs{a}}}$
 
 \begin{align}
 \R_\pi(K) &= 2r_\phi(K)-\Abs{a}-\Abs{b} \\
@@ -3055,13 +3055,13 @@ To verify condition~\ref{con:def__pp_reduce__fun} of Definition~\ref{def:pp_redu
 
 \[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv 0 \pmod{\Fall}\]
 
-To verify condition~\ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, construct ${\tau: \Words \xrightarrow{\Gamma_{\textnormal{red}}} \Words}$ s.t. for any\\ ${z_1,z_2 \in \Bool^{r_\phi(K)}}$ and ${x \in \Supp \sigma_\bullet^K}$, ${\tau^K(\Chev{z_1,N_\phi^{\alpha_\phi(K)},z_2,x})=x}$. By Proposition~\ref{prp:prob_cong_push} and Proposition~\ref{prp:prob_cong_ev}
+To verify condition~\ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, construct ${\tau: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Words}$ s.t. for any\\ $z_1,z_2 \in \Bool^{r_\phi(K)}$ and ${x \in \Supp \sigma_\bullet^K}$, ${\tau^K(\Chev{z_1,N_\phi^{\alpha_\phi(K)},z_2,x})=x}$. By Proposition~\ref{prp:prob_cong_push} and Proposition~\ref{prp:prob_cong_ev}
 
 \[\E_{y \sim \pi_*^K\Dist^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \E_{y \sim \pi_*^K\sigma_\bullet^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \pmod{\Fall}\]
 
 Denoting ${\Un_{ba}^K:=\Un^{r_\phi(K)-\Abs{b}} \times \Un^{r_\phi(K)-\Abs{a}}}$
 
-\[\E[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^K \times \sigma_\bullet^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(\Chev{bz_b,N_\phi^{\alpha_\phi(K)},az_a,x}),\tau_{\Chev{bz_b,N_\phi^{\alpha_\phi(K)},az_a,x}}^K)] \pmod{\Fall}\]
+\[\E[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^K \times \sigma_\bullet^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(\bar{\pi}^K(x,z_b,z_a)),\tau_{\bar{\pi}^K(x,z_b,z_a)}^K)] \pmod{\Fall}\]
 
 \[\E[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^K \times \sigma_\bullet^K}[\Dtv(\delta_x,\delta_x)] \pmod{\Fall}\]
 
@@ -3069,7 +3069,7 @@ Denoting ${\Un_{ba}^K:=\Un^{r_\phi(K)-\Abs{b}} \times \Un^{r_\phi(K)-\Abs{a}}}$
 %
 \end{proof}
 
-Obviously ${\Dist_{\mathfrak{F}}}$ is ${\Fall(\Gamma_{\text{smp}})}$-samplable. Therefore, if there is ${\phi^* \in E}$ s.t. ${f_{\phi^*}}$ is an extension of ${f_{\mathfrak{F}}}$ then ${(\Dist_{\mathfrak{F},L},f_{\phi^*})}$ is complete w.r.t. precise pseudo-invertible ${\Fall(\Gamma_{\text{red}})}$-reductions over efficient injections of the form ${\alpha_p}$ for the class of distributional estimation problems ${(\Dist,f_\phi)}$ s.t. ${\Dist}$ is ${\Fall(\Gamma_{\text{smp}})}$-samplable. 
+Obviously ${\Dist_{\mathfrak{F},N}}$ is ${\Fall(\Gamma_{\text{smp}})}$-samplable. Therefore, if there is ${\phi^* \in E}$ s.t. ${f_{\phi^*}}$ is an extension of ${f_{\mathfrak{F}}}$ then ${(\Dist_{\mathfrak{F},N},f_{\phi^*})}$ is complete w.r.t. precise pseudo-invertible ${\Fall(\Gamma_{\text{red}})}$-reductions over efficient injections of the form ${\alpha_p}$ for the class of distributional estimation problems ${(\Dist,f_\phi)}$ s.t. ${\Dist}$ is ${\Fall(\Gamma_{\text{smp}})}$-samplable. 
 
 \begin{samepage}
 \begin{example}
@@ -3101,7 +3101,7 @@ ${N_{\mathsf{EXP}}}$ is constructed s.t. ${\Abs{N_{\mathsf{EXP},\phi}^k}=t_\phi(
 \end{example}
 \end{samepage}
 
-This completeness property implies that optimal polynomial-time estimators exist for the entire class if an optimal polynomial-time estimator exists for ${(\Dist_{\mathfrak{F},L},f_{\mathfrak{F}})}$. More precisely, we have the following corollaries. For the remainder of the section, fix ${m \in \Nats}$ s.t. ${m \geq n}$. For any ${p \in \NatPoly}$, define ${\beta_p: \Nats^m \rightarrow \Nats^m}$ by 
+This completeness property implies that optimal polynomial-time estimators exist for the entire class if an optimal polynomial-time estimator exists for ${(\Dist_{\mathfrak{F},N},f_{\mathfrak{F}})}$. More precisely, we have the following corollaries. For the remainder of the section, fix ${m \in \Nats}$ s.t. ${m \geq n}$. For any ${p \in \NatPoly}$, define ${\beta_p: \Nats^m \rightarrow \Nats^m}$ by 
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -3120,7 +3120,7 @@ Define ${\eta: \Nats^{m} \rightarrow \Nats^n}$ by
 \begin{corollary}
 \label{crl:complete_sharp}
 
-Fix ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\Dist_{\mathfrak{F},L}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\Dist}$, there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\Dist^\eta,f_\phi)}$.
+Fix ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\Dist_{\mathfrak{F},N}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\Dist}$, there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\Dist^\eta,f_\phi)}$.
 
 \end{corollary}
 \end{samepage}
@@ -3135,7 +3135,7 @@ According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-inver
 \begin{corollary}
 \label{crl:complete}
 
-Fix ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$ s.t. ${\Fall^{(m)}}$ is ${\GrowA^m}$-ample. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\Dist_{\mathfrak{F},L}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\Dist}$, there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\Dist^\eta,f_\phi)}$.
+Fix ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$ s.t. ${\Fall^{(m)}}$ is ${\GrowA^m}$-ample. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\Dist_{\mathfrak{F},N}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\Dist}$, there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\Dist^\eta,f_\phi)}$.
 \end{corollary}
 \end{samepage}
 
@@ -3145,7 +3145,7 @@ Completely analogous to proof of Corollary~\ref{crl:complete_sharp}.
 %
 \end{proof}
 
-In particular, the conditions of Corollary~\ref{crl:complete_sharp} and Corollary~\ref{crl:complete} can hold for ${\Fall=\Fall_\zeta}$ and ${\Fall^{(m)}=\FallUt{\varphi}}$.
+In particular, the conditions of Corollary~\ref{crl:complete_sharp} and Corollary~\ref{crl:complete} can hold for ${\Fall=\Fall_\zeta}$ and ${\Fall^{(m)}=\FallUt{\varphi}}$:
 
 \begin{samepage}
 \begin{proposition}
