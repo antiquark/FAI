@@ -3263,7 +3263,7 @@ We have ${\dif (\log \log t^{\Floor{\log q(J)}}) = \dif(\log \log t)}$ therefore
 
 \[\int_{t = 2}^{a} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-Assume \ref{eqn:prp__fall_uni_weak__prem}. ${\Floor{t^{\Floor{\log q(J)}}}-2 \geq \Floor{t}^{\Floor{\log q(J)}}-2}$ therefore the integrand is non-negative. Taking ${a}$ to ${\infty}$ we get
+Assume ${\zeta}$ satisfies \ref{eqn:prp__fall_uni_weak__prem}. ${\Floor{t^{\Floor{\log q(J)}}}-2 \geq \Floor{t}^{\Floor{\log q(J)}}-2}$ therefore the integrand is non-negative. Taking ${a}$ to ${\infty}$ we get
 
 \[\int_{t = 2}^{\infty} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
@@ -3359,43 +3359,28 @@ Applying \ref{eqn:prp__fall_uni_amp__q} to the right hand side, we get \ref{eqn:
 %
 \end{proof}
 
-\begin{samepage}
-\begin{definition}
-\label{def:decod}
-
-Consider ${f: \Words \Alg \Reals}$ and ${D: \Words \Alg \Rats}$. ${D}$ is called an \emph{f-compatible decoding} when
-
-\begin{enumerate}[(i)]
-
-\item\label{con:def__decod__bnd} The range of ${D}$ is bounded.
-
-\item\label{con:def__decod__inv} There is ${M \in \Rats}$ s.t. ${M \geq \sup \Abs{f}}$ and for any ${t \in [-M,+M]}$, ${D(\En_\Rats(t))=t}$.
-
-\item\label{con:def__decod__time} There is $p_D \in \Nats[k]$ s.t. ${\T_D(x) \leq p_D(\Abs{x})}$.
-
-\end{enumerate}
-
-\end{definition}
-\end{samepage}
-
 \begin{proof}[Proof of Theorem \ref{thm:exists_all}]
 
-Fix ${D}$ an ${f}$-compatible decoding. Choose ${a^*: \Nats^n \rightarrow \Words}$ s.t.
+Fix $M \geq \sup \Abs{f}$ and construct ${D: \Words \Alg \Rats}$ s.t.
+
+\[D(x)=\begin{cases}D(x)=\max(\min(t,+M),-M) \text{ if ${x = \En_\Rats(t)}$}\\D(x)=0 \text{ if } x \not\in \Img \En_\Rats\end{cases}\]
+
+Choose ${a^*: \Nats^n \rightarrow \Words}$ s.t.
 
 \begin{equation}
 \label{eqn:thm__exists_all__astar}
 a^*(K) \in \Argmin{a \in \Bool^{\leq l(K)}} \E_{\Dist^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(a;x,y))-f(x))^2]
 \end{equation} 
 
-Construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x_0,y_0,b_0 \in \Words}$ and ${a_0 \in \Bool^{\leq l(K)}}$
+Construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x,y,b_0 \in \Words}$ and ${a_0 \in \Bool^{\leq l(K)}}$
 
 \begin{align}
 \A_P(K) &= \Chev{a^*(K),\A_r(K)}\\
 \R_P(K,\Chev{a_0,b_0}) &= r(K,b_0) \\
-P^K(x_0,y_0,\Chev{a_0,b_0}) &= D(\Ev^{K_{n-1}}(a_0;x_0,y_0))
+P^K(x,y,\Chev{a_0,b_0}) &= D(\Ev^{K_{n-1}}(a_0;x,y))
 \end{align}
 
-Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ where ${M}$ is as in condition~\ref{con:def__decod__inv} of Definition~\ref{def:decod} (otherwise we can replace ${Q}$ by ${\tilde{Q}:=\max(\min(Q,+M),-M)}$ and have ${\E[(\tilde{Q}-f)^2]\leq\E[(Q-f)^2]}$). Choose ${q \in \NatPoly}$ s.t. for any ${K \in \Nats^n}$
+Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ (otherwise we can replace ${Q}$ by ${\tilde{Q}:=\max(\min(Q,+M),-M)}$ and have ${\E[(\tilde{Q}-f)^2]\leq\E[(Q-f)^2]}$). Choose ${q \in \NatPoly}$ s.t. for any ${K \in \Nats^n}$
 
 \begin{align}
 \label{eqn:thm__exists_all__q_rnd}\R_Q(K) &\leq r(\alpha_q(K)) \\
@@ -3420,7 +3405,7 @@ Applying Proposition~\ref{prp:fall_uni_amp}, we conclude that ${P}$ is an ${\Fal
 %
 \end{proof}
 
-We now proceed to study the special case of samplable problems. These problems admit an optimal polynomial-time estimator which is essentially a brute-force implementation of the empirical risk minimization principle in statistical learning. In particular, the optimality of this algorithm can be regarded as a manifestation of the fundamental theorem of agnostic PAC learning (see e.g. Theorem 6.7 in \cite{Shalev-Shwartz_2014}). In our case the hypothesis space of the space of programs, so this algorithm can also be regarded as a variation on Levin's universal search. The advantage of this optimal polynomial-time estimator on the fully general construction of Theorem~\ref{thm:exists_all} is that the required advice is only the advice of the sampler.
+We now proceed to study the special case of samplable problems. These problems admit an optimal polynomial-time estimator which is essentially a brute-force implementation of the empirical risk minimization principle in statistical learning. In particular, the optimality of this algorithm can be regarded as a manifestation of the fundamental theorem of agnostic PAC learning (see e.g. Theorem 6.7 in \cite{Shalev-Shwartz_2014}). In our case the hypothesis space of the space of programs, so this algorithm can also be regarded as a variation of Levin's universal search. The advantage of this optimal polynomial-time estimator on the fully general construction of Theorem~\ref{thm:exists_all} is that the required advice is only the advice of the sampler.
 
 \begin{samepage}
 \begin{theorem}
@@ -3521,7 +3506,11 @@ Applying Proposition~\ref{prp:smp} to the first term on the right hand side and 
 
 \begin{proof}[Proof of Theorem \ref{thm:exists_smp}]
 
-Fix ${D}$ an ${f}$-compatible decoding. Denote\\ ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${R: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$ and ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
+Fix $M \geq \sup \Abs{f}$ and construct ${D: \Words \Alg \Rats}$ s.t.
+
+\[D(x)=\begin{cases}D(x)=\max(\min(t,M),-M) \text{ if ${x = \En_\Rats(t)}$}\\D(x)=0 \text{ if } x \not\in \Img \En_\Rats\end{cases}\]
+
+Denote\\ ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${R: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$ and ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
 
 \begin{align}
 \label{eqn:thm__exists_smp__l_adv}\A_R(K) &= \A_\sigma(K) \\
