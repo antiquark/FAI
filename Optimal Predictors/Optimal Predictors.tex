@@ -3096,7 +3096,7 @@ ${n = 1}$. ${E_{\textsc{EXP}} \subseteq \Words}$ is the set of valid programs fo
 \end{example}
 \end{samepage}
 
-This completeness property implies that optimal polynomial-time estimators exist for the entire class if an optimal polynomial-time estimator exists for ${(\Dist_{\mathfrak{F},N},f_{\mathfrak{F}})}$. More precisely, we have the following corollaries. For the remainder of the section, fix ${m \in \Nats}$ s.t. ${m \geq n}$. For any ${p \in \NatPoly}$, define ${\beta_p: \Nats^m \rightarrow \Nats^m}$ by 
+This completeness property implies that, under certain assumptions, optimal polynomial-time estimators exist for all problems in ${\textsc{SampX}_\mathfrak{F}[\Fall(\Gamma_{\text{smp}})]}$ if an optimal polynomial-time estimator exists for ${(\Dist_{\mathfrak{F}},f_{\mathfrak{F}})}$. More precisely and slightly more generally, we have the following corollaries. For the remainder of the section, fix ${m \in \Nats}$ s.t. ${m \geq n}$. For any ${p \in \NatPoly}$, define ${\beta_p: \Nats^m \rightarrow \Nats^m}$ by 
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -3115,14 +3115,14 @@ Define ${\eta: \Nats^{m} \rightarrow \Nats^n}$ by
 \begin{corollary}
 \label{crl:complete_sharp}
 
-Fix ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\Dist_{\mathfrak{F},N}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\Dist}$, there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\Dist^\eta,f_\phi)}$.
+Fix ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)\sharp}(\Gamma^m)}$-optimal estimator for ${(\Dist_{\mathfrak{F}}^\eta,f_{\mathfrak{F}})}$. Then, for any ${(\Dist,f) \in \textsc{SampX}_\mathfrak{F}[\Fall(\Gamma_{\text{smp}})]}$ there is an\\ $\Fall^{(m)\sharp}(\Gamma^m)$-optimal estimator for ${(\Dist^\eta,f)}$.
 
 \end{corollary}
 \end{samepage}
 
 \begin{proof}
 
-According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction of ${(\Dist,f_\phi)}$ to ${(\Dist_{\mathfrak{F}},f_{\mathfrak{F}})}$ over ${\alpha_p}$ for some ${p \in \NatPoly}$  increasing in the last argument. This implies ${\pi^\eta}$ is a precise pseudo-invertible ${\Fall^{(m)}(\Gamma^m)}$-reduction of ${(\Dist^\eta,f_\phi)}$ to ${(\Dist_{\mathfrak{F}}^\eta,f_{\mathfrak{F}})}$ over ${\beta_p}$. Applying Corollary~\ref{crl:pp_reduce_sharp}, we get the desired result. 
+According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction of ${(\Dist,f)}$ to ${(\Dist_{\mathfrak{F}},f_{\mathfrak{F}})}$ over ${\alpha_p}$ for some ${p \in \NatPoly}$  increasing in the last argument. This implies ${\pi^\eta}$ is a precise pseudo-invertible ${\Fall^{(m)}(\Gamma^m)}$-reduction of ${(\Dist^\eta,f)}$ to ${(\Dist_{\mathfrak{F}}^\eta,f_{\mathfrak{F}})}$ over ${\beta_p}$. Applying Corollary~\ref{crl:pp_reduce_sharp}, we get the desired result. 
 %
 \end{proof}
 
@@ -3130,7 +3130,7 @@ According to Theorem~\ref{thm:complete}, there is ${\pi}$ a precise pseudo-inver
 \begin{corollary}
 \label{crl:complete}
 
-Fix ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$ s.t. ${\Fall^{(m)}}$ is ${\GrowA^m}$-ample. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\Dist_{\mathfrak{F},N}^\eta,f_{\mathfrak{F}})}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable word ensemble ${\Dist}$, there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\Dist^\eta,f_\phi)}$.
+Fix ${\Fall^{(m)}}$ a fall space of rank ${m}$ and ${\Gamma^m=(\GrowR^m, \GrowA^m)}$ growth spaces of rank ${m}$ s.t. ${\Fall^{(m)}}$ is ${\GrowA^m}$-ample. Assume that ${\Fall \eta \subseteq \Fall^{(m)}}$, ${\Gamma_r \eta \subseteq \GrowR^{m}}$ and for any ${p \in \NatPoly}$ increasing in the last argument, ${\Fall^{(m)} \beta_p \subseteq \Fall^{(m)}}$, ${\GrowR^m \beta_p = \GrowR^m}$ and ${\GrowA^m \beta_p = \GrowA^m}$. In the setting of Theorem~\ref{thm:complete}, assume there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\Dist_{\mathfrak{F}}^\eta,f_{\mathfrak{F}})}$. Then, for any ${(\Dist,f) \in \textsc{SampX}_\mathfrak{F}[\Fall(\Gamma_{\text{smp}})]}$ there is an ${\Fall^{(m)}(\Gamma^m)}$-optimal estimator for ${(\Dist^\eta,f_\phi)}$.
 \end{corollary}
 \end{samepage}
 
@@ -3162,15 +3162,15 @@ Assume ${\zeta}$ is bounded and there is ${h \in \NatPoly}$ s.t. ${\zeta \geq 2^
 
 Consider any ${\varepsilon_0 \in \Fall_\zeta}$.
 
-\[\sum_{l=2}^{\varphi(K)-1} \frac{\varepsilon_0(K)}{l \log l} \leq \varepsilon_0(K) \int_2^{\varphi(K)} \frac{\dif t}{t \log t}\]
+\[\sum_{l=2}^{\varphi(K)-1} \frac{\varepsilon_0(K)}{l \log l} \leq \frac{3}{2} (\log 3) \varepsilon_0(K) \int_2^{\varphi(K)} \frac{\dif t}{t \log t}\]
 
-\[\sum_{l=2}^{\varphi(K)-1} \frac{\varepsilon_0(K)}{l \log l} \leq \varepsilon_0(K) (\ln 2)^2 \log \log \varphi(K)\]
+\[\sum_{l=2}^{\varphi(K)-1} \frac{\varepsilon_0(K)}{l \log l} \leq \frac{3}{2} (\log 3) (\ln 2)^2 \varepsilon_0(K) \log \log \varphi(K)\]
 
 For some ${M_0 \in \Reals^{>0}}$, ${\varepsilon_0 \leq M_0 \zeta}$, therefore
 
-\[\sum_{l=2}^{\varphi(K)-1} \frac{\varepsilon_0(K)}{l \log l} \leq (\ln 2)^2 M_0 \zeta(K) \log \log \varphi(K)\]
+\[\sum_{l=2}^{\varphi(K)-1} \frac{\varepsilon_0(K)}{l \log l} \leq \frac{3}{2} (\log 3)(\ln 2)^2 M_0 \zeta(K) \log \log \varphi(K)\]
 
-\[\sum_{l=2}^{\varphi(K)-1} \frac{\varepsilon_0(K)}{l \log l} \leq (\ln 2)^2 M_0 \log \log (3+\sum_{i \in [n]} K_i)\]
+\[\sum_{l=2}^{\varphi(K)-1} \frac{\varepsilon_0(K)}{l \log l} \leq \frac{3}{2} (\log 3)(\ln 2)^2 M_0 \log \log (3+\sum_{i \in [n]} K_i)\]
 
 We got ${\varepsilon_0 \circ \eta \in \FallUt{\varphi}}$. Now, consider any ${\varepsilon_1 \in \FallUt{\varphi}}$ and ${p \in \NatPoly}$ increasing in the last argument. Clearly, ${p(K) \geq K_{n-1}}$.
 
