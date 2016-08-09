@@ -2979,19 +2979,18 @@ We will show that certain classes of functions paired with ${\Fall(\Gamma_{\text
 \begin{theorem}
 \label{thm:complete}
 
-Consider an encoded set ${E}$ which is prefix-free, i.e. for all ${\phi,\psi \in E}$ and ${z \in \Bool^{>0}}$, ${\En_E(\phi) \ne \En_E(\psi)z}$. Consider ${\mathfrak{F}: E \times \Words \rightarrow \Reals}$ bounded and ${\{N_\phi: \bm{1} \xrightarrow{\Gamma_{\textnormal{det}}} \Words\}_{\phi \in E}}$. For any ${K \in \Nats^n}$, define ${\zeta^K: \Words^2 \rightarrow \Words^2}$ and ${\xi^K: \Words \rightarrow \Words^2}$ by 
+Consider an encoded set ${E}$ which is prefix-free, i.e. for all ${\phi,\psi \in E}$ and ${z \in \Bool^{>0}}$, ${\En_E(\phi) \ne \En_E(\psi)z}$. Consider ${\mathfrak{F}: E \times \Nats \times \Words \rightarrow \Reals}$ bounded. For any ${K \in \Nats^n}$, define\\ $\zeta^K: \Words^2 \rightarrow \Words^2$ by 
 
-\begin{align}
+\begin{equation}
 %\label{eqn:tbd}
-\zeta^K(a,w)&=(a,\Ev^{K_{n-1}}(a;\En_{\Nats^n}(K),w))\\
-\xi^K(b)&=\begin{cases}(b,N_\phi^K) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ (b,\Estr) \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
-\end{align}
+\zeta^K(a,w)=(a,\Ev^{K_{n-1}}(a;\En_{\Nats^n}(K),w))
+\end{equation}
 
-Define the distributional estimation problem $({\Dist_{\mathfrak{F},N}},f_{\mathfrak{F}})$ by 
+Define the distributional estimation problem $({\Dist_{\mathfrak{F}}},f_{\mathfrak{F}})$ by 
 
 \begin{align}
-\Dist_{\mathfrak{F},N}^K&:=\En_*^4 (\xi_*^K(\Un^{r(K)}) \times \zeta_*^k(\Un^{r(K)} \times \Un^{s(K)})) \\
-f_{\mathfrak{F}}(\Chev{b,d,a,x}) &:= \begin{cases}\mathfrak{F}(\phi, x) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ 0 \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
+\Dist_{\mathfrak{F}}^K&:=\En_*^4 (\Un^{r(K)} \times \En_{\Nats*} \delta_{K_{n-1}} \times \zeta_*^k(\Un^{r(K)} \times \Un^{s(K)})) \\
+f_{\mathfrak{F}}(\Chev{b,\En_\Nats(k),a,x}) &:= \begin{cases}\mathfrak{F}(\phi,k,x) \textnormal{ if } \exists z \in \Words: b=\En_E(\phi)z \\ 0 \textnormal{ if } \forall \phi \in E, z \in \Words: b \ne \En_E(\phi)z\end{cases}
 \end{align}
 
 For any ${p \in \NatPoly}$, define ${\alpha_p: \NatFun \Nats^n}$ by
@@ -3001,65 +3000,65 @@ For any ${p \in \NatPoly}$, define ${\alpha_p: \NatFun \Nats^n}$ by
 \forall J \in \Nats^{n-1}, k \in \Nats: \alpha_p(J,k) = (J,p(J,k))
 \end{equation}
 
-For any ${\phi \in E}$, define ${f_\phi: \Words \rightarrow \Reals}$ by ${f_\phi(x)=\mathfrak{F}(\phi,x)}$. Then, for any ${\phi \in E}$ and ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable world ensemble ${\Dist}$, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\Dist,f_\phi)}$ to ${(\Dist_{\mathfrak{F},N}, f_{\mathfrak{F}})}$ over ${\alpha_{\phi}}$ where ${\alpha_\phi:=\alpha_{p_\phi}}$ for some ${p_\phi \in \NatPoly}$ increasing in the last argument (it is easy to see that ${\alpha_p}$ is an efficient injection for any ${p}$ increasing in the last argument).
+Consider a distributional estimator problem ${(\Dist,f)}$ s.t. ${\Dist}$ is ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable and there are ${\phi \in E}$ and ${q \in \Nats[k]}$ s.t. for any ${x \in \Supp \Dist}$ and ${k \geq q(\Abs{x})}$, ${f(x)=\mathfrak{F}(\phi,k,x)}$. Then, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\Dist,f)}$ to ${(\Dist_{\mathfrak{F}}, f_{\mathfrak{F}})}$ over ${\alpha_p}$ for some ${p \in \NatPoly}$ increasing in the last argument (it is easy to see that any such ${\alpha_p}$ is an efficient injection).
 
 \end{theorem}
 \end{samepage}
 
 \begin{proof}
 
-Let ${\sigma}$ be an ${\Fall(\Gamma_{\text{smp}})}$-sampler of ${\Dist}$. Consider some ${\phi \in E}$ and denote ${b=\En_E(\phi)}$. Choose\\ ${p_\phi \in \NatPoly}$ increasing in the last argument and ${a \in \Words}$ s.t. for any ${K \in \Nats^{n}}$, ${z \in \Words}$, ${w_1 \in \Bool^{\R_\sigma(K)}}$ and ${w_2 \in \Words}$: ${r(\alpha_\phi(K)) \geq \Abs{b}}$, ${r(\alpha_\phi(K)) \geq \Abs{a}}$, ${s(\alpha_\phi(K)) \geq \R_\sigma(K)}$ and 
+Let ${\sigma}$ be an ${\Fall(\Gamma_{\text{smp}})}$-sampler of ${\Dist}$. Denote ${b=\En_E(\phi)}$. Choose ${p \in \NatPoly}$ increasing in the last argument and ${a \in \Words}$ s.t. for any ${K \in \Nats^{n}}$, $z \in \Words$, ${w_1 \in \Bool^{\R_\sigma(K)}}$ and ${w_2 \in \Words}$: ${p(K) \geq q(\max_{x \in \Supp \sigma_\bullet^K} \Abs{x})}$, ${r(\alpha_p(K)) \geq \Abs{b}}$, ${r(\alpha_p(K)) \geq \Abs{a}}$, ${s(\alpha_p(K)) \geq \R_\sigma(K)}$ and 
 
-\[\Ev^{p_\phi(K)}(az;\En_{\Nats^n}(\alpha_\phi(K)),w_1 w_2)=\sigma^{K}(w_1)\]
+\[\Ev^{p(K)}(az;\En_{\Nats^n}(\alpha_p(K)),w_1 w_2)=\sigma^{K}(w_1)\]
 
-The latter is possible because ${\alpha_\phi}$ can be efficiently inverted using binary search over ${K_{n-1}}$.
+The latter is possible because ${\alpha_p}$ can be efficiently inverted using binary search over ${K_{n-1}}$.
 
-Denote ${r_\phi := r \circ \alpha_\phi}$. Note that ${\Gamma_{\textnormal{red}} \alpha_\phi = \Gamma_{\textnormal{red}}}$ by Proposition~\ref{prp:gamma_r_alpha_p}. We construct ${\pi: \Words \xrightarrow{\Gamma_{\textnormal{red}}} \Words}$ s.t. for any ${K \in \Nats^{n}}$, ${x \in \Supp \sigma_{\bullet}^{K}}$, ${z_b \in \Bool^{r_\phi(K)-\Abs{b}}}$ and ${z_a \in \Bool^{r_\phi(K)-\Abs{a}}}$
+Denote ${r_p := r \circ \alpha_p}$. Note that ${\Gamma_{\textnormal{red}} \alpha_p = \Gamma_{\textnormal{red}}}$ by Proposition~\ref{prp:gamma_r_alpha_p}. We construct\\ $\pi: \Words \xrightarrow{\Gamma_{\textnormal{red}}} \Words$ s.t. for any ${K \in \Nats^{n}}$, ${x \in \Supp \sigma_{\bullet}^{K}}$, ${z_b \in \Bool^{r_p(K)-\Abs{b}}}$ and ${z_a \in \Bool^{r_p(K)-\Abs{a}}}$
 
 \begin{align}
-\R_\pi(K) &= 2r_\phi(K)-\Abs{a}-\Abs{b} \\
-\label{eqn:thm__complete__red}\pi^{K}(x,z_b z_a)&=\Chev{bz_b,N_\phi^{\alpha_\phi(K)},a z_a, x} 
+\R_\pi(K) &= 2r_p(K)-\Abs{a}-\Abs{b} \\
+\label{eqn:thm__complete__red}\pi^{K}(x,z_b z_a)&=\Chev{bz_b,\En_\Nats(p(K)),a z_a, x} 
 \end{align}
 
 We also ensure that for any ${K \in \Nats^n}$, ${x \in \Words}$ and ${z_b,z_a}$ as above, either \ref{eqn:thm__complete__red} holds or 
 
 \[\pi^K(x,z_b z_a)=\Estr\]
 
-To verify condition~\ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce} (with ${\alpha_\phi}$ playing the role of the efficient injection), fix ${q \in \NatPoly}$ s.t. $q \geq r_\phi$ and $\Supp \sigma_\bullet^K \subseteq \Bool^{q(K)}$. Construct ${W: \Words \xrightarrow{\Gamma_{\textnormal{red}}} \Rats^{\geq 0}}$ s.t. 
+To verify condition~\ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_reduce} (with ${\alpha_p}$ playing the role of the efficient injection), fix ${h \in \NatPoly}$ s.t. $h \geq r_p$ and $\Supp \sigma_\bullet^K \subseteq \Bool^{h(K)}$. Construct ${W: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Rats^{\geq 0}}$ s.t. 
 
-\[W^K(y)=\begin{cases}2^{\Abs{a}+\Abs{b}} \text{ if } \exists z_b,z_a,x \in \Bool^{\leq q(K)}: y=\Chev{bz_b,N_\phi^{\alpha_\phi(K)}, az_a,x}\\0 \text{ otherwise}\end{cases}\]
+\[W^K(y)=\begin{cases}2^{\Abs{a}+\Abs{b}} \text{ if } \exists z_b,z_a,x \in \Bool^{\leq h(K)}: y=\Chev{bz_b,\En_\Nats(p(K)), az_a,x}\\0 \text{ otherwise}\end{cases}\]
 
 ${\Dist^K \equiv \sigma_\bullet^K \pmod{\Fall}}$ since ${\sigma}$ is an ${\Fall(\Gamma_{\textnormal{smp}})}$-sampler of ${\Dist}$. By Proposition~\ref{prp:prob_cong_push}, ${\pi_*^K\Dist^K \equiv \pi_*^K\sigma_\bullet^K \pmod{\Fall}}$. It follows that
 
-\[\sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}(y)W^K(y)-(\pi_*^K\Dist^K)(y)} \equiv \sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}(y)W^K(y)-(\pi_*^K\sigma_\bullet^K)(y)} \pmod{\Fall}\]
+\[\sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(y)W^K(y)-(\pi_*^K\Dist^K)(y)} \equiv \sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(y)W^K(y)-(\pi_*^K\sigma_\bullet^K)(y)} \pmod{\Fall}\]
 
-For any ${y \in \Words}$, if ${W^K(y)=0}$ then ${(\pi_*^K\sigma_\bullet^K)(y) = 0}$, so the corresponding terms contribute nothing to the sum on the right hand side. Denote ${\bar{\pi}^K(x,z_b,z_a):=\Chev{bz_b,N_\phi^{\alpha_\phi(K)},az_a,x}}$.
+For any ${y \in \Words}$, if ${W^K(y)=0}$ then ${(\pi_*^K\sigma_\bullet^K)(y) = 0}$, so the corresponding terms contribute nothing to the sum on the right hand side. Denote ${\bar{\pi}^K(x,z_b,z_a):=\Chev{bz_b,\En_\Nats(p(K)),az_a,x}}$.
 
-\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}W^K-(\pi_*^K\Dist^K)} \equiv \sum_{\substack{z_b \in \Bool^{\leq q(K)}\\z_a \in \Bool^{\leq q(K)}\\x \in \Bool^{\leq q(K)}}} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}(\bar{\pi}^K(x,z_b,z_a))2^{\Abs{a}+\Abs{b}}-(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
+\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-(\pi_*^K\Dist^K)} \equiv \sum_{\substack{z_b \in \Bool^{\leq h(K)}\\z_a \in \Bool^{\leq h(K)}\\x \in \Bool^{\leq h(K)}}} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(\bar{\pi}^K(x,z_b,z_a))2^{\Abs{a}+\Abs{b}}-(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
 
-\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_b \in \Bool^{r_\phi(K)-\Abs{b}}\\z_a \in \Bool^{r_\phi(K)-\Abs{a}}\\x \in \Bool^{\leq q(K)}}} \Abs{2^{-r_\phi(K)}2^{-r_\phi(K)}\sigma_\bullet^K(x) 2^{\Abs{a}+\Abs{b}}-(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
+\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_b \in \Bool^{r_p(K)-\Abs{b}}\\z_a \in \Bool^{r_p(K)-\Abs{a}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-r_p(K)}2^{-r_p(K)}\sigma_\bullet^K(x) 2^{\Abs{a}+\Abs{b}}-(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
 
-\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_1 \in \Bool^{r_\phi(K)-\Abs{a}}\\z_2 \in \Bool^{r_\phi(K)-\Abs{b}}\\x \in \Bool^{\leq q(K)}}} \Abs{2^{-2r_\phi(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
+\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_1 \in \Bool^{r_p(K)-\Abs{a}}\\z_2 \in \Bool^{r_p(K)-\Abs{b}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-2r_p(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
 
-\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_\phi(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_1 \in \Bool^{r_\phi(K)-\Abs{a}}\\z_2 \in \Bool^{r_\phi(K)-\Abs{b}}\\x \in \Bool^{\leq q(K)}}} \Abs{2^{-2r_\phi(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -2^{-(r_\phi(K)-\Abs{a})}2^{-(r_\phi(K)-\Abs{b})}\sigma_\bullet^K(x)} \pmod{\Fall}\]
+\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_1 \in \Bool^{r_p(K)-\Abs{a}}\\z_2 \in \Bool^{r_p(K)-\Abs{b}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-2r_p(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -2^{-(r_p(K)-\Abs{a})}2^{-(r_p(K)-\Abs{b})}\sigma_\bullet^K(x)} \pmod{\Fall}\]
 
 \[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{p(K)}W^K-\pi_*^K\Dist^K} \equiv 0 \pmod{\Fall}\]
 
 To verify condition~\ref{con:def__pp_reduce__fun} of Definition~\ref{def:pp_reduce}, use Proposition~\ref{prp:prob_cong_ev} to get
 
-\[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \pmod{\Fall}\]
+\[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \pmod{\Fall}\]
 
-\[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\Chev{bz_b,N_\phi^{\alpha_\phi(K)},az_a,x})}] \pmod{\Fall}\]
+\[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\Chev{bz_b,\En_\Nats(p(K)),az_a,x})}] \pmod{\Fall}\]
 
-\[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{\mathfrak{F}(\phi,x)-\mathfrak{F}(\phi,x)}] \pmod{\Fall}\]
+\[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{\mathfrak{F}(\phi,p(K),x)-\mathfrak{F}(\phi,p(K),x)}] \pmod{\Fall}\]
 
-\[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f_\phi(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv 0 \pmod{\Fall}\]
+\[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv 0 \pmod{\Fall}\]
 
-To verify condition~\ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, construct ${\tau: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Words}$ s.t. for any\\ $z_1,z_2 \in \Bool^{r_\phi(K)}$ and ${x \in \Supp \sigma_\bullet^K}$, ${\tau^K(\Chev{z_1,N_\phi^{\alpha_\phi(K)},z_2,x})=x}$. By Proposition~\ref{prp:prob_cong_push} and Proposition~\ref{prp:prob_cong_ev}
+To verify condition~\ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, construct ${\tau: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Words}$ s.t. for any\\ $z_1,z_2 \in \Bool^{r_p(K)}$ and ${x \in \Supp \sigma_\bullet^K}$, ${\tau^K(\Chev{z_1,\En_\Nats(p(K)),z_2,x})=x}$. By Proposition~\ref{prp:prob_cong_push} and Proposition~\ref{prp:prob_cong_ev}
 
 \[\E_{y \sim \pi_*^K\Dist^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \E_{y \sim \pi_*^K\sigma_\bullet^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \pmod{\Fall}\]
 
-Denoting ${\Un_{ba}^K:=\Un^{r_\phi(K)-\Abs{b}} \times \Un^{r_\phi(K)-\Abs{a}}}$
+Denoting ${\Un_{ba}^K:=\Un^{r_p(K)-\Abs{b}} \times \Un^{r_p(K)-\Abs{a}}}$
 
 \[\E[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^K \times \sigma_\bullet^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(\bar{\pi}^K(x,z_b,z_a)),\tau_{\bar{\pi}^K(x,z_b,z_a)}^K)] \pmod{\Fall}\]
 
@@ -3069,19 +3068,17 @@ Denoting ${\Un_{ba}^K:=\Un^{r_\phi(K)-\Abs{b}} \times \Un^{r_\phi(K)-\Abs{a}}}$
 %
 \end{proof}
 
-Obviously ${\Dist_{\mathfrak{F},N}}$ is ${\Fall(\Gamma_{\text{smp}})}$-samplable. Therefore, if there is ${\phi^* \in E}$ s.t. ${f_{\phi^*}}$ is an extension of ${f_{\mathfrak{F}}}$ then ${(\Dist_{\mathfrak{F},N},f_{\phi^*})}$ is complete w.r.t. precise pseudo-invertible ${\Fall(\Gamma_{\text{red}})}$-reductions over efficient injections of the form ${\alpha_p}$ for the class of distributional estimation problems ${(\Dist,f_\phi)}$ s.t. ${\Dist}$ is ${\Fall(\Gamma_{\text{smp}})}$-samplable. 
+Denote ${\textsc{X}_\mathfrak{F}}$ the set of bounded functions ${f: D \rightarrow \Reals}$ (where ${D \subseteq \Words}$) satisfying the conditions of Theorem~\ref{thm:complete}, and ${\textsc{SampX}_\mathfrak{F}[\Fall(\Gamma_{\text{smp}})]}$ the set of distributional estimation problems of the form ${(\Dist,f)}$ for ${\Fall(\Gamma_{\text{smp}})}$-samplable ${\Dist}$ and ${f \in \textsc{X}_\mathfrak{F}}$. Obviously ${\Dist_{\mathfrak{F}}}$ is ${\Fall(\Gamma_{\text{smp}})}$-samplable. Therefore, if ${f_{\mathfrak{F}} \in \textsc{X}_\mathfrak{F}}$ then ${(\Dist_{\mathfrak{F}},f_{\mathfrak{F}})}$ is complete for ${\textsc{SampX}_\mathfrak{F}[\Fall(\Gamma_{\text{smp}})]}$ w.r.t. precise pseudo-invertible ${\Fall(\Gamma_{\text{red}})}$-reductions over efficient injections of the form ${\alpha_p}$.
 
 \begin{samepage}
 \begin{example}
 
-${n = 1}$. ${E_{\mathsf{NP}}}$ consists of pairs ${\phi=(M_\phi \in \Words, t_\phi \in \Nats[k])}$. ${\mathfrak{F}_{\mathsf{NP}}}$ is given by 
+${n = 1}$. ${E_{\textsc{NP}} \subseteq \Words}$ is the set of valid programs for ${\mathcal{U}_2}$. ${\mathfrak{F}_{\textsc{NP}}}$ is given by 
 
 \begin{equation}
 %\label{eqn:tbd}
-\mathfrak{F}_{\mathsf{NP}}(\phi,x):=\begin{cases}1 \text{ if } \exists y\in \Bool^{\leq t_\phi(\Abs{x})}: \Ev^{ t_\phi(\Abs{x})}(M_\phi;x,y)=1 \\ 0 \text { otherwise} \end{cases}
+\mathfrak{F}_{\textsc{NP}}(\phi,k,x):=\begin{cases}1 \text{ if } \exists y\in \Bool^k: \Ev^k(\phi;x,y)=1 \\ 0 \text { otherwise} \end{cases}
 \end{equation}
-
-${N_{\mathsf{NP}}}$ is constructed s.t. ${\Abs{N_{\mathsf{NP},\phi}^k}=t_\phi(k)}$. This padding is necessary for ${\phi^*}$ as above to exist. 
 
 \end{example}
 \end{samepage}
@@ -3089,14 +3086,12 @@ ${N_{\mathsf{NP}}}$ is constructed s.t. ${\Abs{N_{\mathsf{NP},\phi}^k}=t_\phi(k)
 \begin{samepage}
 \begin{example}
 
-${n = 1}$. ${E_{\mathsf{EXP}}}$ consists of pairs ${\phi=(M_\phi \in \Words, t_\phi \in \Nats[k])}$. ${\mathfrak{F}_{\mathsf{EXP}}}$ is given by 
+${n = 1}$. ${E_{\textsc{EXP}} \subseteq \Words}$ is the set of valid programs for ${\mathcal{U}_1}$. ${\mathfrak{F}_{\textsc{EXP}}}$ is given by 
 
 \begin{equation}
 %\label{eqn:tbd}
-\mathfrak{F}_{\mathsf{EXP}}(\phi,x):=\begin{cases}1 \text{ if } \Ev^{2^{t_\phi(\Abs{x})}}(M_\phi;x)=1 \\ 0 \text { otherwise} \end{cases}
+\mathfrak{F}_{\textsc{EXP}}(\phi,k,x):=\begin{cases}1 \text{ if } \Ev^{2^k}(\phi;x)=1 \\ 0 \text { otherwise} \end{cases}
 \end{equation}
-
-${N_{\mathsf{EXP}}}$ is constructed s.t. ${\Abs{N_{\mathsf{EXP},\phi}^k}=t_\phi(k)}$.
 
 \end{example}
 \end{samepage}
