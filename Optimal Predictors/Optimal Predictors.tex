@@ -3489,9 +3489,11 @@ Denote ${h_{\sigma\alpha }^K := h_\alpha^K \circ \sigma^K_0}$, ${f_\sigma^K := f
 
 Applying Proposition~\ref{prp:gen} to the right hand side
 
+\[\E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)f_\sigma^K]] \overset{\alpha}{\equiv} \E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)\sigma^K_1] \pmod \Fall\]
+
 \begin{equation}
 \label{eqn:prp__est_err_smp__prf}
-\E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)f_\sigma^K]] \overset{\alpha}{\equiv} \E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)\sigma^K_1] \pmod \Fall
+\E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)(f_\sigma^K-\sigma_1^K)]] \overset{\alpha}{\equiv} 0 \pmod \Fall
 \end{equation}
 
 On the other hand
@@ -3510,7 +3512,7 @@ Fix $M \geq \sup \Abs{f}$ and construct ${D: \Words \Alg \Rats}$ s.t.
 
 \[D(x)=\begin{cases}D(x)=\max(\min(t,M),-M) \text{ if ${x = \En_\Rats(t)}$}\\D(x)=0 \text{ if } x \not\in \Img \En_\Rats\end{cases}\]
 
-Denote\\ ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${R: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$ and ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
+Denote ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${R: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$ and ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
 
 \begin{align}
 \label{eqn:thm__exists_smp__l_adv}\A_R(K) &= \A_\sigma(K) \\
@@ -3595,7 +3597,7 @@ It follows that for some ${M_0 \in \Reals^{>0}}$
 
 \[\forall b \in \Bool^{\leq l(K)}: \E_{\Dist^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \varrho^K(b) + \varepsilon_1(K)\]
 
-Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ where ${M}$ is as in condition~\ref{con:def__decod__inv} of Definition~\ref{def:decod}. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold.
+Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$. Choose ${q \in \NatPoly}$ s.t. ${q(K) \geq K_{n-1}}$ and for all ${K \in \Nats^n}$, \ref{eqn:thm__exists_all__q_rnd} and \ref{eqn:thm__exists_all__q_adv} hold.
 
 \[\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \varrho^{\alpha_{q+i}(K)}(a_Q^K) + \varepsilon_1(\alpha_{q+i}(K))\]
 
@@ -3638,7 +3640,7 @@ Perfect polynomial-time estimators are essentially objects of \enquote{classical
 \begin{samepage}
 \begin{proposition}
 \label{prp:fall_uni_qpoly}
-Consider ${(\Dist,f)}$ a distributional estimation problem, ${P: \Words \Scheme \Rats}$ bounded,\\ $m \in \Nats^{>0}$ and ${p \in \NatPolyJ}$ s.t. ${p \geq 2}$. Define ${q: \NatFun \Nats}$ by ${q(J,k):=2^{\Floor{\log p(J)\log \max(k,1)}^m}}$. Suppose that 
+Consider ${(\Dist,f)}$ a distributional estimation problem, ${P: \Words \Scheme \Rats}$ bounded,\\ $m \in \Nats^{>0}$ and ${p \in \NatPolyJ}$ s.t. ${p \geq 2}$. Define ${q: \NatFun \Nats}$ by $q(J,k):=2^{\Floor{\log p(J)\log \max(k,1)}^m}$. Suppose that 
 
 \begin{equation}
 \label{eqn:prp__fall_uni_qpoly}
