@@ -1,0 +1,144 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+\usepackage{bm}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+\newcommand{\WordsLen}[1]{{\Bool^{#1}}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Var}{Var}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Ev}{ev}
+
+% special symbols that are not really operators
+\DeclareMathOperator{\T}{T}
+\DeclareMathOperator{\R}{r}
+\DeclareMathOperator{\A}{a}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\UM}{UM}
+\DeclareMathOperator{\Un}{U}
+\DeclareMathOperator{\En}{c}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
+\newcommand{\NatPolyJ}{\Nats[J_0, J_1 \ldots J_{n-2}]}
+\newcommand{\NatFun}{\Nats^n \rightarrow}
+
+\newcommand{\Estr}{\bm{\lambda}}
+\newcommand{\LLU}{\mathbf{LLU}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Dist}{\mathcal{D}}
+\newcommand{\GrowR}{\Gamma_{\mathfrak{R}}}
+\newcommand{\GrowA}{\Gamma_{\mathfrak{A}}}
+\newcommand{\Grow}{\Gamma:=(\GrowR,\GrowA)}
+\newcommand{\MGrow}{\mathrm{M}\Gamma}
+\newcommand{\Fall}{\mathcal{F}}
+\newcommand{\EG}{\Fall(\Gamma)}
+\newcommand{\ESG}{\Fall^\sharp(\Gamma)}
+\newcommand{\EMG}{\Fall(\MGrow)}
+\newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
+\newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
+
+\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
+\newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
+\newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
+\newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(#1)}}}
+\newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+\newcommand{\Scheme}{\xrightarrow{\Gamma}}
+\newcommand{\MScheme}{\xrightarrow{\MGrow}}
+
+\begin{document}
+
+*The notation of this post is based on VK16 rather than the notation of previous posts. The concept of "quasi-optimal estimator" introduced here is completely unrelated to the previously introduced "quasi-optimal predictors". The latter term should be considered obsolete (it can be expressed different in the language of VK16).*
+
+Inspired by (presently unpublished) work by Garrabrant, we introduce a generalization of the concept of optimal polynomial-time estimators which we named "quasi-optimal polynomial-time estimators." As agnostic PAC learning (with a quadratic loss function) gives rise to optimal estimators, online convex optimisation gives rise to quasi-optimal estimators. At the same time, most properties of optimal estimators carry over to quasi-optimal estimators.
+
+%##Results
+\section{Results}
+
+%#Definition 1
+\subsection{Definition 1}
+
+Consider ${n,m \in \Nats}$. %circuit...
+
+***
+
+For the rest of the post, we fix ${n \in \Nats}$ and ${\Gamma}$ a pair of growth space of rank ${n}$.
+
+%#Definition 2
+\subsection{Definition 2}
+
+Consider a finite set ${\Sigma}$, ${\{(\Dist_i,f_i)\}_{i \in \Sigma}}$ a family of distributional estimation problems and ${\{\Fall_i\}_{i \in \Sigma}}$ a family of fall spaces. ${\{P_i: \Words \Scheme \Rats\}_{i \in \Sigma}}$ is called a *family of ${\EG}$-quasi-optimal polynomial-time estimators for ${(\Dist,f)}$* when...
+
+***
+
+Moo
+
+%##Appendix
+\section{Appendix A}
+
+Foo
+
+%##Appendix
+\section{Appendix B}
+
+Foo
+
+%##Appendix
+\section{Appendix C}
+
+Foo
+
+\end{document}
+
+
