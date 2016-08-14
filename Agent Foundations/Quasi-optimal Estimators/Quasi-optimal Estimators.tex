@@ -26,7 +26,11 @@
 % operators that require brackets
 \DeclareMathOperator{\Prb}{Pr}
 \DeclareMathOperator{\E}{E}
+\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
 \DeclareMathOperator{\Var}{Var}
+
+\newcommand{\FOO}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
 
 % operators that require parentheses
 \DeclareMathOperator{\Ent}{H}
@@ -96,6 +100,9 @@
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
 \newcommand{\Scheme}{\xrightarrow{\Gamma}}
 \newcommand{\MScheme}{\xrightarrow{\MGrow}}
+\newcommand{\ORC}{\xrightarrow{\textnormal{orc}}}
+
+\newcommand{\Base}{\mathcal{B}}
 
 \begin{document}
 
@@ -109,16 +116,22 @@ Inspired by (presently unpublished) work by Garrabrant, we introduce a generaliz
 %#Definition 1
 \subsection{Definition 1}
 
-Consider ${n,m \in \Nats}$. %circuit...
+An *ordered ring circuit* is a circuit with 3 types of binary gates: ${+}$, ${\times}$ and ${\max}$. Given ${A,B}$ finite sets, ${\Rats^A \ORC \Rats^B}$ is the set of ordered ring circuits with $\Abs{A}$ normal inputs labeled by ${A}$, ${\Abs{B}}$ outputs labeled by ${B}$ and a finite set of auxiliary inputs that receive constants in ${\Rats}$ (we can think of them as 0-nary gates). The notation ${\phi: \Rats^A \ORC \Rats^B}$ means ${\phi \in (\Rats^A \ORC \Rats^B)}$. Any ${\phi: \Rats^A \ORC \Rats^B}$ can be regarded as a function from ${\Rats^A}$ to ${\Rats^B}$ in the obvious way (circuit evaluation). 
+
+Given ${\phi: \Rats^A \ORC \Rats^B}$ with ${N}$ gates and ${M}$ auxiliary inputs ${\{c_i \in \Rats\}_{i \in [M]}}$, the *norm* of ${\phi}$ is ${\Norm{\phi}:=N+\sum_{i \in [M]} \Abs{c_i}}$.
 
 ***
 
-For the rest of the post, we fix ${n \in \Nats}$ and ${\Gamma}$ a pair of growth space of rank ${n}$.
+For the rest of the post, we fix ${n \in \Nats^{>0}}$ and ${\Gamma}$ a pair of growth space of rank ${n}$.
 
 %#Definition 2
 \subsection{Definition 2}
 
-Consider a finite set ${\Sigma}$, ${\{(\Dist_i,f_i)\}_{i \in \Sigma}}$ a family of distributional estimation problems and ${\{\Fall_i\}_{i \in \Sigma}}$ a family of fall spaces. ${\{P_i: \Words \Scheme \Rats\}_{i \in \Sigma}}$ is called a *family of ${\EG}$-quasi-optimal polynomial-time estimators for ${(\Dist,f)}$* when...
+Consider a finite set ${\Base}$, ${\{(\Dist_i,f_i)\}_{i \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_i\}_{i \in \Base}}$ a collection of fall spaces. ${\{P_i: \Words \Scheme \Rats\}_{i \in \Base}}$ is called a *family of ${\EG}$-quasi-optimal polynomial-time estimators for ${(\Dist,f)}$* when for any ${Q: \Words \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{Q^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_i \in \Fall_i\}_{i \in \Base}}$ s.t.
+
+$$\forall i \in \Base, J \in \Nats^{n-1}, k \in \Nats, l \geq p(J,k): \EE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}[(P_i^{Jl}(x,y)-f_i(x))^2] \leq \EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_Q^{Jk}}[(Q^{Jk}(x,z;P^{Jl}(x,y))_i-f_i(x))^2]+\varepsilon_i(J,l)$$
+
+Here, the notation ${Q^{Jk}(x,z;P^{Jl}(x,y))_i}$ means that the circuit ${Q^{Jk}(x,z)}$ is evaluated on ${\{P^{Jl}(x,y)_j\}_{j \in \Base}}$ and component ${i}$ of the result is used.
 
 ***
 
