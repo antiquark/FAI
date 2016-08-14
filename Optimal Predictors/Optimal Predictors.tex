@@ -116,11 +116,11 @@
 
 \begin{document}
 
-\title{Optimal Polynomial-Time Estimators: A Bayesian Notion of Approximation Algorithm (Draft)}
+\title{Optimal Polynomial-Time Estimators: A Bayesian Notion of Approximation Algorithm}
 
 \author{Vadim Kosoy \\ \href{mailto:vadim.kosoy@intelligence.org}{vadim.kosoy@intelligence.org}}
 
-\date{\today}
+\date{August 14, 2016}
 
 \maketitle
 
@@ -3647,7 +3647,7 @@ Consider ${(\Dist,f)}$ a distributional estimation problem, ${P: \Words \Scheme 
 \sup_{i \in \Nats} \E_{(x,y) \sim \Dist^K \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \equiv 0 \pmod \FallU
 \end{equation}
 
-Then, ${P}$ is an ${\FallU(\Gamma)}$-perfect polynomial-time estimator for ${(\Dist,f)}$.
+Then, ${P}$ is an ${\FallU(\Gamma)}$-perfect estimator for ${(\Dist,f)}$.
 
 \end{proposition}
 \end{samepage}
@@ -3666,7 +3666,7 @@ We have
 
 \[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} (\log 3) (\ln 2)^2 \int_0^\infty \varepsilon(J,\Floor{t}) \dif (\log \log t)\]
 
-Substitute ${t=2^{(\log p(J) \log s)^m}}$. Denoting ${s_0=2^{\frac{1}{\log p(J)}}}$
+Substitute ${t=2^{(\log p(J) \log s)^m}}$. Denoting ${s_0=2^{(\log p(J))^{-1}}}$
 
 \[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} (\log 3) (\ln 2)^2 m \int_{s=s_0}^\infty \varepsilon(J,\Floor{2^{(\log p(J) \log s)^m}}) \dif (\log \log s)\]
 
@@ -3684,7 +3684,9 @@ Using \ref{eqn:prp__fall_uni_qpoly} we get that for some ${M_1 \in \Reals^{>0}}$
 
 \[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq M + M_1 \log \log p_1(J)\]
 
-\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq M_1 \log \log p_1(J)^{2^{\frac{M}{M_1}}}\]
+Denoting ${M_2 := 2^{M_1^{-1} M}}$
+
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq M_1 \log \log p_1(J)^{M_2}\]
 %
 \end{proof}
 
@@ -3696,7 +3698,7 @@ In the present work, we don't refute the existence of optimal polynomial-time es
 \begin{proposition}
 \label{prp:tally_perfect}
 
-Consider ${h: \Nats^n \rightarrow \Reals}$ bounded and ${\Dist}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \Dist^{K_1} \cap \Supp \Dist^{K_2} = \varnothing}$. Assume that either ${\Fall^{\frac{1}{2}}}$ is ${\GrowA}$-ample or ${1 \in \GrowA}$ and the image of ${h}$ is a finite subset of ${\Rats}$. Define ${f: \Supp \Dist \rightarrow \Reals}$ by requiring that for any ${K \in \Nats^n}$ and ${x \in \Supp \Dist^K}$, ${f(x)=h(K)}$. Then, there exists an ${\EG}$-perfect estimator for ${(\Dist,f)}$.
+Consider ${h: \Nats^n \rightarrow \Reals}$ bounded and ${\Dist}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \Dist^{K_1} \cap \Supp \Dist^{K_2} = \varnothing}$. Assume that either ${1 \in \GrowA}$ and the image of ${h}$ is a finite subset of ${\Rats}$ or ${\Fall^{\frac{1}{2}}}$ is ${\GrowA}$-ample. Define ${f: \Supp \Dist \rightarrow \Reals}$ by requiring that for any ${K \in \Nats^n}$ and ${x \in \Supp \Dist^K}$, ${f(x)=h(K)}$. Then, there exists an ${\EG}$-perfect estimator for ${(\Dist,f)}$.
 
 \end{proposition}
 \end{samepage}
@@ -3719,7 +3721,7 @@ We have
 %
 \end{proof}
 
-In the setting of Proposition~\ref{prp:tally_perfect}, any ${\EG}$-optimal estimator for ${(\Dist,f)}$ has to be an ${\EG}$-perfect estimator. In particular, if no ${\EG}$-perfect estimator exists then no ${\EG}$-optimal estimator exists. Similarly, if no \emph{uniform} ${\EG}$-perfect estimator exists then no uniform ${\EG}$-optimal estimator exists (and likewise for any other condition on the estimator).
+In the setting of Proposition~\ref{prp:tally_perfect}, any ${\EG}$-optimal estimator for ${(\Dist,f)}$ has to be an ${\EG}$-perfect estimator. In particular, if no \emph{uniform} ${\EG}$-perfect estimator exists then no uniform ${\EG}$-optimal estimator exists (and likewise for any other condition on the estimator).
 
 For distributional decision problems and ${\EG}$-samplable word ensembles we have the following stronger proposition.
 
@@ -3786,9 +3788,9 @@ Consider ${\varphi: \Nats^{n-1} \rightarrow \Nats}$ superquasi-polynomial i.e. f
 
 \begin{proof}
 
-Obviously it is enough to construct ${m}$, ${p}$ and ${B}$ s.t. \ref{eqn:prp__tally_fall_uni} holds for all but a finite number of ${J \in \Nats^{n-1}}$. Use Proposition~\ref{prp:tally_smp_bpp} to construct ${A: \bm{1} \Scheme \Bool}$. Given any ${k \in \Nats}$, define ${\omega^k \in \mathcal{P}(\Nats)}$ s.t. for some ${N_l \in \Reals^{>0}}$
+Obviously it is enough to construct ${m}$, ${p}$ and ${B}$ s.t. \ref{eqn:prp__tally_fall_uni} holds for all but a finite number of ${J \in \Nats^{n-1}}$. Use Proposition~\ref{prp:tally_smp_bpp} to construct ${A: \bm{1} \Scheme \Bool}$. Given any ${k \in \Nats}$, define ${\omega^k \in \mathcal{P}(\Nats)}$ s.t. for some ${N \in \Reals^{>0}}$
 
-\[\omega^k(i):=\begin{cases}\frac{N_l}{i \log i} \text{ if } 2 \leq i < k\\0 \text{ if } i < 2 \text { or } i \geq k\end{cases}\]
+\[\omega^k(i):=\begin{cases}\frac{N}{i \log i} \text{ if } 2 \leq i < k\\0 \text{ if } i < 2 \text { or } i \geq k\end{cases}\]
 
 Denote ${\Gamma^1:=(\GammaPoly^1,\Gamma_0^1)}$. Adapting the standard argument that any computable distribution is samplable, we can construct ${\tau: \bm{1} \xrightarrow{\Gamma^1} \Nats}$ s.t. ${\Supp \tau_\bullet^{k} \subseteq [k]}$ and ${\Dtv(\tau_\bullet^{k}, \omega^k) \leq \frac{1}{6}}$. Construct ${B: \bm{1} \Scheme \Bool}$ s.t. for any ${J \in \Nats^{n-1}}$, ${k \in \Nats}$, ${y \in \Bool^{\R_\tau(J,k)}}$ and ${z \in \Words}$
 
@@ -3829,7 +3831,7 @@ Thanks to the results of section~\ref{sec:reductions}, these negative results ar
 
 \subsection{Uniqueness}
 
-Since we view optimal polynomial-time estimators as computing \enquote{expected values,} it is natural to expect that their values only depend on the distributional estimation problem rather than the particular optimal polynomial-time estimator. However, since they are defined via an asymptotic property exact uniqueness is impossible. Instead, we have uniqueness up to an equivalence relation that means \enquote{asymptotically small difference on average.}
+Since we view optimal polynomial-time estimators as computing \enquote{expected values}, it is natural to expect that their values only depend on the distributional estimation problem rather than the particular optimal polynomial-time estimator. However, since they are defined via an asymptotic property exact uniqueness is impossible. Instead, we have uniqueness up to an equivalence relation that means \enquote{asymptotically small difference on average.}
 
 \begin{samepage}
 \begin{theorem}
@@ -3941,9 +3943,9 @@ The motivation for optimal polynomial-time estimators comes from the desire the 
 
 Thus, the class of distributional estimation problems admitting ${\EG}$-optimal estimators (or ${\ESG}$-optimal estimators) is a natural distributional complexity class. In light of the existence results we have demonstrated, these new classes are unlikely to trivially coincide with any of the previously known classes. Mapping the boundary of these classes and understanding their relationships with other classes in average-case complexity theory seems to be ground for much further work. Moreover, it is possible to consider generalizations by including more types of computational resources e.g. space, parallelism and/or non-determinism.
 
-One area where applying these concepts seems natural is Artificial General Intelligence. Indeed, the von Neumann–Morgenstern theorem shows that perfect rational agents are expected utility maximizers but in general the exact evaluation of expected utility is intractable. It is thus natural to substitute an optimal polynomial-time estimator for utility, as the analogue of expected value in the computationally bounded case. Further illuminating the connection, Theorem~\ref{thm:exists_smp} shows how optimal polynomial-time estimators result from agnostic PAC learning. It seems likely that this result can be generalized to obtaining optimal polynomial-time estimators for non-samplable word ensembles from online learning.
+One area where applying these concepts seems natural is Artificial General Intelligence. Indeed, the von Neumann–Morgenstern theorem shows that perfect rational agents are expected utility maximizers but in general the exact evaluation of expected utility is intractable. It is thus natural to substitute an optimal polynomial-time estimator for utility, as the analogue of expected value in the computationally bounded case. Further illuminating the connection, Theorem~\ref{thm:exists_smp} shows how optimal polynomial-time estimators result from agnostic PAC learning.
 
-Some results we left out of the present work show the existence of systems of optimal polynomial-time estimators that are \enquote{reflective} i.e. estimate systems of functions which depend on the estimators themselves. We constructed such systems using the Kakutani-Glicksberg-Fan theorem which requires the use of random advice strings, as in the definition of ${\EMG}$-samplers. However, it seems likely that such systems can also be constructed using online learning (i.e. by considering a collection of agents which apply online learning to predict each other's behavior). Such systems can be used to model game theoretic behavior of computationally bounded rational agents, similarly to the use of reflective oracles\cite{Fallenstein_2015} for unbounded agents. 
+Some results we left out of the present work show the existence of systems of optimal polynomial-time estimators that are \enquote{reflective} i.e. estimate systems of functions which depend on the estimators themselves. We constructed such systems using the Kakutani-Glicksberg-Fan theorem which requires the use of random advice strings, as in the definition of ${\EMG}$-samplers. Such systems can be used to model game theoretic behavior of computationally bounded rational agents, similarly to the use of reflective oracles\cite{Fallenstein_2015} for unbounded agents. 
 
 Finally, we wish to express the hope that the present work will lead to incorporating more concepts from complexity theory into the theory of AGI, serving to create a stronger theoretical foundation for AI in general. The importance of building such a theoretical foundation is enormous since it is necessary to predict and control the outcome of the eventual creation of artificial agents with superhuman intelligence, an event which might otherwise trigger a catastrophe\cite{Bostrom_2014}.
 
@@ -3981,7 +3983,7 @@ Given $\Dist$ a word ensemble\footnote{The standard definition of a hard-core pr
 Given $\Dist$ a word ensemble, $f: \Supp \Dist \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\text{det}}} \Bool}$, $B$ is a called a \emph{non-uniformly hard-core predicate} of $(\Dist,f)$ when for any ${S: \Words \xrightarrow{\Gamma_{\textnormal{circ}}} \Bool}$ 
 
 \begin{equation}
-\Prb_{x \sim \Dist^k}[S^k(f(x),y)=B^k(x)] \leq \frac{1}{2} \pmod {\Fall_{\text{neg}}}
+\Prb_{x \sim \Dist^k}[S^k(f(x))=B^k(x)] \leq \frac{1}{2} \pmod {\Fall_{\text{neg}}}
 \end{equation}
 
 \end{definition}
