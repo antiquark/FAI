@@ -103,6 +103,7 @@
 \newcommand{\ORC}{\xrightarrow{\textnormal{orc}}}
 
 \newcommand{\Base}{\mathcal{B}}
+\newcommand{\Prob}{\mathcal{P}}
 
 \begin{document}
 
@@ -122,20 +123,41 @@ Given ${\phi: \Rats^A \ORC \Rats^B}$ with ${N}$ gates and ${M}$ auxiliary inputs
 
 ***
 
-For the rest of the post, we fix ${n \in \Nats^{>0}}$ and ${\Gamma}$ a pair of growth space of rank ${n}$.
+For the rest of the post, we fix ${n \in \Nats^{>0}}$ and ${\Gamma}$ a pair of growth space of rank ${n}$. We will use a slightly different (but equivalent) definition of a distributional estimation problem than in VK16.
 
-%#Definition 2
 \subsection{Definition 2}
 
-Consider a finite set ${\Base}$, ${\{(\Dist_i,f_i)\}_{i \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_i\}_{i \in \Base}}$ a collection of fall spaces. ${\{P_i: \Words \Scheme \Rats\}_{i \in \Base}}$ is called a *family of ${\EG}$-quasi-optimal polynomial-time estimators for ${(\Dist,f)}$* when for any ${Q: \Words \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{Q^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_i \in \Fall_i\}_{i \in \Base}}$ s.t.
+An *encoded ensemble of rank ${n}$* is a pair ${(X,\Dist)}$ where ${X}$ is an encoded set and ${\Dist=\{\Dist^K \in \Prob(X)\}_{K \in \Nats^n}}$.
 
-$$\forall i \in \Base, J \in \Nats^{n-1}, k \in \Nats, l \geq p(J,k): \EE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}[(P_i^{Jl}(x,y)-f_i(x))^2] \leq \EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_Q^{Jk}}[(Q^{Jk}(x,z;P^{Jl}(x,y))_i-f_i(x))^2]+\varepsilon_i(J,l)$$
+\subsection{Definition 3}
+
+A *distributional estimation problem of rank ${n}$* is a triple ${(X,\Dist,f)}$ where ${(X,\Dist)}$ is an encoded ensemble of rank ${n}$ and ${f: \Supp \Dist \rightarrow \Reals}$ is a bounded function.
+
+\subsection{Definition 4}
+
+Consider a finite set ${\Base}$, ${\{(X,\Dist_i,f_i)\}_{i \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_i\}_{i \in \Base}}$ a collection of fall spaces. ${\{P_i: X \Scheme \Rats\}_{i \in \Base}}$ is called a *family of ${\EG}$-quasi-optimal polynomial-time estimators for ${(X,\Dist,f)}$* when for any ${Q: X \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{Q^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_i \in \Fall_i\}_{i \in \Base}}$ s.t. for all ${i \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
+
+$$\EE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}[(P_i^{Jl}(x,y)-f_i(x))^2] \leq \EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_Q^{Jk}}[(Q^{Jk}(x,z;P^{Jl}(x,y))_i-f_i(x))^2]+\varepsilon_i(J,l)$$
 
 Here, the notation ${Q^{Jk}(x,z;P^{Jl}(x,y))_i}$ means that the circuit ${Q^{Jk}(x,z)}$ is evaluated on ${\{P^{Jl}(x,y)_j\}_{j \in \Base}}$ and component ${i}$ of the result is used.
 
+\subsection{Definition 5}
+
+Consider a finite set ${\Base}$, ${\{(\Dist_i,f_i)\}_{i \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_i\}_{i \in \Base}}$ a collection of fall spaces. ${\{P_i: X \Scheme \Rats\}_{i \in \Base}}$ is called a *family of ${\ESG}$-quasi-optimal polynomial-time estimators for ${(\Dist,f)}$* when for any ${S: X \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{S^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_i \in \Fall_i\}_{i \in \Base}}$ s.t. for all ${i \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
+
+$$\Abs{\EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_P^{Jk}}[(P_i^{Jl}(x,y)-f_i(x))S^{Jk}(x,z;P^{Jl}(x,y))]} \leq \varepsilon_i(J,l)$$
+
 ***
 
-Moo
+Quasi-optimal estimators have properties similar to optimal estimators and in Appendix A we give several analogous theorems. On the other hand they seem to exist in more cases. Theorem 5.2 in VK16 shows that samplable distributional estimation problems have uniform optimal estimators based on the principle of agnostic PAC learning. The following theorem shows a class of distributional estimation problem families that allow uniform quasi-optimal estimators based on the principle of online convex optimization. Note that this new class of problems, as given here, does *not* include all samplable problems as a special case. We belief it is possible to construct a class which includes both these problems and samplable problems as special cases s.t. all families in the class have quasi-optimal estimators, but we do not attempt it at present.
+
+%#Theorem
+\subsection{Theorem}
+
+Assume ${n=2}$. Define ${\zeta: \Nats^2 \rightarrow \Reals}$ by ${\zeta(j,k):=\min(\sqrt{\frac{k}{j+1}},1)}$.
+% X = sequences of ...? For each j, we can have a different distribution on sequences of length ${j}$ which we then transform by truncating the sequence of a uniformly random length...
+
+FOO
 
 %##Appendix
 \section{Appendix A}
