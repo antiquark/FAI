@@ -47,6 +47,7 @@
 \DeclareMathOperator{\UM}{UM}
 \DeclareMathOperator{\Un}{U}
 \DeclareMathOperator{\En}{c}
+\DeclareMathOperator{\Prj}{pr}
 
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
 \newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
@@ -119,7 +120,7 @@ Inspired by (presently unpublished) work by Garrabrant, we introduce a generaliz
 
 An *ordered ring circuit* is a circuit with 3 types of binary gates: ${+}$, ${\times}$ and ${\max}$. Given ${A,B}$ finite sets, ${\Rats^A \ORC \Rats^B}$ is the set of ordered ring circuits with $\Abs{A}$ normal inputs labeled by ${A}$, ${\Abs{B}}$ outputs labeled by ${B}$ and a finite set of auxiliary inputs that receive constants in ${\Rats}$ (we can think of them as 0-nary gates). The notation ${\phi: \Rats^A \ORC \Rats^B}$ means ${\phi \in (\Rats^A \ORC \Rats^B)}$. Any ${\phi: \Rats^A \ORC \Rats^B}$ can be regarded as a function from ${\Rats^A}$ to ${\Rats^B}$ in the obvious way (circuit evaluation). 
 
-Given ${\phi: \Rats^A \ORC \Rats^B}$ with ${N}$ gates and ${M}$ auxiliary inputs ${\{c_i \in \Rats\}_{i \in [M]}}$, the *norm* of ${\phi}$ is ${\Norm{\phi}:=N+\sum_{i \in [M]} \Abs{c_i}}$.
+Given ${\phi: \Rats^A \ORC \Rats^B}$ with ${N}$ gates and ${M}$ auxiliary inputs ${\{c_\alpha \in \Rats\}_{\alpha \in [M]}}$, the *norm* of ${\phi}$ is ${\Norm{\phi}:=N+\sum_{\alpha \in [M]} \Abs{c_\alpha}}$.
 
 ***
 
@@ -131,21 +132,20 @@ An *encoded ensemble of rank ${n}$* is a pair ${(X,\Dist)}$ where ${X}$ is an en
 
 \subsection{Definition 3}
 
-A *distributional estimation problem of rank ${n}$* is a triple ${(X,\Dist,f)}$ where ${(X,\Dist)}$ is an encoded ensemble of rank ${n}$ and ${f: \Supp \Dist \rightarrow \Reals}$ is a bounded function.
-
+Consider ${(X,\Dist)}$ an encoded ensemble of rank ${n}$. Define ${\Nats^n \ltimes \Supp \Dist^* := \bigsqcup_{K \in \Nats} \{K\} \times \Supp \Dist^K}$. Given ${f: \Nats^n \ltimes \Supp \Dist^* \rightarrow \Reals}$ bounded, the triple ${(X,\Dist,f)}$ is called a *distributional estimation problem of rank ${n}$*.
 \subsection{Definition 4}
 
-Consider a finite set ${\Base}$, ${\{(X,\Dist_i,f_i)\}_{i \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_i\}_{i \in \Base}}$ a collection of fall spaces. ${\{P_i: X \Scheme \Rats\}_{i \in \Base}}$ is called a *family of ${\EG}$-quasi-optimal polynomial-time estimators for ${(X,\Dist,f)}$* when for any ${Q: X \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{Q^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_i \in \Fall_i\}_{i \in \Base}}$ s.t. for all ${i \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
+Consider a finite set ${\Base}$, ${\{(X,\Dist_\alpha,f_\alpha)\}_{\alpha \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_\alpha\}_{\alpha \in \Base}}$ a collection of fall spaces. ${\{P_\alpha: X \Scheme \Rats\}_{\alpha \in \Base}}$ is called a *family of ${\EG}$-quasi-optimal polynomial-time estimators for ${(X,\Dist,f)}$* when for any ${Q: X \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{Q^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_\alpha \in \Fall_\alpha\}_{\alpha \in \Base}}$ s.t. for all ${\alpha \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
 
-$$\EE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}[(P_i^{Jl}(x,y)-f_i(x))^2] \leq \EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_Q^{Jk}}[(Q^{Jk}(x,z;P^{Jl}(x,y))_i-f_i(x))^2]+\varepsilon_i(J,l)$$
+$$\EE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}[(P_\alpha^{Jl}(x,y)-f_\alpha^{Jk}(x))^2] \leq \EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_Q^{Jk}}[(Q^{Jk}(x,z;P^{Jl}(x,y))_\alpha-f_\alpha^{Jk}(x))^2]+\varepsilon_\alpha(J,l)$$
 
-Here, the notation ${Q^{Jk}(x,z;P^{Jl}(x,y))_i}$ means that the circuit ${Q^{Jk}(x,z)}$ is evaluated on ${\{P^{Jl}(x,y)_j\}_{j \in \Base}}$ and component ${i}$ of the result is used.
+Here, the notation ${Q^{Jk}(x,z;P^{Jl}(x,y))_\alpha}$ means that the circuit ${Q^{Jk}(x,z)}$ is evaluated on ${\{P^{Jl}(x,y)_j\}_{j \in \Base}}$ and component ${\alpha}$ of the result is used.
 
 \subsection{Definition 5}
 
-Consider a finite set ${\Base}$, ${\{(\Dist_i,f_i)\}_{i \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_i\}_{i \in \Base}}$ a collection of fall spaces. ${\{P_i: X \Scheme \Rats\}_{i \in \Base}}$ is called a *family of ${\ESG}$-quasi-optimal polynomial-time estimators for ${(\Dist,f)}$* when for any ${S: X \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{S^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_i \in \Fall_i\}_{i \in \Base}}$ s.t. for all ${i \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
+Consider a finite set ${\Base}$, ${\{(X,\Dist_\alpha,f_\alpha)\}_{\alpha \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_\alpha\}_{\alpha \in \Base}}$ a collection of fall spaces. ${\{P_\alpha: X \Scheme \Rats\}_{\alpha \in \Base}}$ is called a *family of ${\ESG}$-quasi-optimal polynomial-time estimators for ${(\Dist,f)}$* when for any ${S: X \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{S^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_\alpha \in \Fall_\alpha\}_{\alpha \in \Base}}$ s.t. for all ${\alpha \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
 
-$$\Abs{\EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_P^{Jk}}[(P_i^{Jl}(x,y)-f_i(x))S^{Jk}(x,z;P^{Jl}(x,y))]} \leq \varepsilon_i(J,l)$$
+$$\Abs{\EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_P^{Jk}}[(P_\alpha^{Jl}(x,y)-f_\alpha^{Jk}(x))S^{Jk}(x,z;P^{Jl}(x,y))]} \leq \varepsilon_\alpha(J,l)$$
 
 ***
 
@@ -154,10 +154,15 @@ Quasi-optimal estimators have properties similar to optimal estimators and in Ap
 %#Theorem
 \subsection{Theorem}
 
-Assume ${n=2}$. Define ${\zeta: \Nats^2 \rightarrow \Reals}$ by ${\zeta(j,k):=\min(\sqrt{\frac{k}{j+1}},1)}$.
-% X = sequences of ...? For each j, we can have a different distribution on sequences of length ${j}$ which we then transform by truncating the sequence of a uniformly random length...
+Assume ${n=2}$ and ${\Gamma= (\Gamma_0^2, \GammaLog^2)}$. Define ${\zeta: \Nats^2 \rightarrow \Reals}$ by ${\zeta(j,k):=\min(\sqrt{\frac{k}{j+1}},1)}$. Consider ${X}$, ${Y}$ encoded sets and ${\Base}$ a finite set. Denote ${X^*:=\bigsqcup_{j \in \Nats} X^j}$. Given, ${x \in X^j}$, denote ${\Abs{x}:=j}$. Consider ${\{f_\alpha: X^* \times Y \rightarrow \Reals\}_{\alpha \in \Base}}$ bounded, ${\{\Dist_\alpha^j \in \Prob(X^j)\}_{\alpha \in \Base, j \in \Nats}}$ and ${\{\mathcal{E}_\alpha^j \in \Prob(Y)\}_{\alpha \in \Base, j \in \Nats}}$. Given ${i,j \in \Nats}$, ${i \leq j}$, define ${\Prj^{ji}: X^j \rightarrow X^i}$ by
 
-FOO
+$${\Prj^{ji}(x_0, x_1 \ldots x_{j-1}):=(x_0, x_1 \ldots x_{i-1})}$$
+
+Define ${\bar{\Dist}_\alpha^j \in \Prob(X^*)}$ by ${\bar{\Dist}_\alpha^j:=\frac{1}{j}\sum_{i \in [j]} \Prj^{ji}_* \Dist_\alpha^j}$. Define ${\{f_{\Dist,\alpha}: \Nats \ltimes \Supp \bar{\Dist}_\alpha^* \times Y \rightarrow \Reals\}_{\alpha \in \Base}}$ by 
+
+$${f_{\Dist,\alpha}^j(x,y):=\E_{x' \sim \Dist_\alpha^j}[f_\alpha(\Prj^{j,\Abs{x}+1}(x'),y) \mid \Prj^{j,\Abs{x}}(x')=x]}$$
+
+Suppose that for each ${\alpha \in \Base}$ there is an ${\Fall_\zeta^2(\Gamma)}$-perfect estimator for ${(X^* \times Y, \bar{\Dist}_\alpha^\eta \times \mathcal{E}_\alpha^\eta,f_\alpha)}$. Then, there is a family of ${\Fall_\zeta(\Gamma)}$-quasi-optimal estimators for ${(X^* \times Y, \bar{\Dist}^\eta \times \mathcal{E}^\eta,f_\Dist)}$.
 
 %##Appendix
 \section{Appendix A}
