@@ -91,12 +91,6 @@
 \newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
 \newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
 
-\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
-\newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
-\newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
-\newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(#1)}}}
-\newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
-
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
 \newcommand{\Scheme}{\xrightarrow{\Gamma}}
@@ -105,6 +99,13 @@
 
 \newcommand{\Base}{\mathcal{B}}
 \newcommand{\Prob}{\mathcal{P}}
+
+\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
+\newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
+\newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
+\newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(#1)}}}
+\newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
+\newcommand{\QBO}{\Rats^\Base \ORC \Rats^\Base}
 
 \begin{document}
 
@@ -124,28 +125,37 @@ Given ${\phi: \Rats^A \ORC \Rats^B}$ with ${N}$ gates and ${M}$ auxiliary inputs
 
 ***
 
-For the rest of the post, we fix ${n \in \Nats^{>0}}$ and ${\Gamma}$ a pair of growth space of rank ${n}$. We will use a slightly different (but equivalent) definition of a distributional estimation problem than in VK16.
+We will use a slightly different (but equivalent) definition of a distributional estimation problem than in VK16.
 
 \subsection{Definition 2}
 
-An *encoded ensemble of rank ${n}$* is a pair ${(X,\Dist)}$ where ${X}$ is an encoded set and ${\Dist=\{\Dist^K \in \Prob(X)\}_{K \in \Nats^n}}$.
+Fix ${n \in \Nats}$. An *encoded ensemble of rank ${n}$* is a pair ${(X,\Dist)}$ where ${X}$ is an encoded set and ${\Dist=\{\Dist^K \in \Prob(X)\}_{K \in \Nats^n}}$.
 
 \subsection{Definition 3}
 
-Consider ${(X,\Dist)}$ an encoded ensemble of rank ${n}$. Define ${\Nats^n \ltimes \Supp \Dist^* := \bigsqcup_{K \in \Nats} \{K\} \times \Supp \Dist^K}$. Given ${f: \Nats^n \ltimes \Supp \Dist^* \rightarrow \Reals}$ bounded, the triple ${(X,\Dist,f)}$ is called a *distributional estimation problem of rank ${n}$*.
+Fix ${n \in \Nats}$. A *distributional estimation problem of rank ${n}$* is a triple ${(X,\Dist,f)}$ where ${X}$ is an encoded set, ${\Dist=\{\Dist^K \in \Prob(X)\}_{K \in \Nats^n}}$ and ${f = \{f^K: \Supp \Dist^K \rightarrow \Reals\}_{K \in \Nats^n}}$ is uniformly bounded.
+
 \subsection{Definition 4}
 
-Consider a finite set ${\Base}$, ${\{(X,\Dist_\alpha,f_\alpha)\}_{\alpha \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_\alpha\}_{\alpha \in \Base}}$ a collection of fall spaces. ${\{P_\alpha: X \Scheme \Rats\}_{\alpha \in \Base}}$ is called a *family of ${\EG}$-quasi-optimal polynomial-time estimators for ${(X,\Dist,f)}$* when for any ${Q: X \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{Q^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_\alpha \in \Fall_\alpha\}_{\alpha \in \Base}}$ s.t. for all ${\alpha \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
+Fix ${n \in \Nats}$. A *family of distributional estimation problems of rank ${n}$* is a quadruple ${(\Base,X,\Dist,f)}$ where ${\Base}$ is a finite set, ${\Dist=\{\Dist_\alpha^K \in \Prob(X)\}_{\alpha \in \Base, K \in \Nats^n}}$ and ${f = \{f_\alpha^K: \Supp \Dist^K \rightarrow \Reals\}_{\alpha \in \Base, K \in \Nats^n}}$ is uniformly bounded. For the sake of brevity, we will refer to such simply as a "problem family".
 
-$$\EE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}[(P_\alpha^{Jl}(x,y)-f_\alpha^{Jk}(x))^2] \leq \EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_Q^{Jk}}[(Q^{Jk}(x,z;P^{Jl}(x,y))_\alpha-f_\alpha^{Jk}(x))^2]+\varepsilon_\alpha(J,l)$$
+***
 
-Here, the notation ${Q^{Jk}(x,z;P^{Jl}(x,y))_\alpha}$ means that the circuit ${Q^{Jk}(x,z)}$ is evaluated on ${\{P^{Jl}(x,y)_j\}_{j \in \Base}}$ and component ${\alpha}$ of the result is used.
+For the rest of the post, we fix ${n \in \Nats^{>0}}$, ${\Gamma}$ a pair of growth space of rank ${n}$, ${\Base}$ a finite set and ${\{\Fall_\alpha\}_{\alpha \in \Base}}$ a collection of fall spaces. 
 
 \subsection{Definition 5}
 
-Consider a finite set ${\Base}$, ${\{(X,\Dist_\alpha,f_\alpha)\}_{\alpha \in \Base}}$ a collection of distributional estimation problems and ${\{\Fall_\alpha\}_{\alpha \in \Base}}$ a collection of fall spaces. ${\{P_\alpha: X \Scheme \Rats\}_{\alpha \in \Base}}$ is called a *family of ${\ESG}$-quasi-optimal polynomial-time estimators for ${(\Dist,f)}$* when for any ${S: X \Scheme (\Rats^{\Base} \ORC \Rats^{\Base})}$ s.t. ${\Norm{S^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_\alpha \in \Fall_\alpha\}_{\alpha \in \Base}}$ s.t. for all ${\alpha \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
+Consider ${(\Base, X, \Dist, f)}$ a problem family. ${\{P_\alpha: X \Scheme \Rats\}_{\alpha \in \Base}}$ is called a *family of ${\EG}$-quasi-optimal polynomial-time estimators for ${(X,\Dist,f)}$* when for any ${Q: X \Scheme (\QBO)}$ s.t. ${\Norm{Q^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_\alpha \in \Fall_\alpha\}_{\alpha \in \Base}}$ s.t. for all ${\alpha \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
 
-$$\Abs{\EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_P^{Jk}}[(P_\alpha^{Jl}(x,y)-f_\alpha^{Jk}(x))S^{Jk}(x,z;P^{Jl}(x,y))]} \leq \varepsilon_\alpha(J,l)$$
+$$\EE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}[(P_\alpha^{Jl}(x,y)-f_\alpha^{Jk}(x))^2] \leq \EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_Q^{Jk}}[(Q_\alpha^{Jk}(x,z;P^{Jl}(x,y))-f_\alpha^{Jk}(x))^2]+\varepsilon_\alpha(J,l)$$
+
+Here, the notation ${Q_\alpha^{Jk}(x,z;P^{Jl}(x,y))}$ means that the circuit ${Q^{Jk}(x,z)}$ is evaluated on ${\{P_\beta^{Jl}(x,y)\}_{\beta \in \Base}}$ and component ${\alpha}$ of the result is used.
+
+\subsection{Definition 6}
+
+Consider $(\Base, X, \Dist, f)$ a problem family. ${\{P_\alpha: X \Scheme \Rats\}_{\alpha \in \Base}}$ is called a *family of ${\ESG}$-quasi-optimal polynomial-time estimators for ${(\Dist,f)}$* when for any ${S: X \Scheme (\QBO)}$ s.t. ${\Norm{S^K(x,y)}}$ is bounded by a constant, there are ${p \in \NatPoly}$ and ${\{\varepsilon_\alpha \in \Fall_\alpha\}_{\alpha \in \Base}}$ s.t. for all ${\alpha \in \Base}$, ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${l \geq p(J,k)}$
+
+$$\Abs{\EEE{x \sim \Dist^{Jk}}{y \sim \Un_P^{Jl}}{z \sim \Un_P^{Jk}}[(P_\alpha^{Jl}(x,y)-f_\alpha^{Jk}(x))S_\alpha^{Jk}(x,z;P^{Jl}(x,y))]} \leq \varepsilon_\alpha(J,l)$$
 
 ***
 
@@ -154,25 +164,95 @@ Quasi-optimal estimators have properties similar to optimal estimators and in Ap
 %#Theorem
 \subsection{Theorem}
 
-Assume ${n=2}$ and ${\Gamma= (\Gamma_0^2, \GammaLog^2)}$. Define ${\zeta: \Nats^2 \rightarrow \Reals}$ by ${\zeta(j,k):=\min(\sqrt{\frac{k}{j+1}},1)}$. Consider ${X}$, ${Y}$ encoded sets and ${\Base}$ a finite set. Denote ${X^*:=\bigsqcup_{j \in \Nats} X^j}$. Given, ${x \in X^j}$, denote ${\Abs{x}:=j}$. Consider ${\{f_\alpha: X^* \times Y \rightarrow \Reals\}_{\alpha \in \Base}}$ bounded, ${\{\Dist_\alpha^j \in \Prob(X^j)\}_{\alpha \in \Base, j \in \Nats}}$ and ${\{\mathcal{E}_\alpha^j \in \Prob(Y)\}_{\alpha \in \Base, j \in \Nats}}$. Given ${i,j \in \Nats}$, ${i \leq j}$, define ${\Prj^{ji}: X^j \rightarrow X^i}$ by
+Assume ${n=2}$ and ${\Gamma= (\Gamma_0^2, \GammaLog^2)}$. Define ${\zeta: \Nats^2 \rightarrow \Reals}$ by ${\zeta(j,k):=\min(\sqrt{\frac{k}{j+1}},1)}$. Consider ${X}$, ${Y}$ encoded sets. Denote ${X^*:=\bigsqcup_{j \in \Nats} X^j}$. Given ${x \in X^j}$, denote ${\Abs{x}:=j}$. Consider ${\{\Dist_\alpha^j \in \Prob(X^j)\}_{\alpha \in \Base, j \in \Nats}}$ and ${\{\mathcal{E}_\alpha^j \in \Prob(Y)\}_{\alpha \in \Base, j \in \Nats}}$. Given ${i,j \in \Nats}$, ${i \leq j}$, define ${\Prj_X^{ji}: X^j \rightarrow X^i}$ by
 
-$${\Prj^{ji}(x_0, x_1 \ldots x_{j-1}):=(x_0, x_1 \ldots x_{i-1})}$$
+$${\Prj_X^{ji}(x_0, x_1 \ldots x_{j-1}):=(x_0, x_1 \ldots x_{i-1})}$$
 
-Define ${\bar{\Dist}_\alpha^j \in \Prob(X^*)}$ by ${\bar{\Dist}_\alpha^j:=\frac{1}{j}\sum_{i \in [j]} \Prj^{ji}_* \Dist_\alpha^j}$. Define ${\{f_{\Dist,\alpha}: \Nats \ltimes \Supp \bar{\Dist}_\alpha^* \times Y \rightarrow \Reals\}_{\alpha \in \Base}}$ by 
+Define ${\bar{\Dist}_\alpha^j \in \Prob(X^*)}$ by ${\bar{\Dist}_\alpha^j:=\frac{1}{j}\sum_{i \in [j]} \Prj^{ji}_* \Dist_\alpha^j}$. Consider ${\{f_\alpha^j: X^* \times \Supp \mathcal{E}_\alpha^j \rightarrow \Reals\}_{j \in \Nats, \alpha \in \Base}}$ uniformly bounded and define ${\{f_{\Dist,\alpha}^j: \Supp \bar{\Dist}_\alpha^j \times \Supp \mathcal{E}_\alpha^j \rightarrow \Reals\}_{j \in \Nats, \alpha \in \Base}}$ by 
 
-$${f_{\Dist,\alpha}^j(x,y):=\E_{x' \sim \Dist_\alpha^j}[f_\alpha(\Prj^{j,\Abs{x}+1}(x'),y) \mid \Prj^{j,\Abs{x}}(x')=x]}$$
+$${f_{\Dist\alpha}^j(x,y):=\E_{x' \sim \Dist_\alpha^j}[f_\alpha^j(\Prj_X^{j,\Abs{x}+1}(x'),y) \mid \Prj_X^{j,\Abs{x}}(x')=x]}$$
 
-Suppose that for each ${\alpha \in \Base}$ there is an ${\Fall_\zeta^2(\Gamma)}$-perfect estimator for ${(X^* \times Y, \bar{\Dist}_\alpha^\eta \times \mathcal{E}_\alpha^\eta,f_\alpha)}$. Then, there is a family of ${\Fall_\zeta(\Gamma)}$-quasi-optimal estimators for ${(X^* \times Y, \bar{\Dist}^\eta \times \mathcal{E}^\eta,f_\Dist)}$.
+Suppose that for each ${\alpha \in \Base}$ there is an ${\Fall_\zeta^2(\Gamma)}$-perfect estimator for ${(X^* \times Y, \bar{\Dist}_\alpha^\eta \times \mathcal{E}_\alpha^\eta,f_\alpha)}$. Then, there is a family of uniform ${\Fall_\zeta(\Gamma)}$-quasi-optimal estimators for ${(X^* \times Y, \bar{\Dist}^\eta \times \mathcal{E}^\eta,f_\Dist)}$.
+
+***
+
+The proof of the Theorem above is given in Appendix C.
 
 %##Appendix
 \section{Appendix A}
 
-Foo
+The proofs of the following results are given in Appendix B.
+
+\subsection{Theorem A.1}
+
+Assume there is ${\zeta: \Nats^n \rightarrow [0,\frac{1}{4}]}$ s.t. ${\forall \alpha \in \Base: \zeta \in \Fall_\alpha^{\frac{1}{2}}}$ and ${\Floor{\log \log \frac{1}{\zeta}}} \in \GrowA$. Consider ${(\Base,X,\Dist,f)}$ a problem family and $P$ a family of ${\EG}$-quasi-optimal estimators for ${(\Base,X,\Dist,f)}$. Then, ${P}$ is also a family of ${\Fall^{\frac{1}{2}\sharp}(\Gamma)}$-quasi-optimal estimators for ${(\Base,X,\Dist,f)}$.
+
+\subsection{Theorem A.2}
+
+Consider ${(\Base,X,\Dist,f)}$ a problem family and $P$ a family of ${\ESG}$-quasi-optimal estimators for ${(X,\Dist,f)}$. Then, ${P}$ is also a family of ${\EG}$-quasi-optimal estimators for ${(X,\Dist,f)}$.
+
+\subsection{Proposition A.1}
+
+Consider ${(\Base,X,\Dist,f)}$ a problem family and ${P}$ a family of ${\ESG}$-quasi-optimal estimators for ${(\Base,X,\Dist,f)}$. Fix ${\alpha, \beta \in \Base}$ and ${t,s \in \Rats}$. Suppose ${\Fall_*}$ is a fall space s.t. ${\Fall_\alpha \subseteq \Fall_*}$, ${\Fall_\beta \subseteq \Fall_*}$ and ${\Dist_\alpha \equiv \Dist_\beta \pmod {\Fall_*}}$. Define ${\bar{\Base}:=\Base \sqcup \{*\}}$, ${\bar{\Fall}}$ is the extension of ${\Fall}$ by ${\Fall_*}$ (i.e. ${\bar{\Fall}}=\{\bar{\Fall}_\alpha\}_{\alpha \in \bar{\Base}}$, ${\forall \alpha \in \Base: \bar{\Fall}_\alpha = \Fall_\alpha}$ and ${\bar{\Fall}_*:=\Fall_*}$), ${\bar{\Dist}}$ is the extension of ${\Dist}$ by ${\Dist_\alpha}$, ${\bar{f}}$ is the extension of ${f}$ by ${t f_\alpha^K + s f_\beta^K}$ and ${\bar{P}}$ is the extension of ${P}$ by ${t P_\alpha + s P_\beta}$. Then, ${\bar{P}}$ is a family of ${\ESG}$-quasi-optimal estimators for ${(\bar{\Base},X,\bar{\Dist},\bar{f})}$.
+
+\subsection{Theorem A.3}
+
+Consider ${(\Base,X,\Dist,f)}$ a problem family and ${P}$ a family of ${\ESG}$-quasi-optimal estimators for ${(\Base,X,\Dist,f)}$. Fix ${\alpha, \beta \in \Base}$. Suppose ${\Fall_*}$ is a fall space s.t. ${\Fall_\alpha \subseteq \Fall_*}$, ${\Fall_\beta \subseteq \Fall_*}$ and ${\Dist_\alpha \equiv \Dist_\beta \pmod {\Fall_*}}$. Suppose ${L \subseteq \Nats^n \times X}$ and uniformly bounded ${\{f_*^K: \Supp \Dist_\beta \rightarrow \Reals\}_{K \in \Nats^n}}$ are s.t. ${f_\alpha^K(x) = \chi_L(K,x)}$ and ${f_\beta^K(x)=\chi(K,x) f_*^K(x)}$. Choose any ${M \in \Rats}$ s.t. ${M \geq \sup \Abs{f_*}}$ and construct ${P_{*}: X \Scheme \Rats}$ according to
+
+$$P_*^K(x,yz)=\begin{cases}P_\alpha^K(x,y)^{-1} P_{\beta}^K(x,z) \textnormal{ if this number is in } [-M,M] \\ M \textnormal{ if } P_\alpha^K(x,y)=0 \textnormal{ or } P_\alpha^K(x,y)^{-1} P_{\beta}^K(x,z) > M\\ -M \textnormal{ if } P_\alpha^K(x,y)^{-1} P_{\beta}^K(x,z) < -M\end{cases}$$
+
+Denote ${\epsilon(K):=\Prb_{x \in \Dist_\beta^K}[(K,x) \in L]}$. Assume ${\forall K \in \Nats^n: \epsilon(K) > 0}$. Define ${\bar{\Base}:=\Base \sqcup \{*\}}$, ${\bar{\Fall}}$ is the extension of ${\Fall}$ by ${\epsilon^{-1}\Fall_*^\frac{1}{2}}$, ${\bar{\Dist}}$ is the extension of ${\Dist}$ by ${\Dist_\beta}$, ${\bar{f}}$ is the extension of ${f}$ by ${f_*}$ and ${\bar{P}}$ is the extension of ${P}$ by ${P_*}$. Then, ${\bar{P}}$ is a family of ${\ESG}$-quasi-optimal estimators for ${(\bar{\Base},X,\bar{\Dist},\bar{f})}$.
+
+\subsection{Theorem A.4}
+
+Consider problem families ${(\Base,X,\Dist,f)}$ and ${(\Base,Y,\mathcal{E},g)}$. Suppose ${\{\pi_\alpha: X \Scheme Y\}_{\alpha \in \Base}}$ s.t. ${\pi_\alpha}$ is a precise strict pseudo-invertible ${\Fall_\alpha(\Gamma)}$-reduction of ${(X,\Dist_\alpha,f_\alpha)}$ to ${(Y,\mathcal{E}_\alpha,g_\alpha)}$. Consider ${P}$ a family of ${\ESG}$-quasi-optimal estimators for ${(\Base,Y,\mathcal{E},g)}$. Then, ${P \circ \pi}$ is a family of ${\ESG}$-quasi-optimal estimators for ${(\Base,X,\Dist,f)}$.
 
 %##Appendix
 \section{Appendix B}
 
-Foo
+\subsection{Proof of Theorem A.1}
+
+Assume without loss of generality that there is ${h \in \NatPoly}$ s.t. $\zeta \geq 2^{-h}$ (otherwise we can take any $h \in \NatPoly$ s.t. $2^{-h} \in \Fall$ and consider $\zeta':=\zeta+2^{-h}$). Fix ${S: X \Scheme (\QBO)}$ bounded. Consider any ${\sigma: \Base \times \NatFun \{ \pm 1 \}}$ and $m: \Base \times \NatFun \Nats$ s.t. $m(\alpha,K) \leq \log \frac{1}{\zeta(K)}$ (in particular ${m(\alpha,K) \leq h(K)}$). Define ${t(\alpha,K) := \sigma(\alpha,K) 2^{-m(\alpha,K)}}$. Construct ${Q_t: X \Scheme (\QBO)}$ s.t. ${\R_{Q_t}=\R_S}$ and given ${\alpha \in \Base}$, $K \in \Nats^n$, $x \in \Supp \Dist^{K}$, ${z \in \WordsLen{ \R_S(K)}}$ and ${u \in \Rats^\Base}$
+
+$$Q_{t\alpha}^{K}(x,z;u) = u_\alpha - t(\alpha,K) S_\alpha^{K}(x,z;u)$$
+
+Moreover, we can construct $Q_t$ for all admissible choices of $t$ (but fixed $S$) to get a uniform family.
+
+% Change definition of quasi-optimality to replace Q/S by a uniform family?
+
+It follows??? that there are $\{\varepsilon_\alpha \in \Fall_\alpha\}_{\alpha \in \Base}$ which don't depend on $t$ s.t.
+
+$$\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(Q_t^{K} - f)^2] + \varepsilon(K)$$
+
+$$\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - t(K)S^{K}  - f)^2] + \varepsilon(K)$$
+
+$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f)^2 - (P^{K} - t(K)S^{K} - f)^2] \leq \varepsilon(K)$$
+
+$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(-t(K)S^{K} + 2 (P^{K} - f)) S^{K}] t(K) \leq \varepsilon(K)$$
+
+$$-\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(S^{K})^2] t(K)^2 + 2 \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] t(K) \leq \varepsilon(K)$$
+
+$$2 \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] t(K) \leq \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(S^{K})^2] t(K)^2 + \varepsilon(K)$$
+
+$$2 \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] t(K) \leq (\sup \Abs{S^{K}})^2 t(K)^2 + \varepsilon(K)$$
+
+$$2 \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] \sigma(K) 2^{-m(K)} \leq (\sup \Abs{S^{K}})^2 4^{-m(K)} + \varepsilon(K)$$
+
+Multiplying both sides by $2^{m(K)-1}$ we get
+
+$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] \sigma(K) \leq \frac{1}{2}((\sup \Abs{S^{K}})^2 2^{-m(K)} + \varepsilon(K) 2^{m(K)})$$
+
+Let $\sigma(K):=\Sgn \E_{\Dist^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}]$.
+
+$$\Abs{\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}]} \leq \frac{1}{2}((\sup \Abs{S^{K}})^2 2^{-m(K)} + \varepsilon(K) 2^{m(K)})$$
+
+Let $m(K):=\min(\Floor{\frac{1}{2}\log \max(\frac{1}{\varepsilon(K)},1)},\Floor{\log \frac{1}{\zeta(K)}})$.
+
+$$\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max(\min(\varepsilon(K)^{\frac{1}{2}},1),\zeta(K)) + \frac{1}{2}\varepsilon(K) \min(\max(\varepsilon(K)^{-\frac{1}{2}},1),\zeta(K)^{-1})$$
+
+$$\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max(\varepsilon(K)^{\frac{1}{2}},\zeta(K)) + \frac{1}{2} \max(\varepsilon(K)^{\frac{1}{2}},\varepsilon(K))$$
+
+The right hand side is obviously in $\Fall^{\frac{1}{2}}$.
 
 %##Appendix
 \section{Appendix C}
