@@ -1,0 +1,154 @@
+%&latex
+\documentclass{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+\usepackage{bm}
+
+\numberwithin{equation}{section}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+%\newtheorem{conjecture}{Conjecture}[section]
+
+%\theoremstyle{remark}
+%\newtheorem{note}{Note}[section]
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+\newcommand{\WordsLen}[1]{{\Bool^{#1}}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Var}{Var}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Ev}{ev}
+
+% special symbols that are not really operators
+\DeclareMathOperator{\T}{T}
+\DeclareMathOperator{\R}{r}
+\DeclareMathOperator{\A}{a}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\UM}{UM}
+\DeclareMathOperator{\Un}{U}
+\DeclareMathOperator{\En}{c}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
+\newcommand{\NatPolyJ}{\Nats[J_0, J_1 \ldots J_{n-2}]}
+\newcommand{\NatFun}{\Nats^n \rightarrow}
+
+\newcommand{\Estr}{\bm{\lambda}}
+\newcommand{\LLU}{\mathbf{LLU}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Dist}{\mathcal{D}}
+\newcommand{\GrowR}{\Gamma_{\mathfrak{R}}}
+\newcommand{\GrowA}{\Gamma_{\mathfrak{A}}}
+\newcommand{\Grow}{\Gamma:=(\GrowR,\GrowA)}
+\newcommand{\MGrow}{\mathrm{M}\Gamma}
+\newcommand{\Fall}{\mathcal{F}}
+\newcommand{\EG}{\Fall(\Gamma)}
+\newcommand{\ESG}{\Fall^\sharp(\Gamma)}
+\newcommand{\EMG}{\Fall(\MGrow)}
+\newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
+\newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
+
+\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
+\newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
+\newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
+\newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(#1)}}}
+\newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+\newcommand{\Scheme}{\xrightarrow{\Gamma}}
+\newcommand{\MScheme}{\xrightarrow{\MGrow}}
+
+\begin{document}
+
+\title{Optimal Polynomial-Time Estimators: A Bayesian Notion of Approximation Algorithm}
+
+\author{Vadim Kosoy}
+
+\maketitle
+
+\begin{abstract}
+The concept of an \enquote{approximation algorithm} is usually only applied to optimization problems since in optimization problems the performance of the algorithm on any given input is a continuous parameter. We introduce a new concept of approximation applicable to decision problems and functions, inspired by Bayesian probability. From the perspective of a Bayesian reasoner with limited computational resources, the answer to a problem that cannot be solved exactly is uncertain and therefore should be described by a random variable. It thus should make sense to talk about the expected value of this random variable, an idea we formalize in the language of average-case complexity theory by introducing the concept of optimal polynomial-time estimator. We show that optimal polynomial-time estimators exhibit many parallels with \enquote{classical} probability theory, prove some existence theorems and completeness results.%
+\end{abstract}
+
+\section*{Statement}
+
+\emph{This is a statement complementing the introduction of \href{http://arxiv.org/abs/1608.04112}{arXiv:1608.04112}, according to the submission guidelines for Innovations in Theoretical Computer Science 2017.}\\\\
+%
+The current work establishes a novel parallel between a certain brand of approximation algorithms, probability theory and (to a lesser extent) agnostic PAC learning. The key concept we introduce is the ${\EG}$-optimal polynomial-time estimator. Optimal polynomial-time estimators are a natural generalization of polynomial-time heuristic algorithms and polynomial-time heuristic schemes from average-case complexity theory\cite{Bogdanov_2006}. A polynomial-time heuristic algorithm ${A}$ for a decision problem ${L \subseteq \Words}$ is a Turing machine that runs a polynomial time and returns ${A(x)=\chi_L(x)}$ on most inputs ${x}$ w.r.t. some family of probability distributions ${\Dist^k}$ on ${\Words}$. That is, the probability of error ${\Prb_{x \in \Dist^k}[A(x) \ne \chi_L(x)]}$ has to be an asymptotically small function of ${k}$. For example, we can require it to fall faster than any polynomial. More generally, we require this function to lie in some appropriate space of functions ${\Fall}$. Equivalently, we can allow ${A}$ to output a rational number and require that ${\E_{x \in \Dist^k}[(A(x)-\chi_L(x))^2]}$ lies in ${\Fall}$. On the other hand, an ${\EG}$-optimal polynomial-time estimator is a polynomial-time Turing machine ${P}$ whose average error is \emph{minimal among all similar machines up to a function in ${\Fall}$}. That is, we require that for any other polynomial-time Turing machine ${Q}$ there is ${\varepsilon \in \Fall}$ s.t.
+
+\[\E_{x \in \Dist^k}[(P(x)-\chi_L(x))^2] \leq \E_{x \in \Dist^k}[(Q(x)-\chi_L(x))^2] + \varepsilon(k)\]
+
+Here ${\Gamma}$ is a pair of function spaces that control how many random bits and advice bits (if any) our machines are allowed to use.
+
+Thus, optimal polynomial-time estimators can be regarded as \emph{approximation algorithms}: they only produce an approximate answer to a problem, but the approximation is as good as possible in polynomial time. The complexity classes of distributional decision problems which admit optimal polynomial-time estimators obviously contain the corresponding average-case complexity classes, and moreover we show that the inclusion is proper (see e.g. Theorem 2.3). These distributional complexity class seem entirely novel and studying their place within the class hierarchy is an interesting problem which we only begin to address.
+
+On the other hand, optimal polynomial-time estimators can be regarded as \emph{subjective probability assignments}. An agent commanding a merely polynomial amount of computational resources cannot be certain about answers to questions of the form \enquote{is ${x}$ in ${L}?$} unless ${L \in\textsc{P}}$ \footnote{more precisely in our parallel complete certainty corresponds to ${(\Dist,L)}$ belonging to an appropriate average-case complexity class, e.g. ${\textsc{HeurP}}$.}. However, it is arguable that for such an agent there should be a rational strategy for placing bets on such questions and thus a way to assign probabilities to their answers. Indeed, optimal polynomial-time estimators are a realization of this intuitive idea. That is, we can think of ${P(x)}$ as the probability that ${x \in L}$ (we can always make sure this value is in ${[0,1]}$). Note that ${x}$ here is \emph{not} a random variable but a fixed instance of the problem, thus these are not probabilities in the usual sense: in reality, either ${x \in L}$ or ${x \not\in L}$. Several authors tried to formalise these sort of probabilities before \cite{Gaifman_2004,Hutter_2013,Demski_2012,Christiano_2014,Garrabrant_2015} but they used a framework of formal logic and made no attempt to employ concepts from complexity theory.
+
+It is also straightforward to generalize from decision problems to arbitrary bounded functions\\ ${f: \Words \rightarrow \Reals}$. An optimal polynomial-time estimator now has to minimize the error\\ ${\E_{x \in \Dist^k}[(P(x)-f(x))^2]}$. We interpret ${P(x)}$ as the \emph{expected value} of the (deterministic!) quantity ${f(x)}$ in the same sense as above. 
+
+To support the idea that optimal polynomial-time estimators are subjective probability (or expected value) assignments we prove a number of results that are analogous to standard properties of probability theory. In particular, the properties ${\E[a X+b Y]=a \E[X] + b\E[Y]}$, ${\Pr[A \cap B] = \Prb[A] \Prb[B \mid A]}$ and that given ${X,Y}$ independent, ${\E[XY] = \E[X]\E[Y]}$ all have analogues for optimal polynomial-time estimators (Proposition 3.1, Theorem 3.2, Theorem 3.3, Theorem 3.4). In addition, we show that optimal polynomial-time estimators are \emph{calibrated} expected value assignments in the sense of Bayesian statistics (Theorem 3.1).
+
+We also prove several results interesting from a purely complexity-theoretic perspective. We show that optimal polynomial-time estimators are preserved by Karp reductions that satisfy certain conditions (strictly stronger than the conditions used in average-case complexity theory; see section 4) and that certain natural distributional complexity classes have problems that are complete w.r.t. these kind of reductions (Theorem 4.4). We give two broad existence results for a specific choice of ${\Fall}$ one of which (Theorem 5.2) displays the connection to agnostic PAC learning. Specifically, for a certain class of problems that we call \enquote{samplable} an optimal-polynomial time estimator can be constructed by adapting the empirical risk minimization principle\cite{Shalev-Shwartz_2014}. Finally, we prove that optimal polynomial-estimators for a fixed problem are unique up to a certain equivalence relation (see subsection 5.2).
+
+We believe that the concept of optimal polynomial-time estimator which we introduce is a natural object of study in its own right and the corresponding distributional complexity classes are a natural extension of the collection of classes relevant to average-case complexity theory. It also seems likely that the parallel to probability theory can be developed further to yield more interesting concepts and results. One potential application of these concepts is as a model of \emph{reasoning with bounded computational resources}. Indeed, the VNM theorem shows that (unbounded) rational agents make decisions by maximizing the expected value of a certain utility function. It is thus natural to conjecture that rational agents with bounded computational resources should make decisions by maximizing \enquote{expected value} in the sense of optimal polynomial-time estimators or something similar. This suggests applications in the theory of artificial general intelligence and algorithmic game theory.
+
+\bibliographystyle{unsrt}
+\bibliography{Optimal_Estimators}
+
+\end{document}
+
