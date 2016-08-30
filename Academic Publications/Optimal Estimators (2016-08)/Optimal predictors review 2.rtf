@@ -1,0 +1,276 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf340
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww21600\viewh14500\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs48 \cf0 Summary of the Paper.\
+
+\b0 \
+
+\b 1.  What are the main questions this paper is addressing?\
+
+\b0 \
+\
+
+\b 1.a)
+\b0  Given that reasoning is limited by the computational resources available to the reasoning agent, is there a coherent and mathematically well-defined notion of optimal reasoning under computational \'93bounds\'94, i.e. limitations?  This question is asked with particular attention to Bayesian prediction.\
+\
+
+\b 1.b)
+\b0  If the answer to (1.a) is Yes, then for what tasks do optimal \'93bounded predictors\'94 actually exist?  (A mathematical property, such as optimality for a bounded predictor, can be well-defined and yet fail to be satisfied by any candidate predictor.)  And if optimal bounded predictors for a task do exist, can we identify them?\
+\
+
+\b 1.c)
+\b0   If optimal bounded predictors do exist for certain tasks, do familiar properties of (non-resource bounded) probabilistic reasoning have close analogues for optimal bounded prediction?\
+\
+\
+\
+
+\b 2.
+\b0   What are this paper\'92s main conclusions?\
+\
+
+\b 2.a)
+\b0   There is indeed a coherent notion of resource-bounded, optimal probabilistic reasoning (or \'93prediction\'94) for estimation problems.  The definitions are inspired by the framework of average-case complexity theory and resemble definitions in that area.  (See [Bogdanov, Trevisan \'9206], ref. [7] in the present work for a good survey that is still fairly up-to-date.)  In my view, the basic notion presented is well-motivated, elegant, and interesting.  \
+\
+(The above is not a guarantee that its study will be fruitful, however, as progress on some equally interesting and well-motivated related questions in complexity theory has been rather limited; it is also not meant as a blanket statement about the interest of particular results proved about the model in the present work.)\
+\
+Next I\'92m going to give a somewhat technical, but still loose, introduction and guide to the author\'92s model.  The key sequence of modeling decisions made by the author to reach his definition are as follows:\
+\
+(i) The class of prediction tasks considered is restricted to estimation problems specified by a pair (mu, f), where: \
+\
+-mu is a known probability distribution over finite strings (typically bitstrings, and typically mu is a distribution that is efficiently-computable);\
+\
+-f = f(x) is a bounded real-valued function defined on finite input strings x; the function f will typically be difficult to compute, and our interest is in approximating it as best we can with limited resources.\
+\
+The interpretation of the pair (mu, f) is that we expect to be given a sample x drawn from mu, and our goal is to estimate/predict f(x) as closely as possible with the computational resources we have at our disposal.  As noted in the paper, this generalizes the well-studied notion of distributional decision problems.  Readers with a Bayesian orientation might regard mu representing as our prior belief about x, but this viewpoint is not essential to the paper.\
+\
+(ii) The \'93quality\'94 of an approximation Q to f under a distribution is decided to be measured in terms of its expected squared-error penalty  Expectation_x [(Q(x) - f(x))^2]  under the reference distribution mu for x (considered for each input size parameter).  Of course we hope for this expected value to be small.  \
+\
+The squared-error measure is \'93nice\'94 in various senses and is a typical choice in statistics, although other choices are possible.  In any case this is a fine assumption for present purposes.  The choice does warrant further discussion than it receives, however; in particular, the author should review for readers how minimizing mean squared error is naturally connected to the use of conditional expectations as optimal predictions, and also how the squared-error measure has nice relationship with the variant notion of optimality (based on orthogonality concepts) introduced in Sec. 1.3, which in turn facilitates various proofs.\
+\
+\
+\
+(iii) As in average-case complexity theory, the key choice is made to study problems where the distribution mu is not a single, fixed distribution, but a family \{ mu_k \}  of distributions, one for each integer k > 0.  A typical example to keep in mind, and one I will henceforth assume for concreteness, is where mu_k is a distribution over bit-strings of length k, so the instances x drawn from mu_k grow ever-larger with k and it requires more and more resources to compute or approximate f(x).\
+\
+Correspondingly, we allow the reasoning agent to use computational resources that scale as some \'93reasonable\'94 function of the parameter k.  The author\'92s formal framework for describing algorithm efficiency is quite agnostic and flexible about the quantitative limits imposed on computation.  He allows resource use to be a tunable parameter, determined by several parameters.  But basically, the main setting under consideration is runtime bounded by a polynomial function of the input length, as is standard in computational complexity theory.  \
+\
+(Polynomially-bounded runtime, or \'93polynomial-time,\'94 is a robust concept of \'93efficient computation\'94 that has nice properties: for example, one can readily apply two polynomial-time algorithms in sequence, or use one as a subroutine inside another, and the resulting algorithm will be polynomial-time.  This modeling setting can simplify and unify the initial study of problem areas such as the one under consideration here.  It\'92s not intended as a permanent gold standard of efficiency, and its use in studies such as this one is, in my view, usually benign and well-motivated.  In any case, the framework here also allows for studying stricter bounds, such as linear runtime.)\
+\
+\
+Now, for an estimation task (f, mu) where f is not polynomial-time computable, any polynomial-time algorithm (or \'93predictor\'94) A for our task is going to make mistakes on at least one input length k (in fact, on infinitely many).  And for any such k, one can modify A to give a second A\'92 that has the correct output for all inputs of that particular length k \'93pre-coded\'94 into its description, and is still polynomial-time.  So A\'92 improves upon A.  Thus under the naive notion of optimality, no polynomial-time predictor can be optimal for a hard estimation task!\
+\
+But it is reasonable to object that A\'92 above makes only a slight improvement over A, one that disappears for large enough inputs.  Indeed this is a large part of the motivation for the study of families \{mu_k\} rather than a single distribution.  So the author makes the sensible choice to say that A is optimal for the estimation task among polynomial-time algorithms if, for any other poly-time algorithm B, the \'93quality\'94 of A\'92s approximation to f is \'93nearly as good, or better than\'94 the quality of B\'92s approximation to f, with respect to the input distribution mu we care about\'97for sufficiently large input lengths k.  More precisely, any amount by which B\'92s quality exceeds A\'92s quality decays rapidly as a function of k.  (The rate of decay is described by a function that the author terms a \'93fall space\'94, generalizing \'93negligible\'94 functions as used in complexity and cryptography.)\
+\
+\
+The framework posed in this work not only gives algorithms runtime budgets that grow with the input length, but also gives resource budgets for the use of random bits (which can sometimes help in computations) and also for the use of so-called\
+\'93non-uniform advice\'94.  This is a technical, but standard, theoretical notion capturing the idea of helpful advice that depends upon the input length k but not upon the precise input.\
+\
+Models of non-uniform advice are arguably not \'93realistic\'94 for actual computation, and they will appear strange to readers outside of computational complexity, so readers will ask why this resource is being studied here.  The answer is that many of the nice properties the author goes on to prove about his definition of optimal bounded predictors, actually only seem to hold (or at least, to be provable by known techniques) in the setting in which a certain amount of non-uniform advice is allowed. \
+One of my misgivings about the current draft is that, while this crucial point is made briefly in the Introduction, its importance is not dwelt on enough, and a good deal of squinting at notation is needed to see which results do or don\'92t make essential use of non-uniform advice.\
+\
+\
+\
+\
+\
+
+\b 2.b)
+\b0   Optimal predictors do exist in certain circumstances.  One example is given fully and others are suggested by the Introduction of this work-in-progress, but not proved here.  From related blog posts by the author, I believe I have gotten a basic sense of most of the further results that will appear in the finished work, and of their main proof ideas (which are plausible and appear correct).  There is one result mentioned in the Intro, asserting the existence of \'93uniform optimal predictors for samplable problems,\'94 whose proof ideas are nowhere apparent (although the models of samplable estimation problems are well-developed in the draft, presumably with an eye to proving further results), and I would need to be further convinced of this significant claim.\
+\
+At least some of the positive examples of optimal bounded prediction rely on a very significant modeling choice: they are shown within a model in which so-called \'93non-uniform advice\'94 is provided for computation.  Non-uniform advice is frequently studied in complexity theory, but its practical relevance/realism is debatable and results proved in this model can be less interesting.  I will say more about this later.\
+\
+It is not mentioned, but appears likely also, that certain other prediction tasks within the author\'92s framework, under certain resource bounds describable in that framework (e.g. when disallowing non-uniform advice), probably do not have optimal bounded predictors.  So there remains further work of classification to be done.\
+\
+\
+\
+\
+
+\b 2.c) 
+\b0  The author shows that several familiar properties of probabilistic reasoning do have appealing analogues for optimal bounded prediction, or results resembling familiar facts, although some of these analogues seem to crucially rely on non-uniform advice, and for at least some of these results it appears unlikely that analogous versions can be proved to hold in the \'93uniform\'94 setting (where advice is disallowed).\
+\
+The author also mentions results about the existence of optimal prediction schemes in a different context of agents reasoning about themselves and/or other bounded Bayesian agents, with suggested implications for game theory and Artificial General Intelligence; this is not followed up on explicitly in the current draft, so I will not comment further, except to say that: the general sort of existence result suggested by the brief description sounds plausible, and reminiscent of other existence results (such as existence of equilibria in multi-player games) whose proof uses topological fixed-point theory.  The related blog posts on the subject use some different notation that I have not fully digested; however, it appears that the general approach looks plausible and likely to be correct.  A caution is that for most of these existence proofs we are currently unable to efficiently compute the objects shown to exist, and there is some evidence (from the theory of \'93PPAD-Completeness\'94) that the apparent difficulty is intrinsic.  This may limit the practical relevance of such existence theorems, much as existence theorems for market equilibria in economic theory must be qualified by the potential difficulty of economic agents to find such equilibria.  The well-known problem of choosing from among multiple equilibria may well also have a counterpart here.  Finally, the author makes some comments of a predictive flavor about the \'93convergence\'94 of players to a certain behavior (p. 3, paragraph 3).  I am unsure what he means and can\'92t see a clear basis for this in any of the material I\'92ve been given.  All of this material deserves to be discussed at much greater length.\
+\
+\
+*********\
+\
+
+\b Novelty:\
+\
+\
+3.  Do you know of other investigators or groups pursuing similar questions?\
+
+\b0 \
+In a sufficiently broad sense, there are hundreds of researchers pursuing some form of computationally-bounded prediction/estimation; and of course, everyone would like their predictions to be optimal if possible.\
+Many researchers have proposed models of computationally-bounded agents trying to approximate rational behavior.  Many fall under the well-known rubric of \'93bounded rationality\'94 in economics and psychology, although a good deal of this research is descriptive (e.g. of observed heuristics and biases) rather than prescriptive for classes of computationally- or cognitively-bounded agents.\
+\
+In a narrower sense, I have not seen any work that attempts to study bounded probabilistic reasoning in the distributional, asymptotic fashion proposed in this work, and I think it is an creative and incisive model.  It takes modeling ideas of average-case complexity as a point of departure, but the background motivation is very different.  The closest thing I can think of to the present work are some recent speculative notes by B. Barak viewing the influential \'93Sum-of-Squares\'94 proof system as a kind of method for bounded Bayesian reasoning, respecting certain familiar rules ( http://www.boazbarak.org/Papers/bayesian.pdf ).  But this is a far more concrete, restricted form of reasoning than explored in the present work, and the Bayesian viewpoint on it is not developed in any real detail; anyway, there is certainly room for both models to be explored.  \
+\
+Anyone with a background in theoretical computer science and/or probability & statistics could potentially contribute to the present area of study; it is not the kind of thing that would take a great deal of special preparation.  So far in the development of the theory, the careful posing of novel definitions and logical rigor have been the main skills put to use\'97partly due to the author\'92s evident flair for rigor and generality, which could have been relaxed somewhat.  While probabilities are a central concern and calculations are involved, it remains to be seen whether difficult probabilistic analysis will come into play; the issues explored thus far are actually so high-level and general as to give the research more of a logical flavor.  \
+\
+The barriers to entry for working on this particular theory could be lowered if the author would invest the effort to give a more reader-friendly presentation (see Question 10 below).\
+\
+\
+
+\b 4.  If correct, what would the paper\'92s conclusions add to what is already known?\
+
+\b0 \
+The framework of the paper\'97a family of carefully-chosen definitions inviting us to think about Bayesian reasoning in a new way\'97is perhaps more exciting than its conclusions.  Once the definitions are clear, the conclusions tend to either confirm our expectations (optimal bounded prediction obeys a number of formal rules analogous to or suggested by familiar rules for unbounded prediction) or to give information about the existence of optimal bounded predictors that is less than satisfying (either because it involves \'93optimal\'94 bounded predictors which do no nontrivial prediction, or because it relies heavily on the unrealistic resource of non-uniform advice).  \
+\
+One further mentioned but unproved existence result about \'93uniform\'94 optimal prediction schemes may be of significant interest if true, but I can\'92t comment without further information.  Further results promised for a future draft, on optimal bounded reasoning in multi-agent settings, sound interesting and proofs appear to be fleshed out in some detailed blog posts; the notation used is different and I did not check them in detail (but I believe they are probably correct).\
+\
+
+\b \
+Technical quality:\
+\
+5.  Did the paper address its main questions in a logically defensible way based on reasonable premises?
+\b0 \
+\
+The paper is carefully written and consists of clear (if notationally taxing) definitions and proofs that appear airtight.  From experience in related areas I can also say that the overall plan of attack (at least for the results proved explicitly in the paper) looks sound; it is not a case where some single mistaken calculation could shake the foundations of the whole work.  \
+\
+The premises are reasonable to an extent, with two caveats.  First, there is essential use in various results of the resource of \'93non-uniform advice,\'94 mentioned earlier.  Again, this is arguably not a realistic resource.  It doesn\'92t negate the results\'92 importance but it does qualify them, and bears significant further discussion, especially for a more general readership who could never hope to discern the significance of this issue by a casual inspection of the paper in its present form.\
+\
+Second, much of this work is about understanding properties obeyed by optimal bounded predictors, pursuing analogues to familiar properties of optimal (unbounded) predictors.  But optimal bounded predictors may not exist in many cases, and if they do exist, it may be exceedingly hard to identify them (including in cases described in the paper that involve the presence of non-uniform advice), so taking them as an object of study might itself be construed as an \'93unreasonable premise.\'94  \
+\
+I don\'92t think this criticism is fatal, however; the current study actually has wisdom to share even for non-optimal bounded prediction (i.e., our usual state of affairs when doing prediction).  To explain why, let me first try to intuitively and roughly explain how the author proves properties of optimal bounded prediction.\
+As a first example, one result in the paper (Prop. 2.1) has the essential message that if X\'92 is an optimal bounded estimator for random variable X and Y\'92 is one for Y, then (X\'92 + Y\'92) is one for (X + Y).  Basically this is because, 
+\i if
+\i0  some Z was an improvement over (X\'92 + Y\'92) as a bounded estimator for (X + Y) that is \'93readily at hand\'94 in some way, then Z could be 
+\i transformed 
+\i0 without too much additional effort into an improved (and still bounded) estimator for at least one of X or Y, contradicting their optimality.  (But you may need a bit of non-uniform advice to do so.  This is not easy to spot, but is implicit in the relation between two notions of optimality connected by Theorems 1.1 and 1.2.)  \
+\
+Another example: suppose X\'92 is again an optimal bounded estimator for random variable X which, let us now suppose, always lies in the unit interval [0, 1].  The author\'92s Corollary 2.1 implies that X\'92 has the desirable \'93calibration\'94 property that, when X\'92 falls in, say, [.49, .51], the expected value of X conditional on this event is quite close to .5 (at least, provided that this event is not too unlikely).   Why is this so?  Basically, were this not the case, X\'92 could be transformed and improved (contrary to its optimality) in an efficient way by altering its output so that it never takes values in [.49, .51]; this can lead to an improvement, because in expectation such outputs will be either too high or too low.   Now we don\'92t know from our assumptions whether it is too high or too low, and if so by how much; moreover, which one of these is the case may depend on the size parameter k.  This is exactly the sort of thing that non-uniform is good for helping with, and starts to explain the role played by advice in the development of the theory.\
+\
+But now, in our first example, even if X\'92 and Y\'92 are 
+\i not
+\i0  bounded-optimal, we can still say that: if Z is an improvement over (X\'92 + Y\'92) as an estimator for (X + Y) that is \'93readily at hand\'94 (or computationally/cognitively apparent) in some way, then it can be transformed without too much additional effort into an improved estimator for at least one of X or Y.  Similarly, if we notice that X\'92 fails the \'93calibration\'94 property for interval [.49, .51], it can be improved without much effort.  (In each case we need some advice to improve our predictors, but one can imagine modeling scenarios in which such advice can be derived using some kind of observations.)  \
+\
+This points to a general theme that is implicit in this study: When our (imperfect, bounded) predictions fail to be \'93coherent\'94, i.e., when they violate normative properties suggested by probability theory, identifying these failures of coherence gives us an opportunity to improve our predictions.\
+This perspective should be spelled out more explicitly in the paper as, I feel, it points to a more general and flexible conception of its message and its main proof idea.  Stated in this way, this basic insight is not exactly new, but it is explored in a new way in this work; and this approach would continue to have interest, and probably more practical relevance, if it were studied in a more general fashion that did not exclusively focus on optimality per se (a very stringent notion).\
+\
+\
+\
+\
+
+\b 6.  Did the paper build on and draw from the most important and relevant prior work?\
+
+\b0 \
+This paper\'92s discussion of prior work was fairly slim, and going forward, the project would most likely benefit from a fuller engagement with the complexity-theory literature in particular.  There are various strands of work that the author could cite as a nicety, but in terms of connections that bear strong resemblance to the work at hand or could have vital relevance for further work here, the following strands come to mind:\
+\
+-The study of \'93hardness amplification\'94 in average-case complexity, specifically \'93Yao\'92s XOR lemma\'94 and \'93Direct Product theorems\'94.  These concern decision problems about which we have \'93computational uncertainty\'94 imposed by resource bounds, and these results study how this computational uncertainty increases when we combine multiple independent copies in one of several possible ways.  They directly probe the extent to which computational uncertainty \'93behaves like\'94 true probabilistic uncertainty, and should be relevant to this work; I believe there are close relatives of these results stated naturally in terms of bounded prediction and/or optimal bounded predictors.  They are described in the Bogdanov-Trevisan survey.\
+\
+-The question of \'93Impagliazzo\'92s Five Worlds\'94, regarding several distinct ways the average-case complexity of NP may behave; e.g. if P is different from NP, are there hard-on-average NP problems?  If so, are there one-way functions in NP?  If so, is there public-key crypto?  See Impagliazzo, \'93A Personal View of Average-Case Complexity\'94 (1995).  For a recent development in this study, see Gutfreund et al., \'93If NP Problems are Hard in the Worst Case, Then it is Easy to Find their Hard Instances\'94 (2007).  This seems to have bearing on whether a bounded predictor (in the current paper\'92s sense) can be simultaneously optimal for the estimation problem (f, mu) on a hard NP problem f and for all possible efficiently samplable mu, a question that fits naturally into the author\'92s framework.\
+\
+More recently in the paper \'93Relativized Separations of Worst-Case and Average-Case Complexities for NP\'94 (2011), Impagliazzo gave evidence that there are inherent difficulties in using most known proof techniques to try to resolve these questions about average-case complexity.  Similar obstacles are likely to confront the present line of work on bounded prediction, and this paper\'92s techniques might be adapted to help understand this.  This is not a strong argument against research in the area; it is just a prediction that some of the natural research questions may be very hard to answer.\
+\
+-There are several other notions of optimality that have been explored for NP-hard problems, that are not too closely related to the author\'92s work (because they largely concern worst-case rather than average-case notions of complexity), but are related enough to mention in the paper and should be studied for possible connections or as a source of further inspiration.  These include: optimal approximation algorithms (see e.g. the recent survey by Barak and Steurer at arXiv:1404.5236 ); runtime-optimal algorithms for certain NP-hard problems (see Fortnow and Santhanam, \'93Time Hierarchies: A Survey\'94, 2007); and the question of optimal proof systems for NP-hard problems and for classes of tautologies (see recent slides by Beyersdorff, \'93Optimal Proof Systems \'97 a Survey\'94).\
+\
+-The present work discusses the \'93calibration\'92\'92 properties of bounded and unbounded predictors.  It\'92s worth consulting and citing \'93The Complexity of Forecast Testing\'94 by Fortnow and Vohra (2009) for a different perspective on calibration issues in resource-bounded prediction (in a fairly distinct model of sequential observations).\
+\
+\
+\
+
+\b 7.  How hard would it be for someone else to derive results like these?\
+
+\b0 \
+As a contribution to theoretical computer science, to decision theory, and to related areas, this paper is particularly strong in two respects: (i) innovative, interdisciplinary modeling, (ii) rigorous and extensive development of the theory with carefully-chosen definitions.  These speak to the quality of the author\'92s intellect and scholarship.  \
+\
+It is possible that, had the author not come along to do this work, no one would have developed this theory, or that something similar might have appeared a decade or more later.  It is also possible that, had someone else had the initial spark, the theory\'92s initial development would\'92ve been less rigorous or extensive. \
+\
+With that said, I do not believe that the essential results of this paper would be especially difficult to develop, once the right set of initial questions had been asked.  The part of the work I have seen does not seem to involve a great deal of applied problem-solving ingenuity once the appropriate definitions are in place (although getting them in place is already an achievement, and the theory\'92s development involves a lot of careful work; beyond the basic modeling decisions, this includes further thought about how to state and prove interesting properties of optimal bounded prediction related to familiar concepts such as conditional expectations and independent random variables).    \
+\
+An exceptionally independent-minded and passionately rigorous graduate student in a top-5 CS department\'92s theory group could, I feel, write a paper like this, perhaps with 6+ months of hard work\'97if they had the initial idea, which necessarily involves a somewhat unusual interdisciplinary spark.  A university professor could do the same; average professors do not show similar creativity or determination in model-posing, but this kind of creativity is encouraged and rewarded in the associated areas of CS theory, and papers as creative (and/or as interdisciplinary) as this one do appear on a regular basis.  This is work that I believe could be published in mainstream CS theory (or theoretical AI) conference or journal, and accepted as a contribution to the community without too much trouble.\
+\
+The author\'92s background knowledge of CS theory (and perhaps other areas too) could probably be strengthened to the benefit of this work\'97I imagine this learning process is ongoing.  But this paper is certainly \'93professional-quality\'94 research; the author\'92s lack of a Ph.D. is unimportant, and the full version of this work could easily qualify as the basis for a dissertation.  \
+\
+In fact this work is actually *more* rigorously and thoroughly developed than is the norm for average-case complexity and other related areas of theoretical CS, which shows the author\'92s strength of mind, but is also potentially a problem.  He has created a formidable thicket of notation and terms that are quite different in many respects from those typically used in complexity theory, and has set a daunting standard for his subject which could dissuade readers who otherwise might contribute.  Also, the long development time for this work (apparent from related blog posts) may be a function of the author\'92s other obligations, but might also speak to the excessive difficulty of the standard of technical writing and of generality he has set for himself, as well as a possible overreach in trying to examine a great number of aspects of the subject in the first paper.  \
+\
+I am only speculating here.  However, I think it is not uncommon for ambitious, talented young researchers to face the above hazards.  Let me also say, I think there is a potential tension in such cases between a researcher\'92s own intellectual and aesthetic preferences for their work (perhaps emphasizing perfection and completeness), and the greater good of rapid impact and advancement of science.  This would be better served by a \'93good-enough\'94 first paper setting basic terms and objectives, proving initial results (with less generality, a less super-rigorous style, and more user-friendliness), asking provocative questions, and laying a groundwork for further papers.  I believe this is also in the author\'92s own best narrowly-professional interests, as it increases the expected impact and citation count, as well as allowing him to write sequels.  And such a style should also be encouraged by donors and funding agencies.  \
+\
+\
+\
+
+\b 8.  The authors of this paper think that its results shed light on standards for good reasoning under deductive limitations.  How significant do you feel that these results are for that?\
+
+\b0 \
+\
+The paper does shed such light, particularly by giving a coherent and defensible way to talk about reasoning schemes that are *optimal* among those with reasonable resource bounds.  This notion of optimality is asymptotic, i.e., applies to families of progressively larger reasoning tasks, which makes the notion more robust and rescues a sense in which optimal computationally-bounded prediction may be possible for difficult tasks, even though such predictors must make mistakes.  This choice allies the model with computational complexity, whose ideas are quite relevant, while the focus on distributional problems makes the approach palatable to Bayesian thinkers and invites these two traditions to come into closer communication.  The focus on the asymptotic setting may lessen the practical relevance of the work, however.  At this stage I\'92d say it\'92s of interest mostly to theorists.\
+\
+The author makes a significant study of the properties of optimal bounded predictors as he defines them.   As mentioned, there are two quite significant caveats: (i) optimal predictors may *not* exist for some natural tasks, indeed I believe this is likely; (ii) optimal predictors, even if they do exist, may be very difficult to find and verify for many prediction tasks, and this paper does not get around this difficulty.  Its results in the setting of non-uniform advice involve a strong non-constructive element, i.e., something is being shown to exist but we are not given an effective way to find it. This will, I expect, also be the case for the promised results about reasoning in a multi-agent setting (due to the use of topological fixed-point theorems).  \
+\
+Despite these caveats, I have suggested (see Q. 5) why I believe this work has significance even for the setting in which optimal predictors do not exist or have yet to be find.  I think this is an interesting and accomplished work, and I look forward to seeing its further development.\
+\
+\
+\
+\
+\
+
+\b 9.  Do the methods and results seem potentially fruitful in the sense that they or related work could shed additional light on these issues in the future?\
+
+\b0 \
+\
+I think this paper could play a fruitful role within the larger theoretical conversation about computationally-bounded reasoning, and set out a model that others will want to explore further (*if* it can be presented in a more user-friendly way).  It will not necessarily become a dominant model, but its concepts could be influential even upon rival approaches, and it sets a strong example in terms of creative modeling informed by multiple theoretical traditions and careful critical thinking.  As mentioned earlier, there is a clear risk that some of the most interesting questions one might ask about this model will prove very difficult to resolve and remain beyond the reach of present-day mathematical techniques (as seems to be the case with some associated questions in average-case complexity).  It is not uncommon for research of this kind, exploring algorithms at such a high level of generality, to pose forbiddingly-difficult general questions where there is not a lot of apparent mathematical structure to work with; whole areas can slow or stagnate as a result.  \
+\
+I also don\'92t see any clear path to near-term practical relevance for this work; in addition to the caveats I mentioned for its applicability, it is intrinsically high-level and abstract.  It is giving a new framework for conceptualizing a great many computational tasks (tasks that would have been visible and approachable in a different light under previous, alternative frameworks), but these particular tasks remain difficult and require individual study.\
+\
+The promised material on multi-agent situations and reflection might ultimately be the part of this work that\'92s of greatest interest to the AI community, but it is only developed in detail in blog posts and its potential practical significance needs to be explored at much greater length.  I think it will have to be studied by a larger group of scholars before its meaning and impact becomes clearer; just as concepts of equilibrium in game theory and economics have been very contentious over many years, and spawned many competing \'93solution concepts\'94, there will need to be vigorous discussion here.  And, much as real-world economic agents generally don\'92t rely on equilibrium theory or worry too much about what kind of equilibrium they might be participating in, I tend to doubt that applied AI projects will feel an urgent need or incentive to utilize this research.\
+\
+\
+
+\b Clarity:
+\b0 \
+\
+
+\b 10.  Is the paper written in a way that will allow others to understand it and build on it?\
+
+\b0 \
+This paper was, I believe, written with the primary goal of rigorously proving its results in the greatest generality possible (although the author has developed still-further generalizations in blog posts), with a compact notation that makes proofs clean to write and straightforward for the author to check.  This is a solid way to develop a theory, but it is not readable in its present form without very significant effort\'97effort that is, I would say, out of proportion to the depth of the core ideas in this work, which are not so hard to explain in ordinary language.\
+\
+Realistically, for others to be likely to understand the work and build on it, the author will need to do significantly more work of exposition, intuition-building, and simplification.  It will be beneficial to present a less-general version of the theory, specializing the resource bounds to some convenient and reasonably-general setting, and reducing the notational overhead, as a first step for newcomers (possibly split into a separate paper).  \
+\
+Again, one thing that should certainly be done is to more fully highlight the role of non-uniform advice in many of the results, clearly indicating it both through better notational means and more extensive discussion, especially of the potential real-world significance of results proved for the non-uniform model. \
+\
+******\
+\
+\
+
+\b Further comments to the author:
+\b0 \
+\
+-I mentioned these above, but to go back and highlight the things I was most curious and uncertain about in terms of promised further work, they are (a) the claim about uniform optimal predictors for samplable problems, p. 3 para 3;  (b) the slightly vague claim about \'93convergence\'94 to the analogue of Nash equilibrium, in the next paragraph.\
+\
+I expect that (a) is one of the main goals of the material of Sec. 2.3 on samplers, which so far seems under-utilized relative to the complexity of the definitions.\
+\
+\
+-p. 5-6, I felt the treatment of set encodings, of algorithms with the arrow notation, and of multi-tape Turing machines was all a bit too formalistic, and the notational choice of n = number of tapes vs. k = primary complexity parameter felt somewhat backwards from the perspective of the complexity theory literature.  The Gamma-schemes formalism also felt excessively general and tends to involve a lot of super/subscripts which is hard on the reader.  (arrows with superscripts over them are, I think, too abstract or categorical feeling, and will not go over well with a TCS audience, nor will the occasional language of \'93push-forward\'94s etc.  This is not to say that anything about the notation is \'93wrong\'94, just that it could be more friendly to many readers who\'92d be well-qualified to read the work but dissuaded by its style)\
+\
+-definition and use of the \'93ample\'94 term, throughout:  I don\'92t like how the use of advice in many results is swept in by the phrase  \'93Assume E is Gamma_A - ample\'94.  It\'92s a very indirect way of indicating the presence of advice and requires starting at and remembering meanings of a bunch of symbols at once.  Also, that script-A you use is intimidating and hard to make out as a letter at all.  Other typographical things I don\'92t like so well include use of \\mathbf\{1\}, use of \\bullet in math, etc.  I strongly encourage reducing the amount of notation, e.g. subscripts can often be implicit from context.\
+\
+If advice were used absolutely everywhere, I would care less about this, but it\'92s not used in some results/reductions, so please make it clearer so readers can easily see where it\'92s used.\
+\
+-p. 8, footnote 3, typo \'93this [is] out of the current scope\'94\
+\
+\
+-p. 10,   (mod E) notation:  consider the alternative of using a subscript-E next to your inequality, possibly making the lower bar of the inequality squiggly.  I find that kind of approximate-inequality display more standard and easier to scan.  I would also use more spacing between LHS and RHS of displayed equations.  \
+\
+-p. 11,  \'93As usual, random[ness] is no more powerful than advice.\'94  This comment will be opaque to readers without lots of complexity theory experience, I would offer some further context / citation.\
+\
+-p. 12, Prop. 1.12, denote $\\mu^\{K\}_\{P, W\} := BLAH$ \'97 this is just one example of notation becoming so cumbersome as to overwhelm readers.  It\'92s got to be made easier to read or almost no one will.\
+\
+\
+-p. 23 grammar, \'97> \'93to state and prove\'94\
+\
+-p. 24, \'93Using the fact [that]\'94\
+\
+-p. 30 \'93of samplability\'94 \'97typo, repeated twice\
+\
+-p. 31, Def. 2.5   the odds that readers will remember your Markov-chain arrow notation at this point are slim, give a textual reminder.\
+\
+-p. 38 and elsewhere, really long chain of equations:   use the  \\align environment to create multiline statements like\
+\
+A  =   B\
+    =   C\
+    =   D\
+\
+which avoids repetition and captures the flow of ideas much better.\
+}
