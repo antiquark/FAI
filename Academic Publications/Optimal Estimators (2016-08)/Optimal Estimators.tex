@@ -252,6 +252,7 @@ $$\chi_Y(x):=\begin{cases}1 & \text{if } x \in Y \\ 0 & \text{if } x \not\in Y \
 $\theta: \Reals \rightarrow \Bool$ will denote the Heaviside step function $\theta:=\chi_{[0,\infty)}$. ${\Sgn: \Reals \rightarrow \Bool}$ will denote the function $2 \theta - 1$.
 
 \subsection{Probability Distributions}
+\label{subsec:notation__prob}
 
 For ${X}$ a set, ${\mathcal{P}(X)}$ will denote the set of probability distributions on ${X}$. A probability distribution on $X$ can be represented by a function $\Dist: X \rightarrow [0,1]$ s.t. $\sum_{x \in X} \Dist(x) = 1$. Abusing notation, we will use the same symbol to denote the function and the probability distribution. Given ${A}$ a subset of ${X}$, we will use the notation
 
@@ -764,7 +765,7 @@ Combining \ref{eqn:prp__unif__prf1} and \ref{eqn:prp__unif__prf2} we get the des
 
 \subsubsection{Random versus Advice}
 
-As usual, random is no more powerful than advice. This is demonstrated by the following two propositions.
+As usual, random is no more powerful than advice (see e.g. Theorem 6.3 in \cite{Goldreich_2008}). This is demonstrated by the following two propositions.
 
 \begin{proposition}
 
@@ -846,17 +847,10 @@ ${\FallU}$ is ${\GammaLog^n}$-ample since we can take ${\zeta(K):=(K_{n-1}+2)^{-
 \begin{proposition}
 \label{prp:weight}
 
-Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimation problem, $P$ an $\EG$-optimal estimator for $(\Dist,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. ${\R_W \geq \max(\R_P, \R_Q)}$. Denote 
-
-\begin{align*}
-\Dist^{K}_{P,W} &:=\Dist^{K} \times \Un_P^{K} \times \Un^{\R_W(K)-\R_P(K)} \\
-\Dist^{K}_{Q,W} &:=\Dist^{K} \times \Un_Q^{K} \times \Un^{\R_W(K)-\R_Q(K)}
-\end{align*}
-
-Then
+Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimation problem, $P$ an $\EG$-optimal estimator for $(\Dist,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. ${\R_W \geq \max(\R_P, \R_Q)}$. Denote ${\Dist_W^K:=\Dist^K \times \Un_W^K}$. Then
 
 \begin{equation}
-\E_{\Dist^{K}_{P,W}}[W^{K}(P^{K} - f)^2] \leq \\ \E_{\Dist^{K}_{Q,W}}[W^{K}(Q^{K} - f)^2] \pmod \Fall
+\E_{\Dist_W^{K}}[W^{K}(x,y)(P^{K}(x,y_{<\R_P(K)}) - f(x))^2] \leq \\ \E_{\Dist_W^{K}}[W^{K}(x,y)(Q^{K}(x,y_{<\R_Q(K)}) - f(x))^2] \pmod \Fall
 \end{equation}
 
 \end{proposition}
@@ -1377,13 +1371,13 @@ Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. We get
 
 \[\E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{\chi f}^K - \chi_L f)S^K] = \E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_L^K - \chi_L) P_{f \mid L}^KS^K)] + \E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[\chi_L (P_{f \mid L}^K - f)S^K]\]
 
-Using the fact $P_L^K$ is $\ESG$-optimal for $(\Dist,\chi_L)$,
+Using the fact that $P_L^K$ is $\ESG$-optimal for $(\Dist,\chi_L)$,
 
 \[\E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{\chi f}^K - \chi_L f)S^K] \equiv  \E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[\chi_L (P_{f \mid L}^K - f)S^K] \pmod \Fall\]
 
 \[\E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{\chi f}^K - \chi_L f)S^K] \equiv \Dist^{K}(L)  \E_{(\Dist^{K} \mid L) \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{f \mid L}^K - f)S^K] \pmod \Fall\]
  
-Using the fact $P_{f \mid L}^K$ is $\Fall_L^\sharp(\Gamma)$-optimal for $(\Dist \mid L, f)$, we conclude
+Using the fact that $P_{f \mid L}^K$ is $\Fall_L^\sharp(\Gamma)$-optimal for $(\Dist \mid L, f)$, we conclude
  
  \[\Abs{\E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{\chi f}^K - \chi_L f)S^K]} \equiv 0 \pmod \Fall\]
 %
@@ -1488,7 +1482,7 @@ Consider any $S: \Words \times \Rats^2 \Scheme \Rats$ bounded.
 
 \[\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - \chi_L f) S^K]=\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) S^K]+\E_{\Dist_P^K \times \Un_S^K}[( P_{\chi f}^K - \chi_L f) S^K]\]
 
-Using the fact $P_{\chi f}$ is an $\ESG$-optimal estimator for $(\Dist, \chi_L f)$, we get
+Using the fact that $P_{\chi f}$ is an $\ESG$-optimal estimator for $(\Dist, \chi_L f)$, we get
 
 \[\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - \chi_L f) S^K] \equiv \E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) S^K] \pmod \Fall\]
 
@@ -1827,7 +1821,7 @@ We now introduce the notions of samplability over a given \enquote{base space} $
 
 \begin{definition}
 
-Consider a word ensemble $\Dist$, an encoded set $Y$ and a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$. $\Dist$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\Dist^{K}}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
+Consider a word ensemble $\Dist$, an encoded set $Y$ and a family of Markov kernels ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$. $\Dist$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\Dist^{K}}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
 
 In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$ relative to $\pi$}.
 
@@ -1837,7 +1831,7 @@ In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. p
 \begin{definition}
 \label{def:smp_prob_rel}
 
-Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$ and a family $\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}$. $(\Dist,f)$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
+Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$ and a family of Markov kernels $\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}$. $(\Dist,f)$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words \times \Rats$ s.t.
 
 \begin{enumerate}[(i)]
 
@@ -2229,7 +2223,7 @@ Applying Proposition~\ref{prp:smp} (with $Y = \bm{1}$) to the right hand side, w
 
 \[\E_{\Dist_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\Dist_2^{K} \times \Un_{PS}^K \times \UM_\sigma^K}[(P^K(x_2) - f(x_2))S^K(\Chev{\sigma^K,x_2},P^K(x_2))] \pmod \Fall\]
 
-Using the fact $P$ is an $\ESG$-optimal estimator for $(\Dist_2,f)$, we conclude
+Using the fact that $P$ is an $\ESG$-optimal estimator for $(\Dist_2,f)$, we conclude
 
 \[\E_{\Dist_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv 0 \pmod \Fall\]
 %
