@@ -220,6 +220,12 @@ Finally, we examine the uniqueness of optimal polynomial-time estimators for a f
 
 We are able to prove a stronger uniqueness result for optimal polynomial-time estimators for problems of the form ${(\Dist \mid M, L)}$ (see Theorem~\ref{thm:uniq_cond}). Namely, if there is an optimal polynomial-time estimator ${P_M}$ for ${(\Dist,M)}$ which takes values with a sufficiently strong lower bound then any ${P_{L1},P_{L2}}$ optimal polynomial-time estimators for ${(\Dist \mid M, L)}$ have an asymptotically small difference on average with respect to ${\Dist}$ (rather than ${\Dist \mid M}$). Informally, this means that whenever determining that ${x \not\in M}$ is sufficiently hard, there are well-defined (up to an asymptotically small perturbation) probabilities for events of the form ${x \in L}$ conditioned by ${x \in M}$, even for instances which actually lie outside of ${M}$. That is, optimal polynomial-time estimators allow us asking counterfactual \enquote{what if} questions that are meaningless from a \enquote{classical} mathematical perspective due to the principle of explosion.
 
+Many of our results make use of algorithms with advice strings, where the allowed asymptotic length of the advice strings is determined but the space of functions ${\GrowA}$. Such algorithms are not entirely realistic, but one way to interpret them is as real-time efficient (since we assume polynomial time) algorithms that require inefficient precomputation (at least this interpretation is valid when the advice strings are computable). The strength of the concept of an \enquote{${\EG}$-optimal polynomial-time estimator} depends ambiguously on the size of ${\GrowA}$, since on the one hand larger ${\GrowA}$ allows for a greater choice of candidate optimal polynomial-time estimators, on the other hand the estimator is required to be optimal in a larger class\footnote{The same observation is true about the space ${\GrowR}$ which controls the allowed quantity of random bits.}. Sometimes it is possible to get the best of both worlds by having an estimator which uses few or no advice but is optimal in a class of estimators which use much advice (see e.g. Theorem~\ref{thm:exists_smp}).
+
+Note that most of the theorems we get about ${\EG}$-optimal polynomial-time estimators require a lower bound on ${\GrowA}$ through the assumption that ${\Fall}$ is ${\GrowA}$-ample (see Definition~\ref{def:ample}). Theorem~\ref{thm:ort} which shows when an ${\EG}$-optimal polynomial-time estimator is also an ${\Fall^{\frac{1}{2}\sharp}(\Gamma)}$-optima polynomial-time estimator also assumes a lower bound on ${\GrowA}$, but a weaker one. On the other hand, the converse Theorem~\ref{thm:con_ort} makes no such assumption and so do all other theorems about ${\ESG}$-optimal polynomial-time estimators (except indirectly since Theorem~\ref{thm:ort} is often required to construct an ${\ESG}$-optimal polynomial-time estimator in the first place).
+
+% TODO: Discussion of advice
+
 The structure of the paper is as follows. Section~\ref{sec:notation} fixes notation. Section~\ref{sec:fundamentals} introduces the main definitions and gives a simple example using one-way functions. Section~\ref{sec:probability} shows the parallel between properties of optimal polynomial-time estimators and classical probability theory. Section~\ref{sec:reductions} discusses behavior of optimal polynomial-time estimators under reductions and shows certain natural classes have complete problems under reductions that are appropriate. Section~\ref{sec:e_and_u} discusses existence and uniqueness of optimal polynomial-time estimators. Section~\ref{sec:discussion} discusses possible avenues for further research. The Appendix briefly reviews relevant material about hard-core predicates and one-way functions.
 
 \section{Notation}
@@ -823,6 +829,7 @@ Clearly ${\E_{\Dist^{K} \times \Un^{r_{\mathfrak{R}}(K)}}[(P^{K} - f)^2] \leq \E
 Although the word ensemble plays a central role in the definition of an optimal polynomial-time estimator, the dependence on the word ensemble is lax in some sense. To see this, consider the following proposition.
 
 \begin{definition}
+\label{def:ample}
 
 Given a growth space $\Gamma_*$ of rank $n$, $\Fall$ is called \emph{$\Gamma_*$-ample} when there is $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_*$.
 
@@ -2993,7 +3000,7 @@ For any ${p \in \NatPoly}$, define ${\alpha_p: \NatFun \Nats^n}$ by
 \forall J \in \Nats^{n-1}, k \in \Nats: \alpha_p(J,k) = (J,p(J,k))
 \end{equation}
 
-Consider a distributional estimator problem ${(\Dist,f)}$ s.t. ${\Dist}$ is ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable and there are ${\phi \in E}$ and ${q \in \Nats[k]}$ s.t. for any ${x \in \Supp \Dist}$ and ${k \geq q(\Abs{x})}$, ${f(x)=\mathfrak{F}(\phi,k,x)}$. Then, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\Dist,f)}$ to ${(\Dist_{\mathfrak{F}}, f_{\mathfrak{F}})}$ over ${\alpha_p}$ for some ${p \in \NatPoly}$ increasing in the last argument (it is easy to see that any such ${\alpha_p}$ is an efficient injection).
+Consider a distributional estimation problem ${(\Dist,f)}$ s.t. ${\Dist}$ is ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable and there are ${\phi \in E}$ and ${q \in \Nats[k]}$ s.t. for any ${x \in \Supp \Dist}$ and ${k \geq q(\Abs{x})}$, ${f(x)=\mathfrak{F}(\phi,k,x)}$. Then, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\Dist,f)}$ to ${(\Dist_{\mathfrak{F}}, f_{\mathfrak{F}})}$ over ${\alpha_p}$ for some ${p \in \NatPoly}$ increasing in the last argument (it is easy to see that any such ${\alpha_p}$ is an efficient injection).
 
 \end{theorem}
 \end{samepage}
