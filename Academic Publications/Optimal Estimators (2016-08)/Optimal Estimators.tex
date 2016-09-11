@@ -119,7 +119,7 @@
 
 \author{Vadim Kosoy \\ \href{mailto:vadim.kosoy@intelligence.org}{vadim.kosoy@intelligence.org}}
 
-\date{August 14, 2016}
+\date{}
 
 \maketitle
 
@@ -3085,7 +3085,7 @@ Denote ${\textsc{X}_\mathfrak{F}}$ the set of bounded functions ${f: D \rightarr
 \begin{samepage}
 \begin{example}
 
-${n = 1}$. ${E_{\textsc{NP}} \subseteq \Words}$ is the set of valid programs for ${\mathcal{U}_2}$. ${\mathfrak{F}_{\textsc{NP}}}$ is given by 
+${n = 1}$. ${E_{\textsc{NP}} \subseteq \Words}$ is the set of valid programs for the universal machine ${\mathcal{U}_2}$. ${\mathfrak{F}_{\textsc{NP}}}$ is given by 
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -3098,7 +3098,7 @@ ${n = 1}$. ${E_{\textsc{NP}} \subseteq \Words}$ is the set of valid programs for
 \begin{samepage}
 \begin{example}
 
-${n = 1}$. ${E_{\textsc{EXP}} \subseteq \Words}$ is the set of valid programs for ${\mathcal{U}_1}$. ${\mathfrak{F}_{\textsc{EXP}}}$ is given by 
+${n = 1}$. ${E_{\textsc{EXP}} \subseteq \Words}$ is the set of valid programs for the universal machine ${\mathcal{U}_1}$. ${\mathfrak{F}_{\textsc{EXP}}}$ is given by 
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -3954,6 +3954,10 @@ Theorem~\ref{thm:uniq_cond} implies that in simple scenarios, \enquote{counterfa
 The motivation for optimal polynomial-time estimators comes from the desire the quantify the uncertainty originating in computational resource bounds. We used this motivation to arrive at an intuitive definition, and proceeded to show the resulting object has many properties of \enquote{normal} probability theory, justifying its interpretation as a brand of expected value. Moreover, there are associated concepts of reductions and complete problems analogous to standard constructions in average-case complexity theory. 
 
 Thus, the class of distributional estimation problems admitting ${\EG}$-optimal estimators (or ${\ESG}$-optimal estimators) is a natural distributional complexity class. In light of the existence results we have demonstrated, these new classes are unlikely to trivially coincide with any of the previously known classes. Mapping the boundary of these classes and understanding their relationships with other classes in average-case complexity theory seems to be ground for much further work. Moreover, it is possible to consider generalizations by including more types of computational resources e.g. space, parallelism and/or non-determinism.
+
+As an example of a natural open problem, consider ${(\Dist_{\textsc{NP}}, f_{\textsc{NP}})}$, the complete problem for ${\textsc{SampNP}}$ resulting from Theorem~\ref{thm:complete} with ${n=1}$, ${r(k)=s(k)=k}$, ${E=E_{\textsc{NP}}}$ and ${\mathfrak{F}=\mathfrak{F}_{\textsc{NP}}}$. Theorem~\ref{thm:exists_all} and Theorem~\ref{thm:ort} imply that e.g. there is an ${\mathcal{F}_{\text{uni}}^{(2)\frac{1}{2}\sharp}(\GammaPoly^2,\GammaLog^2)}$-optimal estimator for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$. On the other hand, Proposition~\ref{prp:tally_fall_uni} implies that it is unlikely that such an optimal estimator can be uniform. This, however, doesn't tell us anything about the existence of an ${\mathcal{F}_{\text{uni}}^{(2)\frac{1}{2}\sharp}(\GammaPoly^2,\Gamma_0^2)}$-optimal estimator\footnote{The reason we consider ${\mathcal{F}_{\text{uni}}^{(2)\frac{1}{2}\sharp}(\GammaPoly^2,\Gamma_0^2)}$-optimal estimators rather than ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\Gamma_0^2)}$-optimal estimators is that Theorem~\ref{thm:ort} doesn't apply when ${\GrowA=\Gamma_0^2}$, and, in this case, ${\EG}$-optimal estimators are not known to have good properties, as opposed to ${\ESG}$-optimal estimators.} for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$. This question fits naturally into the theme of \enquote{Impagliazzo worlds}\cite{Impagliazzo_1995}: if there is an ${\mathcal{F}_{\text{uni}}^{(2)\frac{1}{2}\sharp}(\GammaPoly^2,\Gamma_0^2)}$-\emph{perfect} estimator for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$ (a version of Impagliazzo's \enquote{Heuristica}), then the answer is tautologically positive. However, if there is no such perfect estimator then the optimal estimator may or may not exist, a possible new partition of \enquote{worlds}.
+
+% TODO: Imagliazzo words...
 
 One area where applying these concepts seems natural is Artificial General Intelligence. Indeed, the von Neumann–Morgenstern theorem shows that perfect rational agents are expected utility maximizers but in general the exact evaluation of expected utility is intractable. It is thus natural to substitute an optimal polynomial-time estimator for utility, as the analogue of expected value in the computationally bounded case. Further illuminating the connection, Theorem~\ref{thm:exists_smp} shows how optimal polynomial-time estimators result from agnostic PAC learning.
 
