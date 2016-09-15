@@ -216,7 +216,7 @@ The second (Theorem~\ref{thm:exists_smp}), which is another central result, show
 
 The samplability property allows recasting the estimation problem as a learning problem. That is, we use the sampler to generate a number (we use ${l(K_0,K_1)^4}$) of problem instances for which an unbiased estimate of the correct answer is known, and we should now generalize from these instances to the a instance for which the correct answer is unknown. The optimal polynomial-time estimator we construct accomplishes this using the empirical risk minimization principle from statical learning theory, applied to a hypothesis space which consists of programs. Specifically, the estimator iterates over all programs of length at most ${l(K_0,K_1)}$, runs each of them on the samples ${\{(x_i,t_i)\}_{i \in [l(K_0,K_1)^4]}}$ for time ${K_1}$ getting estimates ${\{p_i\}_{i \in [l(K_0,K_1)^4]}}$ and computes the empirical risk ${\sum_{i \in [l(K_0,K_1)^4]}(p_i-t_i)^2}$. It then selects the program with the minimal risk and runs it on the input for time ${K_1}$ to get the desired estimate. This is similar to Levin's universal search which dovetails all programs to get optimality. The optimality of this estimator is also closely related to the fundamental theorem of statistical learning theory for agnostic PAC learning\cite{Shalev-Shwartz_2014}: like in agnostic PAC learning we get an estimate which is not perfect but is optimal within the hypothesis space (which in our case is the space of efficient estimators).
 
-On the other hand, we rule out the existence of uniform optimal polynomial-time estimators for certain problems. These negative results rely on the simple observation that if the veracity of ${x \in L}$ for ${x \sim \Dist^k}$ depends only on ${k}$, then advice strings enable storing the exact answer to all such questions. This means any optimal polynomial-time estimator has to be a perfect polynomial-time estimator. So, any problem of this form that doesn't have uniform perfect polynomial-time estimators also doesn't have uniform optimal polynomial-time estimators. Consequently, any problem that is reducible to the former sort of problem also doesn't have uniform optimal polynomial-time estimators.
+On the other hand, we rule out the existence of optimal polynomial-time estimators in the uniform case for certain problems. These negative results rely on the simple observation that if the veracity of ${x \in L}$ for ${x \sim \Dist^k}$ depends only on ${k}$, then advice strings of size $O(1)$ enable storing the exact answer to all such questions. Additionally, it is easy to see that an optimal polynomial-time estimator in the uniform case is still optimal when we allow ${O(1)}$ advice. This means that any optimal polynomial-time estimator for such a problem has to be a perfect polynomial-time estimator. So, any problem of this form that doesn't have uniform perfect polynomial-time estimators also doesn't have uniform optimal polynomial-time estimators. Consequently, any problem that is reducible to the former sort of problem also doesn't have optimal polynomial-time estimators.
 
 Finally, we examine the uniqueness of optimal polynomial-time estimators for a fixed problem. We prove that if such an estimator exists, it is unique up to a difference which is asymptotically small on average (see Theorem~\ref{thm:uniq}). For example, given ${(\Dist,L)}$ a distributional decision problem s.t. the length of any ${x \sim \Dist^k}$ is bounded by some polynomial in ${k}$ and ${P_1,P_2}$ two ${\Fall^\sharp(\Gamma_0^1,\Gamma_0^1)}$-optimal polynomial time estimators, ${\E_{x \sim \Dist^k}[(P_1(k,x)-P_2(k,x))^2]}$ is a function of ${k}$ that lies in ${\Fall}$.
 
@@ -392,6 +392,14 @@ Fix $n$. A \emph{growth space} $\Gamma$ of rank $n$ is a set of functions ${\gam
 For any $n \in \Nats$, we define $\Gamma_0^n$, a growth space of rank $n$. $\gamma \in \Gamma_0^n$ iff $\gamma \equiv 0$.
 
 \end{example}
+
+\begin{samepage}
+\begin{example}
+
+For any $n \in \Nats$, we define $\Gamma_1^n$, a growth space of rank $n$. $\gamma \in \Gamma_1^n$ iff there is ${c \in \Nats}$ s.t. ${\gamma \leq c}$.
+
+\end{example}
+\end{samepage}
 
 \begin{example}
 
@@ -960,6 +968,40 @@ $$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t - s = \zeta(K) + \int_{s-\zeta(K)}
 Combining \ref{eqn:prp__weight__prf1} and \ref{eqn:prp__weight__prf2} we conclude that for some $M' \in \Reals^{\geq 0}$
 
 $$\E[W^{K} \cdot ((P^{K}-f)^2-(Q^{K}-f)^2)] \leq M \varepsilon(K) + M'\zeta(K)$$
+\end{proof}
+
+\subsubsection{Amplification from Zero to \texorpdfstring{$O(1)$}{O(1)} Advice}
+
+The following will be handy to prove negative existence results (see section~\ref{sec:e_and_u}).
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:adv_amp}
+
+Assume ${\GrowA=\Gamma_0^n}$. Consider ${(\Dist,f)}$ a distributional estimation problem and ${P}$ an ${\EG}$-optimal estimator for ${(\Dist,f)}$. Denote ${\Gamma_1:=(\GrowR,\Gamma_1^n)}$. Then, ${P}$ is also an ${\Fall(\Gamma_1)}$-optimal estimator for ${(\Dist,f)}$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Consider any ${Q: \Words \xrightarrow{\Gamma_1} \Rats}$. Choose ${l \in \Nats}$ s.t. ${\forall K \in \Nats^n: \Abs{\A_Q(K)} \leq l}$. For each ${a \in \Bool^{\leq l}}$, construct ${Q_a: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x,y \in \Words}$
+
+\begin{align*}
+\R_{Q_a}(K) &= \R_Q(K,a) \\
+Q_a^K(x,y) &= Q^K(x,y,a) 
+\end{align*}
+
+For some ${\varepsilon_a \in \Fall}$ we have
+
+\[\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_{Q_a}^{K}}[(Q_a^{K} - f)^2] + \varepsilon_a(K)\]
+
+Since the above holds for every ${a \in \Bool^{\leq l}}$, we get 
+
+\[\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_{Q}^{K}}[(Q^{K} - f)^2] + \varepsilon_{\A_Q(K)}(K)\]
+
+\[\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_{Q}^{K}}[(Q^{K} - f)^2] + \sum_{a \in \Bool^{\leq l}} \varepsilon_a(K)\]
+
 \end{proof}
 
 \subsection{Orthogonality Theorems}
@@ -3706,7 +3748,7 @@ Denoting ${M_2 := 2^{M_1^{-1} M}}$
 
 \subsubsection{Negative Results}
 
-In the present work, we don't refute the existence of optimal polynomial-time estimators for any given distributional estimation problem. However, we do demonstrate distributional estimation problems for which \emph{uniform} ${\EG}$-optimal estimators don't exist.
+The following propositions lead to disproving the existence of optimal polynomial-time estimators for certain distributional estimation problems in the case ${\GrowA = \Gamma_0^n}$.
 
 \begin{samepage}
 \begin{proposition}
@@ -3735,7 +3777,9 @@ We have
 %
 \end{proof}
 
-In the setting of Proposition~\ref{prp:tally_perfect}, any ${\EG}$-optimal estimator for ${(\Dist,f)}$ has to be an ${\EG}$-perfect estimator. In particular, if no \emph{uniform} ${\EG}$-perfect estimator exists then no uniform ${\EG}$-optimal estimator exists (and likewise for any other condition on the estimator).
+In the setting of Proposition~\ref{prp:tally_perfect}, any ${\EG}$-optimal estimator for ${(\Dist,f)}$ has to be an ${\EG}$-perfect estimator. In particular, if no \emph{uniform} ${\EG}$-perfect estimator exists then no uniform ${\EG}$-optimal estimator exists (and likewise for any other condition on the estimator). 
+
+Denote ${\Gamma_0:=(\GrowR,\Gamma_0^n)}$, ${\Gamma_1:=(\GrowR,\Gamma_1^n)}$. Taking ${\Gamma=\Gamma_1}$ in Proposition~\ref{prp:tally_perfect} and using Proposition~\ref{prp:adv_amp}, we conclude that if the image of ${h}$ is a finite subset of ${\Rats}$ and there is no ${\Fall(\Gamma_0)}$-perfect estimator for ${(\Dist,f)}$ then there is no ${\Fall(\Gamma_0)}$-optimal estimator for ${(\Dist,f)}$. 
 
 For distributional decision problems and ${\EG}$-samplable word ensembles we have the following stronger proposition.
 
@@ -3782,7 +3826,7 @@ By Proposition~\ref{prp:tally_perfect}, ${P}$ is an ${\Fall(\Delta)}$-perfect es
 %
 \end{proof}
 
-Again, the statement can be reversed to disprove existence of uniform ${\Fall(\Delta)}$-optimal estimators.
+Again, the statement can be reversed to disprove existence of ${\Fall(\Delta)}$-optimal estimators for ${\Delta_{\mathfrak{A}}}=\Gamma_0^n$.
 
 Now we consider the special case ${\Fall=\FallUt{\varphi}}$, ${\GrowR = \GammaPoly^n}$. 
 
@@ -3839,9 +3883,9 @@ By the assumption on ${\varphi}$, ${I}$ is a finite set therefore we got the des
 %
 \end{proof}
 
-For ${n=2}$, we can think of ${L}$ as a language using \emph{unary} encoding of natural numbers. Proposition~\ref{prp:tally_fall_uni}  implies that if ${\sigma}$ is uniform and this language cannot be decided in quasi-polynomial time by a bounded-error randomized algorithm, then there is no uniform ${\FallUt{\varphi}(\Delta)}$-optimal estimator for ${(\Dist,\chi)}$.
+For ${n=2}$, we can think of ${L}$ as a language using \emph{unary} encoding of natural numbers. Proposition~\ref{prp:tally_fall_uni} and Proposition~\ref{prp:adv_amp} imply that if ${\Delta_{\mathfrak{A}}=\Gamma_0^n}$, ${\sigma}$ is uniform, and this language cannot be decided in quasi-polynomial time by a bounded-error randomized algorithm, then there is no ${\FallUt{\varphi}(\Delta)}$-optimal estimator for ${(\Dist,\chi)}$.
 
-Thanks to the results of section~\ref{sec:reductions}, these negative results are extendable to any distributional estimation problem s.t. a problem admitting a negative result has an appropriate reduction to it.
+Thanks to the results of section~\ref{sec:reductions} and Theorem~\ref{thm:con_ort}, these negative results imply non-existence results for ${\Fall^\sharp(\Delta)}$-optimal estimators\footnote{The need to use ${\Fall^\sharp(\Delta)}$-optimal estimators rather than ${\Fall(\Delta)}$-optimal estimators arises because the theorems about reductions as we formulated them don't apply to ${\Fall(\Delta)}$-optimal estimators with ${\Delta=\Gamma_0^n}$ or ${\Delta=\Gamma_1^n}$. This can be overcome by using somewhat more special reductions which still admit a similar completeness theorem, but we omit details in the present work.} for any distributional estimation problem s.t. a problem admitting a negative result has an appropriate reduction to it.
 
 \subsection{Uniqueness}
 
@@ -3955,9 +3999,9 @@ Theorem~\ref{thm:uniq_cond} implies that in simple scenarios, \enquote{counterfa
 
 The motivation for optimal polynomial-time estimators comes from the desire the quantify the uncertainty originating in computational resource bounds. We used this motivation to arrive at an intuitive definition, and proceeded to show the resulting object has many properties of \enquote{normal} probability theory, justifying its interpretation as a brand of expected value. Moreover, there are associated concepts of reductions and complete problems analogous to standard constructions in average-case complexity theory. 
 
-Thus, the class of distributional estimation problems admitting ${\EG}$-optimal estimators (or ${\ESG}$-optimal estimators) is a natural distributional complexity class. In light of the existence results we have demonstrated, these new classes are unlikely to trivially coincide with any of the previously known classes. Mapping the boundary of these classes and understanding their relationships with other classes in average-case complexity theory seems to be ground for much further work. Moreover, it is possible to consider generalizations by including more types of computational resources e.g. space, parallelism and/or non-determinism.
+Thus, the class of distributional estimation problems admitting ${\EG}$-optimal estimators (or ${\ESG}$-optimal estimators) is a natural distributional complexity class. In light of the positive and negative existence results we have demonstrated, these new classes are unlikely to trivially coincide with any of the previously known classes. Mapping the boundary of these classes and understanding their relationships with other classes in average-case complexity theory seems to be ground for much further work. Moreover, it is possible to consider generalizations by including more types of computational resources e.g. space, parallelism and/or non-determinism.
 
-As an example of a natural open problem, consider ${(\Dist_{\textsc{NP}}, f_{\textsc{NP}})}$, the complete problem for ${\textsc{SampNP}}$ resulting from Theorem~\ref{thm:complete} with ${n=1}$, ${r(k)=s(k)=k}$, ${E=E_{\textsc{NP}}}$ and ${\mathfrak{F}=\mathfrak{F}_{\textsc{NP}}}$. Theorem~\ref{thm:exists_all} and Theorem~\ref{thm:ort} imply that e.g. there is an ${\mathcal{F}_{\text{uni}}^{(2)\frac{1}{2}\sharp}(\GammaPoly^2,\GammaLog^2)}$-optimal estimator for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$. On the other hand, Proposition~\ref{prp:tally_fall_uni} implies that it is unlikely that such an optimal polynomial-time estimator can be uniform\footnote{More precisely, it cannot be uniform assuming there is a unary language in ${\textsc{NP}}$ that cannot be decided by a randomized algorithm in quasi-polynomial time with bounded probability of error.}. This, however, doesn't tell us anything about the existence of an ${\mathcal{F}_{\text{uni}}^{(2)\frac{1}{2}\sharp}(\GammaPoly^2,\Gamma_0^2)}$-optimal estimator\footnote{The reason we consider ${\mathcal{F}_{\text{uni}}^{(2)\frac{1}{2}\sharp}(\GammaPoly^2,\Gamma_0^2)}$-optimal estimators rather than ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\Gamma_0^2)}$-optimal estimators is that Theorem~\ref{thm:ort} doesn't apply when ${\GrowA=\Gamma_0^2}$, and, in this case, ${\EG}$-optimal estimators are not known to have good properties, as opposed to ${\ESG}$-optimal estimators.} for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$. This question fits naturally into the theme of Impagliazzo's \enquote{worlds}\cite{Impagliazzo_1995}: if there is an ${\mathcal{F}_{\text{uni}}^{(2)\frac{1}{2}\sharp}(\GammaPoly^2,\Gamma_0^2)}$-\emph{perfect} estimator for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$ (a version of Impagliazzo's \enquote{Heuristica}), then the answer is tautologically positive. However, if there is no such perfect polynomial-time estimator then the optimal polynomial-time estimator may or may not exist, a possible new partition of \enquote{worlds}.
+As an example of a natural open problem, consider ${(\Dist_{\textsc{NP}}, f_{\textsc{NP}})}$, the complete problem for ${\textsc{SampNP}}$ resulting from Theorem~\ref{thm:complete} with ${n=1}$, ${r(k)=s(k)=k}$, ${E=E_{\textsc{NP}}}$ and ${\mathfrak{F}=\mathfrak{F}_{\textsc{NP}}}$. Theorem~\ref{thm:exists_all} implies that e.g. there is an ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\GammaLog^2)}$-optimal estimator for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$. On the other hand, Proposition~\ref{prp:tally_fall_uni} implies that it is unlikely that there is an ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\Gamma_0^2)}$-optimal estimator\footnote{More precisely, it cannot exist assuming there is a unary language in ${\textsc{NP}}$ that cannot be decided by a randomized algorithm in quasi-polynomial time with bounded probability of error.}. This, however, doesn't tell us anything about the existence of an ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\Gamma_1^2)}$-optimal estimator. This question fits naturally into the theme of Impagliazzo's \enquote{worlds}\cite{Impagliazzo_1995}: if there is an ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\Gamma_0^2)}$-\emph{perfect} estimator for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$ (a version of Impagliazzo's \enquote{Heuristica} which is considered unlikely), then the answer is tautologically positive. However, if there is no such perfect polynomial-time estimator then the optimal polynomial-time estimator may or may not exist, a possible new partition of \enquote{worlds}\footnote{The relation to the worlds is somewhat disturbed by the role of $O(1)$ advice. We think there is a natural variant of this question that doesn't involve advice but it is out of the present scope.}.
 
 One area where applying these concepts seems natural is Artificial General Intelligence. Indeed, the von Neumann–Morgenstern theorem shows that perfect rational agents are expected utility maximizers but in general the exact evaluation of expected utility is intractable. It is thus natural to substitute an optimal polynomial-time estimator for utility, as the analogue of expected value in the computationally bounded case. Further illuminating the connection, Theorem~\ref{thm:exists_smp} shows how optimal polynomial-time estimators result from agnostic PAC learning.
 
