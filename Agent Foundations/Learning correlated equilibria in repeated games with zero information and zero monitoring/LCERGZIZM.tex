@@ -170,7 +170,7 @@ Now consider a game with a finite set ${\Play}$ of players. Each player ${p \in 
 
 Suppose each player acts according to Exp3Q. This results in a stochastic sequence of outcomes ${a_i \in \Act}$. Denote ${\mu_n \in \Delta \Act}$ the distribution obtained by sampling ${a_i}$ at ${i}$ chosen uniformly at random from ${[n]}$. Define ${\epsilon_n^p:=\sqrt{\frac{8(\ln \Abs{\Act_p}) \Abs{\Act_p}^3}{n}}}$. Then, ${\mu_n}$ is an ${\epsilon_n}$-correlated equilibrium for the average payoff tensor $\bar{u}_n:={\frac{1}{n} \sum_{i \in [n]} u_i}$. That is, for any ${p \in \Play}$ and ${\phi: \Act_p \rightarrow \Act_p}$
 
-$$\E_{a \sim \mu_n}[\bar{u}_n^p(\phi(a^p) \times a^{-p})] \leq \E_{a \sim \mu_n}[\bar{u}_n^p(a)] + \epsilon_n^p$$
+$$\E_{a \sim \mu_n}[\bar{u}_n^p(\phi(a^p), a^{-p})] \leq \E_{a \sim \mu_n}[\bar{u}_n^p(a)] + \epsilon_n^p$$
 
 %##Discussion
 \section{Discussion}
