@@ -97,15 +97,16 @@
 \newcommand{\MScheme}{\xrightarrow{\MGrow}}
 \newcommand{\ORC}{\xrightarrow{\textnormal{orc}}}
 
-\newcommand{\Act}{\mathcal{A}}
-\newcommand{\ActCh}{\mathcal{B}}
-
 \newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
 \newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
 \newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
 \newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(#1)}}}
 \newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
 \newcommand{\QBO}{\Rats^\Base \ORC \Rats^\Base}
+
+\newcommand{\Act}{\mathcal{A}}
+\newcommand{\ActCh}{\mathcal{B}}
+\newcommand{\Play}{\mathcal{P}}
 
 \begin{document}
 
@@ -114,20 +115,62 @@ We describe an algorithm for playing a repeated game, when the only information 
 %##Notation
 \section{Notation}
 
-Given a finite set ${X}$, ${\Delta X}$ will denote the set of probability distributions on ${X}$.
+Given a measurable space ${X}$, ${\Delta X}$ will denote the set of probability measures on ${X}$.
+
+Given a finite set ${X}$ and ${x,y \in X}$, ${\delta_{xy}}$ is the Kronecker delta i.e.
+
+$$\delta_{xy}=\begin{cases}1 \text{ if } x=y\\0 \text{ if } x \ne y\end{cases}$$
 
 %##Results
 \section{Results}
 
-Consider an agent with a finite set of actions ${\Act}$. Fix ${n \in \Nats}$, the number of game iterations. For each game iteration ${i \in [n]}$, the agent performs action ${a_i \in \Act}$ and receives reward ${r_i \in [0,1]}$. We consider the following randomized algorithm for choosing the action.
+Consider an agent with a finite set of actions ${\Act}$. On each game iteration ${i \in \Nats}$, the agent performs action ${a_i \in \Act}$ and receives reward ${r_i \in [0,1]}$. We consider the following randomized algorithm for choosing the action.
 
 \subsection{Exp3Q Algorithm}
 
-Denote ${\ActCh:=\{(a,b) \in \Act^2 \mid a \ne b\}}$. The state of the algorithm on the ${i}$-th iteration is the vector ${L_i \in \Reals^\mathcal{B}}$, initialized to ${L_0 := \bm{0}}$. On each iteration, the following steps are performed:
+Denote ${\ActCh:=\{(b,c) \in \Act^2 \mid b \ne c\}}$. The state of the algorithm on the ${i}$-th iteration is the vector ${L_i \in \Reals^\mathcal{B}}$, initialized to ${L_0 := \bm{0}}$. On the ${i}$-th iteration, the following steps are performed:
 
-1. Compute ${\zeta \in \Delta\mathcal{B}}$
+1. Define ${\beta_i:=\sqrt{\frac{2 \ln \Abs{\ActCh}}{(i+1) \Abs{\Act}}}}$. Compute ${\zeta_i \in \Delta\mathcal{B}}$ according to 
+
+$$\zeta_i(b,c):=\frac{e^{-\beta_i L_i^{bc}}}{\sum_{(b',c') \in \ActCh} e^{-\beta_i L_i^{b'c'}}}$$
+
+2. Compute ${\{\xi_i^{bc} \in \Delta \Act\}_{(b,c) \in \ActCh}}$ by solving the following linear program:
+
+\begin{align*}
+\xi_i^{bc}(a) &\geq 0 \\
+\sum_{a \in \Act} \xi_i^{bc}(a) &= 1 \\
+\xi_i^{bc}(a) &= \E_{(b',c') \sim \zeta_i} [(1-\delta_{ab}) \xi_i^{b'c'}(a) + \delta_{ac} \xi_i^{b'c'}(b)]
+\end{align*}
+
+3. Sample ${(b_i,c_i)}$ from the distribution ${\zeta_i}$ and ${a_i}$ from the distribution ${\xi_i^{b_ic_i}}$. This is the chosen action.
+
+4. Update ${L}$ according to
+
+$$L_{i+1}^{bc}:=L_i^{bc} + \frac{\xi_i^{bc}(a_i)}{\E_{(b',c') \sim \zeta_i}[\xi_i^{b'c'}(a_i)]}(1-r_i)$$
+
+Note that the linear program in step 2 is always solvable since it searches for the fixed point of a certain linear transformation of ${(\Delta \Act)^\ActCh}$, and such a fixed point always exists due to Brouwer's theorem.
 
 ***
+
+The key property of the Exp3Q algorithm is given by the following theorem
+
+\subsection{Theorem}
+
+Consider ${\nu}$ an arbitrary oblivious environment. That is, for any ${i \in \Nats}$ and ${a \in \Act}$, ${\nu_i^a \in \Delta[0,1]}$ is the distribution of rewards received by the agent when making action ${a}$ on iteration ${i}$. Let ${\pi^\nu_i \in \Delta \Act}$ be the distribution over actions produced by the Exp3Q algorithm on the ${i}$-th iteration, assuming it previously interacted with environment ${\nu}$. Consider any ${\phi: \Act \rightarrow \Act}$. Then, for any ${n \in \Nats}$
+
+$$\sum_{i \in [n]} \E_{a_i \sim \pi_i^\nu}[\E_{r_i \sim \nu_i^{\phi(a_i)}} [r_i]] \leq \sum_{i \in [n]} \E_{a_i \sim \pi_i^\nu}[\E_{r_i \sim \nu_i^{a_i}} [r_i]] + 2\sqrt{(\ln \Abs{\ActCh}) \Abs{\Act}^3 n}$$
+
+***
+
+That is, if in each interaction history we replace each action ${a}$ by action ${\phi(a)}$ (artificially assuming no effect on consequent action choices), this can at most yield an ${O(\sqrt{n})}$ gain in expected total reward. In particular, taking ${\phi}$ to be the constant function we see that Exp3Q satisfies the usual desideratum of adversarial bandit algorithms.
+
+Now consider a game with a finite set ${\Play}$ of players. Each player ${p \in \Play}$ has a finite set of actions ${\Act_p}$. Denote ${\Act:=\prod_{p \in \Play} \Act_p}$. For each iteration ${i \in \Nats}$, we have a payoff tensor ${u_i: \Act \rightarrow [0,1]^\Play}$. Note that we allow ${u}$ to change from iteration to iteration but the payoff can only depend on the actions in the given iteration.
+
+\subsection{Corollary}
+
+Suppose each player acts according to Exp3Q. This results in a stochastic sequence of outcomes ${a_i \in \Act}$. Denote ${\mu_n \in \Delta \Act}$ the distribution obtained by sampling ${a_i}$ at ${i}$ chosen uniformly at random from ${[n]}$. Define ${\epsilon_n^p:=\sqrt{\frac{8(\ln \Abs{\Act_p}) \Abs{\Act_p}^3}{n}}}$. Then, ${\mu_n}$ is an ${\epsilon_n}$-correlated equilibrium for the average payoff tensor $\bar{u}_n:={\frac{1}{n} \sum_{i \in [n]} u_i}$. That is, for any ${p \in \Play}$ and ${\phi: \Act_p \rightarrow \Act_p}$
+
+$$\E_{a \sim \mu_n}[\bar{u}_n^p(\phi(a^p) \times a^{-p})] \leq \E_{a \sim \mu_n}[\bar{u}_n^p(a)] + \epsilon_n^p$$
 
 %##Discussion
 \section{Discussion}
@@ -137,7 +180,31 @@ Moo
 %##Appendix
 \section{Appendix}
 
-Bar
+\subsection{Proof of Theorem}
+
+Exp3Q is a special case of Exp4 as described in [Bubeck and Cesa-Bianchi](https://arxiv.org/abs/1204.5721), for a particular construction of experts as described in step 2 (the experts are allowed to depend on previous actions of the agent). This construction guarantees that acting according to the expert ${\xi^{bc}}$ is equivalent to replacing the action ${b}$ by the action ${c}$ every time it occurs in an interaction history of an agent following Exp3Q (i.e. these two define the same distribution on interaction histories). For any ${b \in \Act}$, define ${\phi^b: \Act \rightarrow \Act}$ by
+
+$$\phi^b(a):=\begin{cases}a \text{ if } a \ne b \\ \phi(b) \text{ if } a = b \end{cases}$$
+
+We apply Theorem 4.2 from Bubeck and Cesa-Bianchi for the expert ${\xi^{b,\phi(b)}}$, getting
+
+$$\sum_{i \in [n]} \E_{a_i \sim \pi_i^\nu}[\E_{r_i \sim \nu_i^{\phi^b(a_i)}} [r_i]] \leq \sum_{i \in [n]} \E_{a_i \sim \pi_i^\nu}[\E_{r_i \sim \nu_i^{a_i}} [r_i]] + 2\sqrt{(\ln \Abs{\ActCh}) \Abs{\Act} n}$$
+
+$$\sum_{i \in [n]} \E_{a_i \sim \pi_i^\nu}[\E_{r_i \sim \nu_i^{\phi^b(a_i)}} [r_i] - \E_{r_i \sim \nu_i^{a_i}} [r_i]] \leq 2\sqrt{(\ln \Abs{\ActCh}) \Abs{\Act} n}$$
+
+The expression inside the outer expected value vanishes unless ${a_i=b}$, therefore
+
+$$\sum_{i \in [n]} \E_{a_i \sim \pi_i^\nu}[\delta_{a_ib} (\E_{r_i \sim \nu_i^{\phi(b)}} [r_i] - \E_{r_i \sim \nu_i^b} [r_i])] \leq 2\sqrt{(\ln \Abs{\ActCh}) \Abs{\Act} n}$$
+
+Summing over ${b \in \Act}$, we get
+
+$$\sum_{i \in [n]} \E_{a_i \sim \pi_i^\nu}[\sum_{b \in \Act} \delta_{a_ib} (\E_{r_i \sim \nu_i^{\phi(b)}} [r_i] - \E_{r_i \sim \nu_i^b} [r_i])] \leq 2 \Abs{\Act} \sqrt{(\ln \Abs{\ActCh}) \Abs{\Act} n}$$
+
+$$\sum_{i \in [n]} \E_{a_i \sim \pi_i^\nu}[\E_{r_i \sim \nu_i^{\phi(a_i)}} [r_i]-\E_{r_i \sim \nu_i^{a_i}} [r_i]] \leq 2\sqrt{(\ln \Abs{\ActCh}) \Abs{\Act}^3 n}$$
+
+\subsection{Proof of Corollary}
+
+Lala
 
 \end{document}
 
