@@ -144,7 +144,9 @@ To give a trivial example, given a sequence of two bits $b_1b_2$, the model migh
 
 More generally, we have some measurable event space ${X}$ and ${\Prob(X)}$ is the space of probability measures on ${X}$. A normal (Bayesian) model corresponds to some ${\mu \in \Prob(X)}$. An incomplete model corresponds to some convex set ${M \subseteq \Prob(X)}$ (which can be assumed closed in the strong convergence topology). If we assign probability ${p}$ to model ${\mu}$ and ${1-p}$ to model ${\nu}$, this can be represented by the model ${p \mu + (1-p) \nu}$. Similarly, if we assign probability ${p}$ to incomplete model ${M}$ and probability ${1-p}$ to incomplete model ${N}$, this can be represented by the incomplete model ${pM+(1-p)N:=\{p \mu + (1-p) \nu \mid \mu \in M, \nu \in N\}}$.
 
+In ordinary Bayesian statistics, a prior is often specified by heaving some countable space ${H}$ of hypotheses (i.e. for each ${h \in H}$ we have ${\mu_h \in \Prob(X)}$; more generally ${H}$ can be some measurable space with a Markov kernel into ${X}$, but we won't need that) and a probability measure ${\zeta}$ on ${H}$, so that the prior is ${\E_{h \in \zeta}[\mu_h]}$. Similarly, we can have ${M_h \subseteq \Prob(X)}$ and the overall incomplete model (which we call a "semi-prior") is ${\E_{h \in \zeta}[M_h]:=\{\E_{h \in \zeta}[\mu_h] \mid \mu: H \rightarrow \Prob(X), \forall h \in H: \mu_h \in M_h\}}$.
 
+% Rename incomplete model to semimodel?
 
 %##Appendix
 \section{Appendix}
