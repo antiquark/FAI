@@ -138,7 +138,11 @@ Of the problems above, 3 seems to be the least significant since it is plausible
 
 \section{Knightian Uncertainty and Universal Semi-Priors}
 
-Foo
+Although an agent cannot simulate another agent of equal power without entering an infinite loop, it might be able to observe certain facts about the other agent's behavior. This calls for a notion of an underspecified hypothesis: a model of the environment that doesn't yield precise probabilistic predictions but provides some constraints on what might happen. 
+
+To give a trivial example, given a sequence of two bits $b_1b_2$, the model might say that $b_1=\lnot b_2$ without assigning any probability to $b_1=0$. Knowing only this model one has unquantifiable (Knightian) uncertainty between the possibilities $01$ and $10$. The space of probability distributions on two bit sequences is a tetrahedron, and our model corresponds to one edge of this tetrahedron.
+
+More generally, we have some measurable event space ${X}$ and ${\Prob(X)}$ is the space of probability measures on ${X}$. A normal (Bayesian) model corresponds to some ${\mu \in \Prob(X)}$. An underspecified model corresponds to some convex set ${M \subseteq \Prob(X)}$.
 
 %##Appendix
 \section{Appendix}
