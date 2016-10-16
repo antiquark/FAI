@@ -1,0 +1,150 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+\usepackage{bm}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+\newcommand{\WordsLen}[1]{{\Bool^{#1}}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+\DeclareMathOperator{\Var}{Var}
+
+\newcommand{\FOO}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Ev}{ev}
+
+% special symbols that are not really operators
+\DeclareMathOperator{\T}{T}
+\DeclareMathOperator{\R}{r}
+\DeclareMathOperator{\A}{a}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\UM}{UM}
+\DeclareMathOperator{\Un}{U}
+\DeclareMathOperator{\En}{c}
+\DeclareMathOperator{\Prj}{pr}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
+\newcommand{\NatPolyJ}{\Nats[J_0, J_1 \ldots J_{n-2}]}
+\newcommand{\NatFun}{\Nats^n \rightarrow}
+
+\newcommand{\Estr}{\bm{\lambda}}
+\newcommand{\LLU}{\mathbf{LLU}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Dist}{\mathcal{D}}
+\newcommand{\GrowR}{\Gamma_{\mathfrak{R}}}
+\newcommand{\GrowA}{\Gamma_{\mathfrak{A}}}
+\newcommand{\Grow}{\Gamma:=(\GrowR,\GrowA)}
+\newcommand{\MGrow}{\mathrm{M}\Gamma}
+\newcommand{\Fall}{\mathcal{F}}
+\newcommand{\EG}{\Fall(\Gamma)}
+\newcommand{\ESG}{\Fall^\sharp(\Gamma)}
+\newcommand{\EMG}{\Fall(\MGrow)}
+\newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
+\newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+\newcommand{\Scheme}{\xrightarrow{\Gamma}}
+\newcommand{\MScheme}{\xrightarrow{\MGrow}}
+\newcommand{\ORC}{\xrightarrow{\textnormal{orc}}}
+
+\newcommand{\Base}{\mathcal{B}}
+\newcommand{\Prob}{\mathcal{P}}
+
+\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
+\newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
+\newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
+\newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(#1)}}}
+\newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
+\newcommand{\QBO}{\Rats^\Base \ORC \Rats^\Base}
+
+\begin{document}
+
+Motivated by the grain of truth problem, we propose a generalization of Bayesian inference that allows for *underspecified* hypotheses. Such a hypothesis can be thought of as a set of constraints on the environment which doesn't specify it completely. This means that in addition to ordinary, probabilistic, uncertainty, another ("Knightian") type of uncertainty is introduced. This new uncertainty is managed using Savage's minimax regret decision rule. We construct analogues of AIXI and its bounded counterparts corresponding to this epistemology and speculate about behavior in multi-agent scenarios.
+
+%##Results
+\section{Motivation}
+
+The *grain of truth* problem, as described by [Hutter](https://arxiv.org/abs/0907.0746) concerns the interaction between several AIXI agents. Ideally, we expect that rational agents in multi-agent scenarios should converge to behavior corresponding to some reasonable solution concept in game theory, e.g. Nash equilibrium (for the purposes of this post I completely ignore stronger desiderata such as superrationality; also purely Bayesian agents often fail to do so because of insufficient exploration but this is also a problem mostly orthogonal to grain of truth). However, it is difficult to prove anything about multi-agent scenarios of AIXI since AIXI's prior is supported on computable environments whereas AIXI itself is uncomputable. This problem survives in bounded analogues: if we limit the computational complexity of environments included in the prior, the computational complexity of the agent itself will invariable be higher. Thus, two agents of equal power seem unable to "comprehend" each other.
+
+There are several reasons this problems seem important to AI alignment:
+
+1. The ability of an agent to operate in environments of complexity similar to that of the agent or even surpassing that of the agent seems an important desideratum for the mathematical formalization of intelligence. Without a formal understanding how this desideratum can be satisfied it is difficult to imagine any reliable theory of intelligent agents.
+
+2. Arguably, self-improving agents need the capacity to understand systems that equal themselves in complexity, more or less by definition.
+
+3. Perhaps most importantly, IRL relies on the AI's ability to successfully reason about a complex agent (a human), presumably an agent that cannot be emulated precisely with the AI's computational power. CIRL relies on two-sided interaction between the AI and the human, where neither side can emulate the other. Thus, it seems impossible to prove reasonable guarantees for (C)IRL under quasi-realistic assumptions without solving the grain of truth problem.
+
+To the best of our knowledge, the most serious attack on the problem to date is the work of [Leike, Taylor and Fallenstein](https://arxiv.org/abs/1609.05058). They prove that Thompson samplers relatively to a reflective oracle converge to an "asymptotic" Nash equilibrium. In our opinion, it should be possible to extent that work to ensure subgame perfect and even proper equilibria and, under some assumptions, allow for "tamer" forms of exploration than Thompson sampling (Thompson sampling necessarily sacrifices many horizons until convergence). There is no doubt reflective oracles constitute significant progress towards the solution, in the sense that they clearly demonstrate the grain of truth problem is not inherently unsolvable and provide a formal framework where agents satisfying this desideratum can be studied. Nevertheless, we retain skepticism regarding the prospect of reaching the ultimate solution through developing that approach.
+
+In our opinion, there are 3 ways in which reflective oracles are an unsatisfactory solution:
+
+1. There are many different reflective oracles. In multi-agent scenarios, all results rely on all agents using the same reflective oracle. Realistic agents cannot use uncomputable oracles so they will have to replace them by some sort of bounded analogues. However, there is every reason to suspect these bounded analogues will also be far from unique. Thus, it's not clear that interaction between agents using different brands of "bounded reflective oracles" will have any substantial guarantees. In fact, this lack of uniqueness seems directly related to the lack of uniqueness for Nash equilibria. Any solution for the grain of truth will have to solve equilibrium selection, but reflective oracles seem to "cheat" by implicitly selecting Nash equilibria for all possible games in advance. A more realistic model should imply some sort of negotiation process which will probably need some non-trivial assumptions to converge.
+
+2. Multi-agent scenarios are a test case for the ability to reason about environments more complex than the agent itself, but the latter is more general than the former. We expect reasonable multi-agent behavior to arise as a special cases of some broad capability, useful in a great variety of other scenarios. However, it is not clear what physically realistic environments *except* multi-agent scenarios benefit from reasoning with reflective oracles. If there are few such environments, we would have to admit that either reflective oracles are an unsatisfactory model *or* that realistic agents need to be designed qualitatively differently in order to manage multi-agent scenarios as opposed to all other complex scenarios. In other words, in the latter case there would be uncontrived examples of AIs that solve almost any problem better than humans (including proving theorems, discovering physics, inventing nanotechnology, von Neumann probes and Dyson spheres) but that fail miserably in games. This possibility, although not impossible, appears to us less likely than the alternative.
+
+3. Reflective oracles are uncomputable, although they were proven to be limit computable. Obviously realistic agents use algorithms that are not only computable but satisfy rather stringent complexity bounds.
+
+Of the problems above, 3 seems to be the least significant since it is plausible that bounded analogues can be constructed. In any case, the agents we construct below are also computationally intractable (but they do satisfy non-trivial complexity bounds). Problem 1 might be solved if a natural class of reflective oracles is found s.t. any agent that is computable w.r.t. any oracle ${O_1}$ in this class is also computable w.r.t. any other oracle ${O_2}$ in this class, at least approximately. This is not impossible but also not straightforward. Problem 2 might be the hardest.
+
+\section{Knightian Uncertainty and Universal Semi-Priors}
+
+Foo
+
+%##Appendix
+\section{Appendix}
+
+Bar
+
+\end{document}
+
+
