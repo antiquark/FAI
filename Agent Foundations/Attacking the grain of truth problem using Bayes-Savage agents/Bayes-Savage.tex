@@ -13,9 +13,12 @@
 \usepackage{commath}
 \usepackage{bm}
 
+% Generic TCS commands
+
 \newcommand{\Bool}{\{0,1\}}
 \newcommand{\Words}{{\Bool^*}}
-\newcommand{\WordsLen}[1]{{\Bool^{#1}}}
+\newcommand{\Sagas}{{\Bool^\omega}}
+\newcommand{\Estr}{{\bm{\lambda}}}
 
 % operators that are separated from the operand by a space
 \DeclareMathOperator{\Sgn}{sgn}
@@ -25,6 +28,8 @@
 
 % operators that require brackets
 \DeclareMathOperator{\Prb}{Pr}
+\newcommand{\PP}[2]{\operatorname{Pr}_{\substack{#1 \\ #2}}}
+\newcommand{\PPP}[3]{\operatorname{Pr}_{\substack{#1 \\ #2 \\ #3}}}
 \DeclareMathOperator{\E}{E}
 \newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
 \newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
@@ -43,8 +48,6 @@
 \DeclareMathOperator{\T}{T}
 \DeclareMathOperator{\R}{r}
 \DeclareMathOperator{\A}{a}
-\DeclareMathOperator{\M}{M}
-\DeclareMathOperator{\UM}{UM}
 \DeclareMathOperator{\Un}{U}
 \DeclareMathOperator{\En}{c}
 \DeclareMathOperator{\Prj}{pr}
@@ -62,11 +65,6 @@
 \newcommand{\Coms}{\mathbb{C}}
 
 \newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
-\newcommand{\NatPolyJ}{\Nats[J_0, J_1 \ldots J_{n-2}]}
-\newcommand{\NatFun}{\Nats^n \rightarrow}
-
-\newcommand{\Estr}{\bm{\lambda}}
-\newcommand{\LLU}{\mathbf{LLU}}
 
 \newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
 \newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
@@ -80,41 +78,31 @@
 \newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
 
 \newcommand{\Dist}{\mathcal{D}}
-\newcommand{\GrowR}{\Gamma_{\mathfrak{R}}}
-\newcommand{\GrowA}{\Gamma_{\mathfrak{A}}}
-\newcommand{\Grow}{\Gamma:=(\GrowR,\GrowA)}
-\newcommand{\MGrow}{\mathrm{M}\Gamma}
-\newcommand{\Fall}{\mathcal{F}}
-\newcommand{\EG}{\Fall(\Gamma)}
-\newcommand{\ESG}{\Fall^\sharp(\Gamma)}
-\newcommand{\EMG}{\Fall(\MGrow)}
-\newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
-\newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
-\newcommand{\Scheme}{\xrightarrow{\Gamma}}
-\newcommand{\MScheme}{\xrightarrow{\MGrow}}
-\newcommand{\ORC}{\xrightarrow{\textnormal{orc}}}
 
-\newcommand{\Base}{\mathcal{B}}
-\newcommand{\Prob}{\mathcal{P}}
+\newcommand{\UTM}{\mathcal{U}}
 
-\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
-\newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
-\newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
-\newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(#1)}}}
-\newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
-\newcommand{\QBO}{\Rats^\Base \ORC \Rats^\Base}
+\newcommand{\SP}[1]{\Delta #1}
+
+% Paper specific commands
+
+\newcommand{\Act}{\mathcal{A}}
+\newcommand{\Per}{\mathcal{O}}
+\newcommand{\His}{(\Per \times \Act)^*}
+\newcommand{\Env}{\mathcal{E}}
+\newcommand{\Beh}{\Delta_{\operatorname{b}}}
+\newcommand{\EnvB}{\Beh\Env}
 
 \begin{document}
 
-Motivated by the grain of truth problem, we propose a generalization of Bayesian inference that allows for *incomplete* hypotheses. Such a hypothesis can be thought of as a set of constraints on the environment which doesn't specify it completely. This means that in addition to ordinary, probabilistic, uncertainty, another ("Knightian") type of uncertainty is introduced. This new uncertainty is managed using Savage's minimax regret decision rule. We construct analogues of AIXI and its bounded counterparts corresponding to this epistemology and speculate about behavior in multi-agent scenarios.
+Motivated by the grain of truth problem, we propose a generalization of Bayesian inference that allows for *incomplete* models. Such a model can be thought of as a set of constraints on the environment which doesn't specify it completely. This means that in addition to ordinary, probabilistic, uncertainty, another ("Knightian") type of uncertainty is introduced. This new uncertainty is managed using Savage's minimax regret decision rule. We construct analogues of AIXI and its bounded counterparts corresponding to this epistemology and speculate about behavior in multi-agent scenarios.
 
 %##Results
 \section{Motivation}
 
-The *grain of truth* problem, as described by [Hutter](https://arxiv.org/abs/0907.0746) concerns the interaction between several AIXI agents. Ideally, we expect that rational agents in multi-agent scenarios should converge to behavior corresponding to some reasonable solution concept in game theory, e.g. Nash equilibrium (for the purposes of this post I completely ignore stronger desiderata such as superrationality; also purely Bayesian agents often fail to do so because of insufficient exploration but this is also a problem mostly orthogonal to grain of truth). However, it is difficult to prove anything about multi-agent scenarios of AIXI since AIXI's prior is supported on computable environments whereas AIXI itself is uncomputable. This problem survives in bounded analogues: if we limit the computational complexity of environments included in the prior, the computational complexity of the agent itself will invariable be higher. Thus, two agents of equal power seem unable to "comprehend" each other.
+The *grain of truth* problem, as described by [Hutter](https://arxiv.org/abs/0907.0746) (see problem 5j) concerns the interaction between several AIXI agents. Ideally, we expect that rational agents in multi-agent scenarios should converge to behavior corresponding to some reasonable solution concept in game theory, e.g. Nash equilibrium (for the purposes of this post I completely ignore stronger desiderata such as superrationality; also purely Bayesian agents often fail to do so because of insufficient exploration but this is also a problem mostly orthogonal to grain of truth). However, it is difficult to prove anything about multi-agent scenarios of AIXI since AIXI's prior is supported on computable environments whereas AIXI itself is uncomputable. This problem survives in bounded analogues: if we limit the computational complexity of environments included in the prior, the computational complexity of the agent itself will invariable be higher. Thus, two agents of equal power seem unable to "comprehend" each other.
 
 There are several reasons this problems seem important to AI alignment:
 
@@ -136,17 +124,53 @@ In our opinion, there are 3 ways in which reflective oracles are an unsatisfacto
 
 Of the problems above, 3 seems to be the least significant since it is plausible that bounded analogues can be constructed. In any case, the agents we construct below are also computationally intractable (but they do satisfy non-trivial complexity bounds). Problem 1 might be solved if a natural class of reflective oracles is found s.t. any agent that is computable w.r.t. any oracle ${O_1}$ in this class is also computable w.r.t. any other oracle ${O_2}$ in this class, at least approximately. This is not impossible but also not straightforward. Problem 2 might be the hardest.
 
-\section{Knightian Uncertainty and Universal Semi-Priors}
+\section{Incomplete Models}
 
-Although an agent cannot simulate another agent of equal power without entering an infinite loop, it might be able to observe certain facts about the other agent's behavior. This calls for a notion of an incomplete hypothesis: a model of the environment that doesn't yield precise probabilistic predictions but provides some constraints on what might happen. 
+Although an agent cannot simulate another agent of equal power without entering an infinite loop, it might be able to observe certain facts about the other agent's behavior. This calls for a notion of an incomplete model: a model of the environment that doesn't yield precise probabilistic predictions but provides some constraints on what might happen. 
 
 To give a trivial example, given a sequence of two bits $b_1b_2$, the model might say that $b_1=\lnot b_2$ without assigning any probability to $b_1=0$. Knowing only this model one has unquantifiable (Knightian) uncertainty between the possibilities $01$ and $10$. The space of probability distributions on two bit sequences is a tetrahedron, and our model corresponds to one edge of this tetrahedron.
 
-More generally, we have some measurable event space ${X}$ and ${\Prob(X)}$ is the space of probability measures on ${X}$. A normal (Bayesian) model corresponds to some ${\mu \in \Prob(X)}$. An incomplete model corresponds to some convex set ${M \subseteq \Prob(X)}$ (which can be assumed closed in the strong convergence topology). If we assign probability ${p}$ to model ${\mu}$ and ${1-p}$ to model ${\nu}$, this can be represented by the model ${p \mu + (1-p) \nu}$. Similarly, if we assign probability ${p}$ to incomplete model ${M}$ and probability ${1-p}$ to incomplete model ${N}$, this can be represented by the incomplete model ${pM+(1-p)N:=\{p \mu + (1-p) \nu \mid \mu \in M, \nu \in N\}}$.
+More generally, we have some measurable event space ${X}$ and ${\SP{X}}$ is the space of probability measures on ${X}$. A complete (Bayesian) model corresponds to some ${\mu \in \SP{X}}$. An incomplete model corresponds to some convex set ${M \subseteq \SP{X}}$ (which can be assumed closed in the strong convergence topology). If we assign probability ${p}$ to model ${\mu}$ and ${1-p}$ to model ${\nu}$, this can be represented by the model ${p \mu + (1-p) \nu}$. Similarly, if we assign probability ${p}$ to model ${M}$ and probability ${1-p}$ to model ${N}$, this can be represented by the model 
 
-In ordinary Bayesian statistics, a prior is often specified by heaving some countable space ${H}$ of hypotheses (i.e. for each ${h \in H}$ we have ${\mu_h \in \Prob(X)}$; more generally ${H}$ can be some measurable space with a Markov kernel into ${X}$, but we won't need that) and a probability measure ${\zeta}$ on ${H}$, so that the prior is ${\E_{h \in \zeta}[\mu_h]}$. Similarly, we can have ${M_h \subseteq \Prob(X)}$ and the overall incomplete model (which we call a "semi-prior") is ${\E_{h \in \zeta}[M_h]:=\{\E_{h \in \zeta}[\mu_h] \mid \mu: H \rightarrow \Prob(X), \forall h \in H: \mu_h \in M_h\}}$.
+$${pM+(1-p)N:=\{p \mu + (1-p) \nu \mid \mu \in M, \nu \in N\}}$$
 
-% Rename incomplete model to semimodel?
+In ordinary Bayesian statistics, a prior is often specified by a some countable space ${H}$ of hypotheses (i.e. for each ${\alpha \in H}$ we have ${\mu_\alpha \in \SP{X}}$; more generally ${H}$ can be some measurable space with a Markov kernel into ${X}$, but we won't need that) and a probability measure ${\zeta}$ on ${H}$, so that the prior is ${\E_{\alpha \in \zeta}[\mu_\alpha]}$. Similarly, we can have ${M_\alpha \subseteq \SP{X}}$ and the incomplete prior
+
+$${\E_{\alpha \in \zeta}[M_\alpha]:=\{\E_{h \in \zeta}[\mu_\alpha] \mid \mu: H \rightarrow \SP{X}, \forall \alpha \in H: \mu_\alpha \in M_\alpha\}}$$
+
+Now consider an agent interacting with an unknown environment. The agent has a finite set ${\Act}$ of actions and a finite set ${\Per}$ of percepts. The event space is the space of "pure" (deterministic) environments ${\Env:=\His \rightarrow \Per}$ (its ${\sigma}$-algebra comes from viewing it as the inverse limit of the sequence ${(\Per \times \Act)^{\leq n} \rightarrow \Per}$). In this context we don't usually work with the full space of "mixed" environments ${\SP{\Env}}$ but only with the quotient space of "behavioral" environments  ${\EnvB}$. Here, every ${\mu \in \EnvB}$ is a partial function from ${\His}$ to ${\SP{\Per}}$ s.t. ${\mu(h)}$ is defined iff ${\mu}$ assigns positive probability to all percepts appearing in ${h}$. For every ${\mu \in \SP{\Env}}$, we define the corresponding ${\mu_{\operatorname{b}} \in \EnvB}$ by
+
+$$\Prb[\mu_{\operatorname{b}}(h)=o]:=\Prb_{e \sim \mu}[e(h) = o \mid \forall i \in [\Abs{h}]: h^\Per_{i} = e(h_{0:i-1})]$$
+
+Here, ${h^\Per_{i} \in \Per}$ stands for the first element of the pair ${h_i \in \Per \times \Act}$.
+
+The Solomonoff prior is then constructed by considering environments that are in some sense computable. There are several variants of the definition, but we will consider environments that can be described as ${\mu: \His \times \Sagas \Alg \Per}$. Here, ${\Sagas}$ is regarded as an infinite sequence of fair coin flips and the notation ${\Alg}$ means that ${\mu}$ is given by a Turing machine that halts of every input (it might be more elegant to assume it halts with probability 1 for any fixed ${h \in \His}$ and ${r \in \Sagas}$ a sequence of fair coin flips; we don't consider the distinction important since more realistic models involve complexity bounds on the Turing machine anyway). For any ${h \in \His}$ and ${o \in \Per}$, ${\Prb[\mu(h)=o]:=\Prb_{r \sim \Un^\omega}[\mu(h,r)=o]}$, where ${\Un^\omega}$ is the fair coin probability measure on ${\Sagas}$ (it is easy to see that the set ${\{r \in \Sagas \mid \mu(h,r)=o\}}$ is measurable because ${\mu}$ is given by a Turing machine). Fixing ${\UTM}$ a prefix-free universal Turing machine, we define the prior ${\mu_\UTM}$ by 
+
+$${\Prb[\mu_{\UTM}(h)=o]:=\PP{p \sim \Un^\omega}{r \sim \Un^\omega}[\UTM(p;h,r)=o \mid p \text{ has a prefix that is program for } \UTM \text{ that halts on every input}]}$$
+
+By introducing complexity bounds, it is possible to get "universal" priors that are computable and themselves satisfy complexity bounds. Let ${\UTM_m(p;h,r)}$ denote the result of running ${\UTM}$ with program ${p}$ and input ${(h,r)}$ for ${m}$ time steps and ${\Abs{h}}$ denote the length of ${h}$, that is ${\Abs{h}:=n}$ for ${h \in (\Per \times \Act)^n}$. Then, given a function ${t: \Nats \rightarrow \Nats}$, we define ${\mu_{\UTM,t}}$ by
+
+$${\Prb[\mu_{\UTM,t}(h)=o]:=\PP{p \sim \Un^{t(\Abs{h})}}{r \sim \Un^{t(\Abs{h})}}[\UTM_{t(\Abs{h})}(p;h,r)=o]}$$
+
+Alternatively, we can consider environments that have an unobservable state. For any ${\nu \in \EnvB}$ we denote the domain of ${\nu}$ by ${\His_\nu}$. An computable environment with unobservable state corresponds to a machine
+
+$${\mu: \His \times \Words \times \Sagas \Alg \Per \times \Words}$$ 
+
+The interpretation of this machine as a behavioral environment is defined recursively, simultaneously with ${\rho_\mu: \His_\mu \rightarrow \SP{\Words}}$, the latter describing the probability distribution on unobservable states. Denoting ${\Estr}$ the empty word and ${\Estr_{\Per \times \Act}}$ the empty element of ${\His}$:
+
+\begin{align*}
+\rho_\mu(\Estr_{\Per \times \Act}) &:= \delta_\Estr \\
+\Prb[\mu(h)=o] &:= \PP{u \sim \rho_\mu(h)}{r \sim \Un^\omega}[\mu(h,u,r)^\Per=o] \\
+\Prb[\rho_\mu(hoa)=u] &:= \PP{v \sim \rho_\mu(h)}{r \sim \Un^\omega}[\mu(h,v,r)^\Words=u \mid \mu(h,v,r)^\Per=o]
+\end{align*}
+
+For arbitrary computable environments the addition of an unobservable state gains us nothing. However, it makes a difference when imposing complexity bounds. In particular, we define the prior ${\bar{\mu}_{\UTM,t}}$ by
+
+%$${\Prb[\bar{\mu}_{\UTM,t}(h)=o]:=\PP{p \sim \Un^{t(\Abs{h})}}{r \sim \Un^{t(\Abs{h})}}[\UTM_{t(\Abs{h})}(p;h,r)=o]}$$
+
+% TODO: Remembering a state
+
+We now generalize these concepts to incomplete models. A computable incomplete model corresponds to a machine ${M: \His \times \Sagas \times \Sagas \Alg \Per}$. Here, the two copies of ${\Sagas}$ should be thought of as given on two different tapes or in interleaved form, so the machine can read a finite prefix of both. The first ${\Sagas}$ corresponds to fair coin flips, as before. The second ${\Sagas}$ corresponds to "Knightian coin flips."
 
 %##Appendix
 \section{Appendix}
