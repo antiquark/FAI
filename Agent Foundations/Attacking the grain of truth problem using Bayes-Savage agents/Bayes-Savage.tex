@@ -94,7 +94,8 @@
 \newcommand{\Env}{\mathcal{E}}
 \newcommand{\Beh}{\Delta_{\operatorname{b}}}
 \newcommand{\EnvB}{\Beh\Env}
-\newcommand{\Prog}{\operatorname{P}^\UTM}
+\newcommand{\Prog}{\operatorname{H}^\UTM}
+\newcommand{\ProgS}{\bar{\operatorname{H}}^\UTM}
 
 \begin{document}
 
@@ -123,7 +124,7 @@ In our opinion, there are 3 ways in which reflective oracles are an unsatisfacto
 
 3. Reflective oracles are uncomputable, although they were proven to be limit computable. Obviously realistic agents use algorithms that are not only computable but satisfy rather stringent complexity bounds.
 
-Of the problems above, 3 seems to be the least significant since it is plausible that bounded analogues can be constructed. In any case, the agents we construct below are also computationally intractable (but they do satisfy non-trivial complexity bounds). Problem 1 might be solved if a natural class of reflective oracles is found s.t. any agent that is computable w.r.t. any oracle ${O_1}$ in this class is also computable w.r.t. any other oracle ${O_2}$ in this class, at least approximately. This is not impossible but also not straightforward. Problem 2 might be the hardest.
+Of the problems above, 3 seems to be the least significant since it is plausible that bounded analogues can be constructed. In any case, the agents we construct below are also uncomputable (constructing bounded counterparts seems to be straightforward, but they are still computationally infeasible). Problem 1 might be solved if a natural class of reflective oracles is found s.t. any agent that is computable w.r.t. any oracle ${O_1}$ in this class is also computable w.r.t. any other oracle ${O_2}$ in this class, at least approximately. This is not impossible but also not straightforward. Problem 2 might be the hardest.
 
 \section{Incomplete Models}
 
@@ -131,13 +132,13 @@ Although an agent cannot simulate another agent of equal power without entering 
 
 To give a trivial example, given a sequence of two bits $b_1b_2$, the model might say that $b_1=\lnot b_2$ without assigning any probability to $b_1=0$. Knowing only this model one has unquantifiable (Knightian) uncertainty between the possibilities $01$ and $10$. The space of probability distributions on two bit sequences is a tetrahedron, and our model corresponds to one edge of this tetrahedron.
 
-More generally, we have some measurable event space ${X}$ and ${\SP{X}}$ is the space of probability measures on ${X}$. A complete (Bayesian) model corresponds to some ${\mu \in \SP{X}}$. An incomplete model corresponds to some convex set ${M \subseteq \SP{X}}$ (which can be assumed closed in the strong convergence topology). If we assign probability ${p}$ to model ${\mu}$ and ${1-p}$ to model ${\nu}$, this can be represented by the model ${p \mu + (1-p) \nu}$. Similarly, if we assign probability ${p}$ to model ${M}$ and probability ${1-p}$ to model ${N}$, this can be represented by the model 
+More generally, we have some measurable event space ${X}$ and ${\SP{X}}$ is the space of probability measures on ${X}$. A complete (Bayesian) model corresponds to some ${\mu \in \SP{X}}$. An incomplete model corresponds to some convex set ${\Phi \subseteq \SP{X}}$ (which can be assumed closed in the strong convergence topology). If we assign probability ${p}$ to model ${\mu}$ and ${1-p}$ to model ${\nu}$, this can be represented by the model ${p \mu + (1-p) \nu}$. Similarly, if we assign probability ${p}$ to model ${\Phi}$ and probability ${1-p}$ to model ${\Psi}$, this can be represented by the model 
 
-$${pM+(1-p)N:=\{p \mu + (1-p) \nu \mid \mu \in M, \nu \in N\}}$$
+$${p\Phi+(1-p)\Psi:=\{p \mu + (1-p) \nu \mid \mu \in \Phi, \nu \in \Psi\}}$$
 
-In ordinary Bayesian statistics, a prior is often specified by a some countable space ${H}$ of hypotheses (i.e. for each ${x \in H}$ we have ${\mu_x \in \SP{X}}$; more generally ${H}$ can be some measurable space with a Markov kernel into ${X}$, but we won't need that) and a probability measure ${\zeta}$ on ${H}$, so that the prior is ${\E_{x \in \zeta}[\mu_x]}$. Similarly, we can have ${M_x \subseteq \SP{X}}$ and the incomplete prior
+In ordinary Bayesian statistics, a prior is often specified by a some countable space ${H}$ of hypotheses (i.e. for each ${x \in H}$ we have ${\mu_x \in \SP{X}}$; more generally ${H}$ can be some measurable space with a Markov kernel into ${X}$, but we won't need that) and a probability measure ${\zeta}$ on ${H}$, so that the prior is ${\E_{x \in \zeta}[\mu_x]}$. Similarly, we can have ${\Phi_x \subseteq \SP{X}}$ and the incomplete prior
 
-$${\E_{x \in \zeta}[M_x]:=\{\E_{h \in \zeta}[\mu_x] \mid \mu: H \rightarrow \SP{X}, \forall x \in H: \mu_x \in M_x\}}$$
+$${\E_{x \in \zeta}[\Phi_x]:=\{\E_{h \in \zeta}[\mu_x] \mid \mu: H \rightarrow \SP{X}, \forall x \in H: \mu_x \in \Phi_x\}}$$
 
 Now consider an agent interacting with an unknown environment. The agent has a finite set ${\Act}$ of actions and a finite set ${\Per}$ of percepts. The event space is the space of "pure" (deterministic) environments ${\Env:=\His \rightarrow \Per}$ (its ${\sigma}$-algebra comes from viewing it as the inverse limit of the sequence ${(\Per \times \Act)^{\leq n} \rightarrow \Per}$). In this context we don't usually work with the full space of "mixed" environments ${\SP{\Env}}$ but only with the quotient space of "behavioral" environments  ${\EnvB}$. Here, every ${\mu \in \EnvB}$ is a partial function from ${\His}$ to ${\SP{\Per}}$ s.t. ${\mu(h)}$ is defined iff ${\mu}$ assigns positive probability to all percepts appearing in ${h}$. For every ${\mu \in \SP{\Env}}$, we define the corresponding ${\mu_{\operatorname{b}} \in \EnvB}$ by
 
@@ -145,52 +146,66 @@ $$\Prb[\mu_{\operatorname{b}}(h)=o]:=\Prb_{e \sim \mu}[e(h) = o \mid \forall i \
 
 Here, ${\Abs{h}}$ is defined by ${h \in (\Per \times \Act)^{\Abs{h}}}$ and ${h^\Per_{i} \in \Per}$ stands for the first element of the pair ${h_i \in \Per \times \Act}$. Note that the operation of taking convex linear combinations in ${\SP{\Env}}$ descends to a well-defined operation in ${\EnvB}$ which we will also regard as convex linear combination (but which is *not* the same as taking pointwise convex linear combinations of the partial functions; instead it can be written as the result of Bayesian updating). 
 
-Priors are usually constructed from environments that are in some sense computable. There are several variants of the definition, but we will consider environments that can be described as
+Priors are usually constructed from environments that are in some sense computable. There are several variants of the definition, but we will consider environments that can be represented as
 
-$${\mu: \His \times \Sagas \Alg \Per}$$
+$${M: \His \times \Sagas \Alg \Per}$$
 
-Here, ${\Sagas}$ is regarded as an infinite sequence of fair coin flips and the notation ${\Alg}$ means that ${\mu}$ is given by a Turing machine that halts of every input (it might be more elegant to assume it halts with probability 1 for any fixed ${h \in \His}$ and ${r \in \Sagas}$ a sequence of fair coin flips; we don't consider the distinction important since more realistic models involve complexity bounds on the Turing machine anyway). For any ${h \in \His}$ and ${o \in \Per}$, ${\Prb[\mu(h)=o]:=\Prb_{r \sim \Un^\omega}[\mu(h,r)=o]}$, where ${\Un^\omega}$ is the fair coin probability measure on ${\Sagas}$ (it is easy to see that the set ${\{r \in \Sagas \mid \mu(h,r)=o\}}$ is measurable because ${\mu}$ is given by a Turing machine). 
+Here, ${\Sagas}$ is regarded as an infinite sequence of fair coin flips and the notation ${\Alg}$ means that ${M}$ is a Turing machine that halts with probability 1 for any fixed ${h \in \His}$ and ${r \in \Sagas}$ a sequence of fair coin flips. The corresponding environment is defined by ${\Prb[\mu_M(h)=o]:=\Prb_{r \sim \Un^\omega}[M(h,r)=o]}$, where ${\Un^\omega}$ is the fair coin probability measure on ${\Sagas}$ (it is easy to see that the set ${\{r \in \Sagas \mid M(h,r)=o\}}$ is measurable because ${M}$ is a Turing machine). 
 
-Fix ${\UTM}$ a prefix-free universal Turing machine and denote ${\Prog \subseteq \Words}$ its set of programs. We have ${\zeta \in \SP{\Prog}}$ defined by
+Fix ${\UTM}$ a prefix-free universal Turing machine and denote ${\Prog \subseteq \Words}$ the set of programs that satisfy the halting condition above. We have ${\zeta \in \SP{\Prog}}$ defined by
 
 $${\zeta(x):=\frac{2^{-\Abs{x}}}{\sum_{y \in \Prog} 2^{-\Abs{y}}}}$$
 
-For any ${p \in \Prog}$, we can define an environment ${\mu_x^\UTM}$ for the extended percept set ${\bar{\Per}:=\Per \sqcup \{\bot\}}$, where ${\bot}$ is a special symbol denoting that the environment failed to halt (usually this is handled by considering semi-measures instead of measures but we avoid it here): 
+For any ${x \in \Prog}$, we can define the environment ${\mu_x^\UTM}$: 
 
 $$\Pr[\mu_x^\UTM(h)=o]:=\Prb_{r \sim \Un^\omega}[\UTM(x;h,r)=o]$$ 
 
-We can now define the "universal" prior ${\mu^\UTM:=\E_{x \sim \zeta}[\mu_x^\UTM]}$.
-
-By introducing complexity bounds, it is possible to get "universal" priors that are computable and themselves satisfy complexity bounds. Let ${\UTM_m(x;h,r)}$ denote the result of running ${\UTM}$ with program ${x}$ and input ${(h,r)}$ for ${m}$ time steps (strictly speaking this is a word but we will abuse notation by interpreting it as an element in whatever set is necessary). Given a function ${t: \Nats \rightarrow \Nats}$, we define
-
-$${\Prb[\mu_{xt}^\UTM(h)=o]:=\Prb_{r \sim \Un^{t(\Abs{h})}}[\UTM_{t(\Abs{h})}(x;h,r)=o]}$$
-
-The $t$-bounded universal prior is ${\mu_t^\UTM:=\E_{x \sim \zeta}[\mu_{xt}^\UTM]}$.
+We can now define the universal prior ${\mu^\UTM:=\E_{x \sim \zeta}[\mu_x^\UTM]}$.
 
 Alternatively, we can consider environments that have an unobservable state. For any ${\nu \in \EnvB}$ we denote the domain of ${\nu}$ by ${\His_\nu}$. An computable environment with unobservable state corresponds to a machine
 
-$${\mu: \His \times \Words \times \Sagas \Alg \Per \times \Words}$$ 
+$${M: \His \times \Nats \times \Sagas \Alg \Per \times \Nats}$$ 
 
-The interpretation of this machine as a behavioral environment is defined recursively, simultaneously with ${\rho_\mu: \His_\mu \rightarrow \SP{\Words}}$, the latter describing the probability distribution on unobservable states. Denoting ${\Estr}$ the empty word and ${\Estr_{\Per \times \Act}}$ the empty element of ${\His}$:
+The corresponding ${\mu_M \in \EnvB}$ is defined recursively, simultaneously with ${\rho_M: \His_{\mu_M} \rightarrow \SP{\Nats}}$, the latter describing the probability distribution on unobservable states. Denoting ${\Estr_{\Per \times \Act}}$ the empty element of ${\His}$:
 
 \begin{align*}
-\rho_\mu(\Estr_{\Per \times \Act}) &:= \delta_\Estr \\
-\Prb[\mu(h)=o] &:= \PP{u \sim \rho_\mu(h)}{r \sim \Un^\omega}[\mu(h,u,r)^\Per=o] \\
-\Prb[\rho_\mu(hoa)=u] &:= \PP{v \sim \rho_\mu(h)}{r \sim \Un^\omega}[\mu(h,v,r)^\Words=u \mid \mu(h,v,r)^\Per=o]
+\rho_{M}(\Estr_{\Per \times \Act}) &:= \delta_0 \\
+\Prb[\mu_M(h)=o] &:= \PP{u \sim \rho_{M}(h)}{r \sim \Un^\omega}[M(h,u,r)^\Per=o] \\
+\Prb[\rho_{M}(hoa)=u] &:= \PP{v \sim \rho_{M}(h)}{r \sim \Un^\omega}[M(h,v,r)^\Words=u \mid M(h,v,r)^\Per=o]
 \end{align*}
 
-For arbitrary computable environments the addition of an unobservable state gains us nothing. However, it makes a difference when imposing complexity bounds. Define ${\hat{\mu}_{xt}^\UTM}$ by the same equations as above, replacing ${\mu(h,u,r)}$ by ${\UTM_{t(\Abs{h})}(x;h,u,r)}$ (this also allows replacing ${\Un^\omega}$ by ${\Un^{t(\Abs{h})}}$ since there is no time to read further bits anyway). Define ${\hat{\mu}_t^\UTM:=\E_{x \sim \zeta}[\hat{\mu}_{xt}^\UTM]}$.
+For arbitrary computable environments the addition of an unobservable state gains us nothing. However, it makes a difference when imposing complexity bounds or passing to incomplete models.
 
 We now generalize these concepts to incomplete models. A computable incomplete model (with unobservable state) corresponds to a machine 
 
-$${M: \His \times \Words \times \Sagas \times \Sagas \Alg \Per \times \Words}$$
+$${M: \His \times \Nats \times \Sagas \times \Nats \Alg \Per \times \Nats}$$
 
-Here, the two copies of ${\Sagas}$ should be thought of as given on two different tapes or in interleaved form, so the machine can read a finite prefix of both. The first ${\Sagas}$ corresponds to fair coin flips, as before. The second ${\Sagas}$ corresponds to "Knightian coin flips." ${M}$ is interpreted as a convex subset of ${\EnvB}$ by...
+The last ${\Nats}$ factor represents "Knightian coin flips." For any ${K: \His \times \Nats \rightarrow \Nats}$, we can define ${\mu_{MK} \in \EnvB}$ by the recursive equations
+
+\begin{align*}
+\rho_{MK}(\Estr_{\Per \times \Act}) &:= \delta_0 \\
+\Prb[\mu_{MK}(h)=o] &:= \PP{u \sim \rho_{MK}(h)}{r \sim \Un^\omega}[M(h,u,r,K(h,u))^\Per=o] \\
+\Prb[\rho_{MK}(hoa)=u] &:= \PP{v \sim \rho_{MK}(h)}{r \sim \Un^\omega}[M(h,v,r,K(h,v))^\Words=u \mid M(h,v,r,K(h,v))^\Per=o]
+\end{align*}
+
+We define the incomplete model ${\Phi_M :=\{\E_{K \sim \xi}[\mu_{MK}] \mid \xi \in \SP{(\His \times \Nats \rightarrow \Nats)}\}}$.
+
+Denoting ${\ProgS}$ the set of programs for ${\UTM}$ that satisfy the halting condition for machines of above type, we can define ${\Phi_x \subseteq \EnvB}$ for any ${x \in \ProgS}$ in the obvious way. We define ${\bar{\zeta} \in \Delta \ProgS}$ by
+
+$${\bar{\zeta}(x):=\frac{2^{-\Abs{x}}}{\sum_{y \in \ProgS} 2^{-\Abs{y}}}}$$
+
+This allows us defining "universal incomplete prior" ${\Phi^\UTM:=\E_{x \in \bar{\zeta}}[\Phi_x]}$.
+
+It is also straightforward to impose complexity bounds on these objects (e.g. limit the time or space ${M}$ is allowed to use as a function of ${\Abs{h}}$).
+
+[Hutter](https://arxiv.org/abs/0907.0746) observes that it's unknown whether Solomonoff induction can correctly predict relationships betweens bits in a sequence that contains uncomputable information (see problem 4g). To deal with similar issues in online learning one can use "sleeping experts" (see also [subsequence induction](https://agentfoundations.org/item?id=482)). Here, we deal with much more general scenarios than sleeping experts by including incomplete models in our prior.
 
 %##Appendix
-\section{Appendix}
+\section{Bayes-Savage Agents}
 
 Bar
+
+\section{Discussion}
 
 \end{document}
 
