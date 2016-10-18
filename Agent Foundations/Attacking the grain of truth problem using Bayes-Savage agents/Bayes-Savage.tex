@@ -96,6 +96,7 @@
 \newcommand{\EnvB}{\Beh\Env}
 \newcommand{\Prog}{\operatorname{H}^\UTM}
 \newcommand{\ProgS}{\bar{\operatorname{H}}^\UTM}
+\newcommand{\Strat}{\mathcal{S}}
 
 \begin{document}
 
@@ -194,7 +195,7 @@ Denoting ${\ProgS}$ the set of programs for ${\UTM}$ that satisfy the halting co
 
 $${\bar{\zeta}(x):=\frac{2^{-\Abs{x}}}{\sum_{y \in \ProgS} 2^{-\Abs{y}}}}$$
 
-This allows us defining "universal incomplete prior" ${\Phi^\UTM:=\E_{x \in \bar{\zeta}}[\Phi_x]}$.
+This allows us defining the "universal incomplete prior" ${\Phi^\UTM:=\E_{x \in \bar{\zeta}}[\Phi_x]}$.
 
 It is also straightforward to impose complexity bounds on these objects (e.g. limit the time or space ${M}$ is allowed to use as a function of ${\Abs{h}}$).
 
@@ -203,7 +204,23 @@ It is also straightforward to impose complexity bounds on these objects (e.g. li
 %##Appendix
 \section{Bayes-Savage Agents}
 
-Bar
+Consider an agent that has to choose from a finite strategy set ${\Strat}$. The utility function of the agent is ${u: \Strat \times X \rightarrow \Reals}$. If the agent's beliefs are described by a complete model ${\mu \in \SP{X}}$, the standard decision rule is maximizing expected utility: 
+
+$${s(\mu):=\Argmax{s \in \Strat} \E_{w \sim \mu}[u(s,w)]}$$
+
+For an incomplete model ${\Phi \subseteq \SP{X}}$, we propose using the minimax regret decision rule:
+
+$$s(\Phi):=\Argmax{s \in \SP{\Strat}} \min_{\mu \in \Phi}(\E_{w \sim \mu}[u(s,w)] - \max_{t \in \Strat} \E_{w \sim \mu}[u(t,w)])$$
+
+As opposed to expected utility maximization, minimax regret might demand randomization. This is perhaps not surprising since if we expect our agents to produce Nash equilibria, there must be randomization in their decision rule (e.g. in reflective oracles this randomization comes from the oracle itself).
+
+As a simple example for a setting where the minimax regret rule yields reasonable behavior, consider stochastic multi-armed bandits...
+
+This stands in sharp contrast to the *minimax* decision rule...
+
+Subgame / proper...
+
+Dynamics consistency...
 
 \section{Discussion}
 
