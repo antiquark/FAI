@@ -212,11 +212,13 @@ For an incomplete model ${\Phi \subseteq \SP{X}}$, we propose using the minimax 
 
 $$s(\Phi):=\Argmax{s \in \SP{\Strat}} \min_{\mu \in \Phi}(\E_{w \sim \mu}[u(s,w)] - \max_{t \in \Strat} \E_{w \sim \mu}[u(t,w)])$$
 
+Note that we lost nothing by requiring ${\Phi}$ to be convex since the minimum in the above equation is of a concave function and therefore is always attained in an extreme point (so if we started from a non-convex subset of ${\SP{X}}$, we might as well have replaced it with its convex hull).
+
 As opposed to expected utility maximization, minimax regret might demand randomization. This is perhaps not surprising since if we expect our agents to produce Nash equilibria, there must be randomization in their decision rule (e.g. in reflective oracles this randomization comes from the oracle itself). In fact, this decision rule can be interpreted as selecting a Nash equilibrium in a game where the opponent's strategies are ${\mu \in \Phi}$, the agent's utility function is ${\E_{w \sim \mu}[u(s,w)]}$ and the opponent's utility function is the agent's regret 
 
 $${R(s,\mu):=\max_{t \in \Strat} \E_{w \sim \mu}[u(t,w)]} - \E_{w \sim \mu}[u(s,w)]$$
 
-Equivalently (i.e. yielding the same Nash equilibria), we can make it a zero-sum game by taking negative regret to be the agent's utility function (it makes no difference since the other term depends only on the opponent).
+Equivalently (i.e. yielding the same Nash equilibria), we can make it a zero-sum game by taking negative regret to be the agent's utility function (it makes no difference since the other term depends only on the opponent???). Note that the ${\mu}$ attaining the minimum is *not* the Nash equilibrium strategy for the opponent but only a pure best response to a Nash equilibrium: the former would be a mixed strategy.
 
 In most interesting settings the agent's strategy involves making a sequence of actions between which it receives additional information. This can be expressed using the notation of the previous section. The strategies of the agent now correspond to *policies* ${\sigma: \His \times \Per \rightarrow \Act}$. Instead of arbitrary mixed policies, it is enough to consider "behavioral" policies ${\pi: \His \times \Per \rightarrow \SP{\Act}}$. The minimax regret game is now naturally a game in extensive form. It therefore makes sense to require that the agent plays not only a Nash equilibrium but a subgame perfect equilibrium. More precisely, the standard definition of subgame perfect equilibria is not very useful for games with imperfect information, but for the special case of games with perfect recall where one side (the opponent) has perfect information, we can use the following definition (*I don't know whether this is standard, if it is I would be grateful to receive a source*):
 
