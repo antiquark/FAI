@@ -80,6 +80,7 @@
 \newcommand{\Dist}{\mathcal{D}}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Or}{\xrightarrow{\textnormal{or}}}
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
 
 \newcommand{\UTM}{\mathcal{U}}
@@ -95,23 +96,23 @@
 \newcommand{\Beh}{\Delta_{\operatorname{b}}}
 \newcommand{\EnvB}{\Beh\Env}
 \newcommand{\Prog}{\operatorname{H}^\UTM}
-\newcommand{\ProgS}{\bar{\operatorname{H}}^\UTM}
+\newcommand{\ProgS}{\operatorname{H}^{\bar{\UTM}}}
 \newcommand{\Strat}{\mathcal{S}}
 
 \begin{document}
 
-Motivated by the grain of truth problem, we propose a generalization of Bayesian inference that allows for *incomplete* models. Such a model can be thought of as a set of constraints on the environment which doesn't specify it completely. This means that in addition to ordinary, probabilistic, uncertainty, another ("Knightian") type of uncertainty is introduced. This new uncertainty is managed using Savage's minimax regret decision rule. We construct analogues of AIXI and its bounded counterparts corresponding to this epistemology and speculate about behavior in multi-agent scenarios.
+Motivated by the grain of truth problem, we propose a generalization of Bayesian inference that allows for *incomplete* models. Such a model can be thought of as a set of constraints on the environment which doesn't specify it completely. This means that in addition to ordinary (probabilistic) uncertainty, another ("Knightian") type of uncertainty is introduced. This new uncertainty is managed using Savage's minimax regret decision rule.
 
 %##Results
 \section{Motivation}
 
-The *grain of truth* problem, as described by [Hutter](https://arxiv.org/abs/0907.0746) (see problem 5j) concerns the interaction between several AIXI agents. Ideally, we expect that rational agents in multi-agent scenarios should converge to behavior corresponding to some reasonable solution concept in game theory, e.g. Nash equilibrium (for the purposes of this post I completely ignore stronger desiderata such as superrationality; also purely Bayesian agents often fail to do so because of insufficient exploration but this is also a problem mostly orthogonal to grain of truth). However, it is difficult to prove anything about multi-agent scenarios of AIXI since AIXI's prior is supported on computable environments whereas AIXI itself is uncomputable. This problem survives in bounded analogues: if we limit the computational complexity of environments included in the prior, the computational complexity of the agent itself will invariable be higher. Thus, two agents of equal power seem unable to "comprehend" each other.
+The *grain of truth* problem, as described by [Hutter](https://arxiv.org/abs/0907.0746) (see problem 5j) concerns the interaction between several AIXI agents. Ideally, we expect that rational agents in multi-agent scenarios should converge to behavior corresponding to some reasonable solution concept in game theory, e.g. Nash equilibrium (for the purposes of this post I completely ignore stronger desiderata such as superrationality; also purely Bayesian agents often fail to do so because of insufficient exploration but this is also a problem mostly orthogonal to grain of truth). However, it is difficult to prove anything about multi-agent scenarios of AIXI since AIXI's prior is supported on computable environments whereas AIXI itself is uncomputable. This problem survives in bounded analogues: if we limit the computational complexity of environments included in the prior, the computational complexity of the agent itself will invariably be higher. Thus, two agents of equal power seem unable to "comprehend" each other.
 
 There are several reasons this problems seem important to AI alignment:
 
 1. The ability of an agent to operate in environments of complexity similar to that of the agent or even surpassing that of the agent seems an important desideratum for the mathematical formalization of intelligence. Without a formal understanding how this desideratum can be satisfied it is difficult to imagine any reliable theory of intelligent agents.
 
-2. Arguably, self-improving agents need the capacity to understand systems that equal themselves in complexity, more or less by definition.
+2. Arguably, self-improving agents need the capacity to understand systems that equal to themselves in complexity, more or less by definition.
 
 3. Perhaps most importantly, IRL relies on the AI's ability to successfully reason about a complex agent (a human), presumably an agent that cannot be emulated precisely with the AI's computational power. CIRL relies on two-sided interaction between the AI and the human, where neither side can emulate the other. Thus, it seems impossible to prove reasonable guarantees for (C)IRL under quasi-realistic assumptions without solving the grain of truth problem.
 
@@ -125,7 +126,7 @@ In our opinion, there are 3 ways in which reflective oracles are an unsatisfacto
 
 3. Reflective oracles are uncomputable, although they were proven to be limit computable. Obviously realistic agents use algorithms that are not only computable but satisfy rather stringent complexity bounds.
 
-Of the problems above, 3 seems to be the least significant since it is plausible that bounded analogues can be constructed. In any case, the agents we construct below are also uncomputable (constructing bounded counterparts seems to be straightforward, but they are still computationally infeasible). Problem 1 might be solved if a natural class of reflective oracles is found s.t. any agent that is computable w.r.t. any oracle ${O_1}$ in this class is also computable w.r.t. any other oracle ${O_2}$ in this class, at least approximately. This is not impossible but also not straightforward. Problem 2 might be the hardest.
+Of the problems above, 3 seems to be the least significant since it is plausible that bounded analogues can be constructed. In any case, in our formalism it also entirely unobvious how to construct computationally feasible agents. Problem 1 might be solved if a natural class of reflective oracles is found s.t. any agent that is computable w.r.t. any oracle ${O_1}$ in this class is also computable w.r.t. any other oracle ${O_2}$ in this class, at least approximately. This is not impossible but also not straightforward. Problem 2 might be the hardest.
 
 \section{Incomplete Models}
 
@@ -151,7 +152,11 @@ Priors are usually constructed from environments that are in some sense computab
 
 $${M: \His \times \Sagas \Alg \Per}$$
 
-Here, ${\Sagas}$ is regarded as an infinite sequence of fair coin flips and the notation ${\Alg}$ means that ${M}$ is a Turing machine that halts with probability 1 for any fixed ${h \in \His}$ and ${r \in \Sagas}$ a sequence of fair coin flips. The corresponding environment is defined by ${\Prb[\mu_M(h)=o]:=\Prb_{r \sim \Un^\omega}[M(h,r)=o]}$, where ${\Un^\omega}$ is the fair coin probability measure on ${\Sagas}$ (it is easy to see that the set ${\{r \in \Sagas \mid M(h,r)=o\}}$ is measurable because ${M}$ is a Turing machine). 
+Here, ${\Sagas}$ is regarded as an infinite sequence of fair coin flips and the notation ${\Alg}$ means that ${M}$ is a Turing machine that halts with probability 1 for any fixed ${h \in \His}$ and ${r \in \Sagas}$ a sequence of fair coin flips. The corresponding environment is defined by 
+
+$${\Prb[\mu_M(h)=o]:=\Prb_{r \sim \Un^\omega}[M(h,r)=o]}$$
+
+Here ${\Un^\omega}$ is the fair coin probability measure on ${\Sagas}$ (it is easy to see that the set ${\{r \in \Sagas \mid M(h,r)=o\}}$ is measurable because ${M}$ is a Turing machine). 
 
 Fix ${\UTM}$ a prefix-free universal Turing machine and denote ${\Prog \subseteq \Words}$ the set of programs that satisfy the halting condition above. We have ${\zeta \in \SP{\Prog}}$ defined by
 
@@ -175,29 +180,37 @@ The corresponding ${\mu_M \in \EnvB}$ is defined recursively, simultaneously wit
 \Prb[\rho_{M}(hoa)=u] &:= \PP{v \sim \rho_{M}(h)}{r \sim \Un^\omega}[M(h,v,r)^\Words=u \mid M(h,v,r)^\Per=o]
 \end{align*}
 
-For arbitrary computable environments the addition of an unobservable state gains us nothing. However, it makes a difference when imposing complexity bounds or passing to incomplete models.
+For arbitrary computable environments the addition of an unobservable state gains us nothing. However, it makes a difference when imposing complexity bounds.
 
-We now generalize these concepts to incomplete models. A computable incomplete model (with unobservable state) corresponds to a machine 
+We now generalize these concepts to incomplete models. A computable incomplete model corresponds to an *oracle* machine 
 
-$${M: \His \times \Nats \times \Sagas \times \Nats \Alg \Per \times \Nats}$$
+$${M: \His \times \Sagas \Or \Per}$$
 
-The last ${\Nats}$ factor represents "Knightian coin flips." For any ${K: \His \times \Nats \rightarrow \Nats}$, we can define ${\mu_{MK} \in \EnvB}$ by the recursive equations
+We require that the machine halts with probability 1 for *any* oracle. The values returned by the oracle represent "Knightian coin flips." For any ${K \subseteq \Nats}$, we can define ${\mu_{MK} \in \EnvB}$ by
 
-\begin{align*}
-\rho_{MK}(\Estr_{\Per \times \Act}) &:= \delta_0 \\
-\Prb[\mu_{MK}(h)=o] &:= \PP{u \sim \rho_{MK}(h)}{r \sim \Un^\omega}[M(h,u,r,K(h,u))^\Per=o] \\
-\Prb[\rho_{MK}(hoa)=u] &:= \PP{v \sim \rho_{MK}(h)}{r \sim \Un^\omega}[M(h,v,r,K(h,v))^\Words=u \mid M(h,v,r,K(h,v))^\Per=o]
-\end{align*}
+$${\Prb[\mu_{MK}(h)=o]:=\Prb_{r \sim \Un^\omega}[M^K(h,r)=o]}$$
 
-We define the incomplete model ${\Phi_M :=\{\E_{K \sim \xi}[\mu_{MK}] \mid \xi \in \SP{(\His \times \Nats \rightarrow \Nats)}\}}$.
+The notation ${M^K}$ signifies we are running the machine ${M}$ with the oracle ${K}$. 
 
-Denoting ${\ProgS}$ the set of programs for ${\UTM}$ that satisfy the halting condition for machines of above type, we can define ${\Phi_x \subseteq \EnvB}$ for any ${x \in \ProgS}$ in the obvious way. We define ${\bar{\zeta} \in \Delta \ProgS}$ by
+We define the incomplete model 
+
+$${\Phi_M :=\{\E_{K \sim \xi}[\mu_{MK}] \mid \xi \in \SP{2^{\Nats}}\}}$$
+
+The ${\sigma}$-algebra on ${2^\Nats}$ is defined by regarding it as an infinite product: ${2^\Nats \cong \prod_{n \in \Nats} \Bool}$.
+
+Taking ${\bar{\UTM}}$ a universal oracle machine and ${\ProgS}$ the set of programs for ${\bar{\UTM}}$ that satisfy the our halting condition, we can define ${\Phi_x \subseteq \EnvB}$ for any ${x \in \ProgS}$ in the obvious way. We define ${\bar{\zeta} \in \Delta \ProgS}$ by
 
 $${\bar{\zeta}(x):=\frac{2^{-\Abs{x}}}{\sum_{y \in \ProgS} 2^{-\Abs{y}}}}$$
 
-This allows us defining the "universal incomplete prior" ${\Phi^\UTM:=\E_{x \in \bar{\zeta}}[\Phi_x]}$.
+This allows us defining the "universal incomplete prior" ${\Phi^{\bar{\UTM}}:=\E_{x \in \bar{\zeta}}[\Phi_x]}$.
 
-It is also possible to impose complexity bounds on these objects, e.g. by limiting the time or space ${M}$ is allowed to use as a function of ${\Abs{h}}$, but we will not study this in detail in this essay.
+We also can represent computable incomplete models with unobservable states
+
+$${M: \His \times \Nats \times \Sagas \Or \Per \times \Nats}$$
+
+${\Phi_M}$ is defined analogously.
+
+It is straightforward to impose complexity bounds on these objects, e.g. by limiting the time, space, number of random coins or number of oracle queries ${M}$ is allowed to use as a function of ${\Abs{h}}$.
 
 [Hutter](https://arxiv.org/abs/0907.0746) observes that it's unknown whether Solomonoff induction can correctly predict relationships betweens bits in a sequence that contains uncomputable information (see problem 4g). To deal with similar issues in online learning one can use "sleeping experts" (see also [subsequence induction](https://agentfoundations.org/item?id=482)). Here, we deal with much more general scenarios than sleeping experts by including incomplete models in our prior.
 
@@ -212,27 +225,43 @@ For an incomplete model ${\Phi \subseteq \SP{X}}$, we propose using the minimax 
 
 $$s(\Phi):=\Argmax{s \in \SP{\Strat}} \min_{\mu \in \Phi}(\E_{w \sim \mu}[u(s,w)] - \max_{t \in \Strat} \E_{w \sim \mu}[u(t,w)])$$
 
+We call agents following this rule "Bayes-Savage" agents.
+
 Note that we lost nothing by requiring ${\Phi}$ to be convex since the minimum in the above equation is of a concave function and therefore is always attained in an extreme point (so if we started from a non-convex subset of ${\SP{X}}$, we might as well have replaced it with its convex hull).
 
-As opposed to expected utility maximization, minimax regret might demand randomization. This is perhaps not surprising since if we expect our agents to produce Nash equilibria, there must be randomization in their decision rule (e.g. in reflective oracles this randomization comes from the oracle itself). In fact, this decision rule can be interpreted as selecting a Nash equilibrium in a game where the opponent's strategies are ${\mu \in \Phi}$, the agent's utility function is ${\E_{w \sim \mu}[u(s,w)]}$ and the opponent's utility function is the agent's regret 
+As opposed to expected utility maximization, minimax regret might demand randomization. This is perhaps not surprising since if we expect our agents to produce Nash equilibria, there must be randomization in their decision rule (e.g. in reflective oracles this randomization comes from the oracle itself). In fact, this decision rule can be interpreted as selecting a Nash equilibrium in a game where the strategies of the opponent (who we dub Metanoia) are ${\mu \in \Phi}$, the agent's utility function is ${\E_{w \sim \mu}[u(s,w)]}$ and Metanoia's utility function is the agent's regret 
 
 $${R(s,\mu):=\max_{t \in \Strat} \E_{w \sim \mu}[u(t,w)]} - \E_{w \sim \mu}[u(s,w)]$$
 
-Equivalently (i.e. yielding the same Nash equilibria), we can make it a zero-sum game by taking negative regret to be the agent's utility function (it makes no difference since the other term depends only on the opponent???). Note that the ${\mu}$ attaining the minimum is *not* the Nash equilibrium strategy for the opponent but only a pure best response to a Nash equilibrium: the former would be a mixed strategy.
+Equivalently (i.e. yielding the same Nash equilibria), we can make it a zero-sum game by taking negative regret to be the agent's utility function (it makes no difference since the other term depends only on Metanoia). Note that the ${\mu}$ attaining the minimum is *not* the Nash equilibrium strategy for the Metanoia but only a pure best response to a Nash equilibrium: the former would be a mixed strategy.
 
-In most interesting settings the agent's strategy involves making a sequence of actions between which it receives additional information. This can be expressed using the notation of the previous section. The strategies of the agent now correspond to *policies* ${\sigma: \His \times \Per \rightarrow \Act}$. Instead of arbitrary mixed policies, it is enough to consider "behavioral" policies ${\pi: \His \times \Per \rightarrow \SP{\Act}}$. The minimax regret game is now naturally a game in extensive form. It therefore makes sense to require that the agent plays not only a Nash equilibrium but a subgame perfect equilibrium. More precisely, the standard definition of subgame perfect equilibria is not very useful for games with imperfect information, but for the special case of games with perfect recall where one side (the opponent) has perfect information, we can use the following definition (*I don't know whether this is standard, if it is I would be grateful to receive a source*):
+In most interesting settings the agent's strategy involves making a sequence of actions between which it receives additional information. The strategy of a Bayesian agent in this case can be regarded as performing a Bayesian update after each observation and computing and optimal policy for the rest of time using the maximal expected utility rule applied to the posterior. On the other hand, the policy of a Bayes-Savage agent cannot be decomposed in this way, i.e., the policy after making an observation is *not* the result of applying the minimax regret rule to the incomplete posterior. We deal with this "dynamic inconsistency" simply by requiring the entire policy to be determined in advance ("updatelessly"). In practical implementations we will likely need some approximate decoupling from distant "branches" in order to make the algorithm feasible, but we leave this issue for later.
 
-... 
+In the sequential setting, the Metanoia game is naturally regarded as having extensive form. In particular, the Nash equilibrium condition is too weak to always ensure reasonable behavior, since there might be agent information sets that are never reached in Nash equilibrium. Therefore, we need to make the decision rule more stringent by requiring e.g. [quasi-perfect](https://core.ac.uk/download/pdf/6462167.pdf) or proper equilibrium. We leave working out the details for later.
 
-(it is probably sensible to require something like a proper equilibrium but the correct definition is non-obvious???)
+As a simple example for a setting where the minimax regret rule yields reasonable behavior, consider a stochastic ${k}$-armed bandit played for ${n}$ time steps. Here ${X = \Reals^{kn}}$, each ${w \in X}$ representing a vector of payoffs for all arms and time steps. ${\Phi}$ is the convex hull of all i.i.d. distributions satisfying an appropriate moment condition. Clearly the minimax regret rule leads to behavior qualitatively similar to the UCB algorithm (at least assuming the correct handling of special information sets as suggested above).
 
-As a simple example for a setting where the minimax regret rule yields reasonable behavior, consider stochastic multi-armed bandits...
+This stands in sharp contrast to the *minimax* decision rule:
 
-This stands in sharp contrast to the *minimax* decision rule...
+$$s_{\text{mm}}(\Phi):=\Argmax{s \in \SP{\Strat}} \min_{\mu \in \Phi}\E_{w \sim \mu}[u(s,w)]$$
 
-Dynamics consistency...
+The latter leads to undefined behavior for stochastic bandits since there is no way to guarantee any payoff above the minimum, even if good payoffs were observed on previous time steps.
+
+Finally, a Bayes-Savage agent for ${\Phi^{\bar{\UTM}}}$ is a natural counterpart of AIXI in this setting. We hope that for these agents strong game-theoretic guarantees can be derived.
 
 \section{Discussion}
+
+We think that there is a reasonable chance the concepts outlined in this essay can lead to solving the grain of truth problem. This will require much further work. Specifically, we suggest to continue the research in approximately the following order:
+
+* Better understanding of minimax regret in the sequential setting, including the definition of quasi-perfect or proper strategies.
+
+* Proving convergence of Bayes-Savage agents to policies satisfying appropriate regret guarantees. That is, given an environment ${\mu}$ that does not appear explicitly in the prior but which satisfies ${\mu \in \Phi}$ for ${\Phi}$ that appears in the prior, we expect the agent to converge to a policy ${\pi}$ whose loss w.r.t. the best response ${\pi_\mu}$ to ${\mu}$ is no greater than the maximin regret for ${\Phi}$.
+
+* Better understanding the relationship of the minimax regret rule to game theory e.g. whether the minimax regret rule can allow a better justification of Nash equilibria than best response (i.e. in a Nash equilibrium all strategies are best responses but not all best responses preserve the Nash equilibrium; maybe minimax regret allows doing better?)
+
+* Deriving game-theoretic guarantees for AIXI-like Bayes-Savage agents from the generic regret guarantees above. Presumably, this requires for each agent in the game describing a specific computable incomplete model consistent with the behavior of the other agents (which cannot be complete but should be sufficiently strong in some sense). In general, we expect being able to prove e.g. convergence to iteratively undominated strategies under fairly general conditions and convergence to Nash equilibria (preferably e.g. proper equilibria) under some assumptions on the game (e.g. time discount falling sufficiently slowly).
+
+* Looking for Bayes-Savage agents of bounded complexity. Here the work of [Koller and Megiddo](http://ai.stanford.edu/~koller/Papers/Koller+Megiddo:GEB92.pdf) on two-player zero-sum extensive games seems relevant (in our case the game tree is at least exponentially big w.r.t. horizon length, but such inefficient agents can be a good starting point towards understand bounded agents in general).
 
 \end{document}
 
