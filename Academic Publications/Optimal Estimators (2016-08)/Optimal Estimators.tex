@@ -1,7 +1,7 @@
 %
-\documentclass{article}
+\documentclass[11pt]{article}
 
-\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[letterpaper,margin=1in]{geometry}
 \usepackage[affil-it]{authblk}
 \usepackage{cite}
 \usepackage[unicode]{hyperref}
@@ -126,6 +126,8 @@
 \begin{abstract}
 The concept of an \enquote{approximation algorithm} is usually only applied to optimization problems since in optimization problems the performance of the algorithm on any given input is a continuous parameter. We introduce a new concept of approximation applicable to decision problems and functions, inspired by Bayesian probability. From the perspective of a Bayesian reasoner with limited computational resources, the answer to a problem that cannot be solved exactly is uncertain and therefore should be described by a random variable. It thus should make sense to talk about the expected value of this random variable, an idea we formalize in the language of average-case complexity theory by introducing the concept of optimal polynomial-time estimator. We show that optimal polynomial-time estimators exhibit many parallels with \enquote{classical} probability theory, prove some existence theorems and completeness results.%
 \end{abstract}%
+
+\pagebreak
 
 \tableofcontents
 
@@ -324,9 +326,13 @@ An \emph{encoded set} is a set $X$ together with an injection ${\En_X: X \righta
 
 \end{definition}
 
-There are standard encodings we implicitly use throughout. $\bm{1}$ denotes an encoded set with 1 element $\bullet$ whose encoding is the empty string. $\Words$ is an encoded set with the trivial encoding ${\En_\Words(x):=x}$. $\Nats$ is an encoded set where $\En_\Nats(n)$ is the binary representation of $n$. $\Rats$ is an encoded set where ${\En_\Rats(\frac{n}{m}):=\Chev{n,m}}$ for an irreducible fraction $\frac{n}{m}$. For any encoded set $X$ and $L \in \textsc{P}$, $\{x \in X \mid \En_X(x) \in L\}$ is an encoded set whose encoding is the restriction of $\En_X$. For $X_0,X_1 \ldots X_{n-1}$ encoded sets, $\prod_{i \in [n]} X_i$ is an encoded set with encoding $\En_{\prod_{i \in [n]} X_i}(x_0,x_1 \ldots x_{n-1}):=\Chev{\En_{X_0}(x_0),\En_{X_1}(x_1) \ldots \En_{X_{n-1}}(x_{n-1})}$. For any $n \in \Nats$ we use the shorthand notation $\En^n:=\En_{(\Words)^n}$.
+There are standard encodings we implicitly use throughout. $\bm{1}$ denotes an encoded set with 1 element $\bullet$ whose encoding is the empty string. $\Words$ is an encoded set with the trivial encoding ${\En_\Words(x):=x}$. $\Nats$ is an encoded set where $\En_\Nats(n)$ is the binary representation of $n$. $\Rats$ is an encoded set where ${\En_\Rats(\frac{n}{m}):=\Chev{n,m}}$ for an irreducible fraction $\frac{n}{m}$. For any encoded set $X$ and $L \in \textsc{P}$, $\{x \in X \mid \En_X(x) \in L\}$ is an encoded set whose encoding is the restriction of $\En_X$. For $X_0,X_1 \ldots X_{n-1}$ encoded sets, $\prod_{i \in [n]} X_i$ is an encoded set with encoding 
 
-Given $n \in \Nats$, encoded sets $X_0, X_1 \ldots X_{n-1}$ and encoded set $Y$ we use the notation ${A: \prod_{i \in [n]} X_i \Alg Y}$ to mean a Turing machine with $n$ input tapes that halts on every input for which the $i$-th tape is initialized to a value in $\Img \En_X$ and produces an output in $\Img \En_Y$. Given $\{x_i \in X_i\}_{i \in [n]}$ the notation $A(x_0, x_1 \ldots x_{n-1})$ stands for the unique $y \in Y$ s.t. applying $A$ to the input composed of $\En_{X_i}(x_i)$ results in output $\En_Y(y)$. We use different input tapes for different components of the input instead of encoding the $n$-tuple as a single word in order to allow $A$ to process some components of the input in time smaller than the length of other components. This involves abuse of notation since a Cartesian product of encoded sets is naturally an encoded set, but hopefully this won't cause much confusion.
+\[\En_{\prod_{i \in [n]} X_i}(x_0,x_1 \ldots x_{n-1}):=\Chev{\En_{X_0}(x_0),\En_{X_1}(x_1) \ldots \En_{X_{n-1}}(x_{n-1})}\]
+
+For any $n \in \Nats$ we use the shorthand notation $\En^n:=\En_{(\Words)^n}$.
+
+Given $n \in \Nats$, encoded sets $X_0, X_1 \ldots X_{n-1}$ and encoded set $Y$ we use the notation\\ ${A: \prod_{i \in [n]} X_i \Alg Y}$ to mean a Turing machine with $n$ input tapes that halts on every input for which the $i$-th tape is initialized to a value in $\Img \En_X$ and produces an output in $\Img \En_Y$. Given $\{x_i \in X_i\}_{i \in [n]}$ the notation $A(x_0, x_1 \ldots x_{n-1})$ stands for the unique $y \in Y$ s.t. applying $A$ to the input composed of $\En_{X_i}(x_i)$ results in output $\En_Y(y)$. We use different input tapes for different components of the input instead of encoding the $n$-tuple as a single word in order to allow $A$ to process some components of the input in time smaller than the length of other components. This involves abuse of notation since a Cartesian product of encoded sets is naturally an encoded set, but hopefully this won't cause much confusion.
 
 Given $A: X \Alg Y$ and $x \in X$, $\T_A(x)$ stands for the number of time steps in the computation of $A(x)$.
 
@@ -440,7 +446,7 @@ To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}
 
 \[\gamma_1(J,k)+\gamma_2(J,k) \leq \gamma^*(J,s(J,p(J,k)))\]
 
-In particular taking ${\gamma^*_{\text{poly}}(J,k):=k}$ and ${\gamma^*_{\text{log}}(J,k):=\Floor{\log (k+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{\gamma^*_{\text{poly}}}}$, ${\GammaLog^n=\Gamma_{\gamma^*_{\text{log}}}}$.
+In particular taking ${\gamma^*_{\text{poly}}(J,k):=k}$ and ${\gamma^*_{\text{log}}(J,k):=\Floor{\log (k+1)}}$ we have ${\Gamma_{\text{poly}}^n=\Gamma_{\gamma^*_{\text{poly}}}}$,\\ $\GammaLog^n=\Gamma_{\gamma^*_{\text{log}}}$.
 
 \end{example}
 \end{samepage}
@@ -853,7 +859,7 @@ Although the word ensemble plays a central role in the definition of an optimal 
 \begin{definition}
 \label{def:ample}
 
-Given a growth space $\Gamma_*$ of rank $n$, $\Fall$ is called \emph{$\Gamma_*$-ample} when there is $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_*$.
+Given a growth space $\Gamma_*$ of rank $n$, $\Fall$ is called \emph{$\Gamma_*$-ample} when there is\\ $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_*$.
 
 \end{definition}
 
@@ -985,7 +991,7 @@ Assume ${\GrowA=\Gamma_0^n}$. Consider ${(\Dist,f)}$ a distributional estimation
 
 \begin{proof}
 
-Consider any ${Q: \Words \xrightarrow{\Gamma_1} \Rats}$. Choose ${l \in \Nats}$ s.t. ${\forall K \in \Nats^n: \Abs{\A_Q(K)} \leq l}$. For each ${a \in \Bool^{\leq l}}$, construct ${Q_a: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x,y \in \Words}$
+Consider any ${Q: \Words \xrightarrow{\Gamma_1} \Rats}$. Choose ${l \in \Nats}$ s.t. ${\forall K \in \Nats^n: \Abs{\A_Q(K)} \leq l}$. For each\\ $a \in \Bool^{\leq l}$, construct ${Q_a: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x,y \in \Words}$
 
 \begin{align*}
 \R_{Q_a}(K) &= \R_Q(K,a) \\
@@ -1114,7 +1120,9 @@ Consider $\Dist$ a word ensemble of rank ${1}$ s.t. for any different $k,l \in \
 
 \[\forall x \in \Supp \Dist^k: m(x):=k\]
 
-For every $k \in \Nats$, define ${\Dist_f^k:=f_*^k\Dist^k}$.  Finally, define ${\chi_B: \Supp \Dist_f \rightarrow \Bool}$ by ${\chi_B(f(x)):=B^{m(x)}(x)}$.
+For every $k \in \Nats$, define ${\Dist_f^k:=f_*^k\Dist^k}$.  Finally, define ${\chi_B: \Supp \Dist_f \rightarrow \Bool}$ by
+
+\[\chi_B(f(x)):=B^{m(x)}(x)\]
 
 Let $\Gamma:=(\GammaPoly^1,\Gamma_0^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\Dist_f, \chi_B)$.
 
@@ -1191,7 +1199,7 @@ The following is the non-uniform version of Theorem~\ref{thm:hard_core} which we
 \begin{theorem}
 \label{thm:hard_core_circ}
 
-Consider $\Dist$ a word ensemble s.t. for any different $k,l \in \Nats$, $\Supp \Dist^k \cap \Supp \Dist^l = \varnothing$, $f: \Supp \Dist \rightarrow \Words$ one-to-one and $B$ a non-uniformly hard-core predicate of $(\Dist,f)$ (see Definition~\ref{def:hard_core_adv}). 
+Consider $\Dist$ a word ensemble s.t. for any different $k,l \in \Nats$,\\ $\Supp \Dist^k \cap \Supp \Dist^l = \varnothing$, $f: \Supp \Dist \rightarrow \Words$ one-to-one and $B$ a non-uniformly hard-core predicate of $(\Dist,f)$ (see Definition~\ref{def:hard_core_adv}). 
 
 Let $\Gamma:=(\GammaPoly^1,\GammaPoly^1)$. Let $P: \Words \Scheme \Rats$ satisfy $P \equiv \frac{1}{2}$. Then, $P$ is an $\Fall_{\textnormal{neg}}(\Gamma)$-optimal estimator for $(\Dist_f, \chi_B)$.
 
@@ -1604,7 +1612,7 @@ The notation $f(K) \equiv g(K) \pmod \Fall$ can be conveniently generalized from
 \begin{samepage}
 \begin{definition}
 
-Consider a set $X$ and two families $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$. We say that \emph{$\Dist$ is congruent to $\mathcal{E}$ modulo $\Fall$} when $\Dtv(\Dist^K,\mathcal{E}^K) \in \Fall$. In this case we write $\Dist^K \equiv \mathcal{E}^K \pmod \Fall$ or $\Dist \equiv \mathcal{E} \pmod \Fall$.
+Consider a set $X$ and two families $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$. We say that \emph{$\Dist$ is congruent to $\mathcal{E}$ modulo $\Fall$} when $\Dtv(\Dist^K,\mathcal{E}^K) \in \Fall$. In this case we write ${\Dist^K \equiv \mathcal{E}^K \pmod \Fall}$ or $\Dist \equiv \mathcal{E} \pmod \Fall$.
 
 \end{definition}
 \end{samepage}
@@ -1629,7 +1637,12 @@ Obvious since $\Dtv$ is a metric.
 \begin{proposition}
 \label{prp:prob_cong_ev}
 
-Consider $X$ a set, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \rightarrow \Reals\}_{K \in \Nats^n}}$ a uniformly bounded family of functions. Assume ${\Dist \equiv \mathcal{E} \pmod \Fall}$. Then,\\ ${\E_{x \sim \Dist^K}[f^K(x)] \equiv \E_{x \sim \mathcal{E}^K}[f^K(x)] \pmod \Fall}$.
+Consider $X$ a set, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and\\ $\{f^K: X \rightarrow \Reals\}_{K \in \Nats^n}$ a uniformly bounded family of functions. Assume ${\Dist \equiv \mathcal{E} \pmod \Fall}$. Then
+
+\begin{equation}
+%\label{eqn:tbd}
+\E_{x \sim \Dist^K}[f^K(x)] \equiv \E_{x \sim \mathcal{E}^K}[f^K(x)] \pmod \Fall
+\end{equation}
 
 \end{proposition}
 \end{samepage}
@@ -1643,7 +1656,12 @@ $\Abs{\E_{x \sim \Dist^K}[f^K(x)] - \E_{x \sim \mathcal{E}^K}[f^K(x)]} \leq  (\s
 \begin{proposition}
 \label{prp:prob_cong_semidir}
 
-Consider $X$, $Y$ sets, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\Dist \equiv \mathcal{E} \pmod \Fall$ implies $\Dist^K \ltimes f^K \equiv \mathcal{E}^K \ltimes f^K \pmod \Fall$.
+Consider $X$, $Y$ sets, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and\\ $\{f^K: X \Markov Y\}_{K \in \Nats^n}$ a family of Markov kernels. Then, $\Dist \equiv \mathcal{E} \pmod \Fall$ implies
+
+\begin{equation}
+%\label{eqn:tbd}
+\Dist^K \ltimes f^K \equiv \mathcal{E}^K \ltimes f^K \pmod \Fall
+\end{equation}
 
 \end{proposition}
 \end{samepage}
@@ -1657,7 +1675,12 @@ Total variation distance is contracted by semi-direct product with a Markov kern
 \begin{proposition}
 \label{prp:prob_cong_push}
 
-Consider $X$, $Y$ sets, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and ${\{f^K: X \Markov Y\}_{K \in \Nats^n}}$ a family of Markov kernels. Then, $\Dist \equiv \mathcal{E} \pmod \Fall$ implies $f_*^K\Dist^K \equiv f_*^K\mathcal{E}^K \pmod \Fall$.
+Consider $X$, $Y$ sets, $\{\Dist^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$, $\{\mathcal{E}^K \in \mathcal{P}(X)\}_{K \in \Nats^n}$ and\\ $\{f^K: X \Markov Y\}_{K \in \Nats^n}$ a family of Markov kernels. Then, $\Dist \equiv \mathcal{E} \pmod \Fall$ implies
+
+\begin{equation}
+%\label{eqn:tbd}
+f_*^K\Dist^K \equiv f_*^K\mathcal{E}^K \pmod \Fall
+\end{equation}
 
 \end{proposition}
 \end{samepage}
@@ -1671,7 +1694,12 @@ Total variation distance is contracted by pushforward therefore \[\Dtv(f_*^K\Dis
 \begin{proposition}
 \label{prp:prob_cong_dir}
 
-Consider $X_1$, $X_2$ sets, $\{\Dist_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\mathcal{E}_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\Dist_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$ and $\{\mathcal{E}_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$. Then, $\Dist_1 \equiv \mathcal{E}_1 \pmod \Fall$ and $\Dist_2 \equiv \mathcal{E}_2 \pmod \Fall$ imply\\ ${\Dist_1^K \times \Dist_2^K \equiv \mathcal{E}_1^K \times \mathcal{E}_2^K \pmod \Fall}$. 
+Consider $X_1$, $X_2$ sets, $\{\Dist_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$, $\{\mathcal{E}_1^K \in \mathcal{P}(X_1)\}_{K \in \Nats^n}$,\\ $\{\Dist_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$ and $\{\mathcal{E}_2^K \in \mathcal{P}(X_2)\}_{K \in \Nats^n}$. Then, $\Dist_1 \equiv \mathcal{E}_1 \pmod \Fall$ and $\Dist_2 \equiv \mathcal{E}_2 \pmod \Fall$ imply
+
+\begin{equation}
+%\label{eqn:tbd}
+\Dist_1^K \times \Dist_2^K \equiv \mathcal{E}_1^K \times \mathcal{E}_2^K \pmod \Fall
+\end{equation}
 
 \end{proposition}
 \end{samepage}
@@ -1712,7 +1740,9 @@ $\R_S^K(z)$ will denote $\R_S(K,z)$. $\UM_S^K \in \mathcal{P}(\Words \times \Wor
 
 $S^K(x,y,z)$ will denote $S(K,x,y,z)$. Given $w=(y,z)$, $S^K(x,w)$ will denote $S(K,x,y,z)$. $S^K(x)$ will denote the $Y$-valued random variable which equals $S(K,x,y,z)$ for $(y,z)$ sampled from $\UM_S^K$. $S_x^K$ will denote the probability distribution of this random variable i.e. $S_x^K$ is the push-forward of $\UM_S^K$ by the mapping $(y,z) \mapsto S(K,x,y,z)$.
 
-We think of $S$ as a randomized algorithm with advice which is random in itself. In particular any polynomial-time $\Gamma$-scheme can $S$ can be regarded as a polynomial-time $\MGrow$-scheme with $\M_S^K(z):=\delta_{z\A_S^K}$.
+We think of $S$ as a randomized algorithm with advice which is random in itself. In particular any polynomial-time $\Gamma$-scheme can $S$ can be regarded as a polynomial-time $\MGrow$-scheme with
+
+\[\M_S^K(z):=\delta_{z\A_S^K}\]
 
 We will use the notation $S: X \MScheme Y$ to signify $S$ is a polynomial-time $\MGrow$-scheme of signature $X \rightarrow Y$.
 
@@ -1921,7 +1951,7 @@ The following propositions are basic properties of samplable ensembles and probl
 \begin{proposition}
 \label{prp:smp}
 
-Consider a word ensemble $\Dist$, an encoded set $Y$, a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Suppose $\sigma$ is a polynomial-time $\EMG$-sampler of $\Dist$ relative to $\pi$. Then
+Consider a word ensemble $\Dist$, an encoded set $Y$, a family\\ $\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}$, a set ${I}$ and a uniformly bounded family\\ $\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}$. Suppose $\sigma$ is a polynomial-time $\EMG$-sampler of $\Dist$ relative to $\pi$. Then
 
 \begin{equation}
 \label{eqn:prp__smp}
@@ -1937,7 +1967,10 @@ If we sample $(x,y)$ from $\Dist^{K} \ltimes \pi^K$ and then sample $x'$ from ${
 
 $$\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] = \E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\E_{x' \sim \Dist_y^K}[h_\alpha^K(x',y)]]$$
 
-$$\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] = \E_{\Dist^{K} \ltimes \pi^K}[\E_{\Dist_y^K}[h_\alpha^K(x',y)]] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]$$
+\begin{align*}
+\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] &- \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] =\\ 
+\E_{\Dist^{K} \ltimes \pi^K}[\E_{\Dist_y^K}[h_\alpha^K(x',y)]] &- \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]
+\end{align*}
 
 $$\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] = \E_{\Dist^{K} \ltimes \pi^K}[\E_{\Dist_y^K}[h_\alpha^K(x',y)]-\E_{\UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]]$$
 
@@ -1953,7 +1986,11 @@ Using the defining property of $\sigma$, we get the desired result.
 \begin{proposition}
 \label{prp:gen}
 
-Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family ${\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}}$. Denote $\Dist_\pi^K:=\Dist^{K} \ltimes \pi^K$. Suppose $\sigma$ is a polynomial-time $\EMG$-sampler of $(\Dist,f)$ relative to $\pi$. Then
+Consider a distributional estimation problem $(\Dist,f)$, an encoded set $Y$, a family ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$, a set ${I}$ and a uniformly bounded family
+
+\[\{h_\alpha^K: (\Supp \Dist) \times Y \rightarrow \Reals\}_{\alpha \in I, K \in \Nats^n}\]
+
+Denote $\Dist_\pi^K:=\Dist^{K} \ltimes \pi^K$. Suppose $\sigma$ is a polynomial-time $\EMG$-sampler of $(\Dist,f)$ relative to $\pi$. Then
 
 \begin{equation}
 \E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y)\sigma^K(y,z)_1] \pmod \Fall
@@ -1979,7 +2016,9 @@ Using property (i) of Definition~\ref{def:smp_prob_rel} we can apply Proposition
 
 $$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) f_\sigma^K(\sigma^K(y,z)_0,y)] \pmod \Fall$$
 
-$$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) \E_{z' \sim\UM_\sigma^K}[\sigma^K(y,z')_1 \mid \sigma^K(y,z')_0 = \sigma^K(y,z)_0]] \pmod \Fall$$
+\begin{align*}
+&\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv}\\ &\E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) \E_{z' \sim\UM_\sigma^K}[\sigma^K(y,z')_1 \mid \sigma^K(y,z')_0 = \sigma^K(y,z)_0]] \pmod \Fall
+\end{align*}
 
 $$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) \sigma^K(y,z)_1] \pmod \Fall$$
 \end{proof}
@@ -2011,7 +2050,9 @@ Consider $\Dist$ a word ensemble, $f_1, f_2: \Supp \Dist \rightarrow \Reals$ bou
 
 \item\label{con:thm__mult__dist} $\pi_*^{K}(\Dist^{K}) \equiv \mathcal{E}^{K} \pmod \Fall$
 
-\item\label{con:thm__mult__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by $0$.  We require ${\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f_1(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall}$
+\item\label{con:thm__mult__fun} Denote ${\bar{g}: \Words \rightarrow \Reals}$ the extension of $g$ by $0$.  We require
+
+\[\E_{(x,z) \sim \Dist^{K} \times \Un_\pi^{K}}[\Abs{f_1(x)-\bar{g}(\pi^{K}(x,z))}] \in \Fall\]
 
 \item\label{con:thm__mult__smp} $(\Dist, f_2)$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
@@ -2156,7 +2197,7 @@ Denote $\Dist_\sigma^{K}:=\En_*^2(\sigma_{1\bullet}^{K} \times \sigma_{2\bullet}
 \begin{proposition}
 \label{prp:thm__mult__cond2}
 
-Consider $\Dist_1$, $\Dist_2$ word ensembles and $\sigma_1$, $\sigma_2$ which are polynomial-time $\EMG$-samplers for $\Dist_1$ and $\Dist_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_{1\bullet}^{K}$, ${x_2 \in \Supp \sigma_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any $g: \Supp \Dist_1 \rightarrow \Reals$ bounded and ${\bar{g}: \Words \rightarrow \Reals}$ its extension by ${0}$, we have 
+Consider $\Dist_1$, $\Dist_2$ word ensembles and $\sigma_1$, $\sigma_2$ which are polynomial-time $\EMG$-samplers for $\Dist_1$ and $\Dist_2$ respectively. Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$,\\ $x_1 \in \Supp \sigma_{1\bullet}^{K}$, ${x_2 \in \Supp \sigma_{2\bullet}^{K}}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$. Then, for any\\ $g: \Supp \Dist_1 \rightarrow \Reals$ bounded and ${\bar{g}: \Words \rightarrow \Reals}$ its extension by ${0}$, we have 
 
 $$\E_{(x_1,x_2,z) \sim\Dist_1^{K} \times \Dist_2^{K} \times \Un_\pi^{K}}[\Abs{g(x_1)-\bar{g}(\pi^{K}(\Chev{x_1,x_2},z))}] \in \Fall$$
 
@@ -2216,7 +2257,7 @@ Consider $\Dist_1$ a word ensemble with polynomial-time $\EMG$-sampler $\sigma$ 
 \bar{f}(\Chev{x_1,x_2})=f(x_2)
 \end{align*}
 
-Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{\bullet}^{K}}$, ${x_2 \in \Words}$ and $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$ and, conversely, if ${x \in \Words}$ is s.t. ${\pi^K(x,z)=x_1}$ then ${x}$ is of the form ${\Chev{x_1,x_2'}}$ for some ${x_2' \in \Words}$. Then, $(\Dist,\bar{f})$ is polynomial-time $\EMG$-samplable relative to $\pi$.
+Suppose $\pi: \Words \Scheme \Words$ is s.t. for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{\bullet}^{K}}$, ${x_2 \in \Words}$ and\\ $z \in \Bool^{\R_\pi(K)}$, $\pi^{K}(\Chev{x_1,x_2},z)=x_1$ and, conversely, if ${x \in \Words}$ is s.t. ${\pi^K(x,z)=x_1}$ then ${x}$ is of the form ${\Chev{x_1,x_2'}}$ for some ${x_2' \in \Words}$. Then, $(\Dist,\bar{f})$ is polynomial-time $\EMG$-samplable relative to $\pi$.
 
 \end{proposition}
 \end{samepage}
@@ -2237,19 +2278,19 @@ Let ${f_\tau^K}$ and ${f_{\bar{\tau}}^K}$ be defined as in Definition~\ref{def:s
 
 \[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x,y) \sim \En_*^2(\sigma_\bullet^K \times \tau_{0\bullet}^K) \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K(x,y)-\bar{f}(x)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{f_{\bar{\tau}}^K(\Chev{x_1,x_2},x_1)-\bar{f}(\Chev{x_1,x_2})}] \pmod \Fall\]
+\[\E_{ \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{f_{\bar{\tau}}^K(\Chev{x_1,x_2},x_1)-\bar{f}(\Chev{x_1,x_2})}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_{\bar{\tau}}^K}[\bar{\tau}_1^K(x_1) \mid \bar{\tau}^K(x_1)_0 = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
+\[\E_{ \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_{\bar{\tau}}^K}[\bar{\tau}_1^K(x_1) \mid \bar{\tau}^K(x_1)_0 = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_\tau^K}[\tau_1^K \mid \Chev{x_1,\tau_0^K} = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
+\[\E_{\Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_\tau^K}[\tau_1^K \mid \Chev{x_1,\tau_0^K} = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K(x,y)-\bar{f}(x)}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_\tau^K}[\tau_1^K \mid \tau_0^K = x_2]-f(x_2)}] \pmod \Fall\]
+\[\E_{\Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_\tau^K}[\tau_1^K \mid \tau_0^K = x_2]-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K(x,y)-\bar{f}(x)}] \equiv \E_{x_2 \sim \tau_{0\bullet}^K}[\Abs{f_\tau^K(x_2)-f(x_2)}] \pmod \Fall\]
+\[\E_{\Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{x_2 \sim \tau_{0\bullet}^K}[\Abs{f_\tau^K(x_2)-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K(x,y)-\bar{f}(x)}] \equiv \E_{x_2 \sim \Dist_2^{K}}[\Abs{f_\tau^K(x_2)-f(x_2)}] \pmod \Fall\]
+\[\E_{\Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{x_2 \sim \Dist_2^{K}}[\Abs{f_\tau^K(x_2)-f(x_2)}] \pmod \Fall\]
 
-\[\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K(x,y)-\bar{f}(x)}] \equiv 0 \pmod \Fall\]
+\[\E_{\Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv 0 \pmod \Fall\]
 \end{proof}
 
 \begin{samepage}
@@ -2272,7 +2313,9 @@ Suppose $P$ is an $\ESG$-optimal estimator for $(\Dist_2,f)$. Let ${\bar{P}: \Wo
 
 Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote $\Un_{PS}^K:=\Un_P^K \times \Un_S^K$, ${\Dist_{PS}^K:=\Dist^{K} \times \Un_{PS}^K}$.
 
-\[\E_{\Dist_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]=\E_{\Dist_1^{K} \times \Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - \bar{f}(\Chev{x_1,x_2}))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]\]
+\begin{align*}
+&\E_{\Dist_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]=\\&\E_{\Dist_1^{K} \times \Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - \bar{f}(\Chev{x_1,x_2}))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]
+\end{align*}
 
 \[\E_{\Dist_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]=\E_{\Dist_1^{K} \times \Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - f(x_2))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]\]
 
@@ -2298,7 +2341,7 @@ Define $\bar{f}_1, \bar{f}_2: \Supp \Dist \rightarrow \Reals$ by $\bar{f}_1(\Che
 
 Construct $\pi: \Words \Scheme \Words$ s.t. $\R_\pi \equiv 0$, for any $K \in \Nats^n$, ${x_1 \in \Supp \sigma_{1\bullet}^{K}}$ and ${x_2 \in \Words}$, ${\pi^{K}(\Chev{x_1,x_2})=x_1}$ and, conversely, if ${x \in \Words}$ is s.t. ${\pi^K(x)=x_1}$ then ${x}$ is of the form ${\Chev{x_1,x_2'}}$ for some ${x_2' \in \Words}$. This is possible because the runtime of $\sigma_1^K$ is bounded by a polynomial in $K$ so the length of $\sigma_{1}^K$'s output is also bounded by a polynomial in $K$, implying $\pi^K$ only has to read a polynomial size prefix of its input in order to output $x_1$. On the other hand, if the input is not of the form ${\Chev{x_1,x_2}}$ for ${x_1}$ sufficiently short to be in ${\Supp \sigma_{1\bullet}^{K}}$, ${\pi}$ may output a string too long to be in ${\Supp \sigma_{1\bullet}^{K}}$.
 
-Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp \sigma_{1\bullet}^K$, $x_2 \in \Words$ and $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\ESG$-optimal estimator for $(\Dist,\bar{f}_2)$. 
+Construct $\bar{P}: \Words \Scheme \Rats$ s.t. $\R_{\bar{P}}=\R_{P_2}$ and for any $x_1 \in \Supp \sigma_{1\bullet}^K$, $x_2 \in \Words$ and\\ $z \in \Bool^{\R_{P_2}(K)}$, $\bar{P}^K(\Chev{x_1,x_2},z)=P_2^K(x_2,z)$. This is possible for the same reason as above: $\bar{P}$ skips the polynomial size prefix corresponding to $x_1$ and then executes a simulation of running $P_2$ on $x_2$, even if $x_2$ is too long to read in full. By Proposition~\ref{prp:thm__mult__op}, $\bar{P}$ is an $\ESG$-optimal estimator for $(\Dist,\bar{f}_2)$. 
 
 We apply Theorem~\ref{thm:mult} where $\bar{f}_1$, $\bar{f}_2$ play the roles of $f_1$, $f_2$ and $(\Dist_1, f_1)$ plays the role of $(\mathcal{E},g)$: condition~\ref{con:thm__mult__dist} holds due to Proposition~\ref{prp:thm__mult__cond1}, condition~\ref{con:thm__mult__fun} holds due to Proposition~\ref{prp:thm__mult__cond2} and condition~\ref{con:thm__mult__smp} holds due to Proposition~\ref{prp:thm__mult__cond3}. This gives us $P$, an optimal polynomial-time estimator for $(\Dist, f)$ s.t. ${\R_P=\R_{P_1}+\R_{P_2}}$ and for any ${z_1 \in \Bool^{\R_{P_1}(K)}}$ and $z_2 \in \Bool^{\R_{P_1}(K)}$ 
 
@@ -2317,7 +2360,7 @@ In this section we study notions of Karp reduction between distributional estima
 
 First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose. 
 
-Consider the setting of Corollary~\ref{crl:one_way}. Denote $\Dist^k:=\Un^{2k}$ and define ${\chi: \Supp \Dist \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any $x,y \in \Bool^k$, ${\pi_f^k(xy) = \Chev{f(x),y}}$. $\pi_f$ can be regarded as a Karp reduction of $(\Dist, \chi)$ to $(\Dist_{(f)},\chi_f)$ since for any ${z \in \Supp \Dist^k}$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*\Dist=\Dist_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pullback of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal estimator for $(\Dist,\chi)$ since its error is $\E_{z \sim \Dist^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \Dist^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \Dist^k}[(Q^k(z)-\chi(z))^2]=0$.
+Consider the setting of Corollary~\ref{crl:one_way}. Denote $\Dist^k:=\Un^{2k}$ and define ${\chi: \Supp \Dist \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any\\ $x,y \in \Bool^k$, ${\pi_f^k(xy) = \Chev{f(x),y}}$. $\pi_f$ can be regarded as a Karp reduction of $(\Dist, \chi)$ to $(\Dist_{(f)},\chi_f)$ since for any ${z \in \Supp \Dist^k}$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*\Dist=\Dist_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pullback of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal estimator for $(\Dist,\chi)$ since its error is $\E_{z \sim \Dist^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \Dist^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \Dist^k}[(Q^k(z)-\chi(z))^2]=0$.
 
 We will describe several types of reductions that preserve optimal polynomial-time estimators. After that, we will characterize reductions that can be constructed by composing those types and prove a completeness theorem.
 
@@ -2498,7 +2541,7 @@ Consider $\gamma \in \GammaPoly^n$, $\Dist$ a word ensemble and $\bar{g}: \Words
 
 \begin{equation}
 %\label{eqn:tbd}
-\E_{(x,z_0, z_1 \ldots z_{\gamma(K)-1}) \sim \Dist^{K} \times \prod_{i \in [\gamma(K)]} \Un_\pi^K}[\Abs{\E_{z \sim \Un_\pi^{K}}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \frac{\sup \Abs{\bar{g}}}{\gamma(K)^{\frac{1}{2}}}
+\E_{(x,z) \sim \Dist^{K} \times \prod_{i \in [\gamma(K)]} \Un_\pi^K}[\Abs{\E_{z \sim \Un_\pi^{K}}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \frac{\sup \Abs{\bar{g}}}{\gamma(K)^{\frac{1}{2}}}
 \end{equation}
 
 \end{proposition}
@@ -2508,7 +2551,9 @@ Consider $\gamma \in \GammaPoly^n$, $\Dist$ a word ensemble and $\bar{g}: \Words
 
 Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$.
 
-\[\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \E_{\Dist^{K}}[\E_{\Un_\gamma^K}[(\E_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))^2]^{\frac{1}{2}}]\]
+\begin{align*}
+&\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq\\ &\E_{\Dist^{K}}[\E_{\Un_\gamma^K}[(\E_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))^2]^{\frac{1}{2}}]
+\end{align*}
 
 \[\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \frac{1}{\gamma(K)^{\frac{1}{2}}} \E_{\Dist^{K}}[\Var_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]^{\frac{1}{2}}]\]
 %
@@ -2522,7 +2567,10 @@ Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote ${\Un_{PS}^K
 
 Using the construction of $P_f$, the assumption on $\gamma$ and Proposition~\ref{prp:ev_equiv_mean}, we get
 
-\[\E[(P_f^K - f)S] \equiv \E_{\Dist^{K} \times \Un_{PS}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i) - \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
+\begin{align*}
+&\E[(P_f^K - f)S] \equiv\\ 
+&\E_{\Dist^{K} \times \Un_{PS}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i) - \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall
+\end{align*}
 
 \[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\Dist^{K} \times \Un_{PS}^K}[(P_g^K(\pi^K(x,z_i),w_i) - \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
 
@@ -2595,7 +2643,7 @@ Consider ${F}$ a bounded random variable and ${s,t \in \Reals}$. Then
 
 \begin{proof}[Proof of Theorem \ref{thm:sp_reduce}]
 
-Let ${\sigma}$ be an ${\EMG}$-sampler of ${\Dist}$ relative to ${\pi}$. Consider any ${Q_f: \Words \Scheme \Rats}$ bounded. Construct ${Q_g: \Words \MScheme \Rats}$ s.t. for any ${z_\sigma \in \UM_\sigma^K}$, ${z_Q \in \BoolR{Q_f}}$, ${z_\pi \in \Bool^{\gamma(K) \R_\pi(K)}}$ and ${z_g \in \BoolR{P_g}}$
+Let ${\sigma}$ be an ${\EMG}$-sampler of ${\Dist}$ relative to ${\pi}$. Consider any\\ $Q_f: \Words \Scheme \Rats$ bounded. Construct ${Q_g: \Words \MScheme \Rats}$ s.t. for any ${z_\sigma \in \UM_\sigma^K}$, ${z_Q \in \BoolR{Q_f}}$, ${z_\pi \in \Bool^{\gamma(K) \R_\pi(K)}}$ and ${z_g \in \BoolR{P_g}}$
 
 \begin{align*}
 \M_{Q_g}^K &= c_*^4(\M_\sigma^K \times \M_{Q_f}^K \times \M_{\pi}^K \times \M_{P_g}^K) \\
@@ -2621,7 +2669,10 @@ We can consider the expressions within the expected values on both sides as rand
 
 \[\E_{\Dist^{K} \times \Un_{P_g}^K}[\E_{\Un_\pi^K}[(P_g \circ \pi)^K-\bar{g} \circ \pi^K]^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K - \bar{g} \circ \pi^K])^2] \pmod \Fall\]
 
-\[\E_{\Dist^{K} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-\E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - \E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \pmod \Fall\]
+\begin{align*}
+&\E_{\Dist^{K} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-\E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \leq\\ 
+&\E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - \E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \pmod \Fall 
+\end{align*}
 
 We now apply Proposition~\ref{prp:sq_diff_cong} via condition \ref{con:def__sp_reduce__fun} of Definition~\ref{def:sp_reduce}
 
@@ -2676,7 +2727,10 @@ Let ${W}$ be a Radon-Nikodym ${\EG}$-derivative of ${\Dist}$ w.r.t. ${\mathcal{E
 
 \[\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x) + \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K(x)-f(x))S^K(x,P^K(x))] \equiv 0 \pmod \Fall\]
 
-\[\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] + \sum_{x \in \Words} \ \Dist^{K}(x) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv 0 \pmod \Fall\]
+\begin{align*}
+\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] +\\
+\sum_{x \in \Words} \ \Dist^{K}(x) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv 0 \pmod \Fall 
+\end{align*}
 
 \[\E_{\Dist^{K} \times \Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv -\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] \pmod \Fall\]
 
@@ -2703,7 +2757,10 @@ Let ${W}$ be a Radon-Nikodym ${\EG}$-derivative of ${\Dist}$ w.r.t. ${\mathcal{E
 
 \[\E_{\mathcal{E}^{K} \times \Un_W^K \times \Un_P^K}[W^K(x)(P^K(x)-f(x))^2] \leq \E_{\mathcal{E}^{K} \times \Un_W^K \times \Un_Q^K}[W^K(x)(Q^K(x)-f(x))^2] \pmod \Fall\]
 
-\[\sum_{x \in \Words} \mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_P^K}[(P^K(x)-f(x))^2] \leq \sum_{x \in \Words} \mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall\]
+\begin{align*}
+&\sum_{x \in \Words} \mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_P^K}[(P^K(x)-f(x))^2] \leq\\
+&\sum_{x \in \Words} \mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall
+\end{align*}
 
 Using the assumption on ${W}$
 
@@ -2786,7 +2843,7 @@ Consider ${\Dist}$ a word ensemble of rank ${n}$ and ${\alpha: \Nats^m \rightarr
 \begin{definition}
 %\label{def:tbd}
 
-Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${\alpha: \Nats^m \Alg \Nats^n}$ s.t. ${\alpha \in \GammaPoly^{mn}}$ as a function and ${\T_\alpha \in \GammaPoly^m}$. We define ${S^\alpha: X \xrightarrow{\Gamma \alpha} Y}$ by requiring that for any ${L \in \Nats^m}$, ${\R_{S^\alpha}(L)=\R_S(\alpha(L))}$ and ${(S^\alpha)^L(x,y)=S^{\alpha(L)}(x,y)}$.
+Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${\alpha: \Nats^m \Alg \Nats^n}$ s.t. ${\alpha \in \GammaPoly^{mn}}$ as a function and ${\T_\alpha \in \GammaPoly^m}$. We define ${S^\alpha: X \xrightarrow{\Gamma \alpha} Y}$ by requiring that for any ${L \in \Nats^m}$,\\ $\R_{S^\alpha}(L)=\R_S(\alpha(L))$ and ${(S^\alpha)^L(x,y)=S^{\alpha(L)}(x,y)}$.
 
 \end{definition}
 \end{samepage}
@@ -2795,7 +2852,7 @@ Consider ${X}$, ${Y}$ encoded sets, ${S: X \Scheme Y}$ and ${\alpha: \Nats^m \Al
 \begin{proposition}
 \label{prp:rev_sch_idx}
 
-Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta \in \GammaPoly^{nm}}$. Assume that ${\T_\alpha \in \GammaPoly^m}$ and ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$. Then, for any  ${S: X \xrightarrow{\Gamma \alpha} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${\alpha(\beta(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
+Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\beta \in \GammaPoly^{nm}}$. Assume that\\ $\T_\alpha \in \GammaPoly^m$ and ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$. Then, for any  ${S: X \xrightarrow{\Gamma \alpha} Y}$ there is ${\tilde{S}: X \Scheme Y}$ s.t. for all ${K \in \Nats^n}$ that satisfy ${\alpha(\beta(K))=K}$, ${x \in X}$ and ${y,z \in \Words}$
 
 \begin{align}
 \A_{\tilde{S}}(K)&=\A_S(\beta(K)) \\
@@ -2810,7 +2867,7 @@ Consider  ${X}$, ${Y}$ encoded sets, ${\alpha: \Nats^m \Alg \Nats^n}$ and ${\bet
 
 To see there is no obstruction of time complexity, note that ${\beta}$ can be computed by some\\ ${\beta^*: \Nats^n \Alg \Nats^m}$ s.t. ${\T_{\beta^*} \in \GammaPoly^n}$. Given input ${K}$, ${\beta^*}$ works by iterating over all ${L}$ within some polynomial size range (thanks to the assumption ${\beta \in \GammaPoly^{nm}}$) and checking the condition ${\alpha(L)=K}$.
 
-To see there are no obstructions of random or advice complexity, note there is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t.\\ $\R_S(L) \leq \gamma_{\mathfrak{R}}(\alpha(L))$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(L)} \leq \gamma_{\mathfrak{A}}(\alpha(L))}$. In particular, if ${K \in \Nats^n}$ is s.t. ${\alpha(\beta(K))=K}$ then ${\R_S(\beta(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(\beta(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
+To see there are no obstructions of random or advice complexity, note there is ${\gamma_{\mathfrak{R}} \in \GrowR}$ s.t.\\ $\R_S(L) \leq \gamma_{\mathfrak{R}}(\alpha(L))$ and ${\gamma_{\mathfrak{A}} \in \GrowA}$ s.t. ${\Abs{\A_S(L)} \leq \gamma_{\mathfrak{A}}(\alpha(L))}$. In particular, if ${K \in \Nats^n}$ is s.t.\\ $\alpha(\beta(K))=K$ then ${\R_S(\beta(K)) \leq \gamma_{\mathfrak{R}}(K)}$ and ${\Abs{\A_S(\beta(K))} \leq \gamma_{\mathfrak{A}}(K)}$.
 %
 \end{proof}
 
@@ -2818,7 +2875,7 @@ To see there are no obstructions of random or advice complexity, note there is $
 \begin{definition}
 %\label{def:tbd}
 
-${\alpha: \Nats^m \Alg \Nats^n}$ is called an \emph{efficient injection} when ${\alpha \in \GammaPoly^{mn}}$ as a function, ${\T_\alpha \in \GammaPoly^m}$ and there is ${\beta \in \GammaPoly^{nm}}$ s.t. ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$.
+${\alpha: \Nats^m \Alg \Nats^n}$ is called an \emph{efficient injection} when ${\alpha \in \GammaPoly^{mn}}$ as a function,\\ $\T_\alpha \in \GammaPoly^m$ and there is ${\beta \in \GammaPoly^{nm}}$ s.t. ${\forall L \in \Nats^m: \beta(\alpha(L))=L}$.
 
 \end{definition}
 \end{samepage}
@@ -3007,7 +3064,7 @@ Consider ${r: \NatFun \Nats}$ steadily growing and ${p \in \NatPoly}$ increasing
 
 \begin{proof}
 
-Consider ${\gamma_\alpha \in \Gamma_r \alpha_p}$. There is ${\gamma \in \Gamma_r}$ s.t. ${\gamma_\alpha \leq \gamma \circ \alpha_p}$. There is ${q \in \NatPoly}$ s.t. ${\gamma(J,k) \leq r(J,q(J,k))}$. We get ${\gamma_\alpha(J,k) \leq \gamma(J,p(J,k)) \leq r(J,q(J,p(J,k)))}$ and therefore ${\gamma_\alpha \in \Gamma_r}$. Conversely, consider ${\gamma' \in \Gamma_r}$. There is ${q' \in \NatPoly}$ s..t ${\gamma'(J,k) \leq r(J,q'(J,k))}$. ${p(J,k) \geq k}$ and ${r}$ is non-decreasing in the last argument, implying that ${r \leq r \circ \alpha_p}$. We conclude that\\ ${\gamma'(J,k) \leq r(J,p(J,q'(J,k)))}$ and therefore ${\gamma' \in \Gamma_r \alpha_p}$.
+Consider ${\gamma_\alpha \in \Gamma_r \alpha_p}$. There is ${\gamma \in \Gamma_r}$ s.t. ${\gamma_\alpha \leq \gamma \circ \alpha_p}$. There is ${q \in \NatPoly}$ s.t. ${\gamma(J,k) \leq r(J,q(J,k))}$. We get ${\gamma_\alpha(J,k) \leq \gamma(J,p(J,k)) \leq r(J,q(J,p(J,k)))}$ and therefore ${\gamma_\alpha \in \Gamma_r}$. Conversely, consider ${\gamma' \in \Gamma_r}$. There is ${q' \in \NatPoly}$ s..t ${\gamma'(J,k) \leq r(J,q'(J,k))}$.\\ $p(J,k) \geq k$ and ${r}$ is non-decreasing in the last argument, implying that ${r \leq r \circ \alpha_p}$. We conclude that ${\gamma'(J,k) \leq r(J,p(J,q'(J,k)))}$ and therefore ${\gamma' \in \Gamma_r \alpha_p}$.
 %
 \end{proof}
 
@@ -3056,7 +3113,7 @@ For any ${p \in \NatPoly}$, define ${\alpha_p: \NatFun \Nats^n}$ by
 \forall J \in \Nats^{n-1}, k \in \Nats: \alpha_p(J,k) = (J,p(J,k))
 \end{equation}
 
-Consider a distributional estimation problem ${(\Dist,f)}$ s.t. ${\Dist}$ is ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable and there are ${\phi \in E}$ and ${q \in \Nats[k]}$ s.t. for any ${x \in \Supp \Dist}$ and ${k \geq q(\Abs{x})}$, ${f(x)=\mathfrak{F}(\phi,k,x)}$. Then, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\Dist,f)}$ to ${(\Dist_{\mathfrak{F}}, f_{\mathfrak{F}})}$ over ${\alpha_p}$ for some ${p \in \NatPoly}$ increasing in the last argument (it is easy to see that any such ${\alpha_p}$ is an efficient injection).
+Consider a distributional estimation problem ${(\Dist,f)}$ s.t. ${\Dist}$ is ${\Fall(\Gamma_{\textnormal{smp}})}$-samplable and there are ${\phi \in E}$ and ${q \in \Nats[k]}$ s.t. for any ${x \in \Supp \Dist}$ and ${k \geq q(\Abs{x})}$, ${f(x)=\mathfrak{F}(\phi,k,x)}$. Then, there is a precise pseudo-invertible ${\Fall(\Gamma_{\textnormal{red}})}$-reduction from ${(\Dist,f)}$ to ${(\Dist_{\mathfrak{F}}, f_{\mathfrak{F}})}$ over ${\alpha_p}$ for some\\ $p \in \NatPoly$ increasing in the last argument (it is easy to see that any such ${\alpha_p}$ is an efficient injection).
 
 \end{theorem}
 \end{samepage}
@@ -3084,7 +3141,11 @@ To verify condition~\ref{con:def__pp_reduce__dist} of Definition~\ref{def:pp_red
 
 \[W^K(y)=\begin{cases}2^{\Abs{a}+\Abs{b}} \text{ if } \exists z_b,z_a,x \in \Bool^{\leq h(K)}: y=\Chev{bz_b,\En_\Nats(p(K)), az_a,x}\\0 \text{ otherwise}\end{cases}\]
 
-${\Dist^K \equiv \sigma_\bullet^K \pmod{\Fall}}$ since ${\sigma}$ is an ${\Fall(\Gamma_{\textnormal{smp}})}$-sampler of ${\Dist}$. By Proposition~\ref{prp:prob_cong_push}, ${\pi_*^K\Dist^K \equiv \pi_*^K\sigma_\bullet^K \pmod{\Fall}}$. It follows that
+${\Dist^K \equiv \sigma_\bullet^K \pmod{\Fall}}$ since ${\sigma}$ is an ${\Fall(\Gamma_{\textnormal{smp}})}$-sampler of ${\Dist}$. By Proposition~\ref{prp:prob_cong_push}
+
+\[\pi_*^K\Dist^K \equiv \pi_*^K\sigma_\bullet^K \pmod{\Fall}\]
+
+It follows that
 
 \[\sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(y)W^K(y)-(\pi_*^K\Dist^K)(y)} \equiv \sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(y)W^K(y)-(\pi_*^K\sigma_\bullet^K)(y)} \pmod{\Fall}\]
 
@@ -3096,7 +3157,10 @@ For any ${y \in \Words}$, if ${W^K(y)=0}$ then ${(\pi_*^K\sigma_\bullet^K)(y) = 
 
 \[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_1 \in \Bool^{r_p(K)-\Abs{a}}\\z_2 \in \Bool^{r_p(K)-\Abs{b}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-2r_p(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
 
-\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_1 \in \Bool^{r_p(K)-\Abs{a}}\\z_2 \in \Bool^{r_p(K)-\Abs{b}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-2r_p(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -2^{-(r_p(K)-\Abs{a})}2^{-(r_p(K)-\Abs{b})}\sigma_\bullet^K(x)} \pmod{\Fall}\]
+\begin{align*}
+&\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv\\
+&\sum_{\substack{z_1 \in \Bool^{r_p(K)-\Abs{a}}\\z_2 \in \Bool^{r_p(K)-\Abs{b}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-2r_p(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -2^{-(r_p(K)-\Abs{a})}2^{-(r_p(K)-\Abs{b})}\sigma_\bullet^K(x)} \pmod{\Fall} 
+\end{align*}
 
 \[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{p(K)}W^K-\pi_*^K\Dist^K} \equiv 0 \pmod{\Fall}\]
 
@@ -3351,7 +3415,7 @@ The above obviously implies \ref{eqn:prp__fall_uni_weak__conc}.
 \begin{proposition}
 \label{prp:fall_uni}
 
-For any ${p \in \NatPoly}$ there are ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any ${\zeta: \NatFun \Reals}$ bounded, if 
+For any ${p \in \NatPoly}$ there are ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any\\ $\zeta: \NatFun \Reals$ bounded, if 
 
 \begin{equation}
 \label{eqn:prp__fall_uni__prem}
@@ -3391,15 +3455,15 @@ In the following, we use the notation ${\alpha_{p}(J,k):=(J,p(J,k))}$.
 Consider ${p \in \NatPoly}$, ${(\Dist,f)}$ a distributional estimation problem and\\ ${P,Q: \Words \Scheme \Rats}$ bounded. Suppose that
 
 \begin{align}
-\label{eqn:prp__fall_uni_amp__p}\sup_{i \in \Nats} \E_{ \Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2] &\leq \E_{ \Dist^{K} \times \Un_P^{K}}[(P^{K}(x,y)-f(x))^2] \pmod \FallU \\
-\label{eqn:prp__fall_uni_amp__q}\sup_{i \in \Nats} \E_{\Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2] &\leq \E_{\Dist^{K} \times \Un_Q^{K}}[(Q^{K}(x,y)-f(x))^2] \pmod \FallU
+\label{eqn:prp__fall_uni_amp__p}\sup_{i \in \Nats} \E_{ \Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}-f)^2] &\leq \E_{ \Dist^{K} \times \Un_P^{K}}[(P^{K}-f)^2] \pmod \FallU \\
+\label{eqn:prp__fall_uni_amp__q}\sup_{i \in \Nats} \E_{\Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}-f)^2] &\leq \E_{\Dist^{K} \times \Un_Q^{K}}[(Q^{K}-f)^2] \pmod \FallU
 \end{align}
 
 Then
 
 \begin{equation}
 \label{eqn:prp__fall_uni_amp}
-\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K}(x,y)-f(x))^2] \leq \E_{\Dist^{K} \times \Un_Q^{K}}[(Q^{K}(x,y)-f(x))^2] \pmod \FallU
+\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K}-f)^2] \leq \E_{\Dist^{K} \times \Un_Q^{K}}[(Q^{K}-f)^2] \pmod \FallU
 \end{equation}
 
 \end{proposition}
@@ -3436,11 +3500,11 @@ Construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x,y,b_0 
 P^K(x,y,\Chev{a_0,b_0}) &= D(\Ev^{K_{n-1}}(a_0;x,y))
 \end{align}
 
-Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume ${\sup \Abs{Q} \leq M}$ (otherwise we can replace ${Q}$ by ${\tilde{Q}:=\max(\min(Q,+M),-M)}$ and have ${\E[(\tilde{Q}-f)^2]\leq\E[(Q-f)^2]}$). Choose ${q \in \NatPoly}$ s.t. for any ${K \in \Nats^n}$
+Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume $\sup \Abs{Q} \leq M$ (otherwise we can replace ${Q}$ by ${\tilde{Q}:=\max(\min(Q,+M),-M)}$ and have ${\E[(\tilde{Q}-f)^2]\leq\E[(Q-f)^2]}$). Choose ${q \in \NatPoly}$ s.t. for any ${K \in \Nats^n}$ there exits ${a_Q^K \in \Bool^{l(\alpha_q(K))}}$ for which
 
 \begin{align}
 \label{eqn:thm__exists_all__q_rnd}\R_Q(K) &\leq r(\alpha_q(K)) \\
-\label{eqn:thm__exists_all__q_adv}\exists a_Q^K \in \Bool^{l(\alpha_q(K))} \forall i \in \Nats, x,z \in \Words, y \in \BoolR{Q}: D(\Ev^{q(K)+i}(a_Q^K;x,yz))&=Q^K(x,y)
+\label{eqn:thm__exists_all__q_adv}\forall i \in \Nats, x,z \in \Words, y \in \BoolR{Q}: D(\Ev^{q(K)+i}(a_Q^K;x,yz))&=Q^K(x,y)
 \end{align}
 
 Take any ${i \in \Nats}$.
@@ -3608,7 +3672,10 @@ Consider any ${\alpha: \Nats^n \rightarrow \Words}$ s.t. ${\Abs{\alpha(K)} \leq 
 
 By Proposition~\ref{prp:est_err_smp}
 
-\[\E_{\Un_\sigma^K}[\E[(h_\alpha^K(\sigma^K(y)_0)-\sigma^K(y)_1)^2]] \overset{\alpha}{\equiv} \E_{\Dist^{\eta(K)}}[\E[(h_\alpha^K(x)-f(x))^2]] + \E_{\Un_\sigma^K}[(f(\sigma^K(y)_0)-\sigma^K(y)_1)^2] \pmod \FallM\]
+\begin{align*}
+&\E_{\Un_\sigma^K}[\E[(h_\alpha^K(\sigma^K(y)_0)-\sigma^K(y)_1)^2]] \overset{\alpha}{\equiv}\\ 
+&\E_{\Dist^{\eta(K)}}[\E[(h_\alpha^K(x)-f(x))^2]] + \E_{\Un_\sigma^K}[(f(\sigma^K(y)_0)-\sigma^K(y)_1)^2] \pmod \FallM 
+\end{align*}
 
 \begin{equation}
 \label{eqn:thm__exists_smp__prf1}
@@ -3637,19 +3704,19 @@ Similarly, we have
 \Prb_{\Un_R^K}[R^K(A^K(y),y) < \varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2+l(K)+1}
 \end{equation}
 
-Combining \ref{eqn:thm__exists_smp__prf2} and \ref{eqn:thm__exists_smp__prf3}, we conclude
+Combining \ref{eqn:thm__exists_smp__prf2} and \ref{eqn:thm__exists_smp__prf3}, we conclude that for any ${b \in \Bool^{\leq l(K)}}$
 
-\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_R^K}[\varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1} > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2} + 2^{-\epsilon l(K)^2+l(K)+1}\]
+\[\Prb_{\Un_R^K}[\varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1} > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2} + 2^{-\epsilon l(K)^2+l(K)+1}\]
 
-\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_R^K}[\varrho^K(A^K(y)) > \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1})] \leq 2^{-\epsilon l(K)^2+l(K)+2}\]
+\[\Prb_{\Un_R^K}[\varrho^K(A^K(y)) > \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1})] \leq 2^{-\epsilon l(K)^2+l(K)+2}\]
 
 It follows that for some ${M_0 \in \Reals^{>0}}$
 
-\[\forall b \in \Bool^{\leq l(K)}: \E_{\Un_R^K}[\varrho^K(A^K(y)] \leq \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+2} M_0\]
+\[\E_{\Un_R^K}[\varrho^K(A^K(y)] \leq \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+2} M_0\]
 
  Denote ${\varepsilon_1(K):=2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+1} M_0}$. It is easy to see that ${\varepsilon_1 \in \FallM}$.
 
-\[\forall b \in \Bool^{\leq l(K)}: \E_{\Un_R^K}[\E_{\Dist^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(A^K(y);x,z))-f(x))^2]] \leq \varrho^K(b) + \varepsilon_1(K)\]
+\[\E_{\Un_R^K}[\E_{\Dist^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(A^K(y);x,z))-f(x))^2]] \leq \varrho^K(b) + \varepsilon_1(K)\]
 
 \[\forall b \in \Bool^{\leq l(K)}: \E_{\Dist^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \leq \varrho^K(b) + \varepsilon_1(K)\]
 
@@ -3657,7 +3724,10 @@ Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can 
 
 \[\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \varrho^{\alpha_{q+i}(K)}(a_Q^K) + \varepsilon_1(\alpha_{q+i}(K))\]
 
-\[\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\Dist^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a_Q^K;x,z))-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))\]
+\begin{align*}
+&\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq\\ 
+&\E_{\Dist^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a_Q^K;x,z))-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))
+\end{align*}
 
 \[\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\Dist^{\eta(K)} \times \Un_Q^K}[(Q^K(x,z)-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))\]
 
@@ -3787,7 +3857,7 @@ For distributional decision problems and ${\EG}$-samplable word ensembles we hav
 \begin{proposition}
 \label{prp:tally_smp_bpp}
 
-Let ${\Delta=(\Delta_{\mathfrak{R}}, \Delta_{\mathfrak{A}})}$ be a pair of growth spaces of rank ${n}$ s.t. ${\Delta_{\mathfrak{R}} \subseteq \GrowR}$, ${\Delta_{\mathfrak{A}} \subseteq \GrowA}$ and ${1 \in \Delta_{\mathfrak{A}}}$. Consider ${L \subseteq \Nats^n}$ and ${\Dist}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \Dist^{K_1} \cap \Supp \Dist^{K_2} = \varnothing}$. Define ${\chi: \Supp \Dist \rightarrow \Bool}$ by requiring that for any ${K \in \Nats^n}$ and $x \in \Supp \Dist^K$, ${\chi(x)=\chi_L(K)}$. Assume ${\sigma}$ is an ${\EG}$-sampler of ${\Dist}$ and ${P}$ is an ${\Fall(\Delta)}$-optimal estimator for ${(\Dist, \chi)}$. Then there is ${A: \bm{1} \Scheme \Bool}$ s.t. ${\A_A(K)=\Chev{\A_\sigma(K),\A_P(K)}}$ and
+Let ${\Delta=(\Delta_{\mathfrak{R}}, \Delta_{\mathfrak{A}})}$ be a pair of growth spaces of rank ${n}$ s.t. ${\Delta_{\mathfrak{R}} \subseteq \GrowR}$, ${\Delta_{\mathfrak{A}} \subseteq \GrowA}$ and ${1 \in \Delta_{\mathfrak{A}}}$. Consider ${L \subseteq \Nats^n}$ and ${\Dist}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \Dist^{K_1} \cap \Supp \Dist^{K_2} = \varnothing}$. Define ${\chi: \Supp \Dist \rightarrow \Bool}$ by requiring that for any ${K \in \Nats^n}$ and\\ $x \in \Supp \Dist^K$, ${\chi(x)=\chi_L(K)}$. Assume ${\sigma}$ is an ${\EG}$-sampler of ${\Dist}$ and ${P}$ is an ${\Fall(\Delta)}$-optimal estimator for ${(\Dist, \chi)}$. Then there is ${A: \bm{1} \Scheme \Bool}$ s.t. ${\A_A(K)=\Chev{\A_\sigma(K),\A_P(K)}}$ and
 
 \begin{equation}
 %\label{eqn:tbd}
@@ -3834,7 +3904,7 @@ Now we consider the special case ${\Fall=\FallUt{\varphi}}$, ${\GrowR = \GammaPo
 \begin{proposition}
 \label{prp:tally_fall_uni}
 
-Consider ${\varphi: \Nats^{n-1} \rightarrow \Nats}$ superquasi-polynomial i.e. for any ${m \in \Nats}$ and\\ ${p \in \NatPolyJ}$ there is at most a finite number of ${J \in \Nats^{n-1}}$ s.t. ${\varphi(J) \leq 2^{\Ceil{\log p(J)}^m}}$. Suppose ${\GrowR  = \GammaPoly^n}$. Let ${\Delta=(\Delta_{\mathfrak{R}}, \Delta_{\mathfrak{A}})}$ be a pair of growth spaces of rank ${n}$ s.t. ${\Delta_{\mathfrak{A}} \subseteq \GrowA}$ and ${1 \in \Delta_{\mathfrak{A}}}$. Consider ${L \subseteq \Nats^{n-1}}$ and ${\Dist}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \Dist^{K_1} \cap \Supp \Dist^{K_2} = \varnothing}$. Define ${\chi: \Supp \Dist \rightarrow \Bool}$ by requiring that for any ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${x \in \Supp \Dist^{Jk}}$, ${\chi(x)=\chi_L(J)}$. Assume ${\sigma}$ is an ${\FallUt{\varphi}(\Gamma)}$-sampler of ${\Dist}$ and ${P}$ is an ${\FallUt{\varphi}(\Delta)}$-optimal estimator for ${(\Dist, \chi)}$ s.t. ${\A_\sigma(J,k)}$ and ${\A_P(J,k)}$ don't depend on ${k}$. Then, there are $m \in \Nats$, ${p \in \NatPolyJ}$ and ${B: \bm{1} \Scheme \Bool}$ s.t. ${p \geq 1}$, ${\A_B(K)=\Chev{\A_\sigma(K),\A_P(K)}}$ and, defining ${q: \Nats^{n-1} \rightarrow \Nats}$ by ${q(J):=2^{\Ceil{\log p(J)}^m}}$
+Consider ${\varphi: \Nats^{n-1} \rightarrow \Nats}$ superquasi-polynomial i.e. for any ${m \in \Nats}$ and\\ ${p \in \NatPolyJ}$ there is at most a finite number of ${J \in \Nats^{n-1}}$ s.t. ${\varphi(J) \leq 2^{\Ceil{\log p(J)}^m}}$. Suppose ${\GrowR  = \GammaPoly^n}$. Let ${\Delta=(\Delta_{\mathfrak{R}}, \Delta_{\mathfrak{A}})}$ be a pair of growth spaces of rank ${n}$ s.t. ${\Delta_{\mathfrak{A}} \subseteq \GrowA}$ and ${1 \in \Delta_{\mathfrak{A}}}$. Consider ${L \subseteq \Nats^{n-1}}$ and ${\Dist}$ a word ensemble s.t. given ${K_1, K_2 \in \Nats^n}$, if ${K_1 \ne K_2}$ then ${\Supp \Dist^{K_1} \cap \Supp \Dist^{K_2} = \varnothing}$. Define ${\chi: \Supp \Dist \rightarrow \Bool}$ by requiring that for any ${J \in \Nats^{n-1}}$, ${k \in \Nats}$ and ${x \in \Supp \Dist^{Jk}}$, ${\chi(x)=\chi_L(J)}$. Assume ${\sigma}$ is an ${\FallUt{\varphi}(\Gamma)}$-sampler of ${\Dist}$ and ${P}$ is an ${\FallUt{\varphi}(\Delta)}$-optimal estimator for ${(\Dist, \chi)}$ s.t. ${\A_\sigma(J,k)}$ and ${\A_P(J,k)}$ don't depend on ${k}$. Then, there are\\ $m \in \Nats$, ${p \in \NatPolyJ}$ and ${B: \bm{1} \Scheme \Bool}$ s.t. ${p \geq 1}$, ${\A_B(K)=\Chev{\A_\sigma(K),\A_P(K)}}$ and, defining ${q: \Nats^{n-1} \rightarrow \Nats}$ by ${q(J):=2^{\Ceil{\log p(J)}^m}}$
 
 \begin{equation}
 \label{eqn:prp__tally_fall_uni}
@@ -3976,19 +4046,19 @@ ${R}$ is an ${\ESG}$-optimal estimator for ${(\Dist, \chi_L)}$, therefore
 
 \[\E_{(x,y,z,w) \sim \Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(R^K(x,w)-\chi_L(x))(P^K(x,y)-Q^K(x,z))^2] = 0 \pmod \Fall\]
 
-\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K(x)(P^K(x)-Q^K(x))^2] = \E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\chi_L(x)(P^K(x)-Q^K(x))^2] \pmod \Fall\]
+\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K \cdot (P^K-Q^K)^2] = \E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\chi_L \cdot (P^K-Q^K)^2] \pmod \Fall\]
 
-\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K(x)(P^K(x)-Q^K(x))^2] = \Dist^K(L) \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \pmod \Fall\]
+\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K \cdot (P^K-Q^K)^2] = \Dist^K(L) \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \pmod \Fall\]
 
-\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\epsilon(K)\Dist^K(L)(P^K(x)-Q^K(x))^2] \leq \Dist^K(L) \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \pmod \Fall\]
+\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\epsilon(K)\Dist^K(L)(P^K-Q^K)^2] \leq \Dist^K(L) \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \pmod \Fall\]
 
-\[\epsilon(K)\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \leq \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \pmod {\Fall_L}\]
+\[\epsilon(K)\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \leq \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \pmod {\Fall_L}\]
 
 Applying Theorem~\ref{thm:uniq} to the right hand side, we conclude
 
-\[\epsilon(K)\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \equiv 0 \pmod {\Fall_L}\]
+\[\epsilon(K)\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \equiv 0 \pmod {\Fall_L}\]
 
-\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K(x)-Q^K(x))^2] \equiv 0 \pmod {\epsilon^{-1}\Fall_L}\]
+\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \equiv 0 \pmod {\epsilon^{-1}\Fall_L}\]
 %
 \end{proof}
 
@@ -4098,7 +4168,7 @@ The following appears in \cite{Goldreich_2008} as Theorem 7.7. Here we state it 
 \begin{theorem}[Goldreich-Levin]
 \label{thm:goldreich_levin}
 
-Consider a one-way function ${f: \Words \Alg \Words}$. Let $\Dist^k:=\Un^{2k}$, $f_{\textnormal{GL}}: \Supp \Dist \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Bool}$ be s.t. for any $x,y \in \WordsLen{k}$, $f_{\textnormal{GL}}(xy)=\Chev{f(x),y}$ and ${B^k(xy)=x \cdot y}$. Then, $B$ is a hard-core predicate of $(\Dist, f_{\textnormal{GL}})$.
+Consider a one-way function ${f: \Words \Alg \Words}$. Let\\ $\Dist^k:=\Un^{2k}$, $f_{\textnormal{GL}}: \Supp \Dist \rightarrow \Words$ and ${B: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Bool}$ be s.t. for any $x,y \in \WordsLen{k}$, $f_{\textnormal{GL}}(xy)=\Chev{f(x),y}$ and ${B^k(xy)=x \cdot y}$. Then, $B$ is a hard-core predicate of $(\Dist, f_{\textnormal{GL}})$.
 
 \end{theorem}
 
