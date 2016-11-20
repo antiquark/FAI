@@ -1,0 +1,135 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+\usepackage{bm}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+\newcommand{\WordsLen}[1]{{\Bool^{#1}}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+\DeclareMathOperator{\Var}{Var}
+
+\newcommand{\FOO}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Ev}{ev}
+
+% special symbols that are not really operators
+\DeclareMathOperator{\T}{T}
+\DeclareMathOperator{\R}{r}
+\DeclareMathOperator{\A}{a}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\UM}{UM}
+\DeclareMathOperator{\Un}{U}
+\DeclareMathOperator{\En}{c}
+\DeclareMathOperator{\Prj}{pr}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
+\newcommand{\NatPolyJ}{\Nats[J_0, J_1 \ldots J_{n-2}]}
+\newcommand{\NatFun}{\Nats^n \rightarrow}
+
+\newcommand{\Estr}{\bm{\lambda}}
+\newcommand{\LLU}{\mathbf{LLU}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Dist}{\mathcal{D}}
+\newcommand{\GrowR}{\Gamma_{\mathfrak{R}}}
+\newcommand{\GrowA}{\Gamma_{\mathfrak{A}}}
+\newcommand{\Grow}{\Gamma:=(\GrowR,\GrowA)}
+\newcommand{\MGrow}{\mathrm{M}\Gamma}
+\newcommand{\Fall}{\mathcal{F}}
+\newcommand{\EG}{\Fall(\Gamma)}
+\newcommand{\ESG}{\Fall^\sharp(\Gamma)}
+\newcommand{\EMG}{\Fall(\MGrow)}
+\newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
+\newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+\newcommand{\Scheme}{\xrightarrow{\Gamma}}
+\newcommand{\MScheme}{\xrightarrow{\MGrow}}
+\newcommand{\ORC}{\xrightarrow{\textnormal{orc}}}
+
+\newcommand{\Base}{\mathcal{B}}
+\newcommand{\Prob}{\mathcal{P}}
+
+\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
+\newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
+\newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
+\newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(#1)}}}
+\newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
+\newcommand{\QBO}{\Rats^\Base \ORC \Rats^\Base}
+
+\begin{document}
+
+*This post continues the research programme of attacking the grain of truth problem by departure from the Bayesian paradigm. In the [previous post](https://agentfoundations.org/item?id=1046), I suggested using Savage's minimax regret decision rule, but here I fall back to the simple minimax decision rule. This is because I failed to prove a satisfactory asymptotic optimality theorem for minimax regret (it appears like a problem of principle rather than merely technical).*
+
+We consider "semi-Bayesian" agents following the minimax expected utility decision rule, in oblivious environments with full monitoring (a setting that we will refer to as "forecasting"). This setting is considered in order to avoid the need to enforce exploration, as a preparation for analysis of general environments. We show that such agents satisfy a certain asymptotic optimality theorem. Intuitively, this theorem means that whenever the environment satisfies an incomplete model that is included in the prior, the agent will eventually learn this model i.e. extract at least as much utility as can be guaranteed for this model.
+
+The proofs are in the Appendix.
+
+\section{Notation}
+
+TBD
+
+\section{Elementary properties of minimax}
+
+Consider ${S}$ and ${E}$ compact Polish spaces, ${S}$ representing the agent's strategies and ${E}$ representing the (pure) environments. Let ${u: S \times E \rightarrow \Reals}$ be a continuous utility function.
+
+\section{Asymptotic optimality}
+
+%##Appendix
+\section{Appendix}
+
+Bar
+
+\end{document}
+
+
