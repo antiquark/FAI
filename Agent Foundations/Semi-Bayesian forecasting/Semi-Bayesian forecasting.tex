@@ -15,7 +15,6 @@
 
 \newcommand{\Bool}{\{0,1\}}
 \newcommand{\Words}{{\Bool^*}}
-\newcommand{\WordsLen}[1]{{\Bool^{#1}}}
 
 % operators that are separated from the operand by a space
 \DeclareMathOperator{\Sgn}{sgn}
@@ -30,23 +29,12 @@
 \newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
 \DeclareMathOperator{\Var}{Var}
 
-\newcommand{\FOO}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
-
 % operators that require parentheses
 \DeclareMathOperator{\Ent}{H}
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\End}{End}
 \DeclareMathOperator{\Sym}{Sym}
-\DeclareMathOperator{\Ev}{ev}
 
-% special symbols that are not really operators
-\DeclareMathOperator{\T}{T}
-\DeclareMathOperator{\R}{r}
-\DeclareMathOperator{\A}{a}
-\DeclareMathOperator{\M}{M}
-\DeclareMathOperator{\UM}{UM}
-\DeclareMathOperator{\Un}{U}
-\DeclareMathOperator{\En}{c}
 \DeclareMathOperator{\Prj}{pr}
 
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
@@ -61,12 +49,7 @@
 \newcommand{\Reals}{\mathbb{R}}
 \newcommand{\Coms}{\mathbb{C}}
 
-\newcommand{\NatPoly}{\Nats[K_0, K_1 \ldots K_{n-1}]}
-\newcommand{\NatPolyJ}{\Nats[J_0, J_1 \ldots J_{n-2}]}
-\newcommand{\NatFun}{\Nats^n \rightarrow}
-
 \newcommand{\Estr}{\bm{\lambda}}
-\newcommand{\LLU}{\mathbf{LLU}}
 
 \newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
 \newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
@@ -79,33 +62,15 @@
 \newcommand{\Chev}[1]{\langle #1 \rangle}
 \newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
 
-\newcommand{\Dist}{\mathcal{D}}
-\newcommand{\GrowR}{\Gamma_{\mathfrak{R}}}
-\newcommand{\GrowA}{\Gamma_{\mathfrak{A}}}
-\newcommand{\Grow}{\Gamma:=(\GrowR,\GrowA)}
-\newcommand{\MGrow}{\mathrm{M}\Gamma}
-\newcommand{\Fall}{\mathcal{F}}
-\newcommand{\EG}{\Fall(\Gamma)}
-\newcommand{\ESG}{\Fall^\sharp(\Gamma)}
-\newcommand{\EMG}{\Fall(\MGrow)}
-\newcommand{\ESMG}{\Fall^\sharp(\MGrow)}
-\newcommand{\BoolR}[1]{\Bool^{\R_{#1}(K)}}
-
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
 \newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
-\newcommand{\Scheme}{\xrightarrow{\Gamma}}
-\newcommand{\MScheme}{\xrightarrow{\MGrow}}
-\newcommand{\ORC}{\xrightarrow{\textnormal{orc}}}
 
-\newcommand{\Base}{\mathcal{B}}
 \newcommand{\Prob}{\mathcal{P}}
 
-\newcommand{\GammaPoly}{\Gamma_{\textnormal{poly}}}
-\newcommand{\GammaLog}{\Gamma_{\textnormal{log}}}
-\newcommand{\FallU}{{\Fall_{\textnormal{uni}}^{(n)}}}
-\newcommand{\FallUt}[1]{{\Fall_{\textnormal{uni}}^{(#1)}}}
-\newcommand{\FallM}{\Fall_{\textnormal{mon}}^{(n)}}
-\newcommand{\QBO}{\Rats^\Base \ORC \Rats^\Base}
+% Paper specific
+
+\newcommand{\Act}{\mathcal{A}}
+\newcommand{\Obs}{\mathcal{O}}
 
 \begin{document}
 
@@ -117,13 +82,91 @@ The proofs are in the Appendix.
 
 \section{Notation}
 
-TBD
+Given ${X}$ a topological space, ${\Prob(X)}$ will denote the space of Borel probability measures on ${X}$. We regard it as a topological space using the weak${^*}$ topology.
 
 \section{Elementary properties of minimax}
 
-Consider ${S}$ and ${E}$ compact Polish spaces, ${S}$ representing the agent's strategies and ${E}$ representing the (pure) environments. Let ${u: S \times E \rightarrow \Reals}$ be a continuous utility function.
+Fix ${S}$ and ${E}$ compact Polish spaces, ${S}$ representing the agent's pure policies and ${E}$ representing the pure environments. Let ${u: S \times E \rightarrow \Reals}$ be a continuous utility function.
+
+\subsection{Proposition 1}
+
+Consider ${\Phi \subseteq \Prob(E)}$. There exists 
+
+$${\pi^* \in \Argmax{\pi \in \Prob(S)} \inf_{\mu \in \Phi} \E_{\rho \times \mu}[u]}$$
+
+Moreover, let ${\bar{\Phi}}$ be the closure of the convex hull of ${\Phi}$. Then, the same ${\rho^*}$ satisfies
+
+$${\pi^* \in \Argmax{\pi \in \Prob(S)} \min_{\mu \in \bar{\Phi}} \E_{\rho \times \mu}[u]}$$
+
+We will say that such a ${\pi^*}$ is a *minimax policy for ${\Phi}$*.
+
+\subsection{Proposition 2}
+
+Consider ${\Phi, \Phi' \subseteq \Prob(E)}$ convex closed and ${p \in [0,1]}$. Then, there is ${\nu^* \in \Phi'}$ s.t. any minimax policy for ${p\Phi+(1-p)\Phi'}$ is a minimax policy for ${p\Phi+(1-p)\nu^*}$.
+
+***
+
+In particular, Proposition 2 implies that a minimax policy for ${\Phi}$ is the optimal policy for some ${\mu^* \in \Phi}$.
+
+Now we ask what policy is implemented by "subagents" created by a minimax policy. Suppose ${S = S_1 \times S_2}$, where ${S_2}$ represents the pure policies of the subagent. Assume that there is a Borel set ${A \subseteq E}$ (the condition for the creation of the subagent), a finite set ${T}$ (the part of the policy executed before the creation of the subagent), a Borel measurable mapping ${\alpha: S_1 \rightarrow T}$ and continuous functions ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ s.t. 
+
+$${u(s_1,s_2,e)=u_1(s_1,e)+\chi_A(e) u_2(s_2,\alpha(s_1),e)}$$
+
+Consider ${\Phi \subseteq \Prob(E)}$ convex closed and ${\pi^* \in \Prob(S)}$ minimax for ${\Phi}$. Denote ${\Prj_{1,2}: S \rightarrow S_{1,2}}$ the projection mappings. Define ${\pi_1^* \in \Prob(S_1)}$ by
+
+$$\pi_1^* := \Prj_{1*}\pi^*$$
+
+Define ${\pi_2^*: T \rightarrow \Prob(S_2)}$ by
+
+$$\pi_2^*(t) := \Prj_{2*} (\pi^* \mid \alpha^{-1}(t) \times S_2)$$
+
+\subsection{Proposition 3}
+
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} (\E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu}[u_2(t)]])$$
+
+***
+
+At this point, it should be possible to make do without ${T}$ and the associated decomposition of ${u}$ by instead decomposing ${\pi^*}$ into ${\pi_1^*}$ and a Markov kernel from ${S_1}$ to ${S_2}$. However, we won't need the general case.
+
+In general, ${\pi_2^*}$ is not a minimax policy for any natural model i.e. the minimax decision rule is not "dynamically consistent". However, if we assume a certain factorization condition, it is. Specifically, assume ${E_1, E_2}$ are compact Polish, ${f: E_1 \times E_2 \rightarrow E}$ is Borel measurable, ${\bar{u}_1: S_1 \times E_1 \rightarrow \Reals}$ and ${\bar{u}_2: S_2 \times T \times E_2 \rightarrow \Reals}$ are continuous s.t. 
+
+$${u_1(s_1,f(e_1,e_2))=\bar{u}_1(s_1,e_1)}$$
+
+$${u_2(s_2,t,f(e_1,e_2))=\bar{u}_1(s_2,t,e_2)}$$
+
+Further assume that ${A_1 \subseteq E_1}$ is Borel s.t. ${f^{-1}(A) = A_1 \times E_2}$ and ${\Phi_{1,2} \subseteq E_{1,2}}$ are convex closed s.t. ${\Phi}$ is the closure of the convex hull of ${f(\Phi_1 \times \Phi_2)}$.
+
+\subsection{Proposition 4}
+
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi_2} \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu}[\bar{u}_2(t)]]$$
+
+Moreover, define ${\bar{S}_2:=T \rightarrow S_2}$ equipped with the product topology, define ${\bar{\pi}_2^* \in \Prob(\bar{S}_2)}$ by
+
+$${\bar{\pi}_2^* := \prod_{t \in T} \pi_2^*(t)}$$
+
+Define ${\bar{E}_2:=T \times E_2}$ and define ${\bar{\Phi}_2 \subseteq \bar{E}_2}$ by
+
+$$\bar{\Phi}_2:=\{r_* \pi_1^* \times \mu \mid \mu \in \Phi_2\}$$
+
+Finally, define ${\hat{u}_2: \bar{S}_2 \times \bar{E}_2 \rightarrow \Reals}$ by
+
+$$\hat{u}_2(s,t,e):=\bar{u}_2(s(t),t,e)$$
+
+Then, ${\bar{\pi}_2^*}$ is a minimax policy for ${\bar{\Phi}_2}$ w.r.t. the utility function ${\hat{u}_2}$.
 
 \section{Asymptotic optimality}
+
+Fix finite sets ${\Act}$ and ${\Obs}$. We now assume that ${E=\Obs^\omega}$ and ${S=\Obs^* \rightarrow \Act}$ with the product topology. We fix ${\gamma: \Nats \rightarrow \Reals^{\geq 0}}$ a time discount function satisfying ${\sum_n \gamma(n) < \infty}$ and ${r: (\Act \times \Obs)^* \rightarrow \Reals}$ a bounded reward function. Given ${e \in E}$ and ${s \in S}$, we define ${e^s \in (\Act \times \Obs)^\omega}$ by
+
+$${e^s_n:=(s(e_{<n}),e_n)}$$
+
+The utility function is then given by
+
+$$u(s,e)=\sum_{n \in \Nats} \gamma(n) r(e^s_{<n})$$
+
+Consider ${\Phi,\Phi' \subseteq \Prob(E)}$ and ${p \in [0,1]}$. Denote ${\Psi = p \Phi + (1-p) \Phi'}$. We think of ${\Psi}$ as the prior, ${\Phi}$ as one of the models in the prior (assigned probability ${p}$) and ${\Phi'}$ as the convex combination of all other models. Let ${\pi^* \in \Prob(S)}$ be a minimax policy for ${\Psi}$. Define ${v: \Obs^* \rightarrow \Reals}$ by
+
+$$v(x):=\max_{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi_2} \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu}[\bar{u}_2(t)]]???$$
 
 %##Appendix
 \section{Appendix}
