@@ -175,17 +175,27 @@ $$(s \otimes_x t)(y):=\begin{cases}s(y) \text{ if } y \not\sqsupseteq x \\t(s(\E
 
 Given ${\pi \in \Prob(\Pol)}$ and ${\rho \in \Prob(\Act^n \times \Pol)}$, ${\pi \otimes_x \rho \in \Prob(\Pol)}$ is defined as the pushforward of the operation above.
 
-Consider ${\Phi,\Phi' \in \CC(\ObsO)}$ and ${p \in [0,1]}$. Denote ${\Psi = p \Phi + (1-p) \Phi'}$. We think of ${\Psi}$ as the prior, ${\Phi}$ as one of the models in the prior (assigned probability ${p}$) and ${\Phi'}$ as the convex combination of all other models. Let ${\pi^* \in \Prob(\Pol)}$ be a minimax policy for ${\Psi}$. Define ${v: \Obs^* \rightarrow \Reals}$ by
+Note that changing the policy after a certain event cannot change utility more than the probability of the event times the corresponding time discount factor. That is, we have the following:
+
+\subsection{Proposition 5}
+
+$$\Abs{\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u]} \leq (\sup r - \inf r) \Prb_{e \sim \mu}[x \sqsubset e] \sum_{n = \Abs{x}}^\infty \gamma(n)$$
+
+***
+
+We are now ready to formulate the optimality theorem. Consider ${\Phi,\Phi' \in \CC(\ObsO)}$ and ${p \in [0,1]}$. Denote ${\Psi = p \Phi + (1-p) \Phi'}$. We think of ${\Psi}$ as the prior, ${\Phi}$ as one of the models in the prior (assigned probability ${p}$) and ${\Phi'}$ as the convex combination of all other models. Let ${\pi^* \in \Prob(\Pol)}$ be a minimax policy for ${\Psi}$. Define ${v: \Obs^* \rightarrow \Reals}$ by
 
 $$v(x):=\max_{\rho \in \Prob(\Act^{\Abs{x}} \times \Obs^* \rightarrow \Act)} \min_{\mu \in \Phi} \E_{(\pi^* \otimes_x \rho) \times \mu}[u]$$
 
+That is, ${v}$ is the expected utility that can be guaranteed by changing the policy following ${x}$, assuming that the true environment is in ${\Phi}$. We claim that if the true environment is in ${\Phi}$, then after sufficient time ${\pi^*}$ will achieve at least as much utility as can be guaranteed for ${\Phi}$ (guaranteed under the constraint of following ${\pi^*}$ until the point of making the current observations). That is, ${v}$ can only be greater than ${\E_{\pi^* \times \mu}[u]}$ by a quantity that goes to 0 with probability 1, even after normalizing according to Proposition~5:
+
 \subsection{Theorem}
 
-TBD
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n})-\E_{\pi^* \times \mu}[u]}{\Prb_{e' \sim \mu}[x \sqsubset e'] \sum_{m = n}^\infty \gamma(m)},0)=0] = 1$$
 
-...
+***
 
-In order to get an asymptotic optimality property that doesn't depend on the choice of prior, we need the model to satisfy a factorization condition similar to Proposition 4.
+Compared to the Bayesian case, ${v(x)}$ has the strange property that its definition depends on rewards other than those received after observing ${x}$. This is a direct consequence of the dynamic inconsistency of minimax. In order to get an asymptotic optimality property without this dependence, we need the model to satisfy a factorization condition similar to Proposition 4.
 
 \subsection{Definition}
 
@@ -233,7 +243,7 @@ We define ${\Phi_F \subseteq \Prob(\ObsO)}$ as follows. ${\mu \in \Phi_F}$ iff f
 
 $$\Prb_{e \sim \mu}[xy \sqsubset e] = \Prb_{e \sim \mu}[x \sqsubset e] \mu_x(y)$$
 
-\subsection{Proposition 5}
+\subsection{Proposition 6}
 
 For any ${F}$ as above, ${\Phi_F \in \CC(\ObsO)}$ and factorizes everywhere.
 
@@ -241,7 +251,13 @@ For any ${F}$ as above, ${\Phi_F \in \CC(\ObsO)}$ and factorizes everywhere.
 
 It is also easy to use the above construction to get ${\Phi}$ that factorizes frequently everywhere w.r.t. given ${\gamma}$ (for example, if we require that for every ${x \in X_F}$, ${F(x)}$ is supported on strings of uniformly bounded length, ${\Phi_F}$ will factorize frequently everywhere w.r.t. geometric discount; this condition on ${F}$ is sufficient but not necessary).
 
+Now consider again ${\Phi}$, ${\Psi}$ and ${\pi^*}$ as before.
+
 \subsection{Corollary}
+
+Assume ${\Phi}$ factorizes everywhere.
+
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n})-\E_{\pi^* \times \mu}[u]}{\Prb_{e' \sim \mu}[x \sqsubset e'] \sum_{m = n}^\infty \gamma(m)},0)=0] = 1???$$
 
 TBD
 
