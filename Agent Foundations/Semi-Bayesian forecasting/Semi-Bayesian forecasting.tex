@@ -251,15 +251,23 @@ For any ${F}$ as above, ${\Phi_F \in \CC(\ObsO)}$ and factorizes everywhere.
 
 It is also easy to use the above construction to get ${\Phi}$ that factorizes frequently everywhere w.r.t. given ${\gamma}$ (for example, if we require that for every ${x \in X_F}$, ${F(x)}$ is supported on strings of uniformly bounded length, ${\Phi_F}$ will factorize frequently everywhere w.r.t. geometric discount; this condition on ${F}$ is sufficient but not necessary).
 
-Now consider again ${\Phi}$, ${\Psi}$ and ${\pi^*}$ as before.
+Now consider again ${\Phi}$, ${\Psi}$ and ${\pi^*}$ as before. Define ${u_{\geq n}: \ObsO \times (\Pol) \rightarrow \Reals}$ to be normalized sum of rewards from time ${n}$, i.e.
+
+$$u_{\geq n}(s,e):=\frac{\sum_{m=n}^\infty \gamma(m)r(e^s_{<m})}{\sum_{m=n}^\infty \gamma(m)}$$
+
+Define ${w: \Obs^* \rightarrow \Reals}$ by
+
+$$w(x):=\max_{\rho \in \Prob(\Act^{\Abs{x}} \times \Obs^* \rightarrow \Act)} \min_{\mu \in \Phi} \EE{s \sim \pi^* \otimes_x \rho}{e \sim \mu}[u_{\geq \Abs{x}}(s,e) \mid x \sqsubset e]$$
 
 \subsection{Corollary}
 
-Assume ${\Phi}$ factorizes everywhere.
+Assume ${\Phi}$ factorizes everywhere. Then,
 
-$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n})-\E_{\pi^* \times \mu}[u]}{\Prb_{e' \sim \mu}[x \sqsubset e'] \sum_{m = n}^\infty \gamma(m)},0)=0] = 1???$$
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\liminf_{n \rightarrow \infty} \max(w(e_{<n})-\EE{s \sim \pi^*}{e' \sim \mu}[u_{\geq n}(s,e') \mid e_{<n} \sqsubset e'] ,0)=0] = 1$$
 
-TBD
+Moreover, if ${\Phi}$ factorizes frequently everywhere, then
+
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(w(e_{<n})-\EE{s \sim \pi^*}{e' \sim \mu}[u_{\geq n}(s,e') \mid e_{<n} \sqsubset e'] ,0)=0] = 1$$
 
 %##Appendix
 \section{Appendix A}
