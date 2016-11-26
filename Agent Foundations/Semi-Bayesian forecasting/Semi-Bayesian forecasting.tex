@@ -97,11 +97,11 @@ Fix ${S}$ and ${E}$ compact Polish spaces, ${S}$ representing the agent's pure p
 
 Consider ${\Phi \subseteq \Prob(E)}$. There exists 
 
-$${\pi^* \in \Argmax{\pi \in \Prob(S)} \inf_{\mu \in \Phi} \E_{\rho \times \mu}[u]}$$
+$${\pi^* \in \Argmax{\pi \in \Prob(S)} \inf_{\mu \in \Phi} \E_{\pi \times \mu}[u]}$$
 
-Moreover, let ${\bar{\Phi}}$ be the closure of the convex hull of ${\Phi}$. Then, the same ${\rho^*}$ satisfies
+Moreover, let ${\bar{\Phi}}$ be the closure of the convex hull of ${\Phi}$. Then, the same ${\pi^*}$ satisfies
 
-$${\pi^* \in \Argmax{\pi \in \Prob(S)} \min_{\mu \in \bar{\Phi}} \E_{\rho \times \mu}[u]}$$
+$${\pi^* \in \Argmax{\pi \in \Prob(S)} \min_{\mu \in \bar{\Phi}} \E_{\pi \times \mu}[u]}$$
 
 We will say that such a ${\pi^*}$ is a *minimax policy for ${\Phi}$*.
 
@@ -272,7 +272,51 @@ $$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(w(e_{
 %##Appendix
 \section{Appendix A}
 
-Bar
+We will repeatedly use the standard fact that, given ${X}$ a compact Polish space, ${\Prob(X)}$ is also a compact Polish space (it is metrizable by the Levy-Prokhorov metric, compact as a consequence of the Banach-Alaoglu theorem and the fact that any probability measure on a Polish space is Radon, and separability is also not hard to prove).
+
+\subsection{Proposition A.1}
+
+Consider ${X, Y}$ compact Polish, ${f: X \times Y \rightarrow \Reals}$ continuous and a sequence ${x_n \rightarrow x^*}$ in ${X}$. Define ${g_n: Y \rightarrow \Reals}$ by ${g_n(y):=f(x_n,y)}$ and ${g: Y \rightarrow \Reals}$ by ${g(y):=f(x^*,y)}$. Then, ${g_n}$ converges to ${g}$ uniformly.
+
+\subsection{Proof of Proposition A.1}
+
+Assume to the contrary that there is ${\epsilon > 0}$ and a subsequence ${\{x'_n \in X\}_{n \in \Nats}}$ of ${\{x_n\}}$ s.t. 
+
+$${\max_{y \in Y} \Abs{f(x'_n,y)-f(x^*,y)} > \epsilon}$$
+
+This implies we can choose ${\{y_n \in Y\}_{n \in \Nats}}$ s.t. ${\Abs{f(x'_n,y_n)-f(x^*,y_n)} > \epsilon}$. Let ${\{n_k \in \Nats\}_{k \in \Nats}}$ be an increasing sequence s.t. ${y_{n_k} \rightarrow y^*}$ for some ${y^* \in Y}$. We get ${\Abs{f(x'_{n_k},y_{n_k})-f(x^*,y_{n_k})} > \epsilon}$, which is a contradiction because ${f(x'_{n_k},y_{n_k}) \rightarrow f(x^*,y^*)}$ and ${f(x^*,y_{n_k}) \rightarrow f(x^*,y^*)}$.
+
+\subsection{Proposition A.2}
+
+Consider any ${X,Y}$ compact Polish and ${f: X \times Y \rightarrow \Reals}$ continuous. Define ${\phi: X \times \Prob(Y) \rightarrow \Reals}$ by 
+
+$${\phi(x,\nu):=\E_{y \sim \nu}[f(x,y)]}$$ 
+
+Then, ${\phi}$ is continuous.
+
+\subsection{Proof of Proposition A.2}
+
+Consider any ${x^* \in X}$, ${\nu^* \in \Prob(Y)}$ and sequences ${x_n \rightarrow x}$, ${\nu_n \rightarrow \nu}$. We have...
+
+\subsection{Proposition A.3}
+
+Consider any ${X,Y}$ compact Polish and ${f: X \times Y \rightarrow \Reals}$ continuous. Define ${F: \Prob(X) \times \Prob(Y) \rightarrow \Reals}$ by 
+
+$${F(\mu,\nu):=\E_{\mu \times \nu}[f]}$$ 
+
+Then, ${F}$ is continuous.
+
+\subsection{Proof of Proposition A.3}
+
+Consider any ${\mu^* \in \Prob(X)}$, ${\nu^* \in \Prob(Y)}$ and sequences ${\mu_n \rightarrow \mu^*}$, ${\nu_n \rightarrow \nu^*}$. We have 
+
+$${F(\mu_n,\nu_n)=\E_{x \sim \mu_n}[E_{y \sim \nu_n}[f(x,y)]]}$$
+
+TODO
+
+\subsection{Proof of Proposition 1}
+
+It is enough to show that ${\inf_{\mu \in \Phi} \E_{\pi \times \mu}[u]}$ is a continuous function of ${\pi}$. Consider any sequence ${\pi_n \rightarrow \pi^*}$...
 
 \section{Appendix B}
 
