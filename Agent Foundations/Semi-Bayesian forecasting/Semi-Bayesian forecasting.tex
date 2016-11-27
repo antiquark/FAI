@@ -360,21 +360,21 @@ Combining the inequalities, we get the desired results.
 
 \subsection{Definition A}
 
-In the setting of Proposition 3, consider any ${s_1 \in S_1}$ and ${s_2: T \rightarrow S_2}$. Define ${s_1 \otimes_\alpha s_2 \in S}$ by
+In the setting of Proposition 3, consider any ${\pi_1 \in \Prob(S_1)}$ and ${\pi_2: T \rightarrow \Prob(S_2)}$. We define ${\pi_1 \otimes_\alpha \pi_2 \in \Prob(S_1 \times S_2)}$ as follows. For any Borel measurable ${A \subseteq S_1 \times S_2}$:
 
-$$s_1 \otimes_\alpha s_2:=(s_1,s_2(\alpha(s_1)))$$
+$$(\pi_1 \otimes_\alpha \pi_2)(A):=\sum_{t \in T} (\pi_1 \times \pi_2(t))(A \cap (\alpha^{-1}(t) \times S_2))$$ 
 
-Given ${\pi_1 \in \Prob(S_1)}$ and ${\pi_2 \in \Prob(T \rightarrow S_2)}$???, ${\pi_1 \otimes_\alpha \pi_2}$ is defined as the pushforward of ${\pi_1 \times \pi_2}$ by the operation above.
+It is easy to see the above indeed defines a probability measure.
 
 \subsection{Proposition A.5}
 
-Given ${\pi_1 \in \Prob(S_1)}$, ${\pi_2 \in \Prob(T \rightarrow S_2)}$ and ${\mu \in \Prob(E)}$
+Given ${\pi_1 \in \Prob(S_1)}$, ${\pi_2: T \rightarrow \Prob(S_2)}$ and ${\mu \in \Prob(E)}$
 
 $$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu}[u_2(t)]]$$
 
 \subsection{Proof of Proposition A.5}
 
-$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \EEE{s_1 \sim \pi_1}{s_2 \sim \pi_2}{e \sim \mu}[u_1(s_1,e)+\chi_A(e)u_2(s_2(\alpha(s_1)),\alpha(s_1),e)]$$
+$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \EEE{s_1 \sim \pi_1}{s_2 \sim \pi_2}{e \sim \mu}[u_1(s_1,e)+\chi_A(e)u_2(s_2(\alpha(s_1)),\alpha(s_1),e)]???$$
 
 TBD
 
