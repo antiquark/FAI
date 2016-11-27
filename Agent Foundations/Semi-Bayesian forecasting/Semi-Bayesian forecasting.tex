@@ -10,7 +10,6 @@
 \usepackage{csquotes}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
-\usepackage{commath}
 \usepackage{bm}
 
 \newcommand{\Bool}{\{0,1\}}
@@ -125,9 +124,11 @@ Define ${\pi_2^*: T \rightarrow \Prob(S_2)}$ by
 
 $$\pi_2^*(t) := \Prj_{2*} (\pi^* \mid \alpha^{-1}(t) \times S_2)$$
 
+If for some ${t_0 \in T}$ we have ${\pi^*(\alpha^{-1}(t_0) \times S_2)=0}$, then ${\pi^*_2(t_0)}$ can be arbitrary.
+
 \subsection{Proposition 3}
 
-$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} (\E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu}[u_2(t)]])$$
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} (\E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu \mid A}[u_2(t)]])$$
 
 ***
 
@@ -368,13 +369,55 @@ It is easy to see the above indeed defines a probability measure.
 
 \subsection{Proposition A.5}
 
-Given ${\pi_1 \in \Prob(S_1)}$, ${\pi_2: T \rightarrow \Prob(S_2)}$ and ${\mu \in \Prob(E)}$
+Consider any ${\pi_1 \in \Prob(S_1)}$ and ${\pi_2: T \rightarrow \Prob(S_2)}$ and ${f: S_1 \times S_2 \rightarrow \Reals}$ Borel measurable and bounded. Then:
 
-$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu}[u_2(t)]]$$
+$$\E_{\pi_1 \otimes_\alpha \pi_2}[f] = \E_{s_1 \sim \pi_1}[\E_{s_2 \sim \pi_2(\alpha(s_1))}[f(s_1, s_2)]]$$
 
 \subsection{Proof of Proposition A.5}
 
-$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \EEE{s_1 \sim \pi_1}{s_2 \sim \pi_2}{e \sim \mu}[u_1(s_1,e)+\chi_A(e)u_2(s_2(\alpha(s_1)),\alpha(s_1),e)]???$$
+$$\E_{\pi_1 \otimes_\alpha \pi_2}[f] = \sum_{t \in T} \int_{\alpha^{-1}(t) \times S_2} f(s_1, s_2) d(\pi_1 \times \pi_2(t))(s_2)$$
+
+$$\E_{\pi_1 \otimes_\alpha \pi_2}[f] = \sum_{t \in T} \int_{\alpha^{-1}(t)} \int_{S_2} f(s_1, s_2) d\pi_2(t)(s_2) d\pi_1(s_1)$$
+
+$$\E_{\pi_1 \otimes_\alpha \pi_2}[f] = \sum_{t \in T} \int_{\alpha^{-1}(t)} \E_{s_2 \sim \pi_2(t)}[f(s_1,s_2)] d\pi_1(s_1)$$
+
+$$\E_{\pi_1 \otimes_\alpha \pi_2}[f] = \sum_{t \in T} \int_{\alpha^{-1}(t)} \E_{s_2 \sim \pi_2(\alpha(s_1))}[f(s_1,s_2)] d\pi_1(s_1)$$
+
+$$\E_{\pi_1 \otimes_\alpha \pi_2}[f] = \int_{S_1} \E_{s_2 \sim \pi_2(\alpha(s_1))}[f(s_1,s_2)] d\pi_1(s_1)$$
+
+$$\E_{\pi_1 \otimes_\alpha \pi_2}[f] = \E_{s_1 \sim \pi_1}[\E_{s_2 \sim \pi_2(\alpha(s_1))}[f(s_1, s_2)]]$$
+
+\subsection{Proposition A.6}
+
+Given ${\pi_1 \in \Prob(S_1)}$, ${\pi_2: T \rightarrow \Prob(S_2)}$ and ${\mu \in \Prob(E)}$
+
+$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \E_{\pi_1 \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1}[\E_{\pi_2(t) \times \mu \mid A}[u_2(t)]]$$
+
+\subsection{Proof of Proposition A.6}
+
+Applying Proposition A.5:
+
+$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \E_{s_1 \sim \pi_1}[\E_{s_2 \sim \pi_2(\alpha(s_1))}[\E_{e \sim \mu}[u_1(s_1,e)+\chi_A(e) u_2(s_2,\alpha(s_1),e)]]]$$
+
+$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \E_{\pi_1 \times \mu}[u_1] + \E_{s_1 \sim \pi_1}[\E_{s_2 \sim \pi_2(\alpha(s_1))}[\mu(A) \E_{e \sim \mu \mid A}[u_2(s_2,\alpha(s_1),e)]]]$$
+
+$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \E_{\pi_1 \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1}[\E_{\pi_2(t) \times \mu \mid A}[u_2(t)]]$$
+
+\subsection{Proposition A.7}
+
+Consider any ${\pi \in \Prob(S_1 \times S_2)}$. Define ${\pi_1 \in \Prob(S_1)}$ and ${\pi_2: T \rightarrow \Prob(S_2)}$ by
+
+$$\pi_1 := \Prj_{1*}\pi$$
+
+$$\pi_2(t) := \Prj_{2*} (\pi \mid \alpha^{-1}(t) \times S_2)$$
+
+If for some ${t_0 \in T}$ we have ${\pi(\alpha^{-1}(t_0) \times S_2)=0}$, then ${\pi_2(t_0)}$ can be arbitrary.
+
+Then,
+
+$$\forall \mu \in \Prob(E):U(\pi,\mu)=U(\pi_1 \otimes_\alpha \pi_2, \mu)$$
+
+\subsection{Proof of Proposition A.7}
 
 TBD
 
