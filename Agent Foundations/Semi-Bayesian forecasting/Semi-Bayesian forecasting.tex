@@ -276,19 +276,19 @@ We will repeatedly use the standard fact that, given ${X}$ a compact Polish spac
 
 \subsection{Proposition A.1}
 
-Consider ${X, Y}$ compact Polish, ${f: X \times Y \rightarrow \Reals}$ continuous and a sequence ${x_n \rightarrow x^*}$ in ${X}$. Define ${g_n: Y \rightarrow \Reals}$ by ${g_n(y):=f(x_n,y)}$ and ${g: Y \rightarrow \Reals}$ by ${g(y):=f(x^*,y)}$. Then, ${g_n}$ converges to ${g}$ uniformly.
+Consider ${X, Y}$ compact Polish spaces, ${f: X \times Y \rightarrow \Reals}$ continuous, ${x_\infty \in X}$ and a sequence ${x_n \rightarrow x_\infty}$. Define ${g_n: Y \rightarrow \Reals}$ by ${g_n(y):=f(x_n,y)}$ and ${g_\infty: Y \rightarrow \Reals}$ by ${g_\infty(y):=f(x_\infty,y)}$. Then, ${g_n}$ converges to ${g_\infty}$ uniformly.
 
 \subsection{Proof of Proposition A.1}
 
 Assume to the contrary that there is ${\epsilon > 0}$ and a subsequence ${\{x'_n \in X\}_{n \in \Nats}}$ of ${\{x_n\}}$ s.t. 
 
-$${\max_{y \in Y} \Abs{f(x'_n,y)-f(x^*,y)} > \epsilon}$$
+$${\max_{y \in Y} \Abs{f(x'_n,y)-f(x_\infty,y)} > \epsilon}$$
 
-This implies we can choose ${\{y_n \in Y\}_{n \in \Nats}}$ s.t. ${\Abs{f(x'_n,y_n)-f(x^*,y_n)} > \epsilon}$. Let ${\{n_k \in \Nats\}_{k \in \Nats}}$ be an increasing sequence s.t. ${y_{n_k} \rightarrow y^*}$ for some ${y^* \in Y}$. We get ${\Abs{f(x'_{n_k},y_{n_k})-f(x^*,y_{n_k})} > \epsilon}$, which is a contradiction because ${f(x'_{n_k},y_{n_k}) \rightarrow f(x^*,y^*)}$ and ${f(x^*,y_{n_k}) \rightarrow f(x^*,y^*)}$.
+This implies we can choose ${\{y_n \in Y\}_{n \in \Nats}}$ s.t. ${\Abs{f(x'_n,y_n)-f(x_\infty,y_n)} > \epsilon}$. Let ${\{n_k \in \Nats\}_{k \in \Nats}}$ be an increasing sequence s.t. ${y_{n_k} \rightarrow y_\infty}$ for some ${y_\infty \in Y}$. We get ${\Abs{f(x'_{n_k},y_{n_k})-f(x_\infty,y_{n_k})} > \epsilon}$, which is a contradiction because ${f(x'_{n_k},y_{n_k}) \rightarrow f(x_\infty,y_\infty)}$ and ${f(x_\infty,y_{n_k}) \rightarrow f(x_\infty,y_\infty)}$.
 
 \subsection{Proposition A.2}
 
-Consider any ${X,Y}$ compact Polish and ${f: X \times Y \rightarrow \Reals}$ continuous. Define ${\phi: X \times \Prob(Y) \rightarrow \Reals}$ by 
+Consider ${X,Y}$ compact Polish spaces and ${f: X \times Y \rightarrow \Reals}$ continuous. Define ${\phi: X \times \Prob(Y) \rightarrow \Reals}$ by 
 
 $${\phi(x,\nu):=\E_{y \sim \nu}[f(x,y)]}$$ 
 
@@ -296,7 +296,11 @@ Then, ${\phi}$ is continuous.
 
 \subsection{Proof of Proposition A.2}
 
-Consider any ${x^* \in X}$, ${\nu^* \in \Prob(Y)}$ and sequences ${x_n \rightarrow x}$, ${\nu_n \rightarrow \nu}$. We have...
+Consider any ${x_\infty \in X}$, ${\nu_\infty \in \Prob(Y)}$ and sequences ${x_n \rightarrow x_\infty}$, ${\nu_n \rightarrow \nu_\infty}$. We have
+
+$$\phi(x_n,\nu_n)- \phi(x_\infty,\nu_\infty)=\E_{y \sim \nu_n}[f(x_n,y)-f(x_\infty,y)]+E_{y \sim \nu_n}[f(x_\infty,y)]-E_{y \sim \nu_\infty}[f(x_\infty,y)]$$
+
+On the right hand side, the first term goes to 0 by Proposition A.1 and the second term goes to 0 by definition of the weak* topology.
 
 \subsection{Proposition A.3}
 
@@ -308,15 +312,17 @@ Then, ${F}$ is continuous.
 
 \subsection{Proof of Proposition A.3}
 
-Consider any ${\mu^* \in \Prob(X)}$, ${\nu^* \in \Prob(Y)}$ and sequences ${\mu_n \rightarrow \mu^*}$, ${\nu_n \rightarrow \nu^*}$. We have 
-
-$${F(\mu_n,\nu_n)=\E_{x \sim \mu_n}[E_{y \sim \nu_n}[f(x,y)]]}$$
-
-TODO
+Follows by applying Fubini's theorem and using Proposition A.2 twice.
 
 \subsection{Proof of Proposition 1}
 
-It is enough to show that ${\inf_{\mu \in \Phi} \E_{\pi \times \mu}[u]}$ is a continuous function of ${\pi}$. Consider any sequence ${\pi_n \rightarrow \pi^*}$...
+Define ${U: \Prob(S) \times \Prob(E) \rightarrow \Reals}$ by ${U(\pi,\mu):=\E_{\pi \times \mu}[u]}$. By Proposition A.3, ${U}$ is continuous. Define ${U_\Phi: \Prob(S) \rightarrow \Reals}$ by ${U_\Phi(\pi):= \inf_{\mu \in \Phi} U(\pi,\mu)}$. Given any ${\pi_\infty \in \Prob(S)}$ and a sequence ${\pi_n \rightarrow \pi_\infty}$, Proposition A.1 implies that ${U(\pi_n,\mu)}$ converges to ${U(\pi_\infty,\mu)}$ uniformly in ${\mu}$. It follows that ${U_\Phi(\pi_n) \rightarrow U_\Phi(\pi_\infty)}$, and thus ${U_\Phi}$ is continuous. Therefore, ${\pi^*}$ exists.
+
+${U}$ is continuous and affine in the 2nd argument (i.e. it sends convex linear combinations to convex linear combinations), and therefore ${\inf_{\mu \in \Phi} U(\pi,\mu)=\min_{\mu \in \bar{\Phi}} U(\pi,\mu)}$, implying the second part of the proposition.
+
+\subsection{Proof of Proposition 2}
+
+TODO
 
 \section{Appendix B}
 
