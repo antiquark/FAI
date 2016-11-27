@@ -173,7 +173,7 @@ We will need a notation for a combination of two policies where the agent switch
 
 $$(s \otimes_x t)(y):=\begin{cases}s(y) \text{ if } y \not\sqsupseteq x \\t(s(\Estr_\Obs),s(x_{<1}), s(x_{<2}) \ldots s(x_{<{n-1}}),z) \text{ if } y=xz\end{cases}$$
 
-Given ${\pi \in \Prob(\Pol)}$ and ${\rho \in \Prob(\Act^n \times \Pol)}$, ${\pi \otimes_x \rho \in \Prob(\Pol)}$ is defined as the pushforward of the operation above.
+Given ${\pi \in \Prob(\Pol)}$ and ${\rho \in \Prob(\Act^n \times \Pol)}$, ${\pi \otimes_x \rho \in \Prob(\Pol)}$ is defined as the pushforward of ${\pi \times \rho}$ by the operation above.
 
 Note that changing the policy after a certain event cannot change utility more than the probability of the event times the corresponding time discount factor. That is, we have the following:
 
@@ -348,7 +348,39 @@ ${\Prob(S)}$ and ${\Psi}$ are compact convex sets in the spaces of finite signed
 
 $$\max_{\pi \in \Prob(S)} \min_{\xi \in \Psi} U(\pi,\xi) = \min_{\xi \in \Psi} \max_{s \in S} U(\delta_s,\xi)$$
 
-TODO
+Denote the above number ${u^*}$. We have
+
+$$\min_{\mu \in \Phi} U(\pi^*,p\mu + (1-p)\nu^*) \geq \min_{\xi \in \Psi} U(\pi^*,\xi)=u^*$$
+
+On the other hand
+
+$$\max_{\pi \in \Prob(S)} \min_{\mu \in \Phi} U(\pi,p\mu + (1-p)\nu^*) \leq \max_{\pi \in \Prob(S)}  U(\pi,\xi^*)=u^*$$
+
+Combining the inequalities, we get the desired results.
+
+\subsection{Definition A}
+
+In the setting of Proposition 3, consider any ${s_1 \in S_1}$ and ${s_2: T \rightarrow S_2}$. Define ${s_1 \otimes_\alpha s_2 \in S}$ by
+
+$$s_1 \otimes_\alpha s_2:=(s_1,s_2(\alpha(s_1)))$$
+
+Given ${\pi_1 \in \Prob(S_1)}$ and ${\pi_2 \in \Prob(T \rightarrow S_2)}$???, ${\pi_1 \otimes_\alpha \pi_2}$ is defined as the pushforward of ${\pi_1 \times \pi_2}$ by the operation above.
+
+\subsection{Proposition A.5}
+
+Given ${\pi_1 \in \Prob(S_1)}$, ${\pi_2 \in \Prob(T \rightarrow S_2)}$ and ${\mu \in \Prob(E)}$
+
+$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu}[u_2(t)]]$$
+
+\subsection{Proof of Proposition A.5}
+
+$$U(\pi_1 \otimes_\alpha \pi_2, \mu) = \EEE{s_1 \sim \pi_1}{s_2 \sim \pi_2}{e \sim \mu}[u_1(s_1,e)+\chi_A(e)u_2(s_2(\alpha(s_1)),\alpha(s_1),e)]$$
+
+TBD
+
+\subsection{Proof of Proposition 3}
+
+TBD
 
 \section{Appendix B}
 
