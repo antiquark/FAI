@@ -182,7 +182,7 @@ Note that changing the policy after a certain event cannot change utility more t
 
 \subsection{Proposition 5}
 
-$$\Abs{\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u]} \leq (\sup r - \inf r) \Prb_{e \sim \mu}[x \sqsubset e] \sum_{n = \Abs{x}}^\infty \gamma(n)$$
+$$\Abs{\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u]} \leq (\sup r - \inf r) \Prb_{e \sim \mu}[x \sqsubset e] \sum_{n > \Abs{x}}^\infty \gamma(n)$$
 
 ***
 
@@ -192,9 +192,9 @@ $$v(x):=\max_{\rho \in \Prob(\Act^{\Abs{x}} \times \Obs^* \rightarrow \Act)} \mi
 
 That is, ${v}$ is the expected utility that can be guaranteed by changing the policy following ${x}$, assuming that the true environment is in ${\Phi}$. We claim that if the true environment is in ${\Phi}$, then after sufficient time ${\pi^*}$ will achieve at least as much utility as can be guaranteed for ${\Phi}$ (guaranteed under the constraint of following ${\pi^*}$ until the point of making the current observations). That is, ${v}$ can only be greater than ${\E_{\pi^* \times \mu}[u]}$ by a quantity that goes to 0 with probability 1, even after normalizing according to Proposition~5:
 
-\subsection{Theorem}
+\subsection{Theorem 1}
 
-$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n})-\E_{\pi^* \times \mu}[u]}{\Prb_{e' \sim \mu}[x \sqsubset e'] \sum_{m = n}^\infty \gamma(m)},0)=0] = 1$$
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n})-\E_{\pi^* \times \mu}[u]}{\Prb_{e' \sim \mu}[e_{<n} \sqsubset e'] \sum_{m = n+1}^\infty \gamma(m)},0)=0] = 1$$
 
 ***
 
@@ -256,21 +256,21 @@ It is also easy to use the above construction to get ${\Phi}$ that factorizes fr
 
 Now consider again ${\Phi}$, ${\Psi}$ and ${\pi^*}$ as before. Define ${u_{\geq n}: \ObsO \times (\Pol) \rightarrow \Reals}$ to be normalized sum of rewards from time ${n}$, i.e.
 
-$$u_{\geq n}(s,e):=\frac{\sum_{m=n}^\infty \gamma(m)r(e^s_{<m})}{\sum_{m=n}^\infty \gamma(m)}$$
+$$u_{> n}(s,e):=\frac{\sum_{m=n+1}^\infty \gamma(m)r(e^s_{<m})}{\sum_{m=n+1}^\infty \gamma(m)}$$
 
 Define ${w: \Obs^* \rightarrow \Reals}$ by
 
-$$w(x):=\max_{\rho \in \Prob(\Act^{\Abs{x}} \times \Obs^* \rightarrow \Act)} \min_{\mu \in \Phi} \EE{s \sim \pi^* \otimes_x \rho}{e \sim \mu}[u_{\geq \Abs{x}}(s,e) \mid x \sqsubset e]$$
+$$w(x):=\max_{\rho \in \Prob(\Act^{\Abs{x}} \times \Obs^* \rightarrow \Act)} \min_{\mu \in \Phi} \EE{s \sim \pi^* \otimes_x \rho}{e \sim \mu}[u_{> \Abs{x}}(s,e) \mid x \sqsubset e]$$
 
 \subsection{Corollary}
 
 Assume ${\Phi}$ factorizes everywhere. Then,
 
-$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\liminf_{n \rightarrow \infty} \max(w(e_{<n})-\EE{s \sim \pi^*}{e' \sim \mu}[u_{\geq n}(s,e') \mid e_{<n} \sqsubset e'] ,0)=0] = 1$$
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\liminf_{n \rightarrow \infty} \max(w(e_{<n})-\EE{s \sim \pi^*}{e' \sim \mu}[u_{> n}(s,e') \mid e_{<n} \sqsubset e'] ,0)=0] = 1$$
 
 Moreover, if ${\Phi}$ factorizes frequently everywhere, then
 
-$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(w(e_{<n})-\EE{s \sim \pi^*}{e' \sim \mu}[u_{\geq n}(s,e') \mid e_{<n} \sqsubset e'] ,0)=0] = 1$$
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(w(e_{<n})-\EE{s \sim \pi^*}{e' \sim \mu}[u_{> n}(s,e') \mid e_{<n} \sqsubset e'] ,0)=0] = 1$$
 
 %##Appendix
 \section{Appendix A}
@@ -473,11 +473,25 @@ $$\forall \bar{\mu} \in \bar{\Phi}_2: \E_{\bar{\pi}_2 \times \bar{\mu}}[\hat{u}_
 
 \subsection{Proof of Proposition 5}
 
-Denote ${x\Obs^*:=\{xy \mid y \in \Obs^*\}}$. We have
+Denote ${x\Obs^*:=\{xy \mid y \in \Obs^*\}}$, $\bar{x}\Obs^*:=\Obs^* \setminus x\Obs^*$. We have
 
-$$\E_{\pi \times \mu}[u] = \Prb_{e \sim \mu}[x \sqsubset e]...$$
+$$\E_{\pi \times \mu}[u] = \mu(x\Obs^*) \E_{\pi \times \mu \mid x \Obs^*}[u] + (1 - \mu(x\Obs^*)) \E_{\pi \times \mu \mid \bar{x} \Obs^*}[u]$$
 
-$$\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u] = ...$$
+$$\E_{(\pi \otimes_x \rho) \times \mu}[u] = \mu(x\Obs^*) \E_{(\pi \otimes_x \rho) \times \mu \mid x \Obs^*}[u] + (1 - \mu(x\Obs^*)) \E_{\pi \times \mu \mid \bar{x} \Obs^*}[u]$$
+
+$$\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u] = \mu(x\Obs^*)(\E_{(\pi \otimes_x \rho) \times \mu \mid x \Obs^*}[u]-\E_{\pi \times \mu \mid x \Obs^*}[u])$$
+
+Denote ${u_1(s,e):=\sum_{n \leq \Abs{x}} \gamma(n) r(e^s_{<n})}$, ${u_2(s,e):=\sum_{n > \Abs{x}} \gamma(n) r(e^s_{<n})}$. We have
+
+$$\E_{\pi \times \mu \mid x \Obs^*}[u] = \E_{\pi \times \mu \mid x \Obs^*}[u_1] + \E_{\pi \times \mu \mid x \Obs^*}[u_2]$$
+
+$$\E_{(\pi \otimes_x \rho) \times \mu \mid x \Obs^*}[u] = \E_{\pi \times \mu \mid x \Obs^*}[u_1] + \E_{(\pi \otimes_x \rho) \times \mu \mid x \Obs^*}[u_2]$$
+
+$$\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u] = \mu(x\Obs^*)(\E_{(\pi \otimes_x \rho) \times \mu \mid x \Obs^*}[u_2]-\E_{\pi \times \mu \mid x \Obs^*}[u_2])$$
+
+The desired result now follows from ${(\inf r) \sum_{n > \Abs{x}} \gamma(n) \leq u_2 \leq (\sup r) \sum_{n > \Abs{x}} \gamma(n)}$.
+
+\subsection{Proof of Theorem 1}
 
 TBD
 
