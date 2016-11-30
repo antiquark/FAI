@@ -128,7 +128,7 @@ If for some ${t_0 \in T}$ we have ${\pi^*(\alpha^{-1}(t_0) \times S_2)=0}$, then
 
 \subsection{Proposition 3}
 
-$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} (\E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu \mid A}[u_2(t)]])$$
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} (\E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2(t) \times \mu \mid A}[u_2(t)]])$$
 
 ***
 
@@ -140,7 +140,7 @@ $${u_1(s_1,f(e_1,e_2))=\bar{u}_1(s_1,e_1)}$$
 
 $${u_2(s_2,t,f(e_1,e_2))=\bar{u}_1(s_2,t,e_2)}$$
 
-Further assume that ${A_1 \subseteq E_1}$ is Borel s.t. ${f^{-1}(A) = A_1 \times E_2}$ and ${\Phi_{1,2} \in \CC(E_{1,2})}$ are s.t. ${\Phi}$ is the closure of the convex hull of ${f(\Phi_1 \times \Phi_2)}$.
+Further assume that ${A_1 \subseteq E_1}$ is Borel s.t. ${f^{-1}(A) = A_1 \times E_2}$ and ${\Phi_{1,2} \in \CC(E_{1,2})}$ are s.t. ${\Phi}$ is the closure of the convex hull of ${f_*(\Phi_1 \times \Phi_2)}$.
 
 \subsection{Proposition 4}
 
@@ -419,9 +419,33 @@ $$\forall \mu \in \Prob(E):U(\pi,\mu)=U(\pi_1 \otimes_\alpha \pi_2, \mu)$$
 
 \subsection{Proof of Proposition A.7}
 
-TBD
+$$U(\pi, \mu) = \EE{(s_1,s_2) \sim \pi}{e \sim \mu}[u_1(s_1,e) + \chi_A(e) u_2(s_2, \alpha(s_1), e)]$$
+
+$$U(\pi, \mu) = \E_{\pi_1 \times \mu}[u_1] + \mu(A) \EE{(s_1,s_2) \sim \pi}{e \sim \mu \mid A}[u_2(s_2, \alpha(s_1), e)]$$
+
+$$U(\pi, \mu) = \E_{\pi_1 \times \mu}[u_1] + \mu(A) \sum_{t \in T} \Prb_{(s_1, s_2) \sim \pi}[\alpha(s_1)=t] \EE{(s_1,s_2) \sim \pi \mid \alpha^{-1}(t) \times S_2}{e \sim \mu \mid A}[u_2(s_2, t, e)]$$
+
+$$U(\pi, \mu) = \E_{\pi_1 \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1}[\E_{\pi_2(t) \times \mu \mid A}[u_2(t)]]$$
+
+Applying Proposition A.6, we get the desired result.
 
 \subsection{Proof of Proposition 3}
+
+Consider any ${\pi_2: T \rightarrow \Prob(S_2)}$. By definition of ${\pi^*}$ 
+
+$${\min_{\mu \in \Phi} U(\pi_1^* \otimes_\alpha \pi_2, \mu) \leq \min_{\mu \in \Phi} U(\pi^*, \mu)}$$
+
+Applying Proposition A.7 to the right hand side
+
+$${\min_{\mu \in \Phi} U(\pi_1^* \otimes_\alpha \pi_2, \mu) \leq \min_{\mu \in \Phi} U(\pi_1^* \otimes_\alpha \pi_2^*, \mu)}$$
+
+Applying Proposition A.6 to both sides, we get the desired result.
+
+\subsection{Proof of Proposition 4}
+
+Using Proposition 1 and Proposition 3, we have
+
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\substack{\mu_1 \in \Phi_1 \\ \mu_2 \in \Phi_2}} (\E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2(t) \times \mu \mid A}[u_2(t)]])$$
 
 TBD
 
