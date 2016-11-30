@@ -144,7 +144,9 @@ Further assume that ${A_1 \subseteq E_1}$ is Borel s.t. ${f^{-1}(A) = A_1 \times
 
 \subsection{Proposition 4}
 
-$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi_2} \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2^*(t) \times \mu}[\bar{u}_2(t)]]$$
+Assume that ${\min_{\mu \in \Phi_1} \mu_1(A_1) > 0}$. Then,
+
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi_2} \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2(t) \times \mu}[\bar{u}_2(t)]]$$
 
 Moreover, define ${\bar{S}_2:=T \rightarrow S_2}$ equipped with the product topology, define ${\bar{\pi}_2^* \in \Prob(\bar{S}_2)}$ by
 
@@ -176,7 +178,7 @@ $$(s \otimes_x t)(y):=\begin{cases}s(y) \text{ if } y \not\sqsupseteq x \\t(s(\E
 
 Given ${\pi \in \Prob(\Pol)}$ and ${\rho \in \Prob(\Act^n \times \Pol)}$, ${\pi \otimes_x \rho \in \Prob(\Pol)}$ is defined as the pushforward of ${\pi \times \rho}$ by the operation above.
 
-Note that changing the policy after a certain event cannot change utility more than the probability of the event times the corresponding time discount factor. That is, we have the following:
+Note that changing the policy after a certain event cannot change utility more than ${O(1)}$ times the probability of the event times the corresponding time discount factor. That is, we have the following:
 
 \subsection{Proposition 5}
 
@@ -232,7 +234,7 @@ Note that any singleton ${\{\mu\}}$ factorizes frequently everywhere w.r.t. any 
 
 \subsection{Construction}
 
-Consider any ${F: \Obs^* \rightarrow \CC(\Obs^+)}$ (${\Obs^+}$ is considered to be a discrete space). Assume that for any ${x \in \Obs}$, there is ${A_x \subseteq \Obs^+}$ prefix-free s.t. any ${\mu \in F(x)}$ is supported on ${A_x}$.
+Consider some ${F: \Obs^* \rightarrow \CC(\Obs^+)}$ (${\Obs^+}$ is considered to be a discrete space). Assume that for any ${x \in \Obs}$, there is ${A_x \subseteq \Obs^+}$ prefix-free s.t. any ${\mu \in F(x)}$ is supported on ${A_x}$.
 
 We define ${X_F \subseteq \Obs^*}$ as the minimal set with the following properties:
 
@@ -357,13 +359,13 @@ On the other hand
 
 $$\max_{\pi \in \Prob(S)} \min_{\mu \in \Phi} U(\pi,p\mu + (1-p)\nu^*) \leq \max_{\pi \in \Prob(S)}  U(\pi,\xi^*)=u^*$$
 
-Combining the inequalities, we get the desired results.
+Combining the inequalities, we get the desired result.
 
 \subsection{Definition A}
 
-In the setting of Proposition 3, consider any ${\pi_1 \in \Prob(S_1)}$ and ${\pi_2: T \rightarrow \Prob(S_2)}$. We define ${\pi_1 \otimes_\alpha \pi_2 \in \Prob(S_1 \times S_2)}$ as follows. For any Borel measurable ${A \subseteq S_1 \times S_2}$:
+In the setting of Proposition 3, consider any ${\pi_1 \in \Prob(S_1)}$ and ${\pi_2: T \rightarrow \Prob(S_2)}$. We define ${\pi_1 \otimes_\alpha \pi_2 \in \Prob(S_1 \times S_2)}$ as follows. For any Borel measurable ${B \subseteq S_1 \times S_2}$:
 
-$$(\pi_1 \otimes_\alpha \pi_2)(A):=\sum_{t \in T} (\pi_1 \times \pi_2(t))(A \cap (\alpha^{-1}(t) \times S_2))$$ 
+$$(\pi_1 \otimes_\alpha \pi_2)(B):=\sum_{t \in T} (\pi_1 \times \pi_2(t))(B \cap (\alpha^{-1}(t) \times S_2))$$ 
 
 It is easy to see the above indeed defines a probability measure.
 
@@ -445,7 +447,37 @@ Applying Proposition A.6 to both sides, we get the desired result.
 
 Using Proposition 1 and Proposition 3, we have
 
-$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\substack{\mu_1 \in \Phi_1 \\ \mu_2 \in \Phi_2}} (\E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2(t) \times \mu \mid A}[u_2(t)]])$$
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\substack{\mu_1 \in \Phi_1 \\ \mu_2 \in \Phi_2}} (\E_{\pi_1^* \times f_*(\mu_1 \times \mu_2)}[u_1] + (\mu_1 \times \mu_2)(f^{-1}(A)) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2(t) \times f_*(\mu_1 \times \mu_2) \mid A}[u_2(t)]])$$
+
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\substack{\mu_1 \in \Phi_1 \\ \mu_2 \in \Phi_2}} (\E_{\pi_1^* \times \mu_1}[\bar{u}_1] + \mu_1(A_1) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2(t) \times \mu_2}[\bar{u}_2(t)]])$$
+
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu_1 \in \Phi_1} (\E_{\pi_1^* \times \mu_1}[\bar{u}_1] + \mu_1(A_1) \min_{\mu_2 \in \Phi_2} \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2(t) \times \mu_2}[\bar{u}_2(t)]])$$
+
+Using the assumption ${\min_{\mu_1 \in \Phi_1} \mu_1(A_1) > 0}$, we get the desired result.
+
+Now consider any ${\bar{\pi}_2 \in \Prob(\bar{S}_2)}$. Define ${\pi_2: T \rightarrow \Prob(S_2)}$ by ${(\pi_2(t))(B):=\Prb_{\sigma \sim \bar{\pi}_2}[\sigma(t) \in B]}$. We have
+
+$$\E_{t \sim \alpha_*\pi_1^*}[\EE{s \sim \pi_2(t)}{e \sim \mu_2}[\bar{u}_2(s,t,e)]] = \E_{t \sim \alpha_*\pi_1^*}[\EE{\sigma \sim \bar{\pi}_2}{e \sim \mu_2}[\bar{u}_2(\sigma(t),t,e)]]$$
+
+$$\E_{t \sim \alpha_*\pi_1^*}[\EE{s \sim \pi_2(t)}{e \sim \mu_2}[\bar{u}_2(s,t,e)]] = \E_{\bar{\pi}_2 \times \alpha_* \pi^*_1 \times \mu}[\hat{u}_2]$$
+
+For the special case ${\bar{\pi}_2=\bar{\pi}^*_2=\prod_{t \in T} \pi_2^*(t)}$, we get ${\pi_2=\pi^*_2}$ and therefore
+
+$$\E_{t \sim \alpha_*\pi_1^*}[\EE{s \sim \pi^*_2(t)}{e \sim \mu_2}[\bar{u}_2(s,t,e)]] = \E_{\bar{\pi}^*_2 \times \alpha_* \pi^*_1 \times \mu}[\hat{u}_2]$$
+
+Using the property of ${\pi^*_2}$, it follows that
+
+$$\forall \mu \in \Phi_2: \E_{\bar{\pi}_2 \times \alpha_* \pi^*_1 \times \mu}[\hat{u}_2] \leq \E_{\bar{\pi}^*_2 \times \alpha_* \pi^*_1 \times \mu}[\hat{u}_2]$$
+
+$$\forall \bar{\mu} \in \bar{\Phi}_2: \E_{\bar{\pi}_2 \times \bar{\mu}}[\hat{u}_2] \leq \E_{\bar{\pi}^*_2 \times \bar{\mu}}[\hat{u}_2]$$
+
+\subsection{Proof of Proposition 5}
+
+Denote ${x\Obs^*:=\{xy \mid y \in \Obs^*\}}$. We have
+
+$$\E_{\pi \times \mu}[u] = \Prb_{e \sim \mu}[x \sqsubset e]...$$
+
+$$\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u] = ...$$
 
 TBD
 
@@ -454,5 +486,6 @@ TBD
 Moo
 
 \end{document}
+
 
 
