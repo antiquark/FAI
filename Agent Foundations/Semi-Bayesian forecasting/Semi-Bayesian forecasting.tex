@@ -497,6 +497,30 @@ $$\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u] = \mu(x\Obs^*)(
 
 The desired result now follows from ${(\inf r) \sum_{n > \Abs{x}} \gamma(n) \leq u_2 \leq (\sup r) \sum_{n > \Abs{x}} \gamma(n)}$.
 
+\subsection{Proposition A.8}
+
+Consider ${\Phi, \Phi' \in \CC(E)}$ and ${p \in (0,1]}$, and denote ${\Psi:=p\Phi+(1-p)\Phi'}$. Suppose that ${S = S_1 \times S_2}$, ${A \subseteq E}$ is Borel, ${T}$ is a finite set, ${\alpha: S_1 \rightarrow T}$ is Borel measurable, ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ are continuous and
+
+$$u(s_1,s_2,e) = u_1(s_1,e) + \chi_A(e) u_2(s_2, \alpha(s_1), e)$$
+
+Let ${\nu^* \in \Phi'}$ be as in Proposition 2. Fix ${\pi \in \Prob(S_1)}$.  Let ${\rho^*: T \rightarrow \Prob(S_2)}$ satisfy
+
+$$\rho^* \in \Argmax{\rho: T \rightarrow \Prob(S_2)} \min_{\xi \in \Psi} U(\pi \otimes_\alpha \rho, \xi)$$
+
+Then, for any ${\mu \in \Phi}$ s.t. ${\mu(A) > 0}$
+
+$$U(\rho^*,\mu) \geq \max_{\rho: T \rightarrow \Prob(S_2)} \min_{\mu' \in \Phi} U(\pi \otimes_\alpha \rho, \mu')-2\frac{(\sup u_2 - \inf u_2)\mu(A)\Dtv(\mu \mid A, \nu^* \mid A)}{\frac{p}{1-p}\frac{\mu(A)}{\nu^*(A)}+1}$$
+
+In the above inequality, if the denominator of the second term on the right hand size is infinite, the fraction is understood to be 0.
+
+\subsection{Proof of Proposition A.8}
+
+TBD
+
+\subsection{Proposition A.9}
+
+TBD
+
 \subsection{Proof of Theorem 1}
 
 TBD
