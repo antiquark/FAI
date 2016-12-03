@@ -499,7 +499,7 @@ The desired result now follows from ${(\inf r) \sum_{n > \Abs{x}} \gamma(n) \leq
 
 \subsection{Proposition A.8}
 
-Consider ${\Phi \in \CC(E)}$, ${\nu^* \in \Prob(E)}$ and ${p \in [0,1)}$, and denote ${\Psi:=p\Phi+(1-p)\nu^*}$. Suppose that ${S = S_1 \times S_2}$, ${A \subseteq E}$ is Borel, ${T}$ is a finite set, ${\alpha: S_1 \rightarrow T}$ is Borel measurable, ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ are continuous and
+Consider ${\Phi \in \CC(E)}$, ${\nu^* \in \Prob(E)}$ and ${p \in (0,1)}$, and denote ${\Psi:=p\Phi+(1-p)\nu^*}$. Suppose that ${S = S_1 \times S_2}$, ${A \subseteq E}$ is Borel, ${T}$ is a finite set, ${\alpha: S_1 \rightarrow T}$ is Borel measurable, ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ are continuous and
 
 $$u(s_1,s_2,e) = u_1(s_1,e) + \chi_A(e) u_2(s_2, \alpha(s_1), e)$$
 
@@ -590,6 +590,12 @@ $$(\frac{p}{1-p}\frac{\mu_0(A)}{\nu^*(A)}+1)(u - u^*) \geq - 2\Gamma\mu_0(A)\Dtv
 $$u \geq u^* - \frac{2\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)}{\frac{p}{1-p}\frac{\mu_0(A)}{\nu^*(A)}+1}$$
 
 \subsection{Proposition A.9}
+
+In the setting of Proposition A.8, sans the assumption ${\nu^*(A) > 0}$:
+
+$$U(\pi \otimes_\alpha \rho^*,\mu_0) \geq \max_{\rho: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} U(\pi \otimes_\alpha \rho, \mu)-\frac{1-p}{p}\Gamma\nu^*(A)$$
+
+\subsection{Proof of Proposition A.9}
 
 TBD
 
