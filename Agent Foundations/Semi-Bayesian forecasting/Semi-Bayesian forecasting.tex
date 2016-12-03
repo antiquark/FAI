@@ -499,45 +499,95 @@ The desired result now follows from ${(\inf r) \sum_{n > \Abs{x}} \gamma(n) \leq
 
 \subsection{Proposition A.8}
 
-Consider ${\Phi, \Phi' \in \CC(E)}$ and ${p \in (0,1]}$, and denote ${\Psi:=p\Phi+(1-p)\Phi'}$. Suppose that ${S = S_1 \times S_2}$, ${A \subseteq E}$ is Borel, ${T}$ is a finite set, ${\alpha: S_1 \rightarrow T}$ is Borel measurable, ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ are continuous and
+Consider ${\Phi \in \CC(E)}$, ${\nu^* \in \Prob(E)}$ and ${p \in [0,1)}$, and denote ${\Psi:=p\Phi+(1-p)\nu^*}$. Suppose that ${S = S_1 \times S_2}$, ${A \subseteq E}$ is Borel, ${T}$ is a finite set, ${\alpha: S_1 \rightarrow T}$ is Borel measurable, ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ are continuous and
 
 $$u(s_1,s_2,e) = u_1(s_1,e) + \chi_A(e) u_2(s_2, \alpha(s_1), e)$$
 
-Let ${\nu^* \in \Phi'}$ be as in Proposition 2. Fix ${\pi \in \Prob(S_1)}$.  Let ${\rho^*: T \rightarrow \Prob(S_2)}$ satisfy
+Assume ${\nu^*(A) > 0}$. Fix ${\pi \in \Prob(S_1)}$.  Let ${\rho^*: T \rightarrow \Prob(S_2)}$ satisfy
 
 $$\rho^* \in \Argmax{\rho: T \rightarrow \Prob(S_2)} \min_{\xi \in \Psi} U(\pi \otimes_\alpha \rho, \xi)$$
 
-Then, for any ${\mu \in \Phi}$ s.t. ${\mu(A) > 0}$
+Denote ${\Gamma := \sup u_2 - \inf u_2}$. Then, for any ${\mu_0 \in \Phi}$ s.t. ${\mu_0(A) > 0}$
 
-$$U(\pi \otimes_\alpha \rho^*,\mu) \geq \max_{\rho: T \rightarrow \Prob(S_2)} \min_{\mu' \in \Phi} U(\pi \otimes_\alpha \rho, \mu')-2\frac{(\sup u_2 - \inf u_2)\mu(A)\Dtv(\mu \mid A, \nu^* \mid A)}{\frac{p}{1-p}\frac{\mu(A)}{\nu^*(A)}+1}$$
-
-In the above inequality, if the denominator of the second term on the right hand size is infinite, the fraction is understood to be 0.
+$$U(\pi \otimes_\alpha \rho^*,\mu_0) \geq \max_{\rho: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} U(\pi \otimes_\alpha \rho, \mu)-\frac{2\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)}{\frac{p}{1-p}\frac{\mu_0(A)}{\nu^*(A)}+1}$$
 
 \subsection{Proof of Proposition A.8}
 
-Consider any ${\mu' \in \Phi}$ and denote ${\xi = p\mu' + (1-p)\nu^*}$. Let ${\tau^*: T \rightarrow \Prob(S_2)}$ satisfy
+Let ${\tau^*: T \rightarrow \Prob(S_2)}$ satisfy
 
-$$\tau^* \in \Argmax{\rho: T \rightarrow \Prob(S_2)} \min_{\mu' \in \Phi} U(\pi \otimes_\alpha \rho, \mu')$$
+$$\tau^* \in \Argmax{\rho: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} U(\pi \otimes_\alpha \rho, \mu)$$
 
-Denote ${v^*:= \min_{\mu' \in \Phi} U(\pi \otimes_\alpha \tau^*, \mu')}$. We have
+Denote ${u^*:= \min_{\mu \in \Phi} U(\pi \otimes_\alpha \tau^*, \mu)}$. Consider any ${\mu \in \Phi}$ and denote ${\xi:=p\mu+(1-p)\nu^*}$. We have
 
 $$U(\pi \otimes_\alpha \tau^*, \xi) = p U(\pi \otimes_\alpha \tau^*, \mu') + (1-p) U(\pi \otimes_\alpha \tau^*, \nu^*)$$
 
-$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pv^* + (1-p) U(\pi \otimes_\alpha \tau^*, \nu^*)$$
+$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pu^* + (1-p) U(\pi \otimes_\alpha \tau^*, \nu^*)$$
 
 Applying Proposition A.6 to the right hand side
 
-$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pv^* + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A) \E_{(\pi \otimes_\alpha \tau^*)??? \times \nu^*}[u_2 \mid A])$$
+$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pu^* + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)\E_{t \sim \alpha_* \pi}[\E_{\tau^*(t) \times \nu^*}[u_2 \mid A]])$$
 
-$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pv^* + (1-p) (\E_{(\pi \otimes_\alpha \tau^*) \times \nu^*}[u_1] + \nu^*(A) (\E_{(\pi \otimes_\alpha \tau^*)??? \times \mu}[u_2 \mid A] - (\sup u_2 - \inf u_2)\Dtv(\mu \mid A, \nu^* \mid A)))$$
+$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pu^* + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)(\E_{t \sim \alpha_* \pi}[\E_{\tau^*(t) \times \mu_0}[u_2 \mid A]]- \Gamma\Dtv(\mu_0 \mid A, \nu^* \mid A)))$$
 
 Also, we have
 
-$$v^* \leq U(\pi \otimes_\alpha \tau^*, \mu)$$
+$$U(\pi \otimes_\alpha \tau^*, \mu_0) \geq u^*$$
 
-$$v^* \leq U(\pi \otimes_\alpha \tau^*, \mu)$$
+Applying Proposition A.6 again
 
-TBD
+$$\E_{\pi \times \mu_0}[u_1] + \mu_0(A)\E_{t \sim \alpha_* \pi}[\E_{\tau^*(t) \times \mu_0}[u_2 \mid A]] \geq u^*$$
+
+$$\E_{t \sim \alpha_* \pi}[\E_{\tau^*(t) \times \mu_0}[u_2 \mid A]] \geq \frac{u^* - \E_{\pi \times \mu_0}[u_1]}{\mu_0(A)}$$
+
+Combining the inequalities
+
+$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pu^* + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)(\frac{u^* - \E_{\pi \times \mu_0}[u_1]}{\mu_0(A)}- \Gamma\Dtv(\mu_0 \mid A, \nu^* \mid A)))$$
+
+$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pu^* + (1-p) (\E_{\pi \times \nu^*}[u_1] + \frac{\nu^*(A)}{\mu_0(A)}(u^* - \E_{\pi \times \mu_0}[u_1]- \Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)))$$
+
+$$U(\pi \otimes_\alpha \tau^*, \xi) \geq (p + (1-p) \frac{\nu^*(A)}{\mu_0(A)})u^* + (1-p) (\E_{\pi \times \nu^*}[u_1] - \frac{\nu^*(A)}{\mu_0(A)}(\E_{\pi \times \mu_0}[u_1]+ \Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)))$$
+
+The above inequality holds for any ${\xi}$, therefore
+
+$$\min_{\xi \in \Psi} U(\pi \otimes_\alpha \tau^*, \xi) \geq (p + (1-p) \frac{\nu^*(A)}{\mu_0(A)})u^* + (1-p) (\E_{\pi \times \nu^*}[u_1] - \frac{\nu^*(A)}{\mu_0(A)}(\E_{\pi \times \mu_0}[u_1]+ \Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)))$$
+
+By definition of ${\rho^*}$, it follows that
+
+$$\min_{\xi \in \Psi} U(\pi \otimes_\alpha \rho^*, \xi) \geq (p + (1-p) \frac{\nu^*(A)}{\mu_0(A)})u^* + (1-p) (\E_{\pi \times \nu^*}[u_1] - \frac{\nu^*(A)}{\mu_0(A)}(\E_{\pi \times \mu_0}[u_1]+ \Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)))$$
+
+Denote ${\xi_0:= p \mu_0 + (1-p) \nu^*}$ and ${u:=U(\pi \otimes_\alpha \rho^*, \mu_0)}$. We have
+
+$$U(\pi \otimes_\alpha \rho^*, \xi_0) = pu + (1-p) U(\pi \otimes_\alpha \rho^*, \nu^*)$$
+
+Applying Proposition A.6 to the right hand side
+
+$$U(\pi \otimes_\alpha \rho^*, \xi_0) = pu + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)\E_{t \sim \alpha_* \pi}[\E_{\rho^*(t) \times \nu^*}[u_2 \mid A]])$$
+
+$$U(\pi \otimes_\alpha \rho^*, \xi_0) \leq pu + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)(\E_{t \sim \alpha_* \pi}[\E_{\rho^*(t) \times \mu_0}[u_2 \mid A]]+\Gamma \Dtv(\mu_0 \mid A, \nu^* \mid A))$$
+
+On the other hand, Proposition A.6 implies that
+
+$$\E_{\pi \times \mu_0}[u_1] + \mu_0(A)\E_{t \sim \alpha_* \pi}[\E_{\rho^*(t) \times \mu_0}[u_2 \mid A]] = u$$
+
+$$\E_{t \sim \alpha_* \pi}[\E_{\rho^*(t) \times \mu_0}[u_2 \mid A]] = \frac{u-\E_{\pi \times \mu_0}[u_1]}{\mu_0(A)}$$
+
+Substituting in the inequality, we get
+
+$$U(\pi \otimes_\alpha \rho^*, \xi_0) \leq pu + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)(\frac{u-\E_{\pi \times \mu_0}[u_1]}{\mu_0(A)}+\Gamma \Dtv(\mu_0 \mid A, \nu^* \mid A))$$
+
+$$U(\pi \otimes_\alpha \rho^*, \xi_0) \leq pu + (1-p) (\E_{\pi \times \nu^*}[u_1] + \frac{\nu^*(A)}{\mu_0(A)}(u-\E_{\pi \times \mu_0}[u_1]+\Gamma \mu_0(A) \Dtv(\mu_0 \mid A, \nu^* \mid A))$$
+
+$$U(\pi \otimes_\alpha \rho^*, \xi_0) \leq (p + (1-p)\frac{\nu^*(A)}{\mu_0(A)})u + (1-p) (\E_{\pi \times \nu^*}[u_1] - \frac{\nu^*(A)}{\mu_0(A)}(\E_{\pi \times \mu_0}[u_1]-\Gamma \mu_0(A) \Dtv(\mu_0 \mid A, \nu^* \mid A))$$
+
+Observing that ${U(\pi \otimes_\alpha \rho^*, \xi_0) \geq \min_{\xi \in \Psi} U(\pi \otimes_\alpha \rho^*, \xi)}$ we can combine the inequalities, we get
+
+$$(p + (1-p)\frac{\nu^*(A)}{\mu_0(A)})(u-u^*)\geq 2 (1-p) ( - \frac{\nu^*(A)}{\mu_0(A)}\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A))$$
+
+Dividing both sides by ${(1-p)\frac{\nu^*(A)}{\mu_0(A)}}$
+
+$$(\frac{p}{1-p}\frac{\mu_0(A)}{\nu^*(A)}+1)(u - u^*) \geq - 2\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)$$
+
+$$u \geq u^* - \frac{2\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)}{\frac{p}{1-p}\frac{\mu_0(A)}{\nu^*(A)}+1}$$
 
 \subsection{Proposition A.9}
 
