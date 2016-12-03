@@ -24,6 +24,8 @@
 % operators that require brackets
 \DeclareMathOperator{\Prb}{Pr}
 \DeclareMathOperator{\E}{E}
+\newcommand{\PP}[2]{\operatorname{Pr}_{\substack{#1 \\ #2}}}
+\newcommand{\PPP}[3]{\operatorname{Pr}_{\substack{#1 \\ #2 \\ #3}}}
 \newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
 \newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
 \DeclareMathOperator{\Var}{Var}
@@ -112,7 +114,7 @@ Consider ${\Phi, \Phi' \in \CC(E)}$ and ${p \in [0,1]}$. Then, there is ${\nu^* 
 
 In particular, Proposition 2 implies that a minimax policy for ${\Phi}$ is the optimal policy for some ${\mu^* \in \Phi}$.
 
-Now we ask what policy is implemented by "subagents" created by a minimax policy. Suppose ${S = S_1 \times S_2}$, where ${S_2}$ represents the pure policies of the subagent. Assume that there is a Borel set ${A \subseteq E}$ (the condition for the creation of the subagent), a finite set ${T}$ (the part of the policy executed before the creation of the subagent), a Borel measurable mapping ${\alpha: S_1 \rightarrow T}$ and continuous functions ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ s.t. 
+Now we ask what policy is implemented by "subagents" created by a minimax policy. Suppose ${S = S_1 \times S_2}$, where ${S_2}$ represents the pure policies of the subagent. Assume that there is a Borel set ${A \subseteq E}$ (the condition for the creation of the subagent), a finite set ${T}$ (the actions taken before the creation of the subagent), a Borel measurable mapping ${\alpha: S_1 \rightarrow T}$ and continuous functions ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ s.t. 
 
 $${u(s_1,s_2,e)=u_1(s_1,e)+\chi_A(e) u_2(s_2,\alpha(s_1),e)}$$
 
@@ -164,7 +166,7 @@ Then, ${\bar{\pi}_2^*}$ is a minimax policy for ${\bar{\Phi}_2}$ w.r.t. the util
 
 \section{Asymptotic optimality}
 
-Fix finite sets ${\Act}$ (actions) and ${\Obs}$ (observations). We now assume that ${E=\ObsO}$ and ${S=\Pol}$ with the product topology. We fix ${\gamma: \Nats \rightarrow \Reals^{\geq 0}}$ a time discount function satisfying ${\sum_n \gamma(n) < \infty}$ and ${r: (\Act \times \Obs)^* \rightarrow \Reals}$ a bounded reward function. Given ${e \in E}$ and ${s \in S}$, we define ${e^s \in (\Act \times \Obs)^\omega}$ by
+Fix finite sets ${\Act}$ (actions) and ${\Obs}$ (observations). We now assume that ${E=\ObsO}$ and ${S=\Pol}$ with the product topology. We fix ${\gamma: \Nats \rightarrow \Reals^{\geq 0}}$ a time discount function satisfying ${\sum_n \gamma(n) < \infty}$ and ${r: (\Act \times \Obs)^* \rightarrow \Reals}$ a bounded reward function. Given ${e \in \Obs^*}$ and ${s: \Pol}$, we define ${e^s \in (\Act \times \Obs)^\omega}$ by
 
 $${e^s_n:=(s(e_{<n}),e_n)}$$
 
@@ -172,11 +174,15 @@ The utility function is then given by
 
 $$u(s,e)=\sum_{n \in \Nats} \gamma(n) r(e^s_{<n})$$
 
-We will need a notation for a combination of two policies where the agent switches for one to another when observing some ${x \in \Obs^*}$. Given ${n \in \Nats}$, ${s: \Pol}$, ${x \in \Obs^n}$ and ${t: \Act^n \times \Pol}$, we define ${s \otimes_x t: \Pol}$ by
+We will need a notation for a combination of two policies where the agent switches from one to another when observing some ${x \in \Obs^*}$. Given ${s_1: \Pol}$ and ${s_2: \Pol}$, we define ${s_1 \times_x s_2: \Pol}$ by
 
-$$(s \otimes_x t)(y):=\begin{cases}s(y) \text{ if } y \not\sqsupseteq x \\t(s(\Estr_\Obs),s(x_{<1}), s(x_{<2}) \ldots s(x_{<{n-1}}),z) \text{ if } y=xz\end{cases}$$
+$$(s_1 \times_x s_2)(y):=\begin{cases}s_1(y) \text{ if } y \not\sqsupseteq x \\s_2(z) \text{ if } y=xz\end{cases}$$
 
-Given ${\pi \in \Prob(\Pol)}$ and ${\rho \in \Prob(\Act^n \times \Pol)}$, ${\pi \otimes_x \rho \in \Prob(\Pol)}$ is defined as the pushforward of ${\pi \times \rho}$ by the operation above.
+Consider any ${\pi \in \Prob(\Pol)}$ and ${\rho: \Act^{\Abs{x}} \rightarrow \Prob(\Pol)}$. We define ${\pi \otimes_x \rho \in \Prob(\Obs^* \rightarrow \Act)}$ as follows. For any Borel measurable ${B \subseteq \Pol}$:
+
+$$(\pi \otimes_x \rho)(B):=\sum_{t \in \Act^{\Abs{x}}} \PP{s_1 \sim \pi}{s_2 \sim \rho(t)}[s_1 \times_x s_2 \in B \land \forall n < \Abs{x}: t_n=s_1(x_{<n})]$$ 
+
+It is easy to see the above indeed defines a probability measure.
 
 Note that changing the policy after a certain event cannot change utility more than ${O(1)}$ times the probability of the event times the corresponding time discount factor. That is, we have the following:
 
@@ -188,7 +194,7 @@ $$\Abs{\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u]} \leq (\su
 
 We are now ready to formulate the optimality theorem. Consider ${\Phi,\Phi' \in \CC(\ObsO)}$ and ${p \in [0,1]}$. Denote ${\Psi = p \Phi + (1-p) \Phi'}$. We think of ${\Psi}$ as the prior, ${\Phi}$ as one of the models in the prior (assigned probability ${p}$) and ${\Phi'}$ as the convex combination of all other models. Let ${\pi^* \in \Prob(\Pol)}$ be a minimax policy for ${\Psi}$. Define ${v: \Obs^* \rightarrow \Reals}$ by
 
-$$v(x):=\max_{\rho \in \Prob(\Act^{\Abs{x}} \times \Obs^* \rightarrow \Act)} \min_{\mu \in \Phi} \E_{(\pi^* \otimes_x \rho) \times \mu}[u]$$
+$$v(x):=\max_{\rho \in \Act^{\Abs{x}} \rightarrow \Prob(\Pol)} \min_{\mu \in \Phi} \E_{(\pi^* \otimes_x \rho) \times \mu}[u]$$
 
 That is, ${v}$ is the expected utility that can be guaranteed by changing the policy following ${x}$, assuming that the true environment is in ${\Phi}$. We claim that if the true environment is in ${\Phi}$, then after sufficient time ${\pi^*}$ will achieve at least as much utility as can be guaranteed for ${\Phi}$ (guaranteed under the constraint of following ${\pi^*}$ until the point of making the current observations). That is, ${v}$ can only be greater than ${\E_{\pi^* \times \mu}[u]}$ by a quantity that goes to 0 with probability 1, even after normalizing according to Proposition~5:
 
@@ -260,7 +266,7 @@ $$u_{> n}(s,e):=\frac{\sum_{m=n+1}^\infty \gamma(m)r(e^s_{<m})}{\sum_{m=n+1}^\in
 
 Define ${w: \Obs^* \rightarrow \Reals}$ by
 
-$$w(x):=\max_{\rho \in \Prob(\Act^{\Abs{x}} \times \Obs^* \rightarrow \Act)} \min_{\mu \in \Phi} \EE{s \sim \pi^* \otimes_x \rho}{e \sim \mu}[u_{> \Abs{x}}(s,e) \mid x \sqsubset e]$$
+$$w(x):=\max_{\rho \in \Act^{\Abs{x}} \rightarrow \Prob(\Pol)} \min_{\mu \in \Phi} \EE{s \sim \pi^* \otimes_x \rho}{e \sim \mu}[u_{> \Abs{x}}(s,e) \mid x \sqsubset e]$$
 
 \subsection{Corollary}
 
