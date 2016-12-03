@@ -509,11 +509,33 @@ $$\rho^* \in \Argmax{\rho: T \rightarrow \Prob(S_2)} \min_{\xi \in \Psi} U(\pi \
 
 Then, for any ${\mu \in \Phi}$ s.t. ${\mu(A) > 0}$
 
-$$U(\rho^*,\mu) \geq \max_{\rho: T \rightarrow \Prob(S_2)} \min_{\mu' \in \Phi} U(\pi \otimes_\alpha \rho, \mu')-2\frac{(\sup u_2 - \inf u_2)\mu(A)\Dtv(\mu \mid A, \nu^* \mid A)}{\frac{p}{1-p}\frac{\mu(A)}{\nu^*(A)}+1}$$
+$$U(\pi \otimes_\alpha \rho^*,\mu) \geq \max_{\rho: T \rightarrow \Prob(S_2)} \min_{\mu' \in \Phi} U(\pi \otimes_\alpha \rho, \mu')-2\frac{(\sup u_2 - \inf u_2)\mu(A)\Dtv(\mu \mid A, \nu^* \mid A)}{\frac{p}{1-p}\frac{\mu(A)}{\nu^*(A)}+1}$$
 
 In the above inequality, if the denominator of the second term on the right hand size is infinite, the fraction is understood to be 0.
 
 \subsection{Proof of Proposition A.8}
+
+Consider any ${\mu' \in \Phi}$ and denote ${\xi = p\mu' + (1-p)\nu^*}$. Let ${\tau^*: T \rightarrow \Prob(S_2)}$ satisfy
+
+$$\tau^* \in \Argmax{\rho: T \rightarrow \Prob(S_2)} \min_{\mu' \in \Phi} U(\pi \otimes_\alpha \rho, \mu')$$
+
+Denote ${v^*:= \min_{\mu' \in \Phi} U(\pi \otimes_\alpha \tau^*, \mu')}$. We have
+
+$$U(\pi \otimes_\alpha \tau^*, \xi) = p U(\pi \otimes_\alpha \tau^*, \mu') + (1-p) U(\pi \otimes_\alpha \tau^*, \nu^*)$$
+
+$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pv^* + (1-p) U(\pi \otimes_\alpha \tau^*, \nu^*)$$
+
+Applying Proposition A.6 to the right hand side
+
+$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pv^* + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A) \E_{(\pi \otimes_\alpha \tau^*)??? \times \nu^*}[u_2 \mid A])$$
+
+$$U(\pi \otimes_\alpha \tau^*, \xi) \geq pv^* + (1-p) (\E_{(\pi \otimes_\alpha \tau^*) \times \nu^*}[u_1] + \nu^*(A) (\E_{(\pi \otimes_\alpha \tau^*)??? \times \mu}[u_2 \mid A] - (\sup u_2 - \inf u_2)\Dtv(\mu \mid A, \nu^* \mid A)))$$
+
+Also, we have
+
+$$v^* \leq U(\pi \otimes_\alpha \tau^*, \mu)$$
+
+$$v^* \leq U(\pi \otimes_\alpha \tau^*, \mu)$$
 
 TBD
 
