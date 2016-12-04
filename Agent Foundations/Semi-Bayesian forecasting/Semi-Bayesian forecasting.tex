@@ -82,7 +82,7 @@
 
 We consider "semi-Bayesian" agents following the minimax expected utility decision rule, in oblivious environments with full monitoring (a setting that we will refer to as "forecasting"). This setting is considered in order to avoid the need to enforce exploration, as a preparation for analysis of general environments. We show that such agents satisfy a certain asymptotic optimality theorem. Intuitively, this theorem means that whenever the environment satisfies an incomplete model that is included in the prior, the agent will eventually learn this model i.e. extract at least as much utility as can be guaranteed for this model.
 
-The proofs are in Appendix A.
+Appendix A contains the proofs of all results. Appendix B contains some theorems from the literature together with a corollary used in Appendix A.
 
 \section{Notation}
 
@@ -619,19 +619,27 @@ TBD
 
 Given any ${x \in \Obs^*}$, we denote ${x\ObsO:=\{xy \mid y \in \ObsO\}}$.
 
-\subsection{Theorem B}
+The following theorem is adapted from [Blackwell and Dubbins (1962)](https://projecteuclid.org/euclid.aoms/1177704456).
+
+\subsection{Theorem B.1}
+
+Consider any ${\mu, \nu \in \Prob(\ObsO)}$. Assume that ${\mu}$ is absolutely continuous with respect to ${\nu}$. Then:
+
+$$\Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \Dtv(\mu \mid e_{<n}\ObsO, \nu \mid e_{<n}\ObsO) = 0] = 1$$
+
+\subsection{Theorem B.2}
 
 Consider any ${\mu, \nu \in \Prob(\ObsO)}$. Define ${\{D_n: \ObsO \rightarrow \Reals \sqcup \{+\infty\}\}_{n \in \Nats}}$ by
 
 $$D_n(x):=\begin{cases}\frac{\mu(x_{<n}\ObsO)}{\nu(x_{<n}\ObsO)} \text{ if } \nu(x_{<n}\ObsO) > 0\\+\infty \text{ otherwise}\end{cases}$$
 
-Define ${D:= \limsup_{n \rightarrow \infty} D_n}$. Then, for any Borel ${A \subseteq \Obs^*}$:
+Define ${D:= \limsup_{n \rightarrow \infty} D_n}$. Then, for any Borel ${A \subseteq \ObsO}$:
 
 $$\mu(A) = \int_A D(x) d\nu(x) + \mu(A \cap D^{-1}(+\infty))$$
 
-\subsection{Proof of Theorem B}
+\subsection{Proof of Theorem B.2}
 
-This is almost a special case of Theorem 5.3.3 in [Durret 2010](https://books.google.ie/books/about/Probability.html?id=evbGTPhuvSoC), except that we don't assume ${\mu}$ is locally absolutely continuous w.r.t. ${\nu}$ (i.e. we don't assume that ${\mu(x\ObsO)=0}$ whenever ${\nu(x\ObsO)=0}$). Careful reading of the proof shows that in our case it doesn't matter: ${D_n}$ (${X_n}$ is Durret's notation) is no longer a ${\nu}$-martingale but is still a ${\nu}$-supermartingale, and the identity ${X_n = \frac{Y_n}{Z_n}}$ still holds if the fraction is understood to stand for ${+\infty}$ whenever ${Z_n = 0}$.
+This is almost a special case of Theorem 5.3.3 in [Durret (2010)](https://books.google.ie/books/about/Probability.html?id=evbGTPhuvSoC), except that we don't assume ${\mu}$ is locally absolutely continuous w.r.t. ${\nu}$ (i.e. we don't assume that ${\mu(x\ObsO)=0}$ whenever ${\nu(x\ObsO)=0}$). Careful reading of the proof shows that in our case it doesn't matter: ${D_n}$ (${X_n}$ is Durret's notation) is no longer a ${\nu}$-martingale but is still a ${\nu}$-supermartingale, and the identity ${X_n = \frac{Y_n}{Z_n}}$ still holds if the fraction is understood to stand for ${+\infty}$ whenever ${Z_n = 0}$.
 
 \subsection{Corollary B}
 
@@ -645,13 +653,45 @@ Then, ${\mu(A \cup B) = 1}$.
 
 \subsection{Proof of Corollary B}
 
-By Theorem B
+Assume that ${\E_\nu[D] > 0}$. Then, we can define ${\mu_r \in \Prob(\ObsO)}$ by
+
+$$\mu_r(C):=\frac{\int_{C} D(x) d\nu(x)}{\int_{\ObsO} D(x) d\nu(x)}$$
+
+Obviously, ${\mu_r}$ is absolutely continuous w.r.t. ${\nu}$, therefore we can use Theorem B.1 to conclude
+
+$$\Prb_{e \sim \mu_r}[\lim_{n \rightarrow \infty} \Dtv(\mu_r \mid e_{<n}\ObsO, \nu \mid e_{<n}\ObsO) = 0] = 1$$
+
+By Theorem B.2, ${\mu_r}$ is dominated by ${\mu}$ and in particular is absolutely continuous w.r.t. ${\mu}$. Therefore, again by Theorem B.1:
+
+$$\Prb_{e \sim \mu_r}[\lim_{n \rightarrow \infty} \Dtv(\mu_r \mid e_{<n}\ObsO, \mu \mid e_{<n}\ObsO) = 0] = 1$$
+
+Using the triangle inequality for ${\Dtv}$, we get
+
+$$\Prb_{e \sim \mu_r}[\lim_{n \rightarrow \infty} \Dtv(\mu \mid e_{<n}\ObsO, \nu \mid e_{<n}\ObsO) = 0] = 1$$
+
+By definition of ${\mu_r}$ and ${A}$, this means that
+
+$$\frac{\int_{A} D(x) d\nu(x)}{\int_{\ObsO} D(x) d\nu(x)} = 1$$
+
+$$\int_{A} D(x) d\nu(x) = \int_{\ObsO} D(x) d\nu(x)$$
+
+This holds even without the assumption ${\E_\nu[D] > 0}$, since if ${\E_\nu[D] = 0}$ then both sides vanish.
+
+${\frac{\nu(e_{<n}\ObsO)}{\mu(e_{<n}\ObsO)}}$ is ${\mu}$-supermatingale, therefore (by Doob's convergence theorem) its limit exists ${\mu}$-almost surely. If the limit exists for some ${e \in \ObsO}$, then it vanishes iff ${D(e)=+\infty}$. It follows that
+
+$$\mu(B \cap D^{-1}(+\infty)) = \mu(D^{-1}(+\infty))$$
+
+By Theorem B.2
 
 $$\mu(A \cup B) = \int_{A \cup B} D(x) d\nu(x) + \mu((A \cup B) \cap D^{-1}(+\infty))$$
 
 $$\mu(A \cup B) \geq \int_{A} D(x) d\nu(x) + \mu(B \cap D^{-1}(+\infty))$$
 
-TBD
+$$\mu(A \cup B) \geq \int_{\ObsO} D(x) d\nu(x) + \mu(D^{-1}(+\infty))$$
+
+Applying Theorem B.2 to the right hand side:
+
+$$\mu(A \cup B) \geq \mu(\ObsO) = 1$$
 
 \end{document}
 
