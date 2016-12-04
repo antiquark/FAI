@@ -86,7 +86,7 @@ Appendix A contains the proofs of all results. Appendix B contains some theorems
 
 \section{Notation}
 
-Given ${X}$ a topological space, ${\Prob(X)}$ will denote the space of Borel probability measures on ${X}$. We regard it as a topological space using the weak${^*}$ topology. Given ${x \in X}$, ${\delta_x \in \Prob(X)}$ is defined by ${\delta_x(A):=[[x \in A]]}$. We denote ${\CC(X)}$ the set of non-empty convex closed subsets of ${\Prob(X)}$.
+Given ${X}$ a topological space, ${\Prob(X)}$ will denote the space of Borel probability measures on ${X}$. We regard it as a topological space using the weak${^*}$ topology. Given ${x \in X}$, ${\delta_x \in \Prob(X)}$ is defined by ${\delta_x(A):=[[x \in A]]}$. Given ${\mu, \nu \in \Prob(X)}$, ${\Dtv(\mu, \nu)}$ stands for the total variation distance between ${\mu}$ and ${\nu}$. We denote ${\CC(X)}$ the set of non-empty convex closed subsets of ${\Prob(X)}$.
 
 Given ${\mathcal{X}}$ a finite set, ${\mathcal{X}^*}$ denotes the set of finite strings in alphabet ${\mathcal{X}}$, i.e. ${\mathcal{X}^*:=\bigsqcup_{n \in \Nats} \mathcal{X}^n}$. ${\mathcal{X}^\omega}$ denotes the set of infinite strings in alphabet ${\mathcal{X}}$. Given ${x \in \mathcal{X}^* \sqcup \mathcal{X}^\omega}$, ${\Abs{x} \in \Nats \sqcup \{\infty\}}$ is the length of string. Given ${0 \leq n < \Abs{x}}$, ${x_n \in \mathcal{X}}$ is the ${n}$-th symbol in ${x}$. Given ${0 \leq n \leq \Abs{x}}$, ${x_{<n}}$ is the prefix of ${x}$ of length ${n}$. Given ${x,y \in \mathcal{X}^* \sqcup \mathcal{X}^\omega}$, the notations ${x \sqsubset y}$, ${x \sqsubseteq y}$, ${x \not\sqsubset y}$ and ${x \not\sqsubseteq y}$ mean "${x}$ is a proper prefix of ${y}$", "${x}$ is a prefix of ${y}$" and their negations. ${\Estr_\mathcal{X} \in \mathcal{X}^*}$ is the empty string and ${\mathcal{X}^{+}:=\mathcal{X}^* \setminus \Estr_\mathcal{X}}$. 
 
@@ -188,11 +188,11 @@ Note that changing the policy after a certain event cannot change utility more t
 
 \subsection{Proposition 5}
 
-$$\Abs{\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u]} \leq (\sup r - \inf r) \Prb_{e \sim \mu}[x \sqsubset e] \sum_{n > \Abs{x}}^\infty \gamma(n)$$
+$$\Abs{\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u]} \leq (\sup r - \inf r) \Prb_{e \sim \mu}[x \sqsubset e] \sum_{n > \Abs{x}} \gamma(n)$$
 
 ***
 
-We are now ready to formulate the optimality theorem. Consider ${\Phi,\Phi' \in \CC(\ObsO)}$ and ${p \in [0,1]}$. Denote ${\Psi = p \Phi + (1-p) \Phi'}$. We think of ${\Psi}$ as the prior, ${\Phi}$ as one of the models in the prior (assigned probability ${p}$) and ${\Phi'}$ as the convex combination of all other models. Let ${\pi^* \in \Prob(\Pol)}$ be a minimax policy for ${\Psi}$. Define ${v: \Obs^* \rightarrow \Reals}$ by
+We are now ready to formulate the optimality theorem. Consider ${\Phi,\Phi' \in \CC(\ObsO)}$ and ${p \in (0,1]}$. Denote ${\Psi = p \Phi + (1-p) \Phi'}$. We think of ${\Psi}$ as the prior, ${\Phi}$ as one of the models in the prior (assigned probability ${p}$) and ${\Phi'}$ as the convex combination of all other models. Let ${\pi^* \in \Prob(\Pol)}$ be a minimax policy for ${\Psi}$. Define ${v: \Obs^* \rightarrow \Reals}$ by
 
 $$v(x):=\max_{\rho \in \Act^{\Abs{x}} \rightarrow \Prob(\Pol)} \min_{\mu \in \Phi} \E_{(\pi^* \otimes_x \rho) \times \mu}[u]$$
 
@@ -200,13 +200,13 @@ That is, ${v}$ is the expected utility that can be guaranteed by changing the po
 
 \subsection{Theorem 1}
 
-$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n})-\E_{\pi^* \times \mu}[u]}{\Prb_{e' \sim \mu}[e_{<n} \sqsubset e'] \sum_{m = n+1}^\infty \gamma(m)},0)=0] = 1$$
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n})-\E_{\pi^* \times \mu}[u]}{\Prb_{e' \sim \mu}[e_{<n} \sqsubset e'] \sum_{m > n} \gamma(m)},0)=0] = 1$$
 
 ***
 
 Compared to the Bayesian case, ${v(x)}$ has the strange property that its definition depends on rewards other than those received after observing ${x}$. This is a direct consequence of the dynamic inconsistency of minimax. In order to get an asymptotic optimality property without this dependence, we need the model to satisfy a factorization condition similar to Proposition 4.
 
-\subsection{Definition}
+\subsection{Definition 1}
 
 Consider ${\Phi \in \CC(\ObsO)}$ and ${x \in \Obs^*}$. Define ${f_x: \ObsO \times \ObsO \rightarrow \ObsO}$ by
 
@@ -262,7 +262,7 @@ It is also easy to use the above construction to get ${\Phi}$ that factorizes fr
 
 Now consider again ${\Phi}$, ${\Psi}$ and ${\pi^*}$ as before. Define ${u_{\geq n}: \ObsO \times (\Pol) \rightarrow \Reals}$ to be normalized sum of rewards from time ${n}$, i.e.
 
-$$u_{> n}(s,e):=\frac{\sum_{m=n+1}^\infty \gamma(m)r(e^s_{<m})}{\sum_{m=n+1}^\infty \gamma(m)}$$
+$$u_{> n}(s,e):=\frac{\sum_{m > n} \gamma(m)r(e^s_{<m})}{\sum_{m > n} \gamma(m)}$$
 
 Define ${w: \Obs^* \rightarrow \Reals}$ by
 
@@ -367,7 +367,7 @@ $$\max_{\pi \in \Prob(S)} \min_{\mu \in \Phi} U(\pi,p\mu + (1-p)\nu^*) \leq \max
 
 Combining the inequalities, we get the desired result.
 
-\subsection{Definition A}
+\subsection{Definition A.1}
 
 In the setting of Proposition 3, consider any ${\pi_1 \in \Prob(S_1)}$ and ${\pi_2: T \rightarrow \Prob(S_2)}$. We define ${\pi_1 \otimes_\alpha \pi_2 \in \Prob(S_1 \times S_2)}$ as follows. For any Borel measurable ${B \subseteq S_1 \times S_2}$:
 
@@ -497,19 +497,21 @@ $$\E_{(\pi \otimes_x \rho) \times \mu}[u]-\E_{\pi \times \mu}[u] = \mu(x\Obs^*)(
 
 The desired result now follows from ${(\inf r) \sum_{n > \Abs{x}} \gamma(n) \leq u_2 \leq (\sup r) \sum_{n > \Abs{x}} \gamma(n)}$.
 
-\subsection{Proposition A.8}
+\subsection{Definition A.2}
 
-Consider ${\Phi \in \CC(E)}$, ${\nu^* \in \Prob(E)}$ and ${p \in (0,1)}$, and denote ${\Psi:=p\Phi+(1-p)\nu^*}$. Suppose that ${S = S_1 \times S_2}$, ${A \subseteq E}$ is Borel, ${T}$ is a finite set, ${\alpha: S_1 \rightarrow T}$ is Borel measurable, ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ are continuous and
+A *splitting* of ${(S,E,u)}$ is ${(S_1,S_2,A,T,\alpha,u_1,u_2)}$ s.t. ${S \cong S_1 \times S_2}$, ${A \subseteq E}$ is Borel, ${T}$ is a finite set, ${\alpha: S_1 \rightarrow T}$ is Borel measurable, ${u_1: S_1 \times E \rightarrow \Reals}$ and ${u_2: S_2 \times T \times E \rightarrow \Reals}$ are continuous and
 
 $$u(s_1,s_2,e) = u_1(s_1,e) + \chi_A(e) u_2(s_2, \alpha(s_1), e)$$
 
-Assume ${\nu^*(A) > 0}$. Fix ${\pi \in \Prob(S_1)}$.  Let ${\rho^*: T \rightarrow \Prob(S_2)}$ satisfy
+\subsection{Proposition A.8}
+
+Consider ${\Phi \in \CC(E)}$, ${\nu^* \in \Prob(E)}$ and ${p \in [0,1]}$, and denote ${\Psi:=p\Phi+(1-p)\nu^*}$. Suppose that ${(S_1,S_2,A,T,\alpha,u_1,u_2)}$ is a splitting of ${(S,E,u)}$. Assume ${\nu^*(A) > 0}$. Fix ${\pi \in \Prob(S_1)}$.  Let ${\rho^*: T \rightarrow \Prob(S_2)}$ satisfy
 
 $$\rho^* \in \Argmax{\rho: T \rightarrow \Prob(S_2)} \min_{\xi \in \Psi} U(\pi \otimes_\alpha \rho, \xi)$$
 
 Denote ${\Gamma := \sup u_2 - \inf u_2}$. Then, for any ${\mu_0 \in \Phi}$ s.t. ${\mu_0(A) > 0}$
 
-$$U(\pi \otimes_\alpha \rho^*,\mu_0) \geq \max_{\rho: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} U(\pi \otimes_\alpha \rho, \mu)-\frac{2\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)}{\frac{p}{1-p}\frac{\mu_0(A)}{\nu^*(A)}+1}$$
+$$U(\pi \otimes_\alpha \rho^*,\mu_0) \geq \max_{\rho: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} U(\pi \otimes_\alpha \rho, \mu)-2\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)$$
 
 \subsection{Proof of Proposition A.8}
 
@@ -583,15 +585,17 @@ Observing that ${U(\pi \otimes_\alpha \rho^*, \xi_0) \geq \min_{\xi \in \Psi} U(
 
 $$(p + (1-p)\frac{\nu^*(A)}{\mu_0(A)})(u-u^*)\geq 2 (1-p) ( - \frac{\nu^*(A)}{\mu_0(A)}\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A))$$
 
-Dividing both sides by ${(1-p)\frac{\nu^*(A)}{\mu_0(A)}}$
+If ${p = 1}$, we get ${u \geq u^*}$, as desired. If ${p < 1}$, we divide both sides by ${(1-p)\frac{\nu^*(A)}{\mu_0(A)}}$ and get
 
 $$(\frac{p}{1-p}\frac{\mu_0(A)}{\nu^*(A)}+1)(u - u^*) \geq - 2\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)$$
 
 $$u \geq u^* - \frac{2\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)}{\frac{p}{1-p}\frac{\mu_0(A)}{\nu^*(A)}+1}$$
 
+$$u \geq u^* - 2\Gamma\mu_0(A)\Dtv(\mu_0 \mid A, \nu^* \mid A)$$
+
 \subsection{Proposition A.9}
 
-In the setting of Proposition A.8, sans the assumption ${\nu^*(A) > 0}$:
+In the setting of Proposition A.8, assuming ${p > 0}$ but sans the assumption ${\nu^*(A) > 0}$:
 
 $$U(\pi \otimes_\alpha \rho^*,\mu_0) \geq \max_{\rho: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} U(\pi \otimes_\alpha \rho, \mu)-\frac{1-p}{p}\Gamma\nu^*(A)$$
 
@@ -611,13 +615,65 @@ $$u  \geq u^* + \frac{1-p}{p} \nu^*(A)\E_{t \sim \alpha_* \pi}[\E_{\tau^*(t) \ti
 
 $$u  \geq u^* + \frac{1-p}{p} \Gamma \nu^*(A)$$
 
+***
+
+Given any ${x \in \Obs^*}$, we denote ${x\ObsO:=\{xy \mid y \in \ObsO\}}$ and ${\bar{x}\ObsO:=\ObsO \setminus x\ObsO}$.
+
+\subsection{Definition A.3}
+
+Given any ${x \in \Obs^*}$, the *splitting of ${(\Pol,\ObsO,u)}$ at ${x}$* is defined as follows.
+
+$$S_1 := \bar{x}\Obs^* \rightarrow \Act$$
+
+$$S_2 := x\Obs^* \rightarrow \Act$$
+
+$$A := x\ObsO$$
+
+$$T := \Act^{\Abs{x}}$$
+
+$$\alpha(s)_n:=s(x_{<n})$$
+
+Given ${s: \bar{x}\Obs^* \rightarrow \Act}$ and ${e \in x\ObsO}$, define ${e^s \in (\Act \times \Obs)^{\Abs{x}}}$ by ${e_n^s:=(s(e_{<n}),e_n)}$. Given ${e \in \bar{x}\ObsO}$, define ${e^s \in (\Act \times \Obs)^\omega}$ by ${e_n^s:=(s(e_{<n}),e_n)}$. Define ${u_1}$ by
+
+$$u_1(s,e):=\sum_{n = 0}^{\Abs{e^s}} \gamma(n) r(e^s_{<n})$$
+
+Given ${t \in \Act^{\Abs{x}}}$, ${s: x\Obs^* \rightarrow \Act}$ and ${e \in x\ObsO}$, define ${e^{ts} \in (\Act \times \Obs)^\omega}$ by
+
+$$e^{ts}_n:=\begin{cases}(t_n,e_n) \text{ if } n < \Abs{x}\\(s(e_{<n},e_n) \text{ if } n \geq \Abs{x}\end{cases}$$
+
+Define ${u_2}$ by
+
+$$u_2(s,t,e):=\begin{cases}\sum_{n = \Abs{x}+1}^{\infty} \gamma(n) r(e^{ts}_{<n}) \text{ if } x \sqsubset e\\0 \text{ otherwise}\end{cases}$$
+
+It is easy to see that this is indeed a splitting.
+
 \subsection{Proof of Theorem 1}
+
+Fix ${\mu_0 \in \Phi}$. Let ${\nu^* \in \Phi'}$ be as in Proposition 2. Define ${M,N \subseteq \ObsO}$ by
+
+$$M:=\{e \in \ObsO \mid \lim_{n \rightarrow \infty} \Dtv(\mu_0 \mid e_{<n}\ObsO, \nu^* \mid e_{<n}\ObsO) = 0\}$$
+
+$$N:=\{e \in \ObsO \mid \lim_{n \rightarrow \infty} \frac{\nu^*(e_{<n}\ObsO)}{\mu_0(e_{<n}\ObsO)} = 0\}$$
+
+By Corollary B, ${\mu_0(M \cup N) = 1}$.
+
+Consider any ${e \in M}$. By definition of ${M}$, for any ${n \in \Nats}$ we have ${\mu_0(e_{<n}\ObsO) > 0}$ and ${\nu^*(e_{<n}\ObsO) > 0}$. Therefore, we can apply Proposition A.8 to the splitting of ${(\Pol,\ObsO,u)}$ at ${e_{<n}}$, with ${\pi = \pi^*}$. This gives us
+
+$$U(\pi^*,\mu_0) \geq v(e_{<n})-2\Gamma_n \mu_0(e_{<n}\ObsO)\Dtv(\mu_0 \mid e_{<n}\ObsO, \nu^* \mid e_{<n}\ObsO)$$
+
+Here, ${\Gamma_n \leq (\sup r - \inf r) \sum_{m > n} \gamma(n)}$. 
+
+$$\frac{v(e_{<n}) - U(\pi^*,\mu_0)}{\Gamma_n \mu_0(e_{<n}\ObsO)} \leq 2\Dtv(\mu_0 \mid e_{<n}\ObsO, \nu^* \mid e_{<n}\ObsO)$$
+
+By definition of ${M}$, this implies
+
+$$\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n}) - U(\pi^*,\mu_0)}{\Gamma_n \mu_0(e_{<n}\ObsO)},0) = 0 $$
+
+Now, consider any ${e \in N}$.
 
 TBD
 
 \section{Appendix B}
-
-Given any ${x \in \Obs^*}$, we denote ${x\ObsO:=\{xy \mid y \in \ObsO\}}$.
 
 The following theorem is adapted from [Blackwell and Dubbins (1962)](https://projecteuclid.org/euclid.aoms/1177704456).
 
