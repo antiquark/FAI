@@ -597,7 +597,19 @@ $$U(\pi \otimes_\alpha \rho^*,\mu_0) \geq \max_{\rho: T \rightarrow \Prob(S_2)} 
 
 \subsection{Proof of Proposition A.9}
 
-TBD
+We use the same notation as in the proof of Proposition A.8. As before, we have
+
+$$\min_{\xi \in \Psi} U(\pi \otimes_\alpha \tau^*, \xi) \geq pu^* + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)\E_{t \sim \alpha_* \pi}[\E_{\tau^*(t) \times \nu^*}[u_2 \mid A]])$$
+
+$$U(\pi \otimes_\alpha \rho^*, \xi_0) = pu + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)\E_{t \sim \alpha_* \pi}[\E_{\rho^*(t) \times \nu^*}[u_2 \mid A]])$$
+
+Combining, we get
+
+$$pu + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)\E_{t \sim \alpha_* \pi}[\E_{\rho^*(t) \times \nu^*}[u_2 \mid A]]) \geq pu^* + (1-p) (\E_{\pi \times \nu^*}[u_1] + \nu^*(A)\E_{t \sim \alpha_* \pi}[\E_{\tau^*(t) \times \nu^*}[u_2 \mid A]])$$
+
+$$u  \geq u^* + \frac{1-p}{p} \nu^*(A)\E_{t \sim \alpha_* \pi}[\E_{\tau^*(t) \times \nu^*}[u_2 \mid A]-\E_{\rho^*(t) \times \nu^*}[u_2 \mid A]]$$
+
+$$u  \geq u^* + \frac{1-p}{p} \Gamma \nu^*(A)$$
 
 \subsection{Proof of Theorem 1}
 
@@ -605,7 +617,41 @@ TBD
 
 \section{Appendix B}
 
-Moo
+Given any ${x \in \Obs^*}$, we denote ${x\ObsO:=\{xy \mid y \in \ObsO\}}$.
+
+\subsection{Theorem B}
+
+Consider any ${\mu, \nu \in \Prob(\ObsO)}$. Define ${\{D_n: \ObsO \rightarrow \Reals \sqcup \{+\infty\}\}_{n \in \Nats}}$ by
+
+$$D_n(x):=\begin{cases}\frac{\mu(x_{<n}\ObsO)}{\nu(x_{<n}\ObsO)} \text{ if } \nu(x_{<n}\ObsO) > 0\\+\infty \text{ otherwise}\end{cases}$$
+
+Define ${D:= \limsup_{n \rightarrow \infty} D_n}$. Then, for any Borel ${A \subseteq \Obs^*}$:
+
+$$\mu(A) = \int_A D(x) d\nu(x) + \mu(A \cap D^{-1}(+\infty))$$
+
+\subsection{Proof of Theorem B}
+
+This is almost a special case of Theorem 5.3.3 in [Durret 2010](https://books.google.ie/books/about/Probability.html?id=evbGTPhuvSoC), except that we don't assume ${\mu}$ is locally absolutely continuous w.r.t. ${\nu}$ (i.e. we don't assume that ${\mu(x\ObsO)=0}$ whenever ${\nu(x\ObsO)=0}$). Careful reading of the proof shows that in our case it doesn't matter: ${D_n}$ (${X_n}$ is Durret's notation) is no longer a ${\nu}$-martingale but is still a ${\nu}$-supermartingale, and the identity ${X_n = \frac{Y_n}{Z_n}}$ still holds if the fraction is understood to stand for ${+\infty}$ whenever ${Z_n = 0}$.
+
+\subsection{Corollary B}
+
+Consider any ${\mu, \nu \in \Prob(\ObsO)}$. Define
+
+$$A:=\{e \in \ObsO \mid \lim_{n \rightarrow \infty} \Dtv(\mu \mid e_{<n}\ObsO, \nu \mid e_{<n}\ObsO) = 0\}$$
+
+$$B:=\{e \in \ObsO \mid \lim_{n \rightarrow \infty} \frac{\nu(e_{<n}\ObsO)}{\mu(e_{<n}\ObsO)} = 0\}$$
+
+Then, ${\mu(A \cup B) = 1}$.
+
+\subsection{Proof of Corollary B}
+
+By Theorem B
+
+$$\mu(A \cup B) = \int_{A \cup B} D(x) d\nu(x) + \mu((A \cup B) \cap D^{-1}(+\infty))$$
+
+$$\mu(A \cup B) \geq \int_{A} D(x) d\nu(x) + \mu(B \cap D^{-1}(+\infty))$$
+
+TBD
 
 \end{document}
 
