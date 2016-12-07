@@ -208,11 +208,11 @@ Compared to the Bayesian case, ${v(x)}$ has the strange property that its defini
 
 \subsection{Definition 1}
 
-Consider ${\Phi \in \CC(\ObsO)}$ and ${x \in \Obs^*}$. Define ${f_x: \ObsO \times \ObsO \rightarrow \ObsO}$ by
+Consider ${\Phi \in \CC(\ObsO)}$ and ${x \in \Obs^*}$. Define ${f^x: \ObsO \times \ObsO \rightarrow \ObsO}$ by
 
-$${f_x(e_1,e_2):=\begin{cases}e_1 \text{ if } x \not\sqsubset e_1 \\xe_2 \text{ if } x \sqsubset e_1\end{cases}}$$
+$${f^x(e_1,e_2):=\begin{cases}e_1 \text{ if } x \not\sqsubset e_1 \\xe_2 \text{ if } x \sqsubset e_1\end{cases}}$$
 
-${\Phi}$ is said to *factorize at ${x}$* when there are ${\Phi_1, \Phi_2 \subseteq \Prob(\ObsO)}$ s.t. ${\Phi}$ is the closure of the convex hull of ${f_x(\Phi_1 \times \Phi_2)}$.
+${\Phi}$ is said to *factorize at ${x}$* when there are ${\Phi_1, \Phi_2 \subseteq \Prob(\ObsO)}$ s.t. ${\Phi}$ is the closure of the convex hull of ${f^x_*(\Phi_1 \times \Phi_2)}$.
 
 Given ${e \in \ObsO}$, ${\Phi}$ is said to *factorize over ${e}$* when there are infinitely many ${n \in \Nats}$ s.t. ${\Phi}$ factorizes at ${e_{<n}}$.
 
@@ -742,6 +742,68 @@ Note that ${\Prob(\Obs^+)}$ is not compact but is still Polish (since ${\Obs^+}$
 $$\mu(xy\ObsO) = \mu(x\ObsO) \mu_{x}(y)$$
 
 Therefore ${\mu \in \Phi_F}$.
+
+\subsection{Proposition A.13}
+
+Consider ${x \in \Obs^*}$ and let ${f^x: \ObsO \times \ObsO \rightarrow \ObsO}$ be defined as in Definition 1. Then, for any ${y \in \Obs^*}$:
+
+$${(f^x)^{-1}(xy\ObsO) = x\ObsO \times y\ObsO}$$
+
+\subsection{Proof Proposition A.13}
+
+Given any ${e_1,e_2 \in \ObsO}$, ${f^x(xe_1,ye_2)=xye_2}$. On the other hand, if ${e_1,e_2,e_3 \in \ObsO}$ are s.t. ${f^x(e_1,e_2)=xye_3}$ then ${x \sqsubset e_1}$ and ${e_2=ye_3}$.
+
+\subsection{Proposition A.14}
+
+Consider ${x \in \Obs^*}$ and let ${f^x: \ObsO \times \ObsO \rightarrow \ObsO}$ be defined as in Definition 1. Then, for any ${z \in \Obs^*}$, if ${x \not\sqsubseteq z}$, then:
+
+$${(f^x)^{-1}(z\ObsO) = z\ObsO \times \ObsO}$$
+
+\subsection{Proof Proposition A.14}
+
+Assume ${x = zw}$ for some ${w \in \Obs^*}$. For any ${e_1,e_2 \in \ObsO}$, ${f^x(ze_1,e_2)}$ is either ${ze_1}$ (if $w \not\sqsubset e_1$) or ${xe_2=zwe_2}$ (if ${w \sqsubset e_1}$). Either way, ${z \sqsubset f^x(ze_1,e_2)}$. On the other hand, if ${e_1,e_2,e_3 \in \ObsO}$ are s.t. ${f^x(e_1,e_2)=ze_3}$ then either ${x \not\sqsubset e_1}$ and ${e_1 = ze_3}$ or ${zw = x \sqsubset e_1}$. Either way, ${z \sqsubset e_1}$.
+
+Now, assume ${x \not\sqsupseteq z}$. For any ${e_1,e_2 \in \ObsO}$, ${f^x(ze_1,e_2)=ze_1}$ (since ${x \not\sqsubset ze_1}$). On the other hand, if ${e_1,e_2,e_3 \in \ObsO}$ are s.t. ${f^x(e_1,e_2)=ze_3}$ then ${e_1 = ze_3}$ (since ${x \not\sqsubset ze_3}$).
+
+\subsection{Proposition A.15}
+
+In the setting of the Construction, ${\Phi_F}$ factorizes at ${x}$ for any ${x \in X_F}$.
+
+\subsection{Proposition A.15}
+
+Fix ${x \in X_F}$. Let ${f^x}$ be as in Definition 1. Define ${G: \Obs^* \rightarrow \CC(\Obs^+)}$ by ${G(z):=F(xz)}$. We claim that ${\Phi_F = f^x_*(\Phi_F \times \Phi_G)}$.
+
+Consider any ${\mu \in \Phi_F}$, ${\nu \in \Phi_G}$ and denote ${\xi:=f^x_*(\mu \times \nu)}$. Consider some ${z \in X_F}$ and ${A_z \subseteq \Obs^+}$ corresponding.
+
+Assume ${z = xw}$ for some ${w \in \Obs^*}$. Note that for any ${\nu_0 \in G(w)=F(z)}$, ${\nu_0(y) > 0}$ implies ${y \in A_z}$. Let ${\nu_w \in \Prob(\Obs^+)}$ be as in Proposition A.10. For any ${y \in A_z}$, we have
+
+$$\nu(wy\ObsO) = \nu(w\ObsO) \nu_w(y)$$
+
+Multiplying both sides by ${\mu(x\ObsO)}$:
+
+$$\mu(x\ObsO) \nu(wy\ObsO) = \mu(x\ObsO) \nu(w\ObsO) \nu_w(y)$$
+
+Using the definition of ${\xi}$ and Proposition A.13, we get
+
+$${\xi(z\ObsO)=\mu(x\ObsO) \nu(w\ObsO)}$$
+
+$$\xi(zy\ObsO) = \mu(x\ObsO) \nu(wy\ObsO)$$
+
+Combining, we get
+
+$$\xi(zy\ObsO) = \xi(z\ObsO) \nu_w(y)$$
+
+Now, assume ${x \not\sqsubseteq z}$. Let ${\mu_z \in \Prob(\Obs^+)}$ be as in Proposition A.10. For any ${y \in A_z}$, we have
+
+$$\mu(zy\ObsO)=\mu(z\ObsO) \mu_z(y)$$
+
+By Proposition A.14...
+
+TBD
+
+Finally, consider any ${\xi \in \Phi_F}$.
+
+TBD
 
 \subsection{Proof of Proposition 6}
 
