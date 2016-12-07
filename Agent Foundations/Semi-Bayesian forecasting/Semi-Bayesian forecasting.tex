@@ -86,7 +86,7 @@ Appendix A contains the proofs of all results. Appendix B contains some theorems
 
 \section{Notation}
 
-Given ${X}$ a topological space, ${\Prob(X)}$ will denote the space of Borel probability measures on ${X}$. We regard it as a topological space using the weak${^*}$ topology. Given ${x \in X}$, ${\delta_x \in \Prob(X)}$ is defined by ${\delta_x(A):=[[x \in A]]}$. Given ${\mu, \nu \in \Prob(X)}$, ${\Dtv(\mu, \nu)}$ stands for the total variation distance between ${\mu}$ and ${\nu}$. We denote ${\CC(X)}$ the set of non-empty convex closed subsets of ${\Prob(X)}$.
+Given ${X}$ a topological space, ${\Prob(X)}$ will denote the space of Borel probability measures on ${X}$. We regard it as a topological space using the weak${^*}$ topology. Given ${x \in X}$, ${\delta_x \in \Prob(X)}$ is defined by ${\delta_x(A):=[[x \in A]]}$. Given ${\mu, \nu \in \Prob(X)}$, ${\Dtv(\mu, \nu)}$ stands for the total variation distance between ${\mu}$ and ${\nu}$. We denote ${\CC(X)}$ the set of non-empty convex compact subsets of ${\Prob(X)}$.
 
 Given ${\mathcal{X}}$ a finite set, ${\mathcal{X}^*}$ denotes the set of finite strings in alphabet ${\mathcal{X}}$, i.e. ${\mathcal{X}^*:=\bigsqcup_{n \in \Nats} \mathcal{X}^n}$. ${\mathcal{X}^\omega}$ denotes the set of infinite strings in alphabet ${\mathcal{X}}$. Given ${x \in \mathcal{X}^* \sqcup \mathcal{X}^\omega}$, ${\Abs{x} \in \Nats \sqcup \{\infty\}}$ is the length of string. Given ${0 \leq n < \Abs{x}}$, ${x_n \in \mathcal{X}}$ is the ${n}$-th symbol in ${x}$. Given ${0 \leq n \leq \Abs{x}}$, ${x_{<n}}$ is the prefix of ${x}$ of length ${n}$. Given ${x,y \in \mathcal{X}^* \sqcup \mathcal{X}^\omega}$, the notations ${x \sqsubset y}$, ${x \sqsubseteq y}$, ${x \not\sqsubset y}$ and ${x \not\sqsubseteq y}$ mean "${x}$ is a proper prefix of ${y}$", "${x}$ is a prefix of ${y}$" and their negations. ${\Estr_\mathcal{X} \in \mathcal{X}^*}$ is the empty string and ${\mathcal{X}^{+}:=\mathcal{X}^* \setminus \Estr_\mathcal{X}}$. 
 
@@ -669,7 +669,83 @@ By definition of ${M}$, this implies
 
 $$\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n}) - U(\pi^*,\mu_0)}{\Gamma_n \mu_0(e_{<n}\ObsO)},0) = 0 $$
 
-Now, consider any ${e \in N}$.
+Now, consider any ${e \in N}$. By definition of ${N}$, for any ${n \in N}$ we have ${\mu_0(e_{<n}\ObsO) > 0}$. Therefore, we can apply Proposition A.9 to the splitting of ${(\Pol,\ObsO,u)}$ at ${e_{<n}}$, with ${\pi = \pi^*}$. This gives us
+
+$$U(\pi^*,\mu_0) \geq v(e_{<n})-\frac{1-p}{p} \Gamma_n \nu^*(e_{<n}\ObsO)$$
+
+$$\frac{v(e_{<n}) - U(\pi^*,\mu_0)}{\Gamma_n\mu_0(e_{<n}\ObsO)} \leq \frac{1-p}{p} \frac{\nu^*(e_{<n}\ObsO)}{\mu_0(e_{<n}\ObsO)}$$
+
+By definition of ${N}$, this also implies
+
+$$\lim_{n \rightarrow \infty} \max(\frac{v(e_{<n}) - U(\pi^*,\mu_0)}{\Gamma_n \mu_0(e_{<n}\ObsO)},0) = 0 $$
+
+\subsection{Proposition A.10}
+
+In the setting of the Construction, consider any ${\mu \in \Phi_F}$. Then:
+
+$$\forall x \in X_F \exists \mu_x \in F(x) \forall y \in A_x: \mu(xy\ObsO) = \mu(x\ObsO) \mu_x(y)$$
+
+\subsection{Proof of Proposition A.10}
+
+Given ${x \in X_F}$, we know there is ${\mu_x \in F(x)}$ s.t. the identity holds whenever ${\mu_x(y) > 0}$. Summing these identities over y, we get
+
+$$\sum_{\mu_x(y) > 0} \mu(xy\ObsO) = \sum_{\mu_x(y) > 0} \mu(x\ObsO) \mu_x(y)$$
+
+$$\sum_{\mu_x(y) > 0} \mu(xy\ObsO) = \mu(x\ObsO)$$
+
+Since ${A_x}$ is prefix-free, for any ${y,y' \in A_x}$ we have ${xy\ObsO \cap xy'\ObsO = \varnothing}$. Also, obviously, ${xy\ObsO \subseteq x\ObsO}$. It follows that
+
+$$\sum_{y \in A_x} \mu(xy\ObsO) = \mu(\bigcup_{y \in A_x} xy\ObsO) \leq \mu(x\ObsO) = \sum_{\mu_x(y) > 0} \mu(xy\ObsO)$$
+
+Since ${\mu_x(y) > 0}$ implies ${y \in A_x}$, we conclude that for any ${y \in A_x}$, if ${\mu_x(y) = 0}$ then ${\mu(xy\ObsO)=0}$. This, together with the property of ${\mu_x}$, gives the desired result.
+
+\subsection{Proposition A.11}
+
+In the setting of the Construction, ${\Phi_F}$ is convex.
+
+\subsection{Proof of Proposition A.11}
+
+Consider ${\mu,\nu \in \Phi_F}$ and ${p \in (0,1)}$ and define ${\xi = p \mu + (1-p) \nu}$. Consider some ${x \in X_F}$, and let ${A_x \subseteq \Obs^+}$ be as in the Construction. If ${\xi(x\ObsO)=0}$, we can choose any ${\xi_x \in F(x)}$ to satisfy the desired condition. Therefore, we can assume ${\xi(x\ObsO) > 0}$. By Proposition A.10, there are ${\mu_x, \nu_x \in F(x)}$ s.t. for all ${y \in A_x}$:
+
+$$\mu(xy\ObsO) = \mu(x\ObsO) \mu_x(y)$$
+
+$$\nu(xy\ObsO) = \nu(x\ObsO) \nu_x(y)$$
+
+Taking a convex linear combination of these equations, we get
+
+$$\xi(xy\ObsO) = p \mu(x\ObsO) \mu_x(y) + (1-p) \nu(x\ObsO) \nu_x(y)$$
+
+$$\xi(xy\ObsO) = \xi(x\ObsO) \frac{p \mu(x\ObsO) \mu_x(y) + (1-p) \nu(x\ObsO) \nu_x(y)}{\xi(x\ObsO)}$$
+
+Define ${\xi_x \in \Prob(\Obs^+)}$ by 
+
+$$\xi_x := p\frac{\mu(x\ObsO)}{\xi(x\ObsO)}\mu_x+(1-p)\frac{\nu(x\ObsO)}{\xi(x\ObsO)}\nu_x$$
+
+${\xi_x}$ is a convex linear combination of ${\mu_x}$ and ${\nu_x}$, therefore ${\xi_x \in F(x)}$. We get
+
+$$\xi(xy\ObsO) = \xi(x\ObsO) \xi_x(y)$$
+
+Therefore, ${\xi \in \Phi_F}$.
+
+\subsection{Proposition A.12}
+
+In the setting of the Construction, ${\Phi_F}$ is closed.
+
+\subsection{Proof of Proposition A.12}
+
+Consider any sequence ${\{\mu_n \in \Phi_F\}}_{n \in \Nats}$ and s.t. ${\mu_n \rightarrow \mu}$ for some ${\mu \in \Prob(\ObsO)}$. Consider some ${x \in X_F}$, and let ${A_x \subseteq \Obs^+}$ be as in the Construction. By Proposition A.10, for any ${n \in \Nats}$, there is ${\mu_{nx} \in F(x)}$ s.t. for any ${y \in A_x}$:
+
+$$\mu_n(xy\ObsO) = \mu_n(x\ObsO) \mu_{nx}(y)$$
+
+Note that ${\Prob(\Obs^+)}$ is not compact but is still Polish (since ${\Obs^+}$ is such), and therefore ${F(x)}$ is compact and Polish. Let ${\{n_k \in \Nats\}_{k \in \Nats}}$ be an increasing sequence s.t. ${\mu_{n_kx} \rightarrow \mu_x}$ for some ${\mu_x \in F(x)}$. For any ${z \in \Obs^*}$, ${\chi_{z\ObsO}: \ObsO \rightarrow \{0,1\}}$ is a continuous function, and therefore ${\mu_{n}(z\Obs^*) \rightarrow \mu(z\Obs^*)}$. For any ${y \in \Obs^+}$, ${\chi_{\{y\}}: \Obs^+ \rightarrow \{0,1\}}$ is also continuous, and therefore ${\mu_{n_k x}(y) \rightarrow \mu_x(y)}$. Putting these together, we get
+
+$$\mu(xy\ObsO) = \mu(x\ObsO) \mu_{x}(y)$$
+
+Therefore ${\mu \in \Phi_F}$.
+
+\subsection{Proof of Proposition 6}
+
+By Propositions A.11 and A.12, ${\Phi_F \in \CC(\ObsO)}$. It remains to show that ${\Phi_F}$ factorizes everywhere.
 
 TBD
 
