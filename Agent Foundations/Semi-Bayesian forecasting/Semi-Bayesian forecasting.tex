@@ -827,15 +827,31 @@ Now, assume ${x \not\sqsupseteq z}$. For any ${e_1,e_2 \in \ObsO}$, ${f^x(ze_1,e
 
 \subsection{Proposition A.17}
 
+In the setting of the Construction, consider some ${x \in X_F}$ and define ${G: \Obs^* \rightarrow \CC(\Obs^+)}$ by ${G(z):=F(xz)}$. Assume that ${w \in \Obs^*}$ is s.t. ${xw \in X_F}$. Then, ${w \in X_G}$.
+
+\subsection{Proof of Proposition A.17}
+
+We prove by induction in ${\Abs{w}}$. For ${\Abs{w}=0}$, the proposition is obvious. Assume ${\Abs{w} > 0}$. ${xw \in X_F}$, therefore ${xw=x'y}$ for some ${x' \in X_F}$, ${\mu \in F(x')}$ and ${y \in \Obs^+}$ s.t. ${\mu(y)\ > 0}$. ${x \sqsubset x'y}$, therefore, by Proposition A.13, ${x \sqsubseteq x'}$. Let ${z \in \Obs^*}$ be s.t. ${x' = xz}$. ${xw=x'y=xzy}$, therefore ${w=zy}$ and we can use the induction hypothesis to show that ${z \in X_G}$. ${\mu \in F(x') = F(xz)=G(z)}$, implying that ${w \in X_G}$.
+
+\subsection{Proposition A.18}
+
+In the setting of the Construction, consider some ${x \in X_F}$ and define ${G: \Obs^* \rightarrow \CC(\Obs^+)}$ by ${G(z):=F(xz)}$. Consider any ${w \in X_G}$. Then, ${xw \in X_F}$.
+
+\subsection{Proof of Proposition A.18}
+
+We prove by induction in ${\Abs{w}}$. For ${\Abs{w} = 0}$, the proposition is obvious. Assume that ${\Abs{w} > 0}$. Then, there is some ${w' \in X_G}$, ${\mu \in G(w')=F(xw')}$ and ${y \in \Obs^+}$ s.t. ${\mu(y) > 0}$ and ${w = w'y}$. By the induction hypothesis, ${xw' \in X_F}$. Therefore, ${xw=xw'y}$ is also in ${X_F}$.
+
+\subsection{Proposition A.19}
+
 In the setting of the Construction, ${\Phi_F}$ factorizes at ${x}$ for any ${x \in X_F}$.
 
-\subsection{Proposition A.17}
+\subsection{Proof of Proposition A.19}
 
 Fix ${x \in X_F}$. Let ${f^x}$ be as in Definition 1. Define ${G: \Obs^* \rightarrow \CC(\Obs^+)}$ by ${G(z):=F(xz)}$. We claim that ${\Phi_F = f^x_*(\Phi_F \times \Phi_G)}$.
 
 Consider any ${\mu \in \Phi_F}$, ${\nu \in \Phi_G}$ and denote ${\xi:=f^x_*(\mu \times \nu)}$. Consider some ${z \in X_F}$ and ${A_z \subseteq \Obs^+}$ corresponding.
 
-Assume ${z = xw}$ for some ${w \in \Obs^*}$. Note that for any ${\nu_0 \in G(w)=F(z)}$, ${\nu_0(y) > 0}$ implies ${y \in A_z}$. Let ${\nu_w \in \Prob(\Obs^+)}$ be as in Proposition A.10. For any ${y \in A_z}$, we have
+Assume ${z = xw}$ for some ${w \in \Obs^*}$. By Proposition A.17, ${w \in X_G}$. Note that for any ${\nu_0 \in G(w)=F(z)}$, ${\nu_0(y) > 0}$ implies ${y \in A_z}$. Let ${\nu_w \in \Prob(\Obs^+)}$ be as in Proposition A.10. For any ${y \in A_z}$, we have
 
 $$\nu(wy\ObsO) = \nu(w\ObsO) \nu_w(y)$$
 
@@ -869,11 +885,35 @@ Combining, we get
 
 $$\xi(zy\ObsO) = \xi(z\ObsO) \mu_z(y)$$
 
-We proved that ${\xi \in \Phi_F}$.
+We proved that ${\xi \in \Phi_F}$. It remains to show that, conversely, ${\mu \in f_*^x(\Phi_F \times \Phi_G)}$. 
 
-It remains to show that ${\mu \in f_*^x(\Phi_F \times \Phi_G)}$.
+Define ${\mu^x \in \Prob(\ObsO)}$ as follows. If ${\mu(x\ObsO)=0}$, choose arbitrary ${\mu^x \in \Phi_G}$. If ${\mu(x\ObsO) > 0}$, define ${\mu^x}$ by 
 
-TBD
+$${\mu^x(z\ObsO):=\frac{\mu(xz\ObsO)}{\mu(x\ObsO)}}$$
+
+Consider any ${w \in X_G}$. By Proposition A.18, ${xw \in X_F}$. By Proposition A.10, there is ${\mu_{xw} \in F(xw)}$ s.t. for any ${y \in A_{xw}}$:
+
+$$\mu(xwy\ObsO)=\mu(xw\ObsO)\mu_{xw}(y)$$
+
+If ${\mu(x\ObsO) > 0}$, we can divide both sides by $\mu(x\ObsO)$ and get
+
+$$\mu^x(wy\ObsO)=\mu^x(w\ObsO)\mu_{xw}(y)$$
+
+It follows that, in either case, ${\mu^x \in \Phi_G}$ and 
+
+$$\mu(x\ObsO)\mu^x(z\ObsO)=\mu(xz\ObsO)$$
+
+Denote ${\xi := f^x_*(\mu \times \mu^x)}$. Consider any ${z \in \Obs^*}$.
+
+Assume ${z = xw}$ for some ${w \in \Obs^*}$. By Proposition A.15
+
+$$\xi(z\ObsO) = \mu(x\ObsO)\mu^x(w\ObsO)=\mu(z\ObsO)$$
+
+Now, assume ${x \not\sqsubseteq z}$. By Proposition A.16
+
+$$\xi(z\ObsO) = \mu(z\ObsO)$$
+
+We conclude that ${\mu = \xi}$.
 
 \subsection{Proof of Proposition 6}
 
