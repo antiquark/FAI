@@ -745,9 +745,17 @@ Therefore ${\mu \in \Phi_F}$.
 
 \subsection{Proposition A.13}
 
+In the setting of the Construction, consider any ${x,z \in X_F}$, ${\mu \in F(z)}$ and ${y \in \Obs^+}$ s.t. ${\mu(y) > 0}$. Assume that ${x \sqsubset zy}$. Then, ${x \sqsubseteq z}$.
+
+\subsection{Proof of Proposition A.13}
+
+We prove by induction in ${\Abs{x}}$. If ${\Abs{x}=0}$, then obviously ${x \sqsubseteq z}$. If ${\Abs{x} > 0}$, then, by definition of ${X_F}$, there is ${x' \in X_F}$, ${y' \in \Obs^+}$ and ${\nu \in F(x')}$ s.t. ${\nu(y') > 0}$ and ${x = x'y'}$. ${x' \sqsubset x \sqsubset zy}$, therefore, by the induction hypothesis, ${x' \sqsubseteq z}$. Assume to the contrary that ${x \not\sqsubseteq z}$. Then, since ${x \sqsubset zy}$, ${z \sqsubset x = x'y'}$. By the induction hypothesis, this implies ${z \sqsubseteq x'}$. We got ${z = x'}$. It follows that ${zy' = x \sqsubset zy}$, and therefore ${y' \sqsubset y}$. However, ${y,y' \in A_z}$ and ${A_z}$ is prefix-free, which is a contradiction.
+
+\subsection{Proposition A.14}
+
 In the setting of the Construction, ${\Phi_F}$ is non-empty.
 
-\subsection{Proof Proposition A.13}
+\subsection{Proof Proposition A.14}
 
 Choose ${\mu_x \in F(x)}$ for each ${x \in X_F}$. Given any ${z \in \Obs^+}$, define ${p(z) \in \Obs^*}$ as the longest proper prefix of ${z}$ s.t. ${p(z) \in X_F}$. Define ${\theta: \Obs^* \rightarrow [0,1]}$ recursively by
 
@@ -755,41 +763,67 @@ $$\theta(\Estr_\Obs):=1$$
 
 $$\forall z \in \Obs^+: \theta(z):=\theta(p(z)) \Prb_{y \sim \mu_{p(z)}}[z \sqsubseteq p(z)y]$$
 
-TBD
+Consider any ${z \not\in X_F}$. For any ${o \in \Obs}$, ${p(zo)=p(z)}$, therefore:
 
-$$\theta(z)=\sum_{o \in \Obs} \theta[zo]$$
+$$\theta(zo)=\theta(p(z))\Prb_{y \sim \mu_{p(z)}}[zo \sqsubseteq p(z)y]$$
 
-TBD
+$$\sum_{o \in \Obs} \theta(zo)=\theta(p(z)) \sum_{o \in \Obs} \Prb_{y \sim \mu_{p(z)}}[zo \sqsubseteq p(z)y]$$
 
-\subsection{Proposition A.14}
+$$\sum_{o \in \Obs} \theta(zo)=\theta(p(z)) \Prb_{y \sim \mu_{p(z)}}[z \sqsubset p(z)y]$$
+
+For any ${y}$ s.t. ${\mu_{p(z)}(y) > 0}$, ${p(z)y \in X_F}$ and therefore ${z \ne p(z)y}$. It follows that ${z \sqsubset p(z)y}$ iff ${z \sqsubseteq p(z)y}$, and we get
+
+$$\sum_{o \in \Obs} \theta(zo)=\theta(z)$$
+
+Now, consider ${z \in X_F}$. For any ${o \in \Obs}$, ${p(zo)=z}$, therefore:
+
+$$\theta(zo)=\theta(z)\Prb_{y \sim \mu_z}[zo \sqsubseteq zy]$$
+
+$$\sum_{o \in \Obs} \theta(zo)=\theta(z) \sum_{o \in \Obs} \Prb_{y \sim \mu_z}[zo \sqsubseteq zy]$$
+
+Again we get 
+
+$$\sum_{o \in \Obs} \theta(zo)=\theta(z)$$
+
+It follows that there is ${\mu \in \Prob(\ObsO)}$ s.t. for any ${z \in \Obs^*}$, ${\mu(z\ObsO)=\theta(z)}$.
+
+Consider any ${x \in X_F}$ and ${y_0 \in \Obs^+}$ s.t. ${\mu_x(y_0) > 0}$. ${p(xy_0) \sqsubset xy_0}$ and by Proposition\ A.13, this implies ${p(xy_0) \sqsubseteq x}$. By definition of ${p}$, it follows that ${p(xy_0)=x}$. We get
+
+$$\theta(xy_0)=\theta(p(xy_0)) \Prb_{y \sim \mu_{p(xy_0)}}[xy_0 \sqsubseteq p(xy_0)y]$$
+
+$$\theta(xy_0)=\theta(x) \Prb_{y \sim \mu_x}[xy_0 \sqsubseteq xy]$$
+
+$$\theta(xy_0)=\theta(x) \Prb_{y \sim \mu_x}[y_0 \sqsubseteq y]$$
+
+${y_0 \in A_x}$ and any ${y \in \Obs^+}$ s.t. ${\mu_x(y) > 0}$ is also in ${A_x}$. ${A_x}$ is prefix-free, so ${y_0 \sqsubseteq y}$ iff ${y_0 = y}$. We get
+
+$$\theta(xy_0)=\theta(x) \mu_x(y_0)$$
+
+$$\mu(xy_0 \ObsO)=\mu(x\ObsO) \mu_x(y_0)$$
+
+Therefore, ${\mu \in \Phi_F}$.
+
+\subsection{Proposition A.15}
 
 Consider ${x \in \Obs^*}$ and let ${f^x: \ObsO \times \ObsO \rightarrow \ObsO}$ be defined as in Definition 1. Then, for any ${y \in \Obs^*}$:
 
 $${(f^x)^{-1}(xy\ObsO) = x\ObsO \times y\ObsO}$$
 
-\subsection{Proof of Proposition A.14}
+\subsection{Proof of Proposition A.15}
 
 Given any ${e_1,e_2 \in \ObsO}$, ${f^x(xe_1,ye_2)=xye_2}$. On the other hand, if ${e_1,e_2,e_3 \in \ObsO}$ are s.t. ${f^x(e_1,e_2)=xye_3}$ then ${x \sqsubset e_1}$ and ${e_2=ye_3}$.
 
-\subsection{Proposition A.15}
+\subsection{Proposition A.16}
 
 Consider ${x \in \Obs^*}$ and let ${f^x: \ObsO \times \ObsO \rightarrow \ObsO}$ be defined as in Definition 1. Then, for any ${z \in \Obs^*}$, if ${x \not\sqsubset z}$, then:
 
 $${(f^x)^{-1}(z\ObsO) = z\ObsO \times \ObsO}$$
 
-\subsection{Proof Proposition A.15}
+\subsection{Proof Proposition A.16}
 
 Assume ${x = zw}$ for some ${w \in \Obs^*}$. For any ${e_1,e_2 \in \ObsO}$, ${f^x(ze_1,e_2)}$ is either ${ze_1}$ (if $w \not\sqsubset e_1$) or ${xe_2=zwe_2}$ (if ${w \sqsubset e_1}$). Either way, ${z \sqsubset f^x(ze_1,e_2)}$. On the other hand, if ${e_1,e_2,e_3 \in \ObsO}$ are s.t. ${f^x(e_1,e_2)=ze_3}$ then either ${x \not\sqsubset e_1}$ and ${e_1 = ze_3}$ or ${zw = x \sqsubset e_1}$. Either way, ${z \sqsubset e_1}$.
 
 Now, assume ${x \not\sqsupseteq z}$. For any ${e_1,e_2 \in \ObsO}$, ${f^x(ze_1,e_2)=ze_1}$ (since ${x \not\sqsubset ze_1}$). On the other hand, if ${e_1,e_2,e_3 \in \ObsO}$ are s.t. ${f^x(e_1,e_2)=ze_3}$ then ${e_1 = ze_3}$ (since ${x \not\sqsubset ze_3}$).
-
-\subsection{Proposition A.16}
-
-In the setting of the construction, consider any ${x,z \in X_F}$, ${\mu \in F(z)}$ and ${y \in \Obs^+}$ s.t. ${\mu(y) > 0}$. Assume that ${x \sqsubset zy}$. Then, ${x \sqsubseteq z}$.
-
-\subsection{Proof of Proposition A.16}
-
-We prove by induction in ${\Abs{x}}$. If ${\Abs{x}=0}$, then obviously ${x \sqsubseteq z}$. If ${\Abs{x} > 0}$, then, by definition of ${X_F}$, there is ${x' \in X_F}$, ${y' \in \Obs^+}$ and ${\nu \in F(x')}$ s.t. ${\nu(y') > 0}$ and ${x = x'y'}$. ${x' \sqsubset x \sqsubset zy}$, therefore, by the induction hypothesis, ${x' \sqsubseteq z}$. Assume to the contrary that ${x \not\sqsubseteq z}$. Then, since ${x \sqsubset zy}$, ${z \sqsubset x = x'y'}$. By the induction hypothesis, this implies ${z \sqsubseteq x'}$. We got ${z = x'}$. It follows that ${zy' = x \sqsubset zy}$, and therefore ${y' \sqsubset y}$. However, ${y,y' \in A_z}$ and ${A_z}$ is prefix-free, which is a contradiction.
 
 \subsection{Proposition A.17}
 
@@ -809,7 +843,7 @@ Multiplying both sides by ${\mu(x\ObsO)}$:
 
 $$\mu(x\ObsO) \nu(wy\ObsO) = \mu(x\ObsO) \nu(w\ObsO) \nu_w(y)$$
 
-Using the definition of ${\xi}$ and Proposition A.14, we get
+Using the definition of ${\xi}$ and Proposition A.15, we get
 
 $${\xi(z\ObsO)=\mu(x\ObsO) \nu(w\ObsO)}$$
 
@@ -823,11 +857,11 @@ Now, assume ${x \not\sqsubseteq z}$. Let ${\mu_z \in \Prob(\Obs^+)}$ be as in Pr
 
 $$\mu(zy\ObsO)=\mu(z\ObsO) \mu_z(y)$$
 
-Using the definition of ${\xi}$ and Proposition A.15, we get
+Using the definition of ${\xi}$ and Proposition A.16, we get
 
 $$\xi(z\ObsO)=\mu(z\ObsO)$$
 
-By Proposition A.16, ${x \not\sqsubset zy}$. Therefore, we can use Proposition A.15 again to conclude
+By Proposition A.13, ${x \not\sqsubset zy}$. Therefore, we can use Proposition A.16 again to conclude
 
 $$\xi(zy\ObsO)=\mu(zy\ObsO)$$
 
@@ -843,7 +877,7 @@ TBD
 
 \subsection{Proof of Proposition 6}
 
-By Propositions A.11, A.12 and A.13, ${\Phi_F \in \CC(\ObsO)}$. It remains to show that ${\Phi_F}$ factorizes everywhere.
+By Propositions A.11, A.12 and A.14, ${\Phi_F \in \CC(\ObsO)}$. It remains to show that ${\Phi_F}$ factorizes everywhere.
 
 TBD
 
