@@ -1,0 +1,482 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\newcommand{\PP}[2]{\operatorname{Pr}_{\substack{#1 \\ #2}}}
+\newcommand{\PPP}[3]{\operatorname{Pr}_{\substack{#1 \\ #2 \\ #3}}}
+\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+\DeclareMathOperator{\Var}{Var}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+
+\DeclareMathOperator{\Prj}{pr}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+
+\newcommand{\Prob}{\mathcal{P}}
+
+% Paper specific
+
+\newcommand{\Act}{\mathcal{A}}
+\newcommand{\Obs}{\mathcal{O}}
+\newcommand{\ObsO}{\Obs^\omega}
+\newcommand{\Pol}{\Obs^* \rightarrow \Act}
+\newcommand{\CC}{\mathcal{P}_{\operatorname{C}}}
+
+\begin{document}
+
+The asymptotic optimality property of minimax we proved [previously] was fromulated in terms of the "optimal value" ${v(x)}$. Compared to the Bayesian case, ${v(x)}$ has the strange property that its definition depends on rewards other than those received after observing ${x}$. This is a direct consequence of the dynamic inconsistency of minimax. In an attempt to get around this, we show that the minimax decision rule is dynamically consistent in a certain special case and demonstrate that this special case can occur often for a natural class of models. However, this doesn't immediately solve the problem: doing so requires replacing the minimax decision rule by a stronger condition that ensures subgame perfection in some sense. The formalization of the latter idea is left for future posts.
+
+Appendix A contains the proofs of all results.
+
+\section{Notation}
+
+Given ${X}$ a topological space, ${\Prob(X)}$ will denote the space of Borel probability measures on ${X}$. We regard it as a topological space using the weak${^*}$ topology. Given ${x \in X}$, ${\delta_x \in \Prob(X)}$ is defined by ${\delta_x(A):=[[x \in A]]}$. Given ${\mu, \nu \in \Prob(X)}$, ${\Dtv(\mu, \nu)}$ stands for the total variation distance between ${\mu}$ and ${\nu}$. We denote ${\CC(X)}$ the set of non-empty convex compact subsets of ${\Prob(X)}$.
+
+Given ${\mathcal{X}}$ a finite set, ${\mathcal{X}^*}$ denotes the set of finite strings in alphabet ${\mathcal{X}}$, i.e. ${\mathcal{X}^*:=\bigsqcup_{n \in \Nats} \mathcal{X}^n}$. ${\mathcal{X}^\omega}$ denotes the set of infinite strings in alphabet ${\mathcal{X}}$. Given ${x \in \mathcal{X}^* \sqcup \mathcal{X}^\omega}$, ${\Abs{x} \in \Nats \sqcup \{\infty\}}$ is the length of string. Given ${0 \leq n < \Abs{x}}$, ${x_n \in \mathcal{X}}$ is the ${n}$-th symbol in ${x}$. Given ${0 \leq n \leq \Abs{x}}$, ${x_{<n}}$ is the prefix of ${x}$ of length ${n}$. Given ${x,y \in \mathcal{X}^* \sqcup \mathcal{X}^\omega}$, the notations ${x \sqsubset y}$, ${x \sqsubseteq y}$, ${x \not\sqsubset y}$ and ${x \not\sqsubseteq y}$ mean "${x}$ is a proper prefix of ${y}$", "${x}$ is a prefix of ${y}$" and their negations. ${\Estr_\mathcal{X} \in \mathcal{X}^*}$ is the empty string and ${\mathcal{X}^{+}:=\mathcal{X}^* \setminus \Estr_\mathcal{X}}$.
+
+\section{Factorization}
+
+We recall the result of the previous post regarding subagents of minimax agents:
+
+\subsection{Proposition 3}
+
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi} (\E_{\pi_1^* \times \mu}[u_1] + \mu(A) \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2(t) \times \mu \mid A}[u_2(t)]])$$
+
+In general, ${\pi_2^*}$ is not a minimax policy for any natural model i.e. the minimax decision rule is not "dynamically consistent". However, if we assume a certain factorization condition, it is. Specifically, assume ${E_1, E_2}$ are compact Polish, ${f: E_1 \times E_2 \rightarrow E}$ is Borel measurable, ${\bar{u}_1: S_1 \times E_1 \rightarrow \Reals}$ and ${\bar{u}_2: S_2 \times T \times E_2 \rightarrow \Reals}$ are continuous s.t. 
+
+$${u_1(s_1,f(e_1,e_2))=\bar{u}_1(s_1,e_1)}$$
+
+$${u_2(s_2,t,f(e_1,e_2))=\bar{u}_1(s_2,t,e_2)}$$
+
+Further assume that ${A_1 \subseteq E_1}$ is Borel s.t. ${f^{-1}(A) = A_1 \times E_2}$ and ${\Phi_{1,2} \in \CC(E_{1,2})}$ are s.t. ${\Phi}$ is the closure of the convex hull of ${f_*(\Phi_1 \times \Phi_2)}$.
+
+\subsection{Proposition 4}
+
+Assume that ${\min_{\mu \in \Phi_1} \mu_1(A_1) > 0}$. Then,
+
+$$\pi_2^* \in \Argmax{\pi_2: T \rightarrow \Prob(S_2)} \min_{\mu \in \Phi_2} \E_{t \sim \alpha_*\pi_1^*}[\E_{\pi_2(t) \times \mu}[\bar{u}_2(t)]]$$
+
+Moreover, define ${\bar{S}_2:=T \rightarrow S_2}$ equipped with the product topology, define ${\bar{\pi}_2^* \in \Prob(\bar{S}_2)}$ by
+
+$${\bar{\pi}_2^* := \prod_{t \in T} \pi_2^*(t)}$$
+
+Define ${\bar{E}_2:=T \times E_2}$ and define ${\bar{\Phi}_2 \in \CC(\bar{E}_2)}$ by
+
+$$\bar{\Phi}_2:=\{\alpha_* \pi_1^* \times \mu \mid \mu \in \Phi_2\}$$
+
+Finally, define ${\hat{u}_2: \bar{S}_2 \times \bar{E}_2 \rightarrow \Reals}$ by
+
+$$\hat{u}_2(s,t,e):=\bar{u}_2(s(t),t,e)$$
+
+Then, ${\bar{\pi}_2^*}$ is a minimax policy for ${\bar{\Phi}_2}$ w.r.t. the utility function ${\hat{u}_2}$.
+
+\section{Factorization everywhere}
+
+We now formulate a condition that ensures that factorizations happens "often" in a certain sense.
+
+\subsection{Definition 1}
+
+Consider ${\Phi \in \CC(\ObsO)}$ and ${x \in \Obs^*}$. Define ${f^x: \ObsO \times \ObsO \rightarrow \ObsO}$ by
+
+$${f^x(e_1,e_2):=\begin{cases}e_1 \text{ if } x \not\sqsubset e_1 \\xe_2 \text{ if } x \sqsubset e_1\end{cases}}$$
+
+${\Phi}$ is said to *factorize at ${x}$* when there are ${\Phi_1, \Phi_2 \subseteq \Prob(\ObsO)}$ s.t. ${\Phi}$ is the closure of the convex hull of ${f^x_*(\Phi_1 \times \Phi_2)}$.
+
+Given ${e \in \ObsO}$, ${\Phi}$ is said to *factorize over ${e}$* when there are infinitely many ${n \in \Nats}$ s.t. ${\Phi}$ factorizes at ${e_{<n}}$.
+
+Given a time discount function ${\gamma}$, ${\Phi}$ is said to *factorize frequently over ${e}$* (w.r.t. ${\gamma}$) when there is an increasing sequence ${\{n_k \in \Nats\}_{k \in \Nats}}$ s.t.
+
+i. ${\Phi}$ factorizes at ${e_{<n_k}}$ for all ${k}$.
+
+ii. There is ${\epsilon > 0}$ s.t. for all ${k}$
+
+$$\frac{\sum_{n = n_{k+1}-1}^\infty \gamma(n)}{\sum_{n = n_{k}}^\infty \gamma(n)} > \epsilon$$
+
+For example, for geometric discount (${\gamma(n)=\beta^n)}$, condition ii means that ${n_{k+1}-n_k}$  is bounded.
+
+${\Phi}$ is said to *factorize everywhere* when 
+
+$${\forall \mu \in \Phi: \Prb_{e \sim \mu}[\Phi \text{ factorizes over } e] = 1}$$
+
+${\Phi}$ is said to *factorize frequently everywhere* (w.r.t. ${\gamma}$) when
+
+$${\forall \mu \in \Phi: \Prb_{e \sim \mu}[\Phi \text{ factorizes frequently over } e] = 1}$$
+
+***
+
+Note that any singleton ${\{\mu\}}$ factorizes frequently everywhere w.r.t. any time discount function. More generally, we can give the following explicit description of models that factorize everywhere:
+
+\subsection{Construction}
+
+Consider some ${F: \Obs^* \rightarrow \CC(\Obs^+)}$ (${\Obs^+}$ is considered to be a discrete space). Assume that for any ${x \in \Obs}$, there is ${A_x \subseteq \Obs^+}$ prefix-free s.t. any ${\mu \in F(x)}$ is supported on ${A_x}$.
+
+We define ${X_F \subseteq \Obs^*}$ as the minimal set with the following properties:
+
+i. ${\Estr_\Obs \in X_F}$
+
+ii. If ${x \in X_F}$, ${\mu \in F(x)}$ and ${y \in \Obs^+}$ is s.t. ${\mu(y) > 0}$, then ${xy \in X_F}$.
+
+We define ${\Phi_F \subseteq \Prob(\ObsO)}$ as follows. ${\mu \in \Phi_F}$ iff for any ${x \in X_F}$, there is ${\mu_x \in F(x)}$ s.t. for any ${y \in \Obs^+}$, if ${\mu_x(y) > 0}$ then
+
+$$\Prb_{e \sim \mu}[xy \sqsubset e] = \Prb_{e \sim \mu}[x \sqsubset e] \mu_x(y)$$
+
+\subsection{Proposition 6}
+
+For any ${F}$ as above, ${\Phi_F \in \CC(\ObsO)}$ and factorizes everywhere.
+
+***
+
+It is also easy to use the above construction to get ${\Phi}$ that factorizes frequently everywhere w.r.t. given ${\gamma}$ (for example, if we require that for every ${x \in X_F}$, ${F(x)}$ is supported on strings of uniformly bounded length, ${\Phi_F}$ will factorize frequently everywhere w.r.t. geometric discount; this condition on ${F}$ is sufficient but not necessary).
+
+We now formulate the optimality condition that we would like to hold (but for which minimax is unfortunately insufficent). Consider again ${\Phi}$, ${\Psi}$ and ${\pi^*}$ as before. Define ${u_{> n}: \ObsO \times (\Pol) \rightarrow \Reals}$ to be normalized sum of rewards from time ${n}$, i.e.
+
+$$u_{> n}(s,e):=\frac{\sum_{m > n} \gamma(m)r(e^s_{<m})}{\sum_{m > n} \gamma(m)}$$
+
+Define ${w: \Obs^* \rightarrow \Reals}$ by
+
+$$w(x):=\max_{\rho \in \Act^{\Abs{x}} \rightarrow \Prob(\Pol)} \min_{\mu \in \Phi} \EE{s \sim \pi^* \otimes_x \rho}{e \sim \mu}[u_{> \Abs{x}}(s,e) \mid x \sqsubset e]$$
+
+\subsection{Hypothesis}
+
+If ${\pi^*}$ satisfies the (yet unformulated) subgame perfection condition, we should have the following:
+
+Assume ${\Phi}$ factorizes everywhere. Then,
+
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\liminf_{n \rightarrow \infty} \max(w(e_{<n})-\EE{s \sim \pi^*}{e' \sim \mu}[u_{> n}(s,e') \mid e_{<n} \sqsubset e'] ,0)=0] = 1$$
+
+Moreover, if ${\Phi}$ factorizes frequently everywhere, then
+
+$$\forall \mu \in \Phi: \Prb_{e \sim \mu}[\lim_{n \rightarrow \infty} \max(w(e_{<n})-\EE{s \sim \pi^*}{e' \sim \mu}[u_{> n}(s,e') \mid e_{<n} \sqsubset e'] ,0)=0] = 1$$
+
+%##Appendix
+\section{Appendix A}
+
+\subsection{Proposition A.10}
+
+In the setting of the Construction, consider any ${\mu \in \Phi_F}$. Then:
+
+$$\forall x \in X_F \exists \mu_x \in F(x) \forall y \in A_x: \mu(xy\ObsO) = \mu(x\ObsO) \mu_x(y)$$
+
+\subsection{Proof of Proposition A.10}
+
+Given ${x \in X_F}$, we know there is ${\mu_x \in F(x)}$ s.t. the identity holds whenever ${\mu_x(y) > 0}$. Summing these identities over y, we get
+
+$$\sum_{\mu_x(y) > 0} \mu(xy\ObsO) = \sum_{\mu_x(y) > 0} \mu(x\ObsO) \mu_x(y)$$
+
+$$\sum_{\mu_x(y) > 0} \mu(xy\ObsO) = \mu(x\ObsO)$$
+
+Since ${A_x}$ is prefix-free, for any ${y,y' \in A_x}$ we have ${xy\ObsO \cap xy'\ObsO = \varnothing}$. Also, obviously, ${xy\ObsO \subseteq x\ObsO}$. It follows that
+
+$$\sum_{y \in A_x} \mu(xy\ObsO) = \mu(\bigcup_{y \in A_x} xy\ObsO) \leq \mu(x\ObsO) = \sum_{\mu_x(y) > 0} \mu(xy\ObsO)$$
+
+Since ${\mu_x(y) > 0}$ implies ${y \in A_x}$, we conclude that for any ${y \in A_x}$, if ${\mu_x(y) = 0}$ then ${\mu(xy\ObsO)=0}$. This, together with the property of ${\mu_x}$, gives the desired result.
+
+\subsection{Proposition A.11}
+
+In the setting of the Construction, ${\Phi_F}$ is convex.
+
+\subsection{Proof of Proposition A.11}
+
+Consider ${\mu,\nu \in \Phi_F}$ and ${p \in (0,1)}$ and define ${\xi = p \mu + (1-p) \nu}$. Consider some ${x \in X_F}$, and let ${A_x \subseteq \Obs^+}$ be as in the Construction. If ${\xi(x\ObsO)=0}$, we can choose any ${\xi_x \in F(x)}$ to satisfy the desired condition. Therefore, we can assume ${\xi(x\ObsO) > 0}$. By Proposition A.10, there are ${\mu_x, \nu_x \in F(x)}$ s.t. for all ${y \in A_x}$:
+
+$$\mu(xy\ObsO) = \mu(x\ObsO) \mu_x(y)$$
+
+$$\nu(xy\ObsO) = \nu(x\ObsO) \nu_x(y)$$
+
+Taking a convex linear combination of these equations, we get
+
+$$\xi(xy\ObsO) = p \mu(x\ObsO) \mu_x(y) + (1-p) \nu(x\ObsO) \nu_x(y)$$
+
+$$\xi(xy\ObsO) = \xi(x\ObsO) \frac{p \mu(x\ObsO) \mu_x(y) + (1-p) \nu(x\ObsO) \nu_x(y)}{\xi(x\ObsO)}$$
+
+Define ${\xi_x \in \Prob(\Obs^+)}$ by 
+
+$$\xi_x := p\frac{\mu(x\ObsO)}{\xi(x\ObsO)}\mu_x+(1-p)\frac{\nu(x\ObsO)}{\xi(x\ObsO)}\nu_x$$
+
+${\xi_x}$ is a convex linear combination of ${\mu_x}$ and ${\nu_x}$, therefore ${\xi_x \in F(x)}$. We get
+
+$$\xi(xy\ObsO) = \xi(x\ObsO) \xi_x(y)$$
+
+Therefore, ${\xi \in \Phi_F}$.
+
+\subsection{Proposition A.12}
+
+In the setting of the Construction, ${\Phi_F}$ is closed.
+
+\subsection{Proof of Proposition A.12}
+
+Consider any sequence ${\{\mu_n \in \Phi_F\}}_{n \in \Nats}$ and s.t. ${\mu_n \rightarrow \mu}$ for some ${\mu \in \Prob(\ObsO)}$. Consider some ${x \in X_F}$, and let ${A_x \subseteq \Obs^+}$ be as in the Construction. By Proposition A.10, for any ${n \in \Nats}$, there is ${\mu_{nx} \in F(x)}$ s.t. for any ${y \in A_x}$:
+
+$$\mu_n(xy\ObsO) = \mu_n(x\ObsO) \mu_{nx}(y)$$
+
+Note that ${\Prob(\Obs^+)}$ is not compact but is still Polish (since ${\Obs^+}$ is such), and therefore ${F(x)}$ is compact and Polish. Let ${\{n_k \in \Nats\}_{k \in \Nats}}$ be an increasing sequence s.t. ${\mu_{n_kx} \rightarrow \mu_x}$ for some ${\mu_x \in F(x)}$. For any ${z \in \Obs^*}$, ${\chi_{z\ObsO}: \ObsO \rightarrow \{0,1\}}$ is a continuous function, and therefore ${\mu_{n}(z\Obs^*) \rightarrow \mu(z\Obs^*)}$. For any ${y \in \Obs^+}$, ${\chi_{\{y\}}: \Obs^+ \rightarrow \{0,1\}}$ is also continuous, and therefore ${\mu_{n_k x}(y) \rightarrow \mu_x(y)}$. Putting these together, we get
+
+$$\mu(xy\ObsO) = \mu(x\ObsO) \mu_{x}(y)$$
+
+Therefore ${\mu \in \Phi_F}$.
+
+\subsection{Proposition A.13}
+
+In the setting of the Construction, consider any ${x,z \in X_F}$, ${\mu \in F(z)}$ and ${y \in \Obs^+}$ s.t. ${\mu(y) > 0}$. Assume that ${x \sqsubset zy}$. Then, ${x \sqsubseteq z}$.
+
+\subsection{Proof of Proposition A.13}
+
+We prove by induction on ${\Abs{x}}$. If ${\Abs{x}=0}$, then obviously ${x \sqsubseteq z}$. If ${\Abs{x} > 0}$, then, by definition of ${X_F}$, there is ${x' \in X_F}$, ${y' \in \Obs^+}$ and ${\nu \in F(x')}$ s.t. ${\nu(y') > 0}$ and ${x = x'y'}$. ${x' \sqsubset x \sqsubset zy}$, therefore, by the induction hypothesis, ${x' \sqsubseteq z}$. Assume to the contrary that ${x \not\sqsubseteq z}$. Then, since ${x \sqsubset zy}$, ${z \sqsubset x = x'y'}$. By the induction hypothesis, this implies ${z \sqsubseteq x'}$. We got ${z = x'}$. It follows that ${zy' = x \sqsubset zy}$, and therefore ${y' \sqsubset y}$. However, ${y,y' \in A_z}$ and ${A_z}$ is prefix-free, which is a contradiction.
+
+\subsection{Proposition A.14}
+
+In the setting of the Construction, ${\Phi_F}$ is non-empty.
+
+\subsection{Proof Proposition A.14}
+
+Choose ${\mu_x \in F(x)}$ for each ${x \in X_F}$. Given any ${z \in \Obs^+}$, define ${p(z) \in \Obs^*}$ as the longest proper prefix of ${z}$ s.t. ${p(z) \in X_F}$. Define ${\theta: \Obs^* \rightarrow [0,1]}$ recursively by
+
+$$\theta(\Estr_\Obs):=1$$
+
+$$\forall z \in \Obs^+: \theta(z):=\theta(p(z)) \Prb_{y \sim \mu_{p(z)}}[z \sqsubseteq p(z)y]$$
+
+Consider any ${z \not\in X_F}$. For any ${o \in \Obs}$, ${p(zo)=p(z)}$, therefore:
+
+$$\theta(zo)=\theta(p(z))\Prb_{y \sim \mu_{p(z)}}[zo \sqsubseteq p(z)y]$$
+
+$$\sum_{o \in \Obs} \theta(zo)=\theta(p(z)) \sum_{o \in \Obs} \Prb_{y \sim \mu_{p(z)}}[zo \sqsubseteq p(z)y]$$
+
+$$\sum_{o \in \Obs} \theta(zo)=\theta(p(z)) \Prb_{y \sim \mu_{p(z)}}[z \sqsubset p(z)y]$$
+
+For any ${y}$ s.t. ${\mu_{p(z)}(y) > 0}$, ${p(z)y \in X_F}$ and therefore ${z \ne p(z)y}$. It follows that ${z \sqsubset p(z)y}$ iff ${z \sqsubseteq p(z)y}$, and we get
+
+$$\sum_{o \in \Obs} \theta(zo)=\theta(z)$$
+
+Now, consider ${z \in X_F}$. For any ${o \in \Obs}$, ${p(zo)=z}$, therefore:
+
+$$\theta(zo)=\theta(z)\Prb_{y \sim \mu_z}[zo \sqsubseteq zy]$$
+
+$$\sum_{o \in \Obs} \theta(zo)=\theta(z) \sum_{o \in \Obs} \Prb_{y \sim \mu_z}[zo \sqsubseteq zy]$$
+
+Again we get 
+
+$$\sum_{o \in \Obs} \theta(zo)=\theta(z)$$
+
+It follows that there is ${\mu \in \Prob(\ObsO)}$ s.t. for any ${z \in \Obs^*}$, ${\mu(z\ObsO)=\theta(z)}$.
+
+Consider any ${x \in X_F}$ and ${y_0 \in \Obs^+}$ s.t. ${\mu_x(y_0) > 0}$. ${p(xy_0) \sqsubset xy_0}$ and by Proposition\ A.13, this implies ${p(xy_0) \sqsubseteq x}$. By definition of ${p}$, it follows that ${p(xy_0)=x}$. We get
+
+$$\theta(xy_0)=\theta(p(xy_0)) \Prb_{y \sim \mu_{p(xy_0)}}[xy_0 \sqsubseteq p(xy_0)y]$$
+
+$$\theta(xy_0)=\theta(x) \Prb_{y \sim \mu_x}[xy_0 \sqsubseteq xy]$$
+
+$$\theta(xy_0)=\theta(x) \Prb_{y \sim \mu_x}[y_0 \sqsubseteq y]$$
+
+${y_0 \in A_x}$ and any ${y \in \Obs^+}$ s.t. ${\mu_x(y) > 0}$ is also in ${A_x}$. ${A_x}$ is prefix-free, so ${y_0 \sqsubseteq y}$ iff ${y_0 = y}$. We get
+
+$$\theta(xy_0)=\theta(x) \mu_x(y_0)$$
+
+$$\mu(xy_0 \ObsO)=\mu(x\ObsO) \mu_x(y_0)$$
+
+Therefore, ${\mu \in \Phi_F}$.
+
+\subsection{Proposition A.15}
+
+Consider ${x \in \Obs^*}$ and let ${f^x: \ObsO \times \ObsO \rightarrow \ObsO}$ be defined as in Definition 1. Then, for any ${y \in \Obs^*}$:
+
+$${(f^x)^{-1}(xy\ObsO) = x\ObsO \times y\ObsO}$$
+
+\subsection{Proof of Proposition A.15}
+
+Given any ${e_1,e_2 \in \ObsO}$, ${f^x(xe_1,ye_2)=xye_2}$. On the other hand, if ${e_1,e_2,e_3 \in \ObsO}$ are s.t. ${f^x(e_1,e_2)=xye_3}$ then ${x \sqsubset e_1}$ and ${e_2=ye_3}$.
+
+\subsection{Proposition A.16}
+
+Consider ${x \in \Obs^*}$ and let ${f^x: \ObsO \times \ObsO \rightarrow \ObsO}$ be defined as in Definition 1. Then, for any ${z \in \Obs^*}$, if ${x \not\sqsubset z}$, then:
+
+$${(f^x)^{-1}(z\ObsO) = z\ObsO \times \ObsO}$$
+
+\subsection{Proof Proposition A.16}
+
+Assume ${x = zw}$ for some ${w \in \Obs^*}$. For any ${e_1,e_2 \in \ObsO}$, ${f^x(ze_1,e_2)}$ is either ${ze_1}$ (if $w \not\sqsubset e_1$) or ${xe_2=zwe_2}$ (if ${w \sqsubset e_1}$). Either way, ${z \sqsubset f^x(ze_1,e_2)}$. On the other hand, if ${e_1,e_2,e_3 \in \ObsO}$ are s.t. ${f^x(e_1,e_2)=ze_3}$ then either ${x \not\sqsubset e_1}$ and ${e_1 = ze_3}$ or ${zw = x \sqsubset e_1}$. Either way, ${z \sqsubset e_1}$.
+
+Now, assume ${x \not\sqsupseteq z}$. For any ${e_1,e_2 \in \ObsO}$, ${f^x(ze_1,e_2)=ze_1}$ (since ${x \not\sqsubset ze_1}$). On the other hand, if ${e_1,e_2,e_3 \in \ObsO}$ are s.t. ${f^x(e_1,e_2)=ze_3}$ then ${e_1 = ze_3}$ (since ${x \not\sqsubset ze_3}$).
+
+\subsection{Proposition A.17}
+
+In the setting of the Construction, consider some ${x \in X_F}$ and define ${G: \Obs^* \rightarrow \CC(\Obs^+)}$ by ${G(z):=F(xz)}$. Assume that ${w \in \Obs^*}$ is s.t. ${xw \in X_F}$. Then, ${w \in X_G}$.
+
+\subsection{Proof of Proposition A.17}
+
+We prove by induction on ${\Abs{w}}$. For ${\Abs{w}=0}$, the proposition is obvious. Assume ${\Abs{w} > 0}$. ${xw \in X_F}$, therefore ${xw=x'y}$ for some ${x' \in X_F}$, ${\mu \in F(x')}$ and ${y \in \Obs^+}$ s.t. ${\mu(y)\ > 0}$. ${x \sqsubset x'y}$, therefore, by Proposition A.13, ${x \sqsubseteq x'}$. Let ${z \in \Obs^*}$ be s.t. ${x' = xz}$. ${xw=x'y=xzy}$, therefore ${w=zy}$ and we can use the induction hypothesis to show that ${z \in X_G}$. ${\mu \in F(x') = F(xz)=G(z)}$, implying that ${w \in X_G}$.
+
+\subsection{Proposition A.18}
+
+In the setting of the Construction, consider some ${x \in X_F}$ and define ${G: \Obs^* \rightarrow \CC(\Obs^+)}$ by ${G(z):=F(xz)}$. Consider any ${w \in X_G}$. Then, ${xw \in X_F}$.
+
+\subsection{Proof of Proposition A.18}
+
+We prove by induction on ${\Abs{w}}$. For ${\Abs{w} = 0}$, the proposition is obvious. Assume that ${\Abs{w} > 0}$. Then, there is some ${w' \in X_G}$, ${\mu \in G(w')=F(xw')}$ and ${y \in \Obs^+}$ s.t. ${\mu(y) > 0}$ and ${w = w'y}$. By the induction hypothesis, ${xw' \in X_F}$. Therefore, ${xw=xw'y}$ is also in ${X_F}$.
+
+\subsection{Proposition A.19}
+
+In the setting of the Construction, ${\Phi_F}$ factorizes at ${x}$ for any ${x \in X_F}$.
+
+\subsection{Proof of Proposition A.19}
+
+Fix ${x \in X_F}$. Let ${f^x}$ be as in Definition 1. Define ${G: \Obs^* \rightarrow \CC(\Obs^+)}$ by ${G(z):=F(xz)}$. We claim that ${\Phi_F = f^x_*(\Phi_F \times \Phi_G)}$.
+
+Consider any ${\mu \in \Phi_F}$, ${\nu \in \Phi_G}$ and denote ${\xi:=f^x_*(\mu \times \nu)}$. Consider some ${z \in X_F}$ and ${A_z \subseteq \Obs^+}$ corresponding.
+
+Assume ${z = xw}$ for some ${w \in \Obs^*}$. By Proposition A.17, ${w \in X_G}$. Note that for any ${\nu_0 \in G(w)=F(z)}$, ${\nu_0(y) > 0}$ implies ${y \in A_z}$. Let ${\nu_w \in \Prob(\Obs^+)}$ be as in Proposition A.10. For any ${y \in A_z}$, we have
+
+$$\nu(wy\ObsO) = \nu(w\ObsO) \nu_w(y)$$
+
+Multiplying both sides by ${\mu(x\ObsO)}$:
+
+$$\mu(x\ObsO) \nu(wy\ObsO) = \mu(x\ObsO) \nu(w\ObsO) \nu_w(y)$$
+
+Using the definition of ${\xi}$ and Proposition A.15, we get
+
+$${\xi(z\ObsO)=\mu(x\ObsO) \nu(w\ObsO)}$$
+
+$$\xi(zy\ObsO) = \mu(x\ObsO) \nu(wy\ObsO)$$
+
+Combining, we get
+
+$$\xi(zy\ObsO) = \xi(z\ObsO) \nu_w(y)$$
+
+Now, assume ${x \not\sqsubseteq z}$. Let ${\mu_z \in \Prob(\Obs^+)}$ be as in Proposition A.10. For any ${y \in \Obs^+}$ s.t. ${\mu_z(y) > 0}$, we have
+
+$$\mu(zy\ObsO)=\mu(z\ObsO) \mu_z(y)$$
+
+Using the definition of ${\xi}$ and Proposition A.16, we get
+
+$$\xi(z\ObsO)=\mu(z\ObsO)$$
+
+By Proposition A.13, ${x \not\sqsubset zy}$. Therefore, we can use Proposition A.16 again to conclude
+
+$$\xi(zy\ObsO)=\mu(zy\ObsO)$$
+
+Combining, we get
+
+$$\xi(zy\ObsO) = \xi(z\ObsO) \mu_z(y)$$
+
+We proved that ${\xi \in \Phi_F}$. It remains to show that, conversely, ${\mu \in f_*^x(\Phi_F \times \Phi_G)}$. 
+
+Define ${\mu^x \in \Prob(\ObsO)}$ as follows. If ${\mu(x\ObsO)=0}$, choose arbitrary ${\mu^x \in \Phi_G}$. If ${\mu(x\ObsO) > 0}$, define ${\mu^x}$ by 
+
+$${\mu^x(z\ObsO):=\frac{\mu(xz\ObsO)}{\mu(x\ObsO)}}$$
+
+Consider any ${w \in X_G}$. By Proposition A.18, ${xw \in X_F}$. By Proposition A.10, there is ${\mu_{xw} \in F(xw)}$ s.t. for any ${y \in A_{xw}}$:
+
+$$\mu(xwy\ObsO)=\mu(xw\ObsO)\mu_{xw}(y)$$
+
+If ${\mu(x\ObsO) > 0}$, we can divide both sides by $\mu(x\ObsO)$ and get
+
+$$\mu^x(wy\ObsO)=\mu^x(w\ObsO)\mu_{xw}(y)$$
+
+It follows that, in either case, ${\mu^x \in \Phi_G}$ and 
+
+$$\mu(x\ObsO)\mu^x(z\ObsO)=\mu(xz\ObsO)$$
+
+Denote ${\xi := f^x_*(\mu \times \mu^x)}$. Consider any ${z \in \Obs^*}$.
+
+Assume ${z = xw}$ for some ${w \in \Obs^*}$. By Proposition A.15
+
+$$\xi(z\ObsO) = \mu(x\ObsO)\mu^x(w\ObsO)=\mu(z\ObsO)$$
+
+Now, assume ${x \not\sqsubseteq z}$. By Proposition A.16
+
+$$\xi(z\ObsO) = \mu(z\ObsO)$$
+
+We conclude that ${\mu = \xi}$.
+
+\subsection{Proposition A.20}
+
+In the setting of the construction, consider any ${\mu \in \Phi_F}$ and ${e \in \ObsO}$ s.t. for any ${n \in \Nats}$, ${\mu(e_{<n}\ObsO) > 0}$. Then, there are infinitely many ${x \in X_F}$ s.t. ${x \sqsubset e}$.
+
+\subsection{Proof of Proposition A.20}
+
+We prove by induction on ${n}$ that there are at least ${n}$ prefixes of ${e}$ in ${X_F}$. For ${n=0}$ the claim is vacuously true. Consider any ${n > 0}$. By the induction hypothesis, there are ${x_0 \sqsubset x_1 \sqsubset \ldots \sqsubset x_{n-1} \sqsubset e}$ s.t. ${x_k \in X_F}$ for all ${k < n}$. Without loss of generality, we can assume ${A_{x_{n-1}}}$ is s.t.
+
+$$\bigcup_{y \in A_{x_{n-1}}} y\ObsO = \ObsO$$
+
+Indeed, if this condition is false we can make it true by adding more elements to ${A_{x_{n-1}}}$. By Proposition A.10, there is ${\nu \in F(x_{n-1})}$ s.t. for any ${y \in A_{x_{n-1}}}$
+
+$$\mu(x_{n-1}y\ObsO)=\mu(x_{n-1}\ObsO) \nu(y)$$
+
+By the assumption on ${A_{x_{n-1}}}$, there is ${y_0 \in A_{x_{n-1}}}$ s.t. ${x_{n-1}y_0 \sqsubset e}$. Denote ${x_n:=x_{n-1}y_0}$. We get
+
+$$\mu(x_{n}\ObsO)=\mu(x_{n-1}\ObsO) \nu(y_0)$$
+
+The left hand side is positive since ${x_n \sqsubset e}$, therefore ${\nu(y_0) > 0}$.\ It follows that ${x_n \in X_F}$.
+
+\subsection{Proof of Proposition 6}
+
+By Propositions A.11, A.12 and A.14, ${\Phi_F \in \CC(\ObsO)}$. It remains to show that ${\Phi_F}$ factorizes everywhere.
+
+Consider any ${\mu \in \Phi_F}$. Denote
+
+$$N:=\{e \in \ObsO \mid \exists n \in \Nats: \mu(e_{<n}\ObsO)=0\}$$
+
+We have
+
+$$N = \bigcup_{\substack{x \in \Obs^* \\ \mu(x\ObsO)=0}} x\ObsO$$
+
+Therefore, ${\mu(N) = 0}$ and ${\mu(\ObsO \setminus N) = 1}$. By Proposition A.20, for any ${e \not\in N}$, there are infinitely many ${x \sqsubset e}$ s.t. ${x \in X_F}$. By Proposition A.19, it follows that ${\Phi_F}$ factorizes over ${e}$. We get
+
+$$\Prb_{e \sim \mu}[\Phi_F \text{ factorizes over } e] \geq \Prb_{e \sim \mu}[e \not\in N] = 1$$
+
+\end{document}
+
+
+
