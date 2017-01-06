@@ -1,0 +1,164 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+\DeclareMathOperator{\Var}{Var}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+
+\DeclareMathOperator{\Prj}{pr}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+
+\newcommand{\Prob}{\mathcal{P}}
+
+% Paper specific
+
+\newcommand{\Act}{\mathcal{A}}
+\newcommand{\Obs}{\mathcal{O}}
+\newcommand{\His}{(\Act \times \Obs)^*}
+\newcommand{\Pol}{\Obs^* \rightarrow \Act}
+\newcommand{\Env}{\Obs^\omega}
+\newcommand{\MixPol}{\Prob(\Pol)}
+\newcommand{\MixEnv}{\Prob(\Env)}
+\newcommand{\PC}{\Prob_{\operatorname{C}}}
+\newcommand{\Mod}{\PC(\Env)}
+\newcommand{\Adm}{\Obs_\Phi^+}
+
+\begin{document}
+
+This post continues the study of [minimax forecasting](https://agentfoundations.org/item?id=1107).
+
+The minimax decision rule has the pathology that, when events are sufficiently "optimistic", behavior can become highly suboptimal. This is analogous to off-policy irrational behavior in Nash equilibria of games in extensive form. In order to remedy the problem, we introduce a refinement called "subagent perfect minimax," somewhat analogous to subgame perfect equilibria and other related solution concepts. It is possible to prove existence and, when the model factorizes, dynamic consistency.
+
+The proofs are omitted, but we can easily provide them if necessary.
+
+\section{Notation}
+
+%We use the same notation as before, and also $\Reals^+:=(0,+\infty)$.
+
+\section{Motivation}
+
+Consider the following class of environments: during the first step, the agent gains $\$1$ with some probability $p \in [0,1]$. During the second step, the agent can choose action $a$ which leads to gaining $\$1$ or action $b$ which leads to gaining $\$0$. 
+
+The minimax payoff of this class is $\$1$, corresponding to $p=0$ and action $a$. The obvious rational policy $\pi^*$ is always choosing $a$, which is a minimax policy. However, the following policy $\pi$ is also minimax: choose $a$ if you gained $\$0$ in the first step, choose $b$ if you gained $\$1$ in the first step. $\pi$ guarantees a payoff of $\$1$, which is the same as the worst-case ($p=0$) payoff of $\pi^*$.
+
+Note that the minimax environment has $p=0$ and $\pi$ only differs from $\pi^*$ on histories which are impossible in that environment. Moreover, if we considered the class $p \in [\epsilon,1]$ for some $\epsilon > 0$, the minimax payoff would be $\$(1+\epsilon)$, and $\pi^*$ would be the sole minimax policy. Therefore, in order to eliminate the pathology, we need to formulate a stability condition that ensures any admissible history is treated as occurring with at least infinitesimal probability.
+
+\section{Results}
+
+Now consider the forecasting setting, with action set $\Act$, observation set $\Obs$, time discount function $\gamma: \Nats \rightarrow \Reals^{\geq 0}$ and reward function $r: \His \rightarrow \Reals$. As before, $\gamma$ and $r$ define the utility function $u: (\Pol) \times \Env \rightarrow \Reals$.
+
+Consider $\Phi \in \Mod$ and denote
+
+$$\Adm:=\{x \in \Obs^+ \mid \ \exists \mu \in \Phi: \mu(x\Env) > 0\}$$
+
+%#Definition 1
+
+Consider $X \subseteq \Adm$ finite. $\pi^* \in \MixPol$ is called an *$X$-stable minimax policy for $\Phi$* when there are sequences $\{\epsilon^{(n)}: X \rightarrow (0,1)\}_{n \in \Nats}$ and $\{\pi^{(n)} \in \MixPol\}_{n \in \Nats}$ s.t. $\epsilon^{(n)} \rightarrow 0$, $\pi^{(n)} \rightarrow \pi^*$ and $\pi^{(n)}$ is a minimax policy for
+
+$$\Phi^{(n)}:=\{\mu \in \Phi \mid \forall x \in \Obs^*, o \in \Obs: xo \in X \implies \mu(xo\Env) \geq \epsilon^{(n)}(xo) \mu(x\Env)\}$$
+
+In particular, the definition assumes $\Phi^{(n)}$ is non-empty.
+
+%#Proposition 1
+
+For any $X \subseteq \Adm$ finite, there exists $\pi^* \in \MixPol$ which is an $X$-stable minimax policy for $\Phi$.
+
+%#Proposition 2
+
+For any $X \subseteq \Adm$ finite and $\pi^* \in \MixPol$ an $X$-stable minimax policy for $\Phi$, ${\pi^*}$ is in particular a minimax policy for $\Phi$.
+
+%#Proposition 3
+
+Consider $X \subseteq \Adm$ finite, $\pi^* \in \MixPol$ an $X$-stable minimax policy for $\Phi$ and ${x \in \Obs^*}$ s.t. ${\forall y \sqsubseteq x : y \in X \cup \{\Estr_\Obs\}}$. Assume ${\Phi}$ factorizes at ${x}$ into ${\Phi_1,\Phi_2 \in \Mod}$. Denote ${\Prj_1: (\Pol) \rightarrow (\bar{x}\Obs^* \rightarrow \Act)}$ and ${\Prj_2: (\Pol) \rightarrow (x\Obs^* \rightarrow \Act)}$ the restriction mappings. Define ${\pi_1^* := \Prj_{1*} \pi}$ and define ${\pi_2^*: \Act^{\Abs{x}} \rightarrow (x\Obs^* \rightarrow \Act)}$ by
+
+$$\pi_2^*(t):=\Prj_{2*}(\pi^* \mid \{s: \Pol \mid t_i=s(x_{<i})\})$$
+
+Then
+
+$$\pi^*_2 \in \Argmax{\pi_2: \Act^{\Abs{x}} \rightarrow (x\Obs^* \rightarrow \Act)} \min_{\mu \in \Phi_2} \E_{(\pi_1^* \otimes_x \pi_2) \times \mu}[u_{>\Abs{x}}]$$
+
+%#Definition 2
+
+${\pi^* \in \MixPol}$ is called a *subagent perfect minimax policy for ${\Phi}$* when there is a sequence ${\{X^{(n)} \subseteq \Adm\}_{n \in \Nats}}$ s.t. each ${X^{(n)}}$ is finite, ${X^{(n)} \subseteq X^{(n+1)}}$ and ${\bigcup_{n \in \Nats} X^{(n)} = \Adm}$, and a sequence ${\pi^{(n)} \in \MixPol}$ s.t. ${\pi^{(n)} \rightarrow \pi}$ and ${\pi^{(n)}}$ is an ${X^{(n)}}$-stable minimax policy for ${\Phi}$.
+
+%#Proposition 4
+
+There exists $\pi^* \in \MixPol$ which is a subagent perfect minimax policy for $\Phi$.
+
+%#Proposition 5
+
+For $\pi^* \in \MixPol$ a subagent perfect minimax policy for $\Phi$, ${\pi^*}$ is in particular a minimax policy for $\Phi$.
+
+%#Proposition 6
+
+Consider $\pi^* \in \MixPol$ a subagent perfect minimax policy for $\Phi$ and ${x \in \Adm}$. Assume ${\Phi}$ factorizes at ${x}$ into ${\Phi_1,\Phi_2 \in \Mod}$.
+Then
+
+$$\pi^*_2 \in \Argmax{\pi_2: \Act^{\Abs{x}} \rightarrow (x\Obs^* \rightarrow \Act)} \min_{\mu \in \Phi_2} \E_{(\pi_1^* \otimes_x \pi_2) \times \mu}[u_{>\Abs{x}}]$$
+
+%##Appendix
+%\section{Appendix}
+
+%Haha!
+
+\end{document}
+
+
+
+
