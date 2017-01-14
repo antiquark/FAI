@@ -1,0 +1,144 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+\DeclareMathOperator{\Var}{Var}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+
+\DeclareMathOperator{\Prj}{pr}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+
+\newcommand{\Prob}{\mathcal{P}}
+
+% Paper specific
+
+\newcommand{\T}{\mathcal{T}(X)}
+\newcommand{\B}{\operatorname{B}_b}
+\newcommand{\N}{\operatorname{N}_b}
+\newcommand{\W}{\operatorname{W}}
+\newcommand{\SW}{\operatorname{\Sigma W}_{\min}}
+
+\begin{document}
+
+[Logical induction](https://arxiv.org/abs/1609.03543) is defined in terms of logical sentences and theories, but its principles are applicable in much greater generality and abstraction. Indeed, one such generalization was studied under the name "[universal induction](https://agentfoundations.org/item?id=941)." We [proposed](https://agentfoundations.org/item?id=1197) a slightly different generalization in order to model reasoning with incomplete models. Here, we describe a formalism that includes all these cases and many more, using the language of measure theory. This provides the following advantages:
+
+* In our opinion, this language is more mathematically natural than the original formalism, at least for applications unrelated to formal logic.
+
+* The formalism is applicable to event spaces substantially different from truth assignments or bit sequences, e.g. we can consider sequences of real numbers.
+
+* The formalism treats probabilities and expectations on the same footing, rather than constructing expectations as in section 4.8 of original paper. We consider this more convenient.
+
+On the other hand, we ignore all computational considerations. Obviously these are often important, but in the study of purely information-theoretic questions the use of numerical approximations only serves to obscure.
+
+All proofs are in the Appendix.
+
+\section{Notation}
+
+Bar
+
+\section{Results}
+
+Fix ${X}$ a compact Polish space. For example, ${X}$ might be ${\mathcal{O}^\omega}$ or the space of propositionally consistent truth assignments in some language or ${[0,1]^\omega}$. The role of "pricings" is served by ${\Prob(X)}$: the space of probability measures on ${X}$. A *market* is thus a sequence ${\{\mu_n \in \Prob(X)\}_{n \in \Nats}}$. The "deductive process" is replaced by a sequence of closed sets ${X = X_0 \supseteq X_1 \supseteq X_2 \supseteq \ldots}$ A *trading strategy* is a continuous function ${\tau: \Prob(X) \rightarrow C(X)}$, were ${\Prob(X)}$ is equipped with the weak* topology (as before) and ${C(X)}$ is the space of continuous functions from ${X}$ to ${\Reals}$ equipped with the uniform convergence topology. Here, we should think of ${\tau(\mu)}$ as the share portfolio acquired by the strategy given pricing ${\mu}$, where the cost of the acquisition is understood to be ${\E_\mu[\tau(\mu)]}$ while the ultimate value of the portfolio is ${\tau(\mu)(x)}$ (in the following we will use the less clumsy notation ${\tau(\mu,x)}$) for some ${x \in \bigcap_n X_n}$. We denote the set of trading strategies by ${\T}$. A *trader* is a sequence ${\{T_n: \Prob(X)^n \rightarrow \T\}_{n \in \Nats}}$, where the functions can be arbitrary (don't have to be continuous in any sense). The argument of these functions refers to the market pricings on previous days.
+
+Analogously to Lemma 5.1.1 in "Logical Induction", we have:
+
+\#Proposition 1
+
+For any ${\tau \in \T}$, there is ${\mu \in \Prob(X)}$ s.t.
+
+$$\E_{x \sim \mu}[\tau(\mu,x)] = \max_{x \in X} \tau(\mu,x)$$
+
+***
+
+Analogous to Definition 5.2.1, we have:
+
+\#Proposition 2
+
+Given ${\tau \in \T}$, define ${\W\tau: \Prob(X) \times X \rightarrow \Reals}$ by
+
+$$\W\tau(\mu,x):=\tau(\mu,x)-\E_{y \sim \mu}[\tau(\mu,y)]$$
+
+Fix a trader ${T}$. Define ${\SW T_n: \Prob(X)^n \rightarrow \Reals}$ by
+
+$$\SW T_n(\{\mu_m\}_{m < n}):=\min_{x \in X_n} \sum_{m<n} \W T_m(\{\mu_l\}_{l \leq m},x)$$
+
+Fix ${b > 0}$. Assume ${n \in \Nats}$ and $\{\mu_m \in \Prob(X)\}_{m \leq n}$ are s.t. 
+
+$$\SW T_n(\{\mu_m\}_{m < n}) > -b$$
+
+Then, we can define ${\N T_n: \Prob(X)^n \times \Prob(X) \rightarrow \Reals}$ by
+
+$$\N T_n(\{\mu_m\}_{m \leq n}) :=\max(1,\max_{x \in X_n} \frac{-\W T_n(\{\mu_m\}_{m \leq n}, x)}{b+\sum_{m<n} \W T_m(\{\mu_l\}_{l \leq m},x)})^{-1}$$
+
+Finally, define ${\{\B T_n: \Prob(X)^n \times \Prob(X) \rightarrow C(X)\}_{n \in \Nats}}$ by
+
+$$\B T_n(\{\mu_m\}_{m \leq n})=\begin{cases}0 \text{ if } \exists m \leq n: \SW T_m(\{\mu_l\}_{l < m}) < -b \\ \N T_n(\{\mu_m\}_{m \leq n}) \cdot T_n(\{\mu_m\}_{m \leq n}) \text{ otherwise} \end{cases}$$
+
+Then, ${\B T}$ is also a trader (i.e. it is continuous in the last argument).
+
+%##Appendix
+\section{Appendix}
+
+Haha!
+
+\end{document}
+
+
+
+
