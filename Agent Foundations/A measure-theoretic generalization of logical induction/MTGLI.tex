@@ -139,9 +139,9 @@ Then:
 
 * ${\B T}$ is also a trader (i.e. it is continuous in the last argument).
 
-* $\SWm\B T_n \geq -b$
+* If ${\{\mu_m\}_{m<n}}$ is s.t. $\forall m \leq n: \SWm T_m(\{\mu_l\}_{l<m}) > -b$, then ${\forall m < n: \B T_m(\{\mu_l\}_{l<m}) = T_m(\{\mu_l\}_{l<m})}$.
 
-* If $\SWm T_n \geq -b+1$, then ${\B T = T}$.
+* $\SWm\B T_n \geq -b$
 
 ***
 
@@ -238,10 +238,25 @@ Therefore, ${(\mu,\nu) \in K}$ and ${K}$ is a closed set. Applying the Kakutani-
 
 ${\W \tau}$ is continuous by Proposition A.1. Therefore, ${\N T}$ is continuous in the last argument and ${\B T}$ is also continuous in the last argument.
 
+Assume ${\{\mu_m\}_{m<n}}$ is s.t. $\forall m \leq n: \SWm T_m(\{\mu_l\}_{l<m}) > -b$. Then, for any ${m < n}$ we are in the second case in the definition of ${\B T_m(\{\mu_l\}_{l<m})}$. Moreover, we have
+
+$$\SWm T_{m+1}(\{\mu_l\}_{l \leq m}) >\ -b$$
+
+$$\forall x \in X_{m+1}: \SW T_{m+1}(\{\mu_l\}_{l \leq m}, x) >\ -b$$
+
+$$\forall x \in X_{m+1}: \SW T_{m}(\{\mu_l\}_{l < m}, x) + \W T_{m}(\{\mu_l\}_{l \leq m}, x)  >\ -b$$
+
+$$\forall x \in X_{m+1}: b + \SW T_{m}(\{\mu_l\}_{l < m}, x) > -\W T_{m}(\{\mu_l\}_{l \leq m}, x)$$
+
+The left hand side is positive since ${x \in X_{m+1}}$ and in particular ${x \in X_m}$, which allows using the assumption again. It follows that
+
+$$\forall x \in X_{m+1}: 1 > \frac{-\W T_{m}(\{\mu_l\}_{l \leq m}, x)}{b + \SW T_{m}(\{\mu_l\}_{l < m}, x)}$$
+
+$$\N T_m(\{\mu_l\}_{l \leq m}) = 1$$
+
+$$\B T_m(\{\mu_l\}_{l \leq m}) = T_m(\{\mu_l\}_{l \leq m})$$
+
 FOO
 
 \end{document}
-
-
-
-
+ 
