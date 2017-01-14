@@ -133,25 +133,15 @@ $$\N T_n(\{\mu_m\}_{m \leq n}) :=\max(1,\max_{x \in X_n} \frac{-\W T_n(\{\mu_m\}
 
 Finally, define ${\{\B T_n: \Prob(X)^n \times \Prob(X) \rightarrow C(X)\}_{n \in \Nats}}$ by
 
-$$\B T_n(\{\mu_m\}_{m \leq n})=\begin{cases}0 \text{ if } \exists m \leq n: \SWm T_m(\{\mu_l\}_{l < m}) \leq -b \\ \N T_n(\{\mu_m\}_{m \leq n}) \cdot T_n(\{\mu_m\}_{m \leq n}) \text{ otherwise} \end{cases}$$
+$$\B T_n(\{\mu_m\}_{m \leq n})=\begin{cases}0 \text{ if } \exists m \leq n: \SWm T_m(\{\mu_l\}_{l < m}) \leq -b, \\ \N T_n(\{\mu_m\}_{m \leq n}) \cdot T_n(\{\mu_m\}_{m \leq n}) \text{ otherwise} \end{cases}$$
 
-Then, ${\B T}$ is also a trader (i.e. it is continuous in the last argument). Moreover, it satisfies
+Then:
 
-$$\SWm\B T_n \geq -b$$
+* ${\B T}$ is also a trader (i.e. it is continuous in the last argument).
 
-***
+* $\SWm\B T_n \geq -b$
 
-Analogously to Definition 3.5.1 ("exploitation") we have:
-
-\#Definition 1
-
-A market ${\mu}$ is said to *dominate* a trader ${T}$ relatively to ${\{X_n\}}$ when
-
-* Denoting ${i_n: X_n \rightarrow X}$ the inclusion mapping, ${\mu_n}$ is in the image of ${i_{n*}}$.
-
-* The following set is either unbounded from below or bounded from above:
-
-$$\{\SW T_{n+1}(\{\mu_m\}_{m \leq n},x) \mid n \in \Nats,\, x \in X_n\}$$
+* If $\SWm T_n \geq -b+1$, then ${\B T = T}$.
 
 ***
 
@@ -173,9 +163,25 @@ The analogue of Definition 5.4.1 (logical inductor construction):
 
 \#Proposition 4
 
-Consider a family of traders $\{T^k\}_{k \in \Nats}$ and ${\zeta \in \Prob(\Nats \times \Nats)}$ s.t. ${\E_{(k,b) \sim \zeta}[b] < \infty}$. Then, there are ${\{\mu^*_n \in \Prob(X_n)\}_{n \in \Nats}}$ s.t. 
+Consider a family of traders $\{T^k\}_{k \in \Nats}$ and ${\zeta \in \Prob(\Nats \times \Nats)}$ s.t. ${\E_{(k,b) \sim \zeta}[b] < \infty}$. Then, there are ${\{\mu^*_n \in \Prob(X_n)\}_{n \in \Nats}}$ s.t.
 
 $$\E_{x \sim \mu_n}[T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n},x)] = \max_{x \in X_n} T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n},x)$$
+
+***
+
+Analogously to Definition 3.5.1 ("exploitation") we have:
+
+\#Definition 1
+
+A market ${\mu}$ is said to *dominate* a trader ${T}$ relatively to ${\{X_n\}}$ when
+
+* Denoting ${i_n: X_n \rightarrow X}$ the inclusion mapping, ${\mu_n}$ is in the image of ${i_{n*}}$.
+
+* The following set of real numbers is either unbounded from below or bounded from above:
+
+$$\{\SW T_{n+1}(\{\mu_m\}_{m \leq n},x) \mid n \in \Nats,\, x \in X_n\}$$
+
+***
 
 Finally, the analogue of Theorem 5.4.2:
 
@@ -186,7 +192,53 @@ Consider the setting of Proposition 4. Then, ${\{i_{n*}\mu^*_n\}_{n \in \Nats}}$
 %##Appendix
 \section{Appendix}
 
-Haha!
+\#Proposition A.1
+
+Given ${\tau \in \T}$, define ${E_\tau: \Prob(X) \times \Prob(X) \rightarrow \Reals}$ by
+
+$$E_\tau(\nu,\mu):=\E_\nu[\tau(\mu)]$$
+
+Then, ${E_\tau}$ is continuous.
+
+\#Proof of Proposition A.1
+
+Consider ${\mu_i \rightarrow \mu}$ and ${\nu_i \rightarrow \nu}$. We have
+
+$$\E_{\nu_i}[\tau(\mu_i)] = \E_{\nu_i}[\tau(\mu)] + \E_{\nu_i}[\tau(\mu_i) - \tau(\mu)]$$
+
+$$\Abs{\E_{\nu_i}[\tau(\mu_i)] - \E_{\nu_i}[\tau(\mu)]} \leq \max\Abs{\tau(\mu_i) - \tau(\mu)}$$
+
+By continuity of ${\tau}$, ${\tau(\mu_i) \rightarrow \tau(\mu)}$ and therefore, $\max\Abs{\tau(\mu_i) - \tau(\mu)} \rightarrow 0$. We get
+
+$$\lim_{i \rightarrow \infty} \Abs{\E_{\nu_i}[\tau(\mu_i)] - \E_{\nu_i}[\tau(\mu)]} = 0$$
+
+Since ${\nu_i \rightarrow \nu}$ and ${\tau(\mu)}$ is continuous, we have ${\E_{\nu_i}[\tau(\mu)] \rightarrow \E_{\nu}[\tau(\mu)]}$ and therefore
+
+$$\lim_{i \rightarrow \infty} \E_{\nu_i}[\tau(\mu_i)] = \E_{\nu}[\tau(\mu)]$$
+
+\#Proof of Proposition 1
+
+Define ${K \subseteq \Prob(X) \times \Prob(X)}$ as follows:
+
+$$K:=\{(\mu,\nu) \mid \E_\nu[\tau(\mu)] = \max \tau(\mu)\}$$
+
+For any ${\mu}$, denote ${K(\mu):=K \cap (\mu \times \Prob(X))}$. ${K}(\mu)$ is convex due to linearity of expected value. ${K(\mu)}$ is non-empty because given ${x^* \in \Argmax{x \in X} \tau(\mu,x)}$, ${\delta_x \in K(\mu)}$.
+
+Consider ${\mu_i \rightarrow \mu}$ and ${\nu_i \rightarrow \nu}$ s.t. ${(\mu_i,\nu_i) \in K}$. We have
+
+$$\E_{\nu_i}[\tau(\mu_i)] = \max \tau(\mu_i)$$
+
+By Proposition A.1, the left hand side converges to ${\E_{\nu}[\tau(\mu)]}$. Since ${\tau(\mu_i) \rightarrow \tau(\mu)}$, the right hand side converges to ${\max \tau(\mu)}$. We get:
+
+$$\E_{\nu}[\tau(\mu)] = \max \tau(\mu)$$
+
+Therefore, ${(\mu,\nu) \in K}$ and ${K}$ is a closed set. Applying the Kakutani-Glicksberg-Fan theorem, we get the desired result.
+
+\#Proof of Proposition 2
+
+${\W \tau}$ is continuous by Proposition A.1. Therefore, ${\N T}$ is continuous in the last argument and ${\B T}$ is also continuous in the last argument.
+
+FOO
 
 \end{document}
 
