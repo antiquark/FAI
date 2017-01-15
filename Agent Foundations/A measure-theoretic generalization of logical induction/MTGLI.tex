@@ -151,13 +151,17 @@ The analogue of Definition 5.3.2 ("trading firm") is as follows:
 
 \#Proposition 3
 
-Consider a family of traders $\{T^k\}_{k \in \Nats}$ and ${\zeta \in \Prob(\Nats \times \Nats)}$ s.t. ${\E_{(k,b) \sim \zeta}[b] < \infty}$ and ${\Supp \zeta = \Nats \times \Nats^{>0}}$. Define ${T^\zeta_n}$ as follows:
+Consider a family of traders $\{T^k\}_{k \in \Nats}$ and ${\zeta: \Nats \times \Nats \rightarrow [0,1]}$ s.t.
 
-$$T^\zeta_n = \sum_{\substack{k \leq n\\b \in \Nats}} \zeta(k,b) \B T^k_n$$
+$$\sum_{k=0}^\infty \sum_{b=1}^\infty \zeta(b,k) b = b_\zeta < \infty$$
+
+Define ${T^\zeta_n}$ as follows:
+
+$$T^\zeta_n = \sum_{k=0}^n \sum_{b=1}^\infty \zeta(k,b) \B T^k_n$$
 
 Then, the above sum is convergent and defines a trader. Moreover:
 
-$$\SWm T^\zeta_n \geq -\E_{(k,b) \sim \zeta}[b]$$
+$$\SWm T^\zeta_n \geq -b_\zeta$$
 
 ***
 
@@ -189,7 +193,7 @@ Finally, the analogue of Theorem 5.4.2:
 
 \#Theorem 1
 
-Consider the setting of Proposition 4. Then, ${\{i_{n*}\mu^*_n\}_{n \in \Nats}}$ dominates ${T^k}$ for every ${k}$.
+Consider the setting of Proposition 4, and assume that ${\forall k,b: \zeta(k,b) > 0}$.  Then, ${\{i_{n*}\mu^*_n\}_{n \in \Nats}}$ dominates ${T^k}$ for every ${k}$.
 
 %##Appendix
 \section{Appendix}
@@ -309,6 +313,24 @@ By induction on ${m}$, we conclude:
 $$\SWm \B T_{m}(\{\mu_l \}_{l < m}) \geq \SWm \B T_{m - 1}(\{\mu_l \}_{l < m - 1}) \geq -b$$
 
 \#Proof of Proposition 3
+
+The definition of ${\B}$ implies that
+
+$$\Abs{\B T^k_n(\{\mu_m \}_{m \leq n},x)} \leq \Abs{T^k_n(\{\mu_m \}_{m \leq n},x)}$$
+
+Observe that
+
+$$Z(k):=\sum_{b=1}^\infty \zeta(k,b) \leq \sum_{b=1}^\infty \zeta(k,b)b < \infty$$
+
+As a result, the definition of ${T^\zeta_n}$ is pointwise convergent:
+
+$$ \sum_{b=1}^\infty \zeta(k,b) \Abs{\B T^k_n(\{\mu_m \}_{m \leq n},x)} \leq Z(k) \Abs{T^k_n(\{\mu_m \}_{m \leq n},x)}$$
+
+Moreover, this series converges uniformly in ${x}$:
+
+$$ \sum_{b=b_0}^\infty \zeta(k,b) \Abs{\B T^k_n(\{\mu_m \}_{m \leq n},x)} \leq \max_{y \in X} \Abs{T^k_n(\{\mu_m \}_{m \leq n},y)}\sum_{b=b_0}^\infty \zeta(k,b) \underset{b_0 \rightarrow \infty}{\rightarrow} 0$$
+
+By the uniform limit theorem, the series defines a continuous function of ${x}$.
 
 FOO
 
