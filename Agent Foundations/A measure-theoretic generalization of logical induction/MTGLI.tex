@@ -74,6 +74,7 @@
 \newcommand{\W}{\operatorname{W}}
 \newcommand{\SW}{\operatorname{\Sigma W}}
 \newcommand{\SWm}{\operatorname{\Sigma W}_{\min}}
+\newcommand{\Wo}{\mathcal{W}}
 
 \begin{document}
 
@@ -185,7 +186,7 @@ A market ${\mu}$ is said to *dominate* a trader ${T}$ relatively to ${\{X_n\}}$ 
 
 * The following set of real numbers is either unbounded from below or bounded from above:
 
-$$\{\SW T_{n+1}(\{\mu_m\}_{m \leq n},x) \mid n \in \Nats,\, x \in X_n\}$$
+$$\Wo(T,\mu):=\{\SW T_{n+1}(\{\mu_m\}_{m \leq n},x) \mid n \in \Nats,\, x \in X_n\}$$
 
 ***
 
@@ -365,7 +366,37 @@ Now construct ${\mu^*_n}$ by applying Proposition 1 to ${\tau_n}$.
 
 \#Proof of Theorem
 
-FOO
+We have
+
+$$\W T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n}, x) = T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n}, x) - \E_{y \sim \mu_n^*}[T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n}, y)]$$
+
+By definition of ${\mu^*}$
+
+$$\W T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n}, x) = T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n}, x) - \max_{y \in X_n} T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n}, y)$$
+
+$$\forall x \in X_n: \W T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n}, x) \leq 0$$
+
+$$\forall x \in X_n: \SW T^\zeta_{n+1}(\{i_{m*}\mu^*_m\}_{m \leq n}, x) \leq 0$$
+
+Fix ${k \in \Nats}$ and assume ${\inf \Wo(T^k,i_*\mu^*) > -b}$ for some ${b > 0}$ (otherwise ${T^k}$ is dominated). Define ${\xi: \Nats \times \Nats \rightarrow [0,1]}$ by
+
+$$\xi(j,c):=\begin{cases}\zeta(j,c) \text { when } (j,c) \ne (k,b)\\0 \text{ when } (j,c)=(k,b)\end{cases}$$
+
+We get ${T^\zeta_n = T^\xi_n + [[n \geq k]] \zeta(k,b) \B T^k}$ and therefore
+
+$$\forall x \in X_n: \SW T^\xi_{n+1}(\{i_{m*}\mu^*_m\}_{m \leq n}, x) + [[n \geq k]] \zeta(k,b)  \SW \B T^k_{n+1}(\{i_{m*}\mu^*_m\}_{m \leq n}, x) \leq 0$$
+
+By Proposition 2 and the definition of ${b}$, we can remove ${\B}$ in the second term.
+
+$$\forall x \in X_n: \SW T^\xi_{n+1}(\{i_{m*}\mu^*_m\}_{m \leq n}, x) + [[n \geq k]] \zeta(k,b)  \SW T^k_{n+1}(\{i_{m*}\mu^*_m\}_{m \leq n}, x) \leq 0$$
+
+$$\forall x \in X_n: [[n \geq k]] \zeta(k,b)  \SW T^k_{n+1}(\{i_{m*}\mu^*_m\}_{m \leq n}, x) \leq -\SW T^\xi_{n+1}(\{i_{m*}\mu^*_m\}_{m \leq n}, x)$$
+
+By Proposition 3, the right hand side is bounded from above by ${b_\xi}$, therefore
+
+$$\forall x \in X_n: [[n \geq k]] \zeta(k,b) \SW T^k_{n+1}(\{i_{m*}\mu^*_m\}_{m \leq n}, x) \leq b_\xi$$
+
+$$\sup \Wo(T^k,i_* \mu^*) \leq \frac{b_\xi}{\zeta(k,b)} + \max_{\substack{n < k \\ x \in X_n}} \SW T^k_{n+1}(\{i_{m*}\mu^*_m\}_{m \leq n}, x)$$
 
 \end{document}
  
