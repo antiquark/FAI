@@ -266,15 +266,19 @@ $$\forall m \leq m_0: \SWm T_m(\{\mu_l\}_{l<m}) > -b$$
 
 For any ${m \leq m_0}$, we have
 
-$$\SWm \B T_m(\{\mu_l \in \Prob(X)\}_{l<m})=\SWm T_m(\{\mu_l \in \Prob(X)\}_{l<m}) > -b$$
+$$\SWm \B T_m(\{\mu_l \}_{l<m})=\SWm T_m(\{\mu_l \}_{l<m}) > -b$$
 
-(Note that the sum in the definition of ${\SWm \B T_m}$ only involves ${\B T_l}$ for ${l < m}$)
+(Note that the sum in the definition of ${\SWm \B T_m}$ only involves ${\B T_l}$ for ${l < m \leq m_0}$)
 
-For ${m=m_0+1}$, we are still in the second case in the definition of ${\B T_n(\{\mu_m \in \Prob(X)\}_{m<n})}$??? We get
+For ${m=m_0+1}$, we have
 
-$$\SWm \B T_m(\{\mu_l \in \Prob(X)\}_{l<m}) = \min_{x \in X_m} \SW \B T_m(\{\mu_l \in \Prob(X)\}_{l<m},x)$$
+$$\SWm \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0}) = \min_{x \in X_{m_0+1}} \SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0})$$
 
-$$\SWm \B T_m(\{\mu_l \in \Prob(X)\}_{l<m}) = \min_{x \in X_m} (\SW \B T_{m-1}(\{\mu_l \in \Prob(X)\}_{l<{m-1}},x) + \W T_{m-1}(\{\mu_l \in \Prob(X)\}_{l \leq {m-1}},x))$$
+$$\SWm \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0}) = \min_{x \in X_{m_0+1}} (\SW \B T_{m_0}(\{\mu_l \}_{l < m_0}) + \W \B T_{m_0}(\{\mu_l \}_{l \leq m_0}))$$
+
+The first term only involves ${\B T_l}$ for ${l < m_0}$, and we are still in the first case in the definition of the second term, therefore
+
+$$\SWm \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0}) = \min_{x \in X_{m_0+1}} (\SW T_{m_0}(\{\mu_l \}_{l < m_0}) + \N T_{m_0}(\{\mu_l \}_{l \leq m_0}) \W T_{m_0}(\{\mu_l \}_{l \leq m_0}))$$
 
 FOO
 
