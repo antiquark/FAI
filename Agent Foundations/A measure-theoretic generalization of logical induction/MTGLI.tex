@@ -121,9 +121,11 @@ $$\SW T_n(\{\mu_m\}_{m < n}, x):=\sum_{m<n} \W T_m(\{\mu_l\}_{l \leq m},x)$$
 
 Define ${\SWm T_n: \Prob(X)^n \rightarrow \Reals}$ by
 
-$$\SWm T_n(\{\mu_m\}_{m < n}):=\min_{x \in X_n} \SW T_n(\{\mu_m\}_{m < n}, x)$$
+$$\SWm T_n(\{\mu_m\}_{m < n}):=\min_{x \in X_{n-1}} \SW T_n(\{\mu_m\}_{m < n}, x)$$
 
-Fix ${b \geq 0}$. Assume ${n \in \Nats}$ and $\{\mu_m \in \Prob(X)\}_{m \leq n}$ are s.t. 
+(For ${n=0}$, the above definition is understood to mean 0)
+
+Fix ${b > 0}$. Assume ${n \in \Nats}$ and $\{\mu_m \in \Prob(X)\}_{m \leq n}$ are s.t. 
 
 $$\SWm T_n(\{\mu_m\}_{m < n}) > -b$$
 
@@ -149,7 +151,7 @@ The analogue of Definition 5.3.2 ("trading firm") is as follows:
 
 \#Proposition 3
 
-Consider a family of traders $\{T^k\}_{k \in \Nats}$ and ${\zeta \in \Prob(\Nats \times \Nats)}$ s.t. ${\E_{(k,b) \sim \zeta}[b] < \infty}$. Define ${T^\zeta_n}$ as follows:
+Consider a family of traders $\{T^k\}_{k \in \Nats}$ and ${\zeta \in \Prob(\Nats \times \Nats)}$ s.t. ${\E_{(k,b) \sim \zeta}[b] < \infty}$ and ${\Supp \zeta = \Nats \times \Nats^{>0}}$. Define ${T^\zeta_n}$ as follows:
 
 $$T^\zeta_n = \sum_{\substack{k \leq n\\b \in \Nats}} \zeta(k,b) \B T^k_n$$
 
@@ -163,9 +165,9 @@ The analogue of Definition 5.4.1 (logical inductor construction):
 
 \#Proposition 4
 
-Consider a family of traders $\{T^k\}_{k \in \Nats}$ and ${\zeta \in \Prob(\Nats \times \Nats)}$ s.t. ${\E_{(k,b) \sim \zeta}[b] < \infty}$. Then, there are ${\{\mu^*_n \in \Prob(X_n)\}_{n \in \Nats}}$ s.t.
+Consider the setting of Proposition 3. Then, there are ${\{\mu^*_n \in \Prob(X_n)\}_{n \in \Nats}}$ s.t.
 
-$$\E_{x \sim \mu_n}[T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n},x)] = \max_{x \in X_n} T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n},x)$$
+$$\E_{x \sim \mu^*_n}[T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n},x)] = \max_{x \in X_n} T^\zeta_n(\{i_{m*}\mu^*_m\}_{m \leq n},x)$$
 
 ***
 
@@ -246,13 +248,13 @@ Then, for any ${m < n}$ we are in the second case in the definition of ${\B T_m(
 
 $$\SWm T_{m+1}(\{\mu_l\}_{l \leq m}) >\ -b$$
 
-$$\forall x \in X_{m+1}: \SW T_{m+1}(\{\mu_l\}_{l \leq m}, x) >\ -b$$
+$$\forall x \in X_{m}: \SW T_{m+1}(\{\mu_l\}_{l \leq m}, x) >\ -b$$
 
-$$\forall x \in X_{m+1}: \SW T_{m}(\{\mu_l\}_{l < m}, x) + \W T_{m}(\{\mu_l\}_{l \leq m}, x)  >\ -b$$
+$$\forall x \in X_{m}: \SW T_{m}(\{\mu_l\}_{l < m}, x) + \W T_{m}(\{\mu_l\}_{l \leq m}, x)  >\ -b$$
 
-$$\forall x \in X_{m+1}: b + \SW T_{m}(\{\mu_l\}_{l < m}, x) > -\W T_{m}(\{\mu_l\}_{l \leq m}, x)$$
+$$\forall x \in X_{m}: b + \SW T_{m}(\{\mu_l\}_{l < m}, x) > -\W T_{m}(\{\mu_l\}_{l \leq m}, x)$$
 
-The left hand side is positive since ${x \in X_{m+1}}$ and in particular ${x \in X_m}$, which allows using the assumption again. It follows that
+Using the assumption again, the left hand side is positive. It follows that
 
 $$\forall x \in X_{m+1}: 1 > \frac{-\W T_{m}(\{\mu_l\}_{l \leq m}, x)}{b + \SW T_{m}(\{\mu_l\}_{l < m}, x)}$$
 
@@ -272,13 +274,41 @@ $$\SWm \B T_m(\{\mu_l \}_{l<m})=\SWm T_m(\{\mu_l \}_{l<m}) > -b$$
 
 For ${m=m_0+1}$, we have
 
-$$\SWm \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0}) = \min_{x \in X_{m_0+1}} \SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0})$$
-
-$$\SWm \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0}) = \min_{x \in X_{m_0+1}} (\SW \B T_{m_0}(\{\mu_l \}_{l < m_0}) + \W \B T_{m_0}(\{\mu_l \}_{l \leq m_0}))$$
+$$\SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0},x) = \SW \B T_{m_0}(\{\mu_l \}_{l < m_0},x) + \W \B T_{m_0}(\{\mu_l \}_{l \leq m_0},x)$$
 
 The first term only involves ${\B T_l}$ for ${l < m_0}$, and we are still in the first case in the definition of the second term, therefore
 
-$$\SWm \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0}) = \min_{x \in X_{m_0+1}} (\SW T_{m_0}(\{\mu_l \}_{l < m_0}) + \N T_{m_0}(\{\mu_l \}_{l \leq m_0}) \W T_{m_0}(\{\mu_l \}_{l \leq m_0}))$$
+$$\SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0},x) = \SW T_{m_0}(\{\mu_l \}_{l < m_0},x) + \N T_{m_0}(\{\mu_l \}_{l \leq m_0}) \W T_{m_0}(\{\mu_l \}_{l \leq m_0},x)$$
+
+If ${x}$ is s.t. ${\W T_{m_0}(\{\mu_l \}_{l \leq m_0},x) \geq 0}$, then
+
+$$\SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0},x) \geq \SW T_{m_0}(\{\mu_l \}_{l < m_0},x)$$
+
+$$\SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0},x) \geq \SWm T_{m_0}(\{\mu_l \}_{l < m_0}) > -b$$
+
+If ${x}$ is s.t. ${\W T_{m_0}(\{\mu_l \}_{l \leq m_0},x) < 0}$, then
+
+$$\SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0},x) \geq \SW T_{m_0}(\{\mu_l \}_{l < m_0},x) + \frac{b + \SW T_{m_0}(\{\mu_l\}_{l < {m_0}},x)}{-\W T_{m_0}(\{\mu_l\}_{l \leq {m_0}}, x)} \W T_{m_0}(\{\mu_l \}_{l \leq m_0},x)$$
+
+$$\SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0}) \geq -b$$
+
+We got that $\SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0},x) \geq -b$ for all ${x \in X_{m_0}}$, and therefore
+
+$$\SWm \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0}) = \min_{x \in X_{m_0}} \SW \B T_{m_0+1}(\{\mu_l \}_{l \leq m_0},x) \geq -b$$
+
+Finally, consider ${m > m_0 + 1}$.
+
+$$\SW \B T_{m}(\{\mu_l \}_{l < m},x) = \SW \B T_{m - 1}(\{\mu_l \}_{l < m - 1},x) + \W \B T_{m-1}(\{\mu_l \}_{l < m},x)$$
+
+Now we are in the first case in the definition of ${\W \B T_{m-1}}$, therefore the second term vanishes.
+
+$$\SW \B T_{m}(\{\mu_l \}_{l < m},x) = \SW \B T_{m - 1}(\{\mu_l \}_{l < m - 1},x)$$
+
+By induction on ${m}$, we conclude:
+
+$$\SWm \B T_{m}(\{\mu_l \}_{l < m}) \geq \SWm \B T_{m - 1}(\{\mu_l \}_{l < m - 1}) \geq -b$$
+
+\#Proof of Proposition 3
 
 FOO
 
