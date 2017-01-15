@@ -191,7 +191,7 @@ $$\{\SW T_{n+1}(\{\mu_m\}_{m \leq n},x) \mid n \in \Nats,\, x \in X_n\}$$
 
 Finally, the analogue of Theorem 5.4.2:
 
-\#Theorem 1
+\#Theorem
 
 Consider the setting of Proposition 4, and assume that ${\forall k,b: \zeta(k,b) > 0}$.  Then, ${\{i_{n*}\mu^*_n\}_{n \in \Nats}}$ dominates ${T^k}$ for every ${k}$.
 
@@ -354,6 +354,16 @@ By Proposition 2:
 $$\SW T^\zeta_n(\{\mu_m \}_{m \leq n},x)\geq -\sum_{k=0}^n \sum_{b=1}^\infty \zeta(k,b)b = -\zeta_b$$
 
 \#Proof of Proposition 4
+
+We construct ${\mu^*_n}$ recursively in ${n}$. Define ${\tau_n \in \mathcal{T}(X_n)}$ by
+
+$$\tau_n(\nu,x):=T_n^\zeta(\{i_{m*}\mu^*_m\}_{m<n}, i_{n*} \nu, x)$$
+
+(pushforward is obviously continuous in the weak* topology)
+
+Now construct ${\mu^*_n}$ by applying Proposition 1 to ${\tau_n}$.
+
+\#Proof of Theorem
 
 FOO
 
