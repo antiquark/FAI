@@ -312,6 +312,14 @@ By induction on ${m}$, we conclude:
 
 $$\SWm \B T_{m}(\{\mu_l \}_{l < m}) \geq \SWm \B T_{m - 1}(\{\mu_l \}_{l < m - 1}) \geq -b$$
 
+\#Proposition A.2
+
+If ${X,Y}$ are compact Polish spaces and ${f: X \times Y \rightarrow \Reals}$ is continuous, then ${F: X \rightarrow C(Y)}$ defined by ${F(x)(y):=f(x,y)}$ is continuous.
+
+\#Proof of Proposition A.2
+
+We already proved an equivalent proposition: see "Proposition A.1" [here](https://agentfoundations.org/item?id=1107).
+
 \#Proof of Proposition 3
 
 The definition of ${\B}$ implies that
@@ -322,15 +330,30 @@ Observe that
 
 $$Z(k):=\sum_{b=1}^\infty \zeta(k,b) \leq \sum_{b=1}^\infty \zeta(k,b)b < \infty$$
 
-As a result, the definition of ${T^\zeta_n}$ is pointwise convergent:
+As a result, the definition of ${T^\zeta_n}$ is pointwise absolutely convergent:
 
 $$ \sum_{b=1}^\infty \zeta(k,b) \Abs{\B T^k_n(\{\mu_m \}_{m \leq n},x)} \leq Z(k) \Abs{T^k_n(\{\mu_m \}_{m \leq n},x)}$$
 
-Moreover, this series converges uniformly in ${x}$:
+Moreover, this series converges uniformly absolutely in ${\mu_n}$ and ${x}$:
 
-$$ \sum_{b=b_0}^\infty \zeta(k,b) \Abs{\B T^k_n(\{\mu_m \}_{m \leq n},x)} \leq \max_{y \in X} \Abs{T^k_n(\{\mu_m \}_{m \leq n},y)}\sum_{b=b_0}^\infty \zeta(k,b) \underset{b_0 \rightarrow \infty}{\rightarrow} 0$$
+$$ \sum_{b=b_0}^\infty \zeta(k,b) \Abs{\B T^k_n(\{\mu_m \}_{m \leq n},x)} \leq \max_{\substack{\nu \in \Prob(X) \\ y \in X}} \Abs{T^k_n(\{\mu_m \}_{m < n},\nu,y)}\sum_{b=b_0}^\infty \zeta(k,b) \underset{b_0 \rightarrow \infty}{\rightarrow} 0$$
 
-By the uniform limit theorem, the series defines a continuous function of ${x}$.
+By the uniform limit theorem, the series defines a continuous function of ${\mu_n}$ and ${x}$. By Proposition A.2, it follows that ${T^\zeta}$ is a trader.
+
+Now, let's examine ${\SW T^\zeta}$:
+
+$$\SW T^\zeta_n(\{\mu_m \}_{m \leq n},x)=\SW \sum_{k=0}^n \sum_{b=1}^\infty \zeta(k,b) \B T^k_n(\{\mu_m \}_{m \leq n},x)$$
+
+Since convergence is uniform absolute, the sum commutes with ${\SW}$.
+
+$$\SW T^\zeta_n(\{\mu_m \}_{m \leq n},x)=\sum_{k=0}^n \sum_{b=1}^\infty \zeta(k,b) \SW \B T^k_n(\{\mu_m \}_{m \leq n},x)$$
+
+By Proposition 2:
+
+
+$$\SW T^\zeta_n(\{\mu_m \}_{m \leq n},x)\geq -\sum_{k=0}^n \sum_{b=1}^\infty \zeta(k,b)b = -\zeta_b$$
+
+\#Proof of Proposition 4
 
 FOO
 
