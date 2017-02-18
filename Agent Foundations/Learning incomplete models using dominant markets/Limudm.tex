@@ -1,0 +1,150 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+\DeclareMathOperator{\Var}{Var}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+
+\DeclareMathOperator{\Prj}{pr}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+
+\newcommand{\Prob}{\mathcal{P}}
+
+% Paper specific
+
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\UM}{\mathcal{U}}
+\newcommand{\W}{\operatorname{W}}
+\newcommand{\SW}{\operatorname{\Sigma W}}
+
+\begin{document}
+
+*This post is formal treatment of the idea outlined [here](https://agentfoundations.org/item?id=1197).*
+
+Given a countable set of [incomplete models], we define a forecasting function that converges in the Kantorovich-Rubinstein metric with probability 1 to every one of the models which is satisfied by the true environment. This is analogous to Blackwell-Dubins [merging of opinions](https://projecteuclid.org/euclid.aoms/1177704456), for complete models, except that Kantorovich-Rubinstein convergence is weaker than convergence in total variation. The forecasting function is a [dominant market](https://agentfoundations.org/item?id=1214) for a suitably constructed set of traders. We prove this result in a fairly general setting (for every finite time $t \in \Nats$, the observation space is an arbitrary compact subset of $\Reals^{d(t)}$), but only assuming projective determinacy. In simpler situations (e.g. when observations are strings over a finite alphabet), ZFC is sufficient.
+
+The proofs are in the Appendix.
+
+***
+
+\section{Notation}
+
+Given ${X}$ a topological space, ${\Prob(X)}$ is the space of Borel probability measures on ${X}$ equipped with the weak* topology, ${\mathcal{B}}(X)$ is the Borel ${\sigma}$-algebra on ${X}$ and ${\UM(X)}$ is the ${\sigma}$-algebra of universally measurable sets on ${X}$. Given ${\mu \in \Prob(X)}$, ${\Supp \mu}$ denotes the support of ${\mu}$
+
+\section{Dominant Stochastic Markets}
+
+The way we laid out the dominant market formalism, the sequence of observations (represented by the sets $\{X_i\}$) was fixed. To study forecasting, we instead need to assume this sequence is sampled from some probability measure (the true environment).
+
+For each ${n \in \Nats}$, let ${Y_n}$ be a compact subset of ${\Reals^{d(n)}}$ where ${d: \Nats \rightarrow \Nats}$ is an arbitrary function. ${Y_n}$ represents the space of possible observations made before time ${n}$. Let ${\pi_n: Y_{n+1} \rightarrow Y_n}$ be continuous mappings. Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the composition $\pi_n \circ \pi_{n+1} \circ \ldots \circ \pi_{m-1}$. The typical example is ${Y_n=Y^n}$ where ${Y}$ is some fixed compact set and ${\pi_n}$ the projection mappings. Define ${X = \varprojlim Y_n}$, i.e. ${X}$ is the subspace of ${\prod_n Y_n}$ given by the equations ${\pi_n(y_{n+1})=y_n}$. ${X}$ is a compact Polish space (in the example above, ${X = Y^\omega}$). For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$.
+
+A market is now a sequence of mappings ${\{M_n: Y_n \rightarrow \Prob(X)\}}_{n \in \Nats}$ s.t.
+
+* Each ${M_n}$ is measurable w.r.t. ${\UM(Y_n)}$ and ${\B(\Prob(X))}$.
+
+* For any ${y \in Y_n}$, ${M_n(y) \in \Prob(X_y)}$. Here, we slightly abuse notation by regarding ${\Prob(X_y)}$ as a subspace of ${\Prob(X)}$.
+
+As before, we define the space of trading strategies ${\T(X):=C(\Prob(X)\times X)}$, but this time we regard it as a Banach space. A trader is now a sequence of mappings ${\{T_n: Y_n \times \Prob(X)^n \rightarrow \T(X)\}}_{n \in \Nats}$ which are measurable w.r.t. ${\UM(Y_n) \otimes \B(\Prob(X)^n)}$ and ${\B(\T(X))}$.
+
+Given a trader ${T}$ and a market ${M}$, we define the measurable mappings ${\{T^M_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$ and ${\{\bar{T}^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ as follows:
+
+$$T^M_n(y):= T_n(y, M_0(\pi_{0n}(y)),M_1(\pi_{1n}(y)) \ldots M_{n-1}(\pi_{n-1,n}(y)))$$
+
+$$\bar{T}^M_n(y):= T^M_n(y,M_n(y))$$
+
+The "market maker" lemma now requires some additional work due to the measurability requirement:
+
+\#Lemma N1
+
+Consider any trader ${T}$. Then, there is a market ${M}$ s.t. for all ${n \in \Nats}$ and ${y \in Y_n}$
+
+$$\Supp M_n(y) \subseteq \Argmax{X_y} \bar{T}^M_n(y)$$
+
+***
+
+As before, we have the operator ${\W: \T(X) \rightarrow \T(X)}$ defined by 
+
+$$\W \tau(\mu,x):= \tau(\mu,x) - \E_{z \sim \mu}[\tau(\mu,z)]$$
+
+We also introduce the notation ${\{\W \bar{T}^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ and ${\{\SW T^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ which are measurable mappings defined by
+
+$$\W \bar{T}^M_n(y) = \W T^M_n(y, M_n(y))$$
+
+$$\SW T^M_n(y) = \sum_{m \leq n} \W \bar{T}^M_m(\pi_{mn}(y))$$
+
+TBD
+
+\section{Profitable Metastrategies}
+
+TBD
+
+\section{Exploiting Incomplete Models}
+
+TBD
+
+%##Appendix
+\section{Appendix}
+
+Haha!
+
+\end{document}
+
+
+
+
