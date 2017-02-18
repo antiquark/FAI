@@ -73,6 +73,7 @@
 \newcommand{\UM}{\mathcal{U}}
 \newcommand{\W}{\operatorname{W}}
 \newcommand{\SW}{\operatorname{\Sigma W}}
+\newcommand{\I}{\operatorname{id}}
 
 \begin{document}
 
@@ -86,7 +87,9 @@ The proofs are in the Appendix.
 
 \section{Notation}
 
-Given ${X}$ a topological space, ${\Prob(X)}$ is the space of Borel probability measures on ${X}$ equipped with the weak* topology, ${\mathcal{B}}(X)$ is the Borel ${\sigma}$-algebra on ${X}$ and ${\UM(X)}$ is the ${\sigma}$-algebra of universally measurable sets on ${X}$. Given ${\mu \in \Prob(X)}$, ${\Supp \mu}$ denotes the support of ${\mu}$
+Given ${X}$ a topological space, ${\Prob(X)}$ is the space of Borel probability measures on ${X}$ equipped with the weak* topology, ${\mathcal{B}}(X)$ is the Borel ${\sigma}$-algebra on ${X}$ and ${\UM(X)}$ is the ${\sigma}$-algebra of universally measurable sets on ${X}$. Given ${\mu \in \Prob(X)}$, ${\Supp \mu}$ denotes the support of ${\mu}$. ${\I_X: X \rightarrow X}$ is the identity mapping.
+
+Given ${X}$ and ${Y}$ measurable spaces, ${K: X \Markov\ Y}$ is a Markov kernel from ${X}$ to ${Y}$. For any ${x \in X}$, we have ${K(x) \in \Prob(Y)}$.
 
 \section{Dominant Stochastic Markets}
 
@@ -159,6 +162,10 @@ Theorem N2 is proved exactly as [before](https://agentfoundations.org/item?id=12
 \section{Profitable Metastrategies}
 
 In this section we describe a class of traders associated with a fixed environment ${\mu^* \in \Prob(X)}$ s.t. if a market dominates a trader from this class, a certain function of the pricing converges to 0 with ${\mu^*}$-probability 1. In the next section we will apply this result to a trader associated with an incomplete models ${\Phi \subseteq \Prob(X)}$ by observing that the trader is in the class for any ${\mu^* \in \Phi}$.
+
+\#Definition N4
+
+A *metastrategy* is a family of bounded measurable mappings ${\{\upsilon: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${c > 0}$ and ${\{K_n: Y_n \Markov X\}_{n \in \Nats}}$ s.t. ...
 
 TBD
 
