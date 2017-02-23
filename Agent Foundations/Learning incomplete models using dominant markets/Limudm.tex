@@ -87,15 +87,29 @@ The proofs are in the Appendix.
 
 \section{Notation}
 
-Given ${X}$ a topological space, ${\Prob(X)}$ is the space of Borel probability measures on ${X}$ equipped with the weak* topology, ${\mathcal{B}}(X)$ is the Borel ${\sigma}$-algebra on ${X}$ and ${\UM(X)}$ is the ${\sigma}$-algebra of universally measurable sets on ${X}$. Given ${\mu \in \Prob(X)}$, ${\Supp \mu}$ denotes the support of ${\mu}$. ${\I_X: X \rightarrow X}$ is the identity mapping.
+Given ${X}$ a topological space:
 
-Given ${X}$ and ${Y}$ measurable spaces, ${K: X \Markov\ Y}$ is a Markov kernel from ${X}$ to ${Y}$. For any ${x \in X}$, we have ${K(x) \in \Prob(Y)}$.
+* ${\I_X: X \rightarrow X}$ is the identity mapping.
+
+* ${\Prob(X)}$ is the space of Borel probability measures on ${X}$ equipped with the weak* topology.
+
+* ${C(X)}$ is the Banach space of continuous functions from ${X}$ to ${\Reals}$ with uniform norm.
+
+* ${\mathcal{B}}(X)$ is the Borel ${\sigma}$-algebra on ${X}$.
+
+* ${\UM(X)}$ is the ${\sigma}$-algebra of universally measurable sets on ${X}$.
+
+* Given ${\mu \in \Prob(X)}$, ${\Supp \mu}$ denotes the support of ${\mu}$. 
+
+Given ${X}$ and ${Y}$ measurable spaces, ${K: X \Markov\ Y}$ is a Markov kernel from ${X}$ to ${Y}$. For any ${x \in X}$, we have ${K(x) \in \Prob(Y)}$. Given ${\mu \in \Prob(X)}$, ${\mu \ltimes K \in \Prob(X \times Y)}$ is the semidirect product of ${\mu}$ and ${K}$ and ${K_*\mu \in \Prob(Y)}$ is the pushforward of ${\mu}$ by ${K}$.
+
+Given ${X}$, ${Y}$ Polish spaces, ${\pi: X \rightarrow Y}$ Borel measurable and ${\mu \in \Prob(X)}$, we denote ${\mu \mid \pi}$ the set of Markov kernels ${K: Y \Markov X}$ s.t. ${\pi_* \mu \ltimes K}$ is supported on the graph of ${\pi}$ and ${K_*\pi_* \mu = \mu}$. By the disintegration theorem, ${\mu \mid \pi}$ is always non-empty and any two kernels in ${\mu \mid \pi}$ coincide ${\pi_*\mu}$-almost everywhere.
 
 \section{Dominant Stochastic Markets}
 
 The way we previously laid out the dominant market formalism, the sequence of observations (represented by the sets $\{X_i\}$) was fixed. To study forecasting, we instead need to assume this sequence is sampled from some probability measure (the true environment).
 
-For each ${n \in \Nats}$, let ${Y_n}$ be a compact subset of ${\Reals^{d(n)}}$ where ${d: \Nats \rightarrow \Nats}$ is an arbitrary function. ${Y_n}$ represents the space of possible observations made before time ${n}$. Let ${\pi_n: Y_{n+1} \rightarrow Y_n}$ be continuous mappings. Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the composition $\pi_n \circ \pi_{n+1} \circ \ldots \circ \pi_{m-1}$. The typical example is ${Y_n=Y^n}$ where ${Y}$ is some fixed compact set and ${\pi_n}$ the projection mappings. Define ${X = \varprojlim Y_n}$, i.e. ${X}$ is the subspace of ${\prod_n Y_n}$ given by the equations ${\pi_n(y_{n+1})=y_n}$. ${X}$ is a compact Polish space (in the example above, ${X = Y^\omega}$). For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$.
+For each ${n \in \Nats}$, let ${Y_n}$ be a compact Polish space. ${Y_n}$ represents the space of possible observations made before time ${n}$. Let ${\pi_n: Y_{n+1} \rightarrow Y_n}$ be continuous mappings. Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the composition $\pi_n \circ \pi_{n+1} \circ \ldots \circ \pi_{m-1}$. The typical example is ${Y_n=Y^n}$ where ${Y}$ is some fixed compact Polish space (at some point below we will have to assume it is a compact subset of ${\Reals^d}$) and ${\pi_n}$ are the projection mappings. Define ${X = \varprojlim Y_n}$, i.e. ${X}$ is the subspace of ${\prod_n Y_n}$ given by the equations ${\pi_n(y_{n+1})=y_n}$. ${X}$ is a compact Polish space (in the example above, ${X = Y^\omega}$). For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$.
 
 \#Definition N1
 
@@ -165,11 +179,15 @@ In this section we describe a class of traders associated with a fixed environme
 
 \#Definition N4
 
-A *metastrategy* is a family of bounded measurable mappings ${\{\upsilon: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${c > 0}$ and ${\{K_n: Y_n \Markov X\}_{n \in \Nats}}$ s.t. ...
+A *metastrategy* is a family of bounded measurable mappings ${\{\upsilon_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${c > 0}$ and ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$ s.t. for any ${n \in \Nats}$, ${\pi_{n\omega*}\mu^*}$-almost any ${y \in Y_n}$ and any ${\mu \in \Prob(X_y)}$:
+
+$$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq c \Norm{\upsilon(y,\mu)}$$
 
 TBD
 
 \section{Profiting from Incomplete Models}
+
+From now on, we will assume that for each ${n \in \Nats}$, ${Y_n}$ is a compact subset of ${\Reals^{d(n)}}$ where ${d: \Nats \rightarrow \Nats}$ is an arbitrary function...
 
 TBD
 
