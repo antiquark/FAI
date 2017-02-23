@@ -74,6 +74,9 @@
 \newcommand{\W}{\operatorname{W}}
 \newcommand{\SW}{\operatorname{\Sigma W}}
 \newcommand{\I}{\operatorname{id}}
+\newcommand{\Lip}{\operatorname{Lip}}
+\newcommand{\NormL}[1]{\Norm{#1}_{\operatorname{Lip}}}
+\newcommand{\Dkr}{\operatorname{d}_{\text{KR}}}
 
 \begin{document}
 
@@ -93,7 +96,7 @@ Given ${X}$ a topological space:
 
 * ${\Prob(X)}$ is the space of Borel probability measures on ${X}$ equipped with the weak* topology.
 
-* ${C(X)}$ is the Banach space of continuous functions from ${X}$ to ${\Reals}$ with uniform norm.
+* ${C(X)}$ is the Banach space of continuous functions ${X \rightarrow \Reals}$ with uniform norm.
 
 * ${\mathcal{B}}(X)$ is the Borel ${\sigma}$-algebra on ${X}$.
 
@@ -207,9 +210,35 @@ $$\lim_{n \rightarrow \infty} (\E_{K_n(y_n)}[\upsilon(y_n,M_n(y_n))]-\E_{M_n(y_n
 
 \section{Profiting from Incomplete Models}
 
-From now on, we will assume that for each ${n \in \Nats}$, ${Y_n}$ is a compact subset of ${\Reals^{d(n)}}$ where ${d: \Nats \rightarrow \Nats}$ is an arbitrary function...
+Consider ${X}$ any compact Polish metric space and ${d: X \times X \rightarrow \Reals}$ its metric. We denote ${\Lip(X)}$ the Banach space of Lipschitz continuous functions ${X \rightarrow \Reals}$ with the norm
+
+$$\NormL{f}:=\max_{x} \Abs{f(x)} + \sup_{x \ne y}\frac{\Abs{f(x)-f(y)}}{d(x,y)}$$
+
+${\Prob(X)}$ (as before, with the weak topology) can be regarded as a compact subset of ${\Lip(X)'}$ (with the strong topology), yielding a metrization of ${\Prob(X)}$ which we will call the Kantorovich-Rubinstein metric ${\Dkr}$:
+
+$$\Dkr(\mu,\nu):=\sup_{\NormL{f} \leq 1} \Abs{\E_\mu[f] - \E_\nu[f]}$$
+
+In fact, the above differs from the standard definition of the Kantorovich-Rubinstein metric (a.k.a. 1st Wasserstein metric, a.k.a. earth's mover metric), but this abuse of terminology is mild since the two are strongly equivalent.
+
+Now consider ${\Phi \subseteq \Prob(X)}$ non-empty and convex. We will describe a class of trading strategies that are designed to exploit any ${\mu \in \Phi}$.
+
+\#Definition N6
+
+${\tau: \Prob(X) \rightarrow \Lip(X)}$ continuous is said to be *profitable for ${\Phi}$* when for all ${\mu \in \Prob(X)}$, ${\nu \in \Phi}$ we have
+
+$$\E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \Dkr(\mu,\Phi)$$
+
+\#Lemma N4
+
+There exists ${\tau}$ profitable for ${\Phi}$.
+
+***
+
+...From now on, we will assume that for each ${n \in \Nats}$, ${Y_n}$ is a compact subset of ${\Reals^{d(n)}}$ where ${d: \Nats \rightarrow \Nats}$ is an arbitrary function...
 
 TBD
+
+%Open problems...
 
 %##Appendix
 \section{Appendix}
