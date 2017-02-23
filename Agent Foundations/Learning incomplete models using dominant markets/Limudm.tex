@@ -129,7 +129,7 @@ A *trader* is a sequence of mappings ${\{T_n: Y_n \times \Prob(X)^n \rightarrow 
 
 ***
 
-Given a trader ${T}$ and a market ${M}$, we define the measurable mappings ${\{T^M_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$ and ${\{\bar{T}^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ as follows:
+Given a trader ${T}$ and a market ${M}$, we define the mappings ${\{T^M_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$ (measurable w.r.t. ${\UM(Y_n)}$ and ${\B(\T(X))}$) and ${\{\bar{T}^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ (measurable w.r.t. ${\UM(Y_n)}$ and ${\B(C(X))}$) as follows:
 
 $$T^M_n(y):= T_n(y, M_0(\pi_{0n}(y)),M_1(\pi_{1n}(y)) \ldots M_{n-1}(\pi_{n-1,n}(y)))$$
 
@@ -175,15 +175,35 @@ Theorem N2 is proved exactly as [before](https://agentfoundations.org/item?id=12
 
 \section{Profitable Metastrategies}
 
-In this section we describe a class of traders associated with a fixed environment ${\mu^* \in \Prob(X)}$ s.t. if a market dominates a trader from this class, a certain function of the pricing converges to 0 with ${\mu^*}$-probability 1. In the next section we will apply this result to a trader associated with an incomplete models ${\Phi \subseteq \Prob(X)}$ by observing that the trader is in the class for any ${\mu^* \in \Phi}$.
+We now describe a class of traders associated with a fixed environment ${\mu^* \in \Prob(X)}$ s.t. if a market dominates a trader from this class, a certain function of the pricing converges to 0 with ${\mu^*}$-probability 1. Afterwards, we will apply this result to a trader associated with an incomplete models ${\Phi \subseteq \Prob(X)}$ by observing that the trader is in the class for any ${\mu^* \in \Phi}$.
 
 \#Definition N4
 
-A *metastrategy* is a family of bounded measurable mappings ${\{\upsilon_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${c > 0}$ and ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$ s.t. for any ${n \in \Nats}$, ${\pi_{n\omega*}\mu^*}$-almost any ${y \in Y_n}$ and any ${\mu \in \Prob(X_y)}$:
+A *trading metastrategy* is a family of bounded measurable mappings ${\{\upsilon_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${c > 0}$ and ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$ s.t. for any ${n \in \Nats}$, ${\pi_{n\omega*}\mu^*}$-almost any ${y \in Y_n}$ and any ${\mu \in \Prob(X_y)}$:
 
 $$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq c \Norm{\upsilon(y,\mu)}$$
 
-TBD
+***
+
+Even if a metastrategy is profitable, it doesn't mean that a smart trader should use this metastrategy all the time: in order to avoid running out of budget, a trader shouldn't place too many bets simultaneously. The following construction defines a trader that employs a metastrategy only when all previous bets are closed to being resolved.
+
+\#Definition N5
+
+Fix a metastrategy ${\upsilon}$. We define the trader ${T_\upsilon}$ and the measurable mappings ${\{U_{\upsilon  n}: Y_n \times P(X)^n \rightarrow C(X)\}_{n \in \Nats}}$ recursively as follows:
+ 
+ $$U_0 := 0$$
+
+$$T_{\upsilon0} := \upsilon$$
+
+$$U_{\upsilon,n+1}(y, \{\mu_m\}_{m \leq n}) := U_{\upsilon n}(\pi_n(y), \{\mu_m\}_{m < n}) + T_{\upsilon n}(y, \{\mu_m\}_{m \leq n})$$
+
+$$T_{\upsilon,n+1}(y, \{\mu_m\}_{m \leq n}) := \begin{cases}\upsilon(y) \text{ if } \max_{X_y} U_{\upsilon,n+1}(y,\{\mu_m\}_{m \leq n}) - \min_{X_y} U_{\upsilon,n+1}(y,\{\mu_m\}_{m \leq n})\leq 1\\0 \text{ otherwise}\end{cases}$$
+
+\#Lemma N3
+
+Consider ${\mu^* \in P(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Assume ${M}$ dominates ${T_\upsilon}$. Then, for ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
+
+$$\lim_{n \rightarrow \infty} (\E_{K_n(y_n)}[\upsilon(y_n,M_n(y_n))]-\E_{M_n(y_n)}[\upsilon(y_n,M_n(y_n))])= 0$$
 
 \section{Profiting from Incomplete Models}
 
