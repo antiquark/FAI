@@ -77,18 +77,21 @@
 \newcommand{\Lip}{\operatorname{Lip}}
 \newcommand{\NormL}[1]{\Norm{#1}_{\operatorname{Lip}}}
 \newcommand{\Dkr}{\operatorname{d}_{\text{KR}}}
+\newcommand{\Ball}{\operatorname{B}}
 
 \begin{document}
 
 *This post is formal treatment of the idea outlined [here](https://agentfoundations.org/item?id=1197).*
 
-Given a countable set of [incomplete models], we define a forecasting function that converges in the Kantorovich-Rubinstein metric with probability 1 to every one of the models which is satisfied by the true environment. This is analogous to Blackwell-Dubins [merging of opinions](https://projecteuclid.org/euclid.aoms/1177704456), for complete models, except that Kantorovich-Rubinstein convergence is weaker than convergence in total variation. The forecasting function is a [dominant market](https://agentfoundations.org/item?id=1214) for a suitably constructed set of traders. We prove this result in a fairly general setting (for every finite time $t \in \Nats$, the observation space is an arbitrary compact subset of $\Reals^{d(t)}$).%, but only assuming projective determinacy. In simpler situations (e.g. when observations are strings over a finite alphabet), ZFC is sufficient.
+Given a countable set of [incomplete models], we define a forecasting function that converges in the Kantorovich-Rubinstein metric with probability 1 to every one of the models which is satisfied by the true environment. This is analogous to Blackwell-Dubins [merging of opinions](https://projecteuclid.org/euclid.aoms/1177704456), for complete models, except that Kantorovich-Rubinstein convergence is weaker than convergence in total variation. The forecasting function is a [dominant market](https://agentfoundations.org/item?id=1214) for a suitably constructed set of traders. We prove this result in a fairly general setting (for every finite time $t \in \Nats$, the observation space is an arbitrary compact subset of $\Reals^{D(t)}$).%, but only assuming projective determinacy. In simpler situations (e.g. when observations are strings over a finite alphabet), ZFC is sufficient.
 
 The proofs are in the Appendix.
 
 ***
 
 \section{Notation}
+
+Given ${X}$ a metric space and ${x \in X}$, ${\Ball_r(x):=\{y \in X \mid d(x,y) <\ r\}}$.
 
 Given ${X}$ a topological space:
 
@@ -230,11 +233,53 @@ $$\E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \Dkr(\mu,\Phi)$$
 
 \#Lemma N4
 
-Consider ${Y}$ another compact Polish space and ${\Phi \subseteq Y \times \Prob(X)}$ closed s.t. for any ${y \in Y}$, ${\Phi_y := \{\nu \in \Prob(X): (y,\nu) \in \Phi\}}$ is convex. Then, there exists ${\upsilon: Y \rightarrow \T(X)}$ measurable w.r.t. ${\UM(Y)}$ and ${\B(\T(X))}$ s.t. for all ${y \in Y}$, ${\Norm{\upsilon(y)} \leq 2}$ and ${\upsilon(y)}$ is profitable for ${\Phi_y}$ (instead of 2, the norm can be bounded by ${1+\epsilon}$ for any ${\epsilon > 0}$, but for our purposes any uniform bound is sufficient).
+Consider ${Y}$ another compact Polish space and ${\Phi \subseteq Y \times \Prob(X)}$ closed. For any ${y \in Y}$, define ${\Phi_y \subseteq \Prob(X)}$ by
+
+$${\Phi_y := \{\mu \in \Prob(X) \mid (y,\mu) \in \Phi\}}$$ 
+
+Assume that for any ${y \in Y}$, ${\Phi_y}$ is convex. Then, there exists ${\upsilon: Y \rightarrow \T(X)}$ measurable w.r.t. ${\UM(Y)}$ and ${\B(\T(X))}$ s.t. for all ${y \in Y}$, ${\Norm{\upsilon(y)} \leq 2}$ and ${\upsilon(y)}$ is profitable for ${\Phi_y}$ (instead of 2, the norm can be bounded by ${1+\epsilon}$ for any ${\epsilon > 0}$, but for our purposes any uniform bound is sufficient).
 
 ***
 
-Now consider ${\{Y_n\}_{n \in \Nats}}$ and ${X = \varprojlim Y_n}$ as before, but assume that for each ${n \in \Nats}$, ${Y_n}$ is a compact subset of ${\Reals^{d(n)}}$ where ${d: \Nats \rightarrow \Nats}$ is an arbitrary function...
+Now consider ${\{Y_n\}_{n \in \Nats}}$ and ${X = \varprojlim Y_n}$ as before, but assume that for each ${n \in \Nats}$, ${Y_n}$ is a compact subset of ${\Reals^{D(n)}}$ where ${D: \Nats \rightarrow \Nats}$ is an arbitrary function. The following definition provides a notion of updating an incomplete model by observations:
+
+\#Definition N7
+
+Consider ${\Phi \subseteq \Prob(X)}$. For any ${n \in \Nats}$ and ${y \in Y_n}$, we define ${\Phi_y'' \subseteq \Prob(X)}$ by
+
+$$\Phi_y'':=\{\lim_{r \rightarrow 0} (\mu \mid \pi_{n\omega}^{-1}(\Ball_r(y))) \mid \mu \in \Phi\}$$
+
+Note that the limit in the definition above need not exist for every ${\mu \in \Phi}$.
+
+Denote ${\Phi_y'}$ the convex hull of ${\Phi_y''}$ and define ${\Phi_n' \subseteq Y_n \times \Prob(X)}$ by
+
+$$\Phi_n':=\{(y,\mu) \in Y_n \times \Prob(X) \mid \mu \in \Phi_y'\}$$
+
+Finally, we define ${\Phi_n \subseteq Y_n \times \Prob(X)}$ to be the closure of ${\Phi_n'}$. Given ${y \in Y_n}$, we define ${\Phi_y \subseteq \Prob(X)}$ by
+
+$$\Phi_y:=\{\mu \in \Prob(X) \mid (y,\mu) \in \Phi_n\}$$
+
+***
+
+Note that the above definition uses the Euclidean metric on ${Y_n}$. This is the only place through which the assumption that ${Y_n}$ is a compact subset of ${R^{D(n)}}$ enters. This is used the in the proof of Lemma N5 below, via the Lebesgue differentiation theorem.
+
+Fix a family of metrizations of ${X}$: ${\{d_n: X \times X \rightarrow \Reals\}_{n \in \Nats}}$. The reason we need a family rather than a single metric is that convergence in ${\Dkr}$ is trivial unless we renormalize the metric for each ${n}$. On the other hand, completely arbitrary renormalization is allowed. For example, if ${X=Y^\omega}$ and ${d}$ is a metrization of ${Y}$ (e.g. the Euclidean metric) we can take 
+
+$$d_n(x^1,x^2)= \max_{m \in \Nats} c_{nm} d(x^1_m,x^2_m)$$
+
+Here, ${\{c_{nm} > 0\}_{n,m \in \Nats}}$ are required to satisfy ${\lim_{m \rightarrow \infty} c_{nm} = 0}$. To get a non-trivial result, we need the ${c_{nm}}$ to fall slower with ${m}$ as ${n}$ increases. The stronger we make this trend, the stronger conclusion we get (although it always remains weaker than convergence in total variation).
+
+\#Lemma N5
+
+Consider ${\Phi \subseteq \Prob(X)}$ and ${\epsilon > 0}$. For every ${n \in \Nats}$, denote ${\Dkr^n}$ the Kantorovich-Rubinstein metric associated with ${d_n}$. Define ${\Phi_n^\epsilon \subseteq Y_n \times \Prob(X)}$ by 
+
+$$\Phi_n^\epsilon:=\{(y,\mu) \in Y_n \times \Prob(X) \mid \Dkr^n(\mu,\Phi_y) \leq \epsilon\}$$
+
+For every ${y \in Y_n}$, we define ${\Phi^\epsilon_y \subseteq \Prob(X)}$ by
+
+$$\Phi^\epsilon_y:=\{\mu \in \Prob(X) \mid (y,\mu) \in \Phi^\epsilon_n\}$$
+
+Let ${\upsilon}$ be a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon(y)}$ is profitable for ${\Phi^\epsilon_y}$. Then, ${\upsilon}$ is profitable for any ${\mu^* \in \Phi}$.
 
 TBD
 
