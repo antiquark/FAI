@@ -308,7 +308,35 @@ This leaves an interesting open question, namely whether the counterpart of Theo
 %##Appendix
 \section{Appendix}
 
-Haha!
+\#Proposition N8
+
+Fix ${X}$ a compact Polish space. Define ${e: \T(X) \times \Prob(X) \rightarrow C(X)}$ by ${e(\tau, \mu) = \tau(\mu)}$. Then, ${e}$ is continuous.
+
+\#Proof of Proposition N8
+
+Consider ${\tau_k \rightarrow \tau}$ and ${\mu_k \rightarrow \mu}$. We have
+
+$$\Norm{\tau_k(\mu_k)-\tau(\mu_k)} \leq \Norm{\tau_k - \tau} \rightarrow 0$$
+
+Also
+
+$$\Norm{\tau(\mu_k)-\tau(\mu)} \rightarrow 0$$
+
+(see what we previously called [Proposition A.2](https://agentfoundations.org/item?id=1214)) Combining, we get
+
+$$\Norm{\tau_k(\mu_k)-\tau(\mu)} \rightarrow 0$$
+
+\#Proposition N9
+
+Fix ${X}$ a compact Polish space. Define ${C \subseteq \T(X) \times \Prob(X)}$ by
+
+$$C:=\{(\tau,\mu) \in \T(X) \times \Prob(X) \mid \Supp \mu \subseteq \Argmax{x \in X} \tau(\mu,x)\}$$
+
+Then, ${C}$ is closed.
+
+\#Proof of Proposition N9
+
+TBD...
 
 \end{document}
 
