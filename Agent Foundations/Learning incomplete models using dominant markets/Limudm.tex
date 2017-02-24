@@ -304,27 +304,35 @@ $$\lim_{n \rightarrow \infty} \Dkr^n(M^H_n(y_n),\Phi_{y_n}) = 0$$
 ***
 
 This leaves an interesting open question, namely whether the counterpart of Theorem N7 with ${\Dkr}$ replaced by total variation distance is true.
-
+o
 %##Appendix
 \section{Appendix}
 
+\#Proposition N11
+
+If ${X,Y}$ are compact Polish spaces and ${f: X \times Y \rightarrow \Reals}$ is continuous, then ${F: X \rightarrow C(Y)}$ defined by ${F(x)(y):=f(x,y)}$ is continuous.
+
+***
+
+We omit the proof of Proposition N11, since it appeared as "Proposition A.2" [before](https://agentfoundations.org/item?id=1214).
+
 \#Proposition N8
 
-Fix ${X}$ a compact Polish space. Define ${e: \T(X) \times \Prob(X) \rightarrow C(X)}$ by ${e(\tau, \mu) = \tau(\mu)}$. Then, ${e}$ is continuous.
+Fix ${X,Y}$ compact Polish spaces. Define ${e: C(Y \times X) \times Y \rightarrow C(X)}$ by ${e(f,y)(x):=f(y,x)}$. Then, ${e}$ is continuous. In particular, we can apply this to ${Y = \Prob(X)}$ in which case ${e: \T(X) \times \Prob(X) \rightarrow C(X)}$.
 
 \#Proof of Proposition N8
 
-Consider ${\tau_k \rightarrow \tau}$ and ${\mu_k \rightarrow \mu}$. We have
+Consider ${f_k \rightarrow f}$ and ${y_k \rightarrow y}$. We have
 
-$$\Norm{\tau_k(\mu_k)-\tau(\mu_k)} \leq \Norm{\tau_k - \tau} \rightarrow 0$$
+$$\max_{x \in X} \Abs{f_k(y_k,x)-f(y_k,x)} \leq \Norm{f_k - f} \rightarrow 0$$
 
-Also
+By Proposition N11
 
-$$\Norm{\tau(\mu_k)-\tau(\mu)} \rightarrow 0$$
+$$\max_{x \in X} \Abs{f(y_k,x)-f(y,x)} \rightarrow 0$$
 
-(see what we previously called [Proposition A.2](https://agentfoundations.org/item?id=1214)) Combining, we get
+Combining, we get
 
-$$\Norm{\tau_k(\mu_k)-\tau(\mu)} \rightarrow 0$$
+$$\max_{x \in X} \Abs{f_k(y_k,x)-f(y,x)} \rightarrow 0$$
 
 \#Proposition N9
 
@@ -336,7 +344,39 @@ Then, ${C}$ is closed.
 
 \#Proof of Proposition N9
 
-TBD...
+Note that $\Supp \mu \subseteq \Argmax{} \tau(\mu)$ iff ${\E_\mu[\tau(\mu)]=\max \tau(\mu)}$. Consider ${\tau_k \rightarrow \tau}$, ${\mu_k \rightarrow \mu}$, ${(\tau_k,\mu_k) \in C}$. By Proposition N8, ${\tau_k(\mu_k) \rightarrow \tau(\mu)}$ and hence 
+
+$${\max \tau_k(\mu_k) \rightarrow \max \tau(\mu)}$$
+
+and 
+
+$$\Abs{\E_{\mu_k}[\tau_k(\mu_k)] - \E_{\mu_k}[\tau(\mu)]} \leq \Norm{\tau_k(\mu_k) - \tau(\mu)}  \rightarrow 0$$
+
+Also, ${\mu_k \rightarrow \mu}$ implies that
+
+$$\E_{\mu_k}[\tau(\mu)] \rightarrow \E_{\mu}[\tau(\mu)]$$
+
+Combining, we conclude that $\E_{\mu_k}[\tau_k(\mu_k)] \rightarrow \E_{\mu}[\tau(\mu)]$ and ${(\tau,\mu) \in C}$.
+
+\#Proposition N10
+
+Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$. Define ${d_Z: X \rightarrow \Reals}$ by 
+
+$${d_Z(x):=d(x,Z):=\inf_{z \in Z} d(x,z)}$$
+
+Then, ${d_Z}$ is continuous.
+
+\#Proof of Proposition N10
+
+Define ${d': X \rightarrow C(X)}$ by ${d'(x)(y)=d(x,y)}$. ${d'}$ is continuous by Proposition N11, hence ${d_Z}$ is continuous as well.
+
+\#Proposition N12
+
+Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$ closed. Then, for any ${x \in X \setminus Z}$, ${d(x,Z) > 0}$.
+
+\#Proof of Proposition N12
+
+TBD
 
 \end{document}
 
