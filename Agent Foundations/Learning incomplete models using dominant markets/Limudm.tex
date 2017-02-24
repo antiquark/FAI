@@ -82,7 +82,7 @@
 
 *This post is formal treatment of the idea outlined [here](https://agentfoundations.org/item?id=1197).*
 
-Given a countable set of [incomplete models], we define a forecasting function that converges in the Kantorovich-Rubinstein metric with probability 1 to every one of the models which is satisfied by the true environment. This is analogous to Blackwell-Dubins [merging of opinions](https://projecteuclid.org/euclid.aoms/1177704456), for complete models, except that Kantorovich-Rubinstein convergence is weaker than convergence in total variation. The forecasting function is a [dominant market](https://agentfoundations.org/item?id=1214) for a suitably constructed set of traders. We prove this result in a fairly general setting (for every finite time $t \in \Nats$, the observation space is an arbitrary compact subset of $\Reals^{d(t)}$), but only assuming projective determinacy. In simpler situations (e.g. when observations are strings over a finite alphabet), ZFC is sufficient.
+Given a countable set of [incomplete models], we define a forecasting function that converges in the Kantorovich-Rubinstein metric with probability 1 to every one of the models which is satisfied by the true environment. This is analogous to Blackwell-Dubins [merging of opinions](https://projecteuclid.org/euclid.aoms/1177704456), for complete models, except that Kantorovich-Rubinstein convergence is weaker than convergence in total variation. The forecasting function is a [dominant market](https://agentfoundations.org/item?id=1214) for a suitably constructed set of traders. We prove this result in a fairly general setting (for every finite time $t \in \Nats$, the observation space is an arbitrary compact subset of $\Reals^{d(t)}$).%, but only assuming projective determinacy. In simpler situations (e.g. when observations are strings over a finite alphabet), ZFC is sufficient.
 
 The proofs are in the Appendix.
 
@@ -182,7 +182,7 @@ We now describe a class of traders associated with a fixed environment ${\mu^* \
 
 \#Definition N4
 
-A *trading metastrategy* is a family of bounded measurable mappings ${\{\upsilon_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${c > 0}$ and ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$ s.t. for any ${n \in \Nats}$, ${\pi_{n\omega*}\mu^*}$-almost any ${y \in Y_n}$ and any ${\mu \in \Prob(X_y)}$:
+A *trading metastrategy* is a uniformly bounded family of measurable mappings ${\{\upsilon_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${c > 0}$ and ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$ s.t. for any ${n \in \Nats}$, ${\pi_{n\omega*}\mu^*}$-almost any ${y \in Y_n}$ and any ${\mu \in \Prob(X_y)}$:
 
 $$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq c \Norm{\upsilon(y,\mu)}$$
 
@@ -220,21 +220,21 @@ $$\Dkr(\mu,\nu):=\sup_{\NormL{f} \leq 1} \Abs{\E_\mu[f] - \E_\nu[f]}$$
 
 In fact, the above differs from the standard definition of the Kantorovich-Rubinstein metric (a.k.a. 1st Wasserstein metric, a.k.a. earth's mover metric), but this abuse of terminology is mild since the two are strongly equivalent.
 
-Now consider ${\Phi \subseteq \Prob(X)}$ non-empty and convex. We will describe a class of trading strategies that are designed to exploit any ${\mu \in \Phi}$.
+Now consider ${\Phi \subseteq \Prob(X)}$ convex. We will describe a class of trading strategies that are designed to exploit any ${\mu \in \Phi}$.
 
 \#Definition N6
 
-${\tau: \Prob(X) \rightarrow \Lip(X)}$ continuous is said to be *profitable for ${\Phi}$* when for all ${\mu \in \Prob(X)}$, ${\nu \in \Phi}$ we have
+${\tau \in \T(X)}$ is said to be *profitable for ${\Phi}$* when for all ${\mu \in \Prob(X)}$, ${\nu \in \Phi}$ we have
 
 $$\E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \Dkr(\mu,\Phi)$$
 
 \#Lemma N4
 
-There exists ${\tau}$ profitable for ${\Phi}$.
+Consider ${Y}$ another compact Polish space and ${\Phi \subseteq Y \times \Prob(X)}$ closed s.t. for any ${y \in Y}$, ${\Phi_y := \{\nu \in \Prob(X): (y,\nu) \in \Phi\}}$ is convex. Then, there exists ${\upsilon: Y \rightarrow \T(X)}$ measurable w.r.t. ${\UM(Y)}$ and ${\B(\T(X))}$ s.t. for all ${y \in Y}$, ${\Norm{\upsilon(y)} \leq 2}$ and ${\upsilon(y)}$ is profitable for ${\Phi_y}$ (instead of 2, the norm can be bounded by ${1+\epsilon}$ for any ${\epsilon > 0}$, but for our purposes any uniform bound is sufficient).
 
 ***
 
-...From now on, we will assume that for each ${n \in \Nats}$, ${Y_n}$ is a compact subset of ${\Reals^{d(n)}}$ where ${d: \Nats \rightarrow \Nats}$ is an arbitrary function...
+Now consider ${\{Y_n\}_{n \in \Nats}}$ and ${X = \varprojlim Y_n}$ as before, but assume that for each ${n \in \Nats}$, ${Y_n}$ is a compact subset of ${\Reals^{d(n)}}$ where ${d: \Nats \rightarrow \Nats}$ is an arbitrary function...
 
 TBD
 
