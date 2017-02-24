@@ -115,7 +115,7 @@ Given ${X}$, ${Y}$ Polish spaces, ${\pi: X \rightarrow Y}$ Borel measurable and 
 
 The way we previously laid out the dominant market formalism, the sequence of observations (represented by the sets $\{X_i\}$) was fixed. To study forecasting, we instead need to assume this sequence is sampled from some probability measure (the true environment).
 
-For each ${n \in \Nats}$, let ${Y_n}$ be a compact Polish space. ${Y_n}$ represents the space of possible observations made before time ${n}$. Let ${\pi_n: Y_{n+1} \rightarrow Y_n}$ be continuous mappings. Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the composition $\pi_n \circ \pi_{n+1} \circ \ldots \circ \pi_{m-1}$. The typical example is ${Y_n=Y^n}$ where ${Y}$ is some fixed compact Polish space (at some point below we will have to assume it is a compact subset of ${\Reals^d}$) and ${\pi_n}$ are the projection mappings. Define ${X = \varprojlim Y_n}$, i.e. ${X}$ is the subspace of ${\prod_n Y_n}$ given by the equations ${\pi_n(y_{n+1})=y_n}$. ${X}$ is a compact Polish space (in the example above, ${X = Y^\omega}$). For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$.
+For each ${n \in \Nats}$, let ${Y_n}$ be a compact Polish space. ${Y_n}$ represents the space of possible observations made before time ${n}$. Let ${\pi_n: Y_{n+1} \rightarrow Y_n}$ be continuous mappings. Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the composition $\pi_n \circ \pi_{n+1} \circ \ldots \circ \pi_{m-1}$. The typical example is ${Y_n=Y^n}$ where ${Y}$ is some fixed compact Polish space (at some point below we will have to assume it is a compact subset of ${\Reals^D}$) and ${\pi_n}$ are the projection mappings. Define ${X = \varprojlim Y_n}$, i.e. ${X}$ is the subspace of ${\prod_n Y_n}$ given by the equations ${\pi_n(y_{n+1})=y_n}$. ${X}$ is a compact Polish space (in the example above, ${X = Y^\omega}$). For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$.
 
 \#Definition N1
 
@@ -279,11 +279,31 @@ For every ${y \in Y_n}$, we define ${\Phi^\epsilon_y \subseteq \Prob(X)}$ by
 
 $$\Phi^\epsilon_y:=\{\mu \in \Prob(X) \mid (y,\mu) \in \Phi^\epsilon_n\}$$
 
-Let ${\upsilon}$ be a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon(y)}$ is profitable for ${\Phi^\epsilon_y}$. Then, ${\upsilon}$ is profitable for any ${\mu^* \in \Phi}$.
+Let ${\upsilon}$ be a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is profitable for ${\Phi^\epsilon_y}$. Then, ${\upsilon}$ is profitable for any ${\mu^* \in \Phi}$.
 
-TBD
+***
 
-%Open problems...
+Combining Lemma N3 and Lemma N5, it is easy to get the following:
+
+\#Corollary N6
+
+Consider ${\Phi \subseteq \Prob(X)}$, ${\epsilon > 0}$ and ${\upsilon}$ a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is profitable for ${\Phi^\epsilon_y}$. Let ${M}$ be a market which dominates ${T_\upsilon}$. Then, for any ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
+
+$$\limsup_{n \rightarrow \infty} \Dkr^n(M_n(y_n),\Phi_{y_n}) \leq \epsilon$$
+
+***
+
+Thus, if we construct a set of traders ${T_{\upsilon_k}}$ as in Corollary N6 where ${\upsilon_k}$ corresponds to ${\epsilon=\frac{1}{k}}$, then a market dominating all of these traders would have to converge to ${\Phi_{y_n}}$ with ${\mu^*}$-probability 1. Putting this together with Lemma N4 (so that ${\upsilon_k}$ as above actually exists) and Theorem N2 we finally get
+
+\#Theorem N7
+
+Consider a ${H}$ countable set of subsets of ${\Prob(X)}$. Then, there exists a market ${M^H}$ s.t. for any ${\Phi \in H}$, ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
+
+$$\lim_{n \rightarrow \infty} \Dkr^n(M^H_n(y_n),\Phi_{y_n}) = 0$$
+
+***
+
+This leaves an interesting open question, namely whether the counterpart of Theorem N7 with ${\Dkr}$ replaced by total variation distance is true.
 
 %##Appendix
 \section{Appendix}
