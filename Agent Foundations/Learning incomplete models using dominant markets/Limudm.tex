@@ -334,6 +334,20 @@ Combining, we get
 
 $$\max_{x \in X} \Abs{f_k(y_k,x)-f(y,x)} \rightarrow 0$$
 
+\#Proposition N14
+
+Fix ${X}$ a compact Polish space. Consider ${f \in C(X)}$ and ${\mu \in \Prob(X)}$ and denote ${M := \max f}$. Then, ${\Supp \mu \subseteq f^{-1}(M)}$ iff ${\E_\mu[f] = M}$.
+
+\#Proof of Proposition N14
+
+If ${\Supp \mu \subseteq f^{-1}(M)}$ then $\Prb_{x\sim \mu}[f(x) \ne M] = 0$ and therefore ${\E_\mu[f] = M}$.
+
+Now, assume ${\E_\mu[f] = M}$. For any ${k \in \Nats}$, Markov's inequality yields 
+
+$$\Prb_{x\sim \mu}[M - f(x) \geq \frac{1}{k}] \leq k\E_{x \sim \mu}[M - f(x)] = 0$$
+
+Taking $k \rightarrow \infty$, we get ${\Prb_{x\sim \mu}[M > f(x)] = 0}$ and hence ${\Supp \mu \subseteq f^{-1}(M)}$.
+
 \#Proposition N9
 
 Fix ${X}$ a compact Polish space. Define ${C \subseteq \T(X) \times \Prob(X)}$ by
@@ -344,7 +358,7 @@ Then, ${C}$ is closed.
 
 \#Proof of Proposition N9
 
-Note that $\Supp \mu \subseteq \Argmax{} \tau(\mu)$ iff ${\E_\mu[\tau(\mu)]=\max \tau(\mu)}$. Consider ${\tau_k \rightarrow \tau}$, ${\mu_k \rightarrow \mu}$, ${(\tau_k,\mu_k) \in C}$. By Proposition N8, ${\tau_k(\mu_k) \rightarrow \tau(\mu)}$ and hence 
+By Proposition N14, $\Supp \mu \subseteq \Argmax{} \tau(\mu)$ iff ${\E_\mu[\tau(\mu)]=\max \tau(\mu)}$. Consider ${\tau_k \rightarrow \tau}$, ${\mu_k \rightarrow \mu}$, ${(\tau_k,\mu_k) \in C}$. By Proposition N8, ${\tau_k(\mu_k) \rightarrow \tau(\mu)}$ and hence 
 
 $${\max \tau_k(\mu_k) \rightarrow \max \tau(\mu)}$$
 
@@ -375,6 +389,30 @@ Define ${d': X \rightarrow C(X)}$ by ${d'(x)(y)=d(x,y)}$. ${d'}$ is continuous b
 Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$ closed. Then, for any ${x \in X \setminus Z}$, ${d(x,Z) > 0}$.
 
 \#Proof of Proposition N12
+
+Consider ${x \in X}$ s.t. ${d(x,Z)=0}$. Then, fore any ${k \in \Nats}$ there is ${z_k \in Z}$ s.t. ${d(x,z_k) < \frac{1}{k}}$. Obviously, ${z_k \rightarrow x}$. Since ${Z}$ it closed, it follows that ${x \in Z}$.
+
+\#Proposition N13
+
+Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$ closed. Consider any ${\mu \in \Prob(X)}$. Then, ${\mu \in \Prob(Z)}$ (equivalently ${\Supp \mu \subseteq Z}$) iff ${\E_\mu[d_Z] = 0}$.
+
+\#Proof of Proposition N13
+
+Follows directly from Proposition N12 and Proposition N14.
+
+\#Proposition N15
+
+Fix ${X,Y}$ compact Polish metric spaces and ${\pi: X \rightarrow Y}$ continuous. Consider ${\{y_k \in Y\}_{k \in \Nats}}$, ${y_k \rightarrow y}$. Then
+
+$$\lim_{k \rightarrow \infty} \max_{x \in \pi^{-1}(y_k)} d(x,\pi^{-1}(y)) = 0$$
+
+\#Proof of Proposition N15
+
+Choose ${\{x_k \in \Argmax{x \in \pi^{-1}(y_k)} d(x,\pi^{-1}(y_k))\}_{k \in \Nats}}$. Without loss of generality, assume ${x_k \rightarrow x_\omega}$ (otherwise take a subsequence). It follows that ${\pi(x_\omega)=\lim_{k \rightarrow \infty}\pi(x_k) = \lim_{k \rightarrow \infty} y_k = y}$. By Proposition N10, we get
+
+$$\lim_{k \rightarrow \infty} \max_{x \in \pi^{-1}(y_k)} d(x,\pi^{-1}(y)) = \lim_{k \rightarrow \infty} d(x_k,\pi^{-1}(y))=d(x_\omega,\pi^{-1}(y))=0$$
+
+\#Proof of Lemma N1
 
 TBD
 
