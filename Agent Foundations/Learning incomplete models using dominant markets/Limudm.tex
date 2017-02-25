@@ -85,7 +85,7 @@
 
 Given a countable set of [incomplete models], we define a forecasting function that converges in the Kantorovich-Rubinstein metric with probability 1 to every one of the models which is satisfied by the true environment. This is analogous to Blackwell-Dubins [merging of opinions](https://projecteuclid.org/euclid.aoms/1177704456), for complete models, except that Kantorovich-Rubinstein convergence is weaker than convergence in total variation. The forecasting function is a [dominant market](https://agentfoundations.org/item?id=1214) for a suitably constructed set of traders. We prove this result in a fairly general setting (for every finite time $t \in \Nats$, the observation space is an arbitrary compact subset of $\Reals^{D(t)}$).%, but only assuming projective determinacy. In simpler situations (e.g. when observations are strings over a finite alphabet), ZFC is sufficient.
 
-The proofs are in the Appendix.
+Appendix A contains the proofs of key lemmas and theorems. Appendix B contains the proofs of technical propositions used in Appendix A, which are mostly straightforward.
 
 ***
 
@@ -123,7 +123,7 @@ A *market* is a sequence of mappings ${\{M_n: Y_n \rightarrow \Prob(X)\}}_{n \in
 
 * Each ${M_n}$ is measurable w.r.t. ${\UM(Y_n)}$ and ${\B(\Prob(X))}$.
 
-* For any ${y \in Y_n}$, ${M_n(y) \in \Prob(X_y)}$. Here, we slightly abuse notation by regarding ${\Prob(X_y)}$ as a subspace of ${\Prob(X)}$.
+* For any ${y \in Y_n}$, ${\Supp M_n(y) \subseteq X_y}$.
 
 ***
 
@@ -304,9 +304,16 @@ $$\lim_{n \rightarrow \infty} \Dkr^n(M^H_n(y_n),\Phi_{y_n}) = 0$$
 ***
 
 This leaves an interesting open question, namely whether the counterpart of Theorem N7 with ${\Dkr}$ replaced by total variation distance is true.
-o
-%##Appendix
-\section{Appendix}
+
+\section{Appendix A}
+
+\#Proof of Lemma N1
+
+We construct ${M_n}$ recursively in ${n}$. Define...
+
+TBD
+
+\section{Appendix B}
 
 \#Proposition N11
 
@@ -350,15 +357,15 @@ Taking $k \rightarrow \infty$, we get ${\Prb_{x\sim \mu}[M > f(x)] = 0}$ and hen
 
 \#Proposition N9
 
-Fix ${X}$ a compact Polish space. Define ${C \subseteq \T(X) \times \Prob(X)}$ by
+Fix ${X}$ a compact Polish space. Define ${Z \subseteq \T(X) \times \Prob(X)}$ by
 
-$$C:=\{(\tau,\mu) \in \T(X) \times \Prob(X) \mid \Supp \mu \subseteq \Argmax{x \in X} \tau(\mu,x)\}$$
+$$Z:=\{(\tau,\mu) \in \T(X) \times \Prob(X) \mid \Supp \mu \subseteq \Argmax{x \in X} \tau(\mu,x)\}$$
 
-Then, ${C}$ is closed.
+Then, ${Z}$ is closed.
 
 \#Proof of Proposition N9
 
-By Proposition N14, $\Supp \mu \subseteq \Argmax{} \tau(\mu)$ iff ${\E_\mu[\tau(\mu)]=\max \tau(\mu)}$. Consider ${\tau_k \rightarrow \tau}$, ${\mu_k \rightarrow \mu}$, ${(\tau_k,\mu_k) \in C}$. By Proposition N8, ${\tau_k(\mu_k) \rightarrow \tau(\mu)}$ and hence 
+By Proposition N14, $\Supp \mu \subseteq \Argmax{} \tau(\mu)$ iff ${\E_\mu[\tau(\mu)]=\max \tau(\mu)}$. Consider ${\tau_k \rightarrow \tau}$, ${\mu_k \rightarrow \mu}$, ${(\tau_k,\mu_k) \in Z}$. By Proposition N8, ${\tau_k(\mu_k) \rightarrow \tau(\mu)}$ and hence 
 
 $${\max \tau_k(\mu_k) \rightarrow \max \tau(\mu)}$$
 
@@ -370,7 +377,7 @@ Also, ${\mu_k \rightarrow \mu}$ implies that
 
 $$\E_{\mu_k}[\tau(\mu)] \rightarrow \E_{\mu}[\tau(\mu)]$$
 
-Combining, we conclude that $\E_{\mu_k}[\tau_k(\mu_k)] \rightarrow \E_{\mu}[\tau(\mu)]$ and ${(\tau,\mu) \in C}$.
+Combining, we conclude that $\E_{\mu_k}[\tau_k(\mu_k)] \rightarrow \E_{\mu}[\tau(\mu)]$ and ${(\tau,\mu) \in Z}$.
 
 \#Proposition N10
 
@@ -394,7 +401,7 @@ Consider ${x \in X}$ s.t. ${d(x,Z)=0}$. Then, fore any ${k \in \Nats}$ there is 
 
 \#Proposition N13
 
-Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$ closed. Consider any ${\mu \in \Prob(X)}$. Then, ${\mu \in \Prob(Z)}$ (equivalently ${\Supp \mu \subseteq Z}$) iff ${\E_\mu[d_Z] = 0}$.
+Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$ closed. Consider any ${\mu \in \Prob(X)}$. Then, ${\Supp \mu \subseteq Z}$ iff ${\E_\mu[d_Z] = 0}$.
 
 \#Proof of Proposition N13
 
@@ -412,7 +419,25 @@ Choose ${\{x_k \in \Argmax{x \in \pi^{-1}(y_k)} d(x,\pi^{-1}(y_k))\}_{k \in \Nat
 
 $$\lim_{k \rightarrow \infty} \max_{x \in \pi^{-1}(y_k)} d(x,\pi^{-1}(y)) = \lim_{k \rightarrow \infty} d(x_k,\pi^{-1}(y))=d(x_\omega,\pi^{-1}(y))=0$$
 
-\#Proof of Lemma N1
+\#Proposition N16
+
+Consider ${X,Y}$ compact Polish spaces and ${\pi: X \rightarrow Y}$ continuous. Define ${\Delta \subseteq Y \times \Prob(X)}$ by
+
+$$\Delta:=\{(y,\mu) \in Y \times \Prob(X) \mid \Supp \mu \subseteq \pi^{-1}(y)\}$$
+
+Then, ${\Delta}$ is closed
+
+\#Proof of Proposition N16
+
+Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in \Delta}$. Denote ${Z:=\pi^{-1}(y)}$, ${Z_k:=\pi^{-1}(y_k) \cup Z}$. By the triangle inequality, For any ${x \in X}$:
+
+$$d(x, Z) \leq d(x, Z_k)  + \max_{z \in \pi^{-1}(y_k)} d(z,Z)$$
+
+Obviously, also $d(x, Z_k) \leq d(x, Z)$. It follows that
+
+$$\max_{x \in X} \Abs{d(x, Z_k) - d(x, Z)} \leq \max_{z \in \pi^{-1}(y_k)} d(z,Z)$$
+
+By Proposition N15, we get ${d_{Z_k} \rightarrow d_Z}$. Also, since ${(y_k,\mu_k) \in \Delta}$, ${\E_{\mu_k}[d_{Z_k}] = 0}$. It follows that ${\E_\mu[d_Z] = 0}$ and, by Proposition N13, ${(y,\mu) \in \Delta}$.
 
 TBD
 
