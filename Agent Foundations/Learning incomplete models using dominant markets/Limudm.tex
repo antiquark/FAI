@@ -318,11 +318,15 @@ This leaves an interesting open question, namely whether the counterpart of Theo
 
 \#Proof of Lemma N1
 
-We construct ${M_n}$ recursively in ${n}$. Define ${Z \subseteq Y_n \times \T(X) \times \Prob(X)}$ by
+We construct ${M_n}$ recursively in ${n}$. Define ${Z_1, Z_2, Z \subseteq Y_n \times \Prob(X) \times \T(X)}$ by
 
-$${Z:=\{(y,\tau,\mu) \in Y_n \times \T(X) \times \Prob(X) \mid \Supp \mu \in \Argmax{X_y} \tau(\mu)\}}$$
+$${Z_1:=\{(y,\mu,\tau) \in Y_n \times \Prob(X) \times \T(X) \mid \Supp \mu \subseteq X_y\}}$$
 
+$${Z_2:=\{(y,\mu,\tau) \in Y_n \times \Prob(X) \times \T(X) \mid \E_\mu[\tau(\mu)] = \max_{X_y} \tau(\mu)\}}$$
 
+$${Z:=\{(y,\mu,\tau) \in Y_n \times \Prob(X) \times \T(X) \mid \Supp \mu \subseteq \Argmax{X_y} \tau(\mu)\}}$$
+
+${Z_1}$ is closed by Proposition N16. ${Z_2}$ is closed by Proposition N9. ${Z = Z_1 \cap Z_2}$ by Proposition N14 and hence also closed. Consider any ${U \subseteq \Prob(X)}$ open. Then, ${A_U:=(Y_n \times U \times \T(X)) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image ${B_U}$ of ${A_U}$ under the projection to ${Y_n \times \T(X)}$ is also ${F_\sigma}$ and in particular Borel...
 
 TBD
 
