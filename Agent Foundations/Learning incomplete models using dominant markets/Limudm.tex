@@ -354,20 +354,6 @@ Combining, we get
 
 $$\max_{x \in X} \Abs{f_k(y_k,x)-f(y,x)} \rightarrow 0$$
 
-\#Proposition N14
-
-Fix ${X}$ a compact Polish space. Consider ${f \in C(X)}$ and ${\mu \in \Prob(X)}$ and denote ${M := \max f}$. Then, ${\Supp \mu \subseteq f^{-1}(M)}$ iff ${\E_\mu[f] = M}$.
-
-\#Proof of Proposition N14
-
-If ${\Supp \mu \subseteq f^{-1}(M)}$ then $\Prb_{x\sim \mu}[f(x) \ne M] = 0$ and therefore ${\E_\mu[f] = M}$.
-
-Now, assume ${\E_\mu[f] = M}$. For any ${k \in \Nats}$, Markov's inequality yields 
-
-$$\Prb_{x\sim \mu}[M - f(x) \geq \frac{1}{k}] \leq k\E_{x \sim \mu}[M - f(x)] = 0$$
-
-Taking $k \rightarrow \infty$, we get ${\Prb_{x\sim \mu}[M > f(x)] = 0}$ and hence ${\Supp \mu \subseteq f^{-1}(M)}$.
-
 \#Proposition N17
 
 Fix ${Y,Y'}$ compact Polish spaces and denote ${X:=Y \times Y'}$. Define ${F: Y \times C(X) \rightarrow \Reals}$ by 
@@ -396,59 +382,37 @@ Then, ${Z}$ is closed.
 
 \#Proof of Proposition N18
 
-TBD
+Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${f_k \rightarrow f}$, ${(y_k,\mu_k,f_k) \in Z}$. By Proposition N17, we get
+
+$$\max_{y' \in Y'} f(y,y') = \lim_{k \rightarrow \infty} \max_{y' \in Y'} f_k(y_k,y')= \lim_{k \rightarrow \infty} \E_{\mu_k}[f_k] = \E_{\mu}[f]$$
+
+Hence, ${(y,\mu,f) \in Z}$.
 
 \#Proposition N9
 
-Fix ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$ and let ${\pi: X \rightarrow Y}$ be the projection mapping. Define ${Z \subseteq Y \times \T(X) \times \Prob(X)}$ by
+Fix ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Define ${Z \subseteq Y \times \Prob(X) \times \T(X)}$ by
 
-$$Z:=\{(y,\tau,\mu) \in Y \times \T(X) \times \Prob(X) \mid \E_\mu[\tau(\mu)] = \max_{\pi^{-1}(y)} \tau(\mu)\}$$
+$$Z:=\{(y,\mu,\tau) \in Y \times \Prob(X) \times \T(X) \mid \E_\mu[\tau(\mu)] = \max_{y' \in Y'} \tau(\mu,y,y')\}$$
 
 Then, ${Z}$ is closed.
 
 \#Proof of Proposition N9
 
-Consider ${y_k \rightarrow y, \tau_k \rightarrow \tau}$, ${\mu_k \rightarrow \mu}$, ${(y_k,\tau_k,\mu_k) \in Z}$. By Proposition N8, ${\tau_k(\mu_k) \rightarrow \tau(\mu)}$ and hence??? 
+By Proposition N8, ${Z}$ is the continuous inverse image of a subset of ${Y \times \Prob(X) \times C(X)}$ which is closed by Proposition N18.
 
-$${\max \tau_k(\mu_k) \rightarrow \max \tau(\mu)}$$
+\#Proposition N14
 
-and 
+Fix ${X}$ a compact Polish space. Consider ${f \in C(X)}$ and ${\mu \in \Prob(X)}$ and denote ${M := \max f}$. Then, ${\Supp \mu \subseteq f^{-1}(M)}$ iff ${\E_\mu[f] = M}$.
 
-$$\Abs{\E_{\mu_k}[\tau_k(\mu_k)] - \E_{\mu_k}[\tau(\mu)]} \leq \Norm{\tau_k(\mu_k) - \tau(\mu)}  \rightarrow 0$$
+\#Proof of Proposition N14
 
-Also, ${\mu_k \rightarrow \mu}$ implies that
+If ${\Supp \mu \subseteq f^{-1}(M)}$ then $\Prb_{x\sim \mu}[f(x) \ne M] = 0$ and therefore ${\E_\mu[f] = M}$.
 
-$$\E_{\mu_k}[\tau(\mu)] \rightarrow \E_{\mu}[\tau(\mu)]$$
+Now, assume ${\E_\mu[f] = M}$. For any ${k \in \Nats}$, Markov's inequality yields 
 
-Combining, we conclude that $\E_{\mu_k}[\tau_k(\mu_k)] \rightarrow \E_{\mu}[\tau(\mu)]$ and ${(\tau,\mu) \in Z}$.
+$$\Prb_{x\sim \mu}[M - f(x) \geq \frac{1}{k}] \leq k\E_{x \sim \mu}[M - f(x)] = 0$$
 
-\#Proposition N10
-
-Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$. Define ${d_Z: X \rightarrow \Reals}$ by
-
-$${d_Z(x):=d(x,Z):=\inf_{z \in Z} d(x,z)}$$
-
-Then, ${d_Z}$ is continuous.
-
-\#Proof of Proposition N10
-
-Define ${d': X \rightarrow C(X)}$ by ${d'(x)(y)=d(x,y)}$. ${d'}$ is continuous by Proposition N11, hence ${d_Z}$ is continuous as well.
-
-\#Proposition N12
-
-Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$ closed. Then, for any ${x \in X \setminus Z}$, ${d(x,Z) > 0}$.
-
-\#Proof of Proposition N12
-
-Consider ${x \in X}$ s.t. ${d(x,Z)=0}$. Then, fore any ${k \in \Nats}$ there is ${z_k \in Z}$ s.t. ${d(x,z_k) < \frac{1}{k}}$. Obviously, ${z_k \rightarrow x}$. Since ${Z}$ it closed, it follows that ${x \in Z}$.
-
-\#Proposition N13
-
-Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$ closed. Consider any ${\mu \in \Prob(X)}$. Then, ${\Supp \mu \subseteq Z}$ iff ${\E_\mu[d_Z] = 0}$.
-
-\#Proof of Proposition N13
-
-Follows directly from Proposition N12 and Proposition N14.
+Taking $k \rightarrow \infty$, we get ${\Prb_{x\sim \mu}[M > f(x)] = 0}$ and hence ${\Supp \mu \subseteq f^{-1}(M)}$.
 
 \#Proposition N16
 
@@ -466,7 +430,7 @@ $${d_X((y_1,y_1'),(y_2,y_2')):=\max(d_Y(y_1,y_2),d_{Y'}(y_1',y_2'))}$$
 
 For each ${y \in Y}$, denote ${d_{y}:=d_{y \times Y'}}$.
 
-Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in \Delta}$. We have ${\E_{\mu_k}[d_{y_k}]=0}$. By Proposition N11, ${d_{y_k} \rightarrow d_y}$, therefore ${\E_\mu[d_y] = 0}$. By Proposition N13, ${\Supp \mu \subseteq y \times Y'}$ and hence ${(y,\mu) \in \Delta}$.
+Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in \Delta}$. We have ${\E_{\mu_k}[d_{y_k}]=0}$. By Proposition N11, ${d_{y_k} \rightarrow d_y}$, therefore ${\E_\mu[d_y] = 0}$. By Proposition N14, ${\Supp \mu \subseteq y \times Y'}$ and hence ${(y,\mu) \in \Delta}$.
 
 
 TBD
