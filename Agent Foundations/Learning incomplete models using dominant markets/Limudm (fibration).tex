@@ -68,7 +68,6 @@
 
 % Paper specific
 
-\newcommand{\Ob}{\mathcal{O}}
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\B}{\mathcal{B}}
 \newcommand{\UM}{\mathcal{U}}
@@ -84,7 +83,7 @@
 
 *This post is formal treatment of the idea outlined [here](https://agentfoundations.org/item?id=1197).*
 
-Given a countable set of [incomplete models], we define a forecasting function that converges in the Kantorovich-Rubinstein metric with probability 1 to every one of the models which is satisfied by the true environment. This is analogous to Blackwell-Dubins [merging of opinions](https://projecteuclid.org/euclid.aoms/1177704456), for complete models, except that Kantorovich-Rubinstein convergence is weaker than convergence in total variation. The forecasting function is a [dominant market](https://agentfoundations.org/item?id=1214) for a suitably constructed set of traders. We prove this result in a fairly general setting (for every finite time $t \in \Nats$, the space of observations is an arbitrary compact subset of $\Reals^{D(t)}$).%, but only assuming projective determinacy. In simpler situations (e.g. when observations are strings over a finite alphabet), ZFC is sufficient.
+Given a countable set of [incomplete models], we define a forecasting function that converges in the Kantorovich-Rubinstein metric with probability 1 to every one of the models which is satisfied by the true environment. This is analogous to Blackwell-Dubins [merging of opinions](https://projecteuclid.org/euclid.aoms/1177704456), for complete models, except that Kantorovich-Rubinstein convergence is weaker than convergence in total variation. The forecasting function is a [dominant market](https://agentfoundations.org/item?id=1214) for a suitably constructed set of traders. We prove this result in a fairly general setting (for every finite time $t \in \Nats$, the observation space is an arbitrary compact subset of $\Reals^{D(t)}$).%, but only assuming projective determinacy. In simpler situations (e.g. when observations are strings over a finite alphabet), ZFC is sufficient.
 
 Appendix A contains the proofs of key lemmas and theorems. Appendix B contains the proofs of technical propositions used in Appendix A, which are mostly straightforward.
 
@@ -116,15 +115,7 @@ Given ${X}$, ${Y}$ Polish spaces, ${\pi: X \rightarrow Y}$ Borel measurable and 
 
 The way we previously laid out the dominant market formalism, the sequence of observations (represented by the sets $\{X_i\}$) was fixed. To study forecasting, we instead need to assume this sequence is sampled from some probability measure (the true environment).
 
-For each ${n \in \Nats}$, let ${\Ob_n}$ be a compact Polish space. ${\Ob_n}$ represents the space of possible observations at time ${n}$. Denote 
-
-$${Y_n:=\prod_{m < n} \Ob_m}$$
-
-Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the projection mapping. Denote 
-
-$${X = \prod_{n = 0}^\infty \Ob_n}$$
-
-${X}$ is a compact Polish space. For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$.
+For each ${n \in \Nats}$, let ${Y_n}$ be a compact Polish space. ${Y_n}$ represents the space of possible observations made before time ${n}$. Let ${\pi_n: Y_{n+1} \rightarrow Y_n}$ be continuous mappings. Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the composition $\pi_n \circ \pi_{n+1} \circ \ldots \circ \pi_{m-1}$. The typical example is ${Y_n=Y^n}$ where ${Y}$ is some fixed compact Polish space (at some point below we will have to assume it is a compact subset of ${\Reals^D}$) and ${\pi_n}$ are the projection mappings. Define ${X = \varprojlim Y_n}$, i.e. ${X}$ is the subspace of ${\prod_n Y_n}$ given by the equations ${\pi_n(y_{n+1})=y_n}$. ${X}$ is a compact Polish space (in the example above, ${X = Y^\omega}$). For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$.
 
 \#Definition N1
 
@@ -250,7 +241,7 @@ Assume that for any ${y \in Y}$, ${\Phi_y}$ is convex. Then, there exists ${\ups
 
 ***
 
-Now consider ${\Ob_n}$, ${\{Y_n\}_{n \in \Nats}}$ and $X$ as before, but assume that for each ${n \in \Nats}$, ${\Ob_n}$ is a compact subset of ${\Reals^{D(n)}}$ where ${D: \Nats \rightarrow \Nats}$ is an arbitrary function. Thus, ${Y_n}$ is a compact subset of ${\Reals^{\sum_{m < n} D(m)}}$. We will regard it as equipped with the Euclidean metric. The following definition provides a notion of updating an incomplete model by observations:
+Now consider ${\{Y_n\}_{n \in \Nats}}$ and ${X = \varprojlim Y_n}$ as before, but assume that for each ${n \in \Nats}$, ${Y_n}$ is a compact subset of ${\Reals^{D(n)}}$ where ${D: \Nats \rightarrow \Nats}$ is an arbitrary function. The following definition provides a notion of updating an incomplete model by observations:
 
 \#Definition N7
 
@@ -270,7 +261,7 @@ $$\Phi_y:=\{\mu \in \Prob(X) \mid (y,\mu) \in \Phi_n\}$$
 
 ***
 
-Note that the above definition uses the Euclidean metric on ${Y_n}$. This is the only place through which the assumption that ${\Ob_n}$ is a compact subset of ${R^{D(n)}}$ enters. This is used the in the proof of Lemma N5 below, via the Lebesgue differentiation theorem.
+Note that the above definition uses the Euclidean metric on ${Y_n}$. This is the only place through which the assumption that ${Y_n}$ is a compact subset of ${R^{D(n)}}$ enters. This is used the in the proof of Lemma N5 below, via the Lebesgue differentiation theorem.
 
 Fix a family of metrizations of ${X}$: ${\{d_n: X \times X \rightarrow \Reals\}_{n \in \Nats}}$. The reason we need a family rather than a single metric is that convergence in ${\Dkr}$ is trivial unless we renormalize the metric for each ${n}$. On the other hand, completely arbitrary renormalization is allowed. For example, if ${X=Y^\omega}$ and ${d}$ is a metrization of ${Y}$ (e.g. the Euclidean metric) we can take 
 
