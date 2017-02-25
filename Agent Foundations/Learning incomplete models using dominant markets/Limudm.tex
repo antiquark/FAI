@@ -120,7 +120,7 @@ For each ${n \in \Nats}$, let ${\Ob_n}$ be a compact Polish space. ${\Ob_n}$ rep
 
 $${Y_n:=\prod_{m < n} \Ob_m}$$
 
-Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the projection mapping. Denote 
+Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the projection mapping and ${\pi_n:=\pi_{n,n+1}}$. Denote 
 
 $${X = \prod_{n = 0}^\infty \Ob_n}$$
 
@@ -370,25 +370,41 @@ Taking $k \rightarrow \infty$, we get ${\Prb_{x\sim \mu}[M > f(x)] = 0}$ and hen
 
 \#Proposition N17
 
-Fix ${X,Y}$ compact Polish spaces, ${\pi: X \rightarrow Y}$ continuous. Define ${F: Y \times C(X) \rightarrow \Reals}$ by 
+Fix ${Y,Y'}$ compact Polish spaces and denote ${X:=Y \times Y'}$. Define ${F: Y \times C(X) \rightarrow \Reals}$ by 
 
-$${F(y,f):=\max_{x \in \pi^{-1}(y)} f(x)}$$
+$${F(y,f):=\max_{y' \in Y'} f(y,y')}$$
 
-Then, ${F}$ is upper semicontinuous.
+Then, ${F}$ is continuous.
 
 \#Proof of Proposition N17
 
-Consider ${y_k \rightarrow y}$, ${f_k \rightarrow f}$. It is enough to show that if $F(y_k,f_k) \rightarrow t$, then ${F(y,f) \geq t}$. Choose ${\{x_k \in \Argmax{\pi^{-1}(y_k)}f_k\}_{k \in \Nats}}$. Without loss of generality, we may assume that ${x_k \rightarrow x_\omega}$ (otherwise take a subsequence). Clearly, ${\pi(x_\omega)=y}$ and therefore
+Consider ${y_k \rightarrow y}$, ${f_k \rightarrow f}$. By Proposition N11, ${y_k \rightarrow y}$ implies that
 
-$$F(y,f) \geq f(x_\omega)=\lim_{k \rightarrow \infty} f(x_k) = \lim_{k \rightarrow \infty} f_k(x_k)= \lim_{k \rightarrow \infty} F(y_k,f_k)$$
+$${\lim_{k \rightarrow \infty} \max_{y' \in Y'} f(y_k,y') = \max_{y' \in Y'} f(y,y')}$$
+
+Since ${f_k \rightarrow f}$, we get
+
+$${\lim_{k \rightarrow \infty} \max_{y' \in Y'} f_k(y_k,y') = \max_{y' \in Y'} f(y,y')}$$
+
+\#Proposition N18
+
+Fix ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Define ${Z \subseteq Y \times \Prob(X) \times C(X)}$ by
+
+$$Z:=\{(y,\mu,f) \in Y \times \Prob(X) \times C(X) \mid \E_\mu[f] = \max_{y' \in Y'} f(y,y')\}$$
+
+Then, ${Z}$ is closed.
+
+\#Proof of Proposition N18
+
+TBD
 
 \#Proposition N9
 
-Fix ${X,Y}$ compact Polish spaces, ${\pi: X \rightarrow Y}$ continuous. Define ${Z \subseteq Y \times \T(X) \times \Prob(X)}$ by
+Fix ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$ and let ${\pi: X \rightarrow Y}$ be the projection mapping. Define ${Z \subseteq Y \times \T(X) \times \Prob(X)}$ by
 
 $$Z:=\{(y,\tau,\mu) \in Y \times \T(X) \times \Prob(X) \mid \E_\mu[\tau(\mu)] = \max_{\pi^{-1}(y)} \tau(\mu)\}$$
 
-Then, ${Z}$ is closed???
+Then, ${Z}$ is closed.
 
 \#Proof of Proposition N9
 
@@ -434,35 +450,24 @@ Fix ${X}$ a compact Polish metric space and ${Z \subseteq X}$ closed. Consider a
 
 Follows directly from Proposition N12 and Proposition N14.
 
-\#Proposition N15
-
-Fix ${X,Y}$ compact Polish metric spaces and ${\pi: X \rightarrow Y}$ continuous. Consider ${\{y_k \in Y\}_{k \in \Nats}}$, ${y_k \rightarrow y}$. Then
-
-$$\lim_{k \rightarrow \infty} \max_{x \in \pi^{-1}(y_k)} d(x,\pi^{-1}(y)) = 0$$
-
-\#Proof of Proposition N15
-
-Follows directly from Proposition N17 and Proposition N10.
-
 \#Proposition N16
 
-Consider ${X,Y}$ compact Polish spaces and ${\pi: X \rightarrow Y}$ continuous. Define ${\Delta \subseteq Y \times \Prob(X)}$ by
+Consider ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Define ${\Delta \subseteq Y \times \Prob(X)}$ by
 
-$$\Delta:=\{(y,\mu) \in Y \times \Prob(X) \mid \Supp \mu \subseteq \pi^{-1}(y)\}$$
+$$\Delta:=\{(y,\mu) \in Y \times \Prob(X) \mid \Supp \mu \subseteq y \times Y'\}$$
 
-Then, ${\Delta}$ is closed
+Then, ${\Delta}$ is closed.
 
 \#Proof of Proposition N16
 
-Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in \Delta}$. Denote ${Z:=\pi^{-1}(y)}$, ${Z_k:=\pi^{-1}(y_k) \cup Z}$. By the triangle inequality, For any ${x \in X}$:
+We fix metrizations for ${Y}$ and ${Y'}$ and metrize ${X}$ by 
 
-$$d(x, Z) \leq d(x, Z_k)  + \max_{z \in \pi^{-1}(y_k)} d(z,Z)$$
+$${d_X((y_1,y_1'),(y_2,y_2')):=\max(d_Y(y_1,y_2),d_{Y'}(y_1',y_2'))}$$
 
-Obviously, also $d(x, Z_k) \leq d(x, Z)$. It follows that
+For each ${y \in Y}$, denote ${d_{y}:=d_{y \times Y'}}$.
 
-$$\max_{x \in X} \Abs{d(x, Z_k) - d(x, Z)} \leq \max_{z \in \pi^{-1}(y_k)} d(z,Z)$$
+Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in \Delta}$. We have ${\E_{\mu_k}[d_{y_k}]=0}$. By Proposition N11, ${d_{y_k} \rightarrow d_y}$, therefore ${\E_\mu[d_y] = 0}$. By Proposition N13, ${\Supp \mu \subseteq y \times Y'}$ and hence ${(y,\mu) \in \Delta}$.
 
-By Proposition N15, we get ${d_{Z_k} \rightarrow d_Z}$. Also, since ${(y_k,\mu_k) \in \Delta}$, ${\E_{\mu_k}[d_{Z_k}] = 0}$. It follows that ${\E_\mu[d_Z] = 0}$ and, by Proposition N13, ${(y,\mu) \in \Delta}$.
 
 TBD
 
