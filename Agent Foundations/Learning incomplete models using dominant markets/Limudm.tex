@@ -48,6 +48,9 @@
 \newcommand{\Reals}{\mathbb{R}}
 \newcommand{\Coms}{\mathbb{C}}
 
+\newcommand{\Sq}[2]{\{#1\}_{#2 \in \Nats}}
+\newcommand{\Sqn}[1]{\Sq{#1}{n}}
+
 \newcommand{\Estr}{\boldsymbol{\lambda}}
 
 \newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
@@ -87,7 +90,7 @@
 
 Given a countable set of [incomplete models], we define a forecasting function that converges in the Kantorovich-Rubinstein metric with probability 1 to every one of the models which is satisfied by the true environment. This is analogous to Blackwell-Dubins [merging of opinions](https://projecteuclid.org/euclid.aoms/1177704456), for complete models, except that Kantorovich-Rubinstein convergence is weaker than convergence in total variation. The forecasting function is a [dominant market](https://agentfoundations.org/item?id=1214) for a suitably constructed set of traders. We prove this result in a fairly general setting (for every finite time $t \in \Nats$, the space of observations is an arbitrary compact subset of $\Reals^{D(t)}$).%, but only assuming projective determinacy. In simpler situations (e.g. when observations are strings over a finite alphabet), ZFC is sufficient.
 
-Appendix A contains the proofs of key lemmas and theorems. Appendix B contains the proofs of technical propositions used in Appendix A, which are mostly straightforward.
+Appendix A contains the proofs of key lemmas and theorems. Appendix B contains the proofs of technical propositions used in Appendix A, which are mostly straightforward. Appendix C contains the statement of a version of the optional stopping theorem from [Durret](?).
 
 ***
 
@@ -368,6 +371,12 @@ $$N_0 \equiv 0$$
 
 $$N_{k+1}(x) = \begin{cases}\inf \{n \in \Nats \mid \sum_{m=N_k}^{n-1} T_m(x) \geq 1\} \text{ if } N_k(x) < \infty\\\infty \text{ if } N_k(x) = \infty\end{cases}$$
 
+Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
+
+$$S^0_n := S_n - c \sum_{m=0}^{n-1} T_m$$
+
+By Proposition N21, ${S^0}$ is a submartingale.
+
 TBD
 
 \section{Appendix B}
@@ -476,6 +485,45 @@ For each ${y \in Y}$, denote ${d_{y}:=d_{y \times Y'}}$.
 
 Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in \Delta}$. We have ${\E_{\mu_k}[d_{y_k}]=0}$. By Proposition N11, ${d_{y_k} \rightarrow d_y}$, therefore ${\E_\mu[d_y] = 0}$. By Proposition N14, ${\Supp \mu \subseteq y \times Y'}$ and hence ${(y,\mu) \in \Delta}$.
 
+\#Proposition N21
+
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that there is ${c > 0}$ s.t.:
+
+$$\E[\Abs{S_0}] < \infty$$
+
+$$\Abs{S_{n+1}-S_n} \leq T_n$$
+
+$$\E[S_{n+1} - S_n \mid \F_n] \geq c T_n$$
+
+Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
+
+$$S^0_n := S_n - c \sum_{m=0}^{n-1} T_m$$
+ 
+Then, ${S^0}$ is a submartingale.
+
+\#Proof of Proposition N21
+
+We prove by induction that ${\E[\Abs{S^0_n}] < \infty}$:
+
+$${\E[\Abs{S^0_0}] = \E[\Abs{S_0}] < \infty}$$
+
+$$\E[\Abs{S^0_{n+1}}] \leq \E[\Abs{S^0_n}] + \E[\Abs{S^0_{n+1}-S^0_n}] \leq \E[\Abs{S^0_n}] + \E[T_n] \leq \E[\Abs{S^0_n}] + 1$$
+
+Obviously, ${S^0}$ is adapted to ${\F}$. Finally, we have
+
+$$\E[S^0_{n+1} \mid \F_n] = \E[S_{n+1} \mid \F_n] - c \sum_{m = 0}^{n} T_m$$
+
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] + c T_n - c \sum_{m = 0}^{n} T_m$$
+
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] - c \sum_{m = 0}^{n - 1} T_m$$
+
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S^0_{n} \mid \F_n]$$
+
+\section{Appendix C}
+
+The following appears in [Durret](?) as Theorem 5.4.7:
+
+\#Theorem N22
 
 TBD
 
