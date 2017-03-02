@@ -316,17 +316,36 @@ This leaves an interesting open question, namely whether the counterpart of Theo
 
 \section{Appendix A}
 
+\#Proposition N19
+
+Fix ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Then, there exists ${\mathcal{M}: Y \times \T(X) \rightarrow \Prob(X)}$ measurable w.r.t. ${\B(Y \times \T(X))}$ and ${\B(\Prob(X))}$ s.t. for any ${y \in Y}$ and ${\tau \in \T(X)}$:
+
+
+$$\Supp \mathcal{M}(y,\tau) \subseteq \Argmax{y \times Y'} \tau(\mathcal{M}(y,\tau))$$
+
+\#Proof of Proposition N19
+
+Define ${Z_1, Z_2, Z \subseteq Y \times \T(X) \times \Prob(X)}$ by
+
+$${Z_1:=\{(y,\tau,\mu) \in Y \times \T(X) \times \Prob(X) \mid \Supp \mu \subseteq X_y\}}$$
+
+$${Z_2:=\{(y,\tau,\mu) \in Y \times \T(X) \times \Prob(X) \mid \E_\mu[\tau(\mu)] = \max_{y \in Y'} \tau(\mu,y,y')\}}$$
+
+$${Z:=\{(y,\tau,\mu) \in Y \times \T(X) \times \Prob(X) \mid \Supp \mu \subseteq \Argmax{y \times Y'} \tau(\mu)\}}$$
+
+We can view ${Z}$ as the graph of a *multivalued* mapping from ${Y_n \times \T(X)}$ to ${\Prob(X)}$. We will now show this multivalued mapping has a *selection*, i.e. a single-valued measurable mapping whose graph is a subset. Obviously, the selection is the desired ${\mathcal{M}}$.
+
+${Z_1}$ is closed by Proposition N16. ${Z_2}$ is closed by Proposition N9. ${Z = Z_1 \cap Z_2}$ by Proposition N14 and hence also closed. In particular, the fiber ${Z_{y\tau}}$ of ${Z}$ over any ${(y,\tau) \in Y \times \T(X)}$ is also closed. ${Z_{y\tau}}$ is also non-empty (see "Proposition 1" from [before](https://agentfoundations.org/item?id=1214)).
+
+Consider any ${U \subseteq \Prob(X)}$ open. Then, ${A_U:=(Y \times \T(X) \times U) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image of ${A_U}$ under the projection to ${Y \times \T(X)}$ is also ${F_\sigma}$ and in particular Borel. 
+
+Applying the Kuratowski-Ryll-Nardzewski measurable selection theorem, we get the desired result.
+
 \#Proof of Lemma N1
 
-We construct ${M_n}$ recursively in ${n}$. Define ${Z_1, Z_2, Z \subseteq Y_n \times \Prob(X) \times \T(X)}$ by
+For any ${n \in \Nats}$, let ${\mathcal{M}_n: Y_n \times \T(X) \rightarrow \Prob(X)}$ be as in Proposition N19. We define ${M_n}$ recursively by:
 
-$${Z_1:=\{(y,\mu,\tau) \in Y_n \times \Prob(X) \times \T(X) \mid \Supp \mu \subseteq X_y\}}$$
-
-$${Z_2:=\{(y,\mu,\tau) \in Y_n \times \Prob(X) \times \T(X) \mid \E_\mu[\tau(\mu)] = \max_{X_y} \tau(\mu)\}}$$
-
-$${Z:=\{(y,\mu,\tau) \in Y_n \times \Prob(X) \times \T(X) \mid \Supp \mu \subseteq \Argmax{X_y} \tau(\mu)\}}$$
-
-${Z_1}$ is closed by Proposition N16. ${Z_2}$ is closed by Proposition N9. ${Z = Z_1 \cap Z_2}$ by Proposition N14 and hence also closed. Consider any ${U \subseteq \Prob(X)}$ open. Then, ${A_U:=(Y_n \times U \times \T(X)) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image ${B_U}$ of ${A_U}$ under the projection to ${Y_n \times \T(X)}$ is also ${F_\sigma}$ and in particular Borel...
+$$M_n(y):=\mathcal{M}_n(y,T_n^M(y))$$
 
 TBD
 
