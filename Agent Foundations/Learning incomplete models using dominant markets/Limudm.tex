@@ -363,13 +363,19 @@ $$\E[S_{n+1} - S_n \mid \F_n] \geq c T_n$$
 
 Then, ${\inf_{n} S_n > -\infty}$ with probability 1.
 
-\#Proof of Proposition N20
+***
 
-Define ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ recursively by
+The proof will use the following definition:
+
+\#Definition N8
+
+Consider ${X}$ a probability space and ${\{T_n:X \rightarrow \Reals\}_{n \in \Nats}}$ a stochastic process. The *accumulation times* of ${T}$ are ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ defined recursively by
 
 $$N_0 \equiv 0$$
 
 $$N_{k+1}(x) = \begin{cases}\inf \{n \in \Nats \mid \sum_{m=N_k}^{n-1} T_m(x) \geq 1\} \text{ if } N_k(x) < \infty\\\infty \text{ if } N_k(x) = \infty\end{cases}$$
+
+\#Proof of Proposition N20
 
 Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
 
@@ -518,6 +524,62 @@ $$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] + c T_n - c \sum_{m = 0}^{n} 
 $$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] - c \sum_{m = 0}^{n - 1} T_m$$
 
 $$\E[S^0_{n+1} \mid \F_n] \geq \E[S^0_{n} \mid \F_n]$$
+
+\#Proposition N23
+
+Let ${X}$ be a probability space, ${\Sqn{\F_n \subseteq 2^X}}$ a filtration on ${X}$, ${\Sqn{S_n: X \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and ${N: X \rightarrow \Nats \sqcup \{\infty\}}$ a stopping time (w.r.t. ${\F}$). Suppose ${S}$ is submartingale. Then, ${\Sqn{S_{\min(n,N)}}}$ is also submartingale.
+
+\#Proof of Proposition N23
+
+Clearly, ${\Sqn{S_{\min(n,N)}}}$ is adapted to ${\F}$. We have
+
+$$\Abs{S_{\min(n,N)}} \leq \sum_{m \leq n} \Abs{S_m}$$
+
+$$\E[\Abs{S_{\min(n,N)}}] \leq \E[\sum_{m \leq n} \Abs{S_m}] = \sum_{m \leq n} \E[\Abs{S_m}] < \infty$$
+
+For any ${n \in \Nats}$, define ${A_n \subseteq X}$ by
+
+$$A_n:=\{x \in X \mid N(x)\ > n\}$$
+
+${N}$ is a stopping time, therefore ${A_n \in \F_n}$. We have 
+
+$${S_{\min(n+1,N)} - S_{\min(n,N)} = \chi_{A_n} (S_{n+1} - S_n)}$$
+
+$${\E[S_{\min(n+1,N)} - S_{\min(n,N)} \mid \F_n] = \E[\chi_{A_n} (S_{n+1} - S_n) \mid \F_n]}$$
+
+$${\E[S_{\min(n+1,N)} - S_{\min(n,N)} \mid \F_n] = \chi_{A_n} \E[ S_{n+1} - S_n \mid \F_n] \geq 0}$$
+
+\#Proposition N25
+
+Consider ${X}$ a probability space and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ a stochastic process. Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${T}$. Then:
+
+$$k \leq \sum_{n = 0}^{N_k - 1} T_n \leq k + 1$$
+
+\#Proof of Proposition N25
+
+We prove by induction on ${k}$. For ${k = 0}$, the claim is obvious. ${N_{k+1} \geq N_k}$, therefore
+
+$$\sum_{n = 0}^{N_{k+1} - 1} T_n = \sum_{n = 0}^{N_{k} - 1} T_n + \sum_{n = N_k}^{N_{k + 1} - 1} T_n$$
+
+TBD
+
+\#Proposition N24
+
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that
+
+$$\E[\Abs{S_0}] < \infty$$
+
+$$\Abs{S_{n+1}-S_n} \leq T_n$$
+
+Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${T}$. Define ${\Sqn{U_n: X \rightarrow \Reals}}$ by
+
+$$U_n := \sum_{m=0}^{n-1} T_m$$
+
+Then, ${\Sqn{S_{\min(n,N)}}}$ and ${\Sqn{U_{\min(n,N)}}}$ are uniformly integrable.
+
+\#Proof of Proposition N24
+
+TBD
 
 \section{Appendix C}
 
