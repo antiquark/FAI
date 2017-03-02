@@ -521,11 +521,21 @@ $$\E[S^0_{n+1} \mid \F_n] \geq \E[S^0_{n} \mid \F_n]$$
 
 \section{Appendix C}
 
-The following appears in [Durret](?) as Theorem 5.4.7:
+The following version of the optional stopping theorem appears in [Durret](?) as Theorem 5.4.7:
 
 \#Theorem N22
 
-TBD
+Let ${X}$ be a probability space, ${\Sqn{\F_n \subseteq 2^X}}$ a filtration on ${X}$, ${\Sqn{S_n: X \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and ${M,N: X \rightarrow \Nats \sqcup \{\infty\}}$ stopping times (w.r.t. ${\F}$) s.t. ${M \leq N}$. Assume that ${\Sqn{S_{\min(n,N)}}}$ is a uniformly integrable submartingale. Using Doob's martingale convergence theorem, we can define ${S_N : X \rightarrow \Reals}$ by
+
+$$S_N(x):=\lim_{n \rightarrow \infty} S_{\min(n,N)}(x)=\begin{cases}S_{N(x)}(x) \text{ if } N(x) < \infty\\\lim_{n \rightarrow \infty} S_n(x) \text{ if } N(x) = \infty\end{cases}$$
+
+(the above is well-defined *almost* everywhere, which is sufficient for our purpose) We define ${S_M: X \rightarrow \Reals}$ is an analogous way (this time we can't use Doob's martingale convergence theorem, but whenever ${M(x) = \infty}$ we also have ${N(x) = \infty}$, therefore the limit almost surely converges). We also define ${\F_M \subseteq 2^X}$ by
+
+$$\F_M:=\{A \subseteq X \text{ measurable} \mid \forall n \in \Nats: A \cap M^{-1}(n) \in \F_n\}$$
+
+Then:
+
+$$\E[S_N \mid \F_M] \geq S_M$$
 
 \end{document}
 
