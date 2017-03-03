@@ -310,7 +310,7 @@ Thus, if we construct a set of traders ${T_{\upsilon_k}}$ as in Corollary N6 whe
 
 \#Theorem N7
 
-Consider a ${H}$ countable set of subsets of ${\Prob(X)}$. Then, there exists a market ${M^H}$ s.t. for any ${\Phi \in H}$, ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
+Consider any ${H \subseteq 2^{\Prob(X)}}$ countable. Then, there exists a market ${M^H}$ s.t. for any ${\Phi \in H}$, ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
 
 $$\lim_{n \rightarrow \infty} \Dkr^n(M^H_n(y_n),\Phi_{y_n}) = 0$$
 
@@ -397,7 +397,9 @@ Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
 
 $$S^0_n := S_n - c \sum_{m=0}^{n-1} T_m$$
 
-By Proposition N21, ${S^0}$ is a submartingale.
+By Proposition N21, ${S^0}$ is a submartingale. Let ${\Sqn{N_n:X \rightarrow \Nats \sqcup \{\infty\}}}$ be the accumulation times of ${T}$. It is easy to see that they are stopping times. By proposition N23, ${\Sqn{S^0_{\min(n,N_k)}}}$ are submartingales for all ${k}$. By Proposition\ N24, each of them is uniformly integrable. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem N22, we get
+
+$$\E[S^0_{N_{k+1}} \mid \F_{N_k}] \geq S^0_{N_{k}}$$
 
 TBD
 
