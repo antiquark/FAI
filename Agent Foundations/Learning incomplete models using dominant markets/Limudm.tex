@@ -320,6 +320,16 @@ This leaves an interesting open question, namely whether the counterpart of Theo
 
 \section{Appendix A}
 
+\#Proposition N26
+
+Fix ${X}$ a compact Polish space and ${\tau \in \T(X)}$. Then, there exists ${\mu \in \Prob(X)}$ s.t.
+
+$$\Supp \tau(\mu) \subseteq \Argmax{} \tau$$
+
+\#Proof of Proposition N26
+
+Follows immediately from "Proposition 1" from [before](https://agentfoundations.org/item?id=1214) and Proposition N14.
+
 \#Proposition N19
 
 Fix ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Then, there exists ${\mathcal{M}: Y \times \T(X) \rightarrow \Prob(X)}$ measurable w.r.t. ${\B(Y \times \T(X))}$ and ${\B(\Prob(X))}$ s.t. for any ${y \in Y}$ and ${\tau \in \T(X)}$:
@@ -339,7 +349,13 @@ $${Z:=\{(y,\tau,\mu) \in Y \times \T(X) \times \Prob(X) \mid \Supp \mu \subseteq
 
 We can view ${Z}$ as the graph of a *multivalued* mapping from ${Y_n \times \T(X)}$ to ${\Prob(X)}$. We will now show this multivalued mapping has a *selection*, i.e. a single-valued measurable mapping whose graph is a subset. Obviously, the selection is the desired ${\mathcal{M}}$.
 
-${Z_1}$ is closed by Proposition N16. ${Z_2}$ is closed by Proposition N9. ${Z = Z_1 \cap Z_2}$ by Proposition N14 and hence also closed. In particular, the fiber ${Z_{y\tau}}$ of ${Z}$ over any ${(y,\tau) \in Y \times \T(X)}$ is also closed. ${Z_{y\tau}}$ is also non-empty (see "Proposition 1" from [before](https://agentfoundations.org/item?id=1214)).
+${Z_1}$ is closed by Proposition N16. ${Z_2}$ is closed by Proposition N9. ${Z = Z_1 \cap Z_2}$ by Proposition N14 and hence closed. In particular, the fiber ${Z_{y\tau}}$ of ${Z}$ over any ${(y,\tau) \in Y \times \T(X)}$ is also closed. 
+
+For any ${y \in Y}$, ${\tau \in \T(X)}$, define ${i_y: Y' \rightarrow X}$ by ${i_y(y'):=(y,y')}$ and ${\tau_y \in \T(Y')}$ by ${\tau_y(\nu,y'):=\tau(i_{y*}\nu,y,y')}$. Applying Proposition N26 to ${\tau_y}$ we get ${\nu \in \Prob(Y')}$ s.t.
+
+$$\Supp \tau_y(\nu) \subseteq \Argmax{} \tau_y$$
+
+It follows that ${(y,\tau,i_{y*}\nu) \in Z}$ and hence ${Z_{y\tau}}$ is non-empty.
 
 Consider any ${U \subseteq \Prob(X)}$ open. Then, ${A_U:=(Y \times \T(X) \times U) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image of ${A_U}$ under the projection to ${Y \times \T(X)}$ is also ${F_\sigma}$ and in particular Borel. 
 
@@ -553,15 +569,45 @@ $${\E[S_{\min(n+1,N)} - S_{\min(n,N)} \mid \F_n] = \chi_{A_n} \E[ S_{n+1} - S_n 
 
 Consider ${X}$ a probability space and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ a stochastic process. Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${T}$. Then:
 
-$$k \leq \sum_{n = 0}^{N_k - 1} T_n \leq k + 1$$
+$$\sum_{n = 0}^{N_k - 1} T_n \leq 2k$$
 
 \#Proof of Proposition N25
 
-We prove by induction on ${k}$. For ${k = 0}$, the claim is obvious. ${N_{k+1} \geq N_k}$, therefore
+We prove by induction on ${k}$. For ${k = 0}$, the claim is obvious. Consider any ${x \in X}$. If ${N_k(x) = \infty}$ then ${N_{k+1}(x)=\infty}$ and, by the induction hypothesis
 
-$$\sum_{n = 0}^{N_{k+1} - 1} T_n = \sum_{n = 0}^{N_{k} - 1} T_n + \sum_{n = N_k}^{N_{k + 1} - 1} T_n$$
+$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) = \sum_{n = 0}^{\infty} T_n(x) = \sum_{n = 0}^{N_{k}(x) - 1} T_n(x) \leq 2k \leq 2(k+1)$$
 
-TBD
+Now assume ${N_k(x) < \infty}$. Then ${N_{k+1}(x) > N_k(x)}$ (because for the sum in the definition of ${N}$ to be ${\geq 1}$ it has to be non-empty), therefore
+
+$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) = \sum_{n = 0}^{N_{k}(x) - 1} T_n(x) + \sum_{n = N_k(x)}^{N_{k + 1}(x) - 1} T_n(x)$$
+
+By the induction hypothesis
+
+$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) \leq 2k + \sum_{n = N_k(x)}^{N_{k + 1}(x) - 1} T_n(x)$$
+
+If ${N_{k+1}(x) < \infty}$ then
+
+$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) \leq 2k + \sum_{n = N_k(x)}^{N_{k + 1}(x) - 2} T_n(x) + T_{N_{k+1}(x)-1}(x)$$
+
+By definition of ${N}$, the middle term is ${< 1}$. By definition of ${T}$, the last term is ${\leq 1}$. We get
+
+$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) < 2k + 1 + 1 = 2(k+1)$$
+
+Finally, assume ${N_{k+1}(x) = \infty}$. We have
+
+$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) \leq 2k + \sum_{n = N_k(x)}^{\infty} T_n(x)$$
+
+By definition of ${N}$, we get that for any ${m \in \Nats}$:
+
+$$\sum_{n = N_k(x)}^{m} T_n(x) < 1$$
+
+It follows that
+
+$$\sum_{n = N_k(x)}^{\infty} T_n(x) \leq 1$$
+
+Combining, we have
+
+$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) \leq 2k+1 <\ 2(k+1)$$
 
 \#Proposition N24
 
@@ -575,11 +621,15 @@ Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accu
 
 $$U_n := \sum_{m=0}^{n-1} T_m$$
 
-Then, ${\Sqn{S_{\min(n,N)}}}$ and ${\Sqn{U_{\min(n,N)}}}$ are uniformly integrable.
+Then, for any ${k \in \Nats}$, ${\Sqn{S_{\min(n,N_k)}}}$ and ${\Sqn{U_{\min(n,N_k)}}}$ are uniformly integrable.
 
 \#Proof of Proposition N24
 
-TBD
+By Proposition N25, $U_{\min(n,N_k)} \leq U_{N_k} \leq 2k$, so ${\Sqn{U_{\min(n,N_k)}}}$ is uniformly bounded and in particular uniformly integrable. Now, $\Abs{S_{n+1}-S_n} \leq T_n$ implies that ${\Abs{S_{n}-S_0} \leq U_n}$. We get
+
+$$\Abs{S_{\min(n,N_k)}} \leq \Abs{S_0} + U_{\min(n,N_k)} \leq \Abs{S_0} + 2k$$
+
+Since ${\E[\Abs{S_0}] < \infty}$, it follows that ${\Sqn{S_{\min(n,N_k)}}}$ is uniformly integrable.
 
 \section{Appendix C}
 
