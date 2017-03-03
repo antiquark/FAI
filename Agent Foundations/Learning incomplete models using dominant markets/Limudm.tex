@@ -385,11 +385,13 @@ The proof will use the following definition:
 
 \#Definition N8
 
-Consider ${X}$ a probability space and ${\{T_n:X \rightarrow \Reals\}_{n \in \Nats}}$ a stochastic process. The *accumulation times* of ${T}$ are ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ defined recursively by
+Consider a sequence ${\Sqn{t_n \in [0,1]}}$. The *accumulation times of ${t}$* are ${\Sq{n_k \in \Nats \sqcup \{\infty\}}{k}}$ defined recursively by
 
-$$N_0 \equiv 0$$
+$$n_0 := 0$$
 
-$$N_{k+1}(x) = \begin{cases}\inf \{n \in \Nats \mid \sum_{m=N_k}^{n-1} T_m(x) \geq 1\} \text{ if } N_k(x) < \infty\\\infty \text{ if } N_k(x) = \infty\end{cases}$$
+$$n_{k+1} = \begin{cases}\inf \{n \in \Nats \mid \sum_{m=n_k}^{n-1} t_m \geq 1\} \text{ if } n_k < \infty\\\infty \text{ if } n_k = \infty\end{cases}$$
+
+Consider ${X}$ a probability space and ${\{T_n:X \rightarrow \Reals\}_{n \in \Nats}}$ a stochastic process. The *accumulation times of ${T}$* are ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ defined pointwise as above. Clearly, they are stochastic processes and whenever ${T}$ is adapted to a filtration ${\Sqn{\F_n \subseteq 2^X}}$, they are stopping times w.r.t. ${\F}$.
 
 \#Proof of Proposition N20
 
@@ -397,9 +399,11 @@ Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
 
 $$S^0_n := S_n - c \sum_{m=0}^{n-1} T_m$$
 
-By Proposition N21, ${S^0}$ is a submartingale. Let ${\Sqn{N_n:X \rightarrow \Nats \sqcup \{\infty\}}}$ be the accumulation times of ${T}$. It is easy to see that they are stopping times. By proposition N23, ${\Sqn{S^0_{\min(n,N_k)}}}$ are submartingales for all ${k}$. By Proposition\ N24, each of them is uniformly integrable. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem N22, we get
+By Proposition N21, ${S^0}$ is a submartingale. Let ${\Sqn{N_n:X \rightarrow \Nats \sqcup \{\infty\}}}$ be the accumulation times of ${T}$. By proposition N23, ${\Sqn{S^0_{\min(n,N_k)}}}$ are submartingales for all ${k}$. By Proposition\ N24, each of them is uniformly integrable. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem N22, we get
 
 $$\E[S^0_{N_{k+1}} \mid \F_{N_k}] \geq S^0_{N_{k}}$$
+
+Clearly, ${\Sq{S^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E[\Abs{S^0_{N_k}}] < \infty}$ (${S^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{S^0_{\min(n,N_k)}}}$). We conclude that ${\Sq{S^0_{N_k}}{k}}$ is a submartingale.
 
 TBD
 
@@ -569,47 +573,47 @@ $${\E[S_{\min(n+1,N)} - S_{\min(n,N)} \mid \F_n] = \chi_{A_n} \E[ S_{n+1} - S_n 
 
 \#Proposition N25
 
-Consider ${X}$ a probability space and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ a stochastic process. Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${T}$. Then:
+Consider a sequence ${\{t_n \in [0,1]\}_{n \in \Nats}}$. Let ${\{n_k \in \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Then:
 
-$$\sum_{n = 0}^{N_k - 1} T_n \leq 2k$$
+$$\sum_{n = 0}^{n_k - 1} t_n \leq 2k$$
 
 \#Proof of Proposition N25
 
-We prove by induction on ${k}$. For ${k = 0}$, the claim is obvious. Consider any ${x \in X}$. If ${N_k(x) = \infty}$ then ${N_{k+1}(x)=\infty}$ and, by the induction hypothesis
+We prove by induction on ${k}$. For ${k = 0}$, the claim is obvious. If ${n_k = \infty}$ then ${n_{k+1}=\infty}$ and, by the induction hypothesis
 
-$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) = \sum_{n = 0}^{\infty} T_n(x) = \sum_{n = 0}^{N_{k}(x) - 1} T_n(x) \leq 2k \leq 2(k+1)$$
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n = \sum_{n = 0}^{\infty} t_n = \sum_{n = 0}^{n_k - 1} t_n \leq 2k \leq 2(k+1)$$
 
-Now assume ${N_k(x) < \infty}$. Then ${N_{k+1}(x) > N_k(x)}$ (because for the sum in the definition of ${N}$ to be ${\geq 1}$ it has to be non-empty), therefore
+Now assume ${n_k < \infty}$. Then ${n_{k+1} > n_k}$ (because for the sum in the definition of accumulation times to be ${\geq 1}$ it has to be non-empty), therefore
 
-$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) = \sum_{n = 0}^{N_{k}(x) - 1} T_n(x) + \sum_{n = N_k(x)}^{N_{k + 1}(x) - 1} T_n(x)$$
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n = \sum_{n = 0}^{n_k - 1} t_n + \sum_{n = n_k}^{n_{k+1} - 1} t_n$$
 
 By the induction hypothesis
 
-$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) \leq 2k + \sum_{n = N_k(x)}^{N_{k + 1}(x) - 1} T_n(x)$$
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k + \sum_{n = n_k}^{n_{k+1} - 1} t_n$$
 
-If ${N_{k+1}(x) < \infty}$ then
+If ${n_{k+1} < \infty}$ then
 
-$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) \leq 2k + \sum_{n = N_k(x)}^{N_{k + 1}(x) - 2} T_n(x) + T_{N_{k+1}(x)-1}(x)$$
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k + \sum_{n = n_k}^{n_{k+1} - 2} t_n + t_{n_{k+1}-1}$$
 
-By definition of ${N}$, the middle term is ${< 1}$. By definition of ${T}$, the last term is ${\leq 1}$. We get
+By definition of accumulation times, the middle term is ${< 1}$. By definition of ${t}$, the last term is ${\leq 1}$. We get
 
-$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) < 2k + 1 + 1 = 2(k+1)$$
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n < 2k + 1 + 1 = 2(k+1)$$
 
-Finally, assume ${N_{k+1}(x) = \infty}$. We have
+Finally, assume ${n_{k+1} = \infty}$. We have
 
-$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) \leq 2k + \sum_{n = N_k(x)}^{\infty} T_n(x)$$
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k + \sum_{n = n_k}^{\infty} t_n$$
 
-By definition of ${N}$, we get that for any ${m \in \Nats}$:
+By definition of accumulation times, we get that for any ${m \in \Nats}$:
 
-$$\sum_{n = N_k(x)}^{m} T_n(x) < 1$$
+$$\sum_{n = n_k}^{m} t_n < 1$$
 
 It follows that
 
-$$\sum_{n = N_k(x)}^{\infty} T_n(x) \leq 1$$
+$$\sum_{n = n_k}^{\infty} t_n \leq 1$$
 
 Combining, we have
 
-$$\sum_{n = 0}^{N_{k+1}(x) - 1} T_n(x) \leq 2k+1 <\ 2(k+1)$$
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k+1 <\ 2(k+1)$$
 
 \#Proposition N24
 
@@ -632,6 +636,16 @@ By Proposition N25, $U_{\min(n,N_k)} \leq U_{N_k} \leq 2k$, so ${\Sqn{U_{\min(n,
 $$\Abs{S_{\min(n,N_k)}} \leq \Abs{S_0} + U_{\min(n,N_k)} \leq \Abs{S_0} + 2k$$
 
 Since ${\E[\Abs{S_0}] < \infty}$, it follows that ${\Sqn{S_{\min(n,N_k)}}}$ is uniformly integrable.
+
+\#Proposition N27
+
+Consider sequences ${\Sqn{s_n \in \Reals}}$ and ${\Sqn{t_n \in [0,1]}}$. Let ${\{n_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Assume that ${\Abs{s_{n+1} - s_n} \leq t_n}$ and that either all ${n_{k}}$ are finite or $s$ converges. Denote $s_{n_k}:=\lim_{n \rightarrow n_k} s_n$. Then, ${\Abs{s_{n_{k+1}}-s_{n_k}} \leq 2}$.
+
+\#Proof of Proposition N27
+
+Fix ${k \in \Nats}$...
+
+TBD
 
 \section{Appendix C}
 
