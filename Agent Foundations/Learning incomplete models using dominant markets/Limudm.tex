@@ -405,6 +405,12 @@ $$\E[S^0_{N_{k+1}} \mid \F_{N_k}] \geq S^0_{N_{k}}$$
 
 Clearly, ${\Sq{S^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E[\Abs{S^0_{N_k}}] < \infty}$ (${S^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{S^0_{\min(n,N_k)}}}$). We conclude that ${\Sq{S^0_{N_k}}{k}}$ is a submartingale.
 
+By Proposition N27, ${\Abs{S^0_{N_{k+1}}-S^0_{N_k}}} \leq 2$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
+
+$$\Prb[S^0_{N_k} - S_0 < -k] \leq \exp(-\frac{k^2}{2 \cdot 2^2 \cdot k})=\exp(-\frac{k}{8})$$
+
+Since ${\sum_k \exp(-\frac{k}{8}) < \infty}$, it holds with probability 1 that there is only a finite number of ${k \in \Nats}$ s.t. ${S^0_{N_k} - S_0 < -k}$.
+
 TBD
 
 \section{Appendix B}
@@ -639,13 +645,19 @@ Since ${\E[\Abs{S_0}] < \infty}$, it follows that ${\Sqn{S_{\min(n,N_k)}}}$ is u
 
 \#Proposition N27
 
-Consider sequences ${\Sqn{s_n \in \Reals}}$ and ${\Sqn{t_n \in [0,1]}}$. Let ${\{n_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Assume that ${\Abs{s_{n+1} - s_n} \leq t_n}$ and that either all ${n_{k}}$ are finite or $s$ converges. Denote $s_{n_k}:=\lim_{n \rightarrow n_k} s_n$. Then, ${\Abs{s_{n_{k+1}}-s_{n_k}} \leq 2}$.
+Consider sequences ${\Sqn{s_n \in \Reals}}$ and ${\Sqn{t_n \in [0,1]}}$. Let ${\{n_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Assume that ${\Abs{s_{n+1} - s_n} \leq t_n}$ and that either all ${n_{k}}$ are finite or $s$ converges. Denote $s_{n_k}:=\lim_{n \rightarrow n_k} s_n$. Then, ${\Abs{s_{n_{k+1}}-s_{n_k}} < 2}$.
 
 \#Proof of Proposition N27
 
-Fix ${k \in \Nats}$...
+Fix ${k \in \Nats}$. If ${n_k = \infty}$, the claim is trivial. Consider the case ${n_{k+1} < \infty}$. We have
 
-TBD
+$$\Abs{s_{n_{k+1}}-s_{n_k}} \leq \sum_{n=n_k}^{n_{k+1}-1} t_n = \sum_{n=n_k}^{n_{k+1}-2} t_n + t_{n_{k+1}-1} < 1+1=2$$
+
+Now consider the case ${n_k < \infty}$, ${n_{k+1} = \infty}$. By definition of accumulation times:
+
+$$\sum_{n=n_k}^{\infty} t_n \leq 1$$
+
+It follows that $\Abs{s_{n_{k+1}}-s_{n_k}} \leq 1$.
 
 \section{Appendix C}
 
