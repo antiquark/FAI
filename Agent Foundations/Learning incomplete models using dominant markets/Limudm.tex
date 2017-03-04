@@ -407,9 +407,45 @@ Clearly, ${\Sq{S^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second
 
 By Proposition N27, ${\Abs{S^0_{N_{k+1}}-S^0_{N_k}}} \leq 2$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
 
-$$\Prb[S^0_{N_k} - S_0 < -k] \leq \exp(-\frac{k^2}{2 \cdot 2^2 \cdot k})=\exp(-\frac{k}{8})$$
+$$\Prb[S^0_{N_k} - S_0 < -c k] \leq \exp(-\frac{(ck)^2}{2 \cdot 2^2 \cdot k})=\exp(-\frac{c^2 k}{8})$$
 
-Since ${\sum_k \exp(-\frac{k}{8}) < \infty}$, it holds with probability 1 that there is only a finite number of ${k \in \Nats}$ s.t. ${S^0_{N_k} - S_0 < -k}$.
+Since ${\sum_k \exp(-\frac{c^2 k}{8}) < \infty}$, it follows that
+
+$$\Prb[\exists k \in \Nats \forall l > k: S^0_{N_l} - S_0 \geq -c l]=1$$
+
+$$\Prb[\exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq c (\sum_{n=0}^{N_l-1} T_n -  l)]=1$$
+
+By Proposition N28
+
+$$\Prb[\sum_{n=0}^\infty  T_n = \infty \implies \exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq 0]=1$$
+
+It remains to show that if ${x \in X}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then the condition above fails. Consider any such ${x \in X}$. ${\Abs{S_n(x) - S_0(x)} \leq \sum_{m=0}^{n-1} T_n(x)}$, therefore ${\sum_{n=0}^\infty  T_n(x) = \infty}$. On the other hand, by Proposition N29, ${\inf_{k} S_{N_k(x)}(x) = -\infty}$.
+ 
+\#Proposition N30
+
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$ and ${\Sqn{S'_n:X \rightarrow \Reals}}$ an arbitrary stochastic process. Assume that there are ${c > 0}$ and ${s > 0}$ s.t.:
+
+$$\E[\Abs{S_0}] < \infty$$
+
+$$\Abs{S_n - S'_n} \leq s$$
+
+$$\Abs{S'_{n+1}-S'_n} \leq T_n$$
+
+$$\E[S'_{n+1} - S'_n \mid \F_n] \geq c T_n$$
+
+Then, ${\inf_{n} S_n > -\infty}$ with probability 1???
+
+\#Proof of Proposition N30
+
+Define ${S''_n:= \E[S'_n \mid \F_n]}$. We have
+
+$$\Abs{S''_n - S_n} = \Abs{\E[S'_n \mid \F_n] - S_n} = \Abs{\E[S'_n - S_n \mid \F_n]} \leq s$$
+
+$$\E[\Abs{S''_0}] = \E[\Abs{\E[S'_0 \mid \F_0]}] \leq \E[\E[\Abs{S'_0} \mid \F_0]] = \E[\Abs{S'_0}] \leq \E[\Abs{S_0}] + s < \infty$$
+
+$$\Abs{S''_{n+1} - S''_n} = \Abs{\E[S'_{n+1} \mid \F_{n+1}]-\E[S'_n \mid \F_n]}=\Abs{\E[S'_{n+1}-S'_n \mid \F_{n+1}]+\E[S'_{n} \mid \F_{n+1}]-\E[S'_n \mid \F_n]} \leq ?$$
+
+...${S''}$ and ${T}$ satisfy all the conditions of Proposition N20???, hence ${\inf_n S_n'' > -\infty}$ with probability 1. Also, ${\Abs{S_n - S_n''} \leq s}$, yielding the desired result.
 
 TBD
 
@@ -658,6 +694,32 @@ Now consider the case ${n_k < \infty}$, ${n_{k+1} = \infty}$. By definition of a
 $$\sum_{n=n_k}^{\infty} t_n \leq 1$$
 
 It follows that $\Abs{s_{n_{k+1}}-s_{n_k}} \leq 1$.
+
+\#Proposition N28
+
+Consider a sequence ${\{t_n \in [0,1]\}_{n \in \Nats}}$. Let ${\{n_k \in \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Assume that ${\sum_n^\infty t_n = \infty}$. Then:
+
+$$\sum_{n = 0}^{n_k - 1} t_n \geq k$$
+
+\#Proof of Proposition N28
+
+We prove by induction on ${k}$. For ${k=0}$, the claim is obvious. ${\sum_n^\infty t_n = \infty}$ implies that ${n_0 < n_1 < \ldots < \infty}$, therefore
+
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n = \sum_{n = 0}^{n_{k} - 1} t_n + \sum_{n = n_k}^{n_{k+1} - 1} t_n$$
+
+The first term is ${\geq k}$ by induction. The second term is ${\geq 1}$ by definition of accumulation time.
+
+\#Proposition N29
+
+Consider sequences ${\{s_n \in \Reals\}_{n \in \Nats}}$ and ${\{t_n \in [0,1]\}_{n \in \Nats}}$. Assume that ${\Abs{s_{n+1}-s_n} \leq t_n}$ and ${\inf_n s_n = -\infty}$. In particular, ${\sum_n^\infty t_n = \infty}$. Let ${\{n_k \in \Nats\}_{k \in \Nats}}$ be the accumulation times of ${t}$ (finite because of the previous observation).  Then, ${\inf_k s_{n_k} = -\infty}$.
+
+\#Proof of Proposition N29
+
+We need to prove that for any ${s > 0}$ and ${k \in \Nats}$, there is ${l \geq k}$ s.t. ${s_{n_l} < -s}$. We know that there is ${n \geq n_k}$ s.t. ${s_n\ <\ -s-2}$. We have ${n_0 < n_1 < \ldots < \infty}$, therefore we can choose ${l \geq k}$ s.t. ${n_l \leq n < n_{l+1}}$. We get
+
+$$\Abs{s_n-s_{n_l}} \leq \sum_{m=n_l}^{n - 1} t_m \leq \sum_{m=n_l}^{n_{l+1} - 1} t_m = \sum_{m=n_l}^{n_{l+1} - 2} t_m + t_{n_{l+1}-1} < 1 + 1 =2$$
+
+Therefore, ${s_{n_l} < -s}$. 
 
 \section{Appendix C}
 
