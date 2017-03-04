@@ -208,7 +208,7 @@ Even if a metastrategy is profitable, it doesn't mean that a smart trader should
 
 \#Definition N5
 
-Fix a metastrategy ${\upsilon}$. We define the trader ${T_\upsilon}$ and the measurable mappings ${\{U_{\upsilon  n}: Y_n \times P(X)^n \rightarrow C(X)\}_{n \in \Nats}}$ recursively as follows:
+Fix a metastrategy ${\upsilon}$. We define the trader ${T_\upsilon}$ and the measurable mappings ${\{U_{\upsilon  n}: Y_n \times \Prob(X)^n \rightarrow C(X)\}_{n \in \Nats}}$ recursively as follows:
  
  $$U_0 := 0$$
 
@@ -220,7 +220,7 @@ $$T_{\upsilon,n+1}(y, \{\mu_m\}_{m \leq n}) := \begin{cases}\upsilon(y) \text{ i
 
 \#Lemma N3
 
-Consider ${\mu^* \in P(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Assume ${M}$ dominates ${T_\upsilon}$. Then, for ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
+Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Assume ${M}$ dominates ${T_\upsilon}$. Then, for ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
 
 $$\lim_{n \rightarrow \infty} (\E_{K_n(y_n)}[\upsilon(y_n,M_n(y_n))]-\E_{M_n(y_n)}[\upsilon(y_n,M_n(y_n))])= 0$$
 
@@ -423,29 +423,51 @@ It remains to show that if ${x \in X}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then 
  
 \#Proposition N30
 
-Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$ and ${\Sqn{S'_n:X \rightarrow \Reals}}$ an arbitrary stochastic process. Assume that there are ${c > 0}$ and ${s > 0}$ s.t.:
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S'_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$ and ${\Sqn{S_n:X \rightarrow \Reals}}$ an arbitrary stochastic process. Assume that there are ${\alpha,\beta > 0}$ s.t.:
+
+$$\Abs{S_n - S'_n} \leq \frac{\alpha}{4}$$
 
 $$\E[\Abs{S_0}] < \infty$$
 
-$$\Abs{S_n - S'_n} \leq s$$
+$$\Abs{S_{n+1}-S_n} \leq T_n$$
 
-$$\Abs{S'_{n+1}-S'_n} \leq T_n$$
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta T_n$$
 
-$$\E[S'_{n+1} - S'_n \mid \F_n] \geq c T_n$$
-
-Then, ${\inf_{n} S_n > -\infty}$ with probability 1???
+Then, ${\inf_{n} S_n > -\infty}$ (equivalently ${\inf_{n} S'_n > -\infty}$) with probability 1.
 
 \#Proof of Proposition N30
 
-Define ${S''_n:= \E[S'_n \mid \F_n]}$. We have
+Define ${S''_n:= \E[S_n \mid \F_n]}$. We have
 
-$$\Abs{S''_n - S_n} = \Abs{\E[S'_n \mid \F_n] - S_n} = \Abs{\E[S'_n - S_n \mid \F_n]} \leq s$$
+$$\E[\Abs{S''_0}] = \E[\Abs{\E[S_0 \mid \F_0]}] \leq \E[\E[\Abs{S_0} \mid \F_0]] = \E[\Abs{S_0}] < \infty$$
 
-$$\E[\Abs{S''_0}] = \E[\Abs{\E[S'_0 \mid \F_0]}] \leq \E[\E[\Abs{S'_0} \mid \F_0]] = \E[\Abs{S'_0}] \leq \E[\Abs{S_0}] + s < \infty$$
+$$\Abs{S''_n - S'_n} = \Abs{\E[S_n \mid \F_n] - S'_n} = \Abs{\E[S_n - S'_n \mid \F_n]} \leq \frac{\alpha}{4}$$
 
-$$\Abs{S''_{n+1} - S''_n} = \Abs{\E[S'_{n+1} \mid \F_{n+1}]-\E[S'_n \mid \F_n]}=\Abs{\E[S'_{n+1}-S'_n \mid \F_{n+1}]+\E[S'_{n} \mid \F_{n+1}]-\E[S'_n \mid \F_n]} \leq ?$$
+$$\Abs{S''_n - S_n} \leq \Abs{S''_n - S'_n} + \Abs{S'_n - S_n} \leq \frac{\alpha}{2}$$
 
-...${S''}$ and ${T}$ satisfy all the conditions of Proposition N20???, hence ${\inf_n S_n'' > -\infty}$ with probability 1. Also, ${\Abs{S_n - S_n''} \leq s}$, yielding the desired result.
+$$\forall n' \geq n: \Abs{S''_{n'}-S''_n} \leq \Abs{S_{n'}-S_n} + \alpha \leq \sum_{m=n}^{n'-1} T_m + \alpha$$
+
+$$\E[S''_{n+1}-S''_n \mid \F_n] = \E[\E[S_{n+1} \mid \F_{n+1}]-\E[S_n \mid \F_n] \mid \F_n] = \E[S_{n+1}-S_n \mid \F_n] \geq \beta T_n$$
+
+By Proposition N20, ${\inf_n S''_n > -\infty}$ with probability 1. Since ${\Abs{S''_n - S_n} \leq \frac{\alpha}{2}}$, we get the desired result.
+
+\#Proposition N31
+
+Consider ${\Sqn{\Ob_n}}$, ${\Sqn{Y_n:=\prod_{m < n} \Ob_m}}$ and ${X:=\prod_n \Ob_n}$ as before. Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Then, for ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$ and ${X_n:=\pi_{n\omega}^{-1}(y_n)}$:
+
+$$\inf_{n \in \Nats} \min_{z \in X_n} \SW T^M_{\upsilon n}(y_n,z) > -\infty$$
+
+\#Proof of Proposition N31
+
+We regard ${X}$ as a probability space using the ${\sigma}$-algebra ${\UM(X)}$ and the probability measure ${\mu^*}$. For any ${n \in \Nats}$, we define ${\F_n \subseteq \UM(X)}$, ${S_n,S'_n: X \rightarrow \Reals}$ and ${T_n: X \rightarrow [0,1]}$ by 
+
+$${\F_n := \pi_{n\omega}^{-1}(\UM(Y_n))}$$
+
+$$S_n(x):= \SW T^M_{\upsilon n}(\pi_{n\omega}(x),x)$$
+
+$$S'_n(x):= \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \SW T^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
+
+$$T_n(x):=\max_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z) - \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
 
 TBD
 
@@ -711,13 +733,17 @@ The first term is ${\geq k}$ by induction. The second term is ${\geq 1}$ by defi
 
 \#Proposition N29
 
-Consider sequences ${\{s_n \in \Reals\}_{n \in \Nats}}$ and ${\{t_n \in [0,1]\}_{n \in \Nats}}$. Assume that ${\Abs{s_{n+1}-s_n} \leq t_n}$ and ${\inf_n s_n = -\infty}$. In particular, ${\sum_n^\infty t_n = \infty}$. Let ${\{n_k \in \Nats\}_{k \in \Nats}}$ be the accumulation times of ${t}$ (finite because of the previous observation).  Then, ${\inf_k s_{n_k} = -\infty}$.
+Consider sequences ${\{s_n \in \Reals\}_{n \in \Nats}}$ and ${\{t_n \in [0,1]\}_{n \in \Nats}}$. Assume that there is ${\alpha \geq 0}$ s.t.
+
+$${\forall n' \geq n: \Abs{s_{n'}-s_n} \leq \sum_{m=n}^{n'-1} t_m + \alpha}$$
+
+Assume further that ${\inf_n s_n = -\infty}$. In particular, ${\sum_n^\infty t_n = \infty}$. Let ${\{n_k \in \Nats\}_{k \in \Nats}}$ be the accumulation times of ${t}$ (finite because of the previous observation).  Then, ${\inf_k s_{n_k} = -\infty}$.
 
 \#Proof of Proposition N29
 
-We need to prove that for any ${s > 0}$ and ${k \in \Nats}$, there is ${l \geq k}$ s.t. ${s_{n_l} < -s}$. We know that there is ${n \geq n_k}$ s.t. ${s_n\ <\ -s-2}$. We have ${n_0 < n_1 < \ldots < \infty}$, therefore we can choose ${l \geq k}$ s.t. ${n_l \leq n < n_{l+1}}$. We get
+We need to prove that for any ${s > 0}$ and ${k \in \Nats}$, there is ${l \geq k}$ s.t. ${s_{n_l} < -s}$. We know that there is ${n \geq n_k}$ s.t. ${s_n\ <\ -(s+\alpha+2)}$. We have ${n_0 < n_1 < \ldots < \infty}$, therefore we can choose ${l \geq k}$ s.t. ${n_l \leq n < n_{l+1}}$. We get
 
-$$\Abs{s_n-s_{n_l}} \leq \sum_{m=n_l}^{n - 1} t_m \leq \sum_{m=n_l}^{n_{l+1} - 1} t_m = \sum_{m=n_l}^{n_{l+1} - 2} t_m + t_{n_{l+1}-1} < 1 + 1 =2$$
+$$\Abs{s_n-s_{n_l}} \leq \sum_{m=n_l}^{n - 1} t_m + \alpha \leq \sum_{m=n_l}^{n_{l+1} - 1} t_m  + \alpha = \sum_{m=n_l}^{n_{l+1} - 2} t_m + t_{n_{l+1}-1} + \alpha < 1 + 1  + \alpha = \alpha + 2$$
 
 Therefore, ${s_{n_l} < -s}$. 
 
