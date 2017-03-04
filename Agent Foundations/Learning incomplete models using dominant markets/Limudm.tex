@@ -369,13 +369,13 @@ $$M_n(y):=\mathcal{M}_n(y,T_n^M(y))$$
 
 \#Proposition N20
 
-Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that there is ${c > 0}$ s.t.:
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that there are ${\alpha, \beta > 0}$ s.t.:
 
 $$\E[\Abs{S_0}] < \infty$$
 
-$$\Abs{S_{n+1}-S_n} \leq T_n$$
+$$\forall n' \geq n:\Abs{S_{n'}-S_{n}} \leq \sum_{m=n}^{n'-1} T_m + \alpha$$
 
-$$\E[S_{n+1} - S_n \mid \F_n] \geq c T_n$$
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta T_n$$
 
 Then, ${\inf_{n} S_n > -\infty}$ with probability 1.
 
@@ -397,7 +397,7 @@ Consider ${X}$ a probability space and ${\{T_n:X \rightarrow \Reals\}_{n \in \Na
 
 Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
 
-$$S^0_n := S_n - c \sum_{m=0}^{n-1} T_m$$
+$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} T_m$$
 
 By Proposition N21, ${S^0}$ is a submartingale. Let ${\Sqn{N_n:X \rightarrow \Nats \sqcup \{\infty\}}}$ be the accumulation times of ${T}$. By proposition N23, ${\Sqn{S^0_{\min(n,N_k)}}}$ are submartingales for all ${k}$. By Proposition\ N24, each of them is uniformly integrable. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem N22, we get
 
@@ -405,21 +405,21 @@ $$\E[S^0_{N_{k+1}} \mid \F_{N_k}] \geq S^0_{N_{k}}$$
 
 Clearly, ${\Sq{S^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E[\Abs{S^0_{N_k}}] < \infty}$ (${S^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{S^0_{\min(n,N_k)}}}$). We conclude that ${\Sq{S^0_{N_k}}{k}}$ is a submartingale.
 
-By Proposition N27, ${\Abs{S^0_{N_{k+1}}-S^0_{N_k}}} \leq 2$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
+By Proposition N27, ${\Abs{S^0_{N_{k+1}}-S^0_{N_k}}} \leq \alpha + 2$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
 
-$$\Prb[S^0_{N_k} - S_0 < -c k] \leq \exp(-\frac{(ck)^2}{2 \cdot 2^2 \cdot k})=\exp(-\frac{c^2 k}{8})$$
+$$\Prb[S^0_{N_k} - S_0 < -\beta k] \leq \exp(-\frac{(\beta k)^2}{2(\alpha+2)^2 k})=\exp(-\frac{\beta^2 k}{2(\alpha+2)^2})$$
 
-Since ${\sum_k \exp(-\frac{c^2 k}{8}) < \infty}$, it follows that
+Since ${\sum_k \exp(-\frac{\beta^2 k}{2(\alpha+2)^2}) < \infty}$, it follows that
 
-$$\Prb[\exists k \in \Nats \forall l > k: S^0_{N_l} - S_0 \geq -c l]=1$$
+$$\Prb[\exists k \in \Nats \forall l > k: S^0_{N_l} - S_0 \geq -\beta l]=1$$
 
-$$\Prb[\exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq c (\sum_{n=0}^{N_l-1} T_n -  l)]=1$$
+$$\Prb[\exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq \beta (\sum_{n=0}^{N_l-1} T_n -  l)]=1$$
 
 By Proposition N28
 
 $$\Prb[\sum_{n=0}^\infty  T_n = \infty \implies \exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq 0]=1$$
 
-It remains to show that if ${x \in X}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then the condition above fails. Consider any such ${x \in X}$. ${\Abs{S_n(x) - S_0(x)} \leq \sum_{m=0}^{n-1} T_n(x)}$, therefore ${\sum_{n=0}^\infty  T_n(x) = \infty}$. On the other hand, by Proposition N29, ${\inf_{k} S_{N_k(x)}(x) = -\infty}$.
+It remains to show that if ${x \in X}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then the condition above fails. Consider any such ${x \in X}$. ${\Abs{S_n(x) - S_0(x)} \leq \sum_{m=0}^{n-1} T_n(x) + \alpha}$, therefore ${\sum_{n=0}^\infty  T_n(x) = \infty}$. On the other hand, by Proposition N29, ${\inf_{k} S_{N_k(x)}(x) = -\infty}$.
  
 \#Proposition N30
 
@@ -557,29 +557,25 @@ Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in \D
 
 \#Proposition N21
 
-Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that there is ${c > 0}$ s.t.:
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that there are ${\alpha,\beta > 0}$ s.t.:
 
 $$\E[\Abs{S_0}] < \infty$$
 
-$$\Abs{S_{n+1}-S_n} \leq T_n$$
+$$\Abs{S_{n}-S_0} \leq \sum_{m=0}^{n-1} T_m + \alpha$$
 
-$$\E[S_{n+1} - S_n \mid \F_n] \geq c T_n$$
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta T_n$$
 
 Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
 
-$$S^0_n := S_n - c \sum_{m=0}^{n-1} T_m$$
+$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} T_m$$
  
 Then, ${S^0}$ is a submartingale.
 
 \#Proof of Proposition N21
 
-We prove by induction that ${\E[\Abs{S^0_n}] < \infty}$:
+Obviously, ${S^0}$ is adapted to ${\F}$. We have
 
-$${\E[\Abs{S^0_0}] = \E[\Abs{S_0}] < \infty}$$
-
-$$\E[\Abs{S^0_{n+1}}] \leq \E[\Abs{S^0_n}] + \E[\Abs{S^0_{n+1}-S^0_n}] \leq \E[\Abs{S^0_n}] + \E[T_n] \leq \E[\Abs{S^0_n}] + 1$$
-
-Obviously, ${S^0}$ is adapted to ${\F}$. Finally, we have
+$$\E[\Abs{S^0_{n}}] \leq \E[\Abs{S_n}] + \beta n \leq \E[\Abs{S_0}] + \E[\Abs{S_n - S_0}] + \beta n \leq \E[\Abs{S_0}] + 2\beta n + \alpha < \infty$$
 
 $$\E[S^0_{n+1} \mid \F_n] = \E[S_{n+1} \mid \F_n] - c \sum_{m = 0}^{n} T_m$$
 
@@ -659,21 +655,21 @@ $$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k+1 <\ 2(k+1)$$
 
 \#Proposition N24
 
-Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that
-
-$$\E[\Abs{S_0}] < \infty$$
-
-$$\Abs{S_{n+1}-S_n} \leq T_n$$
-
-Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${T}$. Define ${\Sqn{U_n: X \rightarrow \Reals}}$ by
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Define ${\Sqn{U_n: X \rightarrow \Reals}}$ by
 
 $$U_n := \sum_{m=0}^{n-1} T_m$$
 
-Then, for any ${k \in \Nats}$, ${\Sqn{S_{\min(n,N_k)}}}$ and ${\Sqn{U_{\min(n,N_k)}}}$ are uniformly integrable.
+Assume that there is ${\alpha \geq 0}$ s.t.
+
+$$\E[\Abs{S_0}] < \infty$$
+
+$$\Abs{S_{n}-S_0} \leq U_n + \alpha$$
+
+Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${T}$. Then, for any ${k \in \Nats}$, ${\Sqn{S_{\min(n,N_k)}}}$ and ${\Sqn{U_{\min(n,N_k)}}}$ are uniformly integrable.
 
 \#Proof of Proposition N24
 
-By Proposition N25, $U_{\min(n,N_k)} \leq U_{N_k} \leq 2k$, so ${\Sqn{U_{\min(n,N_k)}}}$ is uniformly bounded and in particular uniformly integrable. Now, $\Abs{S_{n+1}-S_n} \leq T_n$ implies that ${\Abs{S_{n}-S_0} \leq U_n}$. We get
+By Proposition N25, $U_{\min(n,N_k)} \leq U_{N_k} \leq 2k$, so ${\Sqn{U_{\min(n,N_k)}}}$ is uniformly bounded and in particular uniformly integrable. Moreover:
 
 $$\Abs{S_{\min(n,N_k)}} \leq \Abs{S_0} + U_{\min(n,N_k)} \leq \Abs{S_0} + 2k$$
 
@@ -681,19 +677,23 @@ Since ${\E[\Abs{S_0}] < \infty}$, it follows that ${\Sqn{S_{\min(n,N_k)}}}$ is u
 
 \#Proposition N27
 
-Consider sequences ${\Sqn{s_n \in \Reals}}$ and ${\Sqn{t_n \in [0,1]}}$. Let ${\{n_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Assume that ${\Abs{s_{n+1} - s_n} \leq t_n}$ and that either all ${n_{k}}$ are finite or $s$ converges. Denote $s_{n_k}:=\lim_{n \rightarrow n_k} s_n$. Then, ${\Abs{s_{n_{k+1}}-s_{n_k}} < 2}$.
+Consider sequences ${\Sqn{s_n \in \Reals}}$ and ${\Sqn{t_n \in [0,1]}}$. Let ${\{n_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Assume that there is ${\alpha \geq 0}$ s.t.
+
+$${\forall n' \geq n: \Abs{s_{n'} - s_n} \leq \sum_{m=n}^{n'-1} t_m + \alpha}$$
+
+Assume further that either all ${n_{k}}$ are finite or $s$ converges. Denote $s_{n_k}:=\lim_{n \rightarrow n_k} s_n$. Then, ${\Abs{s_{n_{k+1}}-s_{n_k}} < \alpha + 2}$.
 
 \#Proof of Proposition N27
 
 Fix ${k \in \Nats}$. If ${n_k = \infty}$, the claim is trivial. Consider the case ${n_{k+1} < \infty}$. We have
 
-$$\Abs{s_{n_{k+1}}-s_{n_k}} \leq \sum_{n=n_k}^{n_{k+1}-1} t_n = \sum_{n=n_k}^{n_{k+1}-2} t_n + t_{n_{k+1}-1} < 1+1=2$$
+$$\Abs{s_{n_{k+1}}-s_{n_k}} \leq \sum_{n=n_k}^{n_{k+1}-1} t_n + \alpha = \sum_{n=n_k}^{n_{k+1}-2} t_n + t_{n_{k+1}-1} + \alpha < 1+1 + \alpha= \alpha + 2$$
 
 Now consider the case ${n_k < \infty}$, ${n_{k+1} = \infty}$. By definition of accumulation times:
 
 $$\sum_{n=n_k}^{\infty} t_n \leq 1$$
 
-It follows that $\Abs{s_{n_{k+1}}-s_{n_k}} \leq 1$.
+It follows that $\Abs{s_{n_{k+1}}-s_{n_k}} = \Abs{\lim_{n \rightarrow \infty} s_{n}-s_{n_k}} \leq \alpha + 1$.
 
 \#Proposition N28
 
