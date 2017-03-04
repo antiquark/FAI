@@ -369,13 +369,13 @@ $$M_n(y):=\mathcal{M}_n(y,T_n^M(y))$$
 
 \#Proposition N20
 
-Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that there are ${\alpha, \beta > 0}$ s.t.:
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${t,\alpha,\beta > 0}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,t]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that:
 
 $$\E[\Abs{S_0}] < \infty$$
 
-$$\forall n' \geq n:\Abs{S_{n'}-S_{n}} \leq \sum_{m=n}^{n'-1} T_m + \alpha$$
+$$\forall n' \geq n:\Abs{S_{n'}-S_{n}} \leq \sum_{m=n}^{n'-1} \Delta_m + \alpha$$
 
-$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta T_n$$
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta \Delta_n$$
 
 Then, ${\inf_{n} S_n > -\infty}$ with probability 1.
 
@@ -391,15 +391,15 @@ $$n_0 := 0$$
 
 $$n_{k+1} = \begin{cases}\inf \{n \in \Nats \mid \sum_{m=n_k}^{n-1} t_m \geq 1\} \text{ if } n_k < \infty\\\infty \text{ if } n_k = \infty\end{cases}$$
 
-Consider ${X}$ a probability space and ${\{T_n:X \rightarrow \Reals\}_{n \in \Nats}}$ a stochastic process. The *accumulation times of ${T}$* are ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ defined pointwise as above. Clearly, they are stochastic processes and whenever ${T}$ is adapted to a filtration ${\Sqn{\F_n \subseteq 2^X}}$, they are stopping times w.r.t. ${\F}$.
+Consider ${X}$ a probability space and ${\{\Delta_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ a stochastic process. The *accumulation times of ${\Delta}$* are ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ defined pointwise as above. Clearly, they are stochastic processes and whenever ${\Delta}$ is adapted to a filtration ${\Sqn{\F_n \subseteq 2^X}}$, they are stopping times w.r.t. ${\F}$.
 
 \#Proof of Proposition N20
 
-Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
+Without loss of generality, we can assume ${t = 1}$ (otherwise we can renormalize ${S}$, ${\Delta}$ and ${\alpha}$ by a factor of ${t^{-1}}$). Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
 
-$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} T_m$$
+$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} \Delta_m$$
 
-By Proposition N21, ${S^0}$ is a submartingale. Let ${\Sqn{N_n:X \rightarrow \Nats \sqcup \{\infty\}}}$ be the accumulation times of ${T}$. By proposition N23, ${\Sqn{S^0_{\min(n,N_k)}}}$ are submartingales for all ${k}$. By Proposition\ N24, each of them is uniformly integrable. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem N22, we get
+By Proposition N21, ${S^0}$ is a submartingale. Let ${\Sqn{N_n:X \rightarrow \Nats \sqcup \{\infty\}}}$ be the accumulation times of ${\Delta}$. By proposition N23, ${\Sqn{S^0_{\min(n,N_k)}}}$ are submartingales for all ${k}$. By Proposition\ N24, each of them is uniformly integrable. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem N22, we get
 
 $$\E[S^0_{N_{k+1}} \mid \F_{N_k}] \geq S^0_{N_{k}}$$
 
@@ -413,25 +413,25 @@ Since ${\sum_k \exp(-\frac{\beta^2 k}{2(\alpha+2)^2}) < \infty}$, it follows tha
 
 $$\Prb[\exists k \in \Nats \forall l > k: S^0_{N_l} - S_0 \geq -\beta l]=1$$
 
-$$\Prb[\exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq \beta (\sum_{n=0}^{N_l-1} T_n -  l)]=1$$
+$$\Prb[\exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq \beta (\sum_{n=0}^{N_l-1} \Delta_n -  l)]=1$$
 
 By Proposition N28
 
-$$\Prb[\sum_{n=0}^\infty  T_n = \infty \implies \exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq 0]=1$$
+$$\Prb[\sum_{n=0}^\infty  \Delta_n = \infty \implies \exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq 0]=1$$
 
-It remains to show that if ${x \in X}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then the condition above fails. Consider any such ${x \in X}$. ${\Abs{S_n(x) - S_0(x)} \leq \sum_{m=0}^{n-1} T_n(x) + \alpha}$, therefore ${\sum_{n=0}^\infty  T_n(x) = \infty}$. On the other hand, by Proposition N29, ${\inf_{k} S_{N_k(x)}(x) = -\infty}$.
+It remains to show that if ${x \in X}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then the condition above fails. Consider any such ${x \in X}$. ${\Abs{S_n(x) - S_0(x)} \leq \sum_{m=0}^{n-1} \Delta_n(x) + \alpha}$, therefore ${\sum_{n=0}^\infty  \Delta_n(x) = \infty}$. On the other hand, by Proposition N29, ${\inf_{k} S_{N_k(x)}(x) = -\infty}$.
  
 \#Proposition N30
 
-Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S'_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$ and ${\Sqn{S_n:X \rightarrow \Reals}}$ an arbitrary stochastic process. Assume that there are ${\alpha,\beta > 0}$ s.t.:
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${t,\alpha,\beta > 0}$, ${\{S'_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,t]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$ and ${\Sqn{S_n:X \rightarrow \Reals}}$ an arbitrary stochastic process. Assume that there are ${\alpha,\beta > 0}$ s.t.:
 
 $$\Abs{S_n - S'_n} \leq \frac{\alpha}{4}$$
 
 $$\E[\Abs{S_0}] < \infty$$
 
-$$\Abs{S_{n+1}-S_n} \leq T_n$$
+$$\Abs{S_{n+1}-S_n} \leq \Delta_n$$
 
-$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta T_n$$
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta \Delta_n$$
 
 Then, ${\inf_{n} S_n > -\infty}$ (equivalently ${\inf_{n} S'_n > -\infty}$) with probability 1.
 
@@ -445,9 +445,9 @@ $$\Abs{S''_n - S'_n} = \Abs{\E[S_n \mid \F_n] - S'_n} = \Abs{\E[S_n - S'_n \mid 
 
 $$\Abs{S''_n - S_n} \leq \Abs{S''_n - S'_n} + \Abs{S'_n - S_n} \leq \frac{\alpha}{2}$$
 
-$$\forall n' \geq n: \Abs{S''_{n'}-S''_n} \leq \Abs{S_{n'}-S_n} + \alpha \leq \sum_{m=n}^{n'-1} T_m + \alpha$$
+$$\forall n' \geq n: \Abs{S''_{n'}-S''_n} \leq \Abs{S_{n'}-S_n} + \alpha \leq \sum_{m=n}^{n'-1} \Delta_m + \alpha$$
 
-$$\E[S''_{n+1}-S''_n \mid \F_n] = \E[\E[S_{n+1} \mid \F_{n+1}]-\E[S_n \mid \F_n] \mid \F_n] = \E[S_{n+1}-S_n \mid \F_n] \geq \beta T_n$$
+$$\E[S''_{n+1}-S''_n \mid \F_n] = \E[\E[S_{n+1} \mid \F_{n+1}]-\E[S_n \mid \F_n] \mid \F_n] = \E[S_{n+1}-S_n \mid \F_n] \geq \beta \Delta_n$$
 
 By Proposition N20, ${\inf_n S''_n > -\infty}$ with probability 1. Since ${\Abs{S''_n - S_n} \leq \frac{\alpha}{2}}$, we get the desired result.
 
@@ -459,7 +459,7 @@ $$\inf_{n \in \Nats} \min_{z \in X_n} \SW T^M_{\upsilon n}(y_n,z) > -\infty$$
 
 \#Proof of Proposition N31
 
-We regard ${X}$ as a probability space using the ${\sigma}$-algebra ${\UM(X)}$ and the probability measure ${\mu^*}$. For any ${n \in \Nats}$, we define ${\F_n \subseteq \UM(X)}$, ${S_n,S'_n: X \rightarrow \Reals}$ and ${T_n: X \rightarrow [0,1]}$ by 
+We regard ${X}$ as a probability space using the ${\sigma}$-algebra ${\UM(X)}$ and the probability measure ${\mu^*}$. For any ${n \in \Nats}$, we define ${\F_n \subseteq \UM(X)}$ and ${S_n,S'_n,\Delta_n: X \rightarrow \Reals}$ by 
 
 $${\F_n := \pi_{n\omega}^{-1}(\UM(Y_n))}$$
 
@@ -467,7 +467,9 @@ $$S_n(x):= \SW T^M_{\upsilon n}(\pi_{n\omega}(x),x)$$
 
 $$S'_n(x):= \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \SW T^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
 
-$$T_n(x):=\max_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z) - \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
+$$\Delta_n(x):=\max_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z) - \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
+
+Clearly, ${\F}$ is a filtration of ${X}$, ${S,S',\Delta}$ are stochastic processes and ${S',\Delta}$ are adapted to ${\F}$.
 
 TBD
 
@@ -561,11 +563,11 @@ Taking $k \rightarrow \infty$, we get ${\Prb_{x\sim \mu}[M > f(x)] = 0}$ and hen
 
 \#Proposition N16
 
-Consider ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Define ${\Delta \subseteq Y \times \Prob(X)}$ by
+Consider ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Define ${Z \subseteq Y \times \Prob(X)}$ by
 
-$$\Delta:=\{(y,\mu) \in Y \times \Prob(X) \mid \Supp \mu \subseteq y \times Y'\}$$
+$$Z:=\{(y,\mu) \in Y \times \Prob(X) \mid \Supp \mu \subseteq y \times Y'\}$$
 
-Then, ${\Delta}$ is closed.
+Then, ${Z}$ is closed.
 
 \#Proof of Proposition N16
 
@@ -575,21 +577,21 @@ $${d_X((y_1,y_1'),(y_2,y_2')):=\max(d_Y(y_1,y_2),d_{Y'}(y_1',y_2'))}$$
 
 For each ${y \in Y}$, denote ${d_{y}:=d_{y \times Y'}}$.
 
-Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in \Delta}$. We have ${\E_{\mu_k}[d_{y_k}]=0}$. By Proposition N11, ${d_{y_k} \rightarrow d_y}$, therefore ${\E_\mu[d_y] = 0}$. By Proposition N14, ${\Supp \mu \subseteq y \times Y'}$ and hence ${(y,\mu) \in \Delta}$.
+Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in Z}$. We have ${\E_{\mu_k}[d_{y_k}]=0}$. By Proposition N11, ${d_{y_k} \rightarrow d_y}$, therefore ${\E_\mu[d_y] = 0}$. By Proposition N14, ${\Supp \mu \subseteq y \times Y'}$ and hence ${(y,\mu) \in Z}$.
 
 \#Proposition N21
 
-Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that there are ${\alpha,\beta > 0}$ s.t.:
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that there are ${\alpha,\beta > 0}$ s.t.:
 
 $$\E[\Abs{S_0}] < \infty$$
 
-$$\Abs{S_{n}-S_0} \leq \sum_{m=0}^{n-1} T_m + \alpha$$
+$$\Abs{S_{n}-S_0} \leq \sum_{m=0}^{n-1} \Delta_m + \alpha$$
 
-$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta T_n$$
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta \Delta_n$$
 
 Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
 
-$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} T_m$$
+$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} \Delta_m$$
  
 Then, ${S^0}$ is a submartingale.
 
@@ -599,11 +601,11 @@ Obviously, ${S^0}$ is adapted to ${\F}$. We have
 
 $$\E[\Abs{S^0_{n}}] \leq \E[\Abs{S_n}] + \beta n \leq \E[\Abs{S_0}] + \E[\Abs{S_n - S_0}] + \beta n \leq \E[\Abs{S_0}] + 2\beta n + \alpha < \infty$$
 
-$$\E[S^0_{n+1} \mid \F_n] = \E[S_{n+1} \mid \F_n] - c \sum_{m = 0}^{n} T_m$$
+$$\E[S^0_{n+1} \mid \F_n] = \E[S_{n+1} \mid \F_n] - c \sum_{m = 0}^{n} \Delta_m$$
 
-$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] + c T_n - c \sum_{m = 0}^{n} T_m$$
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] + c \Delta_n - c \sum_{m = 0}^{n} \Delta_m$$
 
-$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] - c \sum_{m = 0}^{n - 1} T_m$$
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] - c \sum_{m = 0}^{n - 1} \Delta_m$$
 
 $$\E[S^0_{n+1} \mid \F_n] \geq \E[S^0_{n} \mid \F_n]$$
 
@@ -677,9 +679,9 @@ $$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k+1 <\ 2(k+1)$$
 
 \#Proposition N24
 
-Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{T_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Define ${\Sqn{U_n: X \rightarrow \Reals}}$ by
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Define ${\Sqn{U_n: X \rightarrow \Reals}}$ by
 
-$$U_n := \sum_{m=0}^{n-1} T_m$$
+$$U_n := \sum_{m=0}^{n-1} \Delta_m$$
 
 Assume that there is ${\alpha \geq 0}$ s.t.
 
@@ -687,7 +689,7 @@ $$\E[\Abs{S_0}] < \infty$$
 
 $$\Abs{S_{n}-S_0} \leq U_n + \alpha$$
 
-Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${T}$. Then, for any ${k \in \Nats}$, ${\Sqn{S_{\min(n,N_k)}}}$ and ${\Sqn{U_{\min(n,N_k)}}}$ are uniformly integrable.
+Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${\Delta}$. Then, for any ${k \in \Nats}$, ${\Sqn{S_{\min(n,N_k)}}}$ and ${\Sqn{U_{\min(n,N_k)}}}$ are uniformly integrable.
 
 \#Proof of Proposition N24
 
