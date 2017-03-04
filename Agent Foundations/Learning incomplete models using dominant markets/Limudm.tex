@@ -198,9 +198,9 @@ We now describe a class of traders associated with a fixed environment ${\mu^* \
 
 \#Definition N4
 
-A *trading metastrategy* is a uniformly bounded family of measurable mappings ${\{\upsilon_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${c > 0}$ and ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$ s.t. for any ${n \in \Nats}$, ${\pi_{n\omega*}\mu^*}$-almost any ${y \in Y_n}$ and any ${\mu \in \Prob(X_y)}$:
+A *trading metastrategy* is a uniformly bounded family of measurable mappings ${\{\upsilon_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${\beta > 0}$ and ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$ s.t. for any ${n \in \Nats}$, ${\pi_{n\omega*}\mu^*}$-almost any ${y \in Y_n}$ and any ${\mu \in \Prob(X_y)}$:
 
-$$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq c \Norm{\upsilon(y,\mu)}$$
+$$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq \beta \Norm{\upsilon(y,\mu)}$$
 
 ***
 
@@ -212,11 +212,11 @@ Fix a metastrategy ${\upsilon}$. We define the trader ${T_\upsilon}$ and the mea
  
  $$U_0 := 0$$
 
-$$T_{\upsilon0} := \upsilon$$
+$$T_{\upsilon0} := \upsilon_0$$
 
 $$U_{\upsilon,n+1}(y, \{\mu_m\}_{m \leq n}) := U_{\upsilon n}(\pi_n(y), \{\mu_m\}_{m < n}) + T_{\upsilon n}(y, \{\mu_m\}_{m \leq n})$$
 
-$$T_{\upsilon,n+1}(y, \{\mu_m\}_{m \leq n}) := \begin{cases}\upsilon(y) \text{ if } \max_{X_y} U_{\upsilon,n+1}(y,\{\mu_m\}_{m \leq n}) - \min_{X_y} U_{\upsilon,n+1}(y,\{\mu_m\}_{m \leq n})\leq 1\\0 \text{ otherwise}\end{cases}$$
+$$T_{\upsilon,n+1}(y, \{\mu_m\}_{m \leq n}) := \begin{cases}\upsilon_{n+1}(y) \text{ if } \max_{X_y} U_{\upsilon,n+1}(y,\{\mu_m\}_{m \leq n}) - \min_{X_y} U_{\upsilon,n+1}(y,\{\mu_m\}_{m \leq n})\leq 1\\0 \text{ otherwise}\end{cases}$$
 
 \#Lemma N3
 
@@ -423,7 +423,7 @@ It remains to show that if ${x \in X}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then 
  
 \#Proposition N30
 
-Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${t,\alpha,\beta > 0}$, ${\{S'_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,t]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$ and ${\Sqn{S_n:X \rightarrow \Reals}}$ an arbitrary stochastic process. Assume that there are ${\alpha,\beta > 0}$ s.t.:
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${t,\alpha,\beta > 0}$, ${\{S'_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,t]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$ and ${\Sqn{S_n:X \rightarrow \Reals}}$ an arbitrary stochastic process. Assume that:
 
 $$\Abs{S_n - S'_n} \leq \frac{\alpha}{4}$$
 
@@ -469,7 +469,11 @@ $$S'_n(x):= \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \SW T^M_{\upsilon 
 
 $$\Delta_n(x):=\max_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z) - \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
 
-Clearly, ${\F}$ is a filtration of ${X}$, ${S,S',\Delta}$ are stochastic processes and ${S',\Delta}$ are adapted to ${\F}$.
+Clearly, ${\F}$ is a filtration of ${X}$, ${S,S',\Delta}$ are stochastic processes and ${S',\Delta}$ are adapted to ${\F}$. ${\upsilon}$ is uniformly bounded, therefore ${T_\upsilon}$  is uniformly bounded and so is ${\Delta}$. Obviously, ${\Delta}$ is also non-negative.
+
+By Proposition N32, ${\Abs{S_n-S'_n}}$ are uniformly bounded. ${S_0}$ is bounded an in particular ${\E[S_0] < \infty}$. We have
+
+$$\Abs{S_{n+1}(x)-S_n(x)} = \W \bar{T}_{\upsilon,n+1}^M(\pi_{n+1,\omega}(x),x) \leq \Delta_n(x)???$$
 
 TBD
 
@@ -601,11 +605,11 @@ Obviously, ${S^0}$ is adapted to ${\F}$. We have
 
 $$\E[\Abs{S^0_{n}}] \leq \E[\Abs{S_n}] + \beta n \leq \E[\Abs{S_0}] + \E[\Abs{S_n - S_0}] + \beta n \leq \E[\Abs{S_0}] + 2\beta n + \alpha < \infty$$
 
-$$\E[S^0_{n+1} \mid \F_n] = \E[S_{n+1} \mid \F_n] - c \sum_{m = 0}^{n} \Delta_m$$
+$$\E[S^0_{n+1} \mid \F_n] = \E[S_{n+1} \mid \F_n] - \beta \sum_{m = 0}^{n} \Delta_m$$
 
-$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] + c \Delta_n - c \sum_{m = 0}^{n} \Delta_m$$
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] + \beta \Delta_n - \beta \sum_{m = 0}^{n} \Delta_m$$
 
-$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] - c \sum_{m = 0}^{n - 1} \Delta_m$$
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] - \beta \sum_{m = 0}^{n - 1} \Delta_m$$
 
 $$\E[S^0_{n+1} \mid \F_n] \geq \E[S^0_{n} \mid \F_n]$$
 
@@ -747,7 +751,61 @@ We need to prove that for any ${s > 0}$ and ${k \in \Nats}$, there is ${l \geq k
 
 $$\Abs{s_n-s_{n_l}} \leq \sum_{m=n_l}^{n - 1} t_m + \alpha \leq \sum_{m=n_l}^{n_{l+1} - 1} t_m  + \alpha = \sum_{m=n_l}^{n_{l+1} - 2} t_m + t_{n_{l+1}-1} + \alpha < 1 + 1  + \alpha = \alpha + 2$$
 
-Therefore, ${s_{n_l} < -s}$. 
+Therefore, ${s_{n_l} < -s}$.
+
+\#Proposition N32
+
+Consider ${\Sqn{\Ob_n}}$, ${\Sqn{Y_n:=\prod_{m < n} \Ob_m}}$ and ${X:=\prod_n \Ob_n}$ as before. Consider ${\upsilon}$ a metastrategy and ${M}$ a market. Define ${S_n,S'_n: X \rightarrow \Reals}$ by 
+
+$$S_n(x):= \SW T^M_{\upsilon n}(\pi_{n\omega}(x),x)$$
+
+$$S'_n(x):= \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \SW T^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
+
+Then: 
+
+$${\Abs{S_n-S'_n} \leq 2 \sup_{m \in \Nats} \sup_{y \in Y_m} \Norm{\upsilon(y)}} + 1$$
+
+\#Proof of Proposition N32
+
+We prove by induction. For ${n = 0}$, we get
+
+$$\Abs{S_0(x)-S'_0(x)}=\Abs{\W \upsilon_0(M_0,x) - \min_{z \in X} \W \upsilon_0(M_0,z)}=\Abs{\upsilon_0(M_0,x) - \min_{z \in X} \upsilon_0(M_0,z)} \leq 2 \Norm{\upsilon_0}$$
+
+Now consider any ${n \in \Nats}$ and ${x \in X}$. Denote ${y_n := \pi_{n\omega}(x)}$ and ${X_n := \pi_{n\omega}^{-1}(y_n)}$. First, assume that
+
+$$\max_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z)-\min_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z) > 1$$
+
+Then, by definition of ${T_\upsilon}$, ${T^M_{\upsilon,n+1}}(y_{n+1}) \equiv 0$ and therefore
+
+$$\SW T^M_{\upsilon,n+1}(y_{n+1})=\SW T^M_{\upsilon n}(y_{n})$$
+
+It follows that
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon,n+1}(y_{n+1},x) - \min_{z \in X_{n+1}}\SW T^M_{\upsilon,n+1}(y_{n+1},z)}$$
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon n}(y_n,x) - \min_{z \in X_{n+1}}\SW T^M_{\upsilon n}(y_n,z)}$$
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \Abs{\SW T^M_{\upsilon n}(y_n,x) - \min_{z \in X_{n}}\SW T^M_{\upsilon n}(y_n,z)}$$
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \Abs{S_n(x)-S'_n(x)}$$
+
+Using the induction hypothesis, we conclude
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq 2 \sup_{m \in \Nats} \sup_{y \in Y_m} \Norm{\upsilon(y)} + 1$$
+
+Now, assume that 
+
+$$\max_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z)-\min_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z) \leq 1$$
+
+Then, ${T^M_{\upsilon,n+1}}(y_{n+1}) = \upsilon_{n+1}(y_{n+1})$ and therefore
+
+$$\SW T^M_{\upsilon,n+1}(y_{n+1})=\SW T^M_{\upsilon n}(y_{n}) + \upsilon_{n+1}(y_{n+1},M_{n+1}(y_{n+1}))$$
+
+We get
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \Abs{\max_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z) - \min_{z \in X_{n+1}}\SW T^M_{\upsilon n}(y_n,z)} + 2 \Norm{\upsilon_{n+1}(y_{n+1})}$$
+
+By the assumption, the first term is ${\leq 1}$, yielding the desired result.
 
 \section{Appendix C}
 
