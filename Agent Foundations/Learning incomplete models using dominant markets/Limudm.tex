@@ -128,7 +128,7 @@ Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the projection map
 
 $${X = \prod_{n = 0}^\infty \Ob_n}$$
 
-${X}$ is a compact Polish space. For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$.
+${X}$ is a compact Polish space. For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$. Given $n \in \Ints$ and $x \in X$, we denote $x(n):=\pi_{\max(n,0)\,\omega}(x)$.
 
 \#Definition N1
 
@@ -168,21 +168,21 @@ As before, we have the operator ${\W: \T(X) \rightarrow \T(X)}$ defined by
 
 $$\W \tau(\mu,x):= \tau(\mu,x) - \E_{z \sim \mu}[\tau(\mu,z)]$$
 
-We also introduce the notation ${\{\W \bar{T}^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ and ${\{\SW T^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ which are measurable mappings defined by
+We also introduce the notation ${\{\W \bar{T}^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ and ${\{\SW T^M_n: Y_{\max(n-1,0)}\ \rightarrow C(X)\}_{n \in \Nats}}$ which are measurable mappings defined by
 
 $$\W \bar{T}^M_n(y) = \W T^M_n(y, M_n(y))$$
 
-$$\SW T^M_n(y) = \sum_{m \leq n} \W \bar{T}^M_m(\pi_{mn}(y))$$
+$$\SW T^M_n(y) = \sum_{m < n} \W \bar{T}^M_m(\pi_{mn}(y))$$
 
 \#Definition N3
 
 A market ${M}$ is said to dominate a trader ${T}$ when for any ${x \in X}$, if
 
-$$\inf_{n \in \Nats} \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \SW T^M_n(\pi_{n\omega}(x),z) > -\infty$$
+$$\inf_{n \in \Nats} \min_{z \in X_{x(n)}} \SW T^M_{n+1}(x(n),z) > -\infty$$
 
 then
 
-$$\sup_{n \in \Nats} \max_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \SW T^M_n(\pi_{n\omega}(x),z) < +\infty$$
+$$\sup_{n \in \Nats} \max_{z \in X_{x(n)}} \SW T^M_{n+1}(x(n),z) < +\infty$$
 
 \#Theorem N2
 
@@ -200,7 +200,7 @@ We now describe a class of traders associated with a fixed environment ${\mu^* \
 
 A *trading metastrategy* is a uniformly bounded family of measurable mappings ${\{\upsilon_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${\beta > 0}$ and ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$ s.t. for any ${n \in \Nats}$, ${\pi_{n\omega*}\mu^*}$-almost any ${y \in Y_n}$ and any ${\mu \in \Prob(X_y)}$:
 
-$$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq \beta \Norm{\upsilon(y,\mu)}$$
+$$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq \beta (\max_{X_y} \upsilon(y,\mu) - \min_{X_y} \upsilon(y,\mu))$$
 
 ***
 
@@ -220,9 +220,9 @@ $$T_{\upsilon,n+1}(y, \{\mu_m\}_{m \leq n}) := \begin{cases}\upsilon_{n+1}(y) \t
 
 \#Lemma N3
 
-Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Assume ${M}$ dominates ${T_\upsilon}$. Then, for ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
+Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Assume ${M}$ dominates ${T_\upsilon}$. Then, for ${\mu^*}$-almost any ${x \in X}$:
 
-$$\lim_{n \rightarrow \infty} (\E_{K_n(y_n)}[\upsilon(y_n,M_n(y_n))]-\E_{M_n(y_n)}[\upsilon(y_n,M_n(y_n))])= 0$$
+$$\lim_{n \rightarrow \infty} (\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))])= 0$$
 
 \section{Profiting from Incomplete Models}
 
@@ -300,9 +300,9 @@ Combining Lemma N3 and Lemma N5, it is easy to get the following:
 
 \#Corollary N6
 
-Consider ${\Phi \subseteq \Prob(X)}$, ${\epsilon > 0}$ and ${\upsilon}$ a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is profitable for ${\Phi^\epsilon_y}$. Let ${M}$ be a market which dominates ${T_\upsilon}$. Then, for any ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
+Consider ${\Phi \subseteq \Prob(X)}$, ${\epsilon > 0}$ and ${\upsilon}$ a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is profitable for ${\Phi^\epsilon_y}$. Let ${M}$ be a market which dominates ${T_\upsilon}$. Then, for any ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$:
 
-$$\limsup_{n \rightarrow \infty} \Dkr^n(M_n(y_n),\Phi_{y_n}) \leq \epsilon$$
+$$\limsup_{n \rightarrow \infty} \Dkr^n(M_n(x(n)),\Phi_{x(n)}) \leq \epsilon$$
 
 ***
 
@@ -310,9 +310,9 @@ Thus, if we construct a set of traders ${T_{\upsilon_k}}$ as in Corollary N6 whe
 
 \#Theorem N7
 
-Consider any ${H \subseteq 2^{\Prob(X)}}$ countable. Then, there exists a market ${M^H}$ s.t. for any ${\Phi \in H}$, ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$:
+Consider any ${H \subseteq 2^{\Prob(X)}}$ countable. Then, there exists a market ${M^H}$ s.t. for any ${\Phi \in H}$, ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$:
 
-$$\lim_{n \rightarrow \infty} \Dkr^n(M^H_n(y_n),\Phi_{y_n}) = 0$$
+$$\lim_{n \rightarrow \infty} \Dkr^n(M^H_n(x(n)),\Phi_{x(n)}) = 0$$
 
 ***
 
@@ -453,9 +453,9 @@ By Proposition N20, ${\inf_n S''_n > -\infty}$ with probability 1. Since ${\Abs{
 
 \#Proposition N31
 
-Consider ${\Sqn{\Ob_n}}$, ${\Sqn{Y_n:=\prod_{m < n} \Ob_m}}$ and ${X:=\prod_n \Ob_n}$ as before. Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Then, for ${\mu^*}$-almost any ${x \in X}$, denoting ${y_n:=\pi_{n\omega}(x)}$ and ${X_n:=\pi_{n\omega}^{-1}(y_n)}$:
+Consider ${\Sqn{\Ob_n}}$, ${\Sqn{Y_n:=\prod_{m < n} \Ob_m}}$ and ${X:=\prod_n \Ob_n}$ as before. Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Then, for ${\mu^*}$-almost any ${x \in X}$:
 
-$$\inf_{n \in \Nats} \min_{z \in X_n} \SW T^M_{\upsilon n}(y_n,z) > -\infty$$
+$$\inf_{n \in \Nats} \min_{z \in X_{x(n)}} \SW T^M_{\upsilon, n+1}(x(n),z) > -\infty$$
 
 \#Proof of Proposition N31
 
@@ -463,17 +463,37 @@ We regard ${X}$ as a probability space using the ${\sigma}$-algebra ${\UM(X)}$ a
 
 $${\F_n := \pi_{n\omega}^{-1}(\UM(Y_n))}$$
 
-$$S_n(x):= \SW T^M_{\upsilon n}(\pi_{n\omega}(x),x)$$
+$$S_n(x):= \SW T^M_{\upsilon n}(x(n-1),x)$$
 
-$$S'_n(x):= \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \SW T^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
+$$S'_n(x):= \min_{z \in X_{x(n-1)}} \SW T^M_{\upsilon n}(x(n-1),z)$$
 
-$$\Delta_n(x):=\max_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z) - \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \bar{T}^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
+$$\Delta_n(x):=\max_{z \in X_{x(n)}} \bar{T}^M_{\upsilon n}(x(n),z) - \min_{z \in X_{x(n)}} \bar{T}^M_{\upsilon n}(x(n),z)$$
 
 Clearly, ${\F}$ is a filtration of ${X}$, ${S,S',\Delta}$ are stochastic processes and ${S',\Delta}$ are adapted to ${\F}$. ${\upsilon}$ is uniformly bounded, therefore ${T_\upsilon}$  is uniformly bounded and so is ${\Delta}$. Obviously, ${\Delta}$ is also non-negative.
 
-By Proposition N32, ${\Abs{S_n-S'_n}}$ are uniformly bounded. ${S_0}$ is bounded an in particular ${\E[\Abs{S_0}] < \infty}$. We have
+By Proposition N32, ${\Abs{S_n-S'_n}}$ are uniformly bounded. ${S_0}$ is bounded and in particular ${\E[\Abs{S_0}] < \infty}$. We have
 
-$$\Abs{S_{n+1}(x)-S_n(x)} = \W \bar{T}_{\upsilon,n+1}^M(\pi_{n+1,\omega}(x),x) \leq \Delta_n(x)???$$
+$$\Abs{S_{n+1}(x)-S_n(x)} = \Abs{\W \bar{T}_{\upsilon n}^M(x(n),x)} \leq \Delta_n(x)$$
+
+Let $\beta > 0$ and $K_n \in \mu^* \mid \pi_{n\omega}$ be as in Definition N4. 
+
+$$\E[S_{n+1} - S_n \mid \F_n] = \E_{z \sim K_n(x(n))}[\W \bar{T}_{\upsilon n}^M(x(n),z)]$$
+
+$$\E[S_{n+1} - S_n \mid \F_n] = \E_{z \sim K_n(x(n))}[\bar{T}_{\upsilon n}^M(x(n),z)] - \E_{z \sim M_n(x(n))}[\bar{T}_{\upsilon n}^M(x(n),z)]$$
+
+By definition of $T_\upsilon$, $\bar{T}_{\upsilon n}^M(x(n))$ is equal to either $\upsilon_n(x(n),M_n(x(n)))$ or 0. In either case, we get (almost everywhere)
+
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta (\max_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n)) - \min_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n))) = \beta \Delta_n$$
+
+Applying Proposition N30, we get the desired result.
+
+\#Proposition N33
+
+Consider the setting of Proposition N20. Then, for almost all $x \in X$:
+
+$$\sup_{n \in \Nats} S_n(x) < \infty \implies \sum_{n = 0}^\infty \Delta_n(x) < \infty$$
+
+\#Proof of Proposition N33
 
 TBD
 
@@ -757,9 +777,9 @@ Therefore, ${s_{n_l} < -s}$.
 
 Consider ${\Sqn{\Ob_n}}$, ${\Sqn{Y_n:=\prod_{m < n} \Ob_m}}$ and ${X:=\prod_n \Ob_n}$ as before. Consider ${\upsilon}$ a metastrategy and ${M}$ a market. Define ${S_n,S'_n: X \rightarrow \Reals}$ by 
 
-$$S_n(x):= \SW T^M_{\upsilon n}(\pi_{n\omega}(x),x)$$
+$$S_n(x):= \SW T^M_{\upsilon n}(x(n-1),x)$$
 
-$$S'_n(x):= \min_{z \in \pi_{n\omega}^{-1}(\pi_{n\omega}(x))} \SW T^M_{\upsilon n}(\pi_{n\omega}(x),z)$$
+$$S'_n(x):= \min_{z \in X_{x(n-1)}} \SW T^M_{\upsilon n}(x(n-1),z)$$
 
 Then: 
 
@@ -767,25 +787,21 @@ $${\Abs{S_n-S'_n} \leq 2 \sup_{m \in \Nats} \sup_{y \in Y_m} \Norm{\upsilon(y)}}
 
 \#Proof of Proposition N32
 
-We prove by induction. For ${n = 0}$, we get
+We prove by induction. For the basis, $S_0=S'_0=0$. Consider any ${n \in \Nats}$ and ${x \in X}$. First, assume that
 
-$$\Abs{S_0(x)-S'_0(x)}=\Abs{\W \upsilon_0(M_0,x) - \min_{z \in X} \W \upsilon_0(M_0,z)}=\Abs{\upsilon_0(M_0,x) - \min_{z \in X} \upsilon_0(M_0,z)} \leq 2 \Norm{\upsilon_0}$$
+$$\max_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z)-\min_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z) > 1$$
 
-Now consider any ${n \in \Nats}$ and ${x \in X}$. Denote ${y_n := \pi_{n\omega}(x)}$ and ${X_n := \pi_{n\omega}^{-1}(y_n)}$. First, assume that
+Then, by definition of ${T_\upsilon}$, ${T^M_{\upsilon n}}(x(n)) \equiv 0$ and therefore
 
-$$\max_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z)-\min_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z) > 1$$
-
-Then, by definition of ${T_\upsilon}$, ${T^M_{\upsilon,n+1}}(y_{n+1}) \equiv 0$ and therefore
-
-$$\SW T^M_{\upsilon,n+1}(y_{n+1})=\SW T^M_{\upsilon n}(y_{n})$$
+$$\SW T^M_{\upsilon,n+1}(x(n))=\SW T^M_{\upsilon n}(x(n-1))$$
 
 It follows that
 
-$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon,n+1}(y_{n+1},x) - \min_{z \in X_{n+1}}\SW T^M_{\upsilon,n+1}(y_{n+1},z)}$$
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon,n+1}(x(n),x) - \min_{z \in X_{x(n)}}\SW T^M_{\upsilon,n+1}(x(n),z)}$$
 
-$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon n}(y_n,x) - \min_{z \in X_{n+1}}\SW T^M_{\upsilon n}(y_n,z)}$$
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon n}(x(n-1),x) - \min_{z \in X_{x(n)}}\SW T^M_{\upsilon n}(x(n-1),z)}$$
 
-$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \Abs{\SW T^M_{\upsilon n}(y_n,x) - \min_{z \in X_{n}}\SW T^M_{\upsilon n}(y_n,z)}$$
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon n}(x(n-1),x) - \min_{z \in X_{x(n-1)}}\SW T^M_{\upsilon n}(x(n-1),z)}$$
 
 $$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \Abs{S_n(x)-S'_n(x)}$$
 
@@ -795,17 +811,17 @@ $$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq 2 \sup_{m \in \Nats} \sup_{y \in Y_m} \Norm{
 
 Now, assume that 
 
-$$\max_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z)-\min_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z) \leq 1$$
+$$\max_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z)-\min_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z) \leq 1$$
 
-Then, ${T^M_{\upsilon,n+1}}(y_{n+1}) = \upsilon_{n+1}(y_{n+1})$ and therefore
+Then, ${T^M_{\upsilon n}}(x(n)) = \upsilon_{n}(x(n))$ and therefore
 
-$$\SW T^M_{\upsilon,n+1}(y_{n+1})=\SW T^M_{\upsilon n}(y_{n}) + \upsilon_{n+1}(y_{n+1},M_{n+1}(y_{n+1}))$$
+$$\SW T^M_{\upsilon,n+1}(x(n))=\SW T^M_{\upsilon n}(x(n-1)) + \upsilon_{n}(x(n),M_{n}(x(n)))$$
 
 We get
 
-$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \Abs{\max_{z \in X_{n+1}} \SW T^M_{\upsilon n}(y_n,z) - \min_{z \in X_{n+1}}\SW T^M_{\upsilon n}(y_n,z)} + 2 \Norm{\upsilon_{n+1}(y_{n+1})}$$
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \max_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z) - \min_{z \in X_{x(n)}}\SW T^M_{\upsilon n}(x(n-1),z) + 2 \Norm{\upsilon_{n}(x(n))}$$
 
-By the assumption, the first term is ${\leq 1}$, yielding the desired result.
+By the assumption, the first two terms total to ${\leq 1}$, yielding the desired result.
 
 \section{Appendix C}
 
