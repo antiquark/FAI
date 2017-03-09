@@ -495,6 +495,44 @@ $$\sup_{n \in \Nats} S_n(x) < \infty \implies \sum_{n = 0}^\infty \Delta_n(x) < 
 
 \#Proof of Proposition N33
 
+Define $\Sqn{S^0_n: X \rightarrow \Reals}$ by
+
+$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} \Delta_m$$
+
+Let $\Sqn{N_n}$ be the accumulation times of $\Delta$. Consider any $x \in X$ s.t. $\sup_n S_n(x) = s(x) < \infty$ but $\sum_n \Delta_n(x) = \infty$. Proposition N28 implies that
+
+$$S^0_{N_k(x)}(x) \leq S_{N_k(x)}(x) - \beta k \leq s(x) - \beta k$$
+
+As in the proof of Proposition N20, we can apply the Azuma-Hoeffding inequality to $S^0_N$ and get that for any positive integer $k$
+
+$$\Pr[S^0_{N_k} - S_0 < -k^{\frac{3}{4}}] \leq \exp(-\frac{k^{\frac{3}{2}}}{2(\alpha + 2)^2k})=\exp(-\frac{k^{\frac{1}{2}}}{2(\alpha + 2)^2})$$
+
+It follows that
+
+$$\sum_{k=1}^\infty \Pr[S^0_{N_k} - S_0 < -k^{\frac{3}{4}}] < \infty$$
+
+$$\Pr[\exists k \in \Nats \forall l > k: S^0_{N_l} - S_0 < -l^{\frac{3}{4}}] = 0$$
+
+$$\Pr[\exists m \in \Nats \forall k \in \Nats: S^0_{N_k} \leq m - \beta k] = 0$$
+
+Comparing with the inequality from before, we reach the desired conclusion.
+
+\#Proposition N34
+
+Consider the setting of Proposition N30. Then, for almost all $x \in X$:
+
+$$\sup_{n \in \Nats} S_n(x) < \infty \implies \sum_{n = 0}^\infty \Delta_n(x) < \infty$$
+
+\#Proof of Proposition N34
+
+Define $S''_n:=\E[S_n \mid \F_n]$. As in the proof of Proposition N30, $S''$ meets the conditions of Proposition N20 and thus of Proposition N33 also. By Proposition N33, for almost all $x \in X$:
+
+$$\sup_{n \in \Nats} S''_n(x) < \infty \implies \sum_{n = 0}^\infty \Delta_n(x) < \infty$$
+
+As in the proof of Proposition N30, $\Abs{S''_n-S_n}$ is uniformly bounded, giving the desired result.
+
+\#Proof of Lemma N3
+
 TBD
 
 \section{Appendix B}
