@@ -863,6 +863,50 @@ $$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \max_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x
 
 By the assumption, the first two terms total to ${\leq 1}$, yielding the desired result.
 
+\#Proposition N35
+
+Consider $X$ a compact Polish space, $f \in C(X)$ and $\Sqn{X_n \subseteq X}$ closed s.t. $X_{n+1} \subseteq X_n$ and $\bigcap_n X_n = \{x^*\}$ for some $x^* \in X$. Then
+
+$$\lim_{n \rightarrow \infty} (\max_{X_n} f - \min_{X_n} f) = 0$$
+
+\#Proof of Proposition N35
+
+Choose $\Sqn{x^+_n \in \Argmax{X_n} f}$ and $\Sqn{x^-_n \in \Argmin{X_n} f}$. $\max_{X_n} f - \min_{X_n} f$ is a non-increasing sequence, therefore it is sufficient to prove that a subsequence converges to 0. Therefore, we can assume without loss of generality that $x_n^+ \rightarrow x^+_\omega$ and $x^-_n \rightarrow x^-_\omega$. For each $n \in \Nats$, the fact that $X_n$ is closed implies that $x^+_\omega, x^-_\omega \in X_n$. Therefore, $x^+_\omega=x^-_\omega=x^*$. We get
+
+$$\lim_{n \rightarrow \infty} (\max_{X_n} f - \min_{X_n} f) = \lim_{n \rightarrow \infty} (f(x^+_n) - f(x^-_n)) = f(x^+_\omega) - f(x^-_\omega) = f(x^*) - f(x^*) = 0$$
+
+\#Proposition N36
+
+Consider $\upsilon$ a trading metastrategy, $M$ a market and $x \in X$. Assume that
+
+$$\sum_{n=0}^\infty (\max_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n)) - \min_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n))) < \infty$$
+
+Then, for any $n \gg 0$, $T_{\upsilon n}^M(x(n)) = \upsilon(x(n))$.
+
+\#Proof of Proposition N36
+
+Choose $n_0 \in \Nats$ s.t. 
+
+$$\sum_{n=n_0}^\infty (\max_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n)) - \min_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n))) < \frac{1}{2}$$
+
+Since $\bar{T}_{\upsilon n}^M(x(n)), W \bar{T}_{\upsilon n}^M(x(n)) \in C(X)$ differ by a constant function, we have
+
+$$\sum_{n=n_0}^\infty (\max_{X_{x(n)}} \W\bar{T}_{\upsilon n}^M(x(n)) - \min_{X_{x(n)}} \W\bar{T}_{\upsilon n}^M(x(n))) < \frac{1}{2}$$
+
+In particular, for any $n \geq n_0$
+
+$$\sum_{m=n_0}^{n-1} (\max_{X_{x(n)}} \W\bar{T}_{\upsilon m}^M(x(m)) - \min_{X_{x(n)}} \W\bar{T}_{\upsilon m}^M(x(m))) \leq \sum_{m=n_0}^{n-1} (\max_{X_{x(m)}} \W\bar{T}_{\upsilon m}^M(x(m)) - \min_{X_{x(m)}} \W\bar{T}_{\upsilon m}^M(x(m))) < \frac{1}{2}$$
+
+By Proposition N35, there is $n_1 \geq n_0$ s.t. for any $n \geq n_1$
+
+$$\max_{X_{x(n)}} \SW T_{\upsilon n_0}^M(x(n_0 - 1)) - \min_{X_{x(n)}} \SW T_{\upsilon n_0}^M(x(n_0 - 1)) < \frac{1}{2}$$
+
+Taking the sum of the last two inequalities, we conclude that for any $n \geq n_1$
+
+$$\max_{X_{x(n)}} \SW T_{\upsilon n}^M(x(n - 1)) - \min_{X_{x(n)}} \SW T_{\upsilon n}^M(x(n - 1)) < 1$$
+
+By definition of $T_\upsilon$, we get the desired result.
+
 \section{Appendix C}
 
 The following version of the optional stopping theorem appears in [Durret](?) as Theorem 5.4.7:
