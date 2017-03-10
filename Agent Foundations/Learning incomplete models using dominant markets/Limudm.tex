@@ -533,9 +533,13 @@ As in the proof of Proposition N30, $\Abs{S''_n-S_n}$ is uniformly bounded, givi
 
 \#Proof of Lemma N3
 
-Let $\F$, $S$, $S'$ and $\Delta$ be as in the proof of Proposition N31. Using Proposition N31 and the assumption that $M$ dominates $T_\upsilon$, we conclude that for $\mu^*$-almost any $x \in X$, $\sup_n S_n(x) < \infty$. As in the proof of Proposition N31, the conditions of Proposition N30 are satisfied, and therefore the conditions of Proposition N34 are also satisfied. Applying Proposition N34, we conclude that for $\mu^*$-almost any $x \in X$, $\sum_n \Delta_n(x) < \infty$.
+Let $\F$, $S$, $S'$ and $\Delta$ be as in the proof of Proposition N31. Using Proposition N31 and the assumption that $M$ dominates $T_\upsilon$, we conclude that for $\mu^*$-almost any $x \in X$, $\sup_n S_n(x) < \infty$. As in the proof of Proposition N31, the conditions of Proposition N30 are satisfied, and therefore the conditions of Proposition N34 are also satisfied. Applying Proposition N34, we conclude that $\sum_n \Delta_n(x) < \infty$. By Proposition N36, it follows that for any $n \gg 0$, $T_{\upsilon n}^M(x(n)) = \upsilon(x(n))$. We get
 
-TBD
+$$\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))] = \E_{K_n(x(n))}[\bar{T}_{\upsilon n}^M(x(n))]-\E_{M_n(x(n))}[\bar{T}_{\upsilon n}^M(x(n))])$$
+
+$$\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))] \leq \Delta_n(x)$$
+
+$$\lim_{n \rightarrow \infty} (\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))]) = 0$$
 
 \section{Appendix B}
 
