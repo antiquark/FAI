@@ -1,0 +1,844 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+
+% operators that require brackets
+\DeclareMathOperator{\Prb}{Pr}
+\DeclareMathOperator{\E}{E}
+\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+\DeclareMathOperator{\Var}{Var}
+
+% operators that require parentheses
+\DeclareMathOperator{\Ent}{H}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sym}{Sym}
+
+\DeclareMathOperator{\Prj}{pr}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Sq}[2]{\{#1\}_{#2 \in \Nats}}
+\newcommand{\Sqn}[1]{\Sq{#1}{n}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+
+\newcommand{\Prob}{\mathcal{P}}
+
+% Paper specific
+
+\newcommand{\Ob}{\mathcal{O}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\UM}{\mathcal{U}}
+\newcommand{\W}{\operatorname{W}}
+\newcommand{\SW}{\operatorname{\Sigma W}}
+\newcommand{\I}{\operatorname{id}}
+\newcommand{\Lip}{\operatorname{Lip}}
+\newcommand{\NormL}[1]{\Norm{#1}_{\operatorname{Lip}}}
+\newcommand{\Dkr}{\operatorname{d}_{\text{KR}}}
+\newcommand{\Ball}{\operatorname{B}}
+\newcommand{\F}{\mathcal{F}}
+
+\begin{document}
+
+We generalize the formalism of [dominant markets](https://agentfoundations.org/item?id=1214) to account for stochastic "deductive processes," and prove a theorem regarding the asymptotic behavior of such markets. In a future post, we will show how to use these tools to formalize the ideas outlined [here](https://agentfoundations.org/item?id=1197). (*Indeed, I have already derived a merging of opinions theorem for incomplete models, albeit with convergence in the Kantorovich-Rubinstein metric rather than the total variation metric. The relatively large volume of this work, and the subsequently long time it takes to write it down in understandable form, compelled me to split it and present the current part separately*)
+
+Appendix A contains the key proofs. Appendix B contains the proofs of technical propositions used in Appendix A, which are mostly straightforward. Appendix C contains the statement of a version of the optional stopping theorem from [Durret](?).
+
+***
+
+\section{Notation}
+
+Given ${X}$ a metric space and ${x \in X}$, ${\Ball_r(x):=\{y \in X \mid d(x,y) <\ r\}}$.
+
+Given ${X}$ a topological space:
+
+* ${\I_X: X \rightarrow X}$ is the identity mapping.
+
+* ${\Prob(X)}$ is the space of Borel probability measures on ${X}$ equipped with the weak* topology.
+
+* ${C(X)}$ is the Banach space of continuous functions ${X \rightarrow \Reals}$ with uniform norm.
+
+* ${\mathcal{B}}(X)$ is the Borel ${\sigma}$-algebra on ${X}$.
+
+* ${\UM(X)}$ is the ${\sigma}$-algebra of universally measurable sets on ${X}$.
+
+* Given ${\mu \in \Prob(X)}$, ${\Supp \mu}$ denotes the support of ${\mu}$. 
+
+Given ${X}$ and ${Y}$ measurable spaces, ${K: X \Markov\ Y}$ is a Markov kernel from ${X}$ to ${Y}$. For any ${x \in X}$, we have ${K(x) \in \Prob(Y)}$. Given ${\mu \in \Prob(X)}$, ${\mu \ltimes K \in \Prob(X \times Y)}$ is the semidirect product of ${\mu}$ and ${K}$ and ${K_*\mu \in \Prob(Y)}$ is the pushforward of ${\mu}$ by ${K}$.
+
+Given ${X}$, ${Y}$ Polish spaces, ${\pi: X \rightarrow Y}$ Borel measurable and ${\mu \in \Prob(X)}$, we denote ${\mu \mid \pi}$ the set of Markov kernels ${K: Y \Markov X}$ s.t. ${\pi_* \mu \ltimes K}$ is supported on the graph of ${\pi}$ and ${K_*\pi_* \mu = \mu}$. By the disintegration theorem, ${\mu \mid \pi}$ is always non-empty and any two kernels in ${\mu \mid \pi}$ coincide ${\pi_*\mu}$-almost everywhere.
+
+\section{Dominant Stochastic Markets}
+
+The way we previously laid out the dominant market formalism, the sequence of observations (represented by the sets $\{X_i\}$) was fixed. To study forecasting, we instead need to assume this sequence is sampled from some probability measure (the true environment).
+
+For each ${n \in \Nats}$, let ${\Ob_n}$ be a compact Polish space. ${\Ob_n}$ represents the space of possible observations at time ${n}$. Denote 
+
+$${Y_n:=\prod_{m < n} \Ob_m}$$
+
+Given ${n \leq m}$, ${\pi_{nm}: Y_m \rightarrow Y_n}$ denotes the projection mapping and ${\pi_n:=\pi_{n,n+1}}$. Denote 
+
+$${X = \prod_{n = 0}^\infty \Ob_n}$$
+
+${X}$ is a compact Polish space. For each ${n \in \Nats}$ we denote ${\pi_{n\omega}: X \rightarrow Y_n}$ the projection mapping. Given ${y \in Y_n}$, we denote ${X_y:=\pi_{n\omega}^{-1}(y)}$, a closed subspace of ${X}$. Given $n \in \Ints$ and $x \in X$, we denote $x(n):=\pi_{\max(n,0)\,\omega}(x)$.
+
+\#Definition 1
+
+A *market* is a sequence of mappings ${\{M_n: Y_n \rightarrow \Prob(X)\}}_{n \in \Nats}$ s.t.
+
+* Each ${M_n}$ is measurable w.r.t. ${\UM(Y_n)}$ and ${\B(\Prob(X))}$.
+
+* For any ${y \in Y_n}$, ${\Supp M_n(y) \subseteq X_y}$.
+
+***
+
+As before, we define the space of trading strategies ${\T(X):=C(\Prob(X)\times X)}$, but this time we regard it as a Banach space. 
+
+\#Definition 2
+
+A *trader* is a sequence of mappings ${\{T_n: Y_n \times \Prob(X)^n \rightarrow \T(X)\}}_{n \in \Nats}$ which are measurable w.r.t. ${\UM(Y_n) \otimes \B(\Prob(X)^n)}$ and ${\B(\T(X))}$.
+
+***
+
+Given a trader ${T}$ and a market ${M}$, we define the mappings ${\{T^M_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$ (measurable w.r.t. ${\UM(Y_n)}$ and ${\B(\T(X))}$) and ${\{\bar{T}^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ (measurable w.r.t. ${\UM(Y_n)}$ and ${\B(C(X))}$) as follows:
+
+$$T^M_n(y):= T_n(y, M_0(\pi_{0n}(y)),M_1(\pi_{1n}(y)) \ldots M_{n-1}(\pi_{n-1,n}(y)))$$
+
+$$\bar{T}^M_n(y):= T^M_n(y,M_n(y))$$
+
+The "market maker" lemma now requires some additional work due to the measurability requirement:
+
+\#Lemma
+
+Consider any trader ${T}$. Then, there is a market ${M}$ s.t. for all ${n \in \Nats}$ and ${y \in Y_n}$
+
+$$\Supp M_n(y) \subseteq \Argmax{X_y} \bar{T}^M_n(y)$$
+
+***
+
+As before, we have the operator ${\W: \T(X) \rightarrow \T(X)}$ defined by 
+
+$$\W \tau(\mu,x):= \tau(\mu,x) - \E_{z \sim \mu}[\tau(\mu,z)]$$
+
+We also introduce the notation ${\{\W \bar{T}^M_n: Y_n \rightarrow C(X)\}_{n \in \Nats}}$ and ${\{\SW T^M_n: Y_{\max(n-1,0)}\ \rightarrow C(X)\}_{n \in \Nats}}$ which are measurable mappings defined by
+
+$$\W \bar{T}^M_n(y) = \W T^M_n(y, M_n(y))$$
+
+$$\SW T^M_n(y) = \sum_{m < n} \W \bar{T}^M_m(\pi_{mn}(y))$$
+
+\#Definition 3
+
+A market ${M}$ is said to dominate a trader ${T}$ when for any ${x \in X}$, if
+
+$$\inf_{n \in \Nats} \min_{z \in X_{x(n)}} \SW T^M_{n+1}(x(n),z) > -\infty$$
+
+then
+
+$$\sup_{n \in \Nats} \max_{z \in X_{x(n)}} \SW T^M_{n+1}(x(n),z) < +\infty$$
+
+\#Theorem 1
+
+Given any countable set of traders $R$, there is a market ${M}$ s.t. ${M}$ dominates all ${T \in R}$.
+
+***
+
+Theorem 1 is proved exactly as [before](https://agentfoundations.org/item?id=1214) (modulo Lemma), and we omit the details.
+
+\section{Profitable Metastrategies}
+
+We now describe a class of traders associated with a fixed environment ${\mu^* \in \Prob(X)}$ s.t. if a market dominates a trader from this class, a certain function of the pricing converges to 0 with ${\mu^*}$-probability 1. In a future post, we will apply this result to a trader associated with an incomplete models ${\Phi \subseteq \Prob(X)}$ by observing that the trader is in the class for any ${\mu^* \in \Phi}$.
+
+\#Definition 4
+
+A *trading metastrategy* is a uniformly bounded family of measurable mappings ${\{\upsilon_n: Y_n \rightarrow \T(X)\}_{n \in \Nats}}$. Given ${\mu^* \in \Prob(X)}$, ${\upsilon}$ is said said to be *profitable for ${\mu^*}$*, when there are ${\beta > 0}$ and ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$ s.t. for any ${n \in \Nats}$, ${\pi_{n\omega*}\mu^*}$-almost any ${y \in Y_n}$ and any ${\mu \in \Prob(X_y)}$:
+
+$$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq \beta (\max_{X_y} \upsilon(y,\mu) - \min_{X_y} \upsilon(y,\mu))$$
+
+***
+
+Even if a metastrategy is profitable, it doesn't mean that a smart trader should use this metastrategy all the time: in order to avoid running out of budget, a trader shouldn't place too many bets simultaneously. The following construction defines a trader that employs a metastrategy only when all previous bets are closed to being resolved.
+
+\#Definition 5
+
+Fix a metastrategy ${\upsilon}$. We define the trader ${T_\upsilon}$ and the measurable mappings ${\{U_{\upsilon  n}: Y_n \times \Prob(X)^n \rightarrow C(X)\}_{n \in \Nats}}$ recursively as follows:
+ 
+ $$U_0 := 0$$
+
+$$T_{\upsilon0} := \upsilon_0$$
+
+$$U_{\upsilon,n+1}(y, \{\mu_m\}_{m \leq n}) := U_{\upsilon n}(\pi_n(y), \{\mu_m\}_{m < n}) + T_{\upsilon n}(y, \{\mu_m\}_{m \leq n})$$
+
+$$T_{\upsilon,n+1}(y, \{\mu_m\}_{m \leq n}) := \begin{cases}\upsilon_{n+1}(y) \text{ if } \max_{X_y} U_{\upsilon,n+1}(y,\{\mu_m\}_{m \leq n}) - \min_{X_y} U_{\upsilon,n+1}(y,\{\mu_m\}_{m \leq n})\leq 1\\0 \text{ otherwise}\end{cases}$$
+
+\#Theorem 2
+
+Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Assume ${M}$ dominates ${T_\upsilon}$. Then, for ${\mu^*}$-almost any ${x \in X}$:
+
+$$\lim_{n \rightarrow \infty} (\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))])= 0$$
+
+***
+
+That is, the market price of the "stock portfolio" traded by $\upsilon$ converges to its true $\mu^*$-expected value.
+
+\section{Appendix A}
+
+\#Proposition A.1
+
+Fix ${X}$ a compact Polish space and ${\tau \in \T(X)}$. Then, there exists ${\mu \in \Prob(X)}$ s.t.
+
+$$\Supp \tau(\mu) \subseteq \Argmax{} \tau$$
+
+\#Proof of Proposition A.1
+
+Follows immediately from "Proposition 1" from [before](https://agentfoundations.org/item?id=1214) and Proposition B.6.
+
+\#Proposition A.2
+
+Fix ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Then, there exists ${\mathcal{M}: Y \times \T(X) \rightarrow \Prob(X)}$ measurable w.r.t. ${\B(Y \times \T(X))}$ and ${\B(\Prob(X))}$ s.t. for any ${y \in Y}$ and ${\tau \in \T(X)}$:
+
+
+$$\Supp \mathcal{M}(y,\tau) \subseteq \Argmax{y \times Y'} \tau(\mathcal{M}(y,\tau))$$
+
+\#Proof of Proposition A.2
+
+Define ${Z_1, Z_2, Z \subseteq Y \times \T(X) \times \Prob(X)}$ by
+
+$${Z_1:=\{(y,\tau,\mu) \in Y \times \T(X) \times \Prob(X) \mid \Supp \mu \subseteq X_y\}}$$
+
+$${Z_2:=\{(y,\tau,\mu) \in Y \times \T(X) \times \Prob(X) \mid \E_\mu[\tau(\mu)] = \max_{y \in Y'} \tau(\mu,y,y')\}}$$
+
+$${Z:=\{(y,\tau,\mu) \in Y \times \T(X) \times \Prob(X) \mid \Supp \mu \subseteq \Argmax{y \times Y'} \tau(\mu)\}}$$
+
+We can view ${Z}$ as the graph of a *multivalued* mapping from ${Y_n \times \T(X)}$ to ${\Prob(X)}$. We will now show this multivalued mapping has a *selection*, i.e. a single-valued measurable mapping whose graph is a subset. Obviously, the selection is the desired ${\mathcal{M}}$.
+
+${Z_1}$ is closed by Proposition B.7. ${Z_2}$ is closed by Proposition B.5. ${Z = Z_1 \cap Z_2}$ by Proposition B.6 and hence closed. In particular, the fiber ${Z_{y\tau}}$ of ${Z}$ over any ${(y,\tau) \in Y \times \T(X)}$ is also closed. 
+
+For any ${y \in Y}$, ${\tau \in \T(X)}$, define ${i_y: Y' \rightarrow X}$ by ${i_y(y'):=(y,y')}$ and ${\tau_y \in \T(Y')}$ by ${\tau_y(\nu,y'):=\tau(i_{y*}\nu,y,y')}$. Applying Proposition A.1 to ${\tau_y}$ we get ${\nu \in \Prob(Y')}$ s.t.
+
+$$\Supp \tau_y(\nu) \subseteq \Argmax{} \tau_y$$
+
+It follows that ${(y,\tau,i_{y*}\nu) \in Z}$ and hence ${Z_{y\tau}}$ is non-empty.
+
+Consider any ${U \subseteq \Prob(X)}$ open. Then, ${A_U:=(Y \times \T(X) \times U) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image of ${A_U}$ under the projection to ${Y \times \T(X)}$ is also ${F_\sigma}$ and in particular Borel. 
+
+Applying the Kuratowski-Ryll-Nardzewski measurable selection theorem, we get the desired result.
+
+\#Proof of Lemma
+
+For any ${n \in \Nats}$, let ${\mathcal{M}_n: Y_n \times \T(X) \rightarrow \Prob(X)}$ be as in Proposition A.2. We define ${M_n}$ recursively by:
+
+$$M_n(y):=\mathcal{M}_n(y,T_n^M(y))$$
+
+\#Proposition A.3
+
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${t,\alpha,\beta > 0}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,t]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that:
+
+$$\E[\Abs{S_0}] < \infty$$
+
+$$\forall n' \geq n:\Abs{S_{n'}-S_{n}} \leq \sum_{m=n}^{n'-1} \Delta_m + \alpha$$
+
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta \Delta_n$$
+
+Then, ${\inf_{n} S_n > -\infty}$ with probability 1.
+
+***
+
+The proof will use the following definition:
+
+\#Definition A
+
+Consider a sequence ${\Sqn{t_n \in [0,1]}}$. The *accumulation times of ${t}$* are ${\Sq{n_k \in \Nats \sqcup \{\infty\}}{k}}$ defined recursively by
+
+$$n_0 := 0$$
+
+$$n_{k+1} = \begin{cases}\inf \{n \in \Nats \mid \sum_{m=n_k}^{n-1} t_m \geq 1\} \text{ if } n_k < \infty\\\infty \text{ if } n_k = \infty\end{cases}$$
+
+Consider ${X}$ a probability space and ${\{\Delta_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ a stochastic process. The *accumulation times of ${\Delta}$* are ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ defined pointwise as above. Clearly, they are stochastic processes and whenever ${\Delta}$ is adapted to a filtration ${\Sqn{\F_n \subseteq 2^X}}$, they are stopping times w.r.t. ${\F}$.
+
+\#Proof of Proposition A.3
+
+Without loss of generality, we can assume ${t = 1}$ (otherwise we can renormalize ${S}$, ${\Delta}$ and ${\alpha}$ by a factor of ${t^{-1}}$). Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
+
+$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} \Delta_m$$
+
+By Proposition B.8, ${S^0}$ is a submartingale. Let ${\Sqn{N_n:X \rightarrow \Nats \sqcup \{\infty\}}}$ be the accumulation times of ${\Delta}$. By proposition N23, ${\Sqn{S^0_{\min(n,N_k)}}}$ are submartingales for all ${k}$. By Proposition\ N24, each of them is uniformly integrable. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem C, we get
+
+$$\E[S^0_{N_{k+1}} \mid \F_{N_k}] \geq S^0_{N_{k}}$$
+
+Clearly, ${\Sq{S^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E[\Abs{S^0_{N_k}}] < \infty}$ (${S^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{S^0_{\min(n,N_k)}}}$). We conclude that ${\Sq{S^0_{N_k}}{k}}$ is a submartingale.
+
+By Proposition B.12, ${\Abs{S^0_{N_{k+1}}-S^0_{N_k}}} \leq \alpha + 2$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
+
+$$\Prb[S^0_{N_k} - S_0 < -\beta k] \leq \exp(-\frac{(\beta k)^2}{2(\alpha+2)^2 k})=\exp(-\frac{\beta^2 k}{2(\alpha+2)^2})$$
+
+Since ${\sum_k \exp(-\frac{\beta^2 k}{2(\alpha+2)^2}) < \infty}$, it follows that
+
+$$\Prb[\exists k \in \Nats \forall l > k: S^0_{N_l} - S_0 \geq -\beta l]=1$$
+
+$$\Prb[\exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq \beta (\sum_{n=0}^{N_l-1} \Delta_n -  l)]=1$$
+
+By Proposition B.13
+
+$$\Prb[\sum_{n=0}^\infty  \Delta_n = \infty \implies \exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq 0]=1$$
+
+It remains to show that if ${x \in X}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then the condition above fails. Consider any such ${x \in X}$. ${\Abs{S_n(x) - S_0(x)} \leq \sum_{m=0}^{n-1} \Delta_n(x) + \alpha}$, therefore ${\sum_{n=0}^\infty  \Delta_n(x) = \infty}$. On the other hand, by Proposition B.14, ${\inf_{k} S_{N_k(x)}(x) = -\infty}$.
+ 
+\#Proposition A.4
+
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${t,\alpha,\beta > 0}$, ${\{S'_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,t]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$ and ${\Sqn{S_n:X \rightarrow \Reals}}$ an arbitrary stochastic process. Assume that:
+
+$$\Abs{S_n - S'_n} \leq \frac{\alpha}{4}$$
+
+$$\E[\Abs{S_0}] < \infty$$
+
+$$\Abs{S_{n+1}-S_n} \leq \Delta_n$$
+
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta \Delta_n$$
+
+Then, ${\inf_{n} S_n > -\infty}$ (equivalently ${\inf_{n} S'_n > -\infty}$) with probability 1.
+
+\#Proof of Proposition A.4
+
+Define ${S''_n:= \E[S_n \mid \F_n]}$. We have
+
+$$\E[\Abs{S''_0}] = \E[\Abs{\E[S_0 \mid \F_0]}] \leq \E[\E[\Abs{S_0} \mid \F_0]] = \E[\Abs{S_0}] < \infty$$
+
+$$\Abs{S''_n - S'_n} = \Abs{\E[S_n \mid \F_n] - S'_n} = \Abs{\E[S_n - S'_n \mid \F_n]} \leq \frac{\alpha}{4}$$
+
+$$\Abs{S''_n - S_n} \leq \Abs{S''_n - S'_n} + \Abs{S'_n - S_n} \leq \frac{\alpha}{2}$$
+
+$$\forall n' \geq n: \Abs{S''_{n'}-S''_n} \leq \Abs{S_{n'}-S_n} + \alpha \leq \sum_{m=n}^{n'-1} \Delta_m + \alpha$$
+
+$$\E[S''_{n+1}-S''_n \mid \F_n] = \E[\E[S_{n+1} \mid \F_{n+1}]-\E[S_n \mid \F_n] \mid \F_n] = \E[S_{n+1}-S_n \mid \F_n] \geq \beta \Delta_n$$
+
+By Proposition A.3, ${\inf_n S''_n > -\infty}$ with probability 1. Since ${\Abs{S''_n - S_n} \leq \frac{\alpha}{2}}$, we get the desired result.
+
+\#Proposition A.5
+
+Consider ${\Sqn{\Ob_n}}$, ${\Sqn{Y_n:=\prod_{m < n} \Ob_m}}$ and ${X:=\prod_n \Ob_n}$ as before. Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n\omega}\}_{n \in \Nats}}$, ${\upsilon}$ a metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Then, for ${\mu^*}$-almost any ${x \in X}$:
+
+$$\inf_{n \in \Nats} \min_{z \in X_{x(n)}} \SW T^M_{\upsilon, n+1}(x(n),z) > -\infty$$
+
+\#Proof of Proposition A.5
+
+We regard ${X}$ as a probability space using the ${\sigma}$-algebra ${\UM(X)}$ and the probability measure ${\mu^*}$. For any ${n \in \Nats}$, we define ${\F_n \subseteq \UM(X)}$ and ${S_n,S'_n,\Delta_n: X \rightarrow \Reals}$ by 
+
+$${\F_n := \pi_{n\omega}^{-1}(\UM(Y_n))}$$
+
+$$S_n(x):= \SW T^M_{\upsilon n}(x(n-1),x)$$
+
+$$S'_n(x):= \min_{z \in X_{x(n-1)}} \SW T^M_{\upsilon n}(x(n-1),z)$$
+
+$$\Delta_n(x):=\max_{z \in X_{x(n)}} \bar{T}^M_{\upsilon n}(x(n),z) - \min_{z \in X_{x(n)}} \bar{T}^M_{\upsilon n}(x(n),z)$$
+
+Clearly, ${\F}$ is a filtration of ${X}$, ${S,S',\Delta}$ are stochastic processes and ${S',\Delta}$ are adapted to ${\F}$. ${\upsilon}$ is uniformly bounded, therefore ${T_\upsilon}$  is uniformly bounded and so is ${\Delta}$. Obviously, ${\Delta}$ is also non-negative.
+
+By Proposition B.15, ${\Abs{S_n-S'_n}}$ are uniformly bounded. ${S_0}$ is bounded and in particular ${\E[\Abs{S_0}] < \infty}$. We have
+
+$$\Abs{S_{n+1}(x)-S_n(x)} = \Abs{\W \bar{T}_{\upsilon n}^M(x(n),x)} \leq \Delta_n(x)$$
+
+Let $\beta > 0$ and $K_n \in \mu^* \mid \pi_{n\omega}$ be as in Definition 4. 
+
+$$\E[S_{n+1} - S_n \mid \F_n] = \E_{z \sim K_n(x(n))}[\W \bar{T}_{\upsilon n}^M(x(n),z)]$$
+
+$$\E[S_{n+1} - S_n \mid \F_n] = \E_{z \sim K_n(x(n))}[\bar{T}_{\upsilon n}^M(x(n),z)] - \E_{z \sim M_n(x(n))}[\bar{T}_{\upsilon n}^M(x(n),z)]$$
+
+By definition of $T_\upsilon$, $\bar{T}_{\upsilon n}^M(x(n))$ is equal to either $\upsilon_n(x(n),M_n(x(n)))$ or 0. In either case, we get (almost everywhere)
+
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta (\max_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n)) - \min_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n))) = \beta \Delta_n$$
+
+Applying Proposition A.4, we get the desired result.
+
+\#Proposition A.6
+
+Consider the setting of Proposition A.3. Then, for almost all $x \in X$:
+
+$$\sup_{n \in \Nats} S_n(x) < \infty \implies \sum_{n = 0}^\infty \Delta_n(x) < \infty$$
+
+\#Proof of Proposition A.6
+
+Define $\Sqn{S^0_n: X \rightarrow \Reals}$ by
+
+$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} \Delta_m$$
+
+Let $\Sqn{N_n}$ be the accumulation times of $\Delta$. Consider any $x \in X$ s.t. $\sup_n S_n(x) = s(x) < \infty$ but $\sum_n \Delta_n(x) = \infty$. Proposition B.13 implies that
+
+$$S^0_{N_k(x)}(x) \leq S_{N_k(x)}(x) - \beta k \leq s(x) - \beta k$$
+
+As in the proof of Proposition A.3, we can apply the Azuma-Hoeffding inequality to $S^0_N$ and get that for any positive integer $k$
+
+$$\Pr[S^0_{N_k} - S_0 < -k^{\frac{3}{4}}] \leq \exp(-\frac{k^{\frac{3}{2}}}{2(\alpha + 2)^2k})=\exp(-\frac{k^{\frac{1}{2}}}{2(\alpha + 2)^2})$$
+
+It follows that
+
+$$\sum_{k=1}^\infty \Pr[S^0_{N_k} - S_0 < -k^{\frac{3}{4}}] < \infty$$
+
+$$\Pr[\exists k \in \Nats \forall l > k: S^0_{N_l} - S_0 < -l^{\frac{3}{4}}] = 0$$
+
+$$\Pr[\exists m \in \Nats \forall k \in \Nats: S^0_{N_k} \leq m - \beta k] = 0$$
+
+Comparing with the inequality from before, we reach the desired conclusion.
+
+\#Proposition A.7
+
+Consider the setting of Proposition A.4. Then, for almost all $x \in X$:
+
+$$\sup_{n \in \Nats} S_n(x) < \infty \implies \sum_{n = 0}^\infty \Delta_n(x) < \infty$$
+
+\#Proof of Proposition A.7
+
+Define $S''_n:=\E[S_n \mid \F_n]$. As in the proof of Proposition A.4, $S''$ meets the conditions of Proposition A.3 and thus of Proposition A.6 also. By Proposition A.6, for almost all $x \in X$:
+
+$$\sup_{n \in \Nats} S''_n(x) < \infty \implies \sum_{n = 0}^\infty \Delta_n(x) < \infty$$
+
+As in the proof of Proposition A.4, $\Abs{S''_n-S_n}$ is uniformly bounded, giving the desired result.
+
+\#Proof of Theorem 2
+
+Let $\F$, $S$, $S'$ and $\Delta$ be as in the proof of Proposition A.5. Using Proposition A.5 and the assumption that $M$ dominates $T_\upsilon$, we conclude that for $\mu^*$-almost any $x \in X$, $\sup_n S_n(x) < \infty$. As in the proof of Proposition A.5, the conditions of Proposition A.4 are satisfied, and therefore the conditions of Proposition A.7 are also satisfied. Applying Proposition A.7, we conclude that $\sum_n \Delta_n(x) < \infty$. By Proposition B.17, it follows that for any $n \gg 0$, $T_{\upsilon n}^M(x(n)) = \upsilon(x(n))$. We get
+
+$$\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))] = \E_{K_n(x(n))}[\bar{T}_{\upsilon n}^M(x(n))]-\E_{M_n(x(n))}[\bar{T}_{\upsilon n}^M(x(n))])$$
+
+$$\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))] \leq \Delta_n(x)$$
+
+$$\lim_{n \rightarrow \infty} (\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))]) = 0$$
+
+\section{Appendix B}
+
+\#Proposition B.1
+
+If ${X,Y}$ are compact Polish spaces and ${f: X \times Y \rightarrow \Reals}$ is continuous, then ${F: X \rightarrow C(Y)}$ defined by ${F(x)(y):=f(x,y)}$ is continuous.
+
+***
+
+We omit the proof of Proposition B.1, since it appeared as "Proposition A.2" [before](https://agentfoundations.org/item?id=1214).
+
+\#Proposition B.2
+
+Fix ${X,Y}$ compact Polish spaces. Define ${e: C(Y \times X) \times Y \rightarrow C(X)}$ by ${e(f,y)(x):=f(y,x)}$. Then, ${e}$ is continuous. In particular, we can apply this to ${Y = \Prob(X)}$ in which case ${e: \T(X) \times \Prob(X) \rightarrow C(X)}$.
+
+\#Proof of Proposition B.2
+
+Consider ${f_k \rightarrow f}$ and ${y_k \rightarrow y}$. We have
+
+$$\max_{x \in X} \Abs{f_k(y_k,x)-f(y_k,x)} \leq \Norm{f_k - f} \rightarrow 0$$
+
+By Proposition B.1
+
+$$\max_{x \in X} \Abs{f(y_k,x)-f(y,x)} \rightarrow 0$$
+
+Combining, we get
+
+$$\max_{x \in X} \Abs{f_k(y_k,x)-f(y,x)} \rightarrow 0$$
+
+\#Proposition B.3
+
+Fix ${Y,Y'}$ compact Polish spaces and denote ${X:=Y \times Y'}$. Define ${F: Y \times C(X) \rightarrow \Reals}$ by 
+
+$${F(y,f):=\max_{y' \in Y'} f(y,y')}$$
+
+Then, ${F}$ is continuous.
+
+\#Proof of Proposition B.3
+
+Consider ${y_k \rightarrow y}$, ${f_k \rightarrow f}$. By Proposition B.1, ${y_k \rightarrow y}$ implies that
+
+$${\lim_{k \rightarrow \infty} \max_{y' \in Y'} f(y_k,y') = \max_{y' \in Y'} f(y,y')}$$
+
+Since ${f_k \rightarrow f}$, we get
+
+$${\lim_{k \rightarrow \infty} \max_{y' \in Y'} f_k(y_k,y') = \max_{y' \in Y'} f(y,y')}$$
+
+\#Proposition B.4
+
+Fix ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Define ${Z \subseteq Y \times \Prob(X) \times C(X)}$ by
+
+$$Z:=\{(y,\mu,f) \in Y \times \Prob(X) \times C(X) \mid \E_\mu[f] = \max_{y' \in Y'} f(y,y')\}$$
+
+Then, ${Z}$ is closed.
+
+\#Proof of Proposition B.4
+
+Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${f_k \rightarrow f}$, ${(y_k,\mu_k,f_k) \in Z}$. By Proposition B.3, we get
+
+$$\max_{y' \in Y'} f(y,y') = \lim_{k \rightarrow \infty} \max_{y' \in Y'} f_k(y_k,y')= \lim_{k \rightarrow \infty} \E_{\mu_k}[f_k] = \E_{\mu}[f]$$
+
+Hence, ${(y,\mu,f) \in Z}$.
+
+\#Proposition B.5
+
+Fix ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Define ${Z \subseteq Y \times \Prob(X) \times \T(X)}$ by
+
+$$Z:=\{(y,\mu,\tau) \in Y \times \Prob(X) \times \T(X) \mid \E_\mu[\tau(\mu)] = \max_{y' \in Y'} \tau(\mu,y,y')\}$$
+
+Then, ${Z}$ is closed.
+
+\#Proof of Proposition B.5
+
+By Proposition B.2, ${Z}$ is the continuous inverse image of a subset of ${Y \times \Prob(X) \times C(X)}$ which is closed by Proposition B.4.
+
+\#Proposition B.6
+
+Fix ${X}$ a compact Polish space. Consider ${f \in C(X)}$ and ${\mu \in \Prob(X)}$ and denote ${M := \max f}$. Then, ${\Supp \mu \subseteq f^{-1}(M)}$ iff ${\E_\mu[f] = M}$.
+
+\#Proof of Proposition B.6
+
+If ${\Supp \mu \subseteq f^{-1}(M)}$ then $\Prb_{x\sim \mu}[f(x) \ne M] = 0$ and therefore ${\E_\mu[f] = M}$.
+
+Now, assume ${\E_\mu[f] = M}$. For any ${k \in \Nats}$, Markov's inequality yields 
+
+$$\Prb_{x\sim \mu}[M - f(x) \geq \frac{1}{k}] \leq k\E_{x \sim \mu}[M - f(x)] = 0$$
+
+Taking $k \rightarrow \infty$, we get ${\Prb_{x\sim \mu}[M > f(x)] = 0}$ and hence ${\Supp \mu \subseteq f^{-1}(M)}$.
+
+\#Proposition B.7
+
+Consider ${Y,Y'}$ compact Polish spaces. Denote ${X:=Y \times Y'}$. Define ${Z \subseteq Y \times \Prob(X)}$ by
+
+$$Z:=\{(y,\mu) \in Y \times \Prob(X) \mid \Supp \mu \subseteq y \times Y'\}$$
+
+Then, ${Z}$ is closed.
+
+\#Proof of Proposition B.7
+
+We fix metrizations for ${Y}$ and ${Y'}$ and metrize ${X}$ by 
+
+$${d_X((y_1,y_1'),(y_2,y_2')):=\max(d_Y(y_1,y_2),d_{Y'}(y_1',y_2'))}$$
+
+For each ${y \in Y}$, denote ${d_{y}:=d_{y \times Y'}}$.
+
+Consider ${y_k \rightarrow y}$, ${\mu_k \rightarrow \mu}$, ${(y_k, \mu_k) \in Z}$. We have ${\E_{\mu_k}[d_{y_k}]=0}$. By Proposition B.1, ${d_{y_k} \rightarrow d_y}$, therefore ${\E_\mu[d_y] = 0}$. By Proposition B.6, ${\Supp \mu \subseteq y \times Y'}$ and hence ${(y,\mu) \in Z}$.
+
+\#Proposition B.8
+
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Assume that there are ${\alpha,\beta > 0}$ s.t.:
+
+$$\E[\Abs{S_0}] < \infty$$
+
+$$\Abs{S_{n}-S_0} \leq \sum_{m=0}^{n-1} \Delta_m + \alpha$$
+
+$$\E[S_{n+1} - S_n \mid \F_n] \geq \beta \Delta_n$$
+
+Define ${\Sqn{S^0_n: X \rightarrow \Reals}}$ by
+
+$$S^0_n := S_n - \beta \sum_{m=0}^{n-1} \Delta_m$$
+ 
+Then, ${S^0}$ is a submartingale.
+
+\#Proof of Proposition B.8
+
+Obviously, ${S^0}$ is adapted to ${\F}$. We have
+
+$$\E[\Abs{S^0_{n}}] \leq \E[\Abs{S_n}] + \beta n \leq \E[\Abs{S_0}] + \E[\Abs{S_n - S_0}] + \beta n \leq \E[\Abs{S_0}] + 2\beta n + \alpha < \infty$$
+
+$$\E[S^0_{n+1} \mid \F_n] = \E[S_{n+1} \mid \F_n] - \beta \sum_{m = 0}^{n} \Delta_m$$
+
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] + \beta \Delta_n - \beta \sum_{m = 0}^{n} \Delta_m$$
+
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S_{n} \mid \F_n] - \beta \sum_{m = 0}^{n - 1} \Delta_m$$
+
+$$\E[S^0_{n+1} \mid \F_n] \geq \E[S^0_{n} \mid \F_n]$$
+
+\#Proposition B.9
+
+Let ${X}$ be a probability space, ${\Sqn{\F_n \subseteq 2^X}}$ a filtration on ${X}$, ${\Sqn{S_n: X \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and ${N: X \rightarrow \Nats \sqcup \{\infty\}}$ a stopping time (w.r.t. ${\F}$). Suppose ${S}$ is submartingale. Then, ${\Sqn{S_{\min(n,N)}}}$ is also submartingale.
+
+\#Proof of Proposition B.9
+
+Clearly, ${\Sqn{S_{\min(n,N)}}}$ is adapted to ${\F}$. We have
+
+$$\Abs{S_{\min(n,N)}} \leq \sum_{m \leq n} \Abs{S_m}$$
+
+$$\E[\Abs{S_{\min(n,N)}}] \leq \E[\sum_{m \leq n} \Abs{S_m}] = \sum_{m \leq n} \E[\Abs{S_m}] < \infty$$
+
+For any ${n \in \Nats}$, define ${A_n \subseteq X}$ by
+
+$$A_n:=\{x \in X \mid N(x)\ > n\}$$
+
+${N}$ is a stopping time, therefore ${A_n \in \F_n}$. We have 
+
+$${S_{\min(n+1,N)} - S_{\min(n,N)} = \chi_{A_n} (S_{n+1} - S_n)}$$
+
+$${\E[S_{\min(n+1,N)} - S_{\min(n,N)} \mid \F_n] = \E[\chi_{A_n} (S_{n+1} - S_n) \mid \F_n]}$$
+
+$${\E[S_{\min(n+1,N)} - S_{\min(n,N)} \mid \F_n] = \chi_{A_n} \E[ S_{n+1} - S_n \mid \F_n] \geq 0}$$
+
+\#Proposition B.10
+
+Consider a sequence ${\{t_n \in [0,1]\}_{n \in \Nats}}$. Let ${\{n_k \in \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Then:
+
+$$\sum_{n = 0}^{n_k - 1} t_n \leq 2k$$
+
+\#Proof of Proposition B.10
+
+We prove by induction on ${k}$. For ${k = 0}$, the claim is obvious. If ${n_k = \infty}$ then ${n_{k+1}=\infty}$ and, by the induction hypothesis
+
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n = \sum_{n = 0}^{\infty} t_n = \sum_{n = 0}^{n_k - 1} t_n \leq 2k \leq 2(k+1)$$
+
+Now assume ${n_k < \infty}$. Then ${n_{k+1} > n_k}$ (because for the sum in the definition of accumulation times to be ${\geq 1}$ it has to be non-empty), therefore
+
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n = \sum_{n = 0}^{n_k - 1} t_n + \sum_{n = n_k}^{n_{k+1} - 1} t_n$$
+
+By the induction hypothesis
+
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k + \sum_{n = n_k}^{n_{k+1} - 1} t_n$$
+
+If ${n_{k+1} < \infty}$ then
+
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k + \sum_{n = n_k}^{n_{k+1} - 2} t_n + t_{n_{k+1}-1}$$
+
+By definition of accumulation times, the middle term is ${< 1}$. By definition of ${t}$, the last term is ${\leq 1}$. We get
+
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n < 2k + 1 + 1 = 2(k+1)$$
+
+Finally, assume ${n_{k+1} = \infty}$. We have
+
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k + \sum_{n = n_k}^{\infty} t_n$$
+
+By definition of accumulation times, we get that for any ${m \in \Nats}$:
+
+$$\sum_{n = n_k}^{m} t_n < 1$$
+
+It follows that
+
+$$\sum_{n = n_k}^{\infty} t_n \leq 1$$
+
+Combining, we have
+
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n \leq 2k+1 <\ 2(k+1)$$
+
+\#Proposition B.11
+
+Consider ${X}$ a probability space, ${\{\F_n \subseteq 2^X\}_{n \in \Nats}}$ a filtration of ${X}$, ${\{S_n:X \rightarrow \Reals\}_{n \in \Nats}}$ and ${\{\Delta_n:X \rightarrow [0,1]\}_{n \in \Nats}}$ stochastic processes adapted to ${\F}$. Define ${\Sqn{U_n: X \rightarrow \Reals}}$ by
+
+$$U_n := \sum_{m=0}^{n-1} \Delta_m$$
+
+Assume that there is ${\alpha \geq 0}$ s.t.
+
+$$\E[\Abs{S_0}] < \infty$$
+
+$$\Abs{S_{n}-S_0} \leq U_n + \alpha$$
+
+Let ${\{N_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${\Delta}$. Then, for any ${k \in \Nats}$, ${\Sqn{S_{\min(n,N_k)}}}$ and ${\Sqn{U_{\min(n,N_k)}}}$ are uniformly integrable.
+
+\#Proof of Proposition B.11
+
+By Proposition B.10, $U_{\min(n,N_k)} \leq U_{N_k} \leq 2k$, so ${\Sqn{U_{\min(n,N_k)}}}$ is uniformly bounded and in particular uniformly integrable. Moreover:
+
+$$\Abs{S_{\min(n,N_k)}} \leq \Abs{S_0} + U_{\min(n,N_k)} \leq \Abs{S_0} + 2k$$
+
+Since ${\E[\Abs{S_0}] < \infty}$, it follows that ${\Sqn{S_{\min(n,N_k)}}}$ is uniformly integrable.
+
+\#Proposition B.12
+
+Consider sequences ${\Sqn{s_n \in \Reals}}$ and ${\Sqn{t_n \in [0,1]}}$. Let ${\{n_k: X \rightarrow \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Assume that there is ${\alpha \geq 0}$ s.t.
+
+$${\forall n' \geq n: \Abs{s_{n'} - s_n} \leq \sum_{m=n}^{n'-1} t_m + \alpha}$$
+
+Assume further that either all ${n_{k}}$ are finite or $s$ converges. Denote $s_{n_k}:=\lim_{n \rightarrow n_k} s_n$. Then, ${\Abs{s_{n_{k+1}}-s_{n_k}} < \alpha + 2}$.
+
+\#Proof of Proposition B.12
+
+Fix ${k \in \Nats}$. If ${n_k = \infty}$, the claim is trivial. Consider the case ${n_{k+1} < \infty}$. We have
+
+$$\Abs{s_{n_{k+1}}-s_{n_k}} \leq \sum_{n=n_k}^{n_{k+1}-1} t_n + \alpha = \sum_{n=n_k}^{n_{k+1}-2} t_n + t_{n_{k+1}-1} + \alpha < 1+1 + \alpha= \alpha + 2$$
+
+Now consider the case ${n_k < \infty}$, ${n_{k+1} = \infty}$. By definition of accumulation times:
+
+$$\sum_{n=n_k}^{\infty} t_n \leq 1$$
+
+It follows that $\Abs{s_{n_{k+1}}-s_{n_k}} = \Abs{\lim_{n \rightarrow \infty} s_{n}-s_{n_k}} \leq \alpha + 1$.
+
+\#Proposition B.13
+
+Consider a sequence ${\{t_n \in [0,1]\}_{n \in \Nats}}$. Let ${\{n_k \in \Nats \sqcup \{\infty\}\}_{k \in \Nats}}$ be the accumulation times of ${t}$. Assume that ${\sum_n^\infty t_n = \infty}$. Then:
+
+$$\sum_{n = 0}^{n_k - 1} t_n \geq k$$
+
+\#Proof of Proposition B.13
+
+We prove by induction on ${k}$. For ${k=0}$, the claim is obvious. ${\sum_n^\infty t_n = \infty}$ implies that ${n_0 < n_1 < \ldots < \infty}$, therefore
+
+$$\sum_{n = 0}^{n_{k+1} - 1} t_n = \sum_{n = 0}^{n_{k} - 1} t_n + \sum_{n = n_k}^{n_{k+1} - 1} t_n$$
+
+The first term is ${\geq k}$ by induction. The second term is ${\geq 1}$ by definition of accumulation time.
+
+\#Proposition B.14
+
+Consider sequences ${\{s_n \in \Reals\}_{n \in \Nats}}$ and ${\{t_n \in [0,1]\}_{n \in \Nats}}$. Assume that there is ${\alpha \geq 0}$ s.t.
+
+$${\forall n' \geq n: \Abs{s_{n'}-s_n} \leq \sum_{m=n}^{n'-1} t_m + \alpha}$$
+
+Assume further that ${\inf_n s_n = -\infty}$. In particular, ${\sum_n^\infty t_n = \infty}$. Let ${\{n_k \in \Nats\}_{k \in \Nats}}$ be the accumulation times of ${t}$ (finite because of the previous observation).  Then, ${\inf_k s_{n_k} = -\infty}$.
+
+\#Proof of Proposition B.14
+
+We need to prove that for any ${s > 0}$ and ${k \in \Nats}$, there is ${l \geq k}$ s.t. ${s_{n_l} < -s}$. We know that there is ${n \geq n_k}$ s.t. ${s_n\ <\ -(s+\alpha+2)}$. We have ${n_0 < n_1 < \ldots < \infty}$, therefore we can choose ${l \geq k}$ s.t. ${n_l \leq n < n_{l+1}}$. We get
+
+$$\Abs{s_n-s_{n_l}} \leq \sum_{m=n_l}^{n - 1} t_m + \alpha \leq \sum_{m=n_l}^{n_{l+1} - 1} t_m  + \alpha = \sum_{m=n_l}^{n_{l+1} - 2} t_m + t_{n_{l+1}-1} + \alpha < 1 + 1  + \alpha = \alpha + 2$$
+
+Therefore, ${s_{n_l} < -s}$.
+
+\#Proposition B.15
+
+Consider ${\Sqn{\Ob_n}}$, ${\Sqn{Y_n:=\prod_{m < n} \Ob_m}}$ and ${X:=\prod_n \Ob_n}$ as before. Consider ${\upsilon}$ a metastrategy and ${M}$ a market. Define ${S_n,S'_n: X \rightarrow \Reals}$ by 
+
+$$S_n(x):= \SW T^M_{\upsilon n}(x(n-1),x)$$
+
+$$S'_n(x):= \min_{z \in X_{x(n-1)}} \SW T^M_{\upsilon n}(x(n-1),z)$$
+
+Then: 
+
+$${\Abs{S_n-S'_n} \leq 2 \sup_{m \in \Nats} \sup_{y \in Y_m} \Norm{\upsilon(y)}} + 1$$
+
+\#Proof of Proposition B.15
+
+We prove by induction. For the basis, $S_0=S'_0=0$. Consider any ${n \in \Nats}$ and ${x \in X}$. First, assume that
+
+$$\max_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z)-\min_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z) > 1$$
+
+Then, by definition of ${T_\upsilon}$, ${T^M_{\upsilon n}}(x(n)) \equiv 0$ and therefore
+
+$$\SW T^M_{\upsilon,n+1}(x(n))=\SW T^M_{\upsilon n}(x(n-1))$$
+
+It follows that
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon,n+1}(x(n),x) - \min_{z \in X_{x(n)}}\SW T^M_{\upsilon,n+1}(x(n),z)}$$
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon n}(x(n-1),x) - \min_{z \in X_{x(n)}}\SW T^M_{\upsilon n}(x(n-1),z)}$$
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} = \Abs{\SW T^M_{\upsilon n}(x(n-1),x) - \min_{z \in X_{x(n-1)}}\SW T^M_{\upsilon n}(x(n-1),z)}$$
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \Abs{S_n(x)-S'_n(x)}$$
+
+Using the induction hypothesis, we conclude
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq 2 \sup_{m \in \Nats} \sup_{y \in Y_m} \Norm{\upsilon(y)} + 1$$
+
+Now, assume that 
+
+$$\max_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z)-\min_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z) \leq 1$$
+
+Then, ${T^M_{\upsilon n}}(x(n)) = \upsilon_{n}(x(n))$ and therefore
+
+$$\SW T^M_{\upsilon,n+1}(x(n))=\SW T^M_{\upsilon n}(x(n-1)) + \upsilon_{n}(x(n),M_{n}(x(n)))$$
+
+We get
+
+$$\Abs{S_{n+1}(x)-S'_{n+1}(x)} \leq \max_{z \in X_{x(n)}} \SW T^M_{\upsilon n}(x(n-1),z) - \min_{z \in X_{x(n)}}\SW T^M_{\upsilon n}(x(n-1),z) + 2 \Norm{\upsilon_{n}(x(n))}$$
+
+By the assumption, the first two terms total to ${\leq 1}$, yielding the desired result.
+
+\#Proposition B.16
+
+Consider $X$ a compact Polish space, $f \in C(X)$ and $\Sqn{X_n \subseteq X}$ closed s.t. $X_{n+1} \subseteq X_n$ and $\bigcap_n X_n = \{x^*\}$ for some $x^* \in X$. Then
+
+$$\lim_{n \rightarrow \infty} (\max_{X_n} f - \min_{X_n} f) = 0$$
+
+\#Proof of Proposition B.16
+
+Choose $\Sqn{x^+_n \in \Argmax{X_n} f}$ and $\Sqn{x^-_n \in \Argmin{X_n} f}$. $\max_{X_n} f - \min_{X_n} f$ is a non-increasing sequence, therefore it is sufficient to prove that a subsequence converges to 0. Therefore, we can assume without loss of generality that $x_n^+ \rightarrow x^+_\omega$ and $x^-_n \rightarrow x^-_\omega$. For each $n \in \Nats$, the fact that $X_n$ is closed implies that $x^+_\omega, x^-_\omega \in X_n$. Therefore, $x^+_\omega=x^-_\omega=x^*$. We get
+
+$$\lim_{n \rightarrow \infty} (\max_{X_n} f - \min_{X_n} f) = \lim_{n \rightarrow \infty} (f(x^+_n) - f(x^-_n)) = f(x^+_\omega) - f(x^-_\omega) = f(x^*) - f(x^*) = 0$$
+
+\#Proposition B.17
+
+Consider $\upsilon$ a trading metastrategy, $M$ a market and $x \in X$. Assume that
+
+$$\sum_{n=0}^\infty (\max_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n)) - \min_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n))) < \infty$$
+
+Then, for any $n \gg 0$, $T_{\upsilon n}^M(x(n)) = \upsilon(x(n))$.
+
+\#Proof of Proposition B.17
+
+Choose $n_0 \in \Nats$ s.t. 
+
+$$\sum_{n=n_0}^\infty (\max_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n)) - \min_{X_{x(n)}} \bar{T}_{\upsilon n}^M(x(n))) < \frac{1}{2}$$
+
+Since $\bar{T}_{\upsilon n}^M(x(n)), W \bar{T}_{\upsilon n}^M(x(n)) \in C(X)$ differ by a constant function, we have
+
+$$\sum_{n=n_0}^\infty (\max_{X_{x(n)}} \W\bar{T}_{\upsilon n}^M(x(n)) - \min_{X_{x(n)}} \W\bar{T}_{\upsilon n}^M(x(n))) < \frac{1}{2}$$
+
+In particular, for any $n \geq n_0$
+
+$$\sum_{m=n_0}^{n-1} (\max_{X_{x(n)}} \W\bar{T}_{\upsilon m}^M(x(m)) - \min_{X_{x(n)}} \W\bar{T}_{\upsilon m}^M(x(m))) \leq \sum_{m=n_0}^{n-1} (\max_{X_{x(m)}} \W\bar{T}_{\upsilon m}^M(x(m)) - \min_{X_{x(m)}} \W\bar{T}_{\upsilon m}^M(x(m))) < \frac{1}{2}$$
+
+By Proposition B.16, there is $n_1 \geq n_0$ s.t. for any $n \geq n_1$
+
+$$\max_{X_{x(n)}} \SW T_{\upsilon n_0}^M(x(n_0 - 1)) - \min_{X_{x(n)}} \SW T_{\upsilon n_0}^M(x(n_0 - 1)) < \frac{1}{2}$$
+
+Taking the sum of the last two inequalities, we conclude that for any $n \geq n_1$
+
+$$\max_{X_{x(n)}} \SW T_{\upsilon n}^M(x(n - 1)) - \min_{X_{x(n)}} \SW T_{\upsilon n}^M(x(n - 1)) < 1$$
+
+By definition of $T_\upsilon$, we get the desired result.
+
+\section{Appendix C}
+
+The following version of the optional stopping theorem appears in [Durret](?) as Theorem 5.4.7:
+
+\#Theorem C
+
+Let ${X}$ be a probability space, ${\Sqn{\F_n \subseteq 2^X}}$ a filtration on ${X}$, ${\Sqn{S_n: X \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and ${M,N: X \rightarrow \Nats \sqcup \{\infty\}}$ stopping times (w.r.t. ${\F}$) s.t. ${M \leq N}$. Assume that ${\Sqn{S_{\min(n,N)}}}$ is a uniformly integrable submartingale. Using Doob's martingale convergence theorem, we can define ${S_N : X \rightarrow \Reals}$ by
+
+$$S_N(x):=\lim_{n \rightarrow \infty} S_{\min(n,N)}(x)=\begin{cases}S_{N(x)}(x) \text{ if } N(x) < \infty\\\lim_{n \rightarrow \infty} S_n(x) \text{ if } N(x) = \infty\end{cases}$$
+
+(the above is well-defined *almost* everywhere, which is sufficient for our purpose) We define ${S_M: X \rightarrow \Reals}$ is an analogous way (this time we can't use Doob's martingale convergence theorem, but whenever ${M(x) = \infty}$ we also have ${N(x) = \infty}$, therefore the limit almost surely converges). We also define ${\F_M \subseteq 2^X}$ by
+
+$$\F_M:=\{A \subseteq X \text{ measurable} \mid \forall n \in \Nats: A \cap M^{-1}(n) \in \F_n\}$$
+
+Then:
+
+$$\E[S_N \mid \F_M] \geq S_M$$
+
+\end{document}
+
+
+
+
