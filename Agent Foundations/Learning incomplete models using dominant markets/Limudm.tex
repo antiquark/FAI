@@ -228,6 +228,46 @@ This leaves an interesting open question, namely whether the counterpart of Theo
 
 \section{Appendix A}
 
+\#Proposition N10
+
+Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Consider any $\mu_0 \in \Prob(X) \setminus \bar{\Phi}$ (i.e. $\mu_0$ is in the exterior of $\Phi$). Then, there exists $f \in \Lip(X)$ s.t.
+
+$$\Norm{f} < 2\Dkr(\mu_0,\Phi)$$
+
+$$\inf_{\nu \in \Phi} \E_\nu[f] > \E_{\mu_0}[f] + \Dkr(\mu_0,\Phi)^2$$
+
+\#Proof of Proposition N10
+
+Denote $r:=\Dkr(\mu_0,\Phi)$ and define $\Phi^r \subseteq \Prob(X)$ by
+
+$$\Phi^r:=\{\mu \in \Prob(X) \mid \Dkr(\mu, \Phi) < r\}$$
+
+By the Hahn-Banach separation theorem, there is $\varphi \in \Lip(X)''$ s.t. for all $\nu \in \Phi^r$, $\varphi(\nu) > \varphi(\mu_0)$...
+
+TBD
+
+\#Proposition N8
+
+Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Let $U := \Prob(X) \setminus \bar{\Phi}$. Then, there exists $\tau': U \rightarrow C(X)$ continuous s.t. for all $\mu \in U$
+
+$$\Norm{\tau'(\mu)} < 2\Dkr(\mu,\Phi)$$
+
+$$\inf_{\nu \in \Phi} \E_\nu[\tau'(\mu)] > \E_\mu[\tau'(\mu)] + \Dkr(\mu,\Phi)^2$$
+
+\#Proof of Proposition N8
+
+Define $F: U \rightarrow 2^{C(X)}$ by
+
+$$F(\mu):=\{f \mid \Norm{f} < 2 \Dkr(\mu, \Phi),\, \inf_{\nu \in \Phi} \E_\nu[f] > \E_\mu[f] + \Dkr(\mu,\Phi)^2\}$$
+
+
+
+TBD
+
+\#Proposition N9
+
+Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Then, there exists $\tau \in \T(X)$ profitable for $\Phi$.
+
 TBD
 
 \section{Appendix B}
