@@ -228,45 +228,78 @@ This leaves an interesting open question, namely whether the counterpart of Theo
 
 \section{Appendix A}
 
+\#Proposition N11
+
+Let $X$ be a compact Polish space, $\varphi \in \Lip(X)''$ and $\epsilon > 0$. Then, there exists $f_\epsilon \in \Lip(X)$ s.t. $\NormL{f_\epsilon} \leq \Norm{\varphi}$ and for all $\mu \in \Prob(X)$, $\Abs{\E_\mu[f_\epsilon] - \varphi(\mu)} < \epsilon$.
+
+\#Proof of Proposition N11
+
+Without loss of generality, assume that $\Norm{\varphi}=1$ (if $\Norm{\varphi}=0$ the theorem is trivial, otherwise we can rescale everything by a scalar). Using the compactness of $\Prob(X)$, choose a finite set $A_\epsilon \subseteq \Prob(X)$ s.t. 
+
+$$\max_{\mu \in \Prob(X)} \min_{\nu \in A_\epsilon}\, \Dkr(\mu,\nu) < \frac{\epsilon}{4}$$
+
+Using the Goldstine theorem, choose $f_\epsilon \in \Lip(X)$ s.t. $\NormL{f_\epsilon} \leq 1$ and for any $\nu \in A_\epsilon$ 
+
+$$\Abs{\E_\nu[f_\epsilon] - \varphi(\nu)} < \frac{\epsilon}{2}$$
+
+Consider any $\mu \in \Prob(X)$. Choose $\nu \in A_\epsilon$ s.t. $\Dkr(\mu,\nu) < \frac{\epsilon}{4}$. We get
+
+$$\Abs{\E_\mu[f_\epsilon] - \varphi(\mu)} \leq \Abs{\E_\mu[f_\epsilon] - \E_\nu[f_\epsilon]} + \Abs{\varphi(\mu) - \varphi(\nu)} + \Abs{\E_\nu[f_\epsilon] - \varphi(\nu)} < \frac{\epsilon}{4} + \frac{\epsilon}{4} + \frac{\epsilon}{2} = \epsilon$$
+
 \#Proposition N10
 
 Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Consider any $\mu_0 \in \Prob(X) \setminus \bar{\Phi}$ (i.e. $\mu_0$ is in the exterior of $\Phi$). Then, there exists $f \in \Lip(X)$ s.t.
 
-$$\Norm{f} < 2\Dkr(\mu_0,\Phi)$$
+$$\NormL{f} < 2\Dkr(\mu_0,\Phi)$$
 
 $$\inf_{\nu \in \Phi} \E_\nu[f] > \E_{\mu_0}[f] + \Dkr(\mu_0,\Phi)^2$$
 
 \#Proof of Proposition N10
 
-Denote $r:=\Dkr(\mu_0,\Phi)$ and define $\Phi^r \subseteq \Prob(X)$ by
+Denote $r:=\Dkr(\mu_0,\Phi)$ and define $\Phi^r \subseteq \Lip(X)'$ by
 
-$$\Phi^r:=\{\mu \in \Prob(X) \mid \Dkr(\mu, \Phi) < r\}$$
+$$\Phi^r:=\{\mu \in \Lip(X)' \mid \inf_{\nu \in \Phi} \Norm{\mu - \nu} < r\}$$
 
-By the Hahn-Banach separation theorem, there is $\varphi \in \Lip(X)''$ s.t. for all $\nu \in \Phi^r$, $\varphi(\nu) > \varphi(\mu_0)$...
+By the Hahn-Banach separation theorem, there is $\varphi \in \Lip(X)''$ s.t. for all $\nu \in \Phi^r$, $\varphi(\nu) > \varphi(\mu_0)$. Multiplying by a scalar, we can make sure that $\Norm{\varphi} = \frac{3}{2}r$. For any $\delta > 0$, we can choose $\zeta \in \Lip(X)'$ s.t. $\Norm{\zeta} < 1$ and $\varphi(\zeta) > \frac{3}{2}r - \delta$.  For any $\nu \in \Phi$, $\nu - r \zeta \in \Phi^r$ and therefore
 
-TBD
+$$\varphi(\nu - r \zeta) > \varphi(\mu_0)$$
+
+$$\varphi(\nu) > \varphi(\mu_0) + r \varphi(\zeta) > \varphi(\mu_0) + r (\frac{3}{2}r - \delta)$$
+
+Taking $\delta$ to 0 we get $\varphi(\nu) \geq \varphi(\mu_0) + \frac{3}{2} r^2$. Applying Proposition N11 with $\epsilon < \frac{1}{4}r^2$, we get the desired result.
 
 \#Proposition N8
 
-Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Let $U := \Prob(X) \setminus \bar{\Phi}$. Then, there exists $\tau': U \rightarrow C(X)$ continuous s.t. for all $\mu \in U$
+Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Let $U := \Prob(X) \setminus \bar{\Phi}$. Then, there exists $\tau': U \rightarrow \Lip(X)$ continuous s.t. for all $\mu \in U$
 
-$$\Norm{\tau'(\mu)} < 2\Dkr(\mu,\Phi)$$
+$$\NormL{\tau'(\mu)} < 2\Dkr(\mu,\Phi)$$
 
 $$\inf_{\nu \in \Phi} \E_\nu[\tau'(\mu)] > \E_\mu[\tau'(\mu)] + \Dkr(\mu,\Phi)^2$$
 
 \#Proof of Proposition N8
 
-Define $F: U \rightarrow 2^{C(X)}$ by
+Define $F: U \rightarrow 2^{\Lip(X)}$ by
 
-$$F(\mu):=\{f \mid \Norm{f} < 2 \Dkr(\mu, \Phi),\, \inf_{\nu \in \Phi} \E_\nu[f] > \E_\mu[f] + \Dkr(\mu,\Phi)^2\}$$
+$$F(\mu):=\{f \in C(X) \mid \NormL{f} < 2 \Dkr(\mu, \Phi),\, \inf_{\nu \in \Phi} \E_\nu[f] > \E_\mu[f] + \Dkr(\mu,\Phi)^2\}$$
 
+By Proposition N10, for any $\mu \in U$, $F(\mu) \ne \varnothing$. Clearly, $F(\mu)$ is convex. Fix $f \in C(X)$ and consider $F^{-1}(f):=\{\mu \in U \mid f \in F(\mu)\}$. Consider any $\mu_0 \in F^{-1}(f)$, and take $\epsilon > 0$ s.t.
 
+$$\NormL{f} < 2 (\Dkr(\mu_0, \Phi) - \epsilon)$$
 
-TBD
+$$\inf_{\nu \in \Phi} \E_\nu[f] > \E_{\mu_0}[f] + \epsilon + (\Dkr(\mu_0,\Phi) + \epsilon)^2$$
+
+Define $V := \{\mu \in U \mid \Dkr(\mu,\mu_0) < \epsilon,\, \E_\mu[f] < \E_{\mu_0}[f] + \epsilon\}$. Obviously $V$ is open and $V \subseteq F^{-1}(f)$, hence $F^{-1}(f)$ is open. Applying Theorem N3, we get the desired result.
 
 \#Proposition N9
 
 Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Then, there exists $\tau \in \T(X)$ profitable for $\Phi$.
+
+\#Proof of Proposition N9
+
+Use Proposition N8 to obtain $\tau': \Prob(X) \setminus \bar{\Phi} \rightarrow \Lip(X)$. Define $\tau: \Prob(X) \rightarrow \Lip(X)$ by
+
+$$\tau(\mu):=\begin{cases}\tau'(\mu) \text{ if } \mu \not\in \bar{\Phi}\\0 \text { if } \mu \in \bar{\Phi}\end{cases}$$ 
+Obviously $\tau$ is continuous in the exterior of $\Phi$. Consider any $\mu \in \bar{\Phi}$ and $\Sqn{\mu_n \in \Prob(X)}$ s.t. $\mu_n \rightarrow \mu$. We have $\Dkr(\mu_n,\Phi) \rightarrow 0$ and hence $\NormL{\tau(\mu_n)} \leq \Dkr(\mu_n,\Phi) \rightarrow 0$. Therefore, $\tau$ is continuous everywhere.
 
 TBD
 
@@ -290,7 +323,7 @@ $$\lim_{n \rightarrow \infty} (\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(
 
 \section{Appendix D}
 
-The following theorem appears in [Yannelis and Prabhakar]\Comment{(https://www.biz.uiowa.edu/faculty/nyannelis/publications/Existence_of_Maximal_Elements_and_Equilibria_in_Linear_Topological_Spaces.pdf)} as Theorem 3.1.
+The following variant of the Michael selection theorem appears in [Yannelis and Prabhakar]\Comment{(https://www.biz.uiowa.edu/faculty/nyannelis/publications/Existence_of_Maximal_Elements_and_Equilibria_in_Linear_Topological_Spaces.pdf)} as Theorem 3.1.
 
 \#Theorem N3
 
