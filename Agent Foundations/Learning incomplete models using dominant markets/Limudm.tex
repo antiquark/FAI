@@ -148,7 +148,7 @@ Consider ${Y}$ another compact Polish space and ${\Phi \subseteq Y \times \Prob(
 
 $${\Phi_y := \{\mu \in \Prob(X) \mid (y,\mu) \in \Phi\}}$$ 
 
-Assume that for any ${y \in Y}$, ${\Phi_y}$ is convex. Then, there exists ${\upsilon: Y \rightarrow \T(X)}$ measurable w.r.t. ${\UM(Y)}$ and ${\B(\T(X))}$ s.t. for all ${y \in Y}$, ${\Norm{\upsilon(y)} \leq 2}$ and ${\upsilon(y)}$ is profitable for ${\Phi_y}$ (instead of 2, the norm can be bounded by ${1+\epsilon}$ for any ${\epsilon > 0}$, but for our purposes any uniform bound is sufficient).
+Assume that for any ${y \in Y}$, ${\Phi_y}$ is convex. Then, there exists ${\upsilon: Y \rightarrow \T(X)}$ measurable w.r.t. ${\UM(Y)}$ and ${\B(\T(X))}$ s.t. for all ${y \in Y}$, ${\Norm{\upsilon(y)} \leq 4}$ and ${\upsilon(y)}$ is profitable for ${\Phi_y}$.
 
 ***
 
@@ -172,7 +172,7 @@ $$\Phi_y'':=\{\lim_{r \rightarrow 0} (\mu \mid \pi_{n}^{-1}(\Ball_r(y))) \mid \m
 
 Note that the limit in the definition above need not exist for every ${\mu \in \Phi}$.
 
-Denote ${\Phi_y'}$ the convex hull of ${\Phi_y''}$ and define ${\Phi_n' \subseteq Y_n \times \Prob(X)}$ by
+Denote ${\Phi_y' \subseteq \Prob(X)}$ the convex hull of ${\Phi_y''}$ and define ${\Phi_n' \subseteq Y_n \times \Prob(X)}$ by
 
 $$\Phi_n':=\{(y,\mu) \in Y_n \times \Prob(X) \mid \mu \in \Phi_y'\}$$
 
@@ -292,14 +292,52 @@ Define $V := \{\mu \in U \mid \Dkr(\mu,\mu_0) < \epsilon,\, \E_\mu[f] < \E_{\mu_
 
 \#Proposition N9
 
-Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Then, there exists $\tau \in \T(X)$ profitable for $\Phi$.
+Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Then, there exists $\tau \in \T(X)$ profitable for $\Phi$ s.t. $\Norm{\tau} \leq 4$.
 
 \#Proof of Proposition N9
 
 Use Proposition N8 to obtain $\tau': \Prob(X) \setminus \bar{\Phi} \rightarrow \Lip(X)$. Define $\tau: \Prob(X) \rightarrow \Lip(X)$ by
 
 $$\tau(\mu):=\begin{cases}\tau'(\mu) \text{ if } \mu \not\in \bar{\Phi}\\0 \text { if } \mu \in \bar{\Phi}\end{cases}$$ 
-Obviously $\tau$ is continuous in the exterior of $\Phi$. Consider any $\mu \in \bar{\Phi}$ and $\Sqn{\mu_n \in \Prob(X)}$ s.t. $\mu_n \rightarrow \mu$. We have $\Dkr(\mu_n,\Phi) \rightarrow 0$ and hence $\NormL{\tau(\mu_n)} \leq \Dkr(\mu_n,\Phi) \rightarrow 0$. Therefore, $\tau$ is continuous everywhere.
+Obviously $\tau$ is continuous in the exterior of $\Phi$. Consider any $\mu \in \bar{\Phi}$ and $\Sqn{\mu_n \in \Prob(X)}$ s.t. $\mu_n \rightarrow \mu$. We have $\Dkr(\mu_n,\Phi) \rightarrow 0$ and hence $\NormL{\tau(\mu_n)} \leq 2\Dkr(\mu_n,\Phi) \rightarrow 0$. Therefore, $\tau$ is continuous everywhere. Moreover, for any $\mu \in \Phi$, $\Norm{\tau(\mu)} \leq \NormL{\tau(\mu)} \leq 2 \Dkr(\mu, \Phi) \leq 4$ (it is easy to see that the $\Dkr$-diameter of $\Prob(X)$ cannot exceed 2).
+
+\#Proof of Lemma N4
+
+Define $Z \subseteq Y \times \T(X) \times \Prob(X)^3$ by
+
+$$Z:=\{(y,\tau,\mu,\nu,\zeta) \in Y \times \T(X) \times \Prob(X)^3 \mid \Norm{\tau} \leq 4 \,\land\, \zeta \in \Phi_y \,\land\, \E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \Dkr(\mu,\zeta)^2\}$$
+
+It is easy to see that $Z$ is closed. Define $Z' \subseteq Y \times \T(X) \times \Prob(X)^2$ by
+
+$$Z':=\{(y,\tau,\mu,\nu) \in Y \times \T(X) \times \Prob(X)^2 \mid \exists \zeta \in \Prob(X): (\mu,\nu,\zeta,\tau) \in Z\}$$
+
+$Z'$ is closed since it is the projection of $Z$ and $\Prob(X)$ is compact. The $\Phi_y$ are compact and therefore $(y,\tau,\mu,\nu) \in Z'$ if and only if $\Norm{\tau} \leq 4$ and
+
+$$\E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \Dkr(\mu,\Phi_y)^2$$
+
+Define $W \subseteq Y \times \T(X) \times \Prob(X)^2$ by
+
+$$W:=\{(y,\tau,\mu,\nu) \in Y \times \T(X) \times \Prob(X)^2 \mid \nu \in \Phi_y \land (y,\tau,\mu,\nu) \not\in Z'\}$$
+
+$W$ is locally closed and in particular $F_\sigma$. Define $W' \subseteq Y \times \T(X)$ by
+
+$$W':=\{(y,\tau) \in Y \times \T(X) \mid \exists \mu,\nu \in \Prob(X): (y,\tau,\mu,\nu) \in W\}$$
+
+$W'$ is the projection of $W$ and $\Prob(X)^2$ is compact, therefore $W'$ is $F_\sigma$. Let $A \subseteq Y \times \T(X)$ be the complement of $W'$. $A$ is $G_\delta$ and in particular Borel. As easy to see, $(y,\tau) \in A$ if and only if $\Norm{\tau} \leq 4$ and $\tau$ is profitable for $\Phi_y$. 
+
+For any $y \in Y$, $A_y:=\{\tau \in \T(X) \mid (y,\tau) \in A\}$ is closed since
+
+$$A_y = \bigcap_{\mu \in \Prob(X)} \bigcap_{\nu \in \Phi_y} \{\tau \in \T(X) \mid (y,\tau,\mu,\nu) \in Z'\}$$
+
+Moreover, $A_y$ is non-empty by Proposition N9.
+
+Consider any $U \subseteq \T(X)$ open. Then, $A \cap (Y \times U)$ is Borel and therefore its image under the projection to $Y$ is analytic and in particular universally measurable. Applying the Kuratorwsi-Ryll-Nardzewski measurable selection theorem, we get the desired result.
+
+\#Proposition N12
+
+Consider $X$ a compact Polish space, $D \in \Nats$, $Y$ a compact subset of $\Reals^D$, $\pi: X \rightarrow Y$ continuous, $\mu \in \Prob(X)$ and $K \in \mu \mid \pi$. Then, for $\pi_* \mu$-almost any $y \in Y$
+
+$$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\Ball_r(y)) = K(y)$$
 
 TBD
 
