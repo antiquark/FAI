@@ -339,6 +339,30 @@ Consider $X$ a compact Polish space, $D \in \Nats$, $Y$ a compact subset of $\Re
 
 $$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\Ball_r(y)) = K(y)$$
 
+\#Proof of Proposition N12
+
+Let $\Sq{f_k \in C(X)}{k}$ be dense in $C(X)$. For any $y \in Y$ and $r > 0$ we denote $\chi_{yr}: Y \rightarrow \Bool$ the characteristic function of $\Ball_r(y)$ and $\chi^\pi_{yr}: X \rightarrow \Bool$ the characteristic function of $\pi^{-1}(\Ball_r(y))$. For any $k \in \Nats$ and $y_0 \in \Supp \pi_* \mu$ we have $\mu(\pi^{-1}(\Ball_r(y_0))) = \pi_*\mu(\Ball_r(y_0)) > 0$ and
+
+$$\E_{\mu}[f_k \mid \pi^{-1}(\Ball_r(y_0))] = \frac{\E_{\mu}[\chi^\pi_{y_0r} f_k]}{\mu(\pi^{-1}(\Ball_r(y_0)))} = \frac{\E_{y \sim \pi_* \mu}[\E_{K(y)}[\chi^\pi_{y_0r} f_k]]}{\pi_*\mu(\Ball_r(y_0))} = \frac{\E_{y \sim \pi_* \mu}[\chi_{y_0r} \E_{K(y)}[f_k]]}{\pi_*\mu(\Ball_r(y_0))}$$
+
+In particular, the above holds for $\pi_* \mu$-almost any $y_0 \in Y$. Applying the Lebesgue differentiation theorem, we conclude that for $\pi_* \mu$-almost any $y_0 \in Y$
+
+$$\lim_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\Ball_r(y_0))] = \E_{K(y_0)}[f_k]$$
+
+Now consider any $f \in C(X)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\Norm{f-f_k} < \epsilon$ and therefore
+
+$$\limsup_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\Ball_r(y_0))] \leq \limsup_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\Ball_r(y_0))] + \epsilon = \E_{K(y_0)}[f_k] + \epsilon  \leq \E_{K(y_0)}[f] + 2\epsilon$$
+
+Similarly
+
+$$\liminf_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\Ball_r(y_0))] \geq \E_{K(y_0)}[f] - 2\epsilon$$
+
+Taking $\epsilon$ to 0, we conclude that
+
+$$\lim_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\Ball_r(y_0))] = \E_{K(y_0)}[f]$$
+
+$$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\Ball_r(y_0)) = K(y_0)$$
+
 TBD
 
 \section{Appendix B}
