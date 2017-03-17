@@ -134,7 +134,7 @@ In fact, the above differs from the standard definition of the Kantorovich-Rubin
 
 Now consider ${\Phi \subseteq \Prob(X)}$ convex. We will describe a class of trading strategies that are designed to exploit any ${\mu \in \Phi}$.
 
-\#Definition N6
+\#Definition 1
 
 Let $\alpha > 0$. ${\tau \in \T(X)}$ is said to be an *$\alpha$-representative of $\Phi$* when for all ${\mu \in \Prob(X)}$, ${\nu \in \Phi}$ we have
 
@@ -142,7 +142,7 @@ $$\Norm{\tau(\mu)} \leq \max(\Dkr(\mu,\Phi) - \alpha, 0)$$
 
 $$\E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \frac{1}{2}(\Dkr(\mu,\Phi) - \alpha)\Dkr(\mu,\Phi)$$
 
-\#Lemma N4
+\#Lemma 1
 
 Consider ${Y}$ another compact Polish space and ${\Phi \subseteq Y \times \Prob(X)}$ closed. For any ${y \in Y}$, define ${\Phi_y \subseteq \Prob(X)}$ by
 
@@ -164,7 +164,7 @@ ${X}$ is a compact Polish space. For each ${n \in \Nats}$ we denote ${\pi_{n}: X
 
 The following definition provides a notion of updating an incomplete model by observations:
 
-\#Definition N7
+\#Definition 2
 
 Consider ${\Phi \subseteq \Prob(X)}$. For any ${n \in \Nats}$ and ${y \in Y_n}$, we define ${\Phi_y'' \subseteq \Prob(X)}$ by
 
@@ -182,7 +182,7 @@ $$\Phi_y:=\{\mu \in \Prob(X) \mid (y,\mu) \in \Phi_n\}$$
 
 ***
 
-Note that the above definition uses the Euclidean metric on ${Y_n}$. This is the only place through which the assumption that ${\Ob_n}$ is a compact subset of ${R^{D(n)}}$ (rather than an arbitrary compact Polish space) enters. This is used the in the proof of Lemma N5 below, via the Lebesgue differentiation theorem.
+Note that the above definition uses the Euclidean metric on ${Y_n}$. This is the only place through which the assumption that ${\Ob_n}$ is a compact subset of ${R^{D(n)}}$ (rather than an arbitrary compact Polish space) enters. This is used the in the proof of Lemma 2 below, via the Lebesgue differentiation theorem.
 
 Fix a family of metrizations of ${X}$: ${\{d_n: X \times X \rightarrow \Reals\}_{n \in \Nats}}$. The reason we need a family rather than a single metric is that convergence in ${\Dkr}$ is trivial unless we renormalize the metric for each ${n}$. On the other hand, completely arbitrary renormalization is allowed. For example, assuming the diameters of $\Ob_n$ are uniformly bounded, we can take 
 
@@ -190,15 +190,15 @@ $$d_n(x^1,x^2)= \max_{m \in \Nats} c_{nm} d(x^1_m,x^2_m)$$
 
 Here, ${\{c_{nm} > 0\}_{n,m \in \Nats}}$ are required to satisfy ${\lim_{m \rightarrow \infty} c_{nm} = 0}$. To get a non-trivial result, we need the ${c_{nm}}$ to fall slower with ${m}$ as ${n}$ increases. The stronger we make this trend, the stronger conclusion we get (although it always remains weaker than convergence in total variation).
 
-\#Lemma N5
+\#Lemma 2
 
 Consider ${\Phi \subseteq \Prob(X)}$ and ${\alpha > 0}$. Let ${\upsilon}$ be a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is an $\alpha$-representative of ${\Phi_y}$ (relatively to $d_n$). Then, ${\upsilon}$ is profitable for any ${\mu^* \in \Phi}$.
 
 ***
 
-Combining Theorem N2 and Lemma N5, it is easy to get the following:
+Combining Theorem B.2 and Lemma 2, it is easy to get the following:
 
-\#Corollary N6
+\#Corollary 1
 
 Consider ${\Phi \subseteq \Prob(X)}$, ${\alpha > 0}$ and ${\upsilon}$ a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is an $\alpha$-representative of ${\Phi_y}$. Let ${M}$ be a market which dominates ${T_\upsilon}$. For every ${n \in \Nats}$, denote ${\Dkr^n}$ the Kantorovich-Rubinstein metric associated with ${d_n}$. Then, for any ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$:
 
@@ -206,9 +206,9 @@ $$\limsup_{n \rightarrow \infty} \Dkr^n(M_n(x(n)),\Phi_{x(n)}) \leq \alpha$$
 
 ***
 
-Thus, if we construct a set of traders ${T_{\upsilon_k}}$ as in Corollary N6 where ${\upsilon_k}$ corresponds to ${\alpha=\frac{1}{k}}$, then a market dominating all of these traders would have to converge to ${\Phi_{y_n}}$ with ${\mu^*}$-probability 1. Putting this together with Lemma N4 (so that ${\upsilon_k}$ as above actually exists) and Theorem N1 we finally get
+Thus, if we construct a set of traders ${T_{\upsilon_k}}$ as in Corollary 1 where ${\upsilon_k}$ corresponds to ${\alpha=\frac{1}{k}}$, then a market dominating all of these traders would have to converge to ${\Phi_{y_n}}$ with ${\mu^*}$-probability 1. Putting this together with Lemma 1 (so that ${\upsilon_k}$ as above actually exists) and Theorem B.1 we finally get
 
-\#Theorem N7
+\#Theorem 1
 
 Consider any ${H \subseteq 2^{\Prob(X)}}$ countable. Then, there exists a market ${M^H}$ s.t. for any ${\Phi \in H}$, ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$:
 
@@ -216,15 +216,15 @@ $$\lim_{n \rightarrow \infty} \Dkr^n(M^H_n(x(n)),\Phi_{x(n)}) = 0$$
 
 ***
 
-This leaves an interesting open question, namely whether the counterpart of Theorem N7 with ${\Dkr}$ replaced by total variation distance is true.
+This leaves an interesting open question, namely whether the counterpart of Theorem 1 with ${\Dkr}$ replaced by total variation distance is true.
 
 \section{Appendix A}
 
-\#Proposition N11
+\#Proposition A.1
 
 Let $X$ be a compact Polish space, $\varphi \in \Lip(X)''$ and $\epsilon > 0$. Then, there exists $f_\epsilon \in \Lip(X)$ s.t. $\NormL{f_\epsilon} \leq \Norm{\varphi}$ and for all $\mu \in \Prob(X)$, $\Abs{\E_\mu[f_\epsilon] - \varphi(\mu)} < \epsilon$.
 
-\#Proof of Proposition N11
+\#Proof of Proposition A.1
 
 Without loss of generality, assume that $\Norm{\varphi}=1$ (if $\Norm{\varphi}=0$ the theorem is trivial, otherwise we can rescale everything by a scalar). Using the compactness of $\Prob(X)$, choose a finite set $A_\epsilon \subseteq \Prob(X)$ s.t. 
 
@@ -238,7 +238,7 @@ Consider any $\mu \in \Prob(X)$. Choose $\nu \in A_\epsilon$ s.t. $\Dkr(\mu,\nu)
 
 $$\Abs{\E_\mu[f_\epsilon] - \varphi(\mu)} \leq \Abs{\E_\mu[f_\epsilon] - \E_\nu[f_\epsilon]} + \Abs{\varphi(\mu) - \varphi(\nu)} + \Abs{\E_\nu[f_\epsilon] - \varphi(\nu)} < \frac{\epsilon}{4} + \frac{\epsilon}{4} + \frac{\epsilon}{2} = \epsilon$$
 
-\#Proposition N10
+\#Proposition A.2
 
 Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Consider any $\alpha > 0$ and $\mu_0 \in \Prob(X)$ s.t. $r:=\Dkr(\mu_0, \Phi) > \alpha$. Then, there exists $f \in \Lip(X)$ s.t.
 
@@ -246,7 +246,7 @@ $$\NormL{f} < r - \alpha$$
 
 $$\inf_{\nu \in \Phi} \E_\nu[f] > \E_{\mu_0}[f] + \frac{1}{2}(r - \alpha) r$$
 
-\#Proof of Proposition N10
+\#Proof of Proposition A.2
 
 Define $\Phi^r \subseteq \Lip(X)'$ by
 
@@ -258,13 +258,13 @@ $$\varphi(\nu - r \zeta) > \varphi(\mu_0)$$
 
 $$\varphi(\nu) > \varphi(\mu_0) + r \varphi(\zeta) > \varphi(\mu_0) + r (\frac{3}{4}(r-\alpha) - \delta)$$
 
-Taking $\delta$ to 0 we get $\varphi(\nu) \geq \varphi(\mu_0) + \frac{3}{4} r (r - \alpha)$. Applying Proposition N11 for $\epsilon = \frac{1}{16} r (r - \alpha)$, we get $f \in \Lip(X)$ s.t.
+Taking $\delta$ to 0 we get $\varphi(\nu) \geq \varphi(\mu_0) + \frac{3}{4} r (r - \alpha)$. Applying Proposition A.1 for $\epsilon = \frac{1}{16} r (r - \alpha)$, we get $f \in \Lip(X)$ s.t.
 
 $$\Norm{f} \leq \frac{3}{4} (r - \alpha) < r - \alpha$$ 
 
 $$\E_\nu[f] \geq \varphi(\nu) - \frac{1}{16} r (r - \alpha) \geq \varphi(\mu_0) + \frac{11}{16} r (r - \alpha) \geq \E_{\mu_0}[f] +  \frac{5}{8} r (r - \alpha) > \E_{\mu_0}[f] +  \frac{1}{2} r (r - \alpha)$$ 
 
-\#Proposition N8
+\#Proposition A.3
 
 Let $X$ be a compact Polish space, $\Phi \subseteq \Prob(X)$ convex and $\alpha > 0$. Let $U \subseteq \Prob(X)$ (an open set) be defined by
 
@@ -276,36 +276,36 @@ $$\NormL{\tau'(\mu)} < \Dkr(\mu,\Phi) - \alpha$$
 
 $$\inf_{\nu \in \Phi} \E_\nu[\tau'(\mu)] > \E_\mu[\tau'(\mu)] + \frac{1}{2}(\Dkr(\mu,\Phi) - \alpha) \Dkr(\mu,\Phi)$$
 
-\#Proof of Proposition N8
+\#Proof of Proposition A.3
 
 Define $F: U \rightarrow 2^{\Lip(X)}$ by
 
 $$F(\mu):=\{f \in C(X) \mid \NormL{f} < \Dkr(\mu, \Phi) - \alpha,\, \inf_{\nu \in \Phi} \E_\nu[f] > \E_\mu[f] + (\Dkr(\mu,\Phi) - \alpha) \Dkr(\mu,\Phi)\}$$
 
-By Proposition N10, for any $\mu \in U$, $F(\mu) \ne \varnothing$. Clearly, $F(\mu)$ is convex. Fix $f \in C(X)$ and consider $F^{-1}(f):=\{\mu \in U \mid f \in F(\mu)\}$. Consider any $\mu_0 \in F^{-1}(f)$, and take $\epsilon > 0$ s.t.
+By Proposition A.2, for any $\mu \in U$, $F(\mu) \ne \varnothing$. Clearly, $F(\mu)$ is convex. Fix $f \in C(X)$ and consider $F^{-1}(f):=\{\mu \in U \mid f \in F(\mu)\}$. Consider any $\mu_0 \in F^{-1}(f)$, and take $\epsilon > 0$ s.t.
 
 $$\NormL{f} < \Dkr(\mu_0, \Phi)  - \epsilon - \alpha$$
 
 $$\inf_{\nu \in \Phi} \E_\nu[f] > \E_{\mu_0}[f] + \epsilon + (\Dkr(\mu_0,\Phi) + \epsilon  - \alpha) (\Dkr(\mu_0,\Phi) + \epsilon)$$
 
-Define $V := \{\mu \in U \mid \Dkr(\mu,\mu_0) < \epsilon,\, \E_\mu[f] < \E_{\mu_0}[f] + \epsilon\}$. Obviously $V$ is open and $V \subseteq F^{-1}(f)$, hence $F^{-1}(f)$ is open. Applying Theorem N3, we get the desired result.
+Define $V := \{\mu \in U \mid \Dkr(\mu,\mu_0) < \epsilon,\, \E_\mu[f] < \E_{\mu_0}[f] + \epsilon\}$. Obviously $V$ is open and $V \subseteq F^{-1}(f)$, hence $F^{-1}(f)$ is open. Applying Theorem C, we get the desired result.
 
-\#Proposition N9
+\#Proposition A.4
 
 Let $X$ be a compact Polish space, $\Phi \subseteq \Prob(X)$ convex and $\alpha > 0$. Then, there exists $\tau \in \T(X)$ an $\alpha$-representative of $\Phi$.
 
-\#Proof of Proposition N9
+\#Proof of Proposition A.4
 
 Let $U \subseteq \Prob(X)$ be defined by
 
 $$U:=\{\mu \in \Prob(X) \mid \Dkr(\mu, \Phi) > \alpha\}$$
 
-Use Proposition N8 to obtain $\tau': U \rightarrow \Lip(X)$. Define $\tau: \Prob(X) \rightarrow \Lip(X)$ by
+Use Proposition A.3 to obtain $\tau': U \rightarrow \Lip(X)$. Define $\tau: \Prob(X) \rightarrow \Lip(X)$ by
 
 $$\tau(\mu):=\begin{cases}\tau'(\mu) \text{ if } \mu \in U\\0 \text { if } \mu \not\in U\end{cases}$$ 
 Obviously $\tau$ is continuous in $U$. Consider any $\mu \not\in U$ and $\Sqn{\mu_n \in \Prob(X)}$ s.t. $\mu_n \rightarrow \mu$. We have $\Dkr(\mu_n,\Phi) \rightarrow \Dkr(\mu, \Phi) \leq \alpha$ and hence $\NormL{\tau(\mu_n)} \leq \max(\Dkr(\mu_n,\Phi) - \alpha, 0) \rightarrow 0$. Therefore, $\tau$ is continuous everywhere.
 
-\#Proof of Lemma N4
+\#Proof of Lemma 1
 
 Define $Z_{1,2,3} \subseteq Y \times \T(X) \times \Prob(X)^4$ by
 
@@ -339,17 +339,17 @@ For any $y \in Y$, $A_y:=\{\tau \in \T(X) \mid (y,\tau) \in A\}$ is closed since
 
 $$A_y = \bigcap_{\mu \in \Prob(X)} \bigcap_{\nu,\xi \in \Phi_y} \{\tau \in \T(X) \mid (y,\tau,\mu,\nu,\xi) \in Z'\}$$
 
-Moreover, $A_y$ is non-empty by Proposition N9.
+Moreover, $A_y$ is non-empty by Proposition A.4.
 
 Consider any $U \subseteq \T(X)$ open. Then, $A \cap (Y \times U)$ is Borel and therefore its image under the projection to $Y$ is analytic and in particular universally measurable. Applying the Kuratorwsi-Ryll-Nardzewski measurable selection theorem, we get the desired result.
 
-\#Proposition N12
+\#Proposition A.5
 
 Consider $X$ a compact Polish space, $D \in \Nats$, $Y$ a compact subset of $\Reals^D$, $\pi: X \rightarrow Y$ continuous, $\mu \in \Prob(X)$ and $K \in \mu \mid \pi$. Then, for $\pi_* \mu$-almost any $y \in Y$
 
 $$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\Ball_r(y)) = K(y)$$
 
-\#Proof of Proposition N12
+\#Proof of Proposition A.5
 
 Let $\Sq{f_k \in C(X)}{k}$ be dense in $C(X)$. For any $y \in Y$ and $r > 0$ we denote $\chi_{yr}: Y \rightarrow \Bool$ the characteristic function of $\Ball_r(y)$ and $\chi^\pi_{yr}: X \rightarrow \Bool$ the characteristic function of $\pi^{-1}(\Ball_r(y))$. For any $k \in \Nats$ and $y_0 \in \Supp \pi_* \mu$ we have $\mu(\pi^{-1}(\Ball_r(y_0))) = \pi_*\mu(\Ball_r(y_0)) > 0$ and
 
@@ -373,9 +373,9 @@ $$\lim_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\Ball_r(y_0))] = \E_{K(y_0)}[f
 
 $$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\Ball_r(y_0)) = K(y_0)$$
 
-\#Proof of Lemma N5
+\#Proof of Lemma 2
 
-Fix any $\mu^* \in \Phi$ and $\Sqn{K_n \in \mu^* \mid \pi_n}$. By Proposition N12, for $\pi_{n*} \mu$-almost any $y \in Y$
+Fix any $\mu^* \in \Phi$ and $\Sqn{K_n \in \mu^* \mid \pi_n}$. By Proposition A.5, for $\pi_{n*} \mu$-almost any $y \in Y$
 
 $$\lim_{r \rightarrow 0} \mu^* \mid \Ball_r(y) = K_n(y)$$
 
@@ -387,13 +387,13 @@ When $\Dkr^n(\mu,\Phi_y) \leq \alpha$, $\upsilon(y,\mu) = 0$, hence for any $\mu
 
 $$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq \frac{\alpha}{2} \Norm{\upsilon(y,\mu)}$$
 
-\#Proof of Corollary N6
+\#Proof of Corollary 1
 
-By Lemma N5, $\nu$ is profitable for $\mu^*$. By Theorem N2, for $\mu^*$-almost any $x \in X$
+By Lemma 2, $\nu$ is profitable for $\mu^*$. By Theorem B.2, for $\mu^*$-almost any $x \in X$
 
 $$\lim_{n \rightarrow \infty} (\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))])= 0$$
 
-By Proposition N12, $K_n(x(n)) \in \Phi_{x(n)}$ and therefore
+By Proposition A.5, $K_n(x(n)) \in \Phi_{x(n)}$ and therefore
 
 $$\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))] \geq \frac{1}{2} (\Dkr^n(M_n(x(n)),\Phi_{x(n)}) - \alpha) \Dkr^n(M_n(x(n)),\Phi_{x(n)})$$
 
@@ -403,9 +403,9 @@ $$\limsup_{n \rightarrow \infty} {(\Dkr^n(M_n(x(n)),\Phi_{x(n)}) - \alpha) \Dkr^
 
 $$\limsup_{n \rightarrow \infty} {\Dkr^n(M_n(x(n)),\Phi_{x(n)})} \leq \alpha$$
 
-\#Proof of Theorem N7
+\#Proof of Theorem 1
 
-Consider any $\Phi \in H$ and a positive integer $k$. By Lemma N4, for any $n \in \Nats$, there exists ${\upsilon^{\Phi}_{kn}: Y_n \rightarrow \T(X)}$ measurable s.t. for all $y \in Y_n$, $\upsilon^{\Phi}_{kn}(y)$ is a $\frac{1}{k}$-representative of $\Phi$. We fix such a $\upsilon^{\Phi}_{kn}(y)$ for each $\Phi$ and $k$. It is easy to see that the $\Dkr^n$-diameter of $\Prob(X)$ is at most 2, therefore $\Norm{\upsilon^{\Phi}_{kn}(y)} \leq 2$ and $\Sqn{\upsilon^{\Phi}_{kn}}$ is a trading metastrategy. By Theorem N1, there is a stochastic market $M^H$ that dominates $T_{\upsilon^{\Phi}_k}$ for all $\Phi$ and $k$. By Corollary N6, for any $\Phi \in H$, $\mu^* \in \Phi$, positive integer $k$ and $\mu^*$-almost any $x \in X$
+Consider any $\Phi \in H$ and a positive integer $k$. By Lemma 1, for any $n \in \Nats$, there exists ${\upsilon^{\Phi}_{kn}: Y_n \rightarrow \T(X)}$ measurable s.t. for all $y \in Y_n$, $\upsilon^{\Phi}_{kn}(y)$ is a $\frac{1}{k}$-representative of $\Phi$. We fix such a $\upsilon^{\Phi}_{kn}(y)$ for each $\Phi$ and $k$. It is easy to see that the $\Dkr^n$-diameter of $\Prob(X)$ is at most 2, therefore $\Norm{\upsilon^{\Phi}_{kn}(y)} \leq 2$ and $\Sqn{\upsilon^{\Phi}_{kn}}$ is a trading metastrategy. By Theorem B.1, there is a stochastic market $M^H$ that dominates $T_{\upsilon^{\Phi}_k}$ for all $\Phi$ and $k$. By Corollary 1, for any $\Phi \in H$, $\mu^* \in \Phi$, positive integer $k$ and $\mu^*$-almost any $x \in X$
 
 $$\limsup_{n \rightarrow \infty} {\Dkr^n(M^H_n(x(n)),\Phi_{x(n)})} \leq \frac{1}{k}$$
 
@@ -417,11 +417,11 @@ $$\lim_{n \rightarrow \infty} {\Dkr^n(M^H_n(x(n)),\Phi_{x(n)})} = 0$$
 
 The following are the theorems about dominant stochastic markets proven [before](https://agentfoundations.org/item?id=1327).
 
-\#Theorem N1
+\#Theorem B.1
 
 Given any countable set of traders $R$, there is a market ${M}$ s.t. ${M}$ dominates all ${T \in R}$.
 
-\#Theorem N2
+\#Theorem B.2
 
 Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n}\}_{n \in \Nats}}$, ${\upsilon}$ a trading metastrategy profitable for ${\mu^*}$ and ${M}$ a market. Assume ${M}$ dominates ${T_\upsilon}$. Then, for ${\mu^*}$-almost any ${x \in X}$:
 
@@ -431,7 +431,7 @@ $$\lim_{n \rightarrow \infty} (\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(
 
 The following variant of the Michael selection theorem appears in [Yannelis and Prabhakar]\Comment{(https://www.biz.uiowa.edu/faculty/nyannelis/publications/Existence_of_Maximal_Elements_and_Equilibria_in_Linear_Topological_Spaces.pdf)} as Theorem 3.1.
 
-\#Theorem N3
+\#Theorem C
 
 Consider $X$ a paracompact Hausdorff topological space and $Y$ a topological vector space. Suppose $F: X \rightarrow 2^Y$ is s.t.
 
@@ -444,4 +444,5 @@ Consider $X$ a paracompact Hausdorff topological space and $Y$ a topological vec
 Then, there exists $f: X \rightarrow Y$ continuous s.t. for all $x \in X$, $f(x) \in F(x)$.
 
 \end{document}
+
 
