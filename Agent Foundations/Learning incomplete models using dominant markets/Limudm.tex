@@ -94,7 +94,7 @@ Given a countable set of [incomplete models], we define a forecasting function t
 
 ***
 
-Appendix A contains the proofs of key lemmas and theorems. Appendix B contains the proofs of technical propositions used in Appendix A, which are mostly straightforward. Appendix C restates the theorems about dominant stochastic markets for ease of reference. Appendix D states a variant of the Michael selection theorem due to Yannelis and Prabhakar which is used in Appendix A.
+Appendix A contains the proofs. Appendix B restates the theorems about dominant stochastic markets for ease of reference. Appendix C states a variant of the Michael selection theorem due to Yannelis and Prabhakar which is used in Appendix A.
 
 \section{Notation}
 
@@ -192,7 +192,7 @@ Here, ${\{c_{nm} > 0\}_{n,m \in \Nats}}$ are required to satisfy ${\lim_{m \righ
 
 \#Lemma N5
 
-Consider ${\Phi \subseteq \Prob(X)}$ and ${\alpha > 0}$. For every ${n \in \Nats}$, denote ${\Dkr^n}$ the Kantorovich-Rubinstein metric associated with ${d_n}$. Let ${\upsilon}$ be a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is an $\alpha$-representative of ${\Phi_y}$. Then, ${\upsilon}$ is profitable for any ${\mu^* \in \Phi}$.
+Consider ${\Phi \subseteq \Prob(X)}$ and ${\alpha > 0}$. Let ${\upsilon}$ be a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is an $\alpha$-representative of ${\Phi_y}$ (relatively to $d_n$). Then, ${\upsilon}$ is profitable for any ${\mu^* \in \Phi}$.
 
 ***
 
@@ -200,7 +200,7 @@ Combining Theorem N2 and Lemma N5, it is easy to get the following:
 
 \#Corollary N6
 
-Consider ${\Phi \subseteq \Prob(X)}$, ${\alpha > 0}$ and ${\upsilon}$ a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is an $\alpha$-representative of ${\Phi_y}$. Let ${M}$ be a market which dominates ${T_\upsilon}$. Then, for any ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$:
+Consider ${\Phi \subseteq \Prob(X)}$, ${\alpha > 0}$ and ${\upsilon}$ a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is an $\alpha$-representative of ${\Phi_y}$. Let ${M}$ be a market which dominates ${T_\upsilon}$. For every ${n \in \Nats}$, denote ${\Dkr^n}$ the Kantorovich-Rubinstein metric associated with ${d_n}$. Then, for any ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$:
 
 $$\limsup_{n \rightarrow \infty} \Dkr^n(M_n(x(n)),\Phi_{x(n)}) \leq \alpha$$
 
@@ -379,16 +379,41 @@ Fix any $\mu^* \in \Phi$ and $\Sqn{K_n \in \mu^* \mid \pi_n}$. By Proposition N1
 
 $$\lim_{r \rightarrow 0} \mu^* \mid \Ball_r(y) = K_n(y)$$
 
+Therefore, ${K_n(y) \in \Phi''_y \subseteq \Phi_y}$. Since $\upsilon_n(y)$ is an $\alpha$-representative of $\Phi_y$, for any $\mu \in \Prob(X)$
 
-Therefore, ${K_n(y) \in \Phi''_y \subseteq \Phi_y}$. Since $\upsilon_n(y)$ is an $\alpha$-representative of for $\Phi_y$...
+$$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq \frac{1}{2} \max(\Dkr^n(\mu,\Phi_y) - \alpha, 0) \Dkr^n(\mu,\Phi_y) \geq \frac{1}{2} \Norm{\upsilon(y,\mu)} \Dkr^n(\mu,\Phi_y)$$
 
-TBD
+When $\Dkr^n(\mu,\Phi_y) \leq \alpha$, $\upsilon(y,\mu) = 0$, hence for any $\mu \in \Prob(X)$, $\Norm{\upsilon(y,\mu)} \Dkr^n(\mu,\Phi_y) \geq \Norm{\upsilon(y,\mu)} \alpha$. We get
+
+$$\E_{K_n(y)}[\upsilon(y,\mu)] - \E_{\mu}[\upsilon(y,\mu)] \geq \frac{\alpha}{2} \Norm{\upsilon(y,\mu)}$$
+
+\#Proof of Corollary N6
+
+By Lemma N5, $\nu$ is profitable for $\mu^*$. By Theorem N2, for $\mu^*$-almost any $x \in X$
+
+$$\lim_{n \rightarrow \infty} (\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))])= 0$$
+
+By Proposition N12, $K_n(x(n)) \in \Phi_{x(n)}$ and therefore
+
+$$\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))] \geq \frac{1}{2} (\Dkr^n(M_n(x(n)),\Phi_{x(n)}) - \alpha) \Dkr^n(M_n(x(n)),\Phi_{x(n)})$$
+
+We get
+
+$$\limsup_{n \rightarrow \infty} {(\Dkr^n(M_n(x(n)),\Phi_{x(n)}) - \alpha) \Dkr^n(M_n(x(n)),\Phi_{x(n)})} \leq 0$$
+
+$$\limsup_{n \rightarrow \infty} {\Dkr^n(M_n(x(n)),\Phi_{x(n)})} \leq \alpha$$
+
+\#Proof of Theorem N7
+
+Consider any $\Phi \in H$ and a positive integer $k$. By Lemma N4, for any $n \in \Nats$, there exists ${\upsilon^{\Phi}_{kn}: Y_n \rightarrow \T(X)}$ measurable s.t. for all $y \in Y_n$, $\upsilon^{\Phi}_{kn}(y)$ is a $\frac{1}{k}$-representative of $\Phi$. We fix such a $\upsilon^{\Phi}_{kn}(y)$ for each $\Phi$ and $k$. It is easy to see that the $\Dkr^n$-diameter of $\Prob(X)$ is at most 2, therefore $\Norm{\upsilon^{\Phi}_{kn}(y)} \leq 2$ and $\Sqn{\upsilon^{\Phi}_{kn}}$ is a trading metastrategy. By Theorem N1, there is a stochastic market $M^H$ that dominates $T_{\upsilon^{\Phi}_k}$ for all $\Phi$ and $k$. By Corollary N6, for any $\Phi \in H$, $\mu^* \in \Phi$, positive integer $k$ and $\mu^*$-almost any $x \in X$
+
+$$\limsup_{n \rightarrow \infty} {\Dkr^n(M^H_n(x(n)),\Phi_{x(n)})} \leq \frac{1}{k}$$
+
+It follows that
+
+$$\lim_{n \rightarrow \infty} {\Dkr^n(M^H_n(x(n)),\Phi_{x(n)})} = 0$$
 
 \section{Appendix B}
-
-TBD
-
-\section{Appendix C}
 
 The following are the theorems about dominant stochastic markets proven [before](https://agentfoundations.org/item?id=1327).
 
@@ -402,7 +427,7 @@ Consider ${\mu^* \in \Prob(X)}$, ${\{K_n \in \mu^* \mid \pi_{n}\}_{n \in \Nats}}
 
 $$\lim_{n \rightarrow \infty} (\E_{K_n(x(n))}[\upsilon(x(n),M_n(x(n)))]-\E_{M_n(x(n))}[\upsilon(x(n),M_n(x(n)))])= 0$$
 
-\section{Appendix D}
+\section{Appendix C}
 
 The following variant of the Michael selection theorem appears in [Yannelis and Prabhakar]\Comment{(https://www.biz.uiowa.edu/faculty/nyannelis/publications/Existence_of_Maximal_Elements_and_Equilibria_in_Linear_Topological_Spaces.pdf)} as Theorem 3.1.
 
