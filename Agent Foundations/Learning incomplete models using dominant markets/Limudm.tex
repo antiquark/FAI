@@ -130,17 +130,17 @@ ${\Prob(X)}$ (as before, with the weak topology) can be regarded as a compact su
 
 $$\Dkr(\mu,\nu):=\sup_{\NormL{f} \leq 1} \Abs{\E_\mu[f] - \E_\nu[f]}$$
 
-In fact, the above differs from the standard definition of the Kantorovich-Rubinstein metric (a.k.a. 1st Wasserstein metric, a.k.a. earth's mover metric), but this abuse of terminology is mild since the two are strongly equivalent.
+In fact, the above differs from the standard definition of the Kantorovich-Rubinstein metric (a.k.a. 1st Wasserstein metric, a.k.a. earth mover's metric), but this abuse of terminology is mild since the two are strongly equivalent.
 
 Now consider ${\Phi \subseteq \Prob(X)}$ convex. We will describe a class of trading strategies that are designed to exploit any ${\mu \in \Phi}$.
 
 \#Definition N6
 
-${\tau \in \T(X)}$ is said to be *profitable for ${\Phi}$* when for all ${\mu \in \Prob(X)}$, ${\nu \in \Phi}$ we have
+Let $\alpha > 0$. ${\tau \in \T(X)}$ is said to be an *$\alpha$-representative of $\Phi$* when for all ${\mu \in \Prob(X)}$, ${\nu \in \Phi}$ we have
 
-$$\E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \Dkr(\mu,\Phi)^2$$
+$$\Norm{\tau(\mu)} \leq \max(\Dkr(\mu,\Phi) - \alpha, 0)$$
 
-(The fact that $\Dkr$ appears squared in this equation is somewhat arbitrary. Other choices are possible.)
+$$\E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \frac{1}{2}(\Dkr(\mu,\Phi) - \alpha)\Dkr(\mu,\Phi)$$
 
 \#Lemma N4
 
@@ -148,7 +148,7 @@ Consider ${Y}$ another compact Polish space and ${\Phi \subseteq Y \times \Prob(
 
 $${\Phi_y := \{\mu \in \Prob(X) \mid (y,\mu) \in \Phi\}}$$ 
 
-Assume that for any ${y \in Y}$, ${\Phi_y}$ is convex. Then, there exists ${\upsilon: Y \rightarrow \T(X)}$ measurable w.r.t. ${\UM(Y)}$ and ${\B(\T(X))}$ s.t. for all ${y \in Y}$, ${\Norm{\upsilon(y)} \leq 4}$ and ${\upsilon(y)}$ is profitable for ${\Phi_y}$.
+Assume that for any ${y \in Y}$, ${\Phi_y}$ is convex. Then, for any $\alpha > 0$, there exists ${\upsilon_\alpha: Y \rightarrow \T(X)}$ measurable w.r.t. ${\UM(Y)}$ and ${\B(\T(X))}$ s.t. for all ${y \in Y}$, ${\upsilon_\alpha(y)}$ is an $\alpha$-representative of ${\Phi_y}$.
 
 ***
 
@@ -192,15 +192,7 @@ Here, ${\{c_{nm} > 0\}_{n,m \in \Nats}}$ are required to satisfy ${\lim_{m \righ
 
 \#Lemma N5
 
-Consider ${\Phi \subseteq \Prob(X)}$ and ${\epsilon > 0}$. For every ${n \in \Nats}$, denote ${\Dkr^n}$ the Kantorovich-Rubinstein metric associated with ${d_n}$. Define ${\Phi_n^\epsilon \subseteq Y_n \times \Prob(X)}$ by 
-
-$$\Phi_n^\epsilon:=\{(y,\mu) \in Y_n \times \Prob(X) \mid \Dkr^n(\mu,\Phi_y) \leq \epsilon\}$$
-
-For every ${y \in Y_n}$, we define ${\Phi^\epsilon_y \subseteq \Prob(X)}$ by
-
-$$\Phi^\epsilon_y:=\{\mu \in \Prob(X) \mid (y,\mu) \in \Phi^\epsilon_n\}$$
-
-Let ${\upsilon}$ be a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is profitable for ${\Phi^\epsilon_y}$. Then, ${\upsilon}$ is profitable for any ${\mu^* \in \Phi}$.
+Consider ${\Phi \subseteq \Prob(X)}$ and ${\alpha > 0}$. For every ${n \in \Nats}$, denote ${\Dkr^n}$ the Kantorovich-Rubinstein metric associated with ${d_n}$. Let ${\upsilon}$ be a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is an $\alpha$-representative of ${\Phi_y}$. Then, ${\upsilon}$ is profitable for any ${\mu^* \in \Phi}$.
 
 ***
 
@@ -208,13 +200,13 @@ Combining Theorem N2 and Lemma N5, it is easy to get the following:
 
 \#Corollary N6
 
-Consider ${\Phi \subseteq \Prob(X)}$, ${\epsilon > 0}$ and ${\upsilon}$ a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is profitable for ${\Phi^\epsilon_y}$. Let ${M}$ be a market which dominates ${T_\upsilon}$. Then, for any ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$:
+Consider ${\Phi \subseteq \Prob(X)}$, ${\alpha > 0}$ and ${\upsilon}$ a metastrategy s.t. for each ${n \in \Nats}$ and ${y \in Y_n}$, ${\upsilon_n(y)}$ is an $\alpha$-representative of ${\Phi_y}$. Let ${M}$ be a market which dominates ${T_\upsilon}$. Then, for any ${\mu^* \in \Phi}$ and ${\mu^*}$-almost any ${x \in X}$:
 
-$$\limsup_{n \rightarrow \infty} \Dkr^n(M_n(x(n)),\Phi_{x(n)}) \leq \epsilon$$
+$$\limsup_{n \rightarrow \infty} \Dkr^n(M_n(x(n)),\Phi_{x(n)}) \leq \alpha$$
 
 ***
 
-Thus, if we construct a set of traders ${T_{\upsilon_k}}$ as in Corollary N6 where ${\upsilon_k}$ corresponds to ${\epsilon=\frac{1}{k}}$, then a market dominating all of these traders would have to converge to ${\Phi_{y_n}}$ with ${\mu^*}$-probability 1. Putting this together with Lemma N4 (so that ${\upsilon_k}$ as above actually exists) and Theorem N1 we finally get
+Thus, if we construct a set of traders ${T_{\upsilon_k}}$ as in Corollary N6 where ${\upsilon_k}$ corresponds to ${\alpha=\frac{1}{k}}$, then a market dominating all of these traders would have to converge to ${\Phi_{y_n}}$ with ${\mu^*}$-probability 1. Putting this together with Lemma N4 (so that ${\upsilon_k}$ as above actually exists) and Theorem N1 we finally get
 
 \#Theorem N7
 
@@ -248,86 +240,104 @@ $$\Abs{\E_\mu[f_\epsilon] - \varphi(\mu)} \leq \Abs{\E_\mu[f_\epsilon] - \E_\nu[
 
 \#Proposition N10
 
-Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Consider any $\mu_0 \in \Prob(X) \setminus \bar{\Phi}$ (i.e. $\mu_0$ is in the exterior of $\Phi$). Then, there exists $f \in \Lip(X)$ s.t.
+Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Consider any $\alpha > 0$ and $\mu_0 \in \Prob(X)$ s.t. $r:=\Dkr(\mu_0, \Phi) > \alpha$. Then, there exists $f \in \Lip(X)$ s.t.
 
-$$\NormL{f} < 2\Dkr(\mu_0,\Phi)$$
+$$\NormL{f} < r - \alpha$$
 
-$$\inf_{\nu \in \Phi} \E_\nu[f] > \E_{\mu_0}[f] + \Dkr(\mu_0,\Phi)^2$$
+$$\inf_{\nu \in \Phi} \E_\nu[f] > \E_{\mu_0}[f] + \frac{1}{2}(r - \alpha) r$$
 
 \#Proof of Proposition N10
 
-Denote $r:=\Dkr(\mu_0,\Phi)$ and define $\Phi^r \subseteq \Lip(X)'$ by
+Define $\Phi^r \subseteq \Lip(X)'$ by
 
 $$\Phi^r:=\{\mu \in \Lip(X)' \mid \inf_{\nu \in \Phi} \Norm{\mu - \nu} < r\}$$
 
-By the Hahn-Banach separation theorem, there is $\varphi \in \Lip(X)''$ s.t. for all $\nu \in \Phi^r$, $\varphi(\nu) > \varphi(\mu_0)$. Multiplying by a scalar, we can make sure that $\Norm{\varphi} = \frac{3}{2}r$. For any $\delta > 0$, we can choose $\zeta \in \Lip(X)'$ s.t. $\Norm{\zeta} < 1$ and $\varphi(\zeta) > \frac{3}{2}r - \delta$.  For any $\nu \in \Phi$, $\nu - r \zeta \in \Phi^r$ and therefore
+By the Hahn-Banach separation theorem, there is $\varphi \in \Lip(X)''$ s.t. for all $\nu \in \Phi^r$, $\varphi(\nu) > \varphi(\mu_0)$. Multiplying by a scalar, we can make sure that $\Norm{\varphi} = \frac{3}{4}(r - \alpha)$. For any $\delta > 0$, we can choose $\zeta \in \Lip(X)'$ s.t. $\Norm{\zeta} < 1$ and $\varphi(\zeta) > \frac{3}{4}(r-\alpha) - \delta$.  For any $\nu \in \Phi$, $\nu - r \zeta \in \Phi^r$ and therefore
 
 $$\varphi(\nu - r \zeta) > \varphi(\mu_0)$$
 
-$$\varphi(\nu) > \varphi(\mu_0) + r \varphi(\zeta) > \varphi(\mu_0) + r (\frac{3}{2}r - \delta)$$
+$$\varphi(\nu) > \varphi(\mu_0) + r \varphi(\zeta) > \varphi(\mu_0) + r (\frac{3}{4}(r-\alpha) - \delta)$$
 
-Taking $\delta$ to 0 we get $\varphi(\nu) \geq \varphi(\mu_0) + \frac{3}{2} r^2$. Applying Proposition N11 with $\epsilon < \frac{1}{4}r^2$, we get the desired result.
+Taking $\delta$ to 0 we get $\varphi(\nu) \geq \varphi(\mu_0) + \frac{3}{4} r (r - \alpha)$. Applying Proposition N11 for $\epsilon = \frac{1}{16} r (r - \alpha)$, we get $f \in \Lip(X)$ s.t.
+
+$$\Norm{f} \leq \frac{3}{4} (r - \alpha) < r - \alpha$$ 
+
+$$\E_\nu[f] \geq \varphi(\nu) - \frac{1}{16} r (r - \alpha) \geq \varphi(\mu_0) + \frac{11}{16} r (r - \alpha) \geq \E_{\mu_0}[f] +  \frac{5}{8} r (r - \alpha) > \E_{\mu_0}[f] +  \frac{1}{2} r (r - \alpha)$$ 
 
 \#Proposition N8
 
-Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Let $U := \Prob(X) \setminus \bar{\Phi}$. Then, there exists $\tau': U \rightarrow \Lip(X)$ continuous s.t. for all $\mu \in U$
+Let $X$ be a compact Polish space, $\Phi \subseteq \Prob(X)$ convex and $\alpha > 0$. Let $U \subseteq \Prob(X)$ (an open set) be defined by
 
-$$\NormL{\tau'(\mu)} < 2\Dkr(\mu,\Phi)$$
+$$U:=\{\mu \in \Prob(X) \mid \Dkr(\mu, \Phi) > \alpha\}$$
 
-$$\inf_{\nu \in \Phi} \E_\nu[\tau'(\mu)] > \E_\mu[\tau'(\mu)] + \Dkr(\mu,\Phi)^2$$
+Then, there exists $\tau': U \rightarrow \Lip(X)$ continuous s.t. for all $\mu \in U$
+
+$$\NormL{\tau'(\mu)} < \Dkr(\mu,\Phi) - \alpha$$
+
+$$\inf_{\nu \in \Phi} \E_\nu[\tau'(\mu)] > \E_\mu[\tau'(\mu)] + \frac{1}{2}(\Dkr(\mu,\Phi) - \alpha) \Dkr(\mu,\Phi)$$
 
 \#Proof of Proposition N8
 
 Define $F: U \rightarrow 2^{\Lip(X)}$ by
 
-$$F(\mu):=\{f \in C(X) \mid \NormL{f} < 2 \Dkr(\mu, \Phi),\, \inf_{\nu \in \Phi} \E_\nu[f] > \E_\mu[f] + \Dkr(\mu,\Phi)^2\}$$
+$$F(\mu):=\{f \in C(X) \mid \NormL{f} < \Dkr(\mu, \Phi) - \alpha,\, \inf_{\nu \in \Phi} \E_\nu[f] > \E_\mu[f] + (\Dkr(\mu,\Phi) - \alpha) \Dkr(\mu,\Phi)\}$$
 
 By Proposition N10, for any $\mu \in U$, $F(\mu) \ne \varnothing$. Clearly, $F(\mu)$ is convex. Fix $f \in C(X)$ and consider $F^{-1}(f):=\{\mu \in U \mid f \in F(\mu)\}$. Consider any $\mu_0 \in F^{-1}(f)$, and take $\epsilon > 0$ s.t.
 
-$$\NormL{f} < 2 (\Dkr(\mu_0, \Phi) - \epsilon)$$
+$$\NormL{f} < \Dkr(\mu_0, \Phi)  - \epsilon - \alpha$$
 
-$$\inf_{\nu \in \Phi} \E_\nu[f] > \E_{\mu_0}[f] + \epsilon + (\Dkr(\mu_0,\Phi) + \epsilon)^2$$
+$$\inf_{\nu \in \Phi} \E_\nu[f] > \E_{\mu_0}[f] + \epsilon + (\Dkr(\mu_0,\Phi) + \epsilon  - \alpha) (\Dkr(\mu_0,\Phi) + \epsilon)$$
 
 Define $V := \{\mu \in U \mid \Dkr(\mu,\mu_0) < \epsilon,\, \E_\mu[f] < \E_{\mu_0}[f] + \epsilon\}$. Obviously $V$ is open and $V \subseteq F^{-1}(f)$, hence $F^{-1}(f)$ is open. Applying Theorem N3, we get the desired result.
 
 \#Proposition N9
 
-Let $X$ be a compact Polish space and $\Phi \subseteq \Prob(X)$ convex. Then, there exists $\tau \in \T(X)$ profitable for $\Phi$ s.t. $\Norm{\tau} \leq 4$.
+Let $X$ be a compact Polish space, $\Phi \subseteq \Prob(X)$ convex and $\alpha > 0$. Then, there exists $\tau \in \T(X)$ an $\alpha$-representative of $\Phi$.
 
 \#Proof of Proposition N9
 
-Use Proposition N8 to obtain $\tau': \Prob(X) \setminus \bar{\Phi} \rightarrow \Lip(X)$. Define $\tau: \Prob(X) \rightarrow \Lip(X)$ by
+Let $U \subseteq \Prob(X)$ be defined by
 
-$$\tau(\mu):=\begin{cases}\tau'(\mu) \text{ if } \mu \not\in \bar{\Phi}\\0 \text { if } \mu \in \bar{\Phi}\end{cases}$$ 
-Obviously $\tau$ is continuous in the exterior of $\Phi$. Consider any $\mu \in \bar{\Phi}$ and $\Sqn{\mu_n \in \Prob(X)}$ s.t. $\mu_n \rightarrow \mu$. We have $\Dkr(\mu_n,\Phi) \rightarrow 0$ and hence $\NormL{\tau(\mu_n)} \leq 2\Dkr(\mu_n,\Phi) \rightarrow 0$. Therefore, $\tau$ is continuous everywhere. Moreover, for any $\mu \in \Phi$, $\Norm{\tau(\mu)} \leq \NormL{\tau(\mu)} \leq 2 \Dkr(\mu, \Phi) \leq 4$ (it is easy to see that the $\Dkr$-diameter of $\Prob(X)$ cannot exceed 2).
+$$U:=\{\mu \in \Prob(X) \mid \Dkr(\mu, \Phi) > \alpha\}$$
+
+Use Proposition N8 to obtain $\tau': U \rightarrow \Lip(X)$. Define $\tau: \Prob(X) \rightarrow \Lip(X)$ by
+
+$$\tau(\mu):=\begin{cases}\tau'(\mu) \text{ if } \mu \in U\\0 \text { if } \mu \not\in U\end{cases}$$ 
+Obviously $\tau$ is continuous in $U$. Consider any $\mu \not\in U$ and $\Sqn{\mu_n \in \Prob(X)}$ s.t. $\mu_n \rightarrow \mu$. We have $\Dkr(\mu_n,\Phi) \rightarrow \Dkr(\mu, \Phi) \leq \alpha$ and hence $\NormL{\tau(\mu_n)} \leq \max(\Dkr(\mu_n,\Phi) - \alpha, 0) \rightarrow 0$. Therefore, $\tau$ is continuous everywhere.
 
 \#Proof of Lemma N4
 
-Define $Z \subseteq Y \times \T(X) \times \Prob(X)^3$ by
+Define $Z_{1,2,3} \subseteq Y \times \T(X) \times \Prob(X)^4$ by
 
-$$Z:=\{(y,\tau,\mu,\nu,\zeta) \in Y \times \T(X) \times \Prob(X)^3 \mid \Norm{\tau} \leq 4 \,\land\, \zeta \in \Phi_y \,\land\, \E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \Dkr(\mu,\zeta)^2\}$$
+$$Z_1:=\{(y,\tau,\mu,\nu,\xi,\zeta) \in Y \times \T(X) \times \Prob(X)^4 \mid (y, \zeta) \in \Phi\}$$
 
-It is easy to see that $Z$ is closed. Define $Z' \subseteq Y \times \T(X) \times \Prob(X)^2$ by
+$$Z_2:=\{(y,\tau,\mu,\nu,\xi,\zeta) \in Y \times \T(X) \times \Prob(X)^4 \mid \Norm{\tau(\mu)} \leq \max(\Dkr(\mu,\xi) - \alpha, 0)\}$$
 
-$$Z':=\{(y,\tau,\mu,\nu) \in Y \times \T(X) \times \Prob(X)^2 \mid \exists \zeta \in \Prob(X): (\mu,\nu,\zeta,\tau) \in Z\}$$
+$$Z_3:=\{(y,\tau,\mu,\nu,\xi,\zeta) \in Y \times \T(X) \times \Prob(X)^4 \mid \E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \frac{1}{2}\max(\Dkr(\mu,\zeta) - \alpha, 0) \Dkr(\mu,\zeta)\}$$
 
-$Z'$ is closed since it is the projection of $Z$ and $\Prob(X)$ is compact. The $\Phi_y$ are compact and therefore $(y,\tau,\mu,\nu) \in Z'$ if and only if $\Norm{\tau} \leq 4$ and
+Define $Z := Z_1 \cap Z_2 \cap Z_3$. It is easy to see that $Z_{1,2,3}$ are closed and therefore $Z$ also. Define $Z' \subseteq Y \times \T(X) \times \Prob(X)^3$ by
 
-$$\E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \Dkr(\mu,\Phi_y)^2$$
+$$Z':=\{(y,\tau,\mu,\nu,\xi) \in Y \times \T(X) \times \Prob(X)^2 \mid \exists \zeta \in \Prob(X): (y,\tau,\mu,\nu,\xi,\zeta) \in Z\}$$
 
-Define $W \subseteq Y \times \T(X) \times \Prob(X)^2$ by
+$Z'$ is closed since it is the projection of $Z$ and $\Prob(X)$ is compact. The $\Phi_y$ are compact, therefore $\Dkr(\mu,\Phi_y)=\Dkr(\mu,\zeta)$ for some $\zeta \in \Phi_y$, and hence $(y,\tau,\mu,\nu,\xi) \in Z'$ if and only if the following two conditions hold:
 
-$$W:=\{(y,\tau,\mu,\nu) \in Y \times \T(X) \times \Prob(X)^2 \mid \nu \in \Phi_y \land (y,\tau,\mu,\nu) \not\in Z'\}$$
+$$\Norm{\tau(\mu)} \leq \max(\Dkr(\mu,\xi) - \alpha, 0)$$
+
+$$\E_\nu[\tau(\mu)] \geq \E_\mu[\tau(\mu)] + \max(\Dkr(\mu,\Phi_y) - \alpha, 0) \Dkr(\mu,\Phi_y)$$
+
+Define $W \subseteq Y \times \T(X) \times \Prob(X)^3$ by
+
+$$W:=\{(y,\tau,\mu,\nu,\xi) \in Y \times \T(X) \times \Prob(X)^3 \mid \nu,\xi \in \Phi_y \land (y,\tau,\mu,\nu,\xi) \not\in Z'\}$$
 
 $W$ is locally closed and in particular $F_\sigma$. Define $W' \subseteq Y \times \T(X)$ by
 
-$$W':=\{(y,\tau) \in Y \times \T(X) \mid \exists \mu,\nu \in \Prob(X): (y,\tau,\mu,\nu) \in W\}$$
+$$W':=\{(y,\tau) \in Y \times \T(X) \mid \exists \mu,\nu,\xi \in \Prob(X): (y,\tau,\mu,\nu,\xi) \in W\}$$
 
-$W'$ is the projection of $W$ and $\Prob(X)^2$ is compact, therefore $W'$ is $F_\sigma$. Let $A \subseteq Y \times \T(X)$ be the complement of $W'$. $A$ is $G_\delta$ and in particular Borel. As easy to see, $(y,\tau) \in A$ if and only if $\Norm{\tau} \leq 4$ and $\tau$ is profitable for $\Phi_y$. 
+$W'$ is the projection of $W$ and $\Prob(X)^3$ is compact, therefore $W'$ is $F_\sigma$. Let $A \subseteq Y \times \T(X)$ be the complement of $W'$. $A$ is $G_\delta$ and in particular Borel. As easy to see, $(y,\tau) \in A$ if and only if $\tau$ is an $\alpha$-representative of $\Phi_y$. 
 
 For any $y \in Y$, $A_y:=\{\tau \in \T(X) \mid (y,\tau) \in A\}$ is closed since
 
-$$A_y = \bigcap_{\mu \in \Prob(X)} \bigcap_{\nu \in \Phi_y} \{\tau \in \T(X) \mid (y,\tau,\mu,\nu) \in Z'\}$$
+$$A_y = \bigcap_{\mu \in \Prob(X)} \bigcap_{\nu,\xi \in \Phi_y} \{\tau \in \T(X) \mid (y,\tau,\mu,\nu,\xi) \in Z'\}$$
 
 Moreover, $A_y$ is non-empty by Proposition N9.
 
@@ -362,6 +372,15 @@ Taking $\epsilon$ to 0, we conclude that
 $$\lim_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\Ball_r(y_0))] = \E_{K(y_0)}[f]$$
 
 $$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\Ball_r(y_0)) = K(y_0)$$
+
+\#Proof of Lemma N5
+
+Fix any $\mu^* \in \Phi$ and $\Sqn{K_n \in \mu^* \mid \pi_n}$. By Proposition N12, for $\pi_{n*} \mu$-almost any $y \in Y$
+
+$$\lim_{r \rightarrow 0} \mu^* \mid \Ball_r(y) = K_n(y)$$
+
+
+Therefore, ${K_n(y) \in \Phi''_y \subseteq \Phi_y}$. Since $\upsilon_n(y)$ is an $\alpha$-representative of for $\Phi_y$...
 
 TBD
 
