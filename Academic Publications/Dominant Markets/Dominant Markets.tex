@@ -1,0 +1,90 @@
+%&latex
+\documentclass[11pt]{article}
+
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+\usepackage{bm}
+
+\numberwithin{equation}{section}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+%\newtheorem{conjecture}{Conjecture}[section]
+
+%\theoremstyle{remark}
+%\newtheorem{note}{Note}[section]
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\PM}{\mathcal{P}}
+
+\DeclareMathOperator{\E}{E}
+\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
+\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+
+\begin{document}
+
+%+Title
+\title{Forecasting using incomplete models}
+\author{Vadim Kosoy}
+\date{}%\date{\today}
+\maketitle
+%-Title
+
+%+Abstract
+\begin{abstract}
+We consider the task of forecasting an infinite sequence of future observation based on some number of past observations, where the probability measure generating the observations is \enquote{suspected} to satisfy one or more of a set of \emph{incomplete} models i.e. convex sets in the space of probability measures. This setting is in some sense intermediate between the \emph{realizable} setting where the probability measure comes from some known set of probability measures (which can be addressed using e.g. Bayesian inference) and the \emph{unrealizable} setting where the probability measure is completely arbitrary. We demonstrate a method of forecasting which guarantees that, whenever the true probability measure satisfies an incomplete model in a given countable set, the forecast converges to the same incomplete model in the (appropriately normalized) Kantorovich-Rubinstein metric. This is analogous to merging of opinions for Bayesian inference, except that convergence in the  Kantorovich-Rubinstein metric is weaker than convergence in total variation.
+\end{abstract}
+%-Abstract
+
+%+Contents
+%\tableofcontents
+%-Contents
+
+\section{Introduction}
+
+Forecasting future observations based on past observations is one of the fundamental problems in machine learning, and more broadly is one of the fundamental components of rational reasoning in general. This problem received much attention, using different methods (see e.g. \cite{Cesa-Bianchi_2006} or Chapter 21 in \cite{Shalev-Shwartz_2014}). Most of those methods assume fixing a class $H$ of models or \enquote{hypotheses}, each of which defines a probability measure on sequences of observations (and also conditional probability measures), and produce a forecast $M^H$ which satisfies at least one of two kinds of guarantees:
+
+\begin{itemize}
+\item 
+In the \emph{realizable} setting, the guarantee is that if the observations are sampled from some $\mu \in H$, then $M^H$ converges to \enquote{ideal} forecast in some sense.
+\item
+In the \emph{unrealizable} setting, the guarantee is that for \emph{any} sequence of observations, $M^H$ is asymptotically as good as the forecast produced by any $\mu \in H$.
+\end{itemize}
+
+The realizable setting is often unrealistic, in particular because it requires that the environment under observation is simpler than the observer itself. Indeed, even though we avoid analyzing computational complexity in this work, it should be noted that the computational (e.g. time) complexity of a forecaster is always greater than the complexities of all $\mu \in H$. On the other hand, the unrealizable setting usually only provides guarantees for short-term forecasts (since otherwise the training data is insufficient). The latter is in contrast to e.g. Bayesian inference where the time to learn the model depends on its prior probability, but once \enquote{learned} (i.e. once $M^H$ converged to a given total variation distance from the true probability measure), arbitrarily long-term forecasts become reliable.
+
+The spirit of our approach is that the environment might be very complex, but at the same time it might posses some simple features, and it is these features that the forecast must capture. For example, if we consider a sequence of observations $\{o_n \in \{0,1\}\}_{n \in \Nats}$ s.t. $o_{2k+1}=o_{2k}$, then whatever is the behavior of the even observations $o_{2k}$, the property $o_{2k+1}=o_{2k}$ should asymptotically be assigned high probability by the forecast (this idea was discussed in \cite{Hutter_2009} as \enquote{open problem 4j}).
+
+Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $\Phi$ in the space $\PM(X)$ of probability measures on the space of sequences $X$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $H$ is discrete.} set $H$ of incomplete models. For any $\Phi \in H$ and $\mu \in \Phi$, our forecasts will converge to $\Phi$ in an appropriate sense with $\mu$-probability 1. Thus, this setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $\Phi \in H$, it is \enquote{partially unrealizable} since $\mu \in \Phi$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
+
+The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $\Phi \in H$ corresponds to a trader. This trader buys \enquote{stocks} (continuous functions $f$ on $X$) s.t. assuming the environment is sampled from some $\mu \in \Phi$, the expected value $\E_\mu[f]$ of the stock is greater than its current cost $\E_{M}[f]$. The market pricing is then defined by the requirement that the aggregate of all traders doesn't make a net profit (the existence of such a pricing is established using the Kakutani-Glicksberg-Fan fixed point theorem). The fact that the aggregate of all traders cannot make a net profit implies that each individual trader can only make a bounded profit, which implies in the turn our main result: the convergence of the forecast to any incomplete model that the environment satisfies.
+
+\section{Foo}
+
+Bar
+
+\bibliographystyle{unsrt}
+\bibliography{Dominant_Markets}
+
+\end{document}
+
+
