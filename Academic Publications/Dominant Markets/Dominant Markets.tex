@@ -1,6 +1,7 @@
 %&latex
 \documentclass[11pt]{article}
 
+\usepackage[letterpaper,margin=1in]{geometry}
 \usepackage[affil-it]{authblk}
 \usepackage{cite}
 \usepackage[unicode]{hyperref}
@@ -15,7 +16,7 @@
 \numberwithin{equation}{section}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
+\newtheorem{definition}{Definition}%[section]
 \newtheorem{example}{Example}[section]
 
 \theoremstyle{plain}
@@ -34,11 +35,18 @@
 \newcommand{\Reals}{\mathbb{R}}
 \newcommand{\Coms}{\mathbb{C}}
 
-\newcommand{\PM}{\mathcal{P}}
+\newcommand{\Sq}[2]{\{#1\}_{#2 \in \Nats}}
+\newcommand{\Sqn}[1]{\Sq{#1}{n}}
 
 \DeclareMathOperator{\E}{E}
 \newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
 \newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+
+\newcommand{\PM}{\mathcal{P}}
+
+\DeclareMathOperator{\Sp}{supp}
+
+\newcommand{\Ob}{\mathcal{O}}
 
 \begin{document}
 
@@ -78,9 +86,52 @@ Formally, we introduce the notion of an \emph{incomplete model}, which is a conv
 
 The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $\Phi \in H$ corresponds to a trader. This trader buys \enquote{stocks} (continuous functions $f$ on $X$) s.t. assuming the environment is sampled from some $\mu \in \Phi$, the expected value $\E_\mu[f]$ of the stock is greater than its current cost $\E_{M}[f]$. The market pricing is then defined by the requirement that the aggregate of all traders doesn't make a net profit (the existence of such a pricing is established using the Kakutani-Glicksberg-Fan fixed point theorem). The fact that the aggregate of all traders cannot make a net profit implies that each individual trader can only make a bounded profit, which implies in the turn our main result: the convergence of the forecast to any incomplete model that the environment satisfies.
 
-\section{Foo}
+The structure of the paper is as follows. Section~\ref{sec:notation} fixes notation and conventions. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:markets} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant market}. Section~\ref{sec:profit} introduces the concept of a \emph{profitable trading metastrategy}, which is a technique for proving convergence theorems about dominant markets. Section~\ref{sec:traders} connects the market formalism with incomplete models and proves the main theorem.
+
+\section{Notation and Preliminaries}
+\label{sec:notation}
+
+TBD
+
+\section{Learning Incomplete Models}
+\label{sec:learning}
+
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $Y_n := \prod_{m < n} \Ob_n$  and $X:=\prod_{n \in \Nats} \Ob_n$. $\pi_n: X \rightarrow Y_n$ is the projection mapping. $Y_n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. $\PM(X)$ will denote the space of probability measures on $X$, which will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of \emph{Borel} sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+
+\begin{definition}
+
+A \emph{forecaster} $F$ is a family of measurable mappings
+
+\[\Sqn{F_n: Y_n \rightarrow \PM(X)}\]
+
+s.t. $\Sp {F_n(y)} \subseteq \pi_n^{-1}(y)$.
+
+\end{definition}
+
+TBD
+
+\section{Dominant Markets}
+\label{sec:markets}
 
 Bar
+
+\section{Profitable Trading Metastrategies}
+\label{sec:profit}
+
+Bar
+
+\section{Traders for Incomplete Models}
+\label{sec:traders}
+
+TBD
+
+\section{Discussion}
+
+TBD
+
+\section*{Acknowledgments}
+
+TBD
 
 \bibliographystyle{unsrt}
 \bibliography{Dominant_Markets}
