@@ -22,8 +22,8 @@
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}%[section]
 %\newtheorem{lemma}{Lemma}[section]
-\newtheorem{proposition}{Proposition}[section]
-\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}%[section]
+\newtheorem{corollary}{Corollary}%[section]
 %\newtheorem{conjecture}{Conjecture}[section]
 
 %\theoremstyle{remark}
@@ -38,6 +38,9 @@
 \newcommand{\A}[1]{\lvert #1 \rvert}
 \newcommand{\N}[1]{\lVert #1 \rVert}
 
+\newcommand{\I}{\operatorname{id}}
+\newcommand{\D}{\operatorname{diag}}
+
 \newcommand{\Sq}[2]{\{#1\}_{#2 \in \Nats}}
 \newcommand{\Sqn}[1]{\Sq{#1}{n}}
 
@@ -47,6 +50,9 @@
 \newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
 \newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
 
+\newcommand{\M}{\xrightarrow{\textnormal{k}}}
+\DeclareMathOperator{\Gr}{graph}
+
 \newcommand{\PM}{\mathcal{P}}
 \newcommand{\Lp}{{\operatorname{Lip}}}
 
@@ -55,6 +61,9 @@
 \newcommand{\DKR}{\operatorname{d}_{\textnormal{KR}}}
 
 \newcommand{\Ob}{\mathcal{O}}
+\newcommand{\OO}{\Ob^\omega}
+\newcommand{\PO}{\pi^\Ob}
+\newcommand{\MC}{\mathcal{H}}
 
 \begin{document}
 
@@ -77,26 +86,26 @@ We consider the task of forecasting an infinite sequence of future observation b
 
 \section{Introduction}
 
-Forecasting future observations based on past observations is one of the fundamental problems in machine learning, and more broadly is one of the fundamental components of rational reasoning in general. This problem received much attention, using different methods (see e.g. \cite{Cesa-Bianchi_2006} or Chapter 21 in \cite{Shalev-Shwartz_2014}). Most of those methods assume fixing a class $\mathcal{H}$ of models or \enquote{hypotheses}, each of which defines a probability measure on sequences of observations (and also conditional probability measures), and produce a forecast $F^\mathcal{H}$ which satisfies at least one of two kinds of guarantees:
+Forecasting future observations based on past observations is one of the fundamental problems in machine learning, and more broadly is one of the fundamental components of rational reasoning in general. This problem received much attention, using different methods (see e.g. \cite{Cesa-Bianchi_2006} or Chapter 21 in \cite{Shalev-Shwartz_2014}). Most of those methods assume fixing a class $\MC$ of models or \enquote{hypotheses}, each of which defines a probability measure on sequences of observations (and also conditional probability measures), and produce a forecast $F^\MC$ which satisfies at least one of two kinds of guarantees:
 
 \begin{itemize}
 \item 
-In the \emph{realizable} setting, the guarantee is that if the observations are sampled from some $\mu \in \mathcal{H}$, then $F^\mathcal{H}$ converges to \enquote{ideal} forecast in some sense.
+In the \emph{realizable} setting, the guarantee is that if the observations are sampled from some $\mu \in \MC$, then $F^\MC$ converges to \enquote{ideal} forecast in some sense.
 \item
-In the \emph{unrealizable} setting, the guarantee is that for \emph{any} sequence of observations, $F^\mathcal{H}$ is asymptotically as good as the forecast produced by any $\mu \in \mathcal{H}$.
+In the \emph{unrealizable} setting, the guarantee is that for \emph{any} sequence of observations, $F^\MC$ is asymptotically as good as the forecast produced by any $\mu \in \MC$.
 \end{itemize}
 
-The realizable setting is often unrealistic, in particular because it requires that the environment under observation is simpler than the observer itself. Indeed, even though we avoid analyzing computational complexity in this work, it should be noted that the computational (e.g. time) complexity of a forecaster is always greater than the complexities of all $\mu \in \mathcal{H}$. On the other hand, the unrealizable setting usually only provides guarantees for short-term forecasts (since otherwise the training data is insufficient). The latter is in contrast to e.g. Bayesian inference where the time to learn the model depends on its prior probability, but once \enquote{learned} (i.e. once $F^\mathcal{H}$ converged to a given total variation distance from the true probability measure), arbitrarily long-term forecasts become reliable.
+The realizable setting is often unrealistic, in particular because it requires that the environment under observation is simpler than the observer itself. Indeed, even though we avoid analyzing computational complexity in this work, it should be noted that the computational (e.g. time) complexity of a forecaster is always greater than the complexities of all $\mu \in \MC$. On the other hand, the unrealizable setting usually only provides guarantees for short-term forecasts (since otherwise the training data is insufficient). The latter is in contrast to e.g. Bayesian inference where the time to learn the model depends on its prior probability, but once \enquote{learned} (i.e. once $F^\MC$ converged to a given total variation distance from the true probability measure), arbitrarily long-term forecasts become reliable.
 
 The spirit of our approach is that the environment might be very complex, but at the same time it might posses some simple features, and it is these features that the forecast must capture. For example, if we consider a sequence of observations $\{o_n \in \{0,1\}\}_{n \in \Nats}$ s.t. $o_{2k+1}=o_{2k}$, then whatever is the behavior of the even observations $o_{2k}$, the property $o_{2k+1}=o_{2k}$ should asymptotically be assigned high probability by the forecast (this idea was discussed in \cite{Hutter_2009} as \enquote{open problem 4j}).
 
-Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PM(X)$ of probability measures on the space of sequences $X$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\mathcal{H}$ is discrete.} set $\mathcal{H}$ of incomplete models. For any $M \in \mathcal{H}$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \mathcal{H}$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
+Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PM(X)$ of probability measures on the space of sequences $X$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\MC$ is discrete.} set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
 
-The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $M \in \mathcal{H}$ corresponds to a trader. This trader buys \enquote{stocks} (continuous functions $f$ on $X$) s.t. assuming the environment is sampled from some $\mu \in M$, the expected value $\E_\mu[f]$ of the stock is greater than its current cost $\E_{F}[f]$. The market pricing is then defined by the requirement that the aggregate of all traders doesn't make a net profit (the existence of such a pricing is established using the Kakutani-Glicksberg-Fan fixed point theorem). The fact that the aggregate of all traders cannot make a net profit implies that each individual trader can only make a bounded profit, which implies the main result in turn.
+The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $M \in \MC$ corresponds to a trader. This trader buys \enquote{stocks} (continuous functions $f$ on $X$) s.t. assuming the environment is sampled from some $\mu \in M$, the expected value $\E_\mu[f]$ of the stock is greater than its current cost $\E_{F}[f]$. The market pricing is then defined by the requirement that the aggregate of all traders doesn't make a net profit (the existence of such a pricing is established using the Kakutani-Glicksberg-Fan fixed point theorem). The fact that the aggregate of all traders cannot make a net profit implies that each individual trader can only make a bounded profit, which implies the main result in turn.
 
-The structure of the paper is as follows. Section~\ref{sec:notation} fixes notation and conventions. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:markets} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant market}. Section~\ref{sec:profit} introduces the concept of a \emph{profitable trading metastrategy}, which is a technique for proving convergence theorems about dominant markets. Section~\ref{sec:traders} connects the market formalism with incomplete models and proves the main theorem.
+The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:markets} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant market}. Section~\ref{sec:profit} introduces the concept of a \emph{profitable trading metastrategy}, which is a technique for proving convergence theorems about dominant markets. Section~\ref{sec:traders} connects the market formalism with incomplete models and proves the main theorem.
 
-\section{Notation and Preliminaries}
+\section{Notation}
 \label{sec:notation}
 
 TBD
@@ -104,27 +113,27 @@ TBD
 \section{Learning Incomplete Models}
 \label{sec:learning}
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $Y_n := \prod_{m < n} \Ob_n$  and $X:=\prod_{n \in \Nats} \Ob_n$. $\pi_n: X \rightarrow Y_n$ is the projection mapping. $Y_n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. $\PM(X)$ will denote the space of probability measures on $X$, which will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of \emph{Borel} sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. $\PM(\OO)$ will denote the space of probability measures on $\OO$, which will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of \emph{Borel} sets. Given $\mu \in \PM(\OO)$, we denote $\Sp \mu \subseteq \OO$ the support of $\mu$.
 
 \begin{definition}
 
 A \emph{forecaster} $F$ is a family of measurable mappings
 
-\[\Sqn{F_n: Y_n \rightarrow \PM(X)}\]
+\[\Sqn{F_n: \Ob^n \rightarrow \PM(\OO)}\]
 
-s.t. $\Sp {F_n(y)} \subseteq \pi_n^{-1}(y)$.
+s.t. $\Sp {F_n(y)} \subseteq (\pi^\Ob_n)^{-1}(y)$.
 
 \end{definition}
 
-Given a forecaster $F$ and $y \in Y_n$, $F_n(y)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n(y)} \subseteq \pi_n^{-1}(y)$ reflects the obvious requirement of consistency with past observations.
+Given a forecaster $F$ and $y \in \Ob^n$, $F_n(y)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n(y)} \subseteq (\PO_n)^{-1}(y)$ reflects the obvious requirement of consistency with past observations.
 
-In order to formulate a claim about forecast convergence, we will need a metric on $\PM(X)$. Consider $\rho: X \times X \rightarrow \Reals$ a metrization of $X$. Let $\Lp(X;\rho)$ be the Banach space of $\rho$-Lipschitz functions on $X$, equipped with the norm
+In order to formulate a claim about forecast convergence, we will need a metric on $\PM(\OO)$. Consider $\rho: \OO \times \OO \rightarrow \Reals$ a metrization of $\OO$. Let $\Lp(\OO;\rho)$ be the Banach space of $\rho$-Lipschitz functions on $\OO$, equipped with the norm
 
 \begin{equation}
 \N{f}_\rho:=\max_{x}{\A{f(x)}} + \sup_{x \ne y} \frac{\A{f(x)-f(y)}}{\rho(x,y)}
 \end{equation}
 
-$\PM(X)$ can be regarded as a compact subset of the dual space $\Lp(X;\rho)'$, yielding the following metrization of $\PM(X)$:
+$\PM(\OO)$ can be regarded as a compact subset of the dual space $\Lp(\OO;\rho)'$, yielding the following metrization of $\PM(\OO)$:
 
 \begin{equation}
 \DKR^\rho(\mu,\nu):=\sup_{\N{f}_\rho \leq 1}{(\E_\mu[f] - \E_\nu[f])}
@@ -132,21 +141,25 @@ $\PM(X)$ can be regarded as a compact subset of the dual space $\Lp(X;\rho)'$, y
 
 We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is slightly different from the conventional definition but strongly equivalent. Other names used in the literature for the strongly equivalent metric are \enquote{1st Wassertein metric} and \enquote{earth mover's distance.}}.
 
-Fix any $x \in X$. It is easy to see that
+Fix any $x \in \OO$. It is easy to see that
 
-\[\lim_{n \rightarrow \infty} \max_{x' \in \pi_n^{-1}(x)} \rho(x', x) = 0\]
+\begin{equation}
+\lim_{n \rightarrow \infty} \max_{x' \in (\PO_n)^{-1}(x)} \rho(x', x) = 0
+\end{equation}
 
-Denote $\delta_x \in \PM(X)$ the unique probability measure s.t. $\delta_x(\{x\})=1$. It follows that for any sequence $\Sqn{\mu_n \in \PM(X)}$ s.t. $\Sp{\mu_n} \subseteq \pi_n^{-1}(x)$
+Denote $\delta_x \in \PM(\OO)$ the unique probability measure s.t. $\delta_x(\{x\})=1$. It follows that for any sequence $\Sqn{\mu_n \in \PM(\OO)}$ s.t. $\Sp{\mu_n} \subseteq \pi_n^{-1}(x)$
 
-\[\lim_{n \rightarrow \infty} \DKR^\rho(\mu_n, \delta_x) = 0\]
+\begin{equation}
+\lim_{n \rightarrow \infty} \DKR^\rho(\mu_n, \delta_x) = 0
+\end{equation}
 
-Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of X: $\Sqn{\rho_n: X \times X \rightarrow \Reals}$. We denote $\DKR^n:=\DKR^{\rho_n}$.
+Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. We denote $\DKR^n:=\DKR^{\rho_n}$.
 
-Another ingredient we will need is a notion of regular conditional probability for incomplete models. For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem. In particular, $Y_n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in Y_n$ and $r > 0$, $\B_r(y)$ will denote the open ball of radius $r$ with center at $y$.
+Another ingredient we will need is a notion of regular conditional probability for incomplete models. For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem. In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in Y_n$ and $r > 0$, $\B_r(y)$ will denote the open ball of radius $r$ with center at $y$.
 
 \begin{definition}
 
-Consider any $M \subseteq \PM(X)$. Given $y \in Y_n$, we define
+Consider any $M \subseteq \PM(\OO)$. Given $y \in \Ob^n$, we define
 
 \begin{equation}
 M''_y:=\{\lim_{r \rightarrow 0}{(\mu \mid \pi_n^{-1}(\B_r(y)))} \mid \mu \in M\}
@@ -157,11 +170,11 @@ Here, $\mu \mid \pi_n^{-1}(\B_r(y))$ is the conditional probability measure (def
 We further define
 
 \begin{equation}
-M'_n:=\{(y,\mu) \in Y_n \times \PM(X) \mid \mu \textnormal{ is in the convex hull of } M''_y\}
+M'_n:=\{(y,\mu) \in Y_n \times \PM(\OO) \mid \mu \textnormal{ is in the convex hull of } M''_y\}
 \end{equation}
 
 \begin{equation}
-M_y:=\{\mu \in \PM(X) \mid (y,\mu) \in \bar{M}'_n\}
+M_y:=\{\mu \in \PM(\OO) \mid (y,\mu) \in \bar{M}'_n\}
 \end{equation}
 
 Here, $\bar{M}'_n$ denotes the closure of $M'_n$.
@@ -173,16 +186,40 @@ Note that $M_y$ is always convex and closed.
 We are now ready to formulate the main result.
 
 \begin{theorem}
+\label{thm:main}
 
-Fix any $\mathcal{H} \subseteq 2^{\PM(X)}$ countable. Then, there exists a forecaster $F^\mathcal{H}$ s.t. for any $M \in \mathcal{H}$, $\mu \in M$ and $\mu$-almost any $x \in X$
+Fix any $\MC \subseteq 2^{\PM(\OO)}$ countable. Then, there exists a forecaster $F^\MC$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
 
 \begin{equation}
-\lim_{n \rightarrow 0} \DKR^n(F^\mathcal{H}_n(\pi_n(x)), M_{\pi_n(x)}) = 0
+\lim_{n \rightarrow 0} \DKR^n(F^\MC_n(\PO_n(x)), M_{\PO_n(x)}) = 0
 \end{equation}
 
 \end{theorem}
 
-This result can also be extended to the non-oblivious setting...
+This result can also be extended to the non-oblivious setting. For this, we need to introduce some notation. Given measurable spaces $X$ and $Y$, we will use the notation $f: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $\mu \in \PM(X)$, $\mu \ltimes f \in \PM(X \times Y)$ denotes the semidirect product of $\mu$ and $f$. $f_* \mu \in \PM(Y)$ denotes the pushforward of $\mu$ by $f$ (i.e. the pushforward of $\mu \ltimes f$ by the projection to $Y$). $\I_X: X \rightarrow X$ denotes the identity mapping and $\D_X: X \rightarrow X \times X$ denotes the diagonal mapping.
+
+\begin{corollary}
+\label{crl:nonobliv}
+
+Fix any $\MC \subseteq 2^{\PM(\OO)}$ countable and let $F^\MC$ be as in Theorem~\ref{thm:main}. Consider a family of kernels $\Sqn{\alpha_n: \Ob^n \times \PM(\OO)^{n+1} \M \Ob_n}$. Define $\bar{F}^\MC_n: \Ob^n \times \PM(\OO)^n \rightarrow \Ob^n \times \PM(\OO)^{n+1}$ by
+
+\begin{equation}
+\bar{F}^\MC_n(y,\bm{\mu}):=(y,\bm{\mu},F^\MC_n(y))
+\end{equation}
+
+Define $\zeta_n: \Ob^n \times \PM(\OO)^n \M \Ob^{n+1} \times \PM(\OO)^{n+1}$ by
+
+\begin{equation}
+\zeta_n:=(\I_{\Ob^n \times \PM(\OO)^{n+1}} \times \alpha_n) \D_{\Ob^n \times \PM(\OO)^{n+1}} \bar{F}^\MC_n
+\end{equation}
+
+Let $\bar{\pi}^\Ob_n: \OO \times \PM(\OO)^\omega \rightarrow \Ob^n \times \PM(\OO)^n$ be the projection mapping. By the Kolmogorov extension theorem, there is $\xi \in \PM(\OO \times \PM(\OO)^\omega)$ s.t. $\zeta_{n*}\bar{\pi}^\Ob_n\xi = \bar{\pi}^\Ob_{n+1}\xi$. Let $\mu^*$ be the pushforward of $\xi$ to $\PM(\OO)$. Assume that $M \in \MC$ is s.t. $\mu^* \in M$. Then for $\xi$-almost any $(x, \bm{\mu}) \in \OO \times \PM(\OO)^\omega$
+
+\begin{equation}
+\lim_{n \rightarrow 0} \DKR^n(\mu_n, M_{\PO_n(x)}) = 0
+\end{equation}
+
+\end{corollary}
 
 TBD
 
