@@ -1,0 +1,24 @@
+This result can also be extended to the non-oblivious setting. For this, we need to introduce some notation. Given measurable spaces $X$ and $Y$, we will use the notation $f: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $\mu \in \PM(X)$, $\mu \ltimes f \in \PM(X \times Y)$ denotes the semidirect product of $\mu$ and $f$. $f_* \mu \in \PM(Y)$ denotes the pushforward of $\mu$ by $f$ (i.e. the pushforward of $\mu \ltimes f$ by the projection to $Y$). $\I_X: X \rightarrow X$ denotes the identity mapping and $\D_X: X \rightarrow X \times X$ denotes the diagonal mapping.
+
+\begin{corollary}
+\label{crl:nonobliv}
+
+Fix any $\MC \subseteq 2^{\PM(\OO)}$ countable and let $F^\MC$ be as in Theorem~\ref{thm:main}. Consider a family of kernels $\Sqn{\alpha_n: \Ob^n \times \PM(\OO)^{n+1} \M \Ob_n}$. Define $\bar{F}^\MC_n: \Ob^n \times \PM(\OO)^n \rightarrow \Ob^n \times \PM(\OO)^{n+1}$ by
+
+\begin{equation}
+\bar{F}^\MC_n(y,\bm{\mu}):=(y,\bm{\mu},F^\MC_n(y))
+\end{equation}
+
+Define $\zeta_n: \Ob^n \times \PM(\OO)^n \M \Ob^{n+1} \times \PM(\OO)^{n+1}$ by
+
+\begin{equation}
+\zeta_n:=(\I_{\Ob^n \times \PM(\OO)^{n+1}} \times \alpha_n) \D_{\Ob^n \times \PM(\OO)^{n+1}} \bar{F}^\MC_n
+\end{equation}
+
+Let $\bar{\pi}^\Ob_n: \OO \times \PM(\OO)^\omega \rightarrow \Ob^n \times \PM(\OO)^n$ be the projection mapping. By the Kolmogorov extension theorem, there is $\xi \in \PM(\OO \times \PM(\OO)^\omega)$ s.t. $\zeta_{n*}\bar{\pi}^\Ob_n\xi = \bar{\pi}^\Ob_{n+1}\xi$. Let $\mu^*$ be the pushforward of $\xi$ to $\PM(\OO)$. Assume that $M \in \MC$ is s.t. $\mu^* \in M$. Then for $\xi$-almost any $(x, \bm{\mu}) \in \OO \times \PM(\OO)^\omega$
+
+\begin{equation}
+\lim_{n \rightarrow 0} \DKR^n(\mu_n, M_{\PO_n(x)}) = 0
+\end{equation}
+
+\end{corollary}

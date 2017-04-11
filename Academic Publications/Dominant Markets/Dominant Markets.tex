@@ -63,7 +63,11 @@
 \newcommand{\Ob}{\mathcal{O}}
 \newcommand{\OO}{\Ob^\omega}
 \newcommand{\PO}{\pi^\Ob}
+\newcommand{\PMO}{\PM(\OO)}
 \newcommand{\MC}{\mathcal{H}}
+\newcommand{\Gm}{\mathcal{G}}
+\newcommand{\GMO}{\Gm(\OO)}
+\DeclareMathOperator{\V}{V}
 
 \begin{document}
 
@@ -103,7 +107,7 @@ Formally, we introduce the notion of an \emph{incomplete model}, which is a conv
 
 The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $M \in \MC$ corresponds to a trader. This trader buys \enquote{stocks} (continuous functions $f$ on $X$) s.t. assuming the environment is sampled from some $\mu \in M$, the expected value $\E_\mu[f]$ of the stock is greater than its current cost $\E_{F}[f]$. The market pricing is then defined by the requirement that the aggregate of all traders doesn't make a net profit (the existence of such a pricing is established using the Kakutani-Glicksberg-Fan fixed point theorem). The fact that the aggregate of all traders cannot make a net profit implies that each individual trader can only make a bounded profit, which implies the main result in turn.
 
-The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:markets} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant market}. Section~\ref{sec:profit} introduces the concept of a \emph{profitable trading metastrategy}, which is a technique for proving convergence theorems about dominant markets. Section~\ref{sec:traders} connects the market formalism with incomplete models and proves the main theorem.
+The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant market}. Section~\ref{sec:prudent} introduces the concept of a \emph{profitable trading metastrategy}, which is a technique for proving convergence theorems about dominant markets. Section~\ref{sec:construction} connects the market formalism with incomplete models and proves the main theorem.
 
 \section{Notation}
 \label{sec:notation}
@@ -113,13 +117,13 @@ TBD
 \section{Learning Incomplete Models}
 \label{sec:learning}
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. $\PM(\OO)$ will denote the space of probability measures on $\OO$, which will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of \emph{Borel} sets. Given $\mu \in \PM(\OO)$, we denote $\Sp \mu \subseteq \OO$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. For any Polish space $X$, $\PM(X)$ will denote the space of probability measures on $X$, which will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of \emph{Borel} sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
 \begin{definition}
 
 A \emph{forecaster} $F$ is a family of measurable mappings
 
-\[\Sqn{F_n: \Ob^n \rightarrow \PM(\OO)}\]
+\[\Sqn{F_n: \Ob^n \rightarrow \PMO}\]
 
 s.t. $\Sp {F_n(y)} \subseteq (\pi^\Ob_n)^{-1}(y)$.
 
@@ -127,13 +131,13 @@ s.t. $\Sp {F_n(y)} \subseteq (\pi^\Ob_n)^{-1}(y)$.
 
 Given a forecaster $F$ and $y \in \Ob^n$, $F_n(y)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n(y)} \subseteq (\PO_n)^{-1}(y)$ reflects the obvious requirement of consistency with past observations.
 
-In order to formulate a claim about forecast convergence, we will need a metric on $\PM(\OO)$. Consider $\rho: \OO \times \OO \rightarrow \Reals$ a metrization of $\OO$. Let $\Lp(\OO;\rho)$ be the Banach space of $\rho$-Lipschitz functions on $\OO$, equipped with the norm
+In order to formulate a claim about forecast convergence, we will need a metric on $\PMO$. Consider $\rho: \OO \times \OO \rightarrow \Reals$ a metrization of $\OO$. Let $\Lp(\OO;\rho)$ be the Banach space of $\rho$-Lipschitz functions on $\OO$, equipped with the norm
 
 \begin{equation}
 \N{f}_\rho:=\max_{x}{\A{f(x)}} + \sup_{x \ne y} \frac{\A{f(x)-f(y)}}{\rho(x,y)}
 \end{equation}
 
-$\PM(\OO)$ can be regarded as a compact subset of the dual space $\Lp(\OO;\rho)'$, yielding the following metrization of $\PM(\OO)$:
+$\PMO$ can be regarded as a compact subset of the dual space $\Lp(\OO;\rho)'$, yielding the following metrization of $\PMO$:
 
 \begin{equation}
 \DKR^\rho(\mu,\nu):=\sup_{\N{f}_\rho \leq 1}{(\E_\mu[f] - \E_\nu[f])}
@@ -147,7 +151,7 @@ Fix any $x \in \OO$. It is easy to see that
 \lim_{n \rightarrow \infty} \max_{x' \in (\PO_n)^{-1}(x)} \rho(x', x) = 0
 \end{equation}
 
-Denote $\delta_x \in \PM(\OO)$ the unique probability measure s.t. $\delta_x(\{x\})=1$. It follows that for any sequence $\Sqn{\mu_n \in \PM(\OO)}$ s.t. $\Sp{\mu_n} \subseteq \pi_n^{-1}(x)$
+Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x(\{x\})=1$. It follows that for any sequence $\Sqn{\mu_n \in \PMO}$ s.t. $\Sp{\mu_n} \subseteq \pi_n^{-1}(x)$
 
 \begin{equation}
 \lim_{n \rightarrow \infty} \DKR^\rho(\mu_n, \delta_x) = 0
@@ -159,7 +163,7 @@ Another ingredient we will need is a notion of regular conditional probability f
 
 \begin{definition}
 
-Consider any $M \subseteq \PM(\OO)$. Given $y \in \Ob^n$, we define
+Consider any $M \subseteq \PMO$. Given $y \in \Ob^n$, we define
 
 \begin{equation}
 M''_y:=\{\lim_{r \rightarrow 0}{(\mu \mid \pi_n^{-1}(\B_r(y)))} \mid \mu \in M\}
@@ -170,11 +174,11 @@ Here, $\mu \mid \pi_n^{-1}(\B_r(y))$ is the conditional probability measure (def
 We further define
 
 \begin{equation}
-M'_n:=\{(y,\mu) \in Y_n \times \PM(\OO) \mid \mu \textnormal{ is in the convex hull of } M''_y\}
+M'_n:=\{(y,\mu) \in Y_n \times \PMO \mid \mu \textnormal{ is in the convex hull of } M''_y\}
 \end{equation}
 
 \begin{equation}
-M_y:=\{\mu \in \PM(\OO) \mid (y,\mu) \in \bar{M}'_n\}
+M_y:=\{\mu \in \PMO \mid (y,\mu) \in \bar{M}'_n\}
 \end{equation}
 
 Here, $\bar{M}'_n$ denotes the closure of $M'_n$.
@@ -188,7 +192,7 @@ We are now ready to formulate the main result.
 \begin{theorem}
 \label{thm:main}
 
-Fix any $\MC \subseteq 2^{\PM(\OO)}$ countable. Then, there exists a forecaster $F^\MC$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
+Fix any $\MC \subseteq 2^{\PMO}$ countable. Then, there exists a forecaster $F^\MC$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
 
 \begin{equation}
 \lim_{n \rightarrow 0} \DKR^n(F^\MC_n(\PO_n(x)), M_{\PO_n(x)}) = 0
@@ -196,45 +200,59 @@ Fix any $\MC \subseteq 2^{\PM(\OO)}$ countable. Then, there exists a forecaster 
 
 \end{theorem}
 
-This result can also be extended to the non-oblivious setting. For this, we need to introduce some notation. Given measurable spaces $X$ and $Y$, we will use the notation $f: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $\mu \in \PM(X)$, $\mu \ltimes f \in \PM(X \times Y)$ denotes the semidirect product of $\mu$ and $f$. $f_* \mu \in \PM(Y)$ denotes the pushforward of $\mu$ by $f$ (i.e. the pushforward of $\mu \ltimes f$ by the projection to $Y$). $\I_X: X \rightarrow X$ denotes the identity mapping and $\D_X: X \rightarrow X \times X$ denotes the diagonal mapping.
+\section{Dominant Forecasters}
+\label{sec:garrabrant}
 
-\begin{corollary}
-\label{crl:nonobliv}
+In this section we explain our generalization of the methods introduced in \cite{Garrabrant_2016} under the name \enquote{logical inductors.} The main differences between our formalism and that of \cite{Garrabrant_2016} are
 
-Fix any $\MC \subseteq 2^{\PM(\OO)}$ countable and let $F^\MC$ be as in Theorem~\ref{thm:main}. Consider a family of kernels $\Sqn{\alpha_n: \Ob^n \times \PM(\OO)^{n+1} \M \Ob_n}$. Define $\bar{F}^\MC_n: \Ob^n \times \PM(\OO)^n \rightarrow \Ob^n \times \PM(\OO)^{n+1}$ by
+\begin{itemize}
+\item 
+We are interested in sequence forecasting rather than formal logic.
+\item
+We consider probability measures on certain Polish spaces, rather than probability assignment functions on finite sets.
+\item
+In particular, no special treatment of expected values is required.
+\item
+The observations are stochastic rather than deterministic.
+\end{itemize}
+
+Our terminology also differs from \cite{Garrabrant_2016}: their \enquote{market} is our \enquote{forecaster}, their \enquote{trader} is our \enquote{gambler}. In any case, our exposition assumes no prior knowledge about logical inductors.
+
+The idea is to consider a collection of gamblers making bets against the forecaster. If a gambler with finite budget cannot make an infinite profit, the gambler is said to be \enquote{dominated} by the forecaster. We then prove that for any countable collection of gamblers, there is a forecaster that dominates all of them.
+
+Given a compact Polish space $X$, $C(X)$ will denote the Banach space of continuous functions with uniform norm. We will also use the shorthand notation $\Gm(X):=C(\PM(X) \times X)$. Equivalently, $\Gm(X)$ can be regarded to be the space of continuous functions from $\PM(X)$ to $C(X)$.
+
+We regard $\GMO$ as the space of bets that can be made against a forecaster. Given $\gamma \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \PMO$, the value of the bet $\gamma$ is
 
 \begin{equation}
-\bar{F}^\MC_n(y,\bm{\mu}):=(y,\bm{\mu},F^\MC_n(y))
+\V{\gamma}(\nu,x):=\gamma(\nu,x) - \E_{x' \sim \nu}[\gamma(\nu,x')]
 \end{equation}
 
-Define $\zeta_n: \Ob^n \times \PM(\OO)^n \M \Ob^{n+1} \times \PM(\OO)^{n+1}$ by
+Note that this defines a bounded operator $\V: \Gm(X) \rightarrow \Gm(X)$.
 
-\begin{equation}
-\zeta_n:=(\I_{\Ob^n \times \PM(\OO)^{n+1}} \times \alpha_n) \D_{\Ob^n \times \PM(\OO)^{n+1}} \bar{F}^\MC_n
-\end{equation}
+$C(X)$ and $\Gm(X)$ will also be regarded as a measurable spaces, using the $\sigma$-algebra of Borel sets. We remind that the $\sigma$-algebra on $\Ob^n$ is the algebra of \emph{universally measurable} sets.
 
-Let $\bar{\pi}^\Ob_n: \OO \times \PM(\OO)^\omega \rightarrow \Ob^n \times \PM(\OO)^n$ be the projection mapping. By the Kolmogorov extension theorem, there is $\xi \in \PM(\OO \times \PM(\OO)^\omega)$ s.t. $\zeta_{n*}\bar{\pi}^\Ob_n\xi = \bar{\pi}^\Ob_{n+1}\xi$. Let $\mu^*$ be the pushforward of $\xi$ to $\PM(\OO)$. Assume that $M \in \MC$ is s.t. $\mu^* \in M$. Then for $\xi$-almost any $(x, \bm{\mu}) \in \OO \times \PM(\OO)^\omega$
+\begin{definition}
 
-\begin{equation}
-\lim_{n \rightarrow 0} \DKR^n(\mu_n, M_{\PO_n(x)}) = 0
-\end{equation}
+A \emph{gambler} is a family of measurable mappings
 
-\end{corollary}
+\[\Sqn{G_n : \Ob^n \times \PMO^n \rightarrow \Gm(\OO)}\]
 
-TBD
+\end{definition}
 
-\section{Dominant Markets}
-\label{sec:markets}
+A gambler is considered to observe a forecaster and bet against it. Given $y \in \Ob^n$ and $\bm{\mu} \in \PMO^n$, $G_n(y,\bm{\mu})=\gamma$ means that, if $y$ are the first $n$ observations and $(\bm{\mu},\nu)$ are the first $n + 1$ forecasts (where $\nu$ is the forecast made after observing all of $y$), the gambler will make bet $\gamma$.
+
+We now introduce some notation regarding the interaction of gamblers and forecasters. 
+
+Given a gambler $G$ and a forecaster $F$, we define the measurable mappings $G^F_n: \Ob^n \rightarrow \GMO$ and $\bar{G}^F_n: \Ob^n \rightarrow C(\OO)$ by...
+
+\section{Prudent Gambling Strategies}
+\label{sec:prudent}
 
 Bar
 
-\section{Profitable Trading Metastrategies}
-\label{sec:profit}
-
-Bar
-
-\section{Traders for Incomplete Models}
-\label{sec:traders}
+\section{Gamblers for Incomplete Models}
+\label{sec:construction}
 
 TBD
 
