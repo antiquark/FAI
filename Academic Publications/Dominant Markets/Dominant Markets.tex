@@ -73,6 +73,9 @@
 \newcommand{\CO}{C(\OO)}
 \DeclareMathOperator{\V}{V}
 \DeclareMathOperator{\SV}{\Sigma V}
+\DeclareMathOperator{\SVM}{\Sigma V_{\min}}
+\DeclareMathOperator{\Nr}{N}
+\DeclareMathOperator{\Bd}{B}
 
 \begin{document}
 
@@ -369,7 +372,7 @@ We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
 \end{equation}
 
 \begin{corollary}
-\label{prp:dominate_one}
+\label{crl:dominate_one}
 
 Let $G$ be a gambler. Then, there exists a forecaster $F$ s.t. for all $n \in \Nats$ and $y \in \Ob_n$
 
@@ -387,7 +390,27 @@ For every $n \in \Nats$, let $\alpha_n: \Ob_n \times \GMO \rightarrow \PMO$ be a
 
 \end{proof}
 
-???
+In particular, the forecaster $F$ of Corollary~\ref{crl:dominate_one} dominates $G$ since, as easy to see, $\overline{\V G}^F_n \leq 0$ and hence $\SV G^F_n \leq 0$.
+
+We will now introduce a way to transform a gambler in a way that enforces a \enquote{finite spending budget.} Consider a gambler $G$ and fix $b > 0$ (the size of the \enquote{budget}). Define the measurable functions $\SVM G^F_n: \Ob^n \rightarrow \Reals$ by
+
+\begin{equation}
+\SVM G^F_n(y) := \min_{y\OO}{\SV G^F_n(y)}
+\end{equation}
+
+Define the universally measurable sets
+
+\begin{equation}
+\Ob^n_{GFb}:=\{y \in \Ob^n \mid \SVM G^F_n(y) > -b\}
+\end{equation}
+
+Define the measurable functions $\Nr_b G^F_n: \Ob^n_{GFb} \rightarrow C(\PMO)$ by
+
+\begin{equation}
+\Nr_b G^F_n(y,\mu):=\max(1,\max_{y\OO} \frac{-\V G^F_n(y,\mu)}{b + \SV G^F_n(y)})^{-1}
+\end{equation}
+
+Finally, define the gambler??? $\B_b G^F$...
 
 TBD
 
