@@ -328,41 +328,39 @@ Next, we show that the probability measure of Lemma~\ref{lmm:unwinnable} can be 
 \begin{lemma}
 \label{lmm:measurable_unwinnable}
 
-Fix $Y, Y'$ compact Polish spaces and denote $X:=Y \times Y'$. Then, there exists a Borel measurable mapping $\alpha: Y \times \Gm(X) \rightarrow \PM(X)$ s.t. for any $y \in Y$ and $\gamma \in \Gm(X)$
+Fix $Y_{1,2}$ compact Polish spaces and denote $X:=Y_1 \times Y_2$. Then, there exists a Borel measurable mapping $\alpha: Y_1 \times \Gm(X) \rightarrow \PM(X)$ s.t. for any $y \in Y_1$ and $\gamma \in \Gm(X)$
 
 \begin{equation}
-\Sp \alpha(y,\gamma) \subseteq \Argmax{y \times Y'} \gamma(\alpha(y,\gamma))
+\Sp \alpha(y,\gamma) \subseteq \Argmax{y \times Y_2} \gamma(\alpha(y,\gamma))
 \end{equation}
 
 \end{lemma}
 
 \begin{proof}
 
-Define ${Z_1, Z_2, Z \subseteq Y \times \Gm(X) \times \PM(X)}$ by
+Define ${Z_1, Z_2, Z \subseteq Y_1 \times \Gm(X) \times \PM(X)}$ by
 
-$${Z_1:=\{(y,\gamma,\mu) \in Y \times \Gm(X) \times \PM(X) \mid \Sp \mu \subseteq y \times Y'\}}$$
+$${Z_1:=\{(y,\gamma,\mu) \in Y_1 \times \Gm(X) \times \PM(X) \mid \Sp \mu \subseteq y \times Y_2\}}$$
 
-$${Z_2:=\{(y,\gamma,\mu) \in Y \times \Gm(X) \times \PM(X) \mid \E_\mu[\gamma(\mu)] = \max_{y \in Y'} \gamma(\mu,y,y')\}}$$
+$${Z_2:=\{(y,\gamma,\mu) \in Y_1 \times \Gm(X) \times \PM(X) \mid \E_\mu[\gamma(\mu)] = \max_{y_2 \in Y_2} \gamma(\mu,y,y_2)\}}$$
 
-$${Z:=\{(y,\gamma,\mu) \in Y \times \Gm(X) \times \PM(X) \mid \Sp \mu \subseteq \Argmax{y \times Y'} \gamma(\mu)\}}$$
+$${Z:=Z_1 \cap Z_2 =\{(y,\gamma,\mu) \in Y_1 \times \Gm(X) \times \PM(X) \mid \Sp \mu \subseteq \Argmax{y \times Y_2} \gamma(\mu)\}}$$
 
-We can view ${Z}$ as the graph of a \emph{multivalued} mapping from ${Y_n \times \Gm(X)}$ to ${\PM(X)}$ (i.e a mapping from ${Y_n \times \Gm(X)}$ to $2^{\PM(X)}$). We will now show that this multivalued mapping has a \emph{selection}, i.e. a single-valued Borel measurable mapping whose graph is a subset of $Z$. Obviously, the selection is the desired ${\alpha}$.
+We can view ${Z}$ as the graph of a \emph{multivalued} mapping from ${Y_1 \times \Gm(X)}$ to ${\PM(X)}$ (i.e a mapping from ${Y_1 \times \Gm(X)}$ to $2^{\PM(X)}$). We will now show that this multivalued mapping has a \emph{selection}, i.e. a single-valued Borel measurable mapping whose graph is a subset of $Z$. Obviously, the selection is the desired ${\alpha}$.
 
-${Z_1}$ is closed by Proposition B.7. ${Z_2}$ is closed by Proposition B.5. ${Z = Z_1 \cap Z_2}$ by Proposition B.6 and hence closed. In particular, the fiber ${Z_{y\gamma}}$ of ${Z}$ over any ${(y,\gamma) \in Y \times \Gm(X)}$ is also closed. 
+Fix $\rho$ a metrization of $Y_1$. $Z_1$ is the vanishing locus of the continuous function $\E_{(y_1, y_2) \sim \mu}[\rho(y_1,y)]$. $Z_2$ is the vanishing locus of the continuous function $\E_\mu[\gamma(\mu)] - \max_{y_2 \in Y_2} \gamma(\mu,y,y_2)$. Therefore $Z_{1,2}$ are closed and so is $Z$. In particular, the fiber ${Z_{y\gamma}}$ of ${Z}$ over any ${(y,\gamma) \in Y_1 \times \Gm(X)}$ is also closed. 
 
-For any ${y \in Y}$, ${\gamma \in \Gm(X)}$, define ${i_y: Y' \rightarrow X}$ by ${i_y(y'):=(y,y')}$ and ${\gamma_y \in \Gm(Y')}$ by $\gamma_y(\nu,y'):=\gamma(i_{y*}\nu,y,y')$. Applying Proposition A.1 to ${\gamma_y}$ we get ${\nu \in \PM(Y')}$ s.t.
+For any ${y \in Y_1}$, ${\gamma \in \Gm(X)}$, define ${i_y: Y_2 \rightarrow X}$ by ${i_y(y_2):=(y,y_2)}$ and ${\gamma_y \in \Gm(Y_{2})}$ by $\gamma_y(\nu,y'):=\gamma(i_{y*}\nu,y,y')$. Applying Lemma~\ref{lmm:unwinnable} to ${\gamma_y}$ we get ${\nu \in \PM(Y_2)}$ s.t.
 
-$$\Sp \gamma_y(\nu) \subseteq \Argmax{} \gamma_y$$
+$$\Sp \nu \subseteq \Argmax{} \gamma_y(\nu)$$
 
 It follows that ${(y,\gamma,i_{y*}\nu) \in Z}$ and hence ${Z_{y\gamma}}$ is non-empty.
 
-Consider any ${U \subseteq \PM(X)}$ open. Then, ${A_U:=(Y \times \Gm(X) \times U) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image of ${A_U}$ under the projection to ${Y \times \Gm(X)}$ is also ${F_\sigma}$ and in particular Borel. 
+Consider any ${U \subseteq \PM(X)}$ open. Then, ${A_U:=(Y_{1} \times \Gm(X) \times U) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image of ${A_U}$ under the projection to ${Y_{1} \times \Gm(X)}$ is also ${F_\sigma}$ and in particular Borel. 
 
 Applying the Kuratowski--Ryll-Nardzewski measurable selection theorem, we get the desired result.
 
 \end{proof}
-
-TBD
 
 We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
 
@@ -370,7 +368,7 @@ We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
 \bar{G}^F_n(y) := G^F_n(y,F_n(y))
 \end{equation}
 
-\begin{proposition}
+\begin{corollary}
 \label{prp:dominate_one}
 
 Let $G$ be a gambler. Then, there exists a forecaster $F$ s.t. for all $n \in \Nats$ and $y \in \Ob_n$
@@ -379,7 +377,15 @@ Let $G$ be a gambler. Then, there exists a forecaster $F$ s.t. for all $n \in \N
 \Sp F_n(y) \subseteq \Argmax{y\OO} \bar{G}^F_n
 \end{equation}
 
-\end{proposition}
+\end{corollary}
+
+\begin{proof}
+
+For every $n \in \Nats$, let $\alpha_n: \Ob_n \times \GMO \rightarrow \PMO$ be as in Lemma~\ref{lmm:measurable_unwinnable}. Observing that the definition of $G^F_n$ depends only on $F_m$ for $m < n$, we define $F$ recursively as
+
+\[F_n(y):=\alpha_n(y,G^F_n(y))\]
+
+\end{proof}
 
 ???
 
