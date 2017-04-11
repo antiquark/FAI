@@ -21,7 +21,7 @@
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}%[section]
-%\newtheorem{lemma}{Lemma}[section]
+\newtheorem{lemma}{Lemma}%[section]
 \newtheorem{proposition}{Proposition}%[section]
 \newtheorem{corollary}{Corollary}%[section]
 %\newtheorem{conjecture}{Conjecture}[section]
@@ -37,6 +37,9 @@
 
 \newcommand{\A}[1]{\lvert #1 \rvert}
 \newcommand{\N}[1]{\lVert #1 \rVert}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
 
 \newcommand{\I}{\operatorname{id}}
 \newcommand{\D}{\operatorname{diag}}
@@ -119,7 +122,7 @@ TBD
 \section{Learning Incomplete Models}
 \label{sec:learning}
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. For any Polish space $X$, $\PM(X)$ will denote the space of probability measures on $X$, which will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of \emph{Borel} sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. For any Polish space $X$, $\PM(X)$ will denote the space of probability measures on $X$, which will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of \emph{Borel} sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
 \begin{definition}
 
@@ -131,7 +134,7 @@ s.t. $\Sp {F_n(y)} \subseteq (\pi^\Ob_n)^{-1}(y)$.
 
 \end{definition}
 
-Given a forecaster $F$ and $y \in \Ob^n$, $F_n(y)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n(y)} \subseteq (\PO_n)^{-1}(y)$ reflects the obvious requirement of consistency with past observations.
+Given a forecaster $F$ and $y \in \Ob^n$, $F_n(y)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n(y)} \subseteq y\OO$ reflects the obvious requirement of consistency with past observations.
 
 In order to formulate a claim about forecast convergence, we will need a metric on $\PMO$. Consider $\rho: \OO \times \OO \rightarrow \Reals$ a metrization of $\OO$. Let $\Lp(\OO;\rho)$ be the Banach space of $\rho$-Lipschitz functions on $\OO$, equipped with the norm
 
@@ -150,7 +153,7 @@ We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is sl
 Fix any $x \in \OO$. It is easy to see that
 
 \begin{equation}
-\lim_{n \rightarrow \infty} \max_{x' \in (\PO_n)^{-1}(x)} \rho(x', x) = 0
+\lim_{n \rightarrow \infty} \max_{x' \in \PO_n(x)\OO} \rho(x', x) = 0
 \end{equation}
 
 Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x(\{x\})=1$. It follows that for any sequence $\Sqn{\mu_n \in \PMO}$ s.t. $\Sp{\mu_n} \subseteq \pi_n^{-1}(x)$
@@ -276,15 +279,66 @@ Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ 
 
 \begin{equation}
 \label{eqn:def_dominance__loss}
-\inf_{n \in \Nats} \min_{x' \in (\PO_n)^{-1}(x)} {\SV G^F_{n+1}(\PO_n(x),x')} > -\infty
+\inf_{n \in \Nats} \min_{x' \in \PO_n(x)\OO} {\SV G^F_{n+1}(\PO_n(x),x')} > -\infty
 \end{equation}
 
 \begin{equation}
 \label{eqn:def_dominance__gain}
-\max_{n \in \Nats} \sup_{x' \in (\PO_n)^{-1}(x)} {\SV G^F_{n+1}(\PO_n(x),x')} < +\infty
+\max_{n \in \Nats} \sup_{x' \in \PO_n(x)\OO} {\SV G^F_{n+1}(\PO_n(x),x')} < +\infty
 \end{equation}
 
 \end{definition}
+
+The following is the main theorem of this section, which is our analogue of Theorem 3.6.1 from \cite{Garrabrant_2016}.
+
+\begin{theorem}
+\label{thm:exist_dominant}
+
+Let $\mathfrak{G}$ be a countable set of gamblers. Then, there exists a forecaster $F^\mathfrak{G}$ s.t. for any $G \in \mathfrak{G}$, $F$ dominates $G$.
+
+\end{theorem}
+
+The rest of the section is devoted to proving Theorem~\ref{thm:exist_dominant}. The proof will consist of two steps. First we show that for any \emph{single} gambler, there is a dominant forecaster. Then, given a countable set $\mathfrak{G}$ of gamblers, we construct a single gambler s.t. dominating this gambler implies dominating all gamblers in the set.
+
+The following lemma shows that for any bet, there is a forecast which makes the bet unwinnable.
+
+\begin{lemma}
+\label{lmm:?}
+
+Consider $X$ a compact Polish space and $\gamma \in \Gm(X)$. Then, there exists $\mu \in \PM(X)$ s.t.
+
+\begin{equation}
+\Sp \mu \subseteq \Argmax{} \gamma(\mu)
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+?
+
+\end{proof}
+
+TBD
+
+We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
+
+\begin{equation}
+\bar{G}^F_n(y) := G^F_n(y,F_n(y))
+\end{equation}
+
+\begin{proposition}
+\label{prp:dominate_one}
+
+Let $G$ be a gambler. Then, there exists a forecaster $F$ s.t. for all $n \in \Nats$ and $y \in \Ob_n$
+
+\begin{equation}
+\Sp F_n(y) \subseteq \Argmax{y\OO} \bar{G}^F_n
+\end{equation}
+
+\end{proposition}
+
+???
 
 TBD
 
