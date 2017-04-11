@@ -67,7 +67,9 @@
 \newcommand{\MC}{\mathcal{H}}
 \newcommand{\Gm}{\mathcal{G}}
 \newcommand{\GMO}{\Gm(\OO)}
+\newcommand{\CO}{C(\OO)}
 \DeclareMathOperator{\V}{V}
+\DeclareMathOperator{\SV}{\Sigma V}
 
 \begin{document}
 
@@ -244,12 +246,52 @@ A gambler is considered to observe a forecaster and bet against it. Given $y \in
 
 We now introduce some notation regarding the interaction of gamblers and forecasters. 
 
-Given a gambler $G$ and a forecaster $F$, we define the measurable mappings $G^F_n: \Ob^n \rightarrow \GMO$ and $\bar{G}^F_n: \Ob^n \rightarrow C(\OO)$ by...
+Given a gambler $G$ and a forecaster $F$, we define the measurable mappings $G^F_n: \Ob^n \rightarrow \GMO$ by
+
+\begin{equation}
+\label{eqn:GF}
+G^F_n(y):=G_n(y,F_0(y),F_1(y) \ldots F_{n-1}(y))
+\end{equation}
+
+We allowed some abuse of notation by making implicit the projection from $\Ob^n$ to $\Ob^m$ in the expression $F_m(y)$.
+
+We define the measurable mappings $\overline{\V G}^F_n: \Ob^n \rightarrow \CO$ and $\SV G^F_n: \Ob^{n-1} \rightarrow \CO$ by
+
+\begin{equation}
+\overline{\V G}^F_n(y):=(\V G^F_n(y))(F_n(y))
+\end{equation}
+
+\begin{equation}
+\SV G^F_n(y) := \sum_{m < n} \overline{\V G}^F_m(y)
+\end{equation}
+
+In the definition of $\SV G^F_0$, $\Ob^{-1}$ is defined to be equal to $\Ob^0$ (i.e. the one point space).
+
+We are now ready to state the formally state the definition of \enquote{dominance} alluded to in the beginning of the section.
+
+\begin{definition}
+\label{def:dominance}
+
+Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ when for any $x \in \OO$, if condition~\ref{eqn:def_dominance__loss} holds then condition~\ref{eqn:def_dominance__gain} holds:
+
+\begin{equation}
+\label{eqn:def_dominance__loss}
+\inf_{n \in \Nats} \min_{x' \in (\PO_n)^{-1}(x)} {\SV G^F_{n+1}(\PO_n(x),x')} > -\infty
+\end{equation}
+
+\begin{equation}
+\label{eqn:def_dominance__gain}
+\max_{n \in \Nats} \sup_{x' \in (\PO_n)^{-1}(x)} {\SV G^F_{n+1}(\PO_n(x),x')} < +\infty
+\end{equation}
+
+\end{definition}
+
+TBD
 
 \section{Prudent Gambling Strategies}
 \label{sec:prudent}
 
-Bar
+TBD
 
 \section{Gamblers for Incomplete Models}
 \label{sec:construction}
