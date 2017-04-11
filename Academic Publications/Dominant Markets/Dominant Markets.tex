@@ -303,7 +303,7 @@ The rest of the section is devoted to proving Theorem~\ref{thm:exist_dominant}. 
 The following lemma shows that for any bet, there is a forecast which makes the bet unwinnable.
 
 \begin{lemma}
-\label{lmm:?}
+\label{lmm:unwinnable}
 
 Consider $X$ a compact Polish space and $\gamma \in \Gm(X)$. Then, there exists $\mu \in \PM(X)$ s.t.
 
@@ -315,7 +315,50 @@ Consider $X$ a compact Polish space and $\gamma \in \Gm(X)$. Then, there exists 
 
 \begin{proof}
 
-?
+Define ${K: \PM(X) \rightarrow 2^{\PM(X)}}$ as follows:
+
+\[K(\mu):=\{\nu \in \PM(X) \mid \E_\nu[\gamma(\mu)] = \max \gamma(\mu)\}\]
+
+For any ${\mu}$, ${K}(\mu)$ is obviously convex and non-empty. It is also easy to see that the graph of $K$ in $\PM(X) \times \PM(X)$ is closed. Applying the Kakutani-Glicksberg-Fan theorem, we get the desired result.
+
+\end{proof}
+
+Next, we show that the probability measure of Lemma~\ref{lmm:unwinnable} can be made to depend measurably on past observations and the bet.
+
+\begin{lemma}
+\label{lmm:measurable_unwinnable}
+
+Fix $Y, Y'$ compact Polish spaces and denote $X:=Y \times Y'$. Then, there exists a Borel measurable mapping $\alpha: Y \times \Gm(X) \rightarrow \PM(X)$ s.t. for any $y \in Y$ and $\gamma \in \Gm(X)$
+
+\begin{equation}
+\Sp \alpha(y,\gamma) \subseteq \Argmax{y \times Y'} \gamma(\alpha(y,\gamma))
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+
+Define ${Z_1, Z_2, Z \subseteq Y \times \Gm(X) \times \PM(X)}$ by
+
+$${Z_1:=\{(y,\gamma,\mu) \in Y \times \Gm(X) \times \PM(X) \mid \Sp \mu \subseteq y \times Y'\}}$$
+
+$${Z_2:=\{(y,\gamma,\mu) \in Y \times \Gm(X) \times \PM(X) \mid \E_\mu[\gamma(\mu)] = \max_{y \in Y'} \gamma(\mu,y,y')\}}$$
+
+$${Z:=\{(y,\gamma,\mu) \in Y \times \Gm(X) \times \PM(X) \mid \Sp \mu \subseteq \Argmax{y \times Y'} \gamma(\mu)\}}$$
+
+We can view ${Z}$ as the graph of a \emph{multivalued} mapping from ${Y_n \times \Gm(X)}$ to ${\PM(X)}$ (i.e a mapping from ${Y_n \times \Gm(X)}$ to $2^{\PM(X)}$). We will now show that this multivalued mapping has a \emph{selection}, i.e. a single-valued Borel measurable mapping whose graph is a subset of $Z$. Obviously, the selection is the desired ${\alpha}$.
+
+${Z_1}$ is closed by Proposition B.7. ${Z_2}$ is closed by Proposition B.5. ${Z = Z_1 \cap Z_2}$ by Proposition B.6 and hence closed. In particular, the fiber ${Z_{y\gamma}}$ of ${Z}$ over any ${(y,\gamma) \in Y \times \Gm(X)}$ is also closed. 
+
+For any ${y \in Y}$, ${\gamma \in \Gm(X)}$, define ${i_y: Y' \rightarrow X}$ by ${i_y(y'):=(y,y')}$ and ${\gamma_y \in \Gm(Y')}$ by $\gamma_y(\nu,y'):=\gamma(i_{y*}\nu,y,y')$. Applying Proposition A.1 to ${\gamma_y}$ we get ${\nu \in \PM(Y')}$ s.t.
+
+$$\Sp \gamma_y(\nu) \subseteq \Argmax{} \gamma_y$$
+
+It follows that ${(y,\gamma,i_{y*}\nu) \in Z}$ and hence ${Z_{y\gamma}}$ is non-empty.
+
+Consider any ${U \subseteq \PM(X)}$ open. Then, ${A_U:=(Y \times \Gm(X) \times U) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image of ${A_U}$ under the projection to ${Y \times \Gm(X)}$ is also ${F_\sigma}$ and in particular Borel. 
+
+Applying the Kuratowski--Ryll-Nardzewski measurable selection theorem, we get the desired result.
 
 \end{proof}
 
