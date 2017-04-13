@@ -415,7 +415,7 @@ Define the measurable sets
 Note that $\Ab_b G_n \times \Ob_n$ is a measurable subset of $\Ob^n \times \PMO^n$ and in particular can be regarded as a measurable space in itself. Define the measurable functions $\Nr_b G_n: \Ab_b G_n \times \Ob_n \rightarrow C(\PMO)$ by
 
 \begin{equation}
-\Nr_b G_n(y,\BM;\nu):=\max(1,\max_{y\OO} \frac{-(\V G_n(y,\BM))(\nu)}{b + \SV G_n(y_{:n-1},\BM)})^{-1}
+\Nr_b G_n(y,\BM;\nu):=\max(1,\max_{y\OO} \frac{-(\V G_n(y,\BM))(\nu)}{\SV G_n(y_{:n-1},\BM)+b})^{-1}
 \end{equation}
 
 Finally, define the gambler $\B_b G$ as follows
@@ -427,9 +427,9 @@ Finally, define the gambler $\B_b G$ as follows
 The next proposition shows that as long as $G$ stays \enquote{within budget $b$,} the operator $\B_b$ has no effect. 
 
 \begin{proposition}
-\label{prp:budget}
+\label{prp:b_no_effect}
 
-Consider any gambler $G$, $n \in \Nats$, $y \in \Ob^{n - 1}$ and $\BM \in \PMO^n$. Assume that for all $m < n$, $(y_{:m},\BM_{:m+1}) \in \Ab_b G_{m+1}$. Then, for all $m < n$
+Consider any gambler $G$, $b > 0$, $n \in \Nats$, $y \in \Ob^{n - 1}$ and $\BM \in \PMO^n$. Assume that for all $m < n$, $(y_{:m},\BM_{:m+1}) \in \Ab_b G_{m+1}$. Then, for all $m < n$
 
 \begin{equation}
 \B_b G_m(y_{:m},\BM_{:m};\BM_m)=G_m(y_{:m},\BM_{:m};\BM_m)
@@ -456,6 +456,68 @@ $$\forall x \in y_{:m}\OO: 1 > \frac{-(\V G_{m}(y_{:m},\BM_{:m}))(\BM_{m}, x)}{\
 $$\Nr_b G_m(y_{:m},\BM_{:m};\BM_m) = 1$$
 
 Since we are in the second case in the definition of ${\B_b G_m(y_{:m},\BM_{:m})}$, we get the desired result.
+
+\end{proof}
+
+Now, we show that $\B_b G$ indeed never \enquote{goes over budget.}
+
+\begin{proposition}
+\label{prp:b_stays_in_budget}
+
+Consider any gambler $G$ and $b > 0$. Then, for any $n \in \Nats$, $y \in \Ob^{n-1}$ and $\BM \in \PMO^n$
+
+\begin{equation}
+\SVM \B_b G_n(y,\BM) \geq -b
+\end{equation} 
+
+\end{proposition}
+
+\begin{proof}
+
+Let ${m_0 \in \Nats}$ be the largest number s.t. ${m_0 \leq n}$ and 
+
+$$\forall m \leq m_0: \SVM G_m(y_{:m-1},\BM_{:m}) > -b$$
+
+For any ${m \leq m_0}$, we have, by Proposition~\ref{prp:b_no_effect}
+
+$$\SVM \B_b G_m(y_{:m-1},\BM_{:m})=\SVM G_m(y_{:m-1},\BM_{:m}) > -b$$
+
+(Note that the sum in the definition of ${\SVM \B_b G_m}$ only involves ${\B_b G_l}$ for ${l < m \leq m_0}$)
+
+For ${m=m_0+1}$ and any $x \in y_{:m_0}\OO$, we have
+
+$$\SV \B_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) = \SV \B_b G_{m_0}(y_{:m_0-1},\BM_{:m_0};x) + (\V \B_b G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)$$
+
+The first term only involves ${\B_b G_l}$ for ${l < m_0}$, allowing us to apply Proposition~\ref{prp:b_no_effect}. The second term is in the second case of the definition of $\B_b$.
+
+\begin{align*}
+\SV \B_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) = &\SV G_{m_0}(y_{:m_0-1},\BM_{:m_0};x) +\\ &\Nr_b G_{m_0}(y_{:m_0},\BM_{:m_0};\BM_{m_0}) \cdot (\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)
+\end{align*}
+
+If ${x}$ is s.t. ${(\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x) \geq 0}$, then
+
+\[\SV \B_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) \geq \SV G_{m_0}(y_{:m_0-1},\BM_{:m_0};x)\geq \SVM G_{m_0}(y_{:m_0-1},\BM_{:m_0}) > -b\]
+
+If ${x}$ is s.t. ${(\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x) < 0}$, then, by the definition of $\Nr_b$
+
+\begin{align*}
+\SV \B_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) \geq &\SV G_{m_0}(y_{:m_0-1},\BM_{:m_0};x)+ \\
+&\frac{\SV G_{m_0}(y_{:m_0-1},\BM_{:m_0};x) + b}{-(\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)} \cdot (\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)
+\end{align*}
+
+$$\SV \B_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) \geq -b$$
+
+Finally, consider ${m > m_0 + 1}$.
+
+$$\SV \B_b G_{m}(y_{:m-1},\BM_{:m};x) = \SV \B_b G_{m-1}(y_{:m-2},\BM_{:m-1};x) + (\V \B_b G_{m-1}(y_{:m-1},\BM_{:m-1}))(\BM_{m-1},x)$$
+
+The second term is in the first case of the definition of $\B_b$ and therefore vanishes.
+
+$$\SV \B_b G_{m}(y_{:m-1},\BM_{:m};x) = \SV \B_b G_{m-1}(y_{:m-2},\BM_{:m-1};x)$$
+
+By induction on ${m}$, we conclude:
+
+$$\SVM \B_b G_{m}(y_{:m-1},\BM_{:m}) \geq \SVM \B_b G_{m-1}(y_{:m-2},\BM_{:m-1}) \geq -b$$
 
 \end{proof}
 
