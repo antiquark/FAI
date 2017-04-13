@@ -74,8 +74,10 @@
 \DeclareMathOperator{\V}{V}
 \DeclareMathOperator{\SV}{\Sigma V}
 \DeclareMathOperator{\SVM}{\Sigma V_{\min}}
+\DeclareMathOperator{\Ab}{A}
 \DeclareMathOperator{\Nr}{N}
 \DeclareMathOperator{\Bd}{B}
+\newcommand{\BM}{\bm{\mu}}
 
 \begin{document}
 
@@ -125,7 +127,7 @@ TBD
 \section{Learning Incomplete Models}
 \label{sec:learning}
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. For any Polish space $X$, $\PM(X)$ will denote the space of probability measures on $X$, which will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of \emph{Borel} sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO(x)$. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. For any Polish space $X$, $\PM(X)$ will denote the space of probability measures on $X$, which will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of \emph{Borel} sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
 \begin{definition}
 
@@ -133,7 +135,7 @@ A \emph{forecaster} $F$ is a family of measurable mappings
 
 \[\Sqn{F_n: \Ob^n \rightarrow \PMO}\]
 
-s.t. $\Sp {F_n(y)} \subseteq (\pi^\Ob_n)^{-1}(y)$.
+s.t. $\Sp {F_n(y)} \subseteq y\OO$.
 
 \end{definition}
 
@@ -156,10 +158,10 @@ We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is sl
 Fix any $x \in \OO$. It is easy to see that
 
 \begin{equation}
-\lim_{n \rightarrow \infty} \max_{x' \in \PO_n(x)\OO} \rho(x', x) = 0
+\lim_{n \rightarrow \infty} \max_{x' \in x_{:n}\OO} \rho(x', x) = 0
 \end{equation}
 
-Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x(\{x\})=1$. It follows that for any sequence $\Sqn{\mu_n \in \PMO}$ s.t. $\Sp{\mu_n} \subseteq \pi_n^{-1}(x)$
+Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x(\{x\})=1$. It follows that for any sequence $\Sqn{\mu_n \in \PMO}$ s.t. $\Sp{\mu_n} \subseteq x_{:n}\OO$
 
 \begin{equation}
 \lim_{n \rightarrow \infty} \DKR^\rho(\mu_n, \delta_x) = 0
@@ -174,26 +176,26 @@ Another ingredient we will need is a notion of regular conditional probability f
 Consider any $M \subseteq \PMO$. Given $y \in \Ob^n$, we define
 
 \begin{equation}
-M''_y:=\{\lim_{r \rightarrow 0}{(\mu \mid \pi_n^{-1}(\B_r(y)))} \mid \mu \in M\}
+M_y:=\{\lim_{r \rightarrow 0}{(\mu \mid \pi_n^{-1}(\B_r(y)))} \mid \mu \in M\}
 \end{equation}
 
-Here, $\mu \mid \pi_n^{-1}(\B_r(y))$ is the conditional probability measure (defined whenever $\mu(\pi_n^{-1}(\B_r(y))) > 0$) and the limit need not always exist. That is, $M''_y$ is the set of such limits for those $\mu \in M$ for which the (weak) limit exists (in particular $y \in \Sp{\mu}$).
+Here, $\mu \mid \pi_n^{-1}(\B_r(y))$ is the conditional probability measure (defined whenever $\mu(\pi_n^{-1}(\B_r(y))) > 0$) and the limit need not always exist. That is, $M_y$ is the set of such limits for those $\mu \in M$ for which the (weak) limit exists (in particular $y \in \Sp{\mu}$).
 
 We further define
 
 \begin{equation}
-M'_n:=\{(y,\mu) \in Y_n \times \PMO \mid \mu \textnormal{ is in the convex hull of } M''_y\}
+M_n:=\{(y,\mu) \in Y_n \times \PMO \mid \mu \textnormal{ is in the convex hull of } M_y\}
 \end{equation}
 
 \begin{equation}
-M_y:=\{\mu \in \PMO \mid (y,\mu) \in \bar{M}'_n\}
+M \mid y:=\{\mu \in \PMO \mid (y,\mu) \in \bar{M}_n\}
 \end{equation}
 
-Here, $\bar{M}'_n$ denotes the closure of $M'_n$.
+Here, $\bar{M}_n$ denotes the closure of $M_n$.
 
 \end{definition}
 
-Note that $M_y$ is always convex and closed.
+Note that $M \mid y$ is always convex and closed.
 
 We are now ready to formulate the main result.
 
@@ -203,7 +205,7 @@ We are now ready to formulate the main result.
 Fix any $\MC \subseteq 2^{\PMO}$ countable. Then, there exists a forecaster $F^\MC$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
 
 \begin{equation}
-\lim_{n \rightarrow 0} \DKR^n(F^\MC_n(\PO_n(x)), M_{\PO_n(x)}) = 0
+\lim_{n \rightarrow 0} \DKR^n(F^\MC_n(x_{:n}), M \mid x_{:n}) = 0
 \end{equation}
 
 \end{theorem}
@@ -248,7 +250,7 @@ A \emph{gambler} is a family of measurable mappings
 
 \end{definition}
 
-A gambler is considered to observe a forecaster and bet against it. Given $y \in \Ob^n$ and $\bm{\mu} \in \PMO^n$, $G_n(y,\bm{\mu})=\gamma$ means that, if $y$ are the first $n$ observations and $(\bm{\mu},\nu)$ are the first $n + 1$ forecasts (where $\nu$ is the forecast made after observing all of $y$), the gambler will make bet $\gamma$.
+A gambler is considered to observe a forecaster and bet against it. Given $y \in \Ob^n$ and $\BM \in \PMO^n$, $G_n(y,\BM)=\gamma$ means that, if $y$ are the first $n$ observations and $(\BM,\nu)$ are the first $n + 1$ forecasts (where $\nu$ is the forecast made after observing all of $y$), the gambler will make bet $\gamma$.
 
 We now introduce some notation regarding the interaction of gamblers and forecasters. 
 
@@ -256,10 +258,10 @@ Given a gambler $G$ and a forecaster $F$, we define the measurable mappings $G^F
 
 \begin{equation}
 \label{eqn:GF}
-G^F_n(y):=G_n(y,F_0(y),F_1(y) \ldots F_{n-1}(y))
+G^F_n(y):=G_n(y,F_0,F_1(y_{:1}) \ldots F_{n-1}(y_{:n-1}))
 \end{equation}
 
-We allowed some abuse of notation by making implicit the projection from $\Ob^n$ to $\Ob^m$ in the expression $F_m(y)$.
+Here, $y_{:m}$ denotes the projection of $y$ to $\Ob^m$.
 
 We define the measurable mappings $\overline{\V G}^F_n: \Ob^n \rightarrow \CO$ and $\SV G^F_n: \Ob^{n-1} \rightarrow \CO$ by
 
@@ -268,10 +270,10 @@ We define the measurable mappings $\overline{\V G}^F_n: \Ob^n \rightarrow \CO$ a
 \end{equation}
 
 \begin{equation}
-\SV G^F_n(y) := \sum_{m < n} \overline{\V G}^F_m(y)
+\SV G^F_n(y) := \sum_{m < n} \overline{\V G}^F_m(y_{:m})
 \end{equation}
 
-In the definition of $\SV G^F_0$, $\Ob^{-1}$ is defined to be equal to $\Ob^0$ (i.e. the one point space).
+In the definition of $\SV G^F_0$, $\Ob^{-1}$ is considered to be equal to $\Ob^0$ (i.e. the one point space).
 
 We are now ready to state the formally state the definition of \enquote{dominance} alluded to in the beginning of the section.
 
@@ -282,12 +284,12 @@ Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ 
 
 \begin{equation}
 \label{eqn:def_dominance__loss}
-\inf_{n \in \Nats} \min_{x' \in \PO_n(x)\OO} {\SV G^F_{n+1}(\PO_n(x),x')} > -\infty
+\inf_{n \in \Nats} \min_{x' \in x_{:n}\OO} {\SV G^F_{n+1}(x_{:n},x')} > -\infty
 \end{equation}
 
 \begin{equation}
 \label{eqn:def_dominance__gain}
-\max_{n \in \Nats} \sup_{x' \in \PO_n(x)\OO} {\SV G^F_{n+1}(\PO_n(x),x')} < +\infty
+\max_{n \in \Nats} \sup_{x' \in x_{:n}\OO} {\SV G^F_{n+1}(x_{:n},x')} < +\infty
 \end{equation}
 
 \end{definition}
@@ -322,7 +324,7 @@ Define ${K: \PM(X) \rightarrow 2^{\PM(X)}}$ as follows:
 
 \[K(\mu):=\{\nu \in \PM(X) \mid \E_\nu[\gamma(\mu)] = \max \gamma(\mu)\}\]
 
-For any ${\mu}$, ${K}(\mu)$ is obviously convex and non-empty. It is also easy to see that the graph of $K$ in $\PM(X) \times \PM(X)$ is closed. Applying the Kakutani-Glicksberg-Fan theorem, we get the desired result.
+For any ${\mu}$, ${K}(\mu)$ is obviously convex and non-empty. It is also easy to see that the graph of $K$ in $\PM(X) \times \PM(X)$ is closed. Applying the Kakutani-Glicksberg-Fan theorem, we conclude that $K$ has a fixed point, i.e. $\mu \in \PM(X)$ s.t. $\mu \in K(\mu)$.
 
 \end{proof}
 
@@ -392,25 +394,31 @@ For every $n \in \Nats$, let $\alpha_n: \Ob_n \times \GMO \rightarrow \PMO$ be a
 
 In particular, the forecaster $F$ of Corollary~\ref{crl:dominate_one} dominates $G$ since, as easy to see, $\overline{\V G}^F_n \leq 0$ and hence $\SV G^F_n \leq 0$.
 
-We will now introduce a way to transform a gambler in a way that enforces a \enquote{finite spending budget.} Consider a gambler $G$ and fix $b > 0$ (the size of the \enquote{budget}). Define the measurable functions $\SVM G^F_n: \Ob^n \rightarrow \Reals$ by
+We will now introduce a way to transform a gambler in a way that enforces a \enquote{finite spending budget.} Consider a gambler $G$ and fix $b > 0$ (the size of the \enquote{budget}). Define the measurable functions $\SV G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \CO$ by
 
 \begin{equation}
-\SVM G^F_n(y) := \min_{y\OO}{\SV G^F_n(y)}
+\SV G_n(y,\BM) := \sum_{m < n} (\V G_m(y_{:m},\BM_{:m}))(\BM_m)
 \end{equation}
 
-Define the universally measurable sets
+Here, $\BM_{:m}$ denotes the projection of $\BM \in \PMO^n$ to $\PMO^m$ and $\BM_m$ denotes the $m$-th component of $\BM$. Define the measurable functions $\SVM G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \Reals$ by
 
 \begin{equation}
-\Ob^n_{GFb}:=\{y \in \Ob^n \mid \SVM G^F_n(y) > -b\}
+\SVM G_n(y,\BM) := \min_{y\OO}{\SV G_n(y,\BM)}
 \end{equation}
 
-Define the measurable functions $\Nr_b G^F_n: \Ob^n_{GFb} \rightarrow C(\PMO)$ by
+Define the measurable sets
 
 \begin{equation}
-\Nr_b G^F_n(y,\mu):=\max(1,\max_{y\OO} \frac{-\V G^F_n(y,\mu)}{b + \SV G^F_n(y)})^{-1}
+\Ab_b G_n:=\{(y,\BM) \in \Ob^{n-1} \times \PMO^n \mid \SVM G_n(y,\BM) > -b\}
 \end{equation}
 
-Finally, define the gambler??? $\B_b G^F$...
+Define the measurable functions $\Nr_b G_n: \Ab_b G_n \rightarrow C(\PMO)$ by
+
+\begin{equation}
+\Nr_b G_n(y,\BM;\nu):=\max(1,\max_{y\OO} \frac{-(\V G_n(y,\BM))(\nu)}{b + \SV G_n(y,\BM)})^{-1}
+\end{equation}
+
+Finally, define the gambler $\B_b G^F$...
 
 TBD
 
