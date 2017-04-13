@@ -238,7 +238,7 @@ We regard $\GMO$ as the space of bets that can be made against a forecaster. Giv
 \V{\gamma}(\nu,x):=\gamma(\nu,x) - \E_{x' \sim \nu}[\gamma(\nu,x')]
 \end{equation}
 
-Note that this defines a bounded operator $\V: \Gm(X) \rightarrow \Gm(X)$.
+Note that this defines a bounded linear operator $\V: \Gm(X) \rightarrow \Gm(X)$.
 
 $C(X)$ and $\Gm(X)$ will also be regarded as a measurable spaces, using the $\sigma$-algebra of Borel sets. We remind that the $\sigma$-algebra on $\Ob^n$ is the algebra of \emph{universally measurable} sets.
 
@@ -400,7 +400,7 @@ We will now introduce a way to transform a gambler in a way that enforces a \enq
 \SV G_n(y,\BM) := \sum_{m < n} (\V G_m(y_{:m},\BM_{:m}))(\BM_m)
 \end{equation}
 
-Here, $\BM_{:m}$ denotes the projection of $\BM \in \PMO^n$ to $\PMO^m$ and $\BM_m$ denotes the $m$-th component of $\BM$. Define the measurable functions $\SVM G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \Reals$ by
+Here, $\BM_{:m}$ denotes the projection of $\BM \in \PMO^n$ to $\PMO^m$ that takes components $l < m$ and $\BM_m$ denotes the $m$-th component of $\BM$. Define the measurable functions $\SVM G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \Reals$ by
 
 \begin{equation}
 \SVM G_n(y,\BM) := \min_{y\OO}{\SV G_n(y,\BM)}
@@ -412,13 +412,52 @@ Define the measurable sets
 \Ab_b G_n:=\{(y,\BM) \in \Ob^{n-1} \times \PMO^n \mid \SVM G_n(y,\BM) > -b\}
 \end{equation}
 
-Define the measurable functions $\Nr_b G_n: \Ab_b G_n \rightarrow C(\PMO)$ by
+Note that $\Ab_b G_n \times \Ob_n$ is a measurable subset of $\Ob^n \times \PMO^n$ and in particular can be regarded as a measurable space in itself. Define the measurable functions $\Nr_b G_n: \Ab_b G_n \times \Ob_n \rightarrow C(\PMO)$ by
 
 \begin{equation}
-\Nr_b G_n(y,\BM;\nu):=\max(1,\max_{y\OO} \frac{-(\V G_n(y,\BM))(\nu)}{b + \SV G_n(y,\BM)})^{-1}
+\Nr_b G_n(y,\BM;\nu):=\max(1,\max_{y\OO} \frac{-(\V G_n(y,\BM))(\nu)}{b + \SV G_n(y_{:n-1},\BM)})^{-1}
 \end{equation}
 
-Finally, define the gambler $\B_b G^F$...
+Finally, define the gambler $\B_b G$ as follows
+
+\begin{equation}
+\B_b G_n(y,\BM):=\begin{cases} 0 \text{ if } \exists m < n: (y_{:m},\BM_{:m+1}) \not\in \Ab_b G_{m+1} \\ \Nr_b G_n(y,\BM) \cdot G_n(y, \BM) \text{ otherwise} \end{cases}
+\end{equation}
+
+The next proposition shows that as long as $G$ stays \enquote{within budget $b$,} the operator $\B_b$ has no effect. 
+
+\begin{proposition}
+\label{prp:budget}
+
+Consider any gambler $G$, $n \in \Nats$, $y \in \Ob^{n - 1}$ and $\BM \in \PMO^n$. Assume that for all $m < n$, $(y_{:m},\BM_{:m+1}) \in \Ab_b G_{m+1}$. Then, for all $m < n$
+
+\begin{equation}
+\B_b G_m(y_{:m},\BM_{:m};\BM_m)=G_m(y_{:m},\BM_{:m};\BM_m)
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+
+Consider any $m < n$. We have
+
+$$\SVM G_{m+1}(y_{:m},\BM_{:m+1}) + b > 0$$
+
+$$\forall x \in y_{:m}\OO: \SV G_{m+1}(y_{:m},\BM_{:m+1}; x) + b > 0$$
+
+$$\forall x \in y_{:m}\OO: \SV G_{m}(y_{:m-1},\BM_{:m}; x) + (\V G_{m}(y_{:m},\BM_{:m}))(\BM_{m}, x) + b > 0$$
+
+$$\forall x \in y_{:m}\OO: \SV G_{m}(y_{:m-1},\BM_{:m}; x) + b > -(\V G_{m}(y_{:m},\BM_{:m}))(\BM_{m}, x)$$
+
+Using the assumption again, the left hand side is positive. It follows that
+
+$$\forall x \in y_{:m}\OO: 1 > \frac{-(\V G_{m}(y_{:m},\BM_{:m}))(\BM_{m}, x)}{\SV G_{m}(y_{:m-1},\BM_{:m}; x) + b}$$
+
+$$\Nr_b G_m(y_{:m},\BM_{:m};\BM_m) = 1$$
+
+Since we are in the second case in the definition of ${\B_b G_m(y_{:m},\BM_{:m})}$, we get the desired result.
+
+\end{proof}
 
 TBD
 
