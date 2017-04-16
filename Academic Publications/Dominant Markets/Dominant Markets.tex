@@ -29,6 +29,8 @@
 %\theoremstyle{remark}
 %\newtheorem{note}{Note}[section]
 
+\newcommand{\Comment}[1]{}
+
 \newcommand{\Nats}{\mathbb{N}}
 \newcommand{\Ints}{\mathbb{Z}}
 \newcommand{\Rats}{\mathbb{Q}}
@@ -71,6 +73,7 @@
 \newcommand{\Gm}{\mathcal{G}}
 \newcommand{\GMO}{\Gm(\OO)}
 \newcommand{\CO}{C(\OO)}
+\newcommand{\GC}{\mathfrak{G}}
 \DeclareMathOperator{\V}{V}
 \DeclareMathOperator{\SV}{\Sigma V}
 \DeclareMathOperator{\SVM}{\Sigma V_{\min}}
@@ -289,7 +292,7 @@ Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ 
 
 \begin{equation}
 \label{eqn:def_dominance__gain}
-\max_{n \in \Nats} \sup_{x' \in x_{:n}\OO} {\SV G^F_{n+1}(x_{:n},x')} < +\infty
+\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} {\SV G^F_{n+1}(x_{:n},x')} < +\infty
 \end{equation}
 
 \end{definition}
@@ -299,11 +302,11 @@ The following is the main theorem of this section, which is our analogue of Theo
 \begin{theorem}
 \label{thm:exist_dominant}
 
-Let $\mathfrak{G}$ be a countable set of gamblers. Then, there exists a forecaster $F^\mathfrak{G}$ s.t. for any $G \in \mathfrak{G}$, $F$ dominates $G$.
+Let $\GC$ be a countable set of gamblers. Then, there exists a forecaster $F^\GC$ s.t. for any $G \in \GC$, $F$ dominates $G$.
 
 \end{theorem}
 
-The rest of the section is devoted to proving Theorem~\ref{thm:exist_dominant}. The proof will consist of two steps. First we show that for any \emph{single} gambler, there is a dominant forecaster. Then, given a countable set $\mathfrak{G}$ of gamblers, we construct a single gambler s.t. dominating this gambler implies dominating all gamblers in the set.
+The rest of the section is devoted to proving Theorem~\ref{thm:exist_dominant}. The proof will consist of two steps. First we show that for any \emph{single} gambler, there is a dominant forecaster. Then, given a countable set $\GC$ of gamblers, we construct a single gambler s.t. dominating this gambler implies dominating all gamblers in the set.
 
 The following lemma shows that for any bet, there is a forecast which makes the bet unwinnable.
 
@@ -325,7 +328,6 @@ Define ${K: \PM(X) \rightarrow 2^{\PM(X)}}$ as follows:
 \[K(\mu):=\{\nu \in \PM(X) \mid \E_\nu[\gamma(\mu)] = \max \gamma(\mu)\}\]
 
 For any ${\mu}$, ${K}(\mu)$ is obviously convex and non-empty. It is also easy to see that the graph of $K$ in $\PM(X) \times \PM(X)$ is closed. Applying the Kakutani-Glicksberg-Fan theorem, we conclude that $K$ has a fixed point, i.e. $\mu \in \PM(X)$ s.t. $\mu \in K(\mu)$.
-
 \end{proof}
 
 Next, we show that the probability measure of Lemma~\ref{lmm:unwinnable} can be made to depend measurably on past observations and the bet.
@@ -364,7 +366,6 @@ It follows that ${(y,\gamma,i_{y*}\nu) \in Z}$ and hence ${Z_{y\gamma}}$ is non-
 Consider any ${U \subseteq \PM(X)}$ open. Then, ${A_U:=(Y_{1} \times \Gm(X) \times U) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image of ${A_U}$ under the projection to ${Y_{1} \times \Gm(X)}$ is also ${F_\sigma}$ and in particular Borel. 
 
 Applying the Kuratowski--Ryll-Nardzewski measurable selection theorem, we get the desired result.
-
 \end{proof}
 
 We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
@@ -389,7 +390,6 @@ Let $G$ be a gambler. Then, there exists a forecaster $F$ s.t. for all $n \in \N
 For every $n \in \Nats$, let $\alpha_n: \Ob_n \times \GMO \rightarrow \PMO$ be as in Lemma~\ref{lmm:measurable_unwinnable}. Observing that the definition of $G^F_n$ depends only on $F_m$ for $m < n$, we define $F$ recursively as
 
 \[F_n(y):=\alpha_n(y,G^F_n(y))\]
-
 \end{proof}
 
 In particular, the forecaster $F$ of Corollary~\ref{crl:dominate_one} dominates $G$ since, as easy to see, $\overline{\V G}^F_n \leq 0$ and hence $\SV G^F_n \leq 0$.
@@ -456,7 +456,6 @@ $$\forall x \in y_{:m}\OO: 1 > \frac{-(\V G_{m}(y_{:m},\BM_{:m}))(\BM_{m}, x)}{\
 $$\Nr_b G_m(y_{:m},\BM_{:m};\BM_m) = 1$$
 
 Since we are in the second case in the definition of ${\B_b G_m(y_{:m},\BM_{:m})}$, we get the desired result.
-
 \end{proof}
 
 Now, we show that $\B_b G$ indeed never \enquote{goes over budget.}
@@ -518,10 +517,106 @@ $$\SV \B_b G_{m}(y_{:m-1},\BM_{:m};x) = \SV \B_b G_{m-1}(y_{:m-2},\BM_{:m-1};x)$
 By induction on ${m}$, we conclude:
 
 $$\SVM \B_b G_{m}(y_{:m-1},\BM_{:m}) \geq \SVM \B_b G_{m-1}(y_{:m-2},\BM_{:m-1}) \geq -b$$
-
 \end{proof}
 
+We now show that for any gambler there is \enquote{limited budget} gambler s.t. any forecaster that dominates it also dominates the original gambler.
+
+\begin{proposition}
+\label{prp:frugal_gambler}
+
+Let $G$ be a gambler and $\zeta: \Nats \rightarrow (0,1]$ be s.t.
+
+\begin{equation}
+b_\zeta := \sum_{b=0}^\infty \zeta(b) b < \infty
+\end{equation}
+
+Define the gambler $\B_\zeta G$ by
+
+\begin{equation}
+\B_\zeta G := \sum_{b = 1}^\infty \zeta(b) \B_b G
+\end{equation}
+
+Then
+
+\begin{equation}
+\label{eqn:prp_furgal_gambler__svm_b_zeta}
+\SVM \B_\zeta G_n \geq -b_\zeta
+\end{equation}
+
+Moreover, if $F$ is a forecaster that dominates $\B_\zeta G$ then it also dominates $G$.
+
+\end{proposition}
+
+\begin{proof}
+
+Equation~\ref{eqn:prp_furgal_gambler__svm_b_zeta} follows from Proposition~\ref{prp:b_stays_in_budget}. Now, consider any $F$ that dominates $\B_\zeta G$. For any $x \in \OO$, \ref{eqn:prp_furgal_gambler__svm_b_zeta} and Definition~\ref{def:dominance} imply
+
+\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} {\SV \B_\zeta G^F_{n+1}(x_{:n},x')} < +\infty\]
+
+Consider $x \in \OO$ s.t. condition~\ref{eqn:def_dominance__loss} holds. Denote
+
+\[b_0: = \max( -\min_{n \in \Nats} \inf_{x' \in x_{:n}\OO} {\SV G^F_{n+1}(x_{:n},x')},0)\]
+
+By Proposition~\ref{prp:b_no_effect}, for any $b > b_0$ we have $\B_bG^F = G^F$. We get
+
+\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} (\sum_{b \leq b_0} \zeta(b) {\SV \B_b G^F_{n+1}(x_{:n},x')} + \sum_{b > b_0} \zeta(b) \SV G^F_{n+1}(x_{:n},x')) < +\infty\]
+
+\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} (-\sum_{b \leq b_0} \zeta(b) b + \sum_{b > b_0} \zeta(b) \SV G^F_{n+1}(x_{:n},x')) < +\infty\]
+
+\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} \SV G^F_{n+1}(x_{:n},x') < +\infty\]
+\end{proof}
+
+The last ingredient we need to prove Theorem~\ref{thm:exist_dominant} is the step from one gambler to a countable set of gamblers.
+
+\begin{proposition}
+\label{prp:combining_gamblers}
+
+Let $\Sq{G^k}{k}$ be a family of gamblers, $\xi: \Nats \rightarrow (0,1]$ and $b_\xi > 0$ s.t.
+
+\begin{equation}
+\label{eqn:prp_combining_gamblers__budget}
+\sum_{k = 0}^\infty \xi(k) \min(\SVM G^k_n,0) \geq -b_\xi
+\end{equation}
+
+Define the gambler $G^\xi$ by
+
+\begin{equation}
+G^\xi_n := \sum_{k = 0}^n \xi(k) G^k_n
+\end{equation}
+
+Consider a forecaster $F$ that dominates $G^\xi$. Then, $F$ dominates $G^k$ for all $k \in \Nats$.
+
+\end{proposition}
+
+\begin{proof}
+
+Fix $k \in \Nats$ and $x \in \OO$. Equation~\ref{eqn:prp_combining_gamblers__budget} implies
+
+\[\inf_{n \in \Nats} \min_{x' \in x_{:n}\OO} \SV G^{\xi F}_{n+1}(x_{:n},x') > -\infty\]
+
+Therefore we have
+
+\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} \SV G^{\xi F}_{n+1}(x_{:n},x') < +\infty\]
+
+\[\sup_{n \geq k} \max_{x' \in x_{:n}\OO} (\xi(k) \SV G^{k F}_{n+1}(x_{:n},x') + \sum_{\substack{j \ne k\\ j \leq n}} \xi(j) \SV G^{j F}_{n+1}(x_{:n},x')) < +\infty\]
+
+\[\sup_{n \geq k} \max_{x' \in x_{:n}\OO} (\xi(k) \SV G^{k F}_{n+1}(x_{:n},x') - b_\xi) < +\infty\]
+
+\[\sup_{n \geq k} \max_{x' \in x_{:n}\OO} \SV G^{k F}_{n+1}(x_{:n},x') < +\infty\]
+
+Since there are only finitely many values of $n$ less than $k$, it follows that
+
+\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} \SV G^{k F}_{n+1}(x_{:n},x') < +\infty\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:exist_dominant}]
+
+Choose $w: \Nats \times \Nats \rightarrow (0,1]$ s.t. 
+
+\[\sum_{k = 0}^\infty \sum_{b = 1}^\infty\]
+
 TBD
+\end{proof}
 
 \section{Prudent Gambling Strategies}
 \label{sec:prudent}
