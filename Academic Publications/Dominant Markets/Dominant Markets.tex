@@ -82,6 +82,7 @@
 \DeclareMathOperator{\Ab}{A}
 \DeclareMathOperator{\Nr}{N}
 \DeclareMathOperator{\Bd}{B}
+\DeclareMathOperator{\PG}{G}
 \newcommand{\BM}{\bm{\mu}}
 
 \begin{document}
@@ -631,9 +632,13 @@ By Corollary~\ref{crl:dominate_one}, there is a forecaster $F^G$ that dominates 
 
 In this section we construct a tool for proving asymptotic convergence results about dominant forecasters. We start by introducing a notion of \enquote{prudent gambling,} which requires that gambles are only made when the expected payoff is a certain fraction of the risk. First, we need some notation.
 
-Given measurable spaces $X$ and $Y$, we will use the notation $f: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $f(x) \in \PM(Y)$. Given $\mu \in \PM(X)$, $\mu \ltimes f \in \PM(X \times Y)$ denotes the semidirect product of $\mu$ and $f$. $f_* \mu \in \PM(Y)$ denotes the pushforward of $\mu$ by $f$ (i.e. the pushforward of $\mu \ltimes f$ by the projection to $Y$). When $X,Y$ are Polish and $\pi: X \rightarrow Y$ is (Borel) measurable, $\mu \mid \pi: Y \M X$ is defined to be s.t. $\pi_* \mu \ltimes (\mu \mid \pi)$ is supported on the graph of $\pi$ and $(\mu \mid \pi)_* \pi_* \mu = \mu$ (i.e. $\mu \mid \pi$ is a regular conditional probability). By the disintegration theorem, $\mu \mid \pi$ exists and is defined up to coincidence $\pi_* \mu$-almost everywhere.
+Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K(x) \in \PM(Y)$. Given $\mu \in \PM(X)$, $\mu \ltimes K \in \PM(X \times Y)$ denotes the semidirect product of $\mu$ and $K$. $K_* \mu \in \PM(Y)$ denotes the pushforward of $\mu$ by $K$ (i.e. the pushforward of $\mu \ltimes K$ by the projection to $Y$). When $X,Y$ are Polish and $\pi: X \rightarrow Y$ is (Borel) measurable, $\mu \mid \pi: Y \M X$ is defined to be s.t. $\pi_* \mu \ltimes (\mu \mid \pi)$ is supported on the graph of $\pi$ and $(\mu \mid \pi)_* \pi_* \mu = \mu$ (i.e. $\mu \mid \pi$ is a regular conditional probability). By the disintegration theorem, $\mu \mid \pi$ exists and is defined up to coincidence $\pi_* \mu$-almost everywhere. Given $g: X \rightarrow \Reals$ measurable, we will also use the notation 
 
-We remind that $\PO$ is the projection mapping from $\OO$ to $\Ob^n$.
+\begin{equation}
+\E_{\mu}[g \mid \pi^{-1}(y)]:=\E_{(\mu \mid \pi)(y)}[g]
+\end{equation}
+
+We remind that $\PO$ is the projection mapping from $\OO$ to $\Ob^n$ and $y\OO:= (\PO)^{-1}(y)$.
 
 \begin{definition}
 
@@ -646,12 +651,39 @@ A \emph{gambling strategy} is a uniformly bounded family of measurable mappings
 Given a gambling strategy $S$ and $\mu^* \in \PMO$, $S$ is said to be \emph{$\mu^*$-prudent} when there is $\alpha > 0$ s.t. for any $n \in \Nats$, $\PO_* \mu^*$-almost any $y \in \Ob^n$ and any $\mu \in \PMO$
 
 \begin{equation}
-\E_{(\mu^* \mid \PO)(y)}[S_n(y; \mu)] - \E_\mu[S_n(y; \mu)] \geq \alpha (\max_{y\OO}{S_n(y; \mu)} - \min_{y\OO}{S_n(y; \mu)})
+\E_{\mu^*}[S_n(y; \mu) \mid y\OO] - \E_\mu[S_n(y; \mu)] \geq \alpha (\max_{y\OO}{S_n(y; \mu)} - \min_{y\OO}{S_n(y; \mu)})
 \end{equation}
 
 \end{definition}
 
 \end{definition}
+
+The \enquote{correct} way for a gambler to use a prudent gambling strategy is not employing it all the time: in order to avoid running out of budget, a gambler shouldn’t place too many bets simultaneously. To address this, we define a gambler that employs a strategy only when all previous bets are close to being settled.
+
+\begin{definition}
+
+Consider any gambling strategy $S$. We define the gambler $\PG{S}$ recursively as follows
+
+\begin{equation}
+\PG{S}_n(y,\BM):=\begin{cases} S_n(y) \text{ if } \max_{y\OO}{\SV{\PG{S}}_n(y_{:n-1},\BM)}-\min_{y\OO}{\SV{\PG{S}}_n(y_{:n-1},\BM)} \leq 1 \\ 0 \text{ otherwise} \end{cases}
+\end{equation}
+
+\end{definition}
+
+\begin{theorem}
+\label{thm:prudent}
+
+Consider $\mu^* \in \PMO$, $S$ a $\mu^*$-prudent gambling strategy and a forecaster $F$. Assume $F$ dominates $\PG{S}$. Then, for $\mu^*$-almost any $x \in \OO$
+
+\begin{equation}
+\lim_{n \rightarrow \infty} (\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))]) = 0
+\end{equation}
+
+\end{theorem}
+
+The rest of the section is dedicated to proving Theorem~\ref{thm:prudent}.
+
+% Proposition A.3 => Lemma...
 
 TBD
 
