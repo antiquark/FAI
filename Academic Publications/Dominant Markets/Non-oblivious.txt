@@ -22,3 +22,5 @@ Let $\bar{\pi}^\Ob_n: \OO \times \PM(\OO)^\omega \rightarrow \Ob^n \times \PM(\O
 \end{equation}
 
 \end{corollary}
+
+Given measurable spaces $X$ and $Y$, $\mu \in \PM(X)$, a measurable mapping $\pi: X \rightarrow Y$ and a bounded measurable function $f: X \rightarrow \Reals$, $\E_\mu[f \mid \pi]$ will denote the measurable function on $Y$ corresponding to taking the conditional expected value of $f$ w.r.t. the $\sigma$-algebra of inverse $\pi$-images of measurable subsets of $Y$. Of course, $\E_\mu[f \mid \pi]$ is defined up to equality $\pi_*\mu$-almost everywhere.
