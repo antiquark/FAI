@@ -84,6 +84,7 @@
 \DeclareMathOperator{\Bd}{B}
 \DeclareMathOperator{\PG}{G}
 \newcommand{\BM}{\bm{\mu}}
+\newcommand{\F}{\mathcal{F}}
 
 \begin{document}
 
@@ -133,8 +134,9 @@ TBD
 \section{Learning Incomplete Models}
 \label{sec:learning}
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO(x)$. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets. For any measurable space $X$, $\PM(X)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM(X)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO(x)$. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use this rather than Borel sets will play an important role in the proof of TBD.}. For any measurable space $X$, $\PM(X)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM(X)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
+\begin{samepage}
 \begin{definition}
 
 A \emph{forecaster} $F$ is a family of measurable mappings
@@ -144,6 +146,7 @@ A \emph{forecaster} $F$ is a family of measurable mappings
 s.t. $\Sp {F_n(y)} \subseteq y\OO$.
 
 \end{definition}
+\end{samepage}
 
 Given a forecaster $F$ and $y \in \Ob^n$, $F_n(y)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n(y)} \subseteq y\OO$ reflects the obvious requirement of consistency with past observations.
 
@@ -177,6 +180,7 @@ Therefore, formulating a non-vacuous convergence theorem requires \enquote{renor
 
 Another ingredient we will need is a notion of regular conditional probability for incomplete models. For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem. In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in Y_n$ and $r > 0$, $\B_r(y)$ will denote the open ball of radius $r$ with center at $y$.
 
+\begin{samepage}
 \begin{definition}
 
 Consider any $M \subseteq \PMO$. Given $y \in \Ob^n$, we define
@@ -200,6 +204,7 @@ M \mid y:=\{\mu \in \PMO \mid (y,\mu) \in \bar{M}_n\}
 Here, $\bar{M}_n$ denotes the closure of $M_n$.
 
 \end{definition}
+\end{samepage}
 
 Note that $M \mid y$ is always convex and closed.
 
@@ -682,6 +687,32 @@ Consider $\mu^* \in \PMO$, $S$ a $\mu^*$-prudent gambling strategy and a forecas
 \end{theorem}
 
 The rest of the section is dedicated to proving Theorem~\ref{thm:prudent}.
+
+We start by showing, in a more abstract setting (not specific to forecasting), that for any sequences of bets that is \enquote{prudent} in the sense that the expected payoff is bounded below by a fixed fraction of the risk, the probability to lose an infinite amount vanishes.
+
+\begin{samepage}
+\begin{lemma}
+\label{lmm:prudent_doesnt_lose}
+
+Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow [0,M]}$ stochastic processes adapted to $\F$ (i.e. $X_n$ and $Y_n$ are $\F_n$-measurable). Assume the following conditions\footnote{Equalities and inequalities between random variables are implicitly understood as holding almost surely.}:
+
+\begin{enumerate}[(i)]
+
+\item $\E[\A{X_0}] < +\infty$
+\item $\forall n \in \Nats, m \geq n: \A{X_n - X_m} \leq \sum_{l=n}^{m-1} Y_l + M$
+\item $\E[X_{n+1} \mid \F_n] \geq X_n + \alpha Y_n$
+
+\end{enumerate}
+
+Then, $\inf_n X_n > -\infty$.
+
+\end{lemma}
+\end{samepage}
+
+\begin{proof}
+
+TBD
+\end{proof}
 
 % Proposition A.3 => Lemma...
 
