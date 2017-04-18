@@ -83,6 +83,7 @@
 \DeclareMathOperator{\V}{V}
 \DeclareMathOperator{\SV}{\Sigma V}
 \DeclareMathOperator{\SVM}{\Sigma V_{\min}}
+\DeclareMathOperator{\SVX}{\Sigma V_{\max}}
 \DeclareMathOperator{\Ab}{A}
 \DeclareMathOperator{\Nr}{N}
 \DeclareMathOperator{\Bd}{B}
@@ -94,7 +95,7 @@
 
 %+Title
 \title{Forecasting using incomplete models}
-\author{Vadim Kosoy}
+\author{Vadim Kosoy \\ \href{mailto:vadim.kosoy@intelligence.org}{vadim.kosoy@intelligence.org}}
 \date{}%\date{\today}
 \maketitle
 %-Title
@@ -290,6 +291,16 @@ We define the measurable mappings $\overline{\V G}^F_n: \Ob^n \rightarrow \CO$ a
 
 In the definition of $\SV G^F_0$, $\Ob^{-1}$ is considered to be equal to $\Ob^0$ (i.e. the one point space).
 
+We define the measurable mappings $\SVM G^F_n, \SVX G^F_n: \Ob^{n-1} \rightarrow \Reals$ by
+
+\begin{equation}
+\SVM G^F_n(y):=\min_{y\OO} \SV G^F_n
+\end{equation}
+
+\begin{equation}
+\SVX G^F_n(y):=\max_{y\OO} \SV G^F_n
+\end{equation}
+
 We are now ready to state the formally state the definition of \enquote{dominance} alluded to in the beginning of the section.
 
 \begin{definition}
@@ -299,12 +310,12 @@ Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ 
 
 \begin{equation}
 \label{eqn:def_dominance__loss}
-\inf_{n \in \Nats} \min_{x' \in x_{:n}\OO} {\SV G^F_{n+1}(x_{:n},x')} > -\infty
+\inf_{n \in \Nats} {\SVM G^F_{n}(x_{:n-1})} > -\infty
 \end{equation}
 
 \begin{equation}
 \label{eqn:def_dominance__gain}
-\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} {\SV G^F_{n+1}(x_{:n},x')} < +\infty
+\sup_{n \in \Nats} {\SVX G^F_{n}(x_{:n-1})} < +\infty
 \end{equation}
 
 \end{definition}
@@ -412,10 +423,14 @@ We will now introduce a way to transform a gambler in a way that enforces a \enq
 \SV G_n(y,\BM) := \sum_{m < n} (\V G_m(y_{:m},\BM_{:m}))(\BM_m)
 \end{equation}
 
-Here, $\BM_{:m}$ denotes the projection of $\BM \in \PMO^n$ to $\PMO^m$ that takes components $l < m$ and $\BM_m$ denotes the $m$-th component of $\BM$. Define the measurable functions $\SVM G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \Reals$ by
+Here, $\BM_{:m}$ denotes the projection of $\BM \in \PMO^n$ to $\PMO^m$ that takes components $l < m$ and $\BM_m$ denotes the $m$-th component of $\BM$. Define the measurable functions $\SVM G_n, \SVX G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \Reals$ by
 
 \begin{equation}
 \SVM G_n(y,\BM) := \min_{y\OO}{\SV G_n(y,\BM)}
+\end{equation}
+
+\begin{equation}
+\SVX G_n(y,\BM) := \max_{y\OO}{\SV G_n(y,\BM)}
 \end{equation}
 
 Define the measurable sets
@@ -563,19 +578,19 @@ Moreover, if $F$ is a forecaster that dominates $\B_\zeta G$ then it also domina
 
 Equation~\ref{eqn:prp_furgal_gambler__svm_b_zeta} follows from Proposition~\ref{prp:b_stays_in_budget}. Now, consider any $F$ that dominates $\B_\zeta G$. For any $x \in \OO$, \ref{eqn:prp_furgal_gambler__svm_b_zeta} and Definition~\ref{def:dominance} imply
 
-\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} {\SV \B_\zeta G^F_{n+1}(x_{:n},x')} < +\infty\]
+\[\sup_{n \in \Nats} {\SVX \B_\zeta G^F_{n}(x_{:n-1})} < +\infty\]
 
 Consider $x \in \OO$ s.t. condition~\ref{eqn:def_dominance__loss} holds. Denote
 
-\[b_0: = \max( -\min_{n \in \Nats} \inf_{x' \in x_{:n}\OO} {\SV G^F_{n+1}(x_{:n},x')},0)\]
+\[b_0: = \max( -\min_{n \in \Nats} {\SVM G^F_{n}(x_{:n-1})},0)\]
 
 By Proposition~\ref{prp:b_no_effect}, for any $b > b_0$ we have $\B_bG^F = G^F$. We get
 
-\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} (\sum_{b \leq b_0} \zeta(b) {\SV \B_b G^F_{n+1}(x_{:n},x')} + \sum_{b > b_0} \zeta(b) \SV G^F_{n+1}(x_{:n},x')) < +\infty\]
+\[\sup_{n \in \Nats} \max_{x' \in x_{:n-1}\OO} (\sum_{b \leq b_0} \zeta(b) {\SV \B_b G^F_{n}(x_{:n-1},x')} + \sum_{b > b_0} \zeta(b) \SV G^F_{n}(x_{:n-1},x')) < +\infty\]
 
-\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} (-\sum_{b \leq b_0} \zeta(b) b + \sum_{b > b_0} \zeta(b) \SV G^F_{n+1}(x_{:n},x')) < +\infty\]
+\[\sup_{n \in \Nats} \max_{x' \in x_{:n-1}\OO} (-\sum_{b \leq b_0} \zeta(b) b + \sum_{b > b_0} \zeta(b) \SV G^F_{n}(x_{:n-1},x')) < +\infty\]
 
-\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} \SV G^F_{n+1}(x_{:n},x') < +\infty\]
+\[\sup_{n \in \Nats} \SVX G^F_{n}(x_{:n-1}) < +\infty\]
 \end{proof}
 
 The last ingredient we need to prove Theorem~\ref{thm:exist_dominant} is the step from one gambler to a countable set of gamblers.
@@ -604,21 +619,21 @@ Consider a forecaster $F$ that dominates $G^\xi$. Then, $F$ dominates $G^k$ for 
 
 Fix $k \in \Nats$ and $x \in \OO$. Equation~\ref{eqn:prp_combining_gamblers__budget} implies
 
-\[\inf_{n \in \Nats} \min_{x' \in x_{:n}\OO} \SV G^{\xi F}_{n+1}(x_{:n},x') > -\infty\]
+\[\inf_{n \in \Nats} \SVM G^{\xi F}_{n}(x_{:n-1},x') > -\infty\]
 
 Therefore we have
 
-\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} \SV G^{\xi F}_{n+1}(x_{:n},x') < +\infty\]
+\[\sup_{n \in \Nats} \SVX G^{\xi F}_{n}(x_{:n-1}) < +\infty\]
 
-\[\sup_{n \geq k} \max_{x' \in x_{:n}\OO} (\xi(k) \SV G^{k F}_{n+1}(x_{:n},x') + \sum_{\substack{j \ne k\\ j \leq n}} \xi(j) \SV G^{j F}_{n+1}(x_{:n},x')) < +\infty\]
+\[\sup_{n \geq k} \max_{x' \in x_{:n-1}\OO} (\xi(k) \SV G^{k F}_{n}(x_{:n-1},x') + \sum_{\substack{j \ne k\\ j \leq n}} \xi(j) \SV G^{j F}_{n}(x_{:n-1},x')) < +\infty\]
 
-\[\sup_{n \geq k} \max_{x' \in x_{:n}\OO} (\xi(k) \SV G^{k F}_{n+1}(x_{:n},x') - b_\xi) < +\infty\]
+\[\sup_{n \geq k} \max_{x' \in x_{:n-1}\OO} (\xi(k) \SV G^{k F}_{n}(x_{:n-1},x') - b_\xi) < +\infty\]
 
-\[\sup_{n \geq k} \max_{x' \in x_{:n}\OO} \SV G^{k F}_{n+1}(x_{:n},x') < +\infty\]
+\[\sup_{n \geq k} \SVX G^{k F}_{n}(x_{:n-1}) < +\infty\]
 
 Since there are only finitely many values of $n$ less than $k$, it follows that
 
-\[\sup_{n \in \Nats} \max_{x' \in x_{:n}\OO} \SV G^{k F}_{n+1}(x_{:n},x') < +\infty\]
+\[\sup_{n \in \Nats} \SVX G^{k F}_{n}(x_{:n-1}) < +\infty\]
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:exist_dominant}]
@@ -647,7 +662,7 @@ Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to den
 \E_{\mu}[g \mid \pi^{-1}(y)]:=\E_{(\mu \mid \pi)(y)}[g]
 \end{equation}
 
-We remind that $\PO$ is the projection mapping from $\OO$ to $\Ob^n$ and $y\OO:= (\PO)^{-1}(y)$.
+We remind that $\PO_n$ is the projection mapping from $\OO$ to $\Ob^n$ and $y\OO:= (\PO_{n})^{-1}(y)$.
 
 \begin{definition}
 
@@ -657,7 +672,7 @@ A \emph{gambling strategy} is a uniformly bounded family of measurable mappings
 
 \begin{definition}
 
-Given a gambling strategy $S$ and $\mu^* \in \PMO$, $S$ is said to be \emph{$\mu^*$-prudent} when there is $\alpha > 0$ s.t. for any $n \in \Nats$, $\PO_* \mu^*$-almost any $y \in \Ob^n$ and any $\mu \in \PMO$
+Given a gambling strategy $S$ and $\mu^* \in \PMO$, $S$ is said to be \emph{$\mu^*$-prudent} when there is $\alpha > 0$ s.t. for any $n \in \Nats$, $\PO_{n*} \mu^*$-almost any $y \in \Ob^n$ and any $\mu \in \PMO$
 
 \begin{equation}
 \E_{\mu^*}[S_n(y; \mu) \mid y\OO] - \E_\mu[S_n(y; \mu)] \geq \alpha (\max_{y\OO}{S_n(y; \mu)} - \min_{y\OO}{S_n(y; \mu)})
@@ -674,7 +689,7 @@ The \enquote{correct} way for a gambler to use a prudent gambling strategy is no
 Consider any gambling strategy $S$. We define the gambler $\PG{S}$ recursively as follows
 
 \begin{equation}
-\PG{S}_n(y,\BM):=\begin{cases} S_n(y) \text{ if } \max_{y\OO}{\SV{\PG{S}}_n(y_{:n-1},\BM)}-\min_{y\OO}{\SV{\PG{S}}_n(y_{:n-1},\BM)} \leq 1 \\ 0 \text{ otherwise} \end{cases}
+\PG{S}_n(y,\BM):=\begin{cases} S_n(y) \text{ if } {\SVX{\PG{S}}_n(y_{:n-1},\BM)}-{\SVM{\PG{S}}_n(y_{:n-1},\BM)} \leq 1 \\ 0 \text{ otherwise} \end{cases}
 \end{equation}
 
 \end{definition}
@@ -762,9 +777,134 @@ $$\Pr[\sum_{n=0}^\infty  Y_n = \infty \implies \exists k \in \Nats \forall l > k
 To complete the proof, observe that if ${\omega \in \Omega}$ is s.t. ${\inf_n X_n(\omega) = -\infty}$ then ${\sum_{n=0}^\infty  Y_n(\omega) = \infty}$ (since ${\A{X_n(\omega) - X_0(\omega)} \leq \sum_{m=0}^{n-1} Y_n(\omega) + 1}$).
 \end{proof}
 
-% Proposition A.3 => Lemma...
+\begin{samepage}
+\begin{corollary}
+\label{crl:prudent}
+
+Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X'_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow [0,M]}$ stochastic processes adapted to $\F$ and $\Sqn{X_n: \Omega \rightarrow \Reals}$ an arbitrary stochastic process. Assume the following conditions:
+
+\begin{enumerate}[i.]
+
+\item $\A{X_n - X'_n} \leq M$
+\item $\E[\A{X_0}] < +\infty$
+\item $\A{X_{n+1} - X_n} \leq Y_n$
+\item $\E[X_{n+1} - X_n \mid \F_n] \geq \alpha Y_n$
+
+\end{enumerate}
+
+Then, for almost all $\omega \in \Omega$
+
+\begin{enumerate}[a.]
+
+\item\label{itm:crl_prudent__inf} $\inf_n X_n(\omega) > -\infty$
+\item\label{itm:crl_prudent__sup} If $\sup_n X_n(\omega) < +\infty$ then $\sum_n Y_n(\omega) < +\infty$
+
+\end{enumerate}
+
+\end{corollary}
+\end{samepage}
+
+\begin{proof}
+
+Define ${X''_n:= \E[X_n \mid \F_n]}$. We have
+
+$$\E[\A{X''_0}] = \E[\A{\E[X_0 \mid \F_0]}] \leq \E[\E[\A{X_0} \mid \F_0]] = \E[\A{X_0}] < \infty$$
+
+$$\A{X''_n - X'_n} = \A{\E[X_n \mid \F_n] - X'_n} = \A{\E[X_n - X'_n \mid \F_n]} \leq M$$
+
+$$\A{X''_n - X_n} \leq \A{X''_n - X'_n} + \A{X'_n - X_n} \leq 2M$$
+
+$$\forall n' \geq n: \A{X''_{n'}-X''_n} \leq \A{X_{n'}-X_n} + 4M \leq \sum_{m=n}^{n'-1} Y_m + 4M$$
+
+$$\E[X''_{n+1}-X''_n \mid \F_n] = \E[\E[X_{n+1} \mid \F_{n+1}]-\E[X_n \mid \F_n] \mid \F_n] = \E[X_{n+1}-X_n \mid \F_n] \geq \alpha Y_n$$
+
+Applying Lemma~\ref{lmm:prudent} to $X''$ and using ${\A{X''_n - X_n} \leq 2M}$, we get the desired result.
+\end{proof}
+
+We will also need the following property of the operator $\PG$, reflecting that at any given moment, the uncertainty of the gambler $\PG{S}$ about the total worth of its bets is bounded.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:pg_bounded_uncertainty}
+
+Given any gambling strategy $S$, we have
+
+\begin{equation}
+\SV \PG{S}_n - \SVM \PG{S}_n \leq 2 \sup_{m \in \Nats} \sup_{y \in \Ob^m} \N{S(y)} + 1
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+We prove by induction. For $n=0$ the claim is obvious. Consider any ${n \in \Nats}$ and ${x \in X}$. First, assume that
+
+$$\max_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x')-\min_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x') > 1$$
+
+Then, by definition of ${\PG{S}}$, ${\PG{S}^F_n}(x_{:n}) \equiv 0$ and therefore
+
+$$\SV \PG{S}^F_{n+1}(x_{:n})=\SV \PG{S}^F_n(x_{:n-1})$$
+
+$$\SVM \PG{S}^F_{n+1}(x_{:n}) \geq \SVM \PG{S}^F_n(x_{:n-1})$$
+
+This obviously implies the induction step.
+
+Now, assume that 
+
+$$\max_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x')-\min_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x') \leq 1$$
+
+Then, ${\PG{S}^F_n}(x_{:n}) = S_n(x_{:n})$ and therefore
+
+$$\SV \PG{S}^F_{n+1}(x_{:n})=\SV \PG{S}^F_n(x_{:n-1}) + (\V{S}_n(x_{:n}))(F_{n}(x_{:n}))$$
+
+We get
+
+$$\SV \PG{S}^F_{n+1}(x?) - \SVM \PG{S}^F_{n+1}(x?) \leq \max_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x') - \min_{x' \in x_{:n}\OO}\SV \PG{S}^F_n(x_{:n-1},x') + 2 \N{S_n(x_{:n})}$$
+
+By the assumption, the first two terms total to ${\leq 1}$, yielding the desired result.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:prudent}]
+
+We regard ${\OO}$ as a probability space using the ${\sigma}$-algebra $\F$ of universally measurable sets and the probability measure ${\mu^*}$. For any ${n \in \Nats}$, we define ${\F_n \subseteq \F}$ and $X_n,X'_n,Y_n: \OO \rightarrow \Reals$ by 
+
+$$\F_n := \{(\PO_n)^{-1}(A) \mid A \subseteq \Ob^n \text{ universally measurable}\}$$
+
+$$X_n(x):= \SV \PG{S}^F_{n}(x_{:n-1},x)$$
+
+$$X'_n(x):= \min_{x' \in x_{:n-1}\OO} \SV \PG{S}^F_{n}(x_{:n-1},x')$$
+
+$$Y_n(x):=\max_{x' \in x_{:n}\OO} \overline{\PG{S}}^F_{n}(x_{:n},x') - \min_{x' \in x_{:n}\OO} \overline{\PG{S}}^F_{n}(x_{:n},x')$$
+
+Clearly, ${\F}$ is a filtration of ${\OO}$, ${X,X',Y}$ are stochastic processes and ${X',Y}$ are adapted to ${\F}$. ${S}$ is uniformly bounded, therefore ${\PG{S}}$  is uniformly bounded and so is ${Y}$. Obviously, ${Y}$ is also non-negative.
+
+By Proposition B.15, ${\A{X_n-X'_n}}$ are uniformly bounded. ${X_0}$ is bounded and in particular ${\E[\A{X_0}] < \infty}$. We have
+
+$$\A{X_{n+1}(x)-X_n(x)} = \A{\V \bar{T}_{\upsilon n}^M(x_{:n},x)} \leq Y_n(x)$$
+
+Let $\beta > 0$ and $K_n \in \mu^* \mid \pi_{n\omega}$ be as in Definition 4. 
+
+$$\E[X_{n+1} - X_n \mid \F_n] = \E_{x' \sim K_n(x_{:n})}[\V \bar{T}_{\upsilon n}^M(x_{:n},x')]$$
+
+$$\E[X_{n+1} - X_n \mid \F_n] = \E_{x' \sim K_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n},x')] - \E_{x' \sim M_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n},x')]$$
+
+By definition of $\PG{S}$, $\bar{T}_{\upsilon n}^M(x_{:n})$ is equal to either $\upsilon_n(x_{:n},M_n(x_{:n}))$ or 0. In either case, we get (almost everywhere)
+
+$$\E[X_{n+1} - X_n \mid \F_n] \geq \beta (\max_{x_{:n}\OO} \bar{T}_{\upsilon n}^M(x_{:n}) - \min_{x_{:n}\OO} \bar{T}_{\upsilon n}^M(x_{:n})) = \beta Y_n$$
+
+Applying Proposition A.4, we get...
+
+Let $\F$, $S$, $S'$ and $\Delta$ be as in the proof of Proposition A.5. Using Proposition A.5 and the assumption that $M$ dominates $\PG{S}$, we conclude that for $\mu^*$-almost any $x \in X$, $\sup_n X_n(x) < \infty$. As in the proof of Proposition A.5, the conditions of Proposition A.4 are satisfied, and therefore the conditions of Proposition A.7 are also satisfied. Applying Proposition A.7, we conclude that $\sum_n Y_n(x) < \infty$. By Proposition B.17, it follows that for any $n \gg 0$, $T_{\upsilon n}^M(x_{:n}) = \upsilon(x_{:n})$. We get
+
+$$\E_{K_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))]-\E_{M_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))] = \E_{K_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n})]-\E_{M_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n})]$$
+
+$$\E_{K_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))]-\E_{M_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))] \leq Y_n(x)$$
+
+$$\lim_{n \rightarrow \infty} (\E_{K_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))]-\E_{M_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))]) = 0$$
 
 TBD
+\end{proof}
 
 \section{Gamblers for Incomplete Models}
 \label{sec:construction}
