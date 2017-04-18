@@ -696,7 +696,7 @@ We start by showing, in a more abstract setting (not specific to forecasting), t
 
 \begin{samepage}
 \begin{lemma}
-\label{lmm:prudent_doesnt_lose}
+\label{lmm:prudent}
 
 Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow [0,M]}$ stochastic processes adapted to $\F$ (i.e. $X_n$ and $Y_n$ are $\F_n$-measurable). Assume the following conditions\footnote{Equalities and inequalities between random variables are implicitly understood as holding almost surely.}:
 
@@ -712,8 +712,8 @@ Then, for almost all $\omega \in \Omega$
 
 \begin{enumerate}[a.]
 
-\item $\inf_n X_n(\omega) > -\infty$
-\item If $\sup_n X_n(\omega) < +\infty$ then $\sum_n Y_n(\omega) < +\infty$
+\item\label{itm:lmm_prudent__inf} $\inf_n X_n(\omega) > -\infty$
+\item\label{itm:lmm_prudent__sup} If $\sup_n X_n(\omega) < +\infty$ then $\sum_n Y_n(\omega) < +\infty$
 
 \end{enumerate}
 
@@ -735,51 +735,31 @@ N_0(\omega) &:= 0 \\
 N_{k+1}(\omega) &:= \begin{cases}\inf \{n \in \Nats \mid \sum_{m=N_k(\omega)}^{n-1} Y_m(\omega) \geq 1\} \text{ if } N_k(\omega) < \infty\\\infty \text{ if } N_k(\omega) = \infty\end{cases}
 \end{align*}
 
-For each $k \in \Nats$, $N_k$ is a stopping time w.r.t. ${\F}$. As easy to see, for each $k \in \Nats$, ${\Sqn{X^0_{\min(n,N_k)}}}$ is a uniformly integrable submartingale. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem C, we get
+For each $k \in \Nats$, $N_k$ is a stopping time w.r.t. ${\F}$. As easy to see, for each $k \in \Nats$, ${\Sqn{X^0_{\min(n,N_k)}}}$ is a uniformly integrable submartingale. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem~\ref{thm:optional_stopping} (see Appendix), we get
 
 $$\E[X^0_{N_{k+1}} \mid \F_{N_k}] \geq X^0_{N_{k}}$$
 
 Clearly, ${\Sq{X^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E[\A{X^0_{N_k}}] < \infty}$ (${X^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{X^0_{\min(n,N_k)}}}$). We conclude that ${\Sq{X^0_{N_k}}{k}}$ is a submartingale.
 
-By Proposition B.12, ${\A{X^0_{N_{k+1}}-X^0_{N_k}}} \leq \alpha + 2$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
+It is easy to see that ${\A{X^0_{N_{k+1}}-X^0_{N_k}}} \leq 3$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
 
-$$\Pr[X^0_{N_k} - S_0 < -\alpha k] \leq \exp(-\frac{(\alpha k)^2}{2(\alpha+2)^2 k})=\exp(-\frac{\alpha^2 k}{2(\alpha+2)^2})$$
-
-Since ${\sum_k \exp(-\frac{\alpha^2 k}{2(\alpha+2)^2}) < \infty}$, it follows that
-
-$$\Pr[\exists k \in \Nats \forall l > k: X^0_{N_l} - S_0 \geq -\alpha l]=1$$
-
-$$\Pr[\exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq \alpha (\sum_{n=0}^{N_l-1} Y_n -  l)]=1$$
-
-By Proposition B.13
-
-$$\Pr[\sum_{n=0}^\infty  Y_n = \infty \implies \exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq 0]=1$$
-
-It remains to show that if ${x \in \Omega}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then the condition above fails. Consider any such ${x \in \Omega}$. ${\A{S_n(x) - S_0(x)} \leq \sum_{m=0}^{n-1} Y_n(x) + \alpha}$, therefore ${\sum_{n=0}^\infty  Y_n(x) = \infty}$. On the other hand, by Proposition B.14, ${\inf_{k} S_{N_k(x)}(x) = -\infty}$.
-
-Define $\Sqn{X^0_n: \Omega \rightarrow \Reals}$ by
-
-$$X^0_n := S_n - \alpha \sum_{m=0}^{n-1} Y_m$$
-
-Let $\Sqn{N_n}$ be the accumulation times of $Y$. Consider any $x \in \Omega$ s.t. $\sup_n S_n(x) = s(x) < \infty$ but $\sum_n Y_n(x) = \infty$. Proposition B.13 implies that
-
-$$X^0_{N_k(x)}(x) \leq S_{N_k(x)}(x) - \alpha k \leq s(x) - \alpha k$$
-
-As in the proof of Proposition A.3, we can apply the Azuma-Hoeffding inequality to $X^0_N$ and get that for any positive integer $k$
-
-$$\Pr[X^0_{N_k} - S_0 < -k^{\frac{3}{4}}] \leq \exp(-\frac{k^{\frac{3}{2}}}{2(\alpha + 2)^2k})=\exp(-\frac{k^{\frac{1}{2}}}{2(\alpha + 2)^2})$$
+$$\Pr[X^0_{N_k} - X_0 < -k^{\frac{3}{4}}] \leq \exp(-\frac{k^{\frac{3}{2}}}{18k})=\exp(-\frac{k^{\frac{1}{2}}}{18})$$
 
 It follows that
 
-$$\sum_{k=1}^\infty \Pr[X^0_{N_k} - S_0 < -k^{\frac{3}{4}}] < \infty$$
+$$\sum_{k=1}^\infty \Pr[X^0_{N_k} - X_0 < -k^{\frac{3}{4}}] < \infty$$
 
-$$\Pr[\exists k \in \Nats \forall l > k: X^0_{N_l} - S_0 < -l^{\frac{3}{4}}] = 0$$
+$$\Pr[\exists k \in \Nats \forall l > k: X^0_{N_l} - X_0 \geq -l^{\frac{3}{4}}] = 1$$
 
-$$\Pr[\exists m \in \Nats \forall k \in \Nats: X^0_{N_k} \leq m - \alpha k] = 0$$
+$$\Pr[\exists k \in \Nats \forall l > k: X_{N_l} - X_0 \geq \alpha \sum_{n=0}^{N_l - 1} Y_n - l^{\frac{3}{4}}] = 1$$
 
-Comparing with the inequality from before, we reach the desired conclusion.
+%$$\Pr[\exists m \in \Nats \forall k \in \Nats: X^0_{N_k} \leq m - \alpha k] = 0$$
 
-TBD
+It is easy to see that if $\omega \in \Omega$ is s.t. $\sum_{n=0}^\infty Y_n(\omega) = \infty$ then $\sum_{n=0}^{N_l(\omega) - 1} Y_n(\omega) \geq l$. We get
+
+$$\Pr[\sum_{n=0}^\infty  Y_n = \infty \implies \exists k \in \Nats \forall l > k: X_{N_l} - X_0 \geq \alpha l - l^{\frac{3}{4}}]=1$$
+
+To complete the proof, observe that if ${\omega \in \Omega}$ is s.t. ${\inf_n X_n(\omega) = -\infty}$ then ${\sum_{n=0}^\infty  Y_n(\omega) = \infty}$ (since ${\A{X_n(\omega) - X_0(\omega)} \leq \sum_{m=0}^{n-1} Y_n(\omega) + 1}$).
 \end{proof}
 
 % Proposition A.3 => Lemma...
