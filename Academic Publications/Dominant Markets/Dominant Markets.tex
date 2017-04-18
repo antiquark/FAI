@@ -12,6 +12,8 @@
 \usepackage{enumerate}
 \usepackage{commath}
 \usepackage{bm}
+\usepackage{chngcntr}
+\usepackage{apptools}
 
 %\numberwithin{equation}{section}
 
@@ -28,6 +30,8 @@
 
 %\theoremstyle{remark}
 %\newtheorem{note}{Note}[section]
+
+\AtAppendix{\counterwithin{theorem}{section}}
 
 \newcommand{\Comment}[1]{}
 
@@ -688,7 +692,7 @@ Consider $\mu^* \in \PMO$, $S$ a $\mu^*$-prudent gambling strategy and a forecas
 
 The rest of the section is dedicated to proving Theorem~\ref{thm:prudent}.
 
-We start by showing, in a more abstract setting (not specific to forecasting), that for any sequences of bets that is \enquote{prudent} in the sense that the expected payoff is bounded below by a fixed fraction of the risk, the probability to lose an infinite amount vanishes.
+We start by showing, in a more abstract setting (not specific to forecasting), that for any sequences of bets that is \enquote{prudent} in the sense that the expected payoff is bounded below by a fixed fraction of the risk (= bet magnitude), the probability to lose an infinite amount vanishes and, moreover, it holds with probability 1 that if the total bet magnitude is unbounded then there is infinite gain.
 
 \begin{samepage}
 \begin{lemma}
@@ -696,7 +700,7 @@ We start by showing, in a more abstract setting (not specific to forecasting), t
 
 Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow [0,M]}$ stochastic processes adapted to $\F$ (i.e. $X_n$ and $Y_n$ are $\F_n$-measurable). Assume the following conditions\footnote{Equalities and inequalities between random variables are implicitly understood as holding almost surely.}:
 
-\begin{enumerate}[(i)]
+\begin{enumerate}[i.]
 
 \item $\E[\A{X_0}] < +\infty$
 \item $\forall n \in \Nats, m \geq n: \A{X_n - X_m} \leq \sum_{l=n}^{m-1} Y_l + M$
@@ -704,12 +708,76 @@ Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtrat
 
 \end{enumerate}
 
-Then, $\inf_n X_n > -\infty$.
+Then, for almost all $\omega \in \Omega$
+
+\begin{enumerate}[a.]
+
+\item $\inf_n X_n(\omega) > -\infty$
+\item If $\sup_n X_n(\omega) < +\infty$ then $\sum_n Y_n(\omega) < +\infty$
+
+\end{enumerate}
 
 \end{lemma}
 \end{samepage}
 
 \begin{proof}
+
+Without loss of generality, we can assume ${M = 1}$ (otherwise we can renormalize ${X}$ and ${Y}$ by a factor of ${M^{-1}}$). Define ${\Sqn{X^0_n: \Omega \rightarrow \Reals}}$ by
+
+$$X^0_n := X_n - \alpha \sum_{m=0}^{n-1} Y_m$$
+
+It is easy to see that ${X^0}$ is a submartingale.
+
+We define ${\Sqn{N_n:\Omega \rightarrow \Nats \sqcup \{\infty\}}}$ recursively as follows
+
+\begin{align*}
+N_0(\omega) &:= 0 \\ 
+N_{k+1}(\omega) &:= \begin{cases}\inf \{n \in \Nats \mid \sum_{m=N_k(\omega)}^{n-1} Y_m(\omega) \geq 1\} \text{ if } N_k(\omega) < \infty\\\infty \text{ if } N_k(\omega) = \infty\end{cases}
+\end{align*}
+
+For each $k \in \Nats$, $N_k$ is a stopping time w.r.t. ${\F}$. As easy to see, for each $k \in \Nats$, ${\Sqn{X^0_{\min(n,N_k)}}}$ is a uniformly integrable submartingale. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem C, we get
+
+$$\E[X^0_{N_{k+1}} \mid \F_{N_k}] \geq X^0_{N_{k}}$$
+
+Clearly, ${\Sq{X^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E[\A{X^0_{N_k}}] < \infty}$ (${X^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{X^0_{\min(n,N_k)}}}$). We conclude that ${\Sq{X^0_{N_k}}{k}}$ is a submartingale.
+
+By Proposition B.12, ${\A{X^0_{N_{k+1}}-X^0_{N_k}}} \leq \alpha + 2$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
+
+$$\Pr[X^0_{N_k} - S_0 < -\alpha k] \leq \exp(-\frac{(\alpha k)^2}{2(\alpha+2)^2 k})=\exp(-\frac{\alpha^2 k}{2(\alpha+2)^2})$$
+
+Since ${\sum_k \exp(-\frac{\alpha^2 k}{2(\alpha+2)^2}) < \infty}$, it follows that
+
+$$\Pr[\exists k \in \Nats \forall l > k: X^0_{N_l} - S_0 \geq -\alpha l]=1$$
+
+$$\Pr[\exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq \alpha (\sum_{n=0}^{N_l-1} Y_n -  l)]=1$$
+
+By Proposition B.13
+
+$$\Pr[\sum_{n=0}^\infty  Y_n = \infty \implies \exists k \in \Nats \forall l > k: S_{N_l} - S_0 \geq 0]=1$$
+
+It remains to show that if ${x \in \Omega}$ is s.t. ${\inf_n S_n(x) = -\infty}$ then the condition above fails. Consider any such ${x \in \Omega}$. ${\A{S_n(x) - S_0(x)} \leq \sum_{m=0}^{n-1} Y_n(x) + \alpha}$, therefore ${\sum_{n=0}^\infty  Y_n(x) = \infty}$. On the other hand, by Proposition B.14, ${\inf_{k} S_{N_k(x)}(x) = -\infty}$.
+
+Define $\Sqn{X^0_n: \Omega \rightarrow \Reals}$ by
+
+$$X^0_n := S_n - \alpha \sum_{m=0}^{n-1} Y_m$$
+
+Let $\Sqn{N_n}$ be the accumulation times of $Y$. Consider any $x \in \Omega$ s.t. $\sup_n S_n(x) = s(x) < \infty$ but $\sum_n Y_n(x) = \infty$. Proposition B.13 implies that
+
+$$X^0_{N_k(x)}(x) \leq S_{N_k(x)}(x) - \alpha k \leq s(x) - \alpha k$$
+
+As in the proof of Proposition A.3, we can apply the Azuma-Hoeffding inequality to $X^0_N$ and get that for any positive integer $k$
+
+$$\Pr[X^0_{N_k} - S_0 < -k^{\frac{3}{4}}] \leq \exp(-\frac{k^{\frac{3}{2}}}{2(\alpha + 2)^2k})=\exp(-\frac{k^{\frac{1}{2}}}{2(\alpha + 2)^2})$$
+
+It follows that
+
+$$\sum_{k=1}^\infty \Pr[X^0_{N_k} - S_0 < -k^{\frac{3}{4}}] < \infty$$
+
+$$\Pr[\exists k \in \Nats \forall l > k: X^0_{N_l} - S_0 < -l^{\frac{3}{4}}] = 0$$
+
+$$\Pr[\exists m \in \Nats \forall k \in \Nats: X^0_{N_k} \leq m - \alpha k] = 0$$
+
+Comparing with the inequality from before, we reach the desired conclusion.
 
 TBD
 \end{proof}
@@ -724,6 +792,40 @@ TBD
 TBD
 
 \section{Discussion}
+
+TBD
+
+\appendix
+
+\section{Appendix}
+
+The following variant of the Optional Stopping Theorem appears in \cite{Durrett_2010} as Theorem 5.4.7.
+
+\begin{samepage}
+\begin{theorem}
+\label{thm:optional_stopping}
+
+Let ${\Omega}$ be a probability space, ${\Sqn{\F_n \subseteq 2^\Omega}}$ a filtration of ${\Omega}$, ${\Sqn{X_n: \Omega \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and ${M,N: \Omega \rightarrow \Nats \sqcup \{\infty\}}$ stopping times (w.r.t. ${\F}$) s.t. ${M \leq N}$. Assume that ${\Sqn{X_{\min(n,N)}}}$ is a uniformly integrable submartingale. Using Doob's martingale convergence theorem, we can define ${X_N : \Omega \rightarrow \Reals}$ by\footnote{The limit in equation~\ref{eqn:thm_optional_stopping__xn} is converges \emph{almost} surely, which is sufficient for our purpose.}
+
+\begin{equation}
+\label{eqn:thm_optional_stopping__xn}
+X_N(x):=\lim_{n \rightarrow \infty} X_{\min(n,N)}(x)=\begin{cases}X_{N(x)}(x) \text{ if } N(x) < \infty\\\lim_{n \rightarrow \infty} X_n(x) \text{ if } N(x) = \infty\end{cases}
+\end{equation}
+
+We define ${X_M: \Omega \rightarrow \Reals}$ is an analogous way\footnote{This time we can't use Doob's martingale convergence theorem, but whenever ${M(x) = \infty}$ we also have ${N(x) = \infty}$, therefore the limit still almost surely converges.}. We also define the $\sigma$-algebra ${\F_M \subseteq 2^\Omega}$ by
+
+\begin{equation}
+\F_M:=\{A \subseteq X \text{ measurable} \mid \forall n \in \Nats: A \cap M^{-1}(n) \in \F_n\}
+\end{equation}
+
+Then:
+
+\begin{equation}
+\E[X_N \mid \F_M] \geq X_M
+\end{equation}
+
+\end{theorem}
+\end{samepage}
 
 TBD
 
