@@ -215,6 +215,12 @@ Note that $M \mid y$ is always convex and closed.
 
 We are now ready to formulate the main result.
 
+Given a metric space $X$ with metric $\rho: X \times X \rightarrow \Reals$, $x \in X$ and $A \subseteq X$, we will use the notation
+
+\begin{equation}
+\rho(x,A):=\inf_{y \in A} \rho(x,y)
+\end{equation}
+
 \begin{theorem}
 \label{thm:main}
 
@@ -830,37 +836,43 @@ We will also need the following property of the operator $\PG$, reflecting that 
 Given any gambling strategy $S$, we have
 
 \begin{equation}
-\SV \PG{S}_n - \SVM \PG{S}_n \leq 2 \sup_{m \in \Nats} \sup_{y \in \Ob^m} \N{S(y)} + 1
+\SV \PG{S}_n - \SVM \PG{S}_n \leq 2 \max_{m < n} \sup_{y \in \Ob^m} \N{S_m(y)} + 1
 \end{equation}
+
+In particular, the left hand side is uniformly bounded.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-We prove by induction. For $n=0$ the claim is obvious. Consider any ${n \in \Nats}$ and ${x \in X}$. First, assume that
+We prove by induction. For $n=0$ the claim is obvious. Consider any ${n \in \Nats}$, $y \in \Ob^{n}$ and $\BM \in \PMO^{n+1}$. First, assume that
 
-$$\max_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x')-\min_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x') > 1$$
+$$\SVX \PG{S}_n(y_{:n-1},\BM_{:n}) - \SVM \PG{S}_n(y_{:n-1},\BM_{:n}) > 1$$
 
-Then, by definition of ${\PG{S}}$, ${\PG{S}^F_n}(x_{:n}) \equiv 0$ and therefore
+Then, by definition of ${\PG{S}}$, ${\PG{S}_n}(y,\BM_{:n}) \equiv 0$ and therefore
 
-$$\SV \PG{S}^F_{n+1}(x_{:n})=\SV \PG{S}^F_n(x_{:n-1})$$
+$$\SV \PG{S}_{n+1}(y,\BM)=\SV \PG{S}_n(y_{:n-1},\BM_{:n})$$
 
-$$\SVM \PG{S}^F_{n+1}(x_{:n}) \geq \SVM \PG{S}^F_n(x_{:n-1})$$
+$$\SVM \PG{S}_{n+1}(y,\BM) \geq \SVM \PG{S}_n(y_{:n-1},\BM_{:n})$$
 
-This obviously implies the induction step.
+$$\SV \PG{S}_{n+1}(y,\BM) - \SVM \PG{S}_{n+1}(y,\BM) \leq \SV \PG{S}_n(y_{:n-1},\BM_{:n}) - \SVM \PG{S}_n(y_{:n-1},\BM_{:n}) $$
+
+By the induction hypothesis, we get
+
+$$\SV \PG{S}_{n+1}(y,\BM) - \SVM \PG{S}_{n+1}(y,\BM) \leq  2 \max_{m < n} \sup_{y \in \Ob^m} \N{S_m(y)}  + 1 \leq \max_{m \leq n} \sup_{y \in \Ob^m} \N{S_m(y)}  + 1$$
 
 Now, assume that 
 
-$$\max_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x')-\min_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x') \leq 1$$
+$$\SVX \PG{S}_n(y_{:n-1},\BM_{:n}) - \SVM \PG{S}_n(y_{:n-1},\BM_{:n}) \leq 1$$
 
-Then, ${\PG{S}^F_n}(x_{:n}) = S_n(x_{:n})$ and therefore
+Then, ${\PG{S}_n}(y,\BM_{:n}) = {S_n}(y)$ and therefore
 
-$$\SV \PG{S}^F_{n+1}(x_{:n})=\SV \PG{S}^F_n(x_{:n-1}) + (\V{S}_n(x_{:n}))(F_{n}(x_{:n}))$$
+$$\SV \PG{S}_{n+1}(y,\BM)=\SV \PG{S}_n(y_{:n-1},\BM_{:n}) + (\V{S}_n(y))(\BM_n)$$
 
 We get
 
-$$\SV \PG{S}^F_{n+1}(x?) - \SVM \PG{S}^F_{n+1}(x?) \leq \max_{x' \in x_{:n}\OO} \SV \PG{S}^F_n(x_{:n-1},x') - \min_{x' \in x_{:n}\OO}\SV \PG{S}^F_n(x_{:n-1},x') + 2 \N{S_n(x_{:n})}$$
+$$\SV \PG{S}_{n+1}(y,\BM) - \SVM \PG{S}_{n+1}(y,\BM) \leq \SVX \PG{S}_n(y_{:n-1},\BM_{:n}) - \SVM \PG{S}_n(y_{:n-1},\BM_{:n}) + 2 \N{S_n(y)}$$
 
 By the assumption, the first two terms total to ${\leq 1}$, yielding the desired result.
 \end{proof}
