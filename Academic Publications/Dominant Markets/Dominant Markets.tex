@@ -677,6 +677,7 @@ A \emph{gambling strategy} is a uniformly bounded family of measurable mappings
 \[\Sqn{S_n: \Ob^n \rightarrow \GMO}\]
 
 \begin{definition}
+\label{def:prudent}
 
 Given a gambling strategy $S$ and $\mu^* \in \PMO$, $S$ is said to be \emph{$\mu^*$-prudent} when there is $\alpha > 0$ s.t. for any $n \in \Nats$, $\PO_{n*} \mu^*$-almost any $y \in \Ob^n$ and any $\mu \in \PMO$
 
@@ -688,7 +689,7 @@ Given a gambling strategy $S$ and $\mu^* \in \PMO$, $S$ is said to be \emph{$\mu
 
 \end{definition}
 
-The \enquote{correct} way for a gambler to use a prudent gambling strategy is not employing it all the time: in order to avoid running out of budget, a gambler shouldn’t place too many bets simultaneously. To address this, we define a gambler that employs a strategy only when all previous bets are close to being settled.
+The \enquote{correct} way for a gambler to use a prudent gambling strategy is not employing it all the time: in order to avoid running out of budget, a gambler shouldn’t place too many bets simultaneously. To address this, we define a gambler that \enquote{plays} (employs the given strategy) only when all previous bets are close to being settled.
 
 \begin{definition}
 
@@ -877,6 +878,54 @@ $$\SV \PG{S}_{n+1}(y,\BM) - \SVM \PG{S}_{n+1}(y,\BM) \leq \SVX \PG{S}_n(y_{:n-1}
 By the assumption, the first two terms total to ${\leq 1}$, yielding the desired result.
 \end{proof}
 
+As a final ingredient for the proof of Theorem~\ref{thm:prudent}, we will need another property of $\PG$, namely that when the total magnitude of all bets made is finite, the gambler eventually starts \enquote{playing} in every round.
+
+Given a gambler $G$, we define the measurable mappings $\overline{G}^F_n: \Ob^n \rightarrow \CO$ by
+
+\begin{equation}
+\overline{G}^F_n(y):=G^F_n(y,F_n(y))
+\end{equation}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:when_bounded_play}
+
+Let $S$ be a gambling strategy, $F$ a forecaster and $x \in \OO$. Assume that
+
+\begin{equation}
+\sum_{n=0}^\infty {(\max_{x_{:n}\OO} \overline{\PG{S}}^F_n(x_{:n})-\min_{x_{:n}\OO} \overline{\PG{S}}^F_n(x_{:n}))} < +\infty
+\end{equation}
+
+Then, for any $n \gg 0$, $\PG{S}^F_n(x_{:n})=S_n(x_{:n})$.
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Choose $n_0 \in \Nats$ s.t. 
+
+$$\sum_{n=n_0}^\infty {(\max_{x_{:n}\OO} \overline{\PG{S}}^F_n(x_{:n})-\min_{x_{:n}\OO} \overline{\PG{S}}^F_n(x_{:n}))} < \frac{1}{2}$$
+
+Since $\overline{\PG{S}}^F_n(x_{:n}), \overline{\V{\PG{S}}}^F_n(x_{:n}) \in \CO$ differ by a constant function, we have
+
+$$\sum_{n=n_0}^\infty {(\max_{x_{:n}\OO} \overline{\V{\PG{S}}}^F_n(x_{:n})-\min_{x_{:n}\OO} \overline{\V{\PG{S}}}^F_n(x_{:n}))} < \frac{1}{2}$$
+
+In particular, for any $n \geq n_0$
+
+$$\sum_{m=n_0}^{n-1} {(\max_{x_{:n}\OO} \overline{\V{\PG{S}}}^F_m(x_{:m})-\min_{x_{:n}\OO} \overline{\V{\PG{S}}}^F_m(x_{:m}))} < \frac{1}{2}$$
+
+On the other hand, it is easy to see that there is $n_1 \geq n_0$ s.t. for any $n \geq n_1$
+
+$$\max_{x_{:n}\OO} \SV{\PG{S}}_{n_0}^F(x_{:n_0 - 1}) - \min_{x_{:n}\OO} \SV{\PG{S}}_{n_0}^F(x_{:n_0 - 1}) < \frac{1}{2}$$
+
+Taking the sum of the last two inequalities, we conclude that for any $n \geq n_1$
+
+$$\SVX{\PG{S}}_{n}^F(x_{:n-1}) - \SVM{\PG{S}}_{n}^F(x_{:n-1}) < 1$$
+
+Using the definition of $\PG{S}$, we get the desired result.
+\end{proof}
+
 \begin{proof}[Proof of Theorem~\ref{thm:prudent}]
 
 We regard ${\OO}$ as a probability space using the ${\sigma}$-algebra $\F$ of universally measurable sets and the probability measure ${\mu^*}$. For any ${n \in \Nats}$, we define ${\F_n \subseteq \F}$ and $X_n,X'_n,Y_n: \OO \rightarrow \Reals$ by 
@@ -885,29 +934,37 @@ $$\F_n := \{(\PO_n)^{-1}(A) \mid A \subseteq \Ob^n \text{ universally measurable
 
 $$X_n(x):= \SV \PG{S}^F_{n}(x_{:n-1},x)$$
 
-$$X'_n(x):= \min_{x' \in x_{:n-1}\OO} \SV \PG{S}^F_{n}(x_{:n-1},x')$$
+$$X'_n(x):= \SVM \PG{S}^F_{n}(x_{:n-1})$$
 
-$$Y_n(x):=\max_{x' \in x_{:n}\OO} \overline{\PG{S}}^F_{n}(x_{:n},x') - \min_{x' \in x_{:n}\OO} \overline{\PG{S}}^F_{n}(x_{:n},x')$$
+$$Y_n(x):=\max_{x_{:n}\OO} \overline{\PG{S}}^F_{n}(x_{:n}) - \min_{x_{:n}\OO} \overline{\PG{S}}^F_{n}(x_{:n})$$
 
 Clearly, ${\F}$ is a filtration of ${\OO}$, ${X,X',Y}$ are stochastic processes and ${X',Y}$ are adapted to ${\F}$. ${S}$ is uniformly bounded, therefore ${\PG{S}}$  is uniformly bounded and so is ${Y}$. Obviously, ${Y}$ is also non-negative.
 
-By Proposition B.15, ${\A{X_n-X'_n}}$ are uniformly bounded. ${X_0}$ is bounded and in particular ${\E[\A{X_0}] < \infty}$. We have
+By Proposition~\ref{prp:pg_bounded_uncertainty}, ${\A{X_n-X'_n}}$ are uniformly bounded. ${X_0}$ vanishes and in particular ${\E[\A{X_0}] < \infty}$. We have
 
-$$\A{X_{n+1}(x)-X_n(x)} = \A{\V \bar{T}_{\upsilon n}^M(x_{:n},x)} \leq Y_n(x)$$
+$$\A{X_{n+1}(x)-X_n(x)} = \A{\overline{\V{\PG{S}}}_{n}^F(x_{:n},x)} \leq Y_n(x)$$
 
-Let $\beta > 0$ and $K_n \in \mu^* \mid \pi_{n\omega}$ be as in Definition 4. 
+Moreover:
 
-$$\E[X_{n+1} - X_n \mid \F_n] = \E_{x' \sim K_n(x_{:n})}[\V \bar{T}_{\upsilon n}^M(x_{:n},x')]$$
+$$\E[X_{n+1} - X_n \mid \F_n](x) = \E_{x' \sim \mu^*}[\overline{\V{\PG{S}}}_{n}^F(x_{:n},x') \mid x' \in x_{:n}\OO]$$
 
-$$\E[X_{n+1} - X_n \mid \F_n] = \E_{x' \sim K_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n},x')] - \E_{x' \sim M_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n},x')]$$
+(As before, the notation on the right hand side signifies the use of a regular conditional probability)
 
-By definition of $\PG{S}$, $\bar{T}_{\upsilon n}^M(x_{:n})$ is equal to either $\upsilon_n(x_{:n},M_n(x_{:n}))$ or 0. In either case, we get (almost everywhere)
+$$\E[X_{n+1} - X_n \mid \F_n](x) = \E_{x' \sim \mu^*}[\overline{\PG{S}}_{n}^F(x_{:n},x') \mid x' \in x_{:n}\OO] - \E_{x' \sim F_n(x_{:n})}[\overline{\PG{S}}_{n}^F(x_{:n},x')]$$
 
-$$\E[X_{n+1} - X_n \mid \F_n] \geq \beta (\max_{x_{:n}\OO} \bar{T}_{\upsilon n}^M(x_{:n}) - \min_{x_{:n}\OO} \bar{T}_{\upsilon n}^M(x_{:n})) = \beta Y_n$$
+Let $\alpha > 0$ be as in Definition~\ref{def:prudent}. By definition of $\PG{S}$, $\overline{\PG{S}}_{n}^F(x_{:n})$ is equal to either $S_n(x_{:n},F_n(x_{:n}))$ or 0. In either case, we get that for $\mu^*$-almost any $x \in \OO$
 
-Applying Proposition A.4, we get...
+$$\E[X_{n+1} - X_n \mid \F_n](x) \geq \alpha (\max_{x_{:n}\OO} \overline{\PG{S}}_{n}^F(x_{:n}) - \min_{x_{:n}\OO} \overline{\PG{S}}_{n}^F(x_{:n})) = \alpha Y_n(x)$$
 
-Let $\F$, $S$, $S'$ and $\Delta$ be as in the proof of Proposition A.5. Using Proposition A.5 and the assumption that $M$ dominates $\PG{S}$, we conclude that for $\mu^*$-almost any $x \in X$, $\sup_n X_n(x) < \infty$. As in the proof of Proposition A.5, the conditions of Proposition A.4 are satisfied, and therefore the conditions of Proposition A.7 are also satisfied. Applying Proposition A.7, we conclude that $\sum_n Y_n(x) < \infty$. By Proposition B.17, it follows that for any $n \gg 0$, $T_{\upsilon n}^M(x_{:n}) = \upsilon(x_{:n})$. We get
+By Corollary~\ref*{crl:prudent}\ref{itm:crl_prudent__inf}, for $\mu^*$-almost any $x \in \OO$
+
+\[\inf_{n \in \Nats} \SVM \PG{S}^F_{n}(x_{:n-1}) > -\infty\]
+
+Since $F$ dominates $\PG{S}$, it follows that
+
+\[\sup_{n \in \Nats} \SVX \PG{S}^F_{n}(x_{:n-1}) < +\infty\] 
+
+By Corollary~\ref*{crl:prudent}\ref{itm:crl_prudent__sup}, $\sum_n Y_n(x) < \infty$. By Proposition~\ref{prp:when_bounded_play}, it follows that for any $n \gg 0$, $\PG{S}^F_n(x_{:n}) = S_n(x_{:n})$. We get
 
 $$\E_{K_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))]-\E_{M_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))] = \E_{K_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n})]-\E_{M_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n})]$$
 
