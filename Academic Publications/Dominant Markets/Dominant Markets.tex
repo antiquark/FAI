@@ -707,10 +707,13 @@ Consider any gambling strategy $S$. We define the gambler $\PG{S}$ recursively a
 Consider $\mu^* \in \PMO$, $S$ a $\mu^*$-prudent gambling strategy and a forecaster $F$. Assume $F$ dominates $\PG{S}$. Then, for $\mu^*$-almost any $x \in \OO$
 
 \begin{equation}
-\lim_{n \rightarrow \infty} (\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))]) = 0
+\label{eqn:thm_prudent}
+\sum_{n=0}^\infty (\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))]) < +\infty
 \end{equation}
 
 \end{theorem}
+
+In particular, the terms of the series on the left hand-side converge to 0 (they are non-negative since $S$ is $\mu^*$-prudent).
 
 The rest of the section is dedicated to proving Theorem~\ref{thm:prudent}.
 
@@ -883,7 +886,7 @@ As a final ingredient for the proof of Theorem~\ref{thm:prudent}, we will need a
 Given a gambler $G$, we define the measurable mappings $\overline{G}^F_n: \Ob^n \rightarrow \CO$ by
 
 \begin{equation}
-\overline{G}^F_n(y):=G^F_n(y,F_n(y))
+\overline{G}^F_n(y):=G^F_n(y;F_n(y))
 \end{equation}
 
 \begin{samepage}
@@ -952,7 +955,7 @@ $$\E[X_{n+1} - X_n \mid \F_n](x) = \E_{x' \sim \mu^*}[\overline{\V{\PG{S}}}_{n}^
 
 $$\E[X_{n+1} - X_n \mid \F_n](x) = \E_{x' \sim \mu^*}[\overline{\PG{S}}_{n}^F(x_{:n},x') \mid x' \in x_{:n}\OO] - \E_{x' \sim F_n(x_{:n})}[\overline{\PG{S}}_{n}^F(x_{:n},x')]$$
 
-Let $\alpha > 0$ be as in Definition~\ref{def:prudent}. By definition of $\PG{S}$, $\overline{\PG{S}}_{n}^F(x_{:n})$ is equal to either $S_n(x_{:n},F_n(x_{:n}))$ or 0. In either case, we get that for $\mu^*$-almost any $x \in \OO$
+Let $\alpha > 0$ be as in Definition~\ref{def:prudent}. By definition of $\PG{S}$, $\overline{\PG{S}}_{n}^F(x_{:n})$ is equal to either $S_n(x_{:n};F_n(x_{:n}))$ or 0. In either case, we get that for $\mu^*$-almost any $x \in \OO$
 
 $$\E[X_{n+1} - X_n \mid \F_n](x) \geq \alpha (\max_{x_{:n}\OO} \overline{\PG{S}}_{n}^F(x_{:n}) - \min_{x_{:n}\OO} \overline{\PG{S}}_{n}^F(x_{:n})) = \alpha Y_n(x)$$
 
@@ -964,15 +967,13 @@ Since $F$ dominates $\PG{S}$, it follows that
 
 \[\sup_{n \in \Nats} \SVX \PG{S}^F_{n}(x_{:n-1}) < +\infty\] 
 
-By Corollary~\ref*{crl:prudent}\ref{itm:crl_prudent__sup}, $\sum_n Y_n(x) < \infty$. By Proposition~\ref{prp:when_bounded_play}, it follows that for any $n \gg 0$, $\PG{S}^F_n(x_{:n}) = S_n(x_{:n})$. We get
+By Corollary~\ref*{crl:prudent}\ref{itm:crl_prudent__sup}, $\sum_n Y_n(x) < \infty$. By Proposition~\ref{prp:when_bounded_play}, it follows that for any $n \gg 0$, $\PG{S}^F_n(x_{:n}) = S_n(x_{:n})$. We get, for $n \gg 0$
 
-$$\E_{K_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))]-\E_{M_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))] = \E_{K_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n})]-\E_{M_n(x_{:n})}[\bar{T}_{\upsilon n}^M(x_{:n})]$$
+$$\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))] = \E_{\mu^*}[\overline{\PG{S}}^F_n(x_{:n}) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[\overline{\PG{S}}^F_n(x_{:n})]$$
 
-$$\E_{K_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))]-\E_{M_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))] \leq Y_n(x)$$
+$$\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))] \leq Y_n(x)$$
 
-$$\lim_{n \rightarrow \infty} (\E_{K_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))]-\E_{M_n(x_{:n})}[\upsilon(x_{:n},M_n(x_{:n}))]) = 0$$
-
-TBD
+$$\sum_{n=0}^\infty (\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))]) < +\infty$$
 \end{proof}
 
 \section{Gamblers for Incomplete Models}
