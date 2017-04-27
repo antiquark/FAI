@@ -155,13 +155,13 @@ s.t. $\Sp {F_n(y)} \subseteq y\OO$.
 
 Given a forecaster $F$ and $y \in \Ob^n$, $F_n(y)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n(y)} \subseteq y\OO$ reflects the obvious requirement of consistency with past observations.
 
-In order to formulate a claim about forecast convergence, we will need a metric on $\PMO$. Consider $\rho: \OO \times \OO \rightarrow \Reals$ a metrization of $\OO$. Let $\Lp(\OO;\rho)$ be the Banach space of $\rho$-Lipschitz functions on $\OO$, equipped with the norm
+In order to formulate a claim about forecast convergence, we will need a metric on $\PMO$. Consider $\rho: \OO \times \OO \rightarrow \Reals$ a metrization of $\OO$. Let $\Lp(\OO,\rho)$ be the Banach space of $\rho$-Lipschitz functions on $\OO$, equipped with the norm
 
 \begin{equation}
 \N{f}_\rho:=\max_{x}{\A{f(x)}} + \sup_{x \ne y} \frac{\A{f(x)-f(y)}}{\rho(x,y)}
 \end{equation}
 
-$\PMO$ can be regarded as a compact subset of the dual space $\Lp(\OO;\rho)'$, yielding the following metrization of $\PMO$:
+$\PMO$ can be regarded as a compact subset of the dual space $\Lp(\OO,\rho)'$, yielding the following metrization of $\PMO$:
 
 \begin{equation}
 \DKR^\rho(\mu,\nu):=\sup_{\N{f}_\rho \leq 1}{(\E_\mu[f] - \E_\nu[f])}
@@ -985,12 +985,12 @@ In order to prove Theorem~\ref{thm:main}, we will need, given an incomplete mode
 \begin{samepage}
 \begin{definition}
 
-Consider a compact Polish metric space $X$, $M \subseteq \PM(X)$ convex and $\epsilon > 0$. $\beta \in \Gm(X)$ is said to be \emph{$(M,\epsilon)$-savvy} when for any $\mu \in \PM(X)$, denoting $r_\mu:=\DKR(\mu,M)$:
+Consider a compact Polish metric space $X$, $M \subseteq \PM(X)$ convex and $r_0 > 0$. $\beta \in \Gm(X)$ is said to be \emph{$(M,r_0)$-savvy} when for any $\mu \in \PM(X)$, denoting $r_\mu:=\DKR(\mu,M)$:
 
 \begin{enumerate}[i.]
 
-\item $\N{\beta(\mu)} \leq \max(r_\mu - \epsilon,0)$
-\item $\forall \nu \in M: \E_\nu[\beta(\mu)] - \E_\mu[\beta(\mu)] \geq \frac{1}{2}(r_\mu - \epsilon) r_\mu$
+\item $\N{\beta(\mu)} \leq \max(r_\mu - r_0,0)$
+\item $\forall \nu \in M: \E_\nu[\beta(\mu)] - \E_\mu[\beta(\mu)] \geq \frac{1}{2}(r_\mu - r_0) r_\mu$
 
 \end{enumerate}
 
@@ -1013,6 +1013,99 @@ Assume that $\Gr{M}$ is closed and that $M(y)$ is convex for any $y \in Y$. Rega
 \end{samepage}
 
 In order to prove Lemma~\ref{lmm:savvy}, we will need a few other technical lemmas.
+
+\begin{samepage}
+\begin{lemma}
+\label{lmm:double_dual}
+
+Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $\varphi \in \Lp(X,\rho)''$ and $\epsilon > 0$. Then, there exists $f \in \Lp(X,\rho)$ s.t.
+
+\begin{enumerate}[i.]
+
+\item $\N{f}_\rho \leq \N{\varphi}$
+\item $\forall \mu \in \PM(X): \A{\E_\mu[f] - \varphi(\mu)} < \epsilon$
+
+\end{enumerate}
+
+\end{lemma}
+\end{samepage}
+
+\begin{proof}
+
+Without loss of generality, assume that $\N{\varphi}=1$ (if $\N{\varphi}=0$ the theorem is trivial, otherwise we can rescale everything by a scalar). Using the compactness of $\PM(X)$, choose a finite set $A \subseteq \PM(X)$ s.t. 
+
+$$\max_{\mu \in \PM(X)} \min_{\nu \in A}\, \DKR(\mu,\nu) < \frac{\epsilon}{4}$$
+
+Using the Goldstine theorem, choose $f \in \Lp(X)$ s.t. $\N{f}_\rho \leq 1$ and for any $\nu \in A$ 
+
+$$\A{\E_\nu[f] - \varphi(\nu)} < \frac{\epsilon}{2}$$
+
+Consider any $\mu \in \PM(X)$. Choose $\nu \in A$ s.t. $\DKR(\mu,\nu) < \frac{\epsilon}{4}$. We get
+
+$$\A{\E_\mu[f] - \varphi(\mu)} \leq \A{\E_\mu[f] - \E_\nu[f]} + \A{\E_\nu[f] - \varphi(\nu)} + \A{\varphi(\nu) - \varphi(\mu)} < \frac{\epsilon}{4} + \frac{\epsilon}{2} + \frac{\epsilon}{4} = \epsilon$$
+\end{proof}
+
+\begin{samepage}
+\begin{lemma}
+\label{lmm:separation}
+
+Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $M \subseteq \PM(X)$ convex non-empty, $r_0 > 0$ and $\mu_0 \in \PM(X)$ s.t. $r:=\DKR(\mu_0,M) > r_0$. Then, there exists $f \in \Lp(X,\rho)$ s.t.
+
+\begin{enumerate}[i.]
+
+\item $\N{f}_\rho < r - r_0$
+\item $\inf_{\nu \in M} \E_\nu[f] - \E_\mu[f] > \frac{1}{2}(r-r_0)r$
+
+\end{enumerate}
+
+\end{lemma}
+\end{samepage}
+
+\begin{proof}
+
+Define $M^r \subseteq \Lp(X,\rho)'$ by
+
+$$M^r:=\{\mu \in \Lp(X,\rho)' \mid \inf_{\nu \in M} \N{\mu - \nu} < r\}$$
+
+By the Hahn-Banach separation theorem, there is $\varphi \in \Lp(X,\rho)''$ s.t. for all $\nu \in M^r$, $\varphi(\nu) > \varphi(\mu_0)$. Multiplying by a scalar, we can make sure that $\N{\varphi} = \frac{3}{4}(r - r_0)$. For any $\delta > 0$, we can choose $\zeta \in \Lp(X,\rho)'$ s.t. $\N{\zeta} < 1$ and $\varphi(\zeta) > \frac{3}{4}(r-r_0) - \delta$.  For any $\nu \in M$, $\nu - r \zeta \in M^r$ and therefore
+
+$$\varphi(\nu - r \zeta) > \varphi(\mu_0)$$
+
+$$\varphi(\nu) > \varphi(\mu_0) + r \varphi(\zeta) > \varphi(\mu_0) + r (\frac{3}{4}(r-r_0) - \delta)$$
+
+Taking $\delta$ to 0 we get $\varphi(\nu) \geq \varphi(\mu_0) + \frac{3}{4} r (r - r_0)$. Applying Lemma~\ref{lmm:double_dual} for $\epsilon = \frac{1}{16} r (r - r_0)$, we get $f \in \Lp(X,\rho)$ s.t.
+
+$$\N{f} \leq \frac{3}{4} (r - r_0) < r - r_0$$ 
+
+$$\E_\nu[f] \geq \varphi(\nu) - \frac{1}{16} r (r - r_0) \geq \varphi(\mu_0) + \frac{11}{16} r (r - r_0) \geq \E_{\mu_0}[f] +  \frac{5}{8} r (r - r_0) > \E_{\mu_0}[f] +  \frac{1}{2} r (r - r_0)$$
+\end{proof}
+
+\begin{samepage}
+\begin{lemma}
+\label{lmm:savvy_outside}
+
+Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $M \subseteq \PM(X)$ convex non-empty and $r_0 > 0$. Define $U \subseteq \PM(X)$ by
+
+\begin{equation*}
+U := \{\mu \in \PM(X) \mid \DKR(\mu,M) > r_0\}
+\end{equation*}
+
+Then, there exists $\beta': U \rightarrow \Lp(X,\rho)$ continuous s.t. for all $\mu \in U$, denoting $r_\mu:=\DKR(\mu,M)$:
+
+\begin{enumerate}[i.]
+
+\item $\N{\beta'(\mu)}_\rho < r_\mu - r_0$
+\item $\inf_{\nu \in M} \E_\nu[\beta'(\mu)] - \E_\mu[\beta'(\mu)] > \frac{1}{2} (r_\mu - r_0) r_\mu$
+
+\end{enumerate}
+
+\end{lemma}
+\end{samepage}
+
+\begin{proof}
+
+TBD
+\end{proof}
 
 TBD
 
