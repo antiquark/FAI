@@ -985,7 +985,7 @@ In order to prove Theorem~\ref{thm:main}, we will need, given an incomplete mode
 \begin{samepage}
 \begin{definition}
 
-Consider a compact Polish metric space $X$, $M \subseteq \PM(X)$ convex and $r_0 > 0$. $\beta \in \Gm(X)$ is said to be \emph{$(M,r_0)$-savvy} when for any $\mu \in \PM(X)$, denoting $r_\mu:=\DKR(\mu,M)$:
+Consider $X$ a compact Polish metric space, $M \subseteq \PM(X)$ convex and $r_0 > 0$. $\beta \in \Gm(X)$ is said to be \emph{$(M,r_0)$-savvy} when for any $\mu \in \PM(X)$, denoting $r_\mu:=\DKR(\mu,M)$:
 
 \begin{enumerate}[i.]
 
@@ -1104,7 +1104,53 @@ Then, there exists $\beta': U \rightarrow \Lp(X,\rho)$ continuous s.t. for all $
 
 \begin{proof}
 
-TBD
+Define $B: U \rightarrow 2^{\Lp(X,\rho)}$ by
+
+$$B(\mu):=\{f \in \Lp(X,\rho) \mid \N{f}_\rho < r_\mu - r_0,\, \inf_{\nu \in M} \E_\nu[f] - \E_\mu[f] > (r_\mu - r_0) r_\mu\}$$
+
+By Lemma~\ref{lmm:separation}, for any $\mu \in U$, $B(\mu) \ne \varnothing$. Clearly, $B(\mu)$ is convex. Fix $f \in \Lp(X,\rho)$ and consider $B^{-1}(f):=\{\mu \in U \mid f \in B(\mu)\}$. Consider any $\mu_0 \in B^{-1}(f)$, and take $\epsilon > 0$ s.t.
+
+\begin{enumerate}[i.]
+
+\item $\N{f}_\rho < r_{\mu_0}  - \epsilon - r_0$
+\item $\inf_{\nu \in M} \E_\nu[f] - \E_{\mu_0}[f] -\epsilon > (r_{\mu_0} + \epsilon  - r_0) (r_{\mu_0} + \epsilon)$
+
+\end{enumerate}
+
+Define $V \subseteq U$ by 
+
+$$V := \{\mu \in U \mid \DKR(\mu,\mu_0) < \epsilon,\, \E_\mu[f] < \E_{\mu_0}[f] + \epsilon\}$$
+
+Obviously $V$ is open and $V \subseteq B^{-1}(f)$, hence $B^{-1}(f)$ is open. Applying Theorem~\ref{thm:selection} (see Appendix), we get the desired result.
+\end{proof}
+
+\begin{samepage}
+\begin{corollary}
+\label{crl:savvy}
+
+Consider $X$ a compact Polish metric space, $M \subseteq \PM(X)$ convex and $r_0 > 0$. Then, there exists $\beta \in \Gm(X)$ which is $(M,r_0)$-savvy.
+
+\end{corollary}
+\end{samepage}
+
+\begin{proof}
+
+Let $U \subseteq \PM(X)$ be defined by
+
+$$U:=\{\mu \in \PM(X) \mid \DKR(\mu, M) > r_0\}$$
+
+Use Lemma~\ref{lmm:savvy_outside} to obtain $\beta': U \rightarrow \Lp(X)$. Define $\beta: \PM(X) \rightarrow \Lp(X)$ by
+
+$$\beta(\mu):=\begin{cases}\beta'(\mu) \text{ if } \mu \in U\\0 \text { if } \mu \not\in U\end{cases}$$ 
+Obviously $\beta$ is continuous in $U$. Consider any $\mu \not\in U$ and $\Sq{\mu_k \in \PM(X)}{k}$ s.t. $\lim_{k \rightarrow \infty} \mu_k = \mu$. We have 
+
+$$\lim_{k \rightarrow \infty} \DKR(\mu_k,M) = \DKR(\mu, M) \leq r_0$$
+
+Denote the metric on $X$ by $\rho$. 
+
+$$\limsup_{k \rightarrow \infty}{\N{\beta(\mu_k)}_\rho} \leq \limsup_{k \rightarrow \infty}{\max(\DKR(\mu_k,M) - r_0, 0)} = 0$$
+
+Therefore, $\beta$ is continuous everywhere.
 \end{proof}
 
 TBD
@@ -1145,7 +1191,26 @@ Then:
 \end{theorem}
 \end{samepage}
 
-TBD
+The following variant of the Michael selection theorem appears in \cite{Yannelis_1983} as Theorem 3.1.
+
+\begin{samepage}
+\begin{theorem} [Yannelis and Prabhakar]
+\label{thm:selection}
+
+Consider $X$ a paracompact Hausdorff topological space and $Y$ a topological vector space. Suppose $B: X \rightarrow 2^Y$ is s.t.
+
+\begin{enumerate}[i.]
+
+\item For each $x \in X$, $B(x) \ne \varnothing$.
+\item For each $x \in X$, $B(x)$ is convex.
+\item For each $y \in Y$, $\{x \in X \mid y \in B(x)\}$ is open.
+
+\end{enumerate}
+
+Then, there exists $\beta: X \rightarrow Y$ continuous s.t. for all $x \in X$, $\beta(x) \in B(x)$.
+
+\end{theorem}
+\end{samepage}
 
 \section*{Acknowledgments}
 
