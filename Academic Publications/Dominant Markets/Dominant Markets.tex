@@ -227,7 +227,8 @@ Given a metric space $X$ with metric $\rho: X \times X \rightarrow \Reals$, $x \
 Fix any $\MC \subseteq 2^{\PMO}$ countable. Then, there exists a forecaster $F^\MC$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
 
 \begin{equation}
-\lim_{n \rightarrow 0} \DKR^n(F^\MC_n(x_{:n}), M \mid x_{:n}) = 0
+\label{eqn:thm_main}
+\lim_{n \rightarrow 0} \DKR^n(F^\MC_n(x_{:n}),\, M \mid x_{:n}) = 0
 \end{equation}
 
 \end{theorem}
@@ -978,6 +979,40 @@ $$\sum_{n=0}^\infty (\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(
 
 \section{Gamblers for Incomplete Models}
 \label{sec:construction}
+
+In order to prove Theorem~\ref{thm:main}, we will need, given an incomplete model $M \subseteq \PMO$ and $\epsilon > 0$, a gambling strategy $S^{M\epsilon}$ s.t. $S^{M\epsilon}$ is $\mu$-prudent for any $\mu \in M$ and s.t. Theorem~\ref{thm:prudent} implies that any $F$ that dominates $S^{M\epsilon}$ satisfies equation~\ref{eqn:thm_main} \enquote{within $\epsilon$.} This motivates the following definition and lemma.
+
+\begin{samepage}
+\begin{definition}
+
+Consider a compact Polish metric space $X$, $M \subseteq \PM(X)$ convex and $\epsilon > 0$. $\beta \in \Gm(X)$ is said to be \emph{$(M,\epsilon)$-savvy} when for any $\mu \in \PM(X)$, denoting $r_\mu:=\DKR(\mu,M)$:
+
+\begin{enumerate}[i.]
+
+\item $\N{\beta(\mu)} \leq \max(r_\mu - \epsilon,0)$
+\item $\forall \nu \in M: \E_\nu[\beta(\mu)] - \E_\mu[\beta(\mu)] \geq \frac{1}{2}(r_\mu - \epsilon) r_\mu$
+
+\end{enumerate}
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{lemma}
+\label{lmm:savvy}
+
+Consider $X$ a compact Polish metric space, $Y$ a compact Polish space and $M: Y \rightarrow 2^{\PM(X)}$. Denote
+
+\begin{equation*}
+\Gr{M}:=\{(y, \mu) \in Y \times \PM(X) \mid \mu \in M(y)\}
+\end{equation*}
+
+Assume that $\Gr{M}$ is closed and that $M(y)$ is convex for any $y \in Y$. Regard $Y$ as a measurable space using the $\sigma$-algebra of universally measurable sets and regard $\Gm(X)$ as a measurable space using the $\sigma$-algebra of Borel sets. Then, for any $\epsilon > 0$, there exists $S^\epsilon: Y \rightarrow \Gm(X)$ measurable s.t. for all $y \in Y$, $S^\epsilon(y)$ is $(M(y),\epsilon)$-savvy.
+
+\end{lemma}
+\end{samepage}
+
+In order to prove Lemma~\ref{lmm:savvy}, we will need a few other technical lemmas.
 
 TBD
 
