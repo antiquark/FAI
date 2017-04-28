@@ -212,7 +212,7 @@ Here, $\bar{M}_n$ denotes the closure of $M_n$.
 \end{definition}
 \end{samepage}
 
-Note that $M \mid y$ is always convex and closed.
+Note that $M \mid y$ is always convex??? and closed.
 
 We are now ready to formulate the main result.
 
@@ -978,7 +978,7 @@ $$\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n}
 $$\sum_{n=0}^\infty (\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))]) < +\infty$$
 \end{proof}
 
-\section{Gamblers for Incomplete Models}
+\section{Proof of Main Theorem}
 \label{sec:construction}
 
 In order to prove Theorem~\ref{thm:main}, we will need, given an incomplete model $M \subseteq \PMO$ and $\epsilon > 0$, a gambling strategy $S^{M\epsilon}$ s.t. $S^{M\epsilon}$ is $\mu$-prudent for any $\mu \in M$ and s.t. Theorem~\ref{thm:prudent} implies that any $F$ that dominates $S^{M\epsilon}$ satisfies equation~\ref{eqn:thm_main} \enquote{within $\epsilon$.} This motivates the following definition and lemma.
@@ -1251,11 +1251,11 @@ Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s
 
 \begin{proof}
 
-Fix any $\mu^* \in M$. By Lemma~\ref{lmm:update_incomplete}, for $\pi_{n*} \mu$-almost any $y \in Y$
+Fix any $\mu^* \in M$. By Lemma~\ref{lmm:update_incomplete}, for $\PO_{n*} \mu$-almost any $y \in Y$
 
-$$\lim_{r \rightarrow 0} \mu^* \mid \B_r(y) = (\mu^* \mid \pi)(y)$$
+$$\lim_{r \rightarrow 0} {\mu^* \mid \B_r(y)} = (\mu^* \mid \PO_n)(y)$$
 
-Therefore, ${(\mu^* \mid \pi)(y) \in M_y \subseteq M \mid y}$ (see Definition~\ref{def:update_incomplete}). Since $S_n(y)$ is $(M \mid y,\, \epsilon)$-savvy, for any $\mu \in \PM(X)$, denoting $r_{\mu y}:=\DKR^n(\mu,\,M \mid y)$:
+Therefore, ${(\mu^* \mid \PO_n)(y) \in M_y \subseteq M \mid y}$ (see Definition~\ref{def:update_incomplete}). Since $S_n(y)$ is $(M \mid y,\, \epsilon)$-savvy, for any $\mu \in \PM(X)$, denoting $r_{\mu y}:=\DKR^n(\mu,\,M \mid y)$:
 
 $$\E_{\mu^*}[S_n(y;\mu) \mid y\OO] - \E_{\mu}[S_n(y;\mu)] \geq \frac{1}{2} \max(r_{\mu y} - \epsilon, 0) r_{\mu y} \geq \frac{1}{2} \N{S_n(y;\mu)} r_{\mu y}$$
 
@@ -1264,7 +1264,50 @@ When $r_{\mu y} \leq \epsilon$, $S_n(y;\mu) = 0$, hence for any $\mu \in \PM(X)$
 $$\E_{\mu^*}[S_n(y;\mu) \mid y\OO] - \E_{\mu}[S_n(y;\mu)] \geq \frac{\epsilon}{2} \N{S_n(y;\mu)}$$
 \end{proof}
 
+\begin{samepage}
+\begin{corollary}
+\label{crl:vicinity_convergence}
+
+Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n(y)$ is $(M \mid y,\, \epsilon)$-savvy. Let $F$ be a forecaster that dominates $\PG{S}$. Then, for any $\mu \in M$ and $\mu$-almost any $x \in \OO$
+
+\begin{equation}
+\limsup_{n \rightarrow \infty} \DKR^n(F_n(x_{:n}),\, M \mid x_{:n}) \leq \epsilon
+\end{equation}
+
+\end{corollary}
+\end{samepage}
+
+\begin{proof}
+
+By Corollary~\ref{crl:savvy_is_prudent}, $S$ is $\mu$-prudent. By Theorem~\ref{thm:prudent}, for $\mu$-almost any $x \in X$
+
+$$\lim_{n \rightarrow \infty} {(\E_{\mu}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))])} = 0$$
+
+On the other hand, by Lemma~\ref{lmm:update_incomplete}, $(\mu \mid \PO_n)(x_{:n}) \in M \mid x_{:n}$ and hence, since $S_n(x_{:n})$ is $(M \mid x_{:n} \, \epsilon)$-savvy, denoting $r_n:=\DKR^n(F_n(x_{:n}),\, M \mid x_{:n})$: 
+
+$$\E_{\mu}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))] \geq \frac{1}{2} (r_{n} - \epsilon) r_n$$
+
+We get
+
+$$\limsup_{n \rightarrow \infty} {(r_{n} - \epsilon) r_n} \leq 0$$
+
+$$\limsup_{n \rightarrow \infty} {r_n} \leq \epsilon$$
+\end{proof}
+
+We are finally ready to complete the proof of the main theorem.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+
+Consider any $M \in \MC$ and a positive integer $k$. By Lemma~\ref{lmm:savvy}, for any $n \in \Nats$, there exists ${S^{Mk}_{n}: \Ob^n \rightarrow \Gm(X)}$ measurable s.t. for all $y \in \Ob^n$, $S^{Mk}_{n}(y)$ is a $(M \mid y,\,\frac{1}{k})$-savvy... We fix such a $\upsilon^{M}_{kn}(y)$ for each $M$ and $k$. It is easy to see that the $\DKR^n$-diameter of $\PM(X)$ is at most 2, therefore $\N{\upsilon^{M}_{kn}(y)} \leq 2$ and $\Sqn{\upsilon^{M}_{kn}}$ is a trading metastrategy. By Theorem B.1, there is a stochastic market $F^\MC$ that dominates $T_{\upsilon^{M}_k}$ for all $M$ and $k$. By Corollary 1, for any $M \in \MC$, $\mu^* \in M$, positive integer $k$ and $\mu^*$-almost any $x \in X$
+
+$$\limsup_{n \rightarrow \infty} {\DKR^n(M^H_n(x(n)),M_{x(n)})} \leq \frac{1}{k}$$
+
+It follows that
+
+$$\lim_{n \rightarrow \infty} {\DKR^n(M^H_n(x(n)),M_{x(n)})} = 0$$
+
 TBD
+\end{proof}
 
 \section{Discussion}
 
