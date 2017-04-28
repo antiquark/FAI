@@ -67,6 +67,7 @@
 
 \DeclareMathOperator{\Sp}{supp}
 
+\newcommand{\DTV}{\operatorname{d}_{\textnormal{TV}}}
 \newcommand{\DKR}{\operatorname{d}_{\textnormal{KR}}}
 
 \newcommand{\R}[1]{\N{#1}_{\text{R}}}
@@ -102,7 +103,7 @@
 
 %+Abstract
 \begin{abstract}
-We consider the task of forecasting an infinite sequence of future observation based on some number of past observations, where the probability measure generating the observations is \enquote{suspected} to satisfy one or more of a set of \emph{incomplete} models i.e. convex sets in the space of probability measures. This setting is in some sense intermediate between the \emph{realizable} setting where the probability measure comes from some known set of probability measures (which can be addressed using e.g. Bayesian inference) and the \emph{unrealizable} setting where the probability measure is completely arbitrary. We demonstrate a method of forecasting which guarantees that, whenever the true probability measure satisfies an incomplete model in a given countable set, the forecast converges to the same incomplete model in the (appropriately normalized) Kantorovich-Rubinstein metric. This is analogous to merging of opinions for Bayesian inference, except that convergence in the  Kantorovich-Rubinstein metric is weaker than convergence in total variation.
+We consider the task of forecasting an infinite sequence of future observation based on some number of past observations, where the probability measure generating the observations is \enquote{suspected} to satisfy one or more of a set of \emph{incomplete} models, i.e. convex sets in the space of probability measures. This setting is in some sense intermediate between the \emph{realizable} setting where the probability measure comes from some known set of probability measures (which can be addressed using e.g. Bayesian inference) and the \emph{unrealizable} setting where the probability measure is completely arbitrary. We demonstrate a method of forecasting which guarantees that, whenever the true probability measure satisfies an incomplete model in a given countable set, the forecast converges to the same incomplete model in the (appropriately normalized) Kantorovich-Rubinstein metric. This is analogous to merging of opinions for Bayesian inference, except that convergence in the  Kantorovich-Rubinstein metric is weaker than convergence in total variation.
 \end{abstract}
 %-Abstract
 
@@ -127,17 +128,14 @@ The spirit of our approach is that the environment might be very complex, but at
 
 Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PM(X)$ of probability measures on the space of sequences $X$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\MC$ is discrete.} set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
 
-The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $M \in \MC$ corresponds to a trader. This trader buys \enquote{stocks} (continuous functions $f$ on $X$) s.t. assuming the environment is sampled from some $\mu \in M$, the expected value $\E_\mu[f]$ of the stock is greater than its current cost $\E_{F}[f]$. The market pricing is then defined by the requirement that the aggregate of all traders doesn't make a net profit (the existence of such a pricing is established using the Kakutani-Glicksberg-Fan fixed point theorem). The fact that the aggregate of all traders cannot make a net profit implies that each individual trader can only make a bounded profit, which implies the main result in turn.
+The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $M \in \MC$ corresponds to a gambler that plays in the market. This gambler makes \enquote{bets} (continuous functions $f$ on $X$) s.t. assuming the environment is sampled from some $\mu \in M$, the expected value $\E_\mu[f] - \E_F[f]$ of the bet is positive. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit (the existence of such a pricing is established using the Kakutani-Glicksberg-Fan fixed point theorem). The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit, which implies the main result in turn.
 
-The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant market}. Section~\ref{sec:prudent} introduces the concept of a \emph{profitable trading metastrategy}, which is a technique for proving convergence theorems about dominant markets. Section~\ref{sec:construction} connects the market formalism with incomplete models and proves the main theorem.
-
-\section{Notation}
-\label{sec:notation}
-
-TBD
+The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant forecaster}. Section~\ref{sec:prudent} introduces the concept of a \emph{prudent gambling strategy}, which is a technique for proving convergence theorems about dominant forecasters. Section~\ref{sec:construction} connects dominant forecasters with incomplete models and proves the main theorem.
 
 \section{Learning Incomplete Models}
 \label{sec:learning}
+
+$\Nats$ will denote the set of natural numbers $\{0, 1, 2 \ldots\}$.
 
 Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO(x)$. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM(X)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM(X)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
@@ -189,30 +187,20 @@ Another ingredient we will need is a notion of regular conditional probability f
 \begin{definition}
 \label{def:update_incomplete}
 
-Consider any $M \subseteq \PMO$. Given $y \in \Ob^n$, we define
+Consider any $M \subseteq \PMO$. For each $n \in \Nats$, we define $M \mid \Ob^n$ to be the minimal subset of $\Ob^n \times \PMO$ with the following properties:
 
-\begin{equation}
-M_y:=\{\lim_{r \rightarrow 0}{(\mu \mid \pi_n^{-1}(\B_r(y)))} \mid \mu \in M\}
-\end{equation}
+\begin{enumerate}[i.]
 
-Here, $\mu \mid \pi_n^{-1}(\B_r(y))$ is the conditional probability measure (defined whenever $\mu(\pi_n^{-1}(\B_r(y))) > 0$) and the limit need not always exist. That is, $M_y$ is the set of such limits for those $\mu \in M$ for which the (weak) limit exists (in particular $y \in \Sp{\mu}$).
+\item If $y \in \Ob^n$, $\mu \in \PMO$ and $\nu \in M$ are s.t. $y \in \Sp \PO_{n*}\nu$ and $\mu = \lim_{r \rightarrow 0}{(\nu \mid (\PO_n)^{-1}(\B_r(y)))}$, then $(y,\mu) \in M \mid \Ob^n$. Here, $\nu \mid (\PO_n)^{-1}(\B_r(y))$ is the conditional probability measure.
+\item For each $y \in \Ob^n$, the set $M \mid y:=\{\mu \in \PMO \mid (y,\mu) \in M \mid \Ob^n\}$ is convex.
+\item $M \mid \Ob^n$ is closed.
 
-We further define
+\end{enumerate}
 
-\begin{equation}
-M_n:=\{(y,\mu) \in Y_n \times \PMO \mid \mu \textnormal{ is in the convex hull of } M_y\}
-\end{equation}
-
-\begin{equation}
-M \mid y:=\{\mu \in \PMO \mid (y,\mu) \in \bar{M}_n\}
-\end{equation}
-
-Here, $\bar{M}_n$ denotes the closure of $M_n$.
+It is easy to see that a minimal set with these properties always exists and is unique.
 
 \end{definition}
 \end{samepage}
-
-Note that $M \mid y$ is always convex??? and closed.
 
 We are now ready to formulate the main result.
 
@@ -234,6 +222,8 @@ Fix any $\MC \subseteq 2^{\PMO}$ countable. Then, there exists a forecaster $F^\
 
 \end{theorem}
 
+Note that $F^\MC$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice.
+
 \section{Dominant Forecasters}
 \label{sec:garrabrant}
 
@@ -254,12 +244,12 @@ Our terminology also differs from \cite{Garrabrant_2016}: their \enquote{market}
 
 The idea is to consider a collection of gamblers making bets against the forecaster. If a gambler with finite budget cannot make an infinite profit, the gambler is said to be \enquote{dominated} by the forecaster. We then prove that for any countable collection of gamblers, there is a forecaster that dominates all of them.
 
-Given a compact Polish space $X$, $C(X)$ will denote the Banach space of continuous functions with uniform norm. We will also use the shorthand notation $\Gm(X):=C(\PM(X) \times X)$. Equivalently, $\Gm(X)$ can be regarded to be the space of continuous functions from $\PM(X)$ to $C(X)$.
+Given a compact Polish space $X$, $C(X)$ will denote the Banach space of continuous functions with uniform norm. We will also use the shorthand notation $\Gm(X):=C(\PM(X) \times X)$. Equivalently, $\Gm(X)$ can be regarded to be the space of continuous functions from $\PM(X)$ to $C(X)$, and we will curry implicitly in our notation.
 
 We regard $\GMO$ as the space of bets that can be made against a forecaster. Given $\beta \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \PMO$, the value of the bet $\beta$ is
 
 \begin{equation}
-\V{\beta}(\nu,x):=\beta(\nu,x) - \E_{x' \sim \nu}[\beta(\nu,x')]
+\V{\beta}(\mu,x):=\beta(\mu,x) - \E_{x' \sim \mu}[\beta(\mu,x')]
 \end{equation}
 
 Note that this defines a bounded linear operator $\V: \Gm(X) \rightarrow \Gm(X)$.
@@ -554,7 +544,7 @@ By induction on ${m}$, we conclude:
 $$\SVM \Bd_b G_{m}(y_{:m-1},\BM_{:m}) \geq \SVM \Bd_b G_{m-1}(y_{:m-2},\BM_{:m-1}) \geq -b$$
 \end{proof}
 
-We now show that for any gambler there is \enquote{limited budget} gambler s.t. any forecaster that dominates it also dominates the original gambler.
+Next, we show that for any gambler there is \enquote{limited budget} gambler s.t. any forecaster that dominates it also dominates the original gambler.
 
 \begin{proposition}
 \label{prp:frugal_gambler}
@@ -1298,20 +1288,24 @@ We are finally ready to complete the proof of the main theorem.
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
 
-Consider any $M \in \MC$ and a positive integer $k$. By Lemma~\ref{lmm:savvy}, for any $n \in \Nats$, there exists ${S^{Mk}_{n}: \Ob^n \rightarrow \Gm(X)}$ measurable s.t. for all $y \in \Ob^n$, $S^{Mk}_{n}(y)$ is a $(M \mid y,\,\frac{1}{k})$-savvy... We fix such a $\upsilon^{M}_{kn}(y)$ for each $M$ and $k$. It is easy to see that the $\DKR^n$-diameter of $\PM(X)$ is at most 2, therefore $\N{\upsilon^{M}_{kn}(y)} \leq 2$ and $\Sqn{\upsilon^{M}_{kn}}$ is a trading metastrategy. By Theorem B.1, there is a stochastic market $F^\MC$ that dominates $T_{\upsilon^{M}_k}$ for all $M$ and $k$. By Corollary 1, for any $M \in \MC$, $\mu^* \in M$, positive integer $k$ and $\mu^*$-almost any $x \in X$
+Consider any $M \in \MC$ and a positive integer $k$. By Lemma~\ref{lmm:savvy}, for any $n \in \Nats$, there exists ${S^{Mk}_{n}: \Ob^n \rightarrow \GMO}$ measurable s.t. for all $y \in \Ob^n$, $S^{Mk}_{n}(y)$ is $(M \mid y,\,\frac{1}{k})$-savvy. We fix such a $S^{Mk}_{n}$ for each $M$ and $k$. It is easy to see that the $\DKR^n$-diameter of $\PMO$ is at most 2, therefore $\N{S^{Mk}_{n}(y)} \leq 2$ and $\Sqn{S^{Mk}_{n}}$ is a gambling strategy. By Theorem~\ref{thm:exist_dominant}, there is a forecaster $F^\MC$ that dominates $\PG{S}^{Mk}$ for all $M$ and $k$. By Corollary~\ref{crl:vicinity_convergence}, for any $M \in \MC$, $\mu \in M$, positive integer $k$ and $\mu$-almost any $x \in X$
 
-$$\limsup_{n \rightarrow \infty} {\DKR^n(M^H_n(x(n)),M_{x(n)})} \leq \frac{1}{k}$$
+$$\limsup_{n \rightarrow \infty} {\DKR^n(F^\MC_n(x_{:n}),\,M \mid x_{:n})} \leq \frac{1}{k}$$
 
 It follows that
 
-$$\lim_{n \rightarrow \infty} {\DKR^n(M^H_n(x(n)),M_{x(n)})} = 0$$
-
-TBD
+$$\lim_{n \rightarrow \infty} {\DKR^n(F^\MC_n(x_{:n}),\,M \mid x_{:n})} = 0$$
 \end{proof}
 
 \section{Discussion}
 
-TBD
+We see several natural directions for extending this work.
+
+Theorem~\ref{thm:main} is formulated using the Kantorovich-Rubinstein metric, but instead we could have considered to total variation metric $\DTV$, as in Bayesian merging of opinions\cite{Blackwell_1962}. This would remove the need to renormalize the metrization of $\OO$ and yield a stronger result. However, we currently don't know whether this stronger hypothesis is true.
+
+The present work doesn't analyze any considerations of computational complexity or even computability. It would be very valuable, especially for practical applications, to understand the complexity of forecasters satisfying equation~\ref{eqn:thm_main} given various complexity-theoretic assumptions on $\MC$. In particular, that would entail designing concrete forecasting algorithms of this type, whereas the existence proof in the present work is non-constructive. Also, it would be valuable to analyze the speed of convergence in \ref{eqn:thm_main} and the possibly also the trade-offs between forecaster complexity and speed of convergence.
+
+Finally, we think that the current work may have some bearing on the so-called \enquote{grain of truth} problem (problem 5j in \cite{Hutter_2009}). The problem is, given a system of interacting rational agents, proving their convergence to some reasonable game-theoretic solution concept, e.g. a Nash equilibrium. For a pair of Bayesian agents, this normally requires each agent to lie in the model class $\MC$ of the other agent. However, this requirement is difficult to satisfy in settings that are fairly general, since usually the computational complexity of a Bayesian agent is higher than the complexities of all models in its prior. On the other hand, using our approach, each agent may learn incomplete models satisfied by the other agent that are computationally simpler than a full simulation. This might be sufficient to produce meaningful game-theoretic guarantees.
 
 \appendix
 
@@ -1368,7 +1362,7 @@ Then, there exists $\beta: X \rightarrow Y$ continuous s.t. for all $x \in X$, $
 
 \section*{Acknowledgments}
 
-TBD
+We wish to thank Michael Greinecker for pointing out Theorem~\ref{thm:selection} to us. TBD
 
 \bibliographystyle{unsrt}
 \bibliography{Dominant_Markets}
