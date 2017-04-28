@@ -139,7 +139,7 @@ TBD
 \section{Learning Incomplete Models}
 \label{sec:learning}
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO(x)$. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use this rather than Borel sets will play an important role in the proof of TBD.}. For any measurable space $X$, $\PM(X)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM(X)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO(x)$. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM(X)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM(X)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
 \begin{samepage}
 \begin{definition}
@@ -183,7 +183,7 @@ Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x(\{x\})=
 
 Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. We denote $\DKR^n:=\DKR^{\rho_n}$.
 
-Another ingredient we will need is a notion of regular conditional probability for incomplete models. For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem. In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in Y_n$ and $r > 0$, $\B_r(y)$ will denote the open ball of radius $r$ with center at $y$.
+Another ingredient we will need is a notion of regular conditional probability for incomplete models. For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem (in order to prove Lemma~\ref{lmm:update_incomplete}). In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in Y_n$ and $r > 0$, $\B_r(y)$ will denote the open ball of radius $r$ with center at $y$.
 
 \begin{samepage}
 \begin{definition}
@@ -1215,7 +1215,53 @@ Consider $X$ a compact Polish space, $d \in \Nats$, $Y$ a compact subset of $R^d
 
 \begin{proof}
 
-TBD
+Let $\Sq{f_k \in C(X)}{k}$ be dense in $C(X)$. For any $y \in Y$ and $r > 0$ we denote $\chi_{yr}: Y \rightarrow \{0,1\}$ the characteristic function of $\B_r(y)$ and $\chi^\pi_{yr}: X \rightarrow \{0,1\}$ the characteristic function of $\pi^{-1}(\B_r(y))$. For any $k \in \Nats$ and $y_0 \in \Sp \pi_* \mu$ we have $\mu(\pi^{-1}(\B_r(y_0))) = \pi_*\mu(\B_r(y_0)) > 0$ and
+
+$$\E_{\mu}[f_k \mid \pi^{-1}(\B_r(y_0))] = \frac{\E_{\mu}[\chi^\pi_{y_0r} f_k]}{\mu(\pi^{-1}(\B_r(y_0)))} = \frac{\E_{y \sim \pi_* \mu}[\E_{\mu}[\chi^\pi_{y_0r} f_k \mid \pi^{-1}(y)]]}{\pi_*\mu(\B_r(y_0))} = \frac{\E_{y \sim \pi_* \mu}[\chi_{y_0r} \E_{\mu}[f_k \mid \pi^{-1}(y)]]}{\pi_*\mu(\B_r(y_0))}$$
+
+In particular, the above holds for $\pi_* \mu$-almost any $y_0 \in Y$. Applying the Lebesgue differentiation theorem, we conclude that for $\pi_* \mu$-almost any $y_0 \in Y$
+
+$$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\B_r(y_0))] = \E_{\mu}[f_k \mid \pi^{-1}(y_0)]$$
+
+Now consider any $f \in C(X)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\N{f-f_k} < \epsilon$ and therefore
+
+$$\limsup_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y_0))] \leq \limsup_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\B_r(y_0))] + \epsilon = \E_{\mu}[f_k \mid \pi^{-1}(y_0)] + \epsilon  \leq \E_{\mu}[f \mid \pi^{-1}(y_0)] + 2\epsilon$$
+
+Similarly
+
+$$\liminf_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y_0))] \geq \E_{\mu}[f \mid \pi^{-1}(y_0)] - 2\epsilon$$
+
+Taking $\epsilon$ to 0, we conclude that
+
+$$\lim_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y_0))] = \E_{\mu}[f \mid \pi^{-1}(y_0)]$$
+
+$$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\B_r(y_0)) = (\mu \mid \pi)(y_0)$$
+\end{proof}
+
+We can now obtain a relation between the notions of savviness and prudence.
+
+\begin{samepage}
+\begin{corollary}
+\label{crl:savvy_is_prudent}
+
+Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n(y)$ is $(M \mid y,\, \epsilon)$-savvy (relatively to $\rho_n$). Then, $S$ is $\mu^*$-prudent for any $\mu^* \in M$.
+
+\end{corollary}
+\end{samepage}
+
+\begin{proof}
+
+Fix any $\mu^* \in M$. By Lemma~\ref{lmm:update_incomplete}, for $\pi_{n*} \mu$-almost any $y \in Y$
+
+$$\lim_{r \rightarrow 0} \mu^* \mid \B_r(y) = (\mu^* \mid \pi)(y)$$
+
+Therefore, ${(\mu^* \mid \pi)(y) \in M_y \subseteq M \mid y}$ (see Definition~\ref{def:update_incomplete}). Since $S_n(y)$ is $(M \mid y,\, \epsilon)$-savvy, for any $\mu \in \PM(X)$, denoting $r_{\mu y}:=\DKR^n(\mu,\,M \mid y)$:
+
+$$\E_{\mu^*}[S_n(y;\mu) \mid y\OO] - \E_{\mu}[S_n(y;\mu)] \geq \frac{1}{2} \max(r_{\mu y} - \epsilon, 0) r_{\mu y} \geq \frac{1}{2} \N{S_n(y;\mu)} r_{\mu y}$$
+
+When $r_{\mu y} \leq \epsilon$, $S_n(y;\mu) = 0$, hence for any $\mu \in \PM(X)$, $\N{S_n(y;\mu)} r_{\mu y} \geq \N{S_n(y;\mu)} \epsilon$. We get
+
+$$\E_{\mu^*}[S_n(y;\mu) \mid y\OO] - \E_{\mu}[S_n(y;\mu)] \geq \frac{\epsilon}{2} \N{S_n(y;\mu)}$$
 \end{proof}
 
 TBD
