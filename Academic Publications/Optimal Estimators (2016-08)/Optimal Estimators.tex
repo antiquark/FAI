@@ -570,6 +570,7 @@ Given $n \in \Nats$, a \emph{fall space of rank $n$} is a set $\Fall$ of bounded
 \end{definition}
 
 \begin{example}
+\label{exm:fall_neg}
 
 We define $\Fall_{\text{neg}}$, a fall space of rank $1$. For any $\varepsilon: \Nats \rightarrow \Reals^{\geq 0}$ bounded, $\varepsilon \in \Fall_{\text{neg}}$ iff for any $d \in \Nats$, $\Lim{k} k^d \varepsilon(k) = 0$.
 
@@ -577,6 +578,7 @@ We define $\Fall_{\text{neg}}$, a fall space of rank $1$. For any $\varepsilon: 
 
 \begin{samepage}
 \begin{example}
+\label{exm:fall_zeta}
 
 For any ${n \in \Nats}$ and ${\zeta: \Nats^n \rightarrow \Reals^{\geq 0}}$, we define ${\Fall_{\zeta}}$ to be the set of ${\varepsilon: \NatFun \Reals^{\geq 0}}$ bounded s.t. there is ${M \in \Reals}$ for which ${\varepsilon \leq M \zeta}$. If there is ${h \in \NatPoly}$ s.t. ${\zeta \geq 2^{-h}}$ then ${\Fall_\zeta}$ is a fall space of rank ${n}$.
 
@@ -658,6 +660,7 @@ $$\varepsilon^\alpha = (\sup \varepsilon)^\alpha (\frac{\varepsilon}{\sup \varep
 
 \begin{samepage}
 \begin{definition}
+\label{def:fall_space_power}
 
 For any fall space $\Fall$ and $\alpha \in \Reals^{>0}$, we define ${\Fall^\alpha := \{\varepsilon^\alpha \mid \varepsilon \in \Fall\}}$.
 
@@ -1032,7 +1035,7 @@ For the sake of brevity, we will say \enquote{${\ESG}$-optimal estimator} rather
 
 \end {definition}
 
-The following theorem is the analogue in our language of the previous fact about inner product spaces.
+The following theorem is the analogue in our language of the previous fact about inner product spaces. The notation $\Fall^{\frac{1}{2}}$ refers to Definition~\ref{def:fall_space_power}, i.e. it is just the set of square roots of all the functions in $\Fall$.
 
 \begin{theorem}
 \label{thm:ort}
@@ -1113,7 +1116,7 @@ We can assume $Q$ is bounded without loss of generality since given any $Q$ it e
 \subsection{Simple Example}
 \label{sec:fundamentals__one_way}
 
-The concept of an optimal polynomial-time estimator is in some sense complementary to the concept of pseudorandom: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal polynomial-time estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal polynomial-time estimator, we use the concept of a hard-core predicate (which may be regarded as en elementary example of pseudorandom).
+The concept of an optimal polynomial-time estimator is in some sense complementary to the concept of pseudorandom: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal polynomial-time estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal polynomial-time estimator, we use the concept of a hard-core predicate (which may be regarded as en elementary example of pseudorandom). The notation $\Fall_\text{neg}$ below refers to the fall space defined in Example~\ref{exm:fall_neg} (functions that fall faster than any polynomial).
 
 \begin{theorem}
 \label{thm:hard_core}
@@ -3262,7 +3265,7 @@ Completely analogous to proof of Corollary~\ref{crl:complete_sharp}.
 %
 \end{proof}
 
-In particular, the conditions of Corollary~\ref{crl:complete_sharp} and Corollary~\ref{crl:complete} can hold for ${\Fall=\Fall_\zeta}$ and ${\Fall^{(m)}=\FallUt{\varphi}}$:
+In particular, the conditions of Corollary~\ref{crl:complete_sharp} and Corollary~\ref{crl:complete} can hold for ${\Fall=\Fall_\zeta}$ (the fall space of functions which are $O(\zeta)$; see Example~\ref{exm:fall_zeta}) and ${\Fall^{(m)}=\FallUt{\varphi}}$ (see Example~\ref{exm:e_uni}):
 
 \begin{samepage}
 \begin{proposition}
@@ -3313,7 +3316,7 @@ We got ${\varepsilon_1 \circ \beta_p \in \FallUt{\varphi}}$.
 
 \subsubsection{Positive Results}
 
-We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators. Theorem~\ref{thm:exists_all} shows that, for appropriate steadily growing functions ${r}$ and ${l}$, \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma_r,\Gamma_l)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{Strictly speaking, this example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can tackle it by e.g. taking ${\textsc{NC}}$ instead of ${\textsc{P}}$ as the permissible time complexity for our estimators, but we don't explore this variant in the present work.} example from the introduction, observe that the question \enquote{what is the probability 7614829 is prime?} should depend on the amount of available time. For example, we can use additional time to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
+We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators (the fall space $\FallU$ was defined in Example~\ref{exm:e_uni}). Theorem~\ref{thm:exists_all} shows that, for appropriate steadily growing functions ${r}$ and ${l}$, \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma_r,\Gamma_l)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{Strictly speaking, this example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can tackle it by e.g. taking ${\textsc{NC}}$ instead of ${\textsc{P}}$ as the permissible time complexity for our estimators, but we don't explore this variant in the present work.} example from the introduction, observe that the question \enquote{what is the probability 7614829 is prime?} should depend on the amount of available time. For example, we can use additional time to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
 
 However, in general the estimators constructed in Theorem~\ref{thm:exists_all} are non-uniform. Theorem~\ref{thm:exists_smp} shows that, under certain stronger assumptions on ${r}$ and ${l}$, for \emph{samplable} distributional estimation problems there is an estimator which requires only as much advice as the sampler. In particular, the existence of a uniform sampler implies the existence of a uniform ${\FallU(\Gamma_r,\Gamma_l)}$-optimal estimator.
 
@@ -3527,7 +3530,7 @@ Applying Proposition~\ref{prp:fall_uni_amp}, we conclude that ${P}$ is an ${\Fal
 %
 \end{proof}
 
-We now proceed to study the special case of samplable problems. These problems admit an optimal polynomial-time estimator which is essentially a brute-force implementation of the empirical risk minimization principle in statistical learning. In particular, the optimality of this algorithm can be regarded as a manifestation of the fundamental theorem of agnostic PAC learning (see e.g. Theorem 6.7 in \cite{Shalev-Shwartz_2014}). In our case the hypothesis space of the space of programs, so this algorithm can also be regarded as a variation of Levin's universal search. The advantage of this optimal polynomial-time estimator on the fully general construction of Theorem~\ref{thm:exists_all} is that the required advice is only the advice of the sampler.
+We now proceed to study the special case of samplable problems. These problems admit an optimal polynomial-time estimator which is essentially a brute-force implementation of the empirical risk minimization principle in statistical learning. In particular, the optimality of this algorithm can be regarded as a manifestation of the fundamental theorem of agnostic PAC learning (see e.g. Theorem 6.7 in \cite{Shalev-Shwartz_2014}). In our case the hypothesis space of the space of programs, so this algorithm can also be regarded as a variation of Levin's universal search. The advantage of this optimal polynomial-time estimator on the fully general construction of Theorem~\ref{thm:exists_all} is that the required advice is only the advice of the sampler. The notation $\FallM$ below refers to the fall space defined in Example~\ref{exm:e_mon}.
 
 \begin{samepage}
 \begin{theorem}
