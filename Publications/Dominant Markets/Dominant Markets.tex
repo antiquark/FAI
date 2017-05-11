@@ -88,7 +88,7 @@
 \DeclareMathOperator{\Ab}{A}
 \DeclareMathOperator{\Nr}{N}
 \newcommand{\Bd}{\Lambda}
-\DeclareMathOperator{\PG}{G}
+\DeclareMathOperator{\PG}{\Gamma}
 \newcommand{\BM}{\bm{\mu}}
 \newcommand{\F}{\mathcal{F}}
 
@@ -126,9 +126,9 @@ The realizable setting is often unrealistic, in particular because it requires t
 
 The spirit of our approach is that the environment might be very complex, but at the same time it might posses some simple features, and it is these features that the forecast must capture. For example, if we consider a sequence of observations $\{o_n \in \{0,1\}\}_{n \in \Nats}$ s.t. $o_{2k+1}=o_{2k}$, then whatever is the behavior of the even observations $o_{2k}$, the property $o_{2k+1}=o_{2k}$ should asymptotically be assigned high probability by the forecast (this idea was discussed in \cite{Hutter_2009} as \enquote{open problem 4j}).
 
-Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PM(X)$ of probability measures on the space of sequences $X$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\MC$ is discrete.} set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
+Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PMO$ of probability measures on the space of sequences $\OO$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\MC$ is discrete.} set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
 
-The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $M \in \MC$ corresponds to a gambler that plays in the market. This gambler makes \enquote{bets} (continuous functions $f$ on $X$) s.t. assuming the environment is sampled from some $\mu \in M$, the expected value $\E_\mu[f] - \E_F[f]$ of the bet is positive. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit (the existence of such a pricing is established using the Kakutani-Glicksberg-Fan fixed point theorem). The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit, which implies the main result in turn.
+The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $M \in \MC$ corresponds to a gambler that plays in the market. This gambler makes \enquote{bets} (continuous functions $f$ on $\OO$) s.t. assuming the environment is sampled from some $\mu \in M$, the expected value $\E_\mu[f] - \E_F[f]$ of the bet is positive. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit. The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit, which implies the main result in turn.
 
 The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant forecaster}. Section~\ref{sec:prudent} introduces the concept of a \emph{prudent gambling strategy}, which is a technique for proving convergence theorems about dominant forecasters. Section~\ref{sec:construction} connects dominant forecasters with incomplete models and proves the main theorem.
 
@@ -137,7 +137,7 @@ The structure of the paper is as follows. Section~\ref{sec:learning} defines the
 
 $\Nats$ will denote the set of natural numbers $\{0, 1, 2 \ldots\}$.
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO(x)$. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM(X)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM(X)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO_n(x)$. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM(X)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM(X)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
 \begin{samepage}
 \begin{definition}
@@ -181,7 +181,7 @@ Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x(\{x\})=
 
 Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. We denote $\DKR^n:=\DKR^{\rho_n}$.
 
-Another ingredient we will need is a notion of regular conditional probability for incomplete models. For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem (in order to prove Lemma~\ref{lmm:update_incomplete}). In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in Y_n$ and $r > 0$, $\B_r(y)$ will denote the open ball of radius $r$ with center at $y$.
+Another ingredient we will need is a notion of regular conditional probability for incomplete models. For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem (in order to prove Lemma~\ref{lmm:update_incomplete}). In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in \Ob^n$ and $r > 0$, $\B_r(y)$ will denote the open ball of radius $r$ with center at $y$.
 
 \begin{samepage}
 \begin{definition}
@@ -246,7 +246,7 @@ The idea is to consider a collection of gamblers making bets against the forecas
 
 Given a compact Polish space $X$, $C(X)$ will denote the Banach space of continuous functions with uniform norm. We will also use the shorthand notation $\Gm(X):=C(\PM(X) \times X)$. Equivalently, $\Gm(X)$ can be regarded to be the space of continuous functions from $\PM(X)$ to $C(X)$, and we will curry implicitly in our notation.
 
-We regard $\GMO$ as the space of bets that can be made against a forecaster. Given $\beta \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \PMO$, the value of the bet $\beta$ is
+We regard $\GMO$ as the space of \emph{bets} that can be made against a forecaster. Given $\beta \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \OO$, the value of the bet $\beta$ is
 
 \begin{equation}
 \V{\beta}(\mu,x):=\beta(\mu,x) - \E_{x' \sim \mu}[\beta(\mu,x')]
@@ -346,7 +346,7 @@ Consider $X$ a compact Polish space and $\beta \in \Gm(X)$. Then, there exists $
 
 Define ${K: \PM(X) \rightarrow 2^{\PM(X)}}$ as follows:
 
-\[K(\mu):=\{\nu \in \PM(X) \mid \E_\nu[\beta(\mu)] = \max \beta(\mu)\}\]
+\[K(\mu):=\{\nu \in \PM(X) \mid \Sp{\nu} \subseteq \Argmax{}{\beta(\mu)}\}\]
 
 For any ${\mu}$, ${K}(\mu)$ is obviously convex and non-empty. It is also easy to see that the graph of $K$ in $\PM(X) \times \PM(X)$ is closed. Applying the Kakutani-Glicksberg-Fan theorem, we conclude that $K$ has a fixed point, i.e. $\mu \in \PM(X)$ s.t. $\mu \in K(\mu)$.
 \end{proof}
@@ -392,7 +392,7 @@ Applying the Kuratowski-Rill-Nardzewski measurable selection theorem, we get the
 We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
 
 \begin{equation}
-\bar{G}^F_n(y) := G^F_n(y,F_n(y))
+\bar{G}^F_n(y) := G^F_n(y;F_n(y))
 \end{equation}
 
 \begin{corollary}
@@ -510,7 +510,7 @@ $$\SVM \Bd_b G_m(y_{:m-1},\BM_{:m})=\SVM G_m(y_{:m-1},\BM_{:m}) > -b$$
 
 For ${m=m_0+1}$ and any $x \in y_{:m_0}\OO$, we have
 
-$$\SV \Bd_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) = \SV \Bd_b G_{m_0}(y_{:m_0-1},\BM_{:m_0};x) + (\V \B_b G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)$$
+$$\SV \Bd_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) = \SV \Bd_b G_{m_0}(y_{:m_0-1},\BM_{:m_0};x) + (\V \Bd_b G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)$$
 
 The first term only involves ${\Bd_b G_l}$ for ${l < m_0}$, allowing us to apply Proposition~\ref{prp:b_no_effect}. The second term is in the second case of the definition of $\Bd_b$.
 
@@ -580,11 +580,13 @@ Equation~\ref{eqn:prp_furgal_gambler__svm_b_zeta} follows from Proposition~\ref{
 
 Consider $x \in \OO$ s.t. condition~\ref{eqn:def_dominance__loss} holds. Denote
 
-\[b_0: = \max( -\min_{n \in \Nats} {\SVM G^F_{n}(x_{:n-1})},0)\]
+\[b_0: = \max( -\inf_{n \in \Nats} {\SVM G^F_{n}(x_{:n-1})},0)\]
 
 By Proposition~\ref{prp:b_no_effect}, for any $b > b_0$ we have $\Bd_b G^F = G^F$. We get
 
 \[\sup_{n \in \Nats} \max_{x' \in x_{:n-1}\OO} (\sum_{b \leq b_0} \zeta(b) {\SV \Bd_b G^F_{n}(x_{:n-1},x')} + \sum_{b > b_0} \zeta(b) \SV G^F_{n}(x_{:n-1},x')) < +\infty\]
+
+Applying Proposition~\ref{prp:b_stays_in_budget} to the first term
 
 \[\sup_{n \in \Nats} \max_{x' \in x_{:n-1}\OO} (-\sum_{b \leq b_0} \zeta(b) b + \sum_{b > b_0} \zeta(b) \SV G^F_{n}(x_{:n-1},x')) < +\infty\]
 
@@ -644,7 +646,7 @@ Define $\xi(k):=(k+1)^{-2}$.
 
 We have
 
-\[\sum_{k=0}^\infty \xi(k) \max(\SVM \Bd_{\zeta} G^k_n, 0) \geq -\frac{\pi^4}{36} \]
+\[\sum_{k=0}^\infty \xi(k) \min(\SVM \Bd_{\zeta} G^k_n, 0) \geq -\frac{\pi^4}{36} \]
 
 By Corollary~\ref{crl:dominate_one}, there is a forecaster $F^G$ that dominates $\Bd_\zeta G^\xi$. By Proposition~\ref{prp:combining_gamblers}, $F^G$ dominates $\Bd_\zeta G^k$ for all $k \in \Nats$. By Proposition~\ref{prp:frugal_gambler}, $F^G$ dominates $G^k$ for all $k \in \Nats$.
 \end{proof}
@@ -652,9 +654,9 @@ By Corollary~\ref{crl:dominate_one}, there is a forecaster $F^G$ that dominates 
 \section{Prudent Gambling Strategies}
 \label{sec:prudent}
 
-In this section we construct a tool for proving asymptotic convergence results about dominant forecasters. We start by introducing a notion of \enquote{prudent gambling,} which requires that gambles are only made when the expected payoff is a certain fraction of the risk. First, we need some notation.
+In this section we construct a tool for proving asymptotic convergence results about dominant forecasters. We start by introducing a notion of \enquote{prudent gambling,} which requires that bets are only made when the expected payoff is a certain fraction of the risk. First, we need some notation.
 
-Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K(x) \in \PM(Y)$. Given $\mu \in \PM(X)$, $\mu \ltimes K \in \PM(X \times Y)$ denotes the semidirect product of $\mu$ and $K$. $K_* \mu \in \PM(Y)$ denotes the pushforward of $\mu$ by $K$ (i.e. the pushforward of $\mu \ltimes K$ by the projection to $Y$). When $X,Y$ are Polish and $\pi: X \rightarrow Y$ is (Borel) measurable, $\mu \mid \pi: Y \M X$ is defined to be s.t. $\pi_* \mu \ltimes (\mu \mid \pi)$ is supported on the graph of $\pi$ and $(\mu \mid \pi)_* \pi_* \mu = \mu$ (i.e. $\mu \mid \pi$ is a regular conditional probability). By the disintegration theorem, $\mu \mid \pi$ exists and is defined up to coincidence $\pi_* \mu$-almost everywhere. Given $g: X \rightarrow \Reals$ measurable, we will also use the notation 
+Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K(x) \in \PM(Y)$. Given $\mu \in \PM(X)$, $\mu \ltimes K \in \PM(X \times Y)$ denotes the semidirect product of $\mu$ and $K$. $K_* \mu \in \PM(Y)$ denotes the pushforward of $\mu$ by $K$ (i.e. the pushforward of $\mu \ltimes K$ by the projection to $Y$). When $X,Y$ are Polish and $\pi: X \rightarrow Y$ is Borel measurable, $\mu \mid \pi: Y \M X$ is defined to be s.t. $\pi_* \mu \ltimes (\mu \mid \pi)$ is supported on the graph of $\pi$ and $(\mu \mid \pi)_* \pi_* \mu = \mu$ (i.e. $\mu \mid \pi$ is a regular conditional probability). By the disintegration theorem, $\mu \mid \pi$ exists and is defined up to coincidence $\pi_* \mu$-almost everywhere. Given $g: X \rightarrow \Reals$ measurable, we will also use the notation 
 
 \begin{equation}
 \E_{\mu}[g \mid \pi^{-1}(y)]:=\E_{(\mu \mid \pi)(y)}[g]
@@ -760,7 +762,7 @@ Clearly, ${\Sq{X^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second
 
 It is easy to see that ${\A{X^0_{N_{k+1}}-X^0_{N_k}}} \leq 3$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
 
-$$\Pr[X^0_{N_k} - X_0 < -k^{\frac{3}{4}}] \leq \exp(-\frac{k^{\frac{3}{2}}}{18k})=\exp(-\frac{k^{\frac{1}{2}}}{18})$$
+$$\Pr[X^0_{N_k} - X_0 < -k^{\frac{3}{4}}] \leq \exp(-\frac{k^{\frac{3}{2}}}{2 \cdot 3^2k})=\exp(-\frac{k^{\frac{1}{2}}}{18})$$
 
 It follows that
 
@@ -816,7 +818,7 @@ $$\A{X''_n - X'_n} = \A{\E[X_n \mid \F_n] - X'_n} = \A{\E[X_n - X'_n \mid \F_n]}
 
 $$\A{X''_n - X_n} \leq \A{X''_n - X'_n} + \A{X'_n - X_n} \leq 2M$$
 
-$$\forall n' \geq n: \A{X''_{n'}-X''_n} \leq \A{X_{n'}-X_n} + 4M \leq \sum_{m=n}^{n'-1} Y_m + 4M$$
+$$\forall m \geq n: \A{X''_{m}-X''_n} \leq \A{X_{m}-X_n} + 4M \leq \sum_{l=n}^{n-1} Y_l + 4M$$
 
 $$\E[X''_{n+1}-X''_n \mid \F_n] = \E[\E[X_{n+1} \mid \F_{n+1}]-\E[X_n \mid \F_n] \mid \F_n] = \E[X_{n+1}-X_n \mid \F_n] \geq \alpha Y_n$$
 
@@ -874,12 +876,6 @@ By the assumption, the first two terms total to ${\leq 1}$, yielding the desired
 \end{proof}
 
 As a final ingredient for the proof of Theorem~\ref{thm:prudent}, we will need another property of $\PG$, namely that when the total magnitude of all bets made is finite, the gambler eventually starts \enquote{playing} in every round.
-
-Given a gambler $G$, we define the measurable mappings $\overline{G}^F_n: \Ob^n \rightarrow \CO$ by
-
-\begin{equation}
-\overline{G}^F_n(y):=G^F_n(y;F_n(y))
-\end{equation}
 
 \begin{samepage}
 \begin{proposition}
