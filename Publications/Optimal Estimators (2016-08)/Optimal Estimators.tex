@@ -14,21 +14,10 @@
 \usepackage{bm}
 \usepackage{mathtools}
 
+\newsiamthm{example}{Example}
+
 \numberwithin{equation}{section}
-
-%\theoremstyle{definition}
-%\newtheorem{definition}{Definition}[section]
-\newtheorem{example}{Example}[section]
-
-%\theoremstyle{plain}
-%\newtheorem{theorem}{Theorem}[section]
-%\newtheorem{lemma}{Lemma}[section]
-%\newtheorem{proposition}{proposition}[section]
-%\newtheorem{corollary}{Corollary}[section]
-%\newtheorem{conjecture}{Conjecture}[section]
-
-%\theoremstyle{remark}
-%\newtheorem{note}{Note}[section]
+\numberwithin{theorem}{section}
 
 \newcommand{\Bool}{\{0,1\}}
 \newcommand{\Words}{{\Bool^*}}
@@ -114,10 +103,11 @@
 \newcommand{\Scheme}{\xrightarrow{\Gamma}}
 \newcommand{\MScheme}{\xrightarrow{\MGrow}}
 
+\headers{Optimal Polynomial-Time Estimators}{Vadim Kosoy}
 
 \title{Optimal Polynomial-Time Estimators: A Bayesian Notion of Approximation Algorithm}
-\author{Vadim Kosoy\thanks{Institution Affiliation, City, State
-    (\email{vadim.kosoy@intelligence.org}, \url{https://intelligence.org/}).}}
+\author{Vadim Kosoy\thanks{Independent, Petah Tikva, Israel
+    (\email{vadim.kosoy@intelligence.org}). Partially supported by the Machine Intelligence Research Institute, Berkeley, CA (\url{https://intelligence.org/}).}}
 
 
 \begin{document}
@@ -135,16 +125,15 @@ We introduce a new concept of approximation applicable to decision problems and 
 
 % REQUIRED
 \begin{keywords}
-  %Three(ish) keywords, separated by commas
+  complexity theory, average-case complexity, bounded rationality
 \end{keywords}
 
 % REQUIRED
 \begin{AMS}
-  %We need to enter AMS numbers here. http://www.ams.org/mathscinet/msc/msc2010.html
-  %68Q25, 68R10, 68U05
+  68Q15, 68Q87
 \end{AMS}
 
-\sloppy %%%There are a TON of overfull lines! Trying to fix them all in one go.
+\sloppy
 
 \section{Introduction}
 
@@ -4256,7 +4245,7 @@ Finally, we wish to express the hope that the present work will lead to incorpor
 
 \appendix
 
-\section{Appendix}
+\section{Hard-Core Predicates}
 
 We review the definitions of hard-core predicate and one-way function and state the Goldreich-Levin theorem.
 
