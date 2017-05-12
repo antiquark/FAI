@@ -222,7 +222,7 @@ Fix any $\MC \subseteq 2^{\PMO}$ countable. Then, there exists a forecaster $F^\
 
 \end{theorem}
 
-Note that $F^\MC$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice.
+Note that $F^\MC$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice. Intuitively, we can think of this choice as determining the duration of the future time period over which we need our forecast to be reliable.
 
 \section{Dominant Forecasters}
 \label{sec:garrabrant}
@@ -384,7 +384,7 @@ $$\Sp \nu \subseteq \Argmax{} \beta_y(\nu)$$
 
 It follows that ${(y,\beta,i_{y*}\nu) \in Z}$ and hence ${Z_{y\beta}}$ is non-empty.
 
-Consider any ${U \subseteq \PM(X)}$ open. Then, ${A_U:=(Y_{1} \times \Gm(X) \times U) \cap Z}$ is locally closed and in particular ${F_\sigma}$. Therefore, the image of ${A_U}$ under the projection to ${Y_{1} \times \Gm(X)}$ is also ${F_\sigma}$ and in particular Borel. 
+Consider any ${U \subseteq \PM(X)}$ open. Then, ${A_U:=(Y_{1} \times \Gm(X) \times U) \cap Z}$ is locally closed, and in particular, it is an ${F_\sigma}$ set. Therefore, the image of ${A_U}$ under the projection to ${Y_{1} \times \Gm(X)}$ is also ${F_\sigma}$ and in particular Borel. 
 
 Applying the Kuratowski-Rill-Nardzewski measurable selection theorem, we get the desired result.
 \end{proof}
@@ -1062,7 +1062,7 @@ $$\varphi(\nu) > \varphi(\mu_0) + r \varphi(\zeta) > \varphi(\mu_0) + r (\frac{3
 
 Taking $\delta$ to 0 we get $\varphi(\nu) \geq \varphi(\mu_0) + \frac{3}{4} r (r - r_0)$. Applying Lemma~\ref{lmm:double_dual} for $\epsilon = \frac{1}{16} r (r - r_0)$, we get $f \in \Lp(X,\rho)$ s.t.
 
-$$\N{f} \leq \frac{3}{4} (r - r_0) < r - r_0$$ 
+$$\N{f}_\rho \leq \frac{3}{4} (r - r_0) < r - r_0$$ 
 
 $$\E_\nu[f] \geq \varphi(\nu) - \frac{1}{16} r (r - r_0) \geq \varphi(\mu_0) + \frac{11}{16} r (r - r_0) \geq \E_{\mu_0}[f] +  \frac{5}{8} r (r - r_0) > \E_{\mu_0}[f] +  \frac{1}{2} r (r - r_0)$$
 \end{proof}
@@ -1093,14 +1093,14 @@ Then, there exists $\beta': U \rightarrow \Lp(X,\rho)$ continuous s.t. for all $
 
 Define $B: U \rightarrow 2^{\Lp(X,\rho)}$ by
 
-$$B(\mu):=\{f \in \Lp(X,\rho) \mid \N{f}_\rho < r_\mu - r_0,\, \inf_{\nu \in M} \E_\nu[f] - \E_\mu[f] > (r_\mu - r_0) r_\mu\}$$
+$$B(\mu):=\{f \in \Lp(X,\rho) \mid \N{f}_\rho < r_\mu - r_0,\, \inf_{\nu \in M} \E_\nu[f] - \E_\mu[f] > \frac{1}{2}(r_\mu - r_0) r_\mu\}$$
 
 By Lemma~\ref{lmm:separation}, for any $\mu \in U$, $B(\mu) \ne \varnothing$. Clearly, $B(\mu)$ is convex. Fix $f \in \Lp(X,\rho)$ and consider $B^{-1}(f):=\{\mu \in U \mid f \in B(\mu)\}$. Consider any $\mu_0 \in B^{-1}(f)$, and take $\epsilon > 0$ s.t.
 
 \begin{enumerate}[i.]
 
 \item $\N{f}_\rho < r_{\mu_0}  - \epsilon - r_0$
-\item $\inf_{\nu \in M} \E_\nu[f] - \E_{\mu_0}[f] -\epsilon > (r_{\mu_0} + \epsilon  - r_0) (r_{\mu_0} + \epsilon)$
+\item $\inf_{\nu \in M} \E_\nu[f] - \E_{\mu_0}[f] -\epsilon > \frac{1}{2}(r_{\mu_0} + \epsilon  - r_0) (r_{\mu_0} + \epsilon)$
 
 \end{enumerate}
 
@@ -1122,7 +1122,7 @@ Consider $X$ a compact Polish metric space, $M \subseteq \PM(X)$ convex and $r_0
 
 \begin{proof}
 
-Let $U \subseteq \PM(X)$ be defined by
+If $M$ is empty, the claim is trivial, so assume $M$ is non-empty. Let $U \subseteq \PM(X)$ be defined by
 
 $$U:=\{\mu \in \PM(X) \mid \DKR(\mu, M) > r_0\}$$
 
@@ -1159,13 +1159,13 @@ $Z'$ is closed since it is the projection of $Z$ and $\PM(X)$ is compact. The $M
 \begin{enumerate}[i.]
 
 \item $\N{\beta(\mu)} \leq \max(\DKR(\mu,\xi) - \epsilon, 0)$
-\item $\E_\nu[\beta(\mu)] - \E_\mu[\beta(\mu)] \geq \max(\DKR(\mu,M(y)) - \epsilon, 0) \DKR(\mu,M(y))$
+\item $\E_\nu[\beta(\mu)] - \E_\mu[\beta(\mu)] \geq \frac{1}{2}\max(\DKR(\mu,M(y)) - \epsilon, 0) \DKR(\mu,M(y))$
 
 \end{enumerate}
 
 Define $W \subseteq Y \times \Gm(X) \times \PM(X)^3$ by
 
-$$W:=\{(y,\beta,\mu,\nu,\xi) \in Y \times \Gm(X) \times \PM(X)^3 \mid \nu,\xi \in M(y) \land (y,\beta,\mu,\nu,\xi) \not\in Z'\}$$
+$$W:=\{(y,\beta,\mu,\nu,\xi) \in Y \times \Gm(X) \times \PM(X)^3 \mid \nu,\xi \in M(y),\, (y,\beta,\mu,\nu,\xi) \not\in Z'\}$$
 
 $W$ is locally closed and in particular it is an $F_\sigma$ set. Define $W' \subseteq Y \times \Gm(X)$ by
 
@@ -1190,7 +1190,7 @@ We remind that given $X,Y$ Polish, $\pi: X \rightarrow Y$ Borel measurable and $
 \begin{lemma}
 \label{lmm:update_incomplete}
 
-Consider $X$ a compact Polish space, $d \in \Nats$, $Y$ a compact subset of $R^d$, $\pi: X \rightarrow Y$ continuous and $\mu \in \PM(X)$. Then, for $\pi_*\mu$-almost any $y \in Y$
+Consider $X$ a compact Polish space, $d \in \Nats$, $Y$ a compact subset of $\Reals^d$, $\pi: X \rightarrow Y$ continuous and $\mu \in \PM(X)$. Then, for $\pi_*\mu$-almost any $y \in Y$
 
 \begin{equation}
 \lim_{r \rightarrow 0}{\mu \mid \pi^{-1}(\B_r(y)) = (\mu \mid \pi)(y)}
@@ -1205,23 +1205,23 @@ Let $\Sq{f_k \in C(X)}{k}$ be dense in $C(X)$. For any $y \in Y$ and $r > 0$ we 
 
 $$\E_{\mu}[f_k \mid \pi^{-1}(\B_r(y_0))] = \frac{\E_{\mu}[\chi^\pi_{y_0r} f_k]}{\mu(\pi^{-1}(\B_r(y_0)))} = \frac{\E_{y \sim \pi_* \mu}[\E_{\mu}[\chi^\pi_{y_0r} f_k \mid \pi^{-1}(y)]]}{\pi_*\mu(\B_r(y_0))} = \frac{\E_{y \sim \pi_* \mu}[\chi_{y_0r} \E_{\mu}[f_k \mid \pi^{-1}(y)]]}{\pi_*\mu(\B_r(y_0))}$$
 
-In particular, the above holds for $\pi_* \mu$-almost any $y_0 \in Y$. Applying the Lebesgue differentiation theorem, we conclude that for $\pi_* \mu$-almost any $y_0 \in Y$
+In particular, the above holds for $\pi_* \mu$-almost any $y_0 \in Y$. Applying the Lebesgue differentiation theorem, we conclude that there is $A \subseteq Y$ s.t. $\pi_*\mu(A) = 1$ and for any $y \in A$
 
-$$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\B_r(y_0))] = \E_{\mu}[f_k \mid \pi^{-1}(y_0)]$$
+$$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\B_r(y))] = \E_{\mu}[f_k \mid \pi^{-1}(y)]$$
 
-Now consider any $f \in C(X)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\N{f-f_k} < \epsilon$ and therefore
+Now consider any $f \in C(X)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\N{f-f_k} < \epsilon$ and therefore, for any $y \in A$
 
-$$\limsup_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y_0))] \leq \limsup_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\B_r(y_0))] + \epsilon = \E_{\mu}[f_k \mid \pi^{-1}(y_0)] + \epsilon  \leq \E_{\mu}[f \mid \pi^{-1}(y_0)] + 2\epsilon$$
+$$\limsup_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y))] \leq \limsup_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\B_r(y))] + \epsilon = \E_{\mu}[f_k \mid \pi^{-1}(y)] + \epsilon  \leq \E_{\mu}[f \mid \pi^{-1}(y)] + 2\epsilon$$
 
 Similarly
 
-$$\liminf_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y_0))] \geq \E_{\mu}[f \mid \pi^{-1}(y_0)] - 2\epsilon$$
+$$\liminf_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y))] \geq \E_{\mu}[f \mid \pi^{-1}(y)] - 2\epsilon$$
 
 Taking $\epsilon$ to 0, we conclude that
 
-$$\lim_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y_0))] = \E_{\mu}[f \mid \pi^{-1}(y_0)]$$
+$$\lim_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y))] = \E_{\mu}[f \mid \pi^{-1}(y)]$$
 
-$$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\B_r(y_0)) = (\mu \mid \pi)(y_0)$$
+$$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\B_r(y)) = (\mu \mid \pi)(y)$$
 \end{proof}
 
 We can now obtain a relation between the notions of savviness and prudence.
@@ -1239,9 +1239,9 @@ Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s
 
 Fix any $\mu^* \in M$. By Lemma~\ref{lmm:update_incomplete}, for $\PO_{n*} \mu$-almost any $y \in Y$
 
-$$\lim_{r \rightarrow 0} {\mu^* \mid \B_r(y)} = (\mu^* \mid \PO_n)(y)$$
+$$\lim_{r \rightarrow 0} {\mu^* \mid (\PO_n)^{-1}(\B_r(y))} = (\mu^* \mid \PO_n)(y)$$
 
-Therefore, ${(\mu^* \mid \PO_n)(y) \in M_y \subseteq M \mid y}$ (see Definition~\ref{def:update_incomplete}). Since $S_n(y)$ is $(M \mid y,\, \epsilon)$-savvy, for any $\mu \in \PM(X)$, denoting $r_{\mu y}:=\DKR^n(\mu,\,M \mid y)$:
+Therefore, ${(\mu^* \mid \PO_n)(y) \in M \mid y}$. Since $S_n(y)$ is $(M \mid y,\, \epsilon)$-savvy, for any $\mu \in \PM(X)$, denoting $r_{\mu y}:=\DKR^n(\mu,\,M \mid y)$:
 
 $$\E_{\mu^*}[S_n(y;\mu) \mid y\OO] - \E_{\mu}[S_n(y;\mu)] \geq \frac{1}{2} \max(r_{\mu y} - \epsilon, 0) r_{\mu y} \geq \frac{1}{2} \N{S_n(y;\mu)} r_{\mu y}$$
 
@@ -1358,7 +1358,7 @@ Then, there exists $\beta: X \rightarrow Y$ continuous s.t. for all $x \in X$, $
 
 \section*{Acknowledgments}
 
-We wish to thank Michael Greinecker for pointing out Theorem~\ref{thm:selection} to us. TBD
+We wish to thank Michael Greinecker for pointing out Theorem~\ref{thm:selection} to us.
 
 \bibliographystyle{unsrt}
 \bibliography{Dominant_Markets}
