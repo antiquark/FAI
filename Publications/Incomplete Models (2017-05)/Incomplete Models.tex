@@ -117,7 +117,7 @@ Forecasting future observations based on past observations is one of the fundame
 
 \begin{itemize}
 \item 
-In the \emph{realizable} setting, the guarantee is that if the observations are sampled from some $\mu \in \MC$, then $F^\MC$ converges to \enquote{ideal} forecast in some sense.
+In the \emph{realizable} setting, the guarantee is that if the observations are sampled from some $\mu \in \MC$, then $F^\MC$ converges to an \enquote{ideal} forecast in some sense.
 \item
 In the \emph{unrealizable} setting, the guarantee is that for \emph{any} sequence of observations, $F^\MC$ is asymptotically as good as the forecast produced by any $\mu \in \MC$.
 \end{itemize}
@@ -128,9 +128,11 @@ The spirit of our approach is that the environment might be very complex, but at
 
 Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PMO$ of probability measures on the space of sequences $\OO$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\MC$ is discrete.} set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
 
-The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, where each incomplete model $M \in \MC$ corresponds to a gambler that plays in the market. This gambler makes \enquote{bets} (continuous functions $f$ on $\OO$) s.t. assuming the environment is sampled from some $\mu \in M$, the expected value $\E_\mu[f] - \E_F[f]$ of the bet is positive. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit. The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit, which implies the main result in turn.
+The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, with a countable set of gamblers making bets. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit. The existence of such a pricing follows from the Kakutani-Glicksberg-Fan fixed point theorem and the Kuratowski-Rill-Nardzewski measurable selection theorem (the latter in order to show that the dependence on observation history can be made measurable). The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit.
 
-The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant forecaster}. Section~\ref{sec:prudent} introduces the concept of a \emph{prudent gambling strategy}, which is a technique for proving convergence theorems about dominant forecasters. Section~\ref{sec:construction} connects dominant forecasters with incomplete models and proves the main theorem.
+The above method is fairly general, but for our purposes, we associate with each incomplete model $M \in \MC$ a set of gamblers that make bets which are guaranteed to be profitable assuming the true environment $\mu$ satisfies the incomplete model (i.e. $\mu \in M$). The existence of these gamblers follows from the Hahn-Banach separation theorem (where the incomplete model defines the convex set in question) and selection theorems used to ensure that the choice of separating functional depends in a sufficiently \enquote{regular} way on the market pricing. In order to show that the forecaster we described satisfies the desired convergence property, we use some tools from martingale theory.
+
+The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant forecaster}. Section~\ref{sec:prudent} introduces the concept of a \emph{prudent gambling strategy}, which is a technique for proving convergence theorems about dominant forecasters. Section~\ref{sec:construction} describes the gamblers associated with incomplete models and proves the main theorem.
 
 \section{Learning Incomplete Models}
 \label{sec:learning}
@@ -1363,7 +1365,7 @@ This work was supported by the Machine Intelligence Research Institute in Berkel
 We wish to thank Michael Greinecker for pointing out Theorem~\ref{thm:selection} to us.
 
 \bibliographystyle{unsrt}
-\bibliography{Dominant_Markets}
+\bibliography{Incomplete_Models}
 
 \end{document}
 
