@@ -3,6 +3,7 @@
 *.blg
 *.ddf
 *.out
+*.thm
 *.pdf
 *.Backup*
 ~*.rtf
