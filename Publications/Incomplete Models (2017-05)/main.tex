@@ -1,39 +1,68 @@
-%&latex
-\documentclass[11pt]{article}
+%
+\documentclass[twoside,11pt]{article}
 
-\usepackage[letterpaper,margin=1in]{geometry}
-\usepackage[affil-it]{authblk}
-\usepackage{cite}
-\usepackage[unicode]{hyperref}
-\usepackage[utf8]{inputenc}
+% Any additional packages needed should be included after jmlr2e.
+% Note that jmlr2e.sty includes epsfig, amssymb, natbib and graphicx,
+% and defines many common macros, such as 'proof' and 'example'.
+%
+% It also sets the bibliographystyle to plainnat; for more information on
+% natbib citation styles, see the natbib documentation, a copy of which
+% is archived at http://www.jmlr.org/format/natbib.pdf
+
+\usepackage{jmlr2e}
+
+%\usepackage[letterpaper,margin=1in]{geometry}
+%\usepackage[affil-it]{authblk}
+%\usepackage{cite}
+\usepackage{hyperref}
+%\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{csquotes}
-\usepackage{amsmath,amssymb,amsthm}
+
+%Fix amsmath conflict
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsmath,amsthm}
+
 \usepackage{enumerate}
 \usepackage{commath}
 \usepackage{bm}
 \usepackage{chngcntr}
 \usepackage{apptools}
 
+% Definitions of handy macros can go here
+
+\newcounter{Theorem}
+\newtheorem{thm}{Theorem}
+\newcounter{Lemma}
+\newtheorem{lemm}{Lemma}
+\newcounter{Definition}
+\newtheorem{defn}{Definition}
+\newcounter{Corollary}
+\newtheorem{cor}{Corollary}
+\newcounter{Proposition}
+\newtheorem{prop}{Proposition}
+
+
 %\numberwithin{equation}{section}
 
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}%[section]
-\newtheorem{example}{Example}[section]
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}%[section]
+%\newtheorem{example}{Example}[section]
 
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}%[section]
-\newtheorem{lemma}{Lemma}%[section]
-\newtheorem{proposition}{Proposition}%[section]
-\newtheorem{corollary}{Corollary}%[section]
+%\theoremstyle{plain}
+%\newtheorem{theorem}{Theorem}%[section]
+%\newtheorem{lemma}{Lemma}%[section]
+%\newtheorem{proposition}{Proposition}%[section]
+%\newtheorem{corollary}{Corollary}%[section]
 %\newtheorem{conjecture}{Conjecture}[section]
 
 %\theoremstyle{remark}
 %\newtheorem{note}{Note}[section]
 
-\AtAppendix{\counterwithin{theorem}{section}}
+\AtAppendix{\counterwithin{thm}{section}}
 
-\newcommand{\Comment}[1]{}
+%\newcommand{\Comment}[1]{}
 
 \newcommand{\Nats}{\mathbb{N}}
 \newcommand{\Ints}{\mathbb{Z}}
@@ -46,6 +75,7 @@
 
 \newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
 \newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
 
 \newcommand{\I}{\operatorname{id}}
 \newcommand{\D}{\operatorname{diag}}
@@ -60,46 +90,70 @@
 \newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
 
 \newcommand{\M}{\xrightarrow{\textnormal{k}}}
-\DeclareMathOperator{\Gr}{graph}
+
 
 \newcommand{\PM}{\mathcal{P}}
 \newcommand{\Lp}{{\operatorname{Lip}}}
 
-\DeclareMathOperator{\Sp}{supp}
 
 \newcommand{\DTV}{\operatorname{d}_{\textnormal{TV}}}
 \newcommand{\DKR}{\operatorname{d}_{\textnormal{KR}}}
 
 \newcommand{\R}[1]{\N{#1}_{\text{R}}}
 
+\newcommand{\Bd}{\Lambda}
+\newcommand{\BM}{\bm{\mu}}
+\newcommand{\CO}{C(\OO)}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\GC}{\mathfrak{G}}
+\newcommand{\Gm}{\mathcal{B}}
+\newcommand{\GMO}{\Gm(\OO)}
+\newcommand{\MC}{\mathcal{H}}
 \newcommand{\Ob}{\mathcal{O}}
 \newcommand{\OO}{\Ob^\omega}
 \newcommand{\PO}{\pi^\Ob}
 \newcommand{\PMO}{\PM(\OO)}
-\newcommand{\MC}{\mathcal{H}}
-\newcommand{\Gm}{\mathcal{B}}
-\newcommand{\GMO}{\Gm(\OO)}
-\newcommand{\CO}{C(\OO)}
-\newcommand{\GC}{\mathfrak{G}}
+
 \DeclareMathOperator{\V}{V}
 \DeclareMathOperator{\SV}{\Sigma V}
 \DeclareMathOperator{\SVM}{\Sigma V_{\min}}
 \DeclareMathOperator{\SVX}{\Sigma V_{\max}}
 \DeclareMathOperator{\Ab}{A}
+\DeclareMathOperator{\Gr}{graph}
 \DeclareMathOperator{\Nr}{N}
-\newcommand{\Bd}{\Lambda}
 \DeclareMathOperator{\PG}{\Gamma}
-\newcommand{\BM}{\bm{\mu}}
-\newcommand{\F}{\mathcal{F}}
+\DeclareMathOperator{\Sp}{supp}
+
+
+
+
+
+
+
+% Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
+
+\jmlrheading{X}{2017}{X-X}{6/02}{xx/xx}{ABCDE}{Vadim Kosoy} %Filled in by JMLR
+
+% Short headings should be running head and authors last names
+
+\ShortHeadings{Forecasting Using Incomplete Models}{Vadim Kosoy}
+\firstpageno{1}
 
 \begin{document}
 
-%+Title
-\title{Forecasting using incomplete models}
-\author{Vadim Kosoy \\ \href{mailto:vadim.kosoy@intelligence.org}{vadim.kosoy@intelligence.org}}
-\date{}%\date{\today}
+\title{Forecasting Using Incomplete Models}
+
+\author{\name Vadim Kosoy \\ 
+        \email vadim.kosoy@intelligence.org \\
+        %\addr Machine Intelligence Research Institute\\
+        %2030 Addison Street, FL 7 \\
+        %Berkeley, CA 94704, USA
+       }
+
+\editor{Editors Names Here} %Filled in by JMLR
+
 \maketitle
-%-Title
+
 
 %+Abstract
 \begin{abstract}
@@ -107,9 +161,9 @@ We consider the task of forecasting an infinite sequence of future observation b
 \end{abstract}
 %-Abstract
 
-%+Contents
-%\tableofcontents
-%-Contents
+\begin{keywords}
+  forecasting, sequence prediction, online learning, unsupervised learning
+\end{keywords}
 
 \section{Introduction}
 
@@ -128,7 +182,9 @@ The spirit of our approach is that the environment might be very complex, but at
 
 Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PMO$ of probability measures on the space of sequences $\OO$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\MC$ is discrete.} set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
 
+\begin{sloppypar}
 The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, with a countable set of gamblers making bets. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit. The existence of such a pricing follows from the Kakutani-Glicksberg-Fan fixed point theorem and the Kuratowski-Rill-Nardzewski measurable selection theorem (the latter in order to show that the dependence on observation history can be made measurable). The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit.
+\end{sloppypar}
 
 The above method is fairly general, but for our purposes, we associate with each incomplete model $M \in \MC$ a set of gamblers that make bets which are guaranteed to be profitable assuming the true environment $\mu$ satisfies the incomplete model (i.e. $\mu \in M$). The existence of these gamblers follows from the Hahn-Banach separation theorem (where the incomplete model defines the convex set in question) and selection theorems used to ensure that the choice of separating functional depends in a sufficiently \enquote{regular} way on the market pricing. In order to show that the forecaster we described satisfies the desired convergence property, we use tools from martingale theory.
 
@@ -141,59 +197,59 @@ $\Nats$ will denote the set of natural numbers $\{0, 1, 2 \ldots\}$.
 
 Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO_n(x)$. Given $y \in \Ob^n$, $y\OO := (\PO_n)^{-1}(y)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM(X)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM(X)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM(X)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
-\begin{samepage}
-\begin{definition}
-
+%\begin{samepage}
+\begin{defn}
 A \emph{forecaster} $F$ is a family of measurable mappings
 
 \[\Sqn{F_n: \Ob^n \rightarrow \PMO}\]
 
 s.t. $\Sp {F_n(y)} \subseteq y\OO$.
 
-\end{definition}
-\end{samepage}
+\end{defn}
+%\end{samepage}
 
 Given a forecaster $F$ and $y \in \Ob^n$, $F_n(y)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n(y)} \subseteq y\OO$ reflects the obvious requirement of consistency with past observations.
 
 In order to formulate a claim about forecast convergence, we will need a metric on $\PMO$. Consider $\rho: \OO \times \OO \rightarrow \Reals$ a metrization of $\OO$. Let $\Lp(\OO,\rho)$ be the Banach space of $\rho$-Lipschitz functions on $\OO$, equipped with the norm
 
-\begin{equation}
+\begin{equation*}
 \N{f}_\rho:=\max_{x}{\A{f(x)}} + \sup_{x \ne y} \frac{\A{f(x)-f(y)}}{\rho(x,y)}
-\end{equation}
+\end{equation*}
 
 $\PMO$ can be regarded as a compact subset of the dual space $\Lp(\OO,\rho)'$, yielding the following metrization of $\PMO$:
 
-\begin{equation}
+\begin{equation*}
 \DKR^\rho(\mu,\nu):=\sup_{\N{f}_\rho \leq 1}{(\E_\mu[f] - \E_\nu[f])}
-\end{equation}
+\end{equation*}
 
 We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is slightly different from the conventional definition but strongly equivalent. Other names used in the literature for the strongly equivalent metric are \enquote{1st Wassertein metric} and \enquote{earth mover's distance.}}.
 
 Fix any $x \in \OO$. It is easy to see that
 
-\begin{equation}
+\begin{equation*}
 \lim_{n \rightarrow \infty} \max_{x' \in x_{:n}\OO} \rho(x', x) = 0
-\end{equation}
+\end{equation*}
 
 Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x(\{x\})=1$. It follows that for any sequence $\Sqn{\mu_n \in \PMO}$ s.t. $\Sp{\mu_n} \subseteq x_{:n}\OO$
 
-\begin{equation}
+\begin{equation*}
 \lim_{n \rightarrow \infty} \DKR^\rho(\mu_n, \delta_x) = 0
-\end{equation}
+\end{equation*}
 
 Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. We denote $\DKR^n:=\DKR^{\rho_n}$.
 
 Another ingredient we will need is a notion of regular conditional probability for incomplete models. For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem (in order to prove Lemma~\ref{lmm:update_incomplete}). In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in \Ob^n$ and $r > 0$, $\B_r(y)$ will denote the open ball of radius $r$ with center at $y$.
 
 \begin{samepage}
-\begin{definition}
+\begin{defn}
 \label{def:update_incomplete}
 
 Consider any $M \subseteq \PMO$. For each $n \in \Nats$, we define $M \mid \Ob^n$ to be the minimal subset of $\Ob^n \times \PMO$ with the following properties:
 
 \begin{enumerate}[i.]
-
+\begin{sloppypar}
 \item If $y \in \Ob^n$, $\mu \in \PMO$ and $\nu \in M$ are s.t. $y \in \Sp \PO_{n*}\nu$ and $\mu = \lim_{r \rightarrow 0}{(\nu \mid (\PO_n)^{-1}(\B_r(y)))}$, then $(y,\mu) \in M \mid \Ob^n$. Here, $\nu \mid (\PO_n)^{-1}(\B_r(y))$ is the conditional probability measure.
+\end{sloppypar}
 \item For each $y \in \Ob^n$, the set $M \mid y:=\{\mu \in \PMO \mid (y,\mu) \in M \mid \Ob^n\}$ is convex.
 \item $M \mid \Ob^n$ is closed.
 
@@ -201,18 +257,18 @@ Consider any $M \subseteq \PMO$. For each $n \in \Nats$, we define $M \mid \Ob^n
 
 It is easy to see that a minimal set with these properties always exists and is unique.
 
-\end{definition}
+\end{defn}
 \end{samepage}
 
 We are now ready to formulate the main result.
 
 Given a metric space $X$ with metric $\rho: X \times X \rightarrow \Reals$, $x \in X$ and $A \subseteq X$, we will use the notation
 
-\begin{equation}
+\begin{equation*}
 \rho(x,A):=\inf_{y \in A} \rho(x,y)
-\end{equation}
+\end{equation*}
 
-\begin{theorem}
+\begin{thm}
 \label{thm:main}
 
 Fix any $\MC \subseteq 2^{\PMO}$ countable. Then, there exists a forecaster $F^\MC$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
@@ -222,7 +278,7 @@ Fix any $\MC \subseteq 2^{\PMO}$ countable. Then, there exists a forecaster $F^\
 \lim_{n \rightarrow 0} \DKR^n(F^\MC_n(x_{:n}),\, M \mid x_{:n}) = 0
 \end{equation}
 
-\end{theorem}
+\end{thm}
 
 Note that $F^\MC$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice. Informally, we can think of this choice as determining the duration of the future time period over which we need our forecast to be reliable.
 
@@ -250,21 +306,21 @@ Given a compact Polish space $X$, $C(X)$ will denote the Banach space of continu
 
 We regard $\GMO$ as the space of \emph{bets} that can be made against a forecaster. Given $\beta \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \OO$, the value of the bet $\beta$ is
 
-\begin{equation}
+\begin{equation*}
 \V{\beta}(\mu,x):=\beta(\mu,x) - \E_{x' \sim \mu}[\beta(\mu,x')]
-\end{equation}
+\end{equation*}
 
 Note that this defines a bounded linear operator $\V: \Gm(X) \rightarrow \Gm(X)$.
 
 $C(X)$ and $\Gm(X)$ will also be regarded as a measurable spaces, using the $\sigma$-algebra of Borel sets. We remind that the $\sigma$-algebra on $\Ob^n$ is the algebra of \emph{universally measurable} sets.
 
-\begin{definition}
+\begin{defn}
 
 A \emph{gambler} is a family of measurable mappings
 
 \[\Sqn{G_n : \Ob^n \times \PMO^n \rightarrow \Gm(\OO)}\]
 
-\end{definition}
+\end{defn}
 
 A gambler is considered to observe a forecaster and bet against it. Given $y \in \Ob^n$ and $\BM \in \PMO^n$, $G_n(y,\BM)=\beta$ means that, if $y$ are the first $n$ observations and $(\BM,\nu)$ are the first $n + 1$ forecasts (where $\nu$ is the forecast made after observing all of $y$), the gambler will make bet $\beta$.
 
@@ -281,29 +337,29 @@ Here, $y_{:m}$ denotes the projection of $y$ to $\Ob^m$.
 
 We define the measurable mappings $\overline{\V G}^F_n: \Ob^n \rightarrow \CO$ and $\SV G^F_n: \Ob^{n-1} \rightarrow \CO$ by
 
-\begin{equation}
+\begin{equation*}
 \overline{\V G}^F_n(y):=(\V G^F_n(y))(F_n(y))
-\end{equation}
+\end{equation*}
 
-\begin{equation}
+\begin{equation*}
 \SV G^F_n(y) := \sum_{m < n} \overline{\V G}^F_m(y_{:m})
-\end{equation}
+\end{equation*}
 
 In the definition of $\SV G^F_0$, $\Ob^{-1}$ is considered to be equal to $\Ob^0$ (i.e. the one point space).
 
 We define the measurable mappings $\SVM G^F_n, \SVX G^F_n: \Ob^{n-1} \rightarrow \Reals$ by
 
-\begin{equation}
+\begin{equation*}
 \SVM G^F_n(y):=\min_{y\OO} \SV G^F_n
-\end{equation}
+\end{equation*}
 
-\begin{equation}
+\begin{equation*}
 \SVX G^F_n(y):=\max_{y\OO} \SV G^F_n
-\end{equation}
+\end{equation*}
 
 We are now ready to state the formally state the definition of \enquote{dominance} alluded to in the beginning of the section.
 
-\begin{definition}
+\begin{defn}
 \label{def:dominance}
 
 Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ when for any $x \in \OO$, if condition~\ref{eqn:def_dominance__loss} holds then condition~\ref{eqn:def_dominance__gain} holds:
@@ -318,31 +374,31 @@ Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ 
 \sup_{n \in \Nats} {\SVX G^F_{n}(x_{:n-1})} < +\infty
 \end{equation}
 
-\end{definition}
+\end{defn}
 
 The following is the main theorem of this section, which is our analogue of Theorem 3.6.1 from \cite{Garrabrant_2016}.
 
-\begin{theorem}
+\begin{thm}
 \label{thm:exist_dominant}
 
 Let $\Sq{G^k}{k}$ be a family of gamblers. Then, there exists a forecaster $F^G$ s.t. for any $k \in \Nats$, $F$ dominates $G^k$.
 
-\end{theorem}
+\end{thm}
 
 The rest of the section is devoted to proving Theorem~\ref{thm:exist_dominant}. The proof will consist of two steps. First we show that for any \emph{single} gambler, there is a dominant forecaster. Then, given a countable set $\GC$ of gamblers, we construct a single gambler s.t. dominating this gambler implies dominating all gamblers in the set.
 
 The following lemma shows that for any bet, there is a forecast which makes the bet unwinnable.
 
-\begin{lemma}
+\begin{lemm}
 \label{lmm:unwinnable}
 
 Consider $X$ a compact Polish space and $\beta \in \Gm(X)$. Then, there exists $\mu \in \PM(X)$ s.t.
 
-\begin{equation}
+\begin{equation*}
 \Sp \mu \subseteq \Argmax{} \beta(\mu)
-\end{equation}
+\end{equation*}
 
-\end{lemma}
+\end{lemm}
 
 \begin{proof}
 
@@ -355,16 +411,16 @@ For any ${\mu}$, ${K}(\mu)$ is obviously convex and non-empty. It is also easy t
 
 Next, we show that the probability measure of Lemma~\ref{lmm:unwinnable} can be made to depend measurably on past observations and the bet.
 
-\begin{lemma}
+\begin{lemm}
 \label{lmm:measurable_unwinnable}
 
 Fix $Y_{1,2}$ compact Polish spaces and denote $X:=Y_1 \times Y_2$. Then, there exists a Borel measurable mapping $\alpha: Y_1 \times \Gm(X) \rightarrow \PM(X)$ s.t. for any $y \in Y_1$ and $\beta \in \Gm(X)$
 
-\begin{equation}
+\begin{equation*}
 \Sp \alpha(y,\beta) \subseteq \Argmax{y \times Y_2} \beta(\alpha(y,\beta))
-\end{equation}
+\end{equation*}
 
-\end{lemma}
+\end{lemm}
 
 \begin{proof}
 
@@ -378,7 +434,9 @@ $${Z:=Z_1 \cap Z_2 =\{(y,\beta,\mu) \in Y_1 \times \Gm(X) \times \PM(X) \mid \Sp
 
 We can view ${Z}$ as the graph of a \emph{multivalued} mapping from ${Y_1 \times \Gm(X)}$ to ${\PM(X)}$ (i.e a mapping from ${Y_1 \times \Gm(X)}$ to $2^{\PM(X)}$). We will now show that this multivalued mapping has a \emph{selection}, i.e. a single-valued Borel measurable mapping whose graph is a subset of $Z$. Obviously, the selection is the desired ${\alpha}$.
 
-Fix $\rho$ a metrization of $Y_1$. $Z_1$ is the vanishing locus of the continuous function $\E_{(y_1, y_2) \sim \mu}[\rho(y_1,y)]$. $Z_2$ is the vanishing locus of the continuous function $\E_\mu[\beta(\mu)] - \max_{y_2 \in Y_2} \beta(\mu,y,y_2)$. Therefore $Z_{1,2}$ are closed and so is $Z$. In particular, the fiber ${Z_{y\beta}}$ of ${Z}$ over any ${(y,\beta) \in Y_1 \times \Gm(X)}$ is also closed. 
+\begin{sloppypar}
+Fix $\rho$ a metrization of $Y_1$. $Z_1$ is the vanishing locus of the continuous function $\E_{(y_1, y_2) \sim \mu}[\rho(y_1,y)]$. $Z_2$ is the vanishing locus of the continuous function $\E_\mu[\beta(\mu)] - \max_{y_2 \in Y_2} \beta(\mu,y,y_2)$. Therefore $Z_{1,2}$ are closed and so is $Z$. In particular, the fiber ${Z_{y\beta}}$ of ${Z}$ over any ${(y,\beta) \in Y_1 \times \Gm(X)}$ is also closed.
+\end{sloppypar}
 
 For any ${y \in Y_1}$, ${\beta \in \Gm(X)}$, define ${i_y: Y_2 \rightarrow X}$ by ${i_y(y_2):=(y,y_2)}$ and ${\beta_y \in \Gm(Y_{2})}$ by $\beta_y(\nu,y'):=\beta(i_{y*}\nu,y,y')$. Applying Lemma~\ref{lmm:unwinnable} to ${\beta_y}$ we get ${\nu \in \PM(Y_2)}$ s.t.
 
@@ -393,20 +451,20 @@ Applying the Kuratowski-Rill-Nardzewski measurable selection theorem, we get the
 
 We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
 
-\begin{equation}
+\begin{equation*}
 \bar{G}^F_n(y) := G^F_n(y;F_n(y))
-\end{equation}
+\end{equation*}
 
-\begin{corollary}
+\begin{cor}
 \label{crl:dominate_one}
 
 Let $G$ be a gambler. Then, there exists a forecaster $F$ s.t. for all $n \in \Nats$ and $y \in \Ob_n$
 
-\begin{equation}
+\begin{equation*}
 \Sp F_n(y) \subseteq \Argmax{y\OO} \bar{G}^F_n
-\end{equation}
+\end{equation*}
 
-\end{corollary}
+\end{cor}
 
 \begin{proof}
 
@@ -419,50 +477,50 @@ In particular, the forecaster $F$ of Corollary~\ref{crl:dominate_one} dominates 
 
 We will now introduce a way to transform a gambler in a way that enforces a \enquote{finite spending budget.} Consider a gambler $G$ and fix $b > 0$ (the size of the \enquote{budget}). Define the measurable functions $\SV G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \CO$ by
 
-\begin{equation}
+\begin{equation*}
 \SV G_n(y,\BM) := \sum_{m < n} (\V G_m(y_{:m},\BM_{:m}))(\BM_m)
-\end{equation}
+\end{equation*}
 
 Here, $\BM_{:m}$ denotes the projection of $\BM \in \PMO^n$ to $\PMO^m$ that takes components $l < m$ and $\BM_m$ denotes the $m$-th component of $\BM$. Define the measurable functions $\SVM G_n, \SVX G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \Reals$ by
 
-\begin{equation}
+\begin{equation*}
 \SVM G_n(y,\BM) := \min_{y\OO}{\SV G_n(y,\BM)}
-\end{equation}
+\end{equation*}
 
-\begin{equation}
+\begin{equation*}
 \SVX G_n(y,\BM) := \max_{y\OO}{\SV G_n(y,\BM)}
-\end{equation}
+\end{equation*}
 
 Define the measurable sets
 
-\begin{equation}
+\begin{equation*}
 \Ab_b G_n:=\{(y,\BM) \in \Ob^{n-1} \times \PMO^n \mid \SVM G_n(y,\BM) > -b\}
-\end{equation}
+\end{equation*}
 
 Note that $\Ab_b G_n \times \Ob_n$ is a measurable subset of $\Ob^n \times \PMO^n$ and in particular can be regarded as a measurable space in itself. Define the measurable functions $\Nr_b G_n: \Ab_b G_n \times \Ob_n \rightarrow C(\PMO)$ by
 
-\begin{equation}
+\begin{equation*}
 \Nr_b G_n(y,\BM;\nu):=\max(1,\max_{y\OO} \frac{-(\V G_n(y,\BM))(\nu)}{\SV G_n(y_{:n-1},\BM)+b})^{-1}
-\end{equation}
+\end{equation*}
 
 Finally, define the gambler $\Bd_b G$ as follows
 
-\begin{equation}
+\begin{equation*}
 \Bd_b G_n(y,\BM):=\begin{cases} 0 \text{ if } \exists m < n: (y_{:m},\BM_{:m+1}) \not\in \Ab_b G_{m+1} \\ \Nr_b G_n(y,\BM) \cdot G_n(y, \BM) \text{ otherwise} \end{cases}
-\end{equation}
+\end{equation*}
 
 The next proposition shows that as long as $G$ stays \enquote{within budget $b$,} the operator $\Bd_b$ has no effect. 
 
-\begin{proposition}
+\begin{prop}
 \label{prp:b_no_effect}
 
 Consider any gambler $G$, $b > 0$, $n \in \Nats$, $y \in \Ob^{n - 1}$ and $\BM \in \PMO^n$. Assume that for all $m < n$, $(y_{:m},\BM_{:m+1}) \in \Ab_b G_{m+1}$. Then, for all $m < n$
 
-\begin{equation}
+\begin{equation*}
 \Bd_b G_m(y_{:m},\BM_{:m};\BM_m)=G_m(y_{:m},\BM_{:m};\BM_m)
-\end{equation}
+\end{equation*}
 
-\end{proposition}
+\end{prop}
 
 \begin{proof}
 
@@ -487,16 +545,16 @@ Since we are in the second case in the definition of ${\Bd_b G_m(y_{:m},\BM_{:m}
 
 Now, we show that $\Bd_b G$ indeed never \enquote{goes over budget.}
 
-\begin{proposition}
+\begin{prop}
 \label{prp:b_stays_in_budget}
 
 Consider any gambler $G$ and $b > 0$. Then, for any $n \in \Nats$, $y \in \Ob^{n-1}$ and $\BM \in \PMO^n$
 
-\begin{equation}
+\begin{equation*}
 \SVM \Bd_b G_n(y,\BM) \geq -b
-\end{equation} 
+\end{equation*} 
 
-\end{proposition}
+\end{prop}
 
 \begin{proof}
 
@@ -512,7 +570,9 @@ $$\SVM \Bd_b G_m(y_{:m-1},\BM_{:m})=\SVM G_m(y_{:m-1},\BM_{:m}) > -b$$
 
 For ${m=m_0+1}$ and any $x \in y_{:m_0}\OO$, we have
 
-$$\SV \Bd_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) = \SV \Bd_b G_{m_0}(y_{:m_0-1},\BM_{:m_0};x) + (\V \Bd_b G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)$$
+\begin{multline*}
+\SV \Bd_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) = \SV \Bd_b G_{m_0}(y_{:m_0-1},\BM_{:m_0};x) + \\ (\V \Bd_b G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)
+\end{multline*}
 
 The first term only involves ${\Bd_b G_l}$ for ${l < m_0}$, allowing us to apply Proposition~\ref{prp:b_no_effect}. The second term is in the second case of the definition of $\Bd_b$.
 
@@ -526,16 +586,18 @@ If ${x}$ is s.t. ${(\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x) \geq 0}$, then
 
 If ${x}$ is s.t. ${(\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x) < 0}$, then, by the definition of $\Nr_b$
 
-\begin{align*}
-\SV \Bd_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) \geq &\SV G_{m_0}(y_{:m_0-1},\BM_{:m_0};x)+ \\
-&\frac{\SV G_{m_0}(y_{:m_0-1},\BM_{:m_0};x) + b}{-(\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)} \cdot (\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)
-\end{align*}
+\begin{multline*}
+\SV \Bd_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) \geq \SV G_{m_0}(y_{:m_0-1},\BM_{:m_0};x)+ \\
+\frac{\SV G_{m_0}(y_{:m_0-1},\BM_{:m_0};x) + b}{-(\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)} \cdot (\V G_{m_0}(y_{:m_0},\BM_{:m_0}))(\BM_{m_0},x)
+\end{multline*}
 
 $$\SV \Bd_b G_{m_0+1}(y_{:m_0},\BM_{:m_0+1};x) \geq -b$$
 
 Finally, consider ${m > m_0 + 1}$.
 
-$$\SV \Bd_b G_{m}(y_{:m-1},\BM_{:m};x) = \SV \Bd_b G_{m-1}(y_{:m-2},\BM_{:m-1};x) + (\V \Bd_b G_{m-1}(y_{:m-1},\BM_{:m-1}))(\BM_{m-1},x)$$
+\begin{multline*}
+\SV \Bd_b G_{m}(y_{:m-1},\BM_{:m};x) = \SV \Bd_b G_{m-1}(y_{:m-2},\BM_{:m-1};x) + \\ (\V \Bd_b G_{m-1}(y_{:m-1},\BM_{:m-1}))(\BM_{m-1},x)
+\end{multline*}
 
 The second term is in the first case of the definition of $\Bd_b$ and therefore vanishes.
 
@@ -548,20 +610,20 @@ $$\SVM \Bd_b G_{m}(y_{:m-1},\BM_{:m}) \geq \SVM \Bd_b G_{m-1}(y_{:m-2},\BM_{:m-1
 
 Next, we show that for any gambler there is \enquote{limited budget} gambler s.t. any forecaster that dominates it also dominates the original gambler.
 
-\begin{proposition}
+\begin{prop}
 \label{prp:frugal_gambler}
 
 Let $G$ be a gambler and $\zeta: \Nats \rightarrow (0,1]$ be s.t.
 
-\begin{equation}
+\begin{equation*}
 b_\zeta := \sum_{b=0}^\infty \zeta(b) b < \infty
-\end{equation}
+\end{equation*}
 
 Define the gambler $\Bd_\zeta G$ by
 
-\begin{equation}
+\begin{equation*}
 \Bd_\zeta G := \sum_{b = 1}^\infty \zeta(b) \Bd_b G
-\end{equation}
+\end{equation*}
 
 Then
 
@@ -572,7 +634,7 @@ Then
 
 Moreover, if $F$ is a forecaster that dominates $\Bd_\zeta G$ then it also dominates $G$.
 
-\end{proposition}
+\end{prop}
 
 \begin{proof}
 
@@ -597,7 +659,7 @@ Applying Proposition~\ref{prp:b_stays_in_budget} to the first term
 
 The last ingredient we need to prove Theorem~\ref{thm:exist_dominant} is the step from one gambler to a countable set of gamblers.
 
-\begin{proposition}
+\begin{prop}
 \label{prp:combining_gamblers}
 
 Let $\Sq{G^k}{k}$ be a family of gamblers, $\xi: \Nats \rightarrow (0,1]$ and $b_\xi > 0$ s.t.
@@ -609,13 +671,13 @@ Let $\Sq{G^k}{k}$ be a family of gamblers, $\xi: \Nats \rightarrow (0,1]$ and $b
 
 Define the gambler $G^\xi$ by
 
-\begin{equation}
+\begin{equation*}
 G^\xi_n := \sum_{k = 0}^n \xi(k) G^k_n
-\end{equation}
+\end{equation*}
 
 Consider a forecaster $F$ that dominates $G^\xi$. Then, $F$ dominates $G^k$ for all $k \in \Nats$.
 
-\end{proposition}
+\end{prop}
 
 \begin{proof}
 
@@ -660,44 +722,44 @@ In this section we construct a tool for proving asymptotic convergence results a
 
 Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K(x) \in \PM(Y)$. Given $\mu \in \PM(X)$, $\mu \ltimes K \in \PM(X \times Y)$ denotes the semidirect product of $\mu$ and $K$. $K_* \mu \in \PM(Y)$ denotes the pushforward of $\mu$ by $K$ (i.e. the pushforward of $\mu \ltimes K$ by the projection to $Y$). When $X,Y$ are Polish and $\pi: X \rightarrow Y$ is Borel measurable, $\mu \mid \pi: Y \M X$ is defined to be s.t. $\pi_* \mu \ltimes (\mu \mid \pi)$ is supported on the graph of $\pi$ and $(\mu \mid \pi)_* \pi_* \mu = \mu$ (i.e. $\mu \mid \pi$ is a regular conditional probability). By the disintegration theorem, $\mu \mid \pi$ exists and is defined up to coincidence $\pi_* \mu$-almost everywhere. Given $g: X \rightarrow \Reals$ measurable, we will also use the notation 
 
-\begin{equation}
+\begin{equation*}
 \E_{\mu}[g \mid \pi^{-1}(y)]:=\E_{(\mu \mid \pi)(y)}[g]
-\end{equation}
+\end{equation*}
 
 We remind that $\PO_n$ is the projection mapping from $\OO$ to $\Ob^n$ and $y\OO:= (\PO_{n})^{-1}(y)$.
 
-\begin{definition}
+\begin{defn}
 
 A \emph{gambling strategy} is a uniformly bounded family of measurable mappings
 
 \[\Sqn{S_n: \Ob^n \rightarrow \GMO}\]
 
-\begin{definition}
+\begin{defn}
 \label{def:prudent}
 
 Given a gambling strategy $S$ and $\mu^* \in \PMO$, $S$ is said to be \emph{$\mu^*$-prudent} when there is $\alpha > 0$ s.t. for any $n \in \Nats$, $\PO_{n*} \mu^*$-almost any $y \in \Ob^n$ and any $\mu \in \PMO$
 
-\begin{equation}
+\begin{equation*}
 \E_{\mu^*}[S_n(y; \mu) \mid y\OO] - \E_\mu[S_n(y; \mu)] \geq \alpha (\max_{y\OO}{S_n(y; \mu)} - \min_{y\OO}{S_n(y; \mu)})
-\end{equation}
+\end{equation*}
 
-\end{definition}
+\end{defn}
 
-\end{definition}
+\end{defn}
 
-The \enquote{correct} way for a gambler to use a prudent gambling strategy is not employing it all the time: in order to avoid running out of budget, a gambler shouldn’t place too many bets simultaneously. To address this, we define a gambler that \enquote{plays} (employs the given strategy) only when all previous bets are close to being settled.
+The \enquote{correct} way for a gambler to use a prudent gambling strategy is not employing it all the time: in order to avoid running out of budget, a gambler shouldn't place too many bets simultaneously. To address this, we define a gambler that \enquote{plays} (employs the given strategy) only when all previous bets are close to being settled.
 
-\begin{definition}
+\begin{defn}
 
 Consider any gambling strategy $S$. We define the gambler $\PG{S}$ recursively as follows
 
-\begin{equation}
+\begin{equation*}
 \PG{S}_n(y,\BM):=\begin{cases} S_n(y) \text{ if } {\SVX{\PG{S}}_n(y_{:n-1},\BM)}-{\SVM{\PG{S}}_n(y_{:n-1},\BM)} \leq 1 \\ 0 \text{ otherwise} \end{cases}
-\end{equation}
+\end{equation*}
 
-\end{definition}
+\end{defn}
 
-\begin{theorem}
+\begin{thm}
 \label{thm:prudent}
 
 Consider $\mu^* \in \PMO$, $S$ a $\mu^*$-prudent gambling strategy and a forecaster $F$. Assume $F$ dominates $\PG{S}$. Then, for $\mu^*$-almost any $x \in \OO$
@@ -707,7 +769,7 @@ Consider $\mu^* \in \PMO$, $S$ a $\mu^*$-prudent gambling strategy and a forecas
 \sum_{n=0}^\infty (\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))]) < +\infty
 \end{equation}
 
-\end{theorem}
+\end{thm}
 
 In particular, the terms of the series on the left hand-side converge to 0 (they are non-negative since $S$ is $\mu^*$-prudent).
 
@@ -716,7 +778,7 @@ The rest of the section is dedicated to proving Theorem~\ref{thm:prudent}.
 We start by showing, in a more abstract setting (not specific to forecasting), that for any sequences of bets that is \enquote{prudent} in the sense that the expected payoff is bounded below by a fixed fraction of the risk (= bet magnitude), the probability to lose an infinite amount vanishes and, moreover, it holds with probability 1 that if the total bet magnitude is unbounded then there is infinite gain.
 
 \begin{samepage}
-\begin{lemma}
+\begin{lemm}
 \label{lmm:prudent}
 
 Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow [0,M]}$ stochastic processes adapted to $\F$ (i.e. $X_n$ and $Y_n$ are $\F_n$-measurable). Assume the following conditions\footnote{Equalities and inequalities between random variables are implicitly understood as holding almost surely.}:
@@ -738,7 +800,7 @@ Then, for almost all $\omega \in \Omega$
 
 \end{enumerate}
 
-\end{lemma}
+\end{lemm}
 \end{samepage}
 
 \begin{proof}
@@ -780,11 +842,13 @@ It is easy to see that if $\omega \in \Omega$ is s.t. $\sum_{n=0}^\infty Y_n(\om
 
 $$\Pr[\sum_{n=0}^\infty  Y_n = \infty \implies \exists k \in \Nats \forall l > k: X_{N_l} - X_0 \geq \alpha l - l^{\frac{3}{4}}]=1$$
 
+\begin{sloppypar}
 To complete the proof, observe that if ${\omega \in \Omega}$ is s.t. ${\inf_n X_n(\omega) = -\infty}$ then ${\sum_{n=0}^\infty  Y_n(\omega) = \infty}$ (since ${\A{X_n(\omega) - X_0(\omega)} \leq \sum_{m=0}^{n-1} Y_n(\omega) + 1}$).
+\end{sloppypar}
 \end{proof}
 
 \begin{samepage}
-\begin{corollary}
+\begin{cor}
 \label{crl:prudent}
 
 Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X'_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow [0,M]}$ stochastic processes adapted to $\F$ and $\Sqn{X_n: \Omega \rightarrow \Reals}$ an arbitrary stochastic process. Assume the following conditions:
@@ -807,7 +871,7 @@ Then, for almost all $\omega \in \Omega$
 
 \end{enumerate}
 
-\end{corollary}
+\end{cor}
 \end{samepage}
 
 \begin{proof}
@@ -830,18 +894,18 @@ Applying Lemma~\ref{lmm:prudent} to $X''$ and using ${\A{X''_n - X_n} \leq 2M}$,
 We will also need the following property of the operator $\PG$, reflecting that at any given moment, the uncertainty of the gambler $\PG{S}$ about the total worth of its bets is bounded.
 
 \begin{samepage}
-\begin{proposition}
+\begin{prop}
 \label{prp:pg_bounded_uncertainty}
 
 Given any gambling strategy $S$, we have
 
-\begin{equation}
+\begin{equation*}
 \SV \PG{S}_n - \SVM \PG{S}_n \leq 2 \max_{m < n} \sup_{y \in \Ob^m} \N{S_m(y)} + 1
-\end{equation}
+\end{equation*}
 
 In particular, the left hand side is uniformly bounded.
 
-\end{proposition}
+\end{prop}
 \end{samepage}
 
 \begin{proof}
@@ -872,7 +936,9 @@ $$\SV \PG{S}_{n+1}(y,\BM)=\SV \PG{S}_n(y_{:n-1},\BM_{:n}) + (\V{S}_n(y))(\BM_n)$
 
 We get
 
-$$\SV \PG{S}_{n+1}(y,\BM) - \SVM \PG{S}_{n+1}(y,\BM) \leq \SVX \PG{S}_n(y_{:n-1},\BM_{:n}) - \SVM \PG{S}_n(y_{:n-1},\BM_{:n}) + 2 \N{S_n(y)}$$
+\begin{multline*}
+\SV \PG{S}_{n+1}(y,\BM) - \SVM \PG{S}_{n+1}(y,\BM) \leq \SVX \PG{S}_n(y_{:n-1},\BM_{:n}) - \\ \SVM \PG{S}_n(y_{:n-1},\BM_{:n}) + 2 \N{S_n(y)}
+\end{multline*}
 
 By the assumption, the first two terms total to ${\leq 1}$, yielding the desired result.
 \end{proof}
@@ -880,18 +946,18 @@ By the assumption, the first two terms total to ${\leq 1}$, yielding the desired
 As a final ingredient for the proof of Theorem~\ref{thm:prudent}, we will need another property of $\PG$, namely that when the total magnitude of all bets made is finite, the gambler eventually starts \enquote{playing} in every round.
 
 \begin{samepage}
-\begin{proposition}
+\begin{prop}
 \label{prp:when_bounded_play}
 
 Let $S$ be a gambling strategy, $F$ a forecaster and $x \in \OO$. Assume that
 
-\begin{equation}
+\begin{equation*}
 \sum_{n=0}^\infty {(\max_{x_{:n}\OO} \overline{\PG{S}}^F_n(x_{:n})-\min_{x_{:n}\OO} \overline{\PG{S}}^F_n(x_{:n}))} < +\infty
-\end{equation}
+\end{equation*}
 
 Then, for any $n \gg 0$, $\PG{S}^F_n(x_{:n})=S_n(x_{:n})$.
 
-\end{proposition}
+\end{prop}
 \end{samepage}
 
 \begin{proof}
@@ -959,7 +1025,9 @@ Since $F$ dominates $\PG{S}$, it follows that
 
 By Corollary~\ref*{crl:prudent}\ref{itm:crl_prudent__sup}, $\sum_n Y_n(x) < \infty$. By Proposition~\ref{prp:when_bounded_play}, it follows that for any $n \gg 0$, $\PG{S}^F_n(x_{:n}) = S_n(x_{:n})$. We get, for $n \gg 0$
 
-$$\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))] = \E_{\mu^*}[\overline{\PG{S}}^F_n(x_{:n}) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[\overline{\PG{S}}^F_n(x_{:n})]$$
+\begin{multline*}
+\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))] = \\ \E_{\mu^*}[\overline{\PG{S}}^F_n(x_{:n}) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[\overline{\PG{S}}^F_n(x_{:n})]
+\end{multline*}
 
 $$\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(x_{:n})}[S_n(x_{:n};F_n(x_{:n}))] \leq Y_n(x)$$
 
@@ -972,7 +1040,7 @@ $$\sum_{n=0}^\infty (\E_{\mu^*}[S_n(x_{:n};F_n(x_{:n})) \mid x_{:n}\OO]-\E_{F_n(
 In order to prove Theorem~\ref{thm:main}, we will need, given an incomplete model $M \subseteq \PMO$ and $\epsilon > 0$, a gambling strategy $S^{M\epsilon}$ s.t. $S^{M\epsilon}$ is $\mu$-prudent for any $\mu \in M$ and s.t. Theorem~\ref{thm:prudent} implies that any $F$ that dominates $S^{M\epsilon}$ satisfies equation~\ref{eqn:thm_main} \enquote{within $\epsilon$.} This motivates the following definition and lemma.
 
 \begin{samepage}
-\begin{definition}
+\begin{defn}
 
 Consider $X$ a compact Polish metric space, $M \subseteq \PM(X)$ convex and $r_0 > 0$. $\beta \in \Gm(X)$ is said to be \emph{$(M,r_0)$-savvy} when for any $\mu \in \PM(X)$, denoting $r_\mu:=\DKR(\mu,M)$:
 
@@ -983,11 +1051,11 @@ Consider $X$ a compact Polish metric space, $M \subseteq \PM(X)$ convex and $r_0
 
 \end{enumerate}
 
-\end{definition}
+\end{defn}
 \end{samepage}
 
 \begin{samepage}
-\begin{lemma}
+\begin{lemm}
 \label{lmm:savvy}
 
 Consider $X$ a compact Polish metric space, $Y$ a compact Polish space and $M: Y \rightarrow 2^{\PM(X)}$. Denote
@@ -998,13 +1066,13 @@ Consider $X$ a compact Polish metric space, $Y$ a compact Polish space and $M: Y
 
 Assume that $\Gr{M}$ is closed and that $M(y)$ is convex for any $y \in Y$. Regard $Y$ as a measurable space using the $\sigma$-algebra of universally measurable sets and regard $\Gm(X)$ as a measurable space using the $\sigma$-algebra of Borel sets. Then, for any $\epsilon > 0$, there exists $S^\epsilon: Y \rightarrow \Gm(X)$ measurable s.t. for all $y \in Y$, $S^\epsilon(y)$ is $(M(y),\epsilon)$-savvy.
 
-\end{lemma}
+\end{lemm}
 \end{samepage}
 
 In order to prove Lemma~\ref{lmm:savvy}, we will need a few other technical lemmas.
 
 \begin{samepage}
-\begin{lemma}
+\begin{lemm}
 \label{lmm:double_dual}
 
 Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $\varphi \in \Lp(X,\rho)''$ and $\epsilon > 0$. Then, there exists $f \in \Lp(X,\rho)$ s.t.
@@ -1016,7 +1084,7 @@ Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $\varphi \in \
 
 \end{enumerate}
 
-\end{lemma}
+\end{lemm}
 \end{samepage}
 
 \begin{proof}
@@ -1035,7 +1103,7 @@ $$\A{\E_\mu[f] - \varphi(\mu)} \leq \A{\E_\mu[f] - \E_\nu[f]} + \A{\E_\nu[f] - \
 \end{proof}
 
 \begin{samepage}
-\begin{lemma}
+\begin{lemm}
 \label{lmm:separation}
 
 Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $M \subseteq \PM(X)$ convex non-empty, $r_0 > 0$ and $\mu_0 \in \PM(X)$ s.t. $r:=\DKR(\mu_0,M) > r_0$. Then, there exists $f \in \Lp(X,\rho)$ s.t.
@@ -1047,7 +1115,7 @@ Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $M \subseteq \
 
 \end{enumerate}
 
-\end{lemma}
+\end{lemm}
 \end{samepage}
 
 \begin{proof}
@@ -1070,7 +1138,7 @@ $$\E_\nu[f] \geq \varphi(\nu) - \frac{1}{16} r (r - r_0) \geq \varphi(\mu_0) + \
 \end{proof}
 
 \begin{samepage}
-\begin{lemma}
+\begin{lemm}
 \label{lmm:savvy_outside}
 
 Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $M \subseteq \PM(X)$ convex non-empty and $r_0 > 0$. Define $U \subseteq \PM(X)$ by
@@ -1088,7 +1156,7 @@ Then, there exists $\beta': U \rightarrow \Lp(X,\rho)$ continuous s.t. for all $
 
 \end{enumerate}
 
-\end{lemma}
+\end{lemm}
 \end{samepage}
 
 \begin{proof}
@@ -1114,12 +1182,12 @@ Obviously $V$ is open and $V \subseteq B^{-1}(f)$, hence $B^{-1}(f)$ is open. Ap
 \end{proof}
 
 \begin{samepage}
-\begin{corollary}
+\begin{cor}
 \label{crl:savvy}
 
 Consider $X$ a compact Polish metric space, $M \subseteq \PM(X)$ convex and $r_0 > 0$. Then, there exists $\beta \in \Gm(X)$ which is $(M,r_0)$-savvy.
 
-\end{corollary}
+\end{cor}
 \end{samepage}
 
 \begin{proof}
@@ -1150,7 +1218,9 @@ $$Z_1:=\{(y,\beta,\mu,\nu,\xi,\zeta) \in Y \times \Gm(X) \times \PM(X)^4 \mid \z
 
 $$Z_2:=\{(y,\beta,\mu,\nu,\xi,\zeta) \in Y \times \Gm(X) \times \PM(X)^4 \mid \N{\beta(\mu)} \leq \max(\DKR(\mu,\xi) - \epsilon, 0)\}$$
 
-$$Z_3:=\{(y,\beta,\mu,\nu,\xi,\zeta) \in Y \times \Gm(X) \times \PM(X)^4 \mid \E_\nu[\beta(\mu)] - \E_\mu[\beta(\mu)] \geq \frac{1}{2}\max(\DKR(\mu,\zeta) - \epsilon, 0) \DKR(\mu,\zeta)\}$$
+\begin{multline*}
+Z_3:=\{(y,\beta,\mu,\nu,\xi,\zeta) \in Y \times \Gm(X) \times \PM(X)^4 \mid \E_\nu[\beta(\mu)] - \\ \E_\mu[\beta(\mu)] \geq \frac{1}{2}\max(\DKR(\mu,\zeta) - \epsilon, 0) \DKR(\mu,\zeta)\}
+\end{multline*}
 
 Define $Z := Z_1 \cap Z_2 \cap Z_3$. It is easy to see that $Z_{1,2,3}$ are closed and therefore $Z$ also. Define $Z' \subseteq Y \times \Gm(X) \times \PM(X)^3$ by
 
@@ -1189,23 +1259,25 @@ We will also need to show that Definition~\ref{def:update_incomplete} is compati
 We remind that given $X,Y$ Polish, $\pi: X \rightarrow Y$ Borel measurable and $\mu \in \PM(X)$, $\mu \mid \pi: Y \M\ X$ stands for any corresponding regular conditional probability.
 
 \begin{samepage}
-\begin{lemma}
+\begin{lemm}
 \label{lmm:update_incomplete}
 
 Consider $X$ a compact Polish space, $d \in \Nats$, $Y$ a compact subset of $\Reals^d$, $\pi: X \rightarrow Y$ continuous and $\mu \in \PM(X)$. Then, for $\pi_*\mu$-almost any $y \in Y$
 
-\begin{equation}
+\begin{equation*}
 \lim_{r \rightarrow 0}{\mu \mid \pi^{-1}(\B_r(y)) = (\mu \mid \pi)(y)}
-\end{equation}
+\end{equation*}
 
-\end{lemma}
+\end{lemm}
 \end{samepage}
 
 \begin{proof}
 
 Let $\Sq{f_k \in C(X)}{k}$ be dense in $C(X)$. For any $y \in Y$ and $r > 0$ we denote $\chi_{yr}: Y \rightarrow \{0,1\}$ the characteristic function of $\B_r(y)$ and $\chi^\pi_{yr}: X \rightarrow \{0,1\}$ the characteristic function of $\pi^{-1}(\B_r(y))$. For any $k \in \Nats$ and $y_0 \in \Sp \pi_* \mu$ we have $\mu(\pi^{-1}(\B_r(y_0))) = \pi_*\mu(\B_r(y_0)) > 0$ and
 
-$$\E_{\mu}[f_k \mid \pi^{-1}(\B_r(y_0))] = \frac{\E_{\mu}[\chi^\pi_{y_0r} f_k]}{\mu(\pi^{-1}(\B_r(y_0)))} = \frac{\E_{y \sim \pi_* \mu}[\E_{\mu}[\chi^\pi_{y_0r} f_k \mid \pi^{-1}(y)]]}{\pi_*\mu(\B_r(y_0))} = \frac{\E_{y \sim \pi_* \mu}[\chi_{y_0r} \E_{\mu}[f_k \mid \pi^{-1}(y)]]}{\pi_*\mu(\B_r(y_0))}$$
+\begin{multline*}
+\E_{\mu}[f_k \mid \pi^{-1}(\B_r(y_0))] = \frac{\E_{\mu}[\chi^\pi_{y_0r} f_k]}{\mu(\pi^{-1}(\B_r(y_0)))} = \\ \frac{\E_{y \sim \pi_* \mu}[\E_{\mu}[\chi^\pi_{y_0r} f_k \mid \pi^{-1}(y)]]}{\pi_*\mu(\B_r(y_0))} = \frac{\E_{y \sim \pi_* \mu}[\chi_{y_0r} \E_{\mu}[f_k \mid \pi^{-1}(y)]]}{\pi_*\mu(\B_r(y_0))}
+\end{multline*}
 
 In particular, the above holds for $\pi_* \mu$-almost any $y_0 \in Y$. Applying the Lebesgue differentiation theorem, we conclude that there is $A \subseteq Y$ s.t. $\pi_*\mu(A) = 1$ and for any $y \in A$
 
@@ -1213,7 +1285,9 @@ $$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\B_r(y)
 
 Now consider any $f \in C(X)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\N{f-f_k} < \epsilon$ and therefore, for any $y \in A$
 
-$$\limsup_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y))] \leq \limsup_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\B_r(y))] + \epsilon = \E_{\mu}[f_k \mid \pi^{-1}(y)] + \epsilon  \leq \E_{\mu}[f \mid \pi^{-1}(y)] + 2\epsilon$$
+\begin{multline*}
+\limsup_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}(\B_r(y))] \leq \limsup_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}(\B_r(y))] + \\ \epsilon = \E_{\mu}[f_k \mid \pi^{-1}(y)] + \epsilon  \leq \E_{\mu}[f \mid \pi^{-1}(y)] + 2\epsilon
+\end{multline*}
 
 Similarly
 
@@ -1229,12 +1303,12 @@ $$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}(\B_r(y)) = (\mu \mid \pi)(y)$$
 We can now obtain a relation between the notions of savviness and prudence.
 
 \begin{samepage}
-\begin{corollary}
+\begin{cor}
 \label{crl:savvy_is_prudent}
 
 Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n(y)$ is $(M \mid y,\, \epsilon)$-savvy (relatively to $\rho_n$). Then, $S$ is $\mu^*$-prudent for any $\mu^* \in M$.
 
-\end{corollary}
+\end{cor}
 \end{samepage}
 
 \begin{proof}
@@ -1253,16 +1327,16 @@ $$\E_{\mu^*}[S_n(y;\mu) \mid y\OO] - \E_{\mu}[S_n(y;\mu)] \geq \frac{\epsilon}{2
 \end{proof}
 
 \begin{samepage}
-\begin{corollary}
+\begin{cor}
 \label{crl:vicinity_convergence}
 
 Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n(y)$ is $(M \mid y,\, \epsilon)$-savvy. Let $F$ be a forecaster that dominates $\PG{S}$. Then, for any $\mu \in M$ and $\mu$-almost any $x \in \OO$
 
-\begin{equation}
+\begin{equation*}
 \limsup_{n \rightarrow \infty} \DKR^n(F_n(x_{:n}),\, M \mid x_{:n}) \leq \epsilon
-\end{equation}
+\end{equation*}
 
-\end{corollary}
+\end{cor}
 \end{samepage}
 
 \begin{proof}
@@ -1312,7 +1386,7 @@ Finally, we think that the current work may have some bearing on the so-called \
 The following variant of the Optional Stopping Theorem appears in \cite{Durrett_2010} as Theorem 5.4.7.
 
 \begin{samepage}
-\begin{theorem}
+\begin{thm}
 \label{thm:optional_stopping}
 
 Let ${\Omega}$ be a probability space, ${\Sqn{\F_n \subseteq 2^\Omega}}$ a filtration of ${\Omega}$, ${\Sqn{X_n: \Omega \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and ${M,N: \Omega \rightarrow \Nats \sqcup \{\infty\}}$ stopping times (w.r.t. ${\F}$) s.t. ${M \leq N}$. Assume that ${\Sqn{X_{\min(n,N)}}}$ is a uniformly integrable submartingale. Using Doob's martingale convergence theorem, we can define ${X_N : \Omega \rightarrow \Reals}$ by\footnote{The limit in equation~\ref{eqn:thm_optional_stopping__xn} is converges \emph{almost} surely, which is sufficient for our purpose.}
@@ -1324,23 +1398,23 @@ X_N(x):=\lim_{n \rightarrow \infty} X_{\min(n,N)}(x)=\begin{cases}X_{N(x)}(x) \t
 
 We define ${X_M: \Omega \rightarrow \Reals}$ is an analogous way\footnote{This time we can't use Doob's martingale convergence theorem, but whenever ${M(x) = \infty}$ we also have ${N(x) = \infty}$, therefore the limit still almost surely converges.}. We also define the $\sigma$-algebra ${\F_M \subseteq 2^\Omega}$ by
 
-\begin{equation}
+\begin{equation*}
 \F_M:=\{A \subseteq X \text{ measurable} \mid \forall n \in \Nats: A \cap M^{-1}(n) \in \F_n\}
-\end{equation}
+\end{equation*}
 
 Then:
 
-\begin{equation}
+\begin{equation*}
 \E[X_N \mid \F_M] \geq X_M
-\end{equation}
+\end{equation*}
 
-\end{theorem}
+\end{thm}
 \end{samepage}
 
 The following variant of the Michael selection theorem appears in \cite{Yannelis_1983} as Theorem 3.1.
 
 \begin{samepage}
-\begin{theorem} [Yannelis and Prabhakar]
+\begin{thm} [Yannelis and Prabhakar]
 \label{thm:selection}
 
 Consider $X$ a paracompact Hausdorff topological space and $Y$ a topological vector space. Suppose $B: X \rightarrow 2^Y$ is s.t.
@@ -1355,7 +1429,7 @@ Consider $X$ a paracompact Hausdorff topological space and $Y$ a topological vec
 
 Then, there exists $\beta: X \rightarrow Y$ continuous s.t. for all $x \in X$, $\beta(x) \in B(x)$.
 
-\end{theorem}
+\end{thm}
 \end{samepage}
 
 \section*{Acknowledgments}
@@ -1364,7 +1438,7 @@ This work was supported by the Machine Intelligence Research Institute in Berkel
 
 We wish to thank Michael Greinecker for pointing out Theorem~\ref{thm:selection} to us.
 
-\bibliographystyle{unsrt}
+%\bibliographystyle{unsrt}
 \bibliography{Incomplete_Models}
 
 \end{document}
