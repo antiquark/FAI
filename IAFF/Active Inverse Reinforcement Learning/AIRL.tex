@@ -75,10 +75,13 @@
 
 \newcommand{\Ob}{\mathcal{O}}
 \newcommand{\A}{\mathcal{A}}
+\newcommand{\En}{\mathcal{E}}
+
+\newcommand{\Ut}{\operatorname{U}}
 
 \begin{document}
 
-We introduce a reinforcement-like learning setting we call *active inverse reinforcement learning* (AIRL). In AIRL, the agent can, at any point of time, defer the choice of action to an "advisor". The agent knows neither the environment nor the reward function, whereas the advisor knows both. A similar setting was studied in [Clouse 1997](https://web.cs.umass.edu/publication/docs/1997/UM-CS-1997-026.pdf), but as far as we can tell, the relevant literature offers few theoretical results and virtually all researchers focus on the MDP case (*please correct me if I'm wrong*). On the other hand, we consider general environments (not necessarily MDP or even POMDP) and prove a natural performance guarantee.
+We introduce a reinforcement-like learning setting we call *active inverse reinforcement learning* (AIRL). In AIRL, the agent can, at any point of time, defer the choice of action to an "advisor". The agent knows neither the environment nor the reward function, whereas the advisor knows both. Thus, AIRL can be regarded as a special case of CIRL. A similar setting was studied in [Clouse 1997](https://web.cs.umass.edu/publication/docs/1997/UM-CS-1997-026.pdf), but as far as we can tell, the relevant literature offers few theoretical results and virtually all researchers focus on the MDP case (*please correct me if I'm wrong*). On the other hand, we consider general environments (not necessarily MDP or even POMDP) and prove a natural performance guarantee.
 
 The use of an advisor allows us to kill two birds with one stone: learning the reward function and safe exploration (i.e. avoiding both the Scylla of "[Bayesian paranoia](http://proceedings.mlr.press/v40/Leike15.pdf)" and the Charybdis of falling into traps). We prove that, given certain assumption about the advisor, a Bayesian AIRL agent (whose prior is supported on some countable set of hypotheses) is guaranteed to attain most of the value in the slow falling time discount (long-term planning) limit (assuming one of the hypotheses in the prior is true). The assumption about the advisor is quite strong, but the advisor is not required to be fully optimal: a "soft maximizer" satisfies the conditions. Moreover, we allow for the existence of "corrupt states" in which the advisor stops being a relevant signal, thus demonstrating that this approach can deal with wireheading and avoid manipulating the advisor, at least in principle (the assumption about the advisor is still unrealistically strong). Finally we consider advisors that don't know the environment but have some *beliefs* about the environment, and show that in this case the agent converges to Bayes-optimality w.r.t. the advisor's beliefs, which is arguably the best we can expect.
 
@@ -92,13 +95,27 @@ Whatever...
 
 \section{Results}
 
-We fix $\A$ and $\Ob$ finite sets ("actions" and "observations").
+We fix $\A$ and $\Ob$ finite sets ("actions" and "observations"). A *policy* is a mapping $\pi: (\A \times \Ob)^* \rightarrow \Delta\A$ and an *environment* is a mapping $\mu:(\A \times \Ob)^* \times \A \rightarrow \Delta\Ob$. A *reward function* is a mapping $r: (\A \times \Ob)^* \rightarrow [0,1]$. Given a policy $\pi$ and an environment $\mu$, we get $\mu^\pi \in \Delta(\A \times \Ob)^\omega$ in the usual way. We will use the notation $\E_\mu^\pi := \E_{\mu^\pi}$ for expected values.
+
+Given a reward function $r$ and $t \in (0,\infty)$, we have the associated *utility function* $\Ut_t[r]: (A \times \Ob)^\omega \rightarrow [0,1]$ defined by
+
+$$\Ut_t[r](h):=\frac{\sum_{n=0}^\infty e^{-n/t} r(h_{:n})}{\sum_{n=0}^\infty e^{-n/t}}$$
+
+Here and throughout, we use geometric time discount, however this choice is mostly for notational simplicity. More or less all results carry over to other shapes of the time discount function.
+
+A *metapolicy* is a family $\{\pi_t: (\A \times \Ob)^* \rightarrow \Delta\A\}_{t \in (0, \infty)}$, where the parameter $t$ is thought of as setting the scale of the time discount. A *meta-environment* is a family $\{\mu_t:(\A \times \Ob)^* \times \A \rightarrow \Delta\Ob\}_{t \in (0, \infty)}$. This latter concept is useful for analyzing multi-agent systems, where the environment contains other agents and we study the asymptotics when all agents' time discount scales go to infinity. We won't focus on the multi-agent case in this essay, but for future reference, it seems useful to make sure the results hold in the greater generality of meta-environments.
+
+Denote $\Pi:=\{(\A \times \Ob)^* \rightarrow \A\}$, the space of deterministic policies.
 
 \#Definition 1
 
-Bar
+Consider $\pi$ a metapolicy, $\En$ a set of meta-environments and $r$ a reward function. $\pi$ is said to *learn* $(\En,r)$ when for any $\mu \in \En$
 
-\#Lemma 1
+$$\lim_{t \rightarrow \infty} (\max_{\pi' \in \Pi} \E_{\mu_t}^{\pi'}[\Ut_t[r]] - \E_{\mu_t}^{\pi_t}[\Ut_t[r]]) = 0$$
+
+$(\En, r)$ is said to be *learnable* when there exists $\pi$ that learns $(\En, r)$.
+
+\#Proposition 1
 
 Foo
 
