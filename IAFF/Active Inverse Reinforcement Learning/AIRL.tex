@@ -75,7 +75,7 @@
 
 \newcommand{\Ob}{\mathcal{O}}
 \newcommand{\A}{\mathcal{A}}
-\newcommand{\En}{\mathcal{E}}
+\newcommand{\Hy}{\mathcal{H}}
 
 \newcommand{\Ut}{\operatorname{U}}
 
@@ -95,29 +95,33 @@ Whatever...
 
 \section{Results}
 
-We fix $\A$ and $\Ob$ finite sets ("actions" and "observations"). A *policy* is a mapping $\pi: (\A \times \Ob)^* \rightarrow \Delta\A$ and an *environment* is a mapping $\mu:(\A \times \Ob)^* \times \A \rightarrow \Delta\Ob$. A *reward function* is a mapping $r: (\A \times \Ob)^* \rightarrow [0,1]$. Given a policy $\pi$ and an environment $\mu$, we get $\mu^\pi \in \Delta(\A \times \Ob)^\omega$ in the usual way. We will use the notation $\E_\mu^\pi := \E_{\mu^\pi}$ for expected values.
+We fix $\A$ and $\Ob$ finite sets ("actions" and "observations"). A *policy* is a mapping $\pi: (\A \times \Ob)^* \rightarrow \Delta\A$ and an *environment* is a mapping $\mu:(\A \times \Ob)^* \times \A \rightarrow \Delta\Ob$. A *reward function* is a mapping $r: (\A \times \Ob)^* \rightarrow [0,1]$. A *universe* is a pair $(\mu,r)$ where $\mu$ is an environment and $r$ is a reward function. We denote the space of universes by $\Upsilon$. Given a policy $\pi$ and an environment $\mu$, we get $\mu^\pi \in \Delta(\A \times \Ob)^\omega$ in the usual way. We will use the notation $\E_\mu^\pi := \E_{\mu^\pi}$ for expected values.
 
-Given a reward function $r$ and $t \in (0,\infty)$, we have the associated *utility function* $\Ut_t[r]: (A \times \Ob)^\omega \rightarrow [0,1]$ defined by
+Given a reward function $r$ and $t \in (0,\infty)$, we have the associated *utility function* $\Ut_t^r: (A \times \Ob)^\omega \rightarrow [0,1]$ defined by
 
-$$\Ut_t[r](h):=\frac{\sum_{n=0}^\infty e^{-n/t} r(h_{:n})}{\sum_{n=0}^\infty e^{-n/t}}$$
+$$\Ut_t^{r}(h):=\frac{\sum_{n=0}^\infty e^{-n/t} r(h_{:n})}{\sum_{n=0}^\infty e^{-n/t}}$$
 
 Here and throughout, we use geometric time discount, however this choice is mostly for notational simplicity. More or less all results carry over to other shapes of the time discount function.
 
-A *metapolicy* is a family $\{\pi_t: (\A \times \Ob)^* \rightarrow \Delta\A\}_{t \in (0, \infty)}$, where the parameter $t$ is thought of as setting the scale of the time discount. A *meta-environment* is a family $\{\mu_t:(\A \times \Ob)^* \times \A \rightarrow \Delta\Ob\}_{t \in (0, \infty)}$. This latter concept is useful for analyzing multi-agent systems, where the environment contains other agents and we study the asymptotics when all agents' time discount scales go to infinity. We won't focus on the multi-agent case in this essay, but for future reference, it seems useful to make sure the results hold in the greater generality of meta-environments.
+A *metapolicy* is a family $\{\pi_t: (\A \times \Ob)^* \rightarrow \Delta\A\}_{t \in (0, \infty)}$, where the parameter $t$ is thought of as setting the scale of the time discount. A *meta-universe* is a family $\{\upsilon_t \in \Upsilon\}_{t \in (0, \infty)}$. This latter concept is useful for analyzing multi-agent systems, where the environment contains other agents and we study the asymptotics when all agents' time discount scales go to infinity. We won't focus on the multi-agent case in this essay, but for future reference, it seems useful to make sure the results hold in the greater generality of meta-universes.
 
-Denote $\Pi:=\{(\A \times \Ob)^* \rightarrow \A\}$, the space of deterministic policies.
+Denote $\Pi:=\{(\A \times \Ob)^* \rightarrow \Delta\A\}$, the space of policies.
 
 \#Definition 1
 
-Consider $\pi$ a metapolicy, $\En$ a set of meta-environments and $r$ a reward function. $\pi$ is said to *learn* $(\En,r)$ when for any $\mu \in \En$
+Consider $\pi^*$ a metapolicy and $\Hy$ a set of meta-universes. $\pi^*$ is said to *learn* $\Hy$ when for any $(\mu,r) \in \Hy$
 
-$$\lim_{t \rightarrow \infty} (\max_{\pi' \in \Pi} \E_{\mu_t}^{\pi'}[\Ut_t[r]] - \E_{\mu_t}^{\pi_t}[\Ut_t[r]]) = 0$$
+$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \E_{\mu_t}^{\pi}[\Ut_t^{r_t}] - \E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}]) = 0$$
 
-$(\En, r)$ is said to be *learnable* when there exists $\pi$ that learns $(\En, r)$.
+$\Hy$ is said to be *learnable* when there exists $\pi^*$ that learns $\Hy$.
 
 \#Proposition 1
 
-Foo
+Consider $\Hy$ a countable learnable set of meta-universes. Consider any $\zeta \in \Delta\Hy$ s.t. $\Supp \zeta = \Hy$. Consider $\pi^\zeta$ a $\zeta$-Bayes optimal metapolicy, i.e.
+
+$$\pi^\zeta_t \in \Argmax{\pi \in \Pi} \E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi}[\Ut_t^{r_t}]]$$
+
+Then, $\pi^\zeta$ learns $\Hy$.
 
 ***
 
@@ -125,13 +129,15 @@ Bar
 
 \section{Appendix A}
 
-\#Proposition A.1
+\#Proof of Proposition 1
 
-Hahaha
+Fix $\pi^*$ a metapolicy that learns $\Hy$. Consider $\epsilon > 0$ and let $\Hy_\epsilon \subseteq \Hy$ be finite s.t. $\zeta(\Hy \setminus \Hy_\epsilon) < \epsilon$. For any $\delta > 0$ and $t \gg 0$, for every $(\mu,r) \in \Hy_\epsilon$ we have
 
-\#Proof of Proposition A.1
+$$\max_{\pi \in \Pi} \E_{\mu_t}^{\pi}[\Ut_t^{r_t}] \leq \E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}] + \delta$$
 
-Mwhahaha
+$$\E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^\zeta_t}[\Ut_t^{r_t}]] \geq \E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}]]$$
+
+$$\E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^\zeta_t}[\Ut_t^{r_t}]] \geq \E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}]; (\mu,r) \in \Hy_\epsilon] + \E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}]; (\mu,r) \not\in \Hy_\epsilon]$$
 
 \end{document}
 
