@@ -78,6 +78,7 @@
 \newcommand{\Hy}{\mathcal{H}}
 
 \newcommand{\Ut}{\operatorname{U}}
+\newcommand{\EU}{\operatorname{EU}}
 
 \begin{document}
 
@@ -105,39 +106,84 @@ Here and throughout, we use geometric time discount, however this choice is most
 
 A *metapolicy* is a family $\{\pi_t: (\A \times \Ob)^* \rightarrow \Delta\A\}_{t \in (0, \infty)}$, where the parameter $t$ is thought of as setting the scale of the time discount. A *meta-universe* is a family $\{\upsilon_t \in \Upsilon\}_{t \in (0, \infty)}$. This latter concept is useful for analyzing multi-agent systems, where the environment contains other agents and we study the asymptotics when all agents' time discount scales go to infinity. We won't focus on the multi-agent case in this essay, but for future reference, it seems useful to make sure the results hold in the greater generality of meta-universes.
 
-Denote $\Pi:=\{(\A \times \Ob)^* \rightarrow \Delta\A\}$, the space of policies.
+Denote $\Pi:=\{(\A \times \Ob)^* \rightarrow \Delta\A\}$, the space of policies. Given a policy $\pi$, a universe $\upsilon$ and $t > 0$, we denote $\EU_\upsilon^\pi(t):=\E_\mu^\pi[\Ut^r_t]$.
 
 \#Definition 1
 
-Consider $\pi^*$ a metapolicy and $\Hy$ a set of meta-universes. $\pi^*$ is said to *learn* $\Hy$ when for any $(\mu,r) \in \Hy$
+Consider $\pi^*$ a metapolicy and $\Hy$ a set of meta-universes. $\pi^*$ is said to *learn* $\Hy$ when for any $\upsilon \in \Hy$
 
-$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \E_{\mu_t}^{\pi}[\Ut_t^{r_t}] - \E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}]) = 0$$
+$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t) - \EU_{\upsilon_t}^{\pi^*_t}(t)) = 0$$
 
 $\Hy$ is said to be *learnable* when there exists $\pi^*$ that learns $\Hy$.
+
+***
+
+Our notion of learnability is closely related to the notion of *sublinear regret*, as defined in [Leike 2016](https://arxiv.org/abs/1611.08944), except that we allow the policy to explicitly depend on the time discount scale.
 
 \#Proposition 1
 
 Consider $\Hy$ a countable learnable set of meta-universes. Consider any $\zeta \in \Delta\Hy$ s.t. $\Supp \zeta = \Hy$. Consider $\pi^\zeta$ a $\zeta$-Bayes optimal metapolicy, i.e.
 
-$$\pi^\zeta_t \in \Argmax{\pi \in \Pi} \E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi}[\Ut_t^{r_t}]]$$
+$$\pi^\zeta_t \in \Argmax{\pi \in \Pi} \E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi}(t)]$$
 
 Then, $\pi^\zeta$ learns $\Hy$.
 
 ***
 
-Bar
+Proposition 1 shows that Bayesian agents are optimal in a "frequentist" sense for any countable class of meta-universes s.t. *some* metapolicy is optimal in this sense.
+
+Another handy property of learnability is the following.
+
+\#Proposition 2
+
+Let $\Hy$ be a countable set of meta-universes s.t. any finite $\mathcal{G} \subseteq \Hy$ is learnable. Then, $\Hy$ is learnable.
+
+***
+
+We now introduce the formalism needed to discuss advisors. Define $\bar{\A}:=\A \sqcup \{\bot\}$ and $\bar{\Ob}:=\Ob \times \bar{\A}$.
 
 \section{Appendix A}
 
 \#Proof of Proposition 1
 
-Fix $\pi^*$ a metapolicy that learns $\Hy$. Consider $\epsilon > 0$ and let $\Hy_\epsilon \subseteq \Hy$ be finite s.t. $\zeta(\Hy \setminus \Hy_\epsilon) < \epsilon$. For any $\delta > 0$ and $t \gg 0$, for every $(\mu,r) \in \Hy_\epsilon$ we have
+Fix $\pi^*$ a metapolicy that learns $\Hy$. Consider $\epsilon > 0$ and let $\Hy_\epsilon \subseteq \Hy$ be finite s.t. $\zeta(\Hy \setminus \Hy_\epsilon) < \epsilon$. For $t \gg 0$ and every $\upsilon \in \Hy_\epsilon$ we have
 
-$$\max_{\pi \in \Pi} \E_{\mu_t}^{\pi}[\Ut_t^{r_t}] \leq \E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}] + \delta$$
+$$\EU_{\upsilon_t}^{\pi^*_t}(t) \geq \max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t) - \epsilon$$
 
-$$\E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^\zeta_t}[\Ut_t^{r_t}]] \geq \E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}]]$$
+Also
 
-$$\E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^\zeta_t}[\Ut_t^{r_t}]] \geq \E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}]; (\mu,r) \in \Hy_\epsilon] + \E_{(\mu,r) \sim \zeta}[\E_{\mu_t}^{\pi^*_t}[\Ut_t^{r_t}]; (\mu,r) \not\in \Hy_\epsilon]$$
+$$\E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t)] \geq \E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t); \upsilon \in \Hy_\epsilon]$$
+
+Combining, we get
+
+$$\E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E_{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t); \upsilon \in \Hy_\epsilon] - \epsilon$$
+
+$$\E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E_{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)] -  \E_{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t); \upsilon \not\in \Hy_\epsilon] - \epsilon$$
+
+By definition of $\Hy_\epsilon$, this implies
+
+$$\E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E_{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)] -  2\epsilon$$
+
+For any $\upsilon \in \Hy$, we get
+
+$$\EU_{\upsilon_t}^{\pi^\zeta_t}(t) \geq \max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t) - \frac{2\epsilon}{\zeta(\upsilon)}$$
+
+Taking $\epsilon$ to 0, we get the desired result.
+
+\#Proof of Proposition 2
+
+Let $\Hy = \{\upsilon^k\}_{k \in \Nats}$. For each $k \in \Nats$, let $\pi^k$ learn $\{\upsilon^l\}_{l < k}$. Choose $\{t^k \in (0,\infty)\}_{k \in \Nats}$ s.t.
+
+\begin{enumerate}[i.]
+
+\item $t^0 = 0$
+\item $t^k < t^{k+1}$
+\item $\lim_{k \rightarrow \infty} t^k = \infty$
+\item For any $l < k$ and $t \geq t^k$, $\EU_{\upsilon^l_t}^{\pi^k_t}(t) \geq \max_{\pi \in \Pi} \EU_{\upsilon^l_t}^\pi(t) - \frac{1}{k+1}$.
+
+Now define $\pi^*_t:=\pi_t^{\max\{k \mid t \geq t^k\}}$. Clearly, $\pi^*$ learns $\Hy$.
+
+\end{enumerate}
 
 \end{document}
 
