@@ -90,6 +90,8 @@
 \newcommand{\Hy}{\mathcal{H}}
 
 \newcommand{\Ut}{\operatorname{U}}
+\newcommand{\V}{\operatorname{V}}
+\newcommand{\W}{\operatorname{W}}
 \newcommand{\EU}{\operatorname{EU}}
 
 \begin{document}
@@ -184,7 +186,23 @@ $$\bar{\mu}[\alpha](ha)(bo):=\begin{cases} \mu(\underline{h}a)(o) \text{ if } a\
 
 It is easy to the above is a well-defined $\Adi$-environment with $\HD \mu \subseteq \Adfh$.
 
-% \beta-rational advisor... 
+We now introduce the conditions on the advisor policy which will allow us to prove a learnability theorem.
+
+Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$, $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ and $\A^\upsilon_t: \HD{\mu} \rightarrow 2^\A$ by
+
+$$\V_t^\upsilon(h):=\max_{\pi \in \Pi} {\E_{x \sim \mu^\pi}[\frac{\sum_{n=\Abs{h}}^\infty e^{-n/t} r(x_{:n})}{\sum_{n=\Abs{h}}^\infty e^{-n/t}} \mid h \sqsubset x]}$$
+
+$$\W_t^\upsilon(ha):=\E_{o \sim \mu(ha)}[V_t^\upsilon(hao)]$$
+
+$$\A^\upsilon_t(h) := \Argmax{a \in \A} \W_t^\upsilon(h)$$
+
+\#Definition 2
+
+Fix an interface $\I$ and consider a universe $\upsilon=(\mu,r)$. Let $t,\beta \in (0,\infty)$. A policy $\alpha$ is called *strictly $\beta$-rational* for $(\upsilon,t)$ when for any $h \in \HD{\mu}$ and $a \in \A$
+
+$$\alpha(h)(a) \leq \exp{[\beta(\W^\upsilon_t(ha)-\V^\upsilon_t(h))]} \max_{a^* \in \A^\upsilon_t(h)} \alpha(h)(a^*) $$
+
+FOO
 
 \section{Appendix A}
 
