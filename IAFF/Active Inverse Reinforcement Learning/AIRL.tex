@@ -125,7 +125,7 @@ Given an $\I$-policy $\pi$ and an $\I$-environment $\mu$, we get $\mu^\pi \in \D
 
 An $\I$-*reward function* is a partial function $r: (\A \times \Ob)^* \PF [0,1]$. An $\I$-*universe* is a pair $(\mu,r)$ where $\mu$ is an $\I$-environment and $r$ is an $\I$-reward function s.t. $\Dom{r} \supseteq \HD{\mu}$. We denote the space of $\I$-universes by $\Upsilon_\I$. Given an $\I$-reward function $r$ and $t \in (0,\infty)$, we have the associated *utility function* $\Ut_t^r: \IH \PF [0,1]$ defined by
 
-$$\Ut_t^{r}(h):=\frac{\sum_{n=0}^\infty e^{-n/t} r(h_{:n})}{\sum_{n=0}^\infty e^{-n/t}}$$
+$$\Ut_t^{r}(x):=\frac{\sum_{n=0}^\infty e^{-n/t} r(x_{:n})}{\sum_{n=0}^\infty e^{-n/t}}$$
 
 Here and throughout, we use geometric time discount, however this choice is mostly for notational simplicity. More or less all results carry over to other shapes of the time discount function.
 
@@ -187,7 +187,7 @@ It is easy to the above is a well-defined $\Adi$-environment with $\HD \mu \subs
 
 Given an $\I$-universe $\upsilon=(\mu,r)$, we define the $\Adi$-reward function $\bar{r}: \Adfh \PF [0,1]$ by $\bar{r}(h):=r(\underline{h})$ and the $\Adi$-universe $\bar{\upsilon}[\alpha]:=(\bar{\mu}[\alpha],\bar{r})$.
 
-We now introduce the conditions on the advisor policy which will allow us to prove a learnability theorem.
+We now introduce the conditions on the advisor policy which will allow us to prove a learnability theorem. First, we specify an advisor that always remains "approximately rational."
 
 Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$, $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ and $\A^\upsilon_t: \HD{\mu} \rightarrow 2^\A$ by
 
@@ -199,15 +199,53 @@ $$\A^\upsilon_t(h) := \Argmax{a \in \A} \W_t^\upsilon(h)$$
 
 \#Definition 3
 
-Fix an interface $\I$ and consider a universe $\upsilon=(\mu,r)$. Let $t,\beta \in (0,\infty)$. An autonomous $\Adi$-policy $\alpha$ is called *strictly $\beta$-rational* for $(\upsilon,t)$ when for any $h \in \HD{\bar{\mu}[\alpha]}$ and $a \in \A$
+Fix an interface $\I$. Consider a universe $\upsilon=(\mu,r)$. Let $t,\beta \in (0,\infty)$. A policy $\alpha$ is called *strictly $\beta$-rational* for $(\upsilon,t)$ when for any $h \in \Dom{\mu}$ and $a \in \A$
 
-$$\alpha(h)(a) \leq \exp{[\beta(\W^{\upsilon}_t(\underline{h}a)-\V^\upsilon_t(\underline{h}))]} \max_{a^* \in \A^\upsilon_t(\underline{h})} \alpha(h)(a^*) $$
+$$\alpha(h)(a) \leq \exp{[\beta(\W^{\upsilon}_t(ha)-\V^\upsilon_t(h))]} \max_{a^* \in \A^\upsilon_t(h)} \alpha(h)(a^*)$$
+
+***
+
+Now we deal with the possibility of the advisor becoming "corrupt". In practical implementations where the "advisor" is a human operator, this can correspond to several types of events, e.g. sabotaging the channel that transmits data from the operator to the AI ("wireheading"), manipulation of the operator or replacement of the operator by a different entity.
 
 \#Definition 4
 
+Fix an interface $\I$. Consider a family $\{\kappa_t: \FH \rightarrow [0,1]\}_{t \in (0,\infty)}$, where we think of $\kappa_t(h)$ as the probability of a certain event occurring right after history $h$, conditional on it not occurring before. Define $\hat{\kappa}_t: \FH \rightarrow [0,1]$ by
 
+$$\hat{\kappa}_t(h):= \prod_{n = 0}^{\Abs{h}} \kappa_t(h_{:n})$$
 
-FOO
+We think of $\hat{\kappa}_t(h)$ as the *accumulated* probability the event occurred during history $h$. Consider a meta-universe $\upsilon=(\mu,r)$. $\kappa$ is said to be a $\upsilon$-*avoidable transition probability* when there is a meta-policy $\pi^*$ s.t.
+
+\begin{enumerate}[i.]
+
+\item $\lim_{t \rightarrow \infty} {(\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)-\EU_{\upsilon_t}^{\pi^*_t}(t))} = 0$
+\item $\lim_{t \rightarrow \infty} \E_{x \sim \mu_t^{\pi^*_t}}[\lim_{n \rightarrow \infty} \hat{\kappa}_t(x_{:n})] = 0$
+
+***
+
+That is, $\kappa$ is $\upsilon$-avoidable when it is possible to avoid the associated event while retaining most of the value. Consider a meta-universe $\upsilon=(\mu,r)$ and $\kappa$ a $\upsilon$-avoidable transition probability. Denote $-\upsilon:=(\mu,1-r)$. We define the reward function $r^\kappa_t$ by
+
+$$r^\kappa_t(h):=\kappa_t(\Estr_{\A \times \Ob}) \V^{-\upsilon}_t(\Estr_{\A \times \Ob})+\sum_{n=1}^{\Abs{h}} (1-\hat{\kappa}_t(h_{:n-1}))\kappa_t(h_{:n}) \V^{-\upsilon}_t(h_{:n})+(1-\hat{\kappa}_t(h))r_t(h)$$
+
+We think of $r^\kappa$ as representing a process wherein once the event represented by $\kappa$ occurs, the agent starts *minimizing* the utility function. We also use the notation $\upsilon^\kappa:=(\mu,r^\kappa)$.
+
+\#Definition 5
+
+Consider a meta-universe $\upsilon=(\mu,r)$. Let $\beta \in (0,\infty)$. An autonomous $\Adi$-metapolicy $\alpha$ is called *$\beta$-rational* for $\upsilon$ when there exists a $\upsilon$-avoidable transition probability $\kappa$ (that we think of as the probability for the advisor to become "corrupt") and autonomous $\Adi$-metapolicies $\alpha^*,\alpha_*$ (representing advisor policy conditional on non-corruption and corruption respectively) s.t. 
+
+\begin{enumerate}[i.]
+
+\item For any $h \in \Adfh$, $\alpha_t(h) = \hat{\kappa}_t(\underline{h}) \alpha_*(h) + (1 - \hat{\kappa}_t(\underline{h}))\alpha^*(h)$.
+\item $\alpha^*_t$ is strictly $\beta$-rational for $(\bar{\upsilon}^\kappa_t[\alpha], t)$.
+
+\end{enumerate}
+
+\end{enumerate}
+
+***
+
+Our definition of $\beta$-rationality requires the advisor to be extremely averse to corruption: the advisor behaves as if, once a corruption occurs, the agent policy becomes the worst possible. In general, this seems much too strong: by the time corruption occurs, the agent might have already converged into accurate beliefs about the universe that allow it to detect the corruption and keep operating without the advisor. Even better, the agent can usually outperform *the worst possible policy* using the prior alone. Moreover, we can differentiate between different degrees of corruption and treat them accordingly. We leave those further improvements for future work.
+
+% Main theorem!
 
 \section{Appendix A}
 
