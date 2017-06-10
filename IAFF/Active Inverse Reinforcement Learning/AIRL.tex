@@ -110,16 +110,7 @@ Whatever...
 
 \section{Results}
 
-An *interface* $\I = (\A,\Ob)$ is a pair of finite sets  ("actions" and "observations"). An $\I$-*policy* is a partial function $\pi: \FH \PF \Delta\A$ s.t.
-
-\begin{enumerate}[i.]
-
-\item $\Estr_{\A \times \Ob} \in \Dom \pi$
-\item Given $h \in \FH$ and $ao \in \A \times \Ob$, $hao \in \Dom \pi$ iff $h \in \Dom \pi$ and $\pi(h)(a) > 0$.
-
-\end{enumerate}
-
-An $\I$-*environment* is a partial function $\mu: \FH \times \A \PF \Delta\Ob$ s.t. 
+An *interface* $\I = (\A,\Ob)$ is a pair of finite sets  ("actions" and "observations"). An $\I$-*policy* is a function $\pi: \FH \rightarrow \Delta\A$. An $\I$-*environment* is a partial function $\mu: \FH \times \A \PF \Delta\Ob$ s.t. 
 
 \begin{enumerate}[i.]
 
@@ -132,7 +123,7 @@ It is easy to see that $\Dom \mu$ is always of the form $X \times \A$ for some $
 
 Given an $\I$-policy $\pi$ and an $\I$-environment $\mu$, we get $\mu^\pi \in \Delta\IH$ in the usual way. We will use the notation $\E_\mu^\pi := \E_{\mu^\pi}$ for expected values.
 
-An $\I$-*reward function* is a function $r: (\A \times \Ob)^* \rightarrow [0,1]$. An $\I$-*universe* is a pair $(\mu,r)$ where $\mu$ is an $\I$-environment and $r$ is an $\I$-reward function. We denote the space of $\I$-universes by $\Upsilon_\I$. Given an $\I$-reward function $r$ and $t \in (0,\infty)$, we have the associated *utility function* $\Ut_t^r: \IH \rightarrow [0,1]$ defined by
+An $\I$-*reward function* is a partial function $r: (\A \times \Ob)^* \PF [0,1]$. An $\I$-*universe* is a pair $(\mu,r)$ where $\mu$ is an $\I$-environment and $r$ is an $\I$-reward function s.t. $\Dom{r} \supseteq \HD{\mu}$. We denote the space of $\I$-universes by $\Upsilon_\I$. Given an $\I$-reward function $r$ and $t \in (0,\infty)$, we have the associated *utility function* $\Ut_t^r: \IH \PF [0,1]$ defined by
 
 $$\Ut_t^{r}(h):=\frac{\sum_{n=0}^\infty e^{-n/t} r(h_{:n})}{\sum_{n=0}^\infty e^{-n/t}}$$
 
@@ -140,7 +131,7 @@ Here and throughout, we use geometric time discount, however this choice is most
 
 Denote $\Pi_{\I}$\ the space of $\I$-policies. An $\I$-*metapolicy* is a family $\{\pi_t \in \Pi_\I\}_{t \in (0, \infty)}$, where the parameter $t$ is thought of as setting the scale of the time discount. An $\I$-*meta-universe* is a family $\{\upsilon_t \in \Upsilon\}_{t \in (0, \infty)}$. This latter concept is useful for analyzing multi-agent systems, where the environment contains other agents and we study the asymptotics when all agents' time discount scales go to infinity. We won't focus on the multi-agent case in this essay, but for future reference, it seems useful to make sure the results hold in the greater generality of meta-universes.
 
-Given an $\I$-policy $\pi$, an $\I$-universe $\upsilon$ and $t > 0$, we denote $\EU_\upsilon^\pi(t):=\E_\mu^\pi[\Ut^r_t]$. We will omit $\I$ when it is obvious from the context.
+Given an $\I$-policy $\pi$, an $\I$-universe $\upsilon$ and $t > 0$, we denote $\EU_\upsilon^\pi(t):=\E_\mu^\pi[\Ut^r_t]$ (this is well-defined since $\Ut^r_t$ is defined on the support of $\mu^\pi$). We will omit $\I$ when it is obvious from the context.
 
 \#Definition 1
 
@@ -180,11 +171,21 @@ Denote $\Adao:= \Ada \times \Ado \setminus \{\bot\bot o \mid o \in \Ob\}$. Given
 
 $$\underline{abo}:=\begin{cases} ao \text{ if } a\ne\bot \\ bo \text{ if } a=\bot \end{cases}$$
 
-Given $h \in \Adfh$, we define $\underline{h} \in \FH$ by $\underline{h}_n:=\underline{h_n}$. Consider an $\I$-environment $\mu$ and an $\I$-policy $\alpha$, which we think of as the advisor policy. We define the $\Adi$-environment $\bar{\mu}[\alpha]$ as follows. For any $h \in \Adfh$ s.t. $\underline{h} \in \HD \mu$, $a,b \in \Ada$ and $o \in \Ob$:
+Given $h \in \Adfh$, we define $\underline{h} \in \FH$ by $\underline{h}_n:=\underline{h_n}$. 
 
-$$\bar{\mu}[\alpha](ha)(bo):=\begin{cases} \mu(\underline{h}a)(o) \text{ if } a\ne\bot,\, b=\bot \\ \alpha(\underline{h})(b)\cdot\mu(\underline{h}b)(o) \text{ if } a=\bot,\,b\ne\bot \\ 0 \text{ if } a\ne\bot,\, b\ne\bot \text{ or } a=b=\bot \end{cases}$$
+\#Definition 2
 
-It is easy to the above is a well-defined $\Adi$-environment with $\HD \mu \subseteq \Adfh$.
+An $\Adi$-policy $\alpha$ is said to be *autonomous* when for any $h \in \Adfh$, $\alpha(h)(\bot)=0$.
+
+***
+
+Consider an $\I$-environment $\mu$ and an autonomous $\Adi$-policy $\alpha$, which we think of as the advisor policy. We define the $\Adi$-environment $\bar{\mu}[\alpha]$ as follows. For any $h \in \Adfh$ s.t. $\underline{h} \in \HD \mu$, $a,b \in \Ada$ and $o \in \Ob$:
+
+$$\bar{\mu}[\alpha](ha)(bo):=\begin{cases} \mu(\underline{h}a)(o) \text{ if } a\ne\bot,\, b=\bot \\ \alpha(h)(b)\cdot\mu(\underline{h}b)(o) \text{ if } a=\bot,\,b\ne\bot \\ 0 \text{ if } a\ne\bot,\, b\ne\bot \text{ or } a=b=\bot \end{cases}$$
+
+It is easy to the above is a well-defined $\Adi$-environment with $\HD \mu \subseteq \Adfh$. 
+
+Given an $\I$-universe $\upsilon=(\mu,r)$, we define the $\Adi$-reward function $\bar{r}: \Adfh \PF [0,1]$ by $\bar{r}(h):=r(\underline{h})$ and the $\Adi$-universe $\bar{\upsilon}[\alpha]:=(\bar{\mu}[\alpha],\bar{r})$.
 
 We now introduce the conditions on the advisor policy which will allow us to prove a learnability theorem.
 
@@ -196,11 +197,15 @@ $$\W_t^\upsilon(ha):=\E_{o \sim \mu(ha)}[V_t^\upsilon(hao)]$$
 
 $$\A^\upsilon_t(h) := \Argmax{a \in \A} \W_t^\upsilon(h)$$
 
-\#Definition 2
+\#Definition 3
 
-Fix an interface $\I$ and consider a universe $\upsilon=(\mu,r)$. Let $t,\beta \in (0,\infty)$. A policy $\alpha$ is called *strictly $\beta$-rational* for $(\upsilon,t)$ when for any $h \in \HD{\mu}$ and $a \in \A$
+Fix an interface $\I$ and consider a universe $\upsilon=(\mu,r)$. Let $t,\beta \in (0,\infty)$. An autonomous $\Adi$-policy $\alpha$ is called *strictly $\beta$-rational* for $(\upsilon,t)$ when for any $h \in \HD{\bar{\mu}[\alpha]}$ and $a \in \A$
 
-$$\alpha(h)(a) \leq \exp{[\beta(\W^\upsilon_t(ha)-\V^\upsilon_t(h))]} \max_{a^* \in \A^\upsilon_t(h)} \alpha(h)(a^*) $$
+$$\alpha(h)(a) \leq \exp{[\beta(\W^{\upsilon}_t(\underline{h}a)-\V^\upsilon_t(\underline{h}))]} \max_{a^* \in \A^\upsilon_t(\underline{h})} \alpha(h)(a^*) $$
+
+\#Definition 4
+
+
 
 FOO
 
