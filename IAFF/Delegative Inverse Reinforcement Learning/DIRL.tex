@@ -240,11 +240,7 @@ We are now ready to formulate the main result.
 
 \#Theorem
 
-Consider $\Hy = \{\upsilon^k\}_{k \in \Nats}$ a countable family of $\I$-meta-universes and $\beta: (0,\infty) \rightarrow (0,\infty)$ s.t. $\beta(t) = \omega(t^{2/3})$. Let $\{\alpha^k\}_{k \in \Nats}$ be a family of autonomous $\Adi$-metapolicies s.t. for every $k \in \Nats$, $\alpha^k$ is $\beta$-rational for $\upsilon^k$. Define 
-
-$$\bar{\Hy}:=\{\bar{\upsilon}^k[\alpha^k]\}_{k \in \Nats}$$
-
-Then, $\bar{\Hy}$ is learnable.
+Consider $\Hy = \{\upsilon^k\}_{k \in \Nats}$ a countable family of $\I$-meta-universes and $\beta: (0,\infty) \rightarrow (0,\infty)$ s.t. $\beta(t) = \omega(t^{2/3})$. Let $\{\alpha^k\}_{k \in \Nats}$ be a family of autonomous $\Adi$-metapolicies s.t. for every $k \in \Nats$, $\alpha^k$ is $\beta$-rational for $\upsilon^k$. Define $\bar{\Hy}:=\{\bar{\upsilon}^k[\alpha^k]\}_{k \in \Nats}$. Then, $\bar{\Hy}$ is learnable.
 
 ***
 
@@ -258,11 +254,26 @@ Some remarks:
 
 The conditions of the Theorem imply that, in some sense, the advisor "knows" the true environment. This is unrealistic: obviously, we expect the human operator to have some (!) uncertainty about the world. However, we clearly cannot do away with this assumption: if the same action triggers a trap in some universes and is necessary for approaching maximal utility in other universes, and there is no observable difference between the universes before the action is taken, then there is no way to guarantee optimality. The prior knowledge you have about the universe caps the utility you can guarantee to obtain. On the other hand, as an AI designer, one can reasonably expect the AI to do at least as well as possible using the *designer's* own knowledge. If running the AI is the designer's best strategy, the AI should be close to Bayes optimal (in some sense that includes computational bounds et cetera: complications that we currently ignore) with respect to the designer's posterior rather than with respect to some simple prior. In other words, we need a way to transmit the designer's knowledge to the AI, without hand-crafting an elaborate prior.
 
-The following shows that the DIRL achieves this goal (theoretically, given the considerable simplifying assumptions).
+The following shows that the DIRL achieves this goal (theoretically, given the considerable simplifying assumptions). Given a family of environments $\{\mu^k\}_{k \in \Nats}$ and $\xi \in \Delta\Nats$, we will use the notation $\boldsymbol{\E}_{k \sim \xi}[\mu^k]$ to denote the environment given by
 
-\#Corollary
+$$\boldsymbol{\E}_{k \sim \xi}[\mu^k](ha):=\frac{\E_{k \sim \xi}[\mu^k(ha) \prod_{n < \Abs{h}} \mu^k(h_{:n+1/2})]}{\E_{k \sim \xi}[\prod_{n < \Abs{h}} \mu^k(h_{:n+1/2})]}$$
 
+\#Corollary 1
 
+Consider $\{\mu^k\}_{k \in \Nats}$ a countable family of $\I$-meta-environments, $\{r^K\}_{K \in \Nats}$ a countable family of reward functions and $\{\xi^K \in \Delta\Nats\}_{K \in \Nats}$ s.t. given $k \in \Supp \xi^K$, $\Dom{r^K} \supseteq \HD{\mu^k}$. We think of $\xi^K$ as the advisor's belief about the environment in universe $K$. Let $\beta: (0,\infty) \rightarrow (0,\infty)$ be s.t. $\beta(t) = \omega(t^{2/3})$ and $\{\alpha^K\}_{K \in \Nats}$ be a family of autonomous $\Adi$-metapolicies s.t. for every $K \in \Nats$, $\alpha^K$ is $\beta$-rational for $(\boldsymbol{\E}_{k \sim \xi^K}[\mu^k], r^K)$. Let $\zeta \in \Delta\Nats^2$ be s.t. for any $J,j \in \Nats$ 
+
+$$\Pr_{(K,k) \in \zeta}[k = j \mid K = J] = \xi^J(j)$$ 
+
+We think of $\zeta$ as the agent's prior and the equation above as stating the agent's belief that the advisor's beliefs are "calibrated". Consider $\pi^\zeta$ a $\zeta$-Bayes optimal $\Adi$-metapolicy, i.e.
+
+$$\pi^\zeta \in \Argmax{\pi \in \Pi_{\Adi}}{\E_{(K,k) \in \zeta}[\EU_{\bar{\mu}^k[\alpha^k],\bar{r}^K}^\pi(t)]}$$ 
+Then, for every $K \in \Nats$
+
+$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \E_{k \in \xi^K}[\EU_{\mu^k,r^K}^\pi(t)] - \E_{k \in \xi^K}[\EU_{\bar{\mu}^k[\alpha^k],\bar{r}^K}^{\pi^\zeta}(t)]) = 0$$
+
+***
+
+% Corollary 2: If learnable...
 
 \section{Appendix A}
 
