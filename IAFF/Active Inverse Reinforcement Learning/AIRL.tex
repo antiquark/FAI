@@ -96,9 +96,9 @@
 
 \begin{document}
 
-We introduce a reinforcement-like learning setting we call *active inverse reinforcement learning* (AIRL). In AIRL, the agent can, at any point of time, defer the choice of action to an "advisor". The agent knows neither the environment nor the reward function, whereas the advisor knows both. Thus, AIRL can be regarded as a special case of CIRL. A similar setting was studied in [Clouse 1997](https://web.cs.umass.edu/publication/docs/1997/UM-CS-1997-026.pdf), but as far as we can tell, the relevant literature offers few theoretical results and virtually all researchers focus on the MDP case (*please correct me if I'm wrong*). On the other hand, we consider general environments (not necessarily MDP or even POMDP) and prove a natural performance guarantee.
+We introduce a reinforcement-like learning setting we call *active inverse reinforcement learning* (AIRL). In AIRL, the agent can, at any point of time, defer the choice of action to an "adviser". The agent knows neither the environment nor the reward function, whereas the adviser knows both. Thus, AIRL can be regarded as a special case of CIRL. A similar setting was studied in [Clouse 1997](https://web.cs.umass.edu/publication/docs/1997/UM-CS-1997-026.pdf), but as far as we can tell, the relevant literature offers few theoretical results and virtually all researchers focus on the MDP case (*please correct me if I'm wrong*). On the other hand, we consider general environments (not necessarily MDP or even POMDP) and prove a natural performance guarantee.
 
-The use of an advisor allows us to kill two birds with one stone: learning the reward function and safe exploration (i.e. avoiding both the Scylla of "[Bayesian paranoia](http://proceedings.mlr.press/v40/Leike15.pdf)" and the Charybdis of falling into traps). We prove that, given certain assumption about the advisor, a Bayesian AIRL agent (whose prior is supported on some countable set of hypotheses) is guaranteed to attain most of the value in the slow falling time discount (long-term planning) limit (assuming one of the hypotheses in the prior is true). The assumption about the advisor is quite strong, but the advisor is not required to be fully optimal: a "soft maximizer" satisfies the conditions. Moreover, we allow for the existence of "corrupt states" in which the advisor stops being a relevant signal, thus demonstrating that this approach can deal with wireheading and avoid manipulating the advisor, at least in principle (the assumption about the advisor is still unrealistically strong). Finally we consider advisors that don't know the environment but have some *beliefs* about the environment, and show that in this case the agent converges to Bayes-optimality w.r.t. the advisor's beliefs, which is arguably the best we can expect.
+The use of an adviser allows us to kill two birds with one stone: learning the reward function and safe exploration (i.e. avoiding both the Scylla of "[Bayesian paranoia](http://proceedings.mlr.press/v40/Leike15.pdf)" and the Charybdis of falling into traps). We prove that, given certain assumption about the adviser, a Bayesian AIRL agent (whose prior is supported on some countable set of hypotheses) is guaranteed to attain most of the value in the slow falling time discount (long-term planning) limit (assuming one of the hypotheses in the prior is true). The assumption about the adviser is quite strong, but the adviser is not required to be fully optimal: a "soft maximizer" satisfies the conditions. Moreover, we allow for the existence of "corrupt states" in which the adviser stops being a relevant signal, thus demonstrating that this approach can deal with wireheading and avoid manipulating the adviser, at least in principle (the assumption about the adviser is still unrealistically strong). Finally we consider advisers that don't know the environment but have some *beliefs* about the environment, and show that in this case the agent converges to Bayes-optimality w.r.t. the adviser's beliefs, which is arguably the best we can expect.
 
 ***
 
@@ -165,7 +165,7 @@ Fix an interface $\I$. Let $\Hy$ be a countable set of meta-universes s.t. any f
 
 ***
 
-We now introduce the formalism needed to discuss advisors. Define $\Ada:=\A \sqcup \{\bot\}$, $\Ado:=\Ada \times \Ob$ and $\Adi:=(\Ada,\Ado)$. Here, the $\Ada$ factor of $\Ado$ is the action taken by the advisor, assumed to be observable by the agent. The environments we will consider are s.t. this action is $\bot$ unless the agent deferred to the advisor at this point of time, which is specified by the agent taking action $\bot$. It will also be the case that whenever the agent takes action $\bot$, the advisor cannot take action $\bot$.
+We now introduce the formalism needed to discuss advisers. Define $\Ada:=\A \sqcup \{\bot\}$, $\Ado:=\Ada \times \Ob$ and $\Adi:=(\Ada,\Ado)$. Here, the $\Ada$ factor of $\Ado$ is the action taken by the adviser, assumed to be observable by the agent. The environments we will consider are s.t. this action is $\bot$ unless the agent deferred to the adviser at this point of time, which is specified by the agent taking action $\bot$. It will also be the case that whenever the agent takes action $\bot$, the adviser cannot take action $\bot$.
 
 Denote $\Adao:= \Ada \times \Ado \setminus \{\bot\bot o \mid o \in \Ob\}$. Given $abo \in \Adao$, we define $\underline{abo} \in \A \times \Ob$ by
 
@@ -179,7 +179,7 @@ An $\Adi$-policy $\alpha$ is said to be *autonomous* when for any $h \in \Adfh$,
 
 ***
 
-Consider an $\I$-environment $\mu$ and an autonomous $\Adi$-policy $\alpha$, which we think of as the advisor policy. We define the $\Adi$-environment $\bar{\mu}[\alpha]$ as follows. For any $h \in \Adfh$ s.t. $\underline{h} \in \HD \mu$, $a,b \in \Ada$ and $o \in \Ob$:
+Consider an $\I$-environment $\mu$ and an autonomous $\Adi$-policy $\alpha$, which we think of as the adviser policy. We define the $\Adi$-environment $\bar{\mu}[\alpha]$ as follows. For any $h \in \Adfh$ s.t. $\underline{h} \in \HD \mu$, $a,b \in \Ada$ and $o \in \Ob$:
 
 $$\bar{\mu}[\alpha](ha)(bo):=\begin{cases} \mu(\underline{h}a)(o) \text{ if } a\ne\bot,\, b=\bot \\ \alpha(h)(b)\cdot\mu(\underline{h}b)(o) \text{ if } a=\bot,\,b\ne\bot \\ 0 \text{ if } a\ne\bot,\, b\ne\bot \text{ or } a=b=\bot \end{cases}$$
 
@@ -187,7 +187,7 @@ It is easy to the above is a well-defined $\Adi$-environment with $\HD \mu \subs
 
 Given an $\I$-universe $\upsilon=(\mu,r)$, we define the $\Adi$-reward function $\bar{r}: \Adfh \PF [0,1]$ by $\bar{r}(h):=r(\underline{h})$ and the $\Adi$-universe $\bar{\upsilon}[\alpha]:=(\bar{\mu}[\alpha],\bar{r})$.
 
-We now introduce the conditions on the advisor policy which will allow us to prove a learnability theorem. First, we specify an advisor that always remains "approximately rational."
+We now introduce the conditions on the adviser policy which will allow us to prove a learnability theorem. First, we specify an adviser that always remains "approximately rational."
 
 Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$, $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ and $\A^\upsilon_t: \HD{\mu} \rightarrow 2^\A$ by
 
@@ -205,7 +205,7 @@ $$\alpha(h)(a) \leq \exp{[\beta(\W^{\upsilon}_t(ha)-\V^\upsilon_t(h))]} \max_{a^
 
 ***
 
-Now we deal with the possibility of the advisor becoming "corrupt". In practical implementations where the "advisor" is a human operator, this can correspond to several types of events, e.g. sabotaging the channel that transmits data from the operator to the AI ("wireheading"), manipulation of the operator or replacement of the operator by a different entity.
+Now we deal with the possibility of the adviser becoming "corrupt". In practical implementations where the "adviser" is a human operator, this can correspond to several types of events, e.g. sabotaging the channel that transmits data from the operator to the AI ("wireheading"), manipulation of the operator or replacement of the operator by a different entity.
 
 \#Definition 4
 
@@ -230,7 +230,7 @@ We think of $r^\kappa$ as representing a process wherein once the event represen
 
 \#Definition 5
 
-Consider a meta-universe $\upsilon=(\mu,r)$. Let $\beta \in (0,\infty)$. An autonomous $\Adi$-metapolicy $\alpha$ is called *$\beta$-rational* for $\upsilon$ when there exists a $\upsilon$-avoidable transition probability $\kappa$ (that we think of as the probability for the advisor to become "corrupt") and autonomous $\Adi$-metapolicies $\alpha^*,\alpha_*$ (representing advisor policy conditional on non-corruption and corruption respectively) s.t. 
+Consider a meta-universe $\upsilon=(\mu,r)$. Let $\beta \in (0,\infty)$. An autonomous $\Adi$-metapolicy $\alpha$ is called *$\beta$-rational* for $\upsilon$ when there exists a $\upsilon$-avoidable transition probability $\kappa$ (that we think of as the probability for the adviser to become "corrupt") and autonomous $\Adi$-metapolicies $\alpha^*,\alpha_*$ (representing adviser policy conditional on non-corruption and corruption respectively) s.t. 
 
 \begin{enumerate}[i.]
 
@@ -243,9 +243,31 @@ Consider a meta-universe $\upsilon=(\mu,r)$. Let $\beta \in (0,\infty)$. An auto
 
 ***
 
-Our definition of $\beta$-rationality requires the advisor to be extremely averse to corruption: the advisor behaves as if, once a corruption occurs, the agent policy becomes the worst possible. In general, this seems much too strong: by the time corruption occurs, the agent might have already converged into accurate beliefs about the universe that allow it to detect the corruption and keep operating without the advisor. Even better, the agent can usually outperform *the worst possible policy* using the prior alone. Moreover, we can differentiate between different degrees of corruption and treat them accordingly. We leave those further improvements for future work.
+Our definition of $\beta$-rationality requires the adviser to be extremely averse to corruption: the adviser behaves as if, once a corruption occurs, the agent policy becomes the worst possible. In general, this seems much too strong: by the time corruption occurs, the agent might have already converged into accurate beliefs about the universe that allow it to detect the corruption and keep operating without the adviser. Even better, the agent can usually outperform *the worst possible policy* using the prior alone. Moreover, we can differentiate between different degrees of corruption and treat them accordingly. We leave those further improvements for future work.
 
-% Main theorem!
+We are now ready to formulate the main result.
+
+\#Theorem
+
+Consider $\Hy = \{\upsilon^k\}_{k \in \Nats}$ a countable family of $\I$-meta-universes and $\beta \in (0,\infty)$. Let $\{\alpha^k\}_{k \in \Nats}$ be a family of autonomous $\Adi$-metapolicies s.t. for every $k \in \Nats$, $\alpha^k$ is $\beta$-rational for $\upsilon^k$. Define 
+
+$$\bar{\Hy}:=\{\bar{\upsilon}^k[\alpha^k]\}_{k \in \Nats}$$
+
+Then, $\bar{\Hy}$ is learnable.
+
+***
+
+In particular, by Proposition 1, $\bar{\Hy}$ is learned by any Bayes optimal metapolicy with prior supported on $\bar{\Hy}$.
+
+It is easy to see that the Theorem can be generalized by introducing an external penalty (negative reward) for each time the agent defers to the adviser: as it is, using the adviser already carries a penalty due to its suboptimal choice.
+
+The conditions of the Theorem imply that, in some sense, the adviser "knows" the true environment. This is unrealistic: obviously, we expect the human operator to have some (!) uncertainty about the world. However, we clearly cannot do away with this assumption: if the same action triggers a trap in some universes and is necessary for approaching maximal utility in other universes, and there is no observable difference between the universes before the action is taken, then there is no way to guarantee optimality. The prior knowledge you have about the universe caps the utility you can guarantee to obtain. On the other hand, as an AI designer, one can reasonably expect the AI to do at least as well as possible using the *designer's* own knowledge. If running the AI is the designer's best strategy, the AI should be close to Bayes optimal (in some sense that includes computational bounds et cetera: complications that we currently ignore) with respect to the designer's posterior rather than with respect to some simple prior. In other words, we need a way to transmit the designer's knowledge to the AI, without hand-crafting an elaborate prior.
+
+The following shows that the AIRL achieves this goal (theoretically, given the considerable simplifying assumptions).
+
+\#Corollary
+
+
 
 \section{Appendix A}
 
