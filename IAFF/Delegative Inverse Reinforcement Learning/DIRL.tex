@@ -266,14 +266,29 @@ $$\Pr_{(K,k) \in \zeta}[k = j \mid K = J] = \xi^J(j)$$
 
 We think of $\zeta$ as the agent's prior and the equation above as stating the agent's belief that the advisor's beliefs are "calibrated". Consider $\pi^\zeta$ a $\zeta$-Bayes optimal $\Adi$-metapolicy, i.e.
 
-$$\pi^\zeta \in \Argmax{\pi \in \Pi_{\Adi}}{\E_{(K,k) \in \zeta}[\EU_{\bar{\mu}^k[\alpha^k],\bar{r}^K}^\pi(t)]}$$ 
+$$\pi^\zeta \in \Argmax{\pi \in \Pi_{\Adi}}{\E_{(K,k) \in \zeta}[\EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^\pi(t)]}$$ 
 Then, for every $K \in \Nats$
 
-$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \E_{k \in \xi^K}[\EU_{\mu^k,r^K}^\pi(t)] - \E_{k \in \xi^K}[\EU_{\bar{\mu}^k[\alpha^k],\bar{r}^K}^{\pi^\zeta}(t)]) = 0$$
+$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \E_{k \in \xi^K}[\EU_{\mu^k,r^K}^\pi(t)] - \E_{k \in \xi^K}[\EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^{\pi^\zeta}(t)]) = 0$$
 
 ***
 
-% Corollary 2: If learnable...
+If we happen to be so lucky that the advisor's (presumably justified) belief is supported on a learnable environment class, we get a stronger conclusion.
+
+\#Corollary 2
+
+In the setting of Corollary 1, fix $K \in \Nats$. Define the set of meta-universes $\Hy^K$ by
+
+$$\Hy^K:= \{(\mu^k, r^K) \mid k \in \Supp \xi^K\}$$
+
+Assume $\Hy^K$ is learnable. Then, for every $k \in \Nats$
+
+
+$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \EU_{\mu^k,r^K}^\pi(t) - \EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^{\pi^\zeta}(t)) = 0$$
+
+***
+
+We also believe that to some extent DIRL is effective against [acausal attack](https://ordinaryideas.wordpress.com/2016/11/30/what-does-the-universal-prior-actually-look-like/). Indeed, the optimality we get from the Theorem + Proposition 1 holds for any prior. However, the speed of convergence to optimality certainly depends on the prior.  It is therefore desirable to analyze this dependency and bound the damage an adversary can do by controlling a certain portion of the prior. We live this for future work.
 
 \section{Appendix A}
 
