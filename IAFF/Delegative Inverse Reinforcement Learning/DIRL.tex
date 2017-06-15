@@ -342,6 +342,30 @@ iv. For any $l < k$ and $t \geq t^k$, $\EU_{\upsilon^l_t}^{\pi^k_t}(t) \geq \max
 
 Now define $\pi^*_t:=\pi_t^{\max\{k \mid t \geq t^k\}}$. Clearly, $\pi^*$ learns $\Hy$.
 
+\#Proposition A.1
+
+Consider $d \in \Nats$ and $x,y \in \Reals^d \setminus \boldsymbol{0}$. Then
+
+$$\Norm{\frac{x}{\Norm{x}_\infty}-\frac{y}{\Norm{y}_\infty}}_\infty \leq2d \Norm{\frac{x}{\Norm{x}_1}-\frac{y}{\Norm{y}_1}}_1$$
+
+\#Proof of Proposition A.1
+
+Without loss of generality, assume $\Norm{x}_1 = \Norm{y}_1 = 1$. For any $i < d$, we have
+
+$$\frac{x_i}{\Norm{x}_\infty} - \frac{y_i}{\Norm{y}_\infty} = \frac{x_i\Norm{y}_\infty-y_i\Norm{x}_\infty}{\Norm{x}_\infty\Norm{y}_\infty} = \frac{x_i\Norm{y}_\infty - x_i\Norm{x}_\infty + x_i\Norm{x}_\infty - y_i\Norm{x}_\infty}{\Norm{x}_\infty\Norm{y}_\infty}$$
+
+$$\frac{x_i}{\Norm{x}_\infty} - \frac{y_i}{\Norm{y}_\infty} = \frac{x_i(\Norm{y}_\infty - \Norm{x}_\infty) + (x_i - y_i)\Norm{x}_\infty}{\Norm{x}_\infty\Norm{y}_\infty}$$
+
+Denote $r:=\Norm{x-y}_1$. Obviously, $\Norm{x-y}_\infty \leq r$ and therefore $\Abs{x_i-y_i} \leq r$ and $\Abs{\Norm{x}_\infty - \Norm{y}_\infty} \leq r$. We get
+
+$$\Abs{\frac{x_i}{\Norm{x}_\infty} - \frac{y_i}{\Norm{y}_\infty}} \leq \frac{\Abs{x_i}r + r\Norm{x}_\infty}{\Norm{x}_\infty\Norm{y}_\infty} \leq \frac{\Norm{x}_\infty r + r\Norm{x}_\infty}{\Norm{x}_\infty\Norm{y}_\infty} \leq \frac{2r}{\Norm{y}_\infty}$$
+
+Since $\Norm{y}_1 = 1$, $\Norm{y}_\infty \geq \frac{1}{d}$ yielding the desired result.
+
+\#Proposition A.2
+
+TBD
+
 \#Lemma
 
 Consider the setting of Theorem, but assume that $\Hy = \{\upsilon^k = (\mu^k,r^k)\}_{k < N}$ for some $N \in \Nats$ (i.e. it is finite) and that $\alpha^k(t)$ is *strictly* $\beta(t)$-rational for $\bar{\upsilon}^k[\alpha^k]$. Denote $\nu^k:=\bar{\mu}^k[\alpha^k]$ and $\HD{\nu}:= \bigcup_{k < N} \HD{\nu^k}$. Define $L_t: \HD{\nu} \times \A \rightarrow [0,1]$ by
