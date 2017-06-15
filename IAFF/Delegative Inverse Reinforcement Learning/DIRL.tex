@@ -68,7 +68,7 @@
 \newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
-\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{k}}}
 \newcommand{\PF}{\xrightarrow{\circ}}
 
 \newcommand{\Prob}{\mathcal{P}}
@@ -152,7 +152,7 @@ Then, $\pi^\zeta$ learns $\Hy$.
 
 ***
 
-Proposition 1 shows that Bayesian agents are optimal in a "frequentist" sense for any countable class of meta-universes s.t. *some* metapolicy is optimal in this sense.
+Proposition 1 can be regarded as a "frequentist" justification for Bayesian agents: if *any* metapolicy is optimal in a "frequentist" sense for the class $\Hy$ (i.e. learns it), then the Bayes optimal metapolicy is such.
 
 Another handy property of learnability is the following.
 
@@ -364,6 +364,22 @@ Since $\Norm{y}_1 = 1$, $\Norm{y}_\infty \geq \frac{1}{d}$ yielding the desired 
 
 \#Proposition A.2
 
+Consider $\Hy$ and $\A$ finite sets, $L: \Hy \times \A \rightarrow [0,1]$, $\zeta \in \Delta\Hy$, $\alpha: \Hy \rightarrow \Delta\A$, $\beta \in (0,\infty)$ and $\epsilon \in (0,1)$. Assume that
+
+i. For each $k \in \Hy$, there is $a^*_k \in \A$ s.t. $L(k,a_k^*)=0$.
+
+ii. For each $k \in \Hy$, $\zeta(k) \geq \beta\epsilon$.
+
+iii. For each $a \in A$, $\E_{k \in \zeta}[L(k,a)] \geq \epsilon$.
+
+iv. For each $k \in \Hy$ and $a \in A$, $\alpha(k)(a) \leq \exp[-\beta L(k,a)] \max_{b \in \A} \alpha(k)(b)$
+
+Define $\zeta \ltimes \alpha \in \Delta(\Hy \times \A)$ by $(\zeta \ltimes \alpha)(k,a):=\zeta(k)\alpha(k,a)$. Then,  the mutual information $I$ between $k$ and $a$ in the distribution $\zeta \ltimes \alpha$ satisfies
+
+$$I \geq \frac{(1-e^{-1})^2}{8\Abs{\A}^2} \beta^2 \epsilon^2$$
+
+\#Proof of Proposition A.2
+
 TBD
 
 \#Lemma
@@ -374,7 +390,7 @@ $$L_t(ha):=\frac{\sum_{k < N} \hat{\nu}^k(h)(\max_{b \in A}{\W^{\upsilon^k}_t(\u
 
 Denote $\epsilon_t:=\beta(t)^{-1}t^{-1/3}$. Define the following $\Adi$-metapolicy $\pi^*$:
 
-$$\pi^*_t(h):=\begin{cases} \Argmin{a \in \A} L_t(ha) \text{ if } h \in \HD{\nu},\, \min_{a \in \A}{L_t(ha)} \leq \epsilon_t \\ \bot \text{ if } h \in \HD{\nu},\,\min_{a \in \A}{L_t(ha)} > \epsilon_t \\ \bot \text{ if } h \not\in \HD{\nu}\end{cases}$$
+$$\pi^*_t(h):=\begin{cases} \Argmin{a \in \A} L_t(ha) \text{ if } h \in \HD{\nu},\, \min_{a \in \A}{L_t(ha)} < \epsilon_t \\ \bot \text{ if } h \in \HD{\nu},\,\min_{a \in \A}{L_t(ha)} \geq \epsilon_t \\ \bot \text{ if } h \not\in \HD{\nu}\end{cases}$$
 
 Here, $\Argmin{}$ is disambiguated arbitrarily (and the last line is also arbitrary). Then, $\pi^*$ learns $\bar{\Hy}$.
  
