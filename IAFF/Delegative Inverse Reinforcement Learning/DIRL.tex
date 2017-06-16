@@ -364,21 +364,37 @@ Since $\Norm{y}_1 = 1$, $\Norm{y}_\infty \geq \frac{1}{d}$ yielding the desired 
 
 \#Proposition A.2
 
+Consider $\Hy$ a finite set, $L: \Hy \rightarrow [0,\infty)$, $\zeta \in \Delta\Hy$ and $\beta,\epsilon \in (0,\infty)$. Assume that
+
+i. For any $k \in \Hy$, $\zeta(k) \geq \beta\epsilon$.
+
+ii. $\E_{\zeta}[L] \geq \epsilon$
+
+Then
+
+$$\E_{\zeta}[e^{-\beta L}] \leq 1 - (1 - e^{-1})\beta\epsilon$$
+
+\#Proof of Proposition A.2
+
+Without loss of generality, we can assume that $\E_\zeta[L] = \epsilon$, because otherwise we can rescale $L$ by a constant in $(0,1)$ which will only make $\E_{\zeta}[e^{-\beta L}]$ larger. It now follows that for any $k$, $L(k) \leq \beta^{-1}$...
+
+TBD
+
+\#Proposition A.3
+
 Consider $\Hy$ and $\A$ finite sets, $L: \Hy \times \A \rightarrow [0,1]$, $\zeta \in \Delta\Hy$, $\alpha: \Hy \rightarrow \Delta\A$, $\beta \in (0,\infty)$ and $\epsilon \in (0,1)$. Assume that
 
-i. For each $k \in \Hy$, there is $a^*_k \in \A$ s.t. $L(k,a_k^*)=0$.
+i. For any $k \in \Hy$, $\zeta(k) \geq \beta\epsilon$.
 
-ii. For each $k \in \Hy$, $\zeta(k) \geq \beta\epsilon$.
+ii. For any $a \in A$, $\E_{k \in \zeta}[L(k,a)] \geq \epsilon$.
 
-iii. For each $a \in A$, $\E_{k \in \zeta}[L(k,a)] \geq \epsilon$.
-
-iv. For each $k \in \Hy$ and $a \in A$, $\alpha(k)(a) \leq \exp[-\beta L(k,a)] \max_{b \in \A} \alpha(k)(b)$
+iii. For any $k \in \Hy$ and $a \in A$, $\alpha(k)(a) \leq \exp[-\beta L(k,a)] \max_{b \in \A} \alpha(k)(b)$.
 
 Define $\zeta \ltimes \alpha \in \Delta(\Hy \times \A)$ by $(\zeta \ltimes \alpha)(k,a):=\zeta(k)\alpha(k,a)$. Then,  the mutual information $I$ between $k$ and $a$ in the distribution $\zeta \ltimes \alpha$ satisfies
 
 $$I \geq \frac{(1-e^{-1})^2}{8\Abs{\A}^2} \beta^2 \epsilon^2$$
 
-\#Proof of Proposition A.2
+\#Proof of Proposition A.3
 
 TBD
 
