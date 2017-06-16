@@ -25,17 +25,17 @@
 \DeclareMathOperator{\Dom}{dom}
 
 % operators that require brackets
-\DeclareMathOperator{\Prb}{Pr}
-\DeclareMathOperator{\E}{E}
+\newcommand{\Prb}{\operatorname{Pr}}
+\newcommand{\E}{\operatorname{E}}
 \newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
 \newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
-\DeclareMathOperator{\Var}{Var}
+\newcommand{\Var}{\operatorname{Var}}
 
 % operators that require parentheses
-\DeclareMathOperator{\Ent}{H}
-\DeclareMathOperator{\Hom}{Hom}
-\DeclareMathOperator{\End}{End}
-\DeclareMathOperator{\Sym}{Sym}
+\newcommand{\Ent}{\operatorname{H}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
 
 \newcommand{\Prj}{\operatorname{pr}}
 
@@ -118,7 +118,7 @@ ii. Given $h \in \FH$ and $aob \in \A \times \Ob \times \A$, $haob \in \Dom \mu$
 
 It is easy to see that $\Dom \mu$ is always of the form $X \times \A$ for some $X \subseteq \FH$. We denote $\HD \mu := X$.
 
-Given an $\I$-policy $\pi$ and an $\I$-environment $\mu$, we get $\mu^\pi \in \Delta\IH$ in the usual way. We will use the notation $\E_\mu^\pi := \E_{\mu^\pi}$ for expected values.
+Given an $\I$-policy $\pi$ and an $\I$-environment $\mu$, we get $\mu\bowtie\pi \in \Delta\IH$ in the usual way.
 
 An $\I$-*reward function* is a partial function $r: (\A \times \Ob)^* \PF [0,1]$. An $\I$-*universe* is a pair $(\mu,r)$ where $\mu$ is an $\I$-environment and $r$ is an $\I$-reward function s.t. $\Dom{r} \supseteq \HD{\mu}$. We denote the space of $\I$-universes by $\Upsilon_\I$. Given an $\I$-reward function $r$ and $t \in (0,\infty)$, we have the associated *utility function* $\Ut_t^r: \IH \PF [0,1]$ defined by
 
@@ -128,7 +128,7 @@ Here and throughout, we use geometric time discount, however this choice is most
 
 Denote $\Pi_{\I}$\ the space of $\I$-policies. An $\I$-*metapolicy* is a family $\{\pi_t \in \Pi_\I\}_{t \in (0, \infty)}$, where the parameter $t$ is thought of as setting the scale of the time discount. An $\I$-*meta-universe* is a family $\{\upsilon_t \in \Upsilon\}_{t \in (0, \infty)}$. This latter concept is useful for analyzing multi-agent systems, where the environment contains other agents and we study the asymptotics when all agents' time discount scales go to infinity. We won't focus on the multi-agent case in this essay, but for future reference, it seems useful to make sure the results hold in the greater generality of meta-universes.
 
-Given an $\I$-policy $\pi$, an $\I$-universe $\upsilon$ and $t > 0$, we denote $\EU_\upsilon^\pi(t):=\E_\mu^\pi[\Ut^r_t]$ (this is well-defined since $\Ut^r_t$ is defined on the support of $\mu^\pi$). We will omit $\I$ when it is obvious from the context.
+Given an $\I$-policy $\pi$, an $\I$-universe $\upsilon$ and $t > 0$, we denote $\EU_\upsilon^\pi(t):=\E_{\mu\bowtie\pi}[\Ut^r_t]$ (this is well-defined since $\Ut^r_t$ is defined on the support of $\mu\bowtie\pi$). We will omit $\I$ when it is obvious from the context.
 
 \#Definition 1
 
@@ -188,7 +188,7 @@ We now introduce the conditions on the advisor policy which will allow us to pro
 
 Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$, $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ and $\A^\upsilon_t: \HD{\mu} \rightarrow 2^\A$ by
 
-$$\V_t^\upsilon(h):=\max_{\pi \in \Pi} {\E_{x \sim \mu^\pi}[\frac{\sum_{n=\Abs{h}}^\infty e^{-n/t} r(x_{:n})}{\sum_{n=\Abs{h}}^\infty e^{-n/t}} \mid h \sqsubset x]}$$
+$$\V_t^\upsilon(h):=\max_{\pi \in \Pi} {\E_{x \sim \mu\bowtie\pi}[\frac{\sum_{n=\Abs{h}}^\infty e^{-n/t} r(x_{:n})}{\sum_{n=\Abs{h}}^\infty e^{-n/t}} \mid h \sqsubset x]}$$
 
 $$\W_t^\upsilon(ha):=\E_{o \sim \mu(ha)}[V_t^\upsilon(hao)]$$
 
@@ -214,7 +214,7 @@ We think of $\hat{\kappa}_t(h)$ as the *accumulated* probability the event occur
 
 i. $\lim_{t \rightarrow \infty} {(\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)-\EU_{\upsilon_t}^{\pi^*_t}(t))} = 0$
 
-ii. $\lim_{t \rightarrow \infty} \E_{x \sim \mu_t^{\pi^*_t}}[\lim_{n \rightarrow \infty} \hat{\kappa}_t(x_{:n})] = 0$
+ii. $\lim_{t \rightarrow \infty} \E_{x \sim \mu_t\bowtie\pi^*_t}[\lim_{n \rightarrow \infty} \hat{\kappa}_t(x_{:n})] = 0$
 
 ***
 
@@ -424,19 +424,27 @@ Applying Proposition A.2, we get
 
 $$I \geq \frac{1}{8\Abs{\A}^2}(1-(1-(1-e^{-1})\beta\epsilon))^2=\frac{(1-e^{-1})^2}{8\Abs{\A}^2}\beta^2\epsilon^2$$
 
-\#Lemma
+\#Proposition A.4
 
-Consider the setting of Theorem, but assume that $\Hy = \{\upsilon^k = (\mu^k,r^k)\}_{k < N}$ for some $N \in \Nats$ (i.e. it is finite) and that $\alpha^k(t)$ is *strictly* $\beta(t)$-rational for $\bar{\upsilon}^k[\alpha^k]$. Denote $\nu^k:=\bar{\mu}^k[\alpha^k]$ and $\HD{\nu}:= \bigcup_{k < N} \HD{\nu^k}$. Define $L_t: \HD{\nu} \times \A \rightarrow [0,1]$ by
+Consider the setting of Theorem, but assume that $\Hy = \{\upsilon^k = (\mu^k,r^k)\}_{k < N}$ for some $N \in \Nats$ (i.e. it is finite) and that $\alpha^k(t)$ is *strictly* $\beta(t)$-rational for $\bar{\upsilon}^k[\alpha^k]$. Denote $\nu^k:=\bar{\mu}^k[\alpha^k]$ and $\HD{\bar{\Hy}}:= \bigcup_{k < N} \HD{\nu^k}$. Define $L_t: \HD{\bar{\Hy}} \times \A \rightarrow [0,1]$ by
 
-$$L_t(ha):=\frac{\sum_{k < N} \hat{\nu}^k(h)(\max_{b \in A}{\W^{\upsilon^k}_t(\underline{h}b)}-\W^{\upsilon^k}_t(\underline{h}a))}{\sum_{k < N} \hat{\nu}^k(h)}$$
+$$L_t(ha):=\frac{\sum_{k < N} \hat{\nu}^k_t(h)(\max_{b \in A}{\W^{\upsilon^k_t}_t(\underline{h}b)}-\W^{\upsilon^k_t}_t(\underline{h}a))}{\sum_{k < N} \hat{\nu}_t^k(h)}$$
 
 Denote $\epsilon_t:=\beta(t)^{-1}t^{-1/3}$. Define the following $\Adi$-metapolicy $\pi^*$:
 
-$$\pi^*_t(h):=\begin{cases} \Argmin{a \in \A} L_t(ha) \text{ if } h \in \HD{\nu},\, \min_{a \in \A}{L_t(ha)} < \epsilon_t \\ \bot \text{ if } h \in \HD{\nu},\,\min_{a \in \A}{L_t(ha)} \geq \epsilon_t \\ \bot \text{ if } h \not\in \HD{\nu}\end{cases}$$
+$$\pi^*_t(h):=\begin{cases} \Argmin{a \in \A} L_t(ha) \text{ if } h \in \HD{\bar{\Hy}},\, \min_{a \in \A}{L_t(ha)} < \epsilon_t \\ \bot \text{ if } h \in \HD{\bar{\Hy}},\,\min_{a \in \A}{L_t(ha)} \geq \epsilon_t \\ \bot \text{ if } h \not\in \HD{\bar{\Hy}}\end{cases}$$
 
 Here, $\Argmin{}$ is disambiguated arbitrarily (and the last line is also arbitrary). Then, $\pi^*$ learns $\bar{\Hy}$.
  
-\#Proof of Lemma
+\#Proof of Proposition A.4
+
+Denote $\zeta^0 \in \Delta[N]$ the uniform probability distribution. Define $\zeta_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ by
+
+$$\zeta_t(h)(k):=\frac{\hat{\nu}^k(h)}{\sum_{j < N}\hat{\nu}^j(h)}$$
+
+That is, $\zeta_t(h)$ is the posterior probability distribution on $\bar{\Hy}$ after observing $h$, given prior $\zeta^0$. We have
+
+$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(?)] \leq ?$$
 
 TBD
 
