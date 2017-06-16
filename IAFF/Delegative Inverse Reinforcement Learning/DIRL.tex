@@ -376,9 +376,15 @@ $$\E_{\zeta}[e^{-\beta L}] \leq 1 - (1 - e^{-1})\beta\epsilon$$
 
 \#Proof of Proposition A.2
 
-Without loss of generality, we can assume that $\E_\zeta[L] = \epsilon$, because otherwise we can rescale $L$ by a constant in $(0,1)$ which will only make $\E_{\zeta}[e^{-\beta L}]$ larger. It now follows that for any $k$, $L(k) \leq \beta^{-1}$...
+Without loss of generality, we can assume that $\E_\zeta[L] = \epsilon$, because otherwise we can rescale $L$ by a constant in $(0,1)$ which will only make $\E_{\zeta}[e^{-\beta L}]$ larger. It now follows from conditions i+ii that for any $k$, $L(k) \leq \beta^{-1}$ and therefore $\beta L(k) \in [0,1]$. We have
 
-TBD
+$$L(k) = (1 - \beta L(k)) \cdot 0 + \beta L(k) \cdot \beta^{-1}$$
+
+Since $e^{-\beta x}$ is a convex function, we get
+
+$$e^{-\beta L(k)} \leq (1 - \beta L(k)) \cdot e^{-\beta \cdot 0} + \beta L(k) \cdot e^{-\beta \cdot \beta^{-1}} = 1 - \beta L(k) + e^{-1} \beta L(k) = 1-(1-e^{-1})\beta L(k)$$
+
+$$\E_\zeta[e^{-\beta L}] \leq 1-(1-e^{-1})\beta \E_\zeta[L] = 1-(1-e^{-1})\beta\epsilon$$
 
 \#Proposition A.3
 
@@ -396,7 +402,27 @@ $$I \geq \frac{(1-e^{-1})^2}{8\Abs{\A}^2} \beta^2 \epsilon^2$$
 
 \#Proof of Proposition A.3
 
-TBD
+Define $\bar{\alpha} \in \Delta\A$ by $\bar{\alpha}:=\E_\zeta[\alpha]$. We have
+
+$$I = \E_{\zeta}[\KL{\alpha}{\bar{\alpha}}]$$
+
+Applying Pinsker's inequality
+
+$$I \geq 2\E_{\zeta}[\Dtv(\alpha,\bar{\alpha})^2]=\frac{1}{2}\E_\zeta[\Norm{\alpha-\bar{\alpha}}_1^2] \geq \frac{1}{2}\E_\zeta[\Norm{\alpha-\bar{\alpha}}_1]^2$$
+
+By Proposition A.1
+
+$$I \geq \frac{1}{8\Abs{\A}^2}\E_\zeta[\Norm{\frac{\alpha}{\Norm{\alpha}_\infty}-\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}}_\infty]^2 \geq \frac{1}{8\Abs{\A}^2}\Norm{\E_\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}-\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}]}_\infty^2=\frac{1}{8\Abs{\A}^2}\Norm{\E_\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}]-\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}}_\infty^2$$
+
+$$I \geq \frac{1}{8\Abs{\A}^2}(\Norm{\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}}_\infty-\Norm{\E_\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}]}_\infty)^2=\frac{1}{8\Abs{\A}^2}(1-\Norm{\E_\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}]}_\infty)^2$$
+
+By condition iii, $\alpha(k)(a) / \Norm{\alpha(k)}_\infty \leq \exp[-\beta L(k,a)]$ and therefore
+
+$$I \geq \frac{1}{8\Abs{\A}^2}(1-\max_{a \in \A} \E_{k \sim \zeta}[e^{-\beta L(k,a)}])^2$$
+
+Applying Proposition A.2, we get
+
+$$I \geq \frac{1}{8\Abs{\A}^2}(1-(1-(1-e^{-1})\beta\epsilon))^2=\frac{(1-e^{-1})^2}{8\Abs{\A}^2}\beta^2\epsilon^2$$
 
 \#Lemma
 
