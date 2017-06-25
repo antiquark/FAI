@@ -112,7 +112,7 @@ Whatever...
 
 An *interface* $\I = (\A,\Ob)$ is a pair of finite sets  ("actions" and "observations"). An $\I$-*policy* is a function $\pi: \FH \rightarrow \Delta\A$. An $\I$-*environment* is a partial function $\mu: \FH \times \A \PF \Delta\Ob$ s.t. 
 
-i. $\Estr_{\A \times \Ob} \times \A \subseteq \Dom \mu$
+i. $\Estr \times \A \subseteq \Dom \mu$
 
 ii. Given $h \in \FH$ and $aob \in \A \times \Ob \times \A$, $haob \in \Dom \mu$ iff $h \in \Dom \mu$ and $\mu(ha)(o) > 0$.
 
@@ -220,7 +220,7 @@ ii. $\lim_{t \rightarrow \infty} \E_{x \sim \mu_t\bowtie\pi^*_t}[\lim_{n \righta
 
 That is, $\kappa$ is $\upsilon$-avoidable when it is possible to avoid the associated event while retaining most of the value. Consider a meta-universe $\upsilon=(\mu,r)$ and $\kappa$ a $\upsilon$-avoidable transition probability. Denote $-\upsilon:=(\mu,1-r)$. We define the reward function $r^\kappa_t$ by
 
-$$r^\kappa_t(h):=\kappa_t(\Estr_{\A \times \Ob}) \V^{-\upsilon}_t(\Estr_{\A \times \Ob})+\sum_{n=1}^{\Abs{h}} (1-\hat{\kappa}_t(h_{:n-1}))\kappa_t(h_{:n}) \V^{-\upsilon}_t(h_{:n})+(1-\hat{\kappa}_t(h))r_t(h)$$
+$$r^\kappa_t(h):=\kappa_t(\Estr) \V^{-\upsilon}_t(\Estr)+\sum_{n=1}^{\Abs{h}} (1-\hat{\kappa}_t(h_{:n-1}))\kappa_t(h_{:n}) \V^{-\upsilon}_t(h_{:n})+(1-\hat{\kappa}_t(h))r_t(h)$$
 
 We think of $r^\kappa$ as representing a process wherein once the event represented by $\kappa$ occurs, the agent starts *minimizing* the utility function. We also use the notation $\upsilon^\kappa:=(\mu,r^\kappa)$.
 
@@ -426,25 +426,41 @@ $$I \geq \frac{1}{8\Abs{\A}^2}(1-(1-(1-e^{-1})\beta\epsilon))^2=\frac{(1-e^{-1})
 
 \#Proposition A.4
 
-Consider the setting of Theorem, but assume that $\Hy = \{\upsilon^k = (\mu^k,r^k)\}_{k < N}$ for some $N \in \Nats$ (i.e. it is finite) and that $\alpha^k(t)$ is *strictly* $\beta(t)$-rational for $\bar{\upsilon}^k[\alpha^k]$. Denote $\nu^k:=\bar{\mu}^k[\alpha^k]$ and $\HD{\bar{\Hy}}:= \bigcup_{k < N} \HD{\nu^k}$. Define $L_t: \HD{\bar{\Hy}} \times \A \rightarrow [0,1]$ by
+Consider the setting of Theorem, but assume that $\Hy = \{\upsilon^k = (\mu^k,r^k)\}_{k < N}$ for some $N \in \Nats$ (i.e. it is finite) and that $\alpha^k(t)$ is *strictly* $\beta(t)$-rational for $\bar{\upsilon}^k[\alpha^k]$. Denote $\nu^k:=\bar{\mu}^k[\alpha^k]$ and $\HD{\bar{\Hy}}:= \bigcup_{k < N} \HD{\nu^k}$. Denote $\zeta^0 \in \Delta[N]$ the uniform probability distribution. For any $t > N^3$, define $\zeta_t,\zeta'_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ recursively as follows
 
-$$L_t(ha):=\frac{\sum_{k < N} \hat{\nu}^k_t(h)(\max_{b \in A}{\W^{\upsilon^k_t}_t(\underline{h}b)}-\W^{\upsilon^k_t}_t(\underline{h}a))}{\sum_{k < N} \hat{\nu}_t^k(h)}$$
+$$\zeta'_t(\Estr):=\zeta^0$$
+
+$$\zeta'_t(hao)(k):=\frac{\zeta_t(h)(k) \cdot \nu^k(ha)(o)}{\sum_{j < N} \zeta_t(h)(j) \cdot \nu^j(ha)(o)}$$
+
+$$\zeta_t(h)(k):=\frac{\zeta'_t(h)(k)[[\zeta'_t(h)(k) > t^{-1/3}]]}{\sum_{j < N}\zeta'_t(h)(j)[[\zeta'_t(h)(j) > t^{-1/3}]]}$$
+
+That is, $\zeta_t(h)$ is obtained by starting from prior $\zeta^0$, updating on every observation and removing from consideration any universe whose probability drops below $t^{-1/3}$. Define $L_t: \HD{\bar{\Hy}} \times \A \rightarrow [0,1]$ by
+
+$$L_t(ha):=\E_{k \sim \zeta_t(h)}[\max_{b \in A}{\W^{\upsilon^k_t}_t(\underline{h}b)}-\W^{\upsilon^k_t}_t(\underline{h}a)]$$
 
 Denote $\epsilon_t:=\beta(t)^{-1}t^{-1/3}$. Define the following $\Adi$-metapolicy $\pi^*$:
 
 $$\pi^*_t(h):=\begin{cases} \Argmin{a \in \A} L_t(ha) \text{ if } h \in \HD{\bar{\Hy}},\, \min_{a \in \A}{L_t(ha)} < \epsilon_t \\ \bot \text{ if } h \in \HD{\bar{\Hy}},\,\min_{a \in \A}{L_t(ha)} \geq \epsilon_t \\ \bot \text{ if } h \not\in \HD{\bar{\Hy}}\end{cases}$$
 
-Here, $\Argmin{}$ is disambiguated arbitrarily (and the last line is also arbitrary). Then, $\pi^*$ learns $\bar{\Hy}$.
+(Technically, we only defined $\pi^*_t$ for $t > N^3$, but it doesn't matter.) Then, $\pi^*$ learns $\bar{\Hy}$.
  
 \#Proof of Proposition A.4
 
-Denote $\zeta^0 \in \Delta[N]$ the uniform probability distribution. Define $\zeta_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ by
+For any $h \in \HD{\bar{\Hy}}$, we have
 
-$$\zeta_t(h)(k):=\frac{\hat{\nu}^k(h)}{\sum_{j < N}\hat{\nu}^j(h)}$$
+$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\zeta_t(x_{:\Abs{h}+1})) \mid x_{:\Abs{h}}=h] = \Ent(\zeta_t(h)) - \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\KL{\zeta_t(x_{:n+1})}{\zeta_t(x_{:n})} \mid x_{:\Abs{h}}=h]$$
 
-That is, $\zeta_t(h)$ is the posterior probability distribution on $\bar{\Hy}$ after observing $h$, given prior $\zeta^0$. We have
+Taking expected value over $h$, we conclude that for any $n \in \Nats$
 
-$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(?)] \leq ?$$
+$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\zeta_t(x_{:n+1}))] = \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\zeta_t(x_{:n}))] - \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\KL{\zeta_t(x_{:n+1})}{\zeta_t(x_{:n})}]$$
+
+$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\zeta_t(x_{:n}))] = \Ent(\zeta^0) - \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\sum_{m < n} \KL{\zeta_t(x_{:m+1})}{\zeta_t(x_{:m})}]$$
+
+Applying Proposition A.3???, we get
+
+$$0 \leq \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\zeta_t(x_{:n}))] \leq N \ln{N} - \frac{(1-e^{-1})^2}{8\Abs{\A}^2} \beta(t)^2 \epsilon_t^2\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ob\}}]$$
+
+$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ob\}}] \leq \frac{8 \Abs{\A}^2 N \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
 
 TBD
 
