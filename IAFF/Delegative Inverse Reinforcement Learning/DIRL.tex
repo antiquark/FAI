@@ -25,13 +25,11 @@
 \DeclareMathOperator{\Dom}{dom}
 
 % operators that require brackets
-\newcommand{\Prb}{\operatorname{Pr}}
-\newcommand{\PP}[2]{\operatorname{Pr}_{\substack{#1 \\ #2}}}
-\newcommand{\PPP}[3]{\operatorname{Pr}_{\substack{#1 \\ #2 \\ #3}}}
-%\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
-\newcommand{\E}{\operatorname{E}}
-\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
-\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
 \newcommand{\Var}{\operatorname{Var}}
 
 % operators that require parentheses
@@ -97,6 +95,8 @@
 \newcommand{\W}{\operatorname{W}}
 \newcommand{\EU}{\operatorname{EU}}
 
+\newcommand{\BE}[1]{\underset{#1}{\boldsymbol{\operatorname{E}}}}
+
 \begin{document}
 
 We introduce a reinforcement-like learning setting we call *Delegative Inverse Reinforcement Learning* (DIRL). In DIRL, the agent can, at any point of time, delegate the choice of action to an "advisor". The agent knows neither the environment nor the reward function, whereas the advisor knows both. Thus, DIRL can be regarded as a special case of CIRL. A similar setting was studied in [Clouse 1997](https://web.cs.umass.edu/publication/docs/1997/UM-CS-1997-026.pdf), but as far as we can tell, the relevant literature offers few theoretical results and virtually all researchers focus on the MDP case (*please correct me if I'm wrong*). On the other hand, we consider general environments (not necessarily MDP or even POMDP) and prove a natural performance guarantee.
@@ -131,7 +131,7 @@ Here and throughout, we use geometric time discount, however this choice is most
 
 Denote $\Pi_{\I}$\ the space of $\I$-policies. An $\I$-*metapolicy* is a family $\{\pi_t \in \Pi_\I\}_{t \in (0, \infty)}$, where the parameter $t$ is thought of as setting the scale of the time discount. An $\I$-*meta-universe* is a family $\{\upsilon_t \in \Upsilon\}_{t \in (0, \infty)}$. This latter concept is useful for analyzing multi-agent systems, where the environment contains other agents and we study the asymptotics when all agents' time discount scales go to infinity. We won't focus on the multi-agent case in this essay, but for future reference, it seems useful to make sure the results hold in the greater generality of meta-universes.
 
-Given an $\I$-policy $\pi$, an $\I$-universe $\upsilon$ and $t > 0$, we denote $\EU_\upsilon^\pi(t):=\E_{\mu\bowtie\pi}[\Ut^r_t]$ (this is well-defined since $\Ut^r_t$ is defined on the support of $\mu\bowtie\pi$). We will omit $\I$ when it is obvious from the context.
+Given an $\I$-policy $\pi$, an $\I$-universe $\upsilon$ and $t > 0$, we denote $\EU_\upsilon^\pi(t):=\E{\mu\bowtie\pi}[\Ut^r_t]$ (this is well-defined since $\Ut^r_t$ is defined on the support of $\mu\bowtie\pi$). We will omit $\I$ when it is obvious from the context.
 
 \#Definition 1
 
@@ -149,7 +149,7 @@ Our notion of learnability is closely related to the notion of *sublinear regret
 
 Fix an interface $\I$. Consider $\Hy$ a countable learnable set of meta-universes. Consider any $\zeta \in \Delta\Hy$ s.t. $\Supp \zeta = \Hy$. Consider $\pi^\zeta$ a $\zeta$-Bayes optimal metapolicy, i.e.
 
-$$\pi^\zeta_t \in \Argmax{\pi \in \Pi} \E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi}(t)]$$
+$$\pi^\zeta_t \in \Argmax{\pi \in \Pi} \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi}(t)]$$
 
 Then, $\pi^\zeta$ learns $\Hy$.
 
@@ -189,11 +189,11 @@ Given an $\I$-universe $\upsilon=(\mu,r)$, we define the $\Adi$-reward function 
 
 We now introduce the conditions on the advisor policy which will allow us to prove a learnability theorem. First, we specify an advisor that always remains "approximately rational."
 
-Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$, $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ and $\A^\upsilon_t: \HD{\mu} \rightarrow 2^\A$ by
+The notation $\E{x \sim \rho}[X \mid h]$ will be used to mean $\E{x \sim \rho}[X \mid h \sqsubset x]$. Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$, $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ and $\A^\upsilon_t: \HD{\mu} \rightarrow 2^\A$ by
 
-$$\V_t^\upsilon(h):=\max_{\pi \in \Pi} {\E_{x \sim \mu\bowtie\pi}[\frac{\sum_{n=\Abs{h}}^\infty e^{-n/t} r(x_{:n})}{\sum_{n=\Abs{h}}^\infty e^{-n/t}} \mid h \sqsubset x]}$$
+$$\V_t^\upsilon(h):=\max_{\pi \in \Pi} {\E{x \sim \mu\bowtie\pi}[\frac{\sum_{n=\Abs{h}}^\infty e^{-n/t} r(x_{:n})}{\sum_{n=\Abs{h}}^\infty e^{-n/t}} \mid h]}$$
 
-$$\W_t^\upsilon(ha):=\E_{o \sim \mu(ha)}[V_t^\upsilon(hao)]$$
+$$\W_t^\upsilon(ha):=\E{o \sim \mu(ha)}[V_t^\upsilon(hao)]$$
 
 $$\A^\upsilon_t(h) := \Argmax{a \in \A} \W_t^\upsilon(h)$$
 
@@ -217,7 +217,7 @@ We think of $\hat{\kappa}_t(h)$ as the *accumulated* probability the event occur
 
 i. $\lim_{t \rightarrow \infty} {(\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)-\EU_{\upsilon_t}^{\pi^*_t}(t))} = 0$
 
-ii. $\lim_{t \rightarrow \infty} \E_{x \sim \mu_t\bowtie\pi^*_t}[\lim_{n \rightarrow \infty} \hat{\kappa}_t(x_{:n})] = 0$
+ii. $\lim_{t \rightarrow \infty} \E{x \sim \mu_t\bowtie\pi^*_t}[\lim_{n \rightarrow \infty} \hat{\kappa}_t(x_{:n})] = 0$
 
 ***
 
@@ -265,24 +265,24 @@ $$\hat{\mu}(h):=\prod_{m < n} \mu(h_{:m}a_m)(o_m)$$
 
 For $h \in \FH \setminus \HD{\mu}$, $\hat{\mu}(h):=0$.
 
-Given a family of environments $\{\mu^k\}_{k \in \Nats}$ and $\xi \in \Delta\Nats$, we will use the notation $\boldsymbol{\E}_{k \sim \xi}[\mu^k]$ to denote the environment given by
+Given a family of environments $\{\mu^k\}_{k \in \Nats}$ and $\xi \in \Delta\Nats$, we will use the notation $\BE{k \sim \xi}[\mu^k]$ to denote the environment given by
 
-$$\HD{\boldsymbol{\E}_{k \sim \xi}[\mu^k]}:= \bigcup_{k \in \Supp \xi} \HD{\mu^k}$$
+$$\HD{\BE{k \sim \xi}[\mu^k]}:= \bigcup_{k \in \Supp \xi} \HD{\mu^k}$$
 
-$$\boldsymbol{\E}_{k \sim \xi}[\mu^k](ha):=\frac{\E_{k \sim \xi}[ \hat{\mu}^k(h)\mu^k(ha)]}{\E_{k \sim \xi}[ \hat{\mu}^k(h)]}$$
+$$\BE{k \sim \xi}[\mu^k](ha):=\frac{\E{k \sim \xi}[ \hat{\mu}^k(h)\mu^k(ha)]}{\E{k \sim \xi}[ \hat{\mu}^k(h)]}$$
 
 \#Corollary 1
 
-Consider $\{\mu^k\}_{k \in \Nats}$ a countable family of $\I$-meta-environments, $\{r^K\}_{K \in \Nats}$ a countable family of reward functions and $\{\xi^K \in \Delta\Nats\}_{K \in \Nats}$ s.t. given $k \in \Supp \xi^K$, $\Dom{r^K} \supseteq \HD{\mu^k}$. We think of $\xi^K$ as the advisor's belief about the environment in universe $K$. Let $\beta: (0,\infty) \rightarrow (0,\infty)$ be s.t. $\beta(t) = \omega(t^{2/3})$ and $\{\alpha^K\}_{K \in \Nats}$ be a family of autonomous $\Adi$-metapolicies s.t. for every $K \in \Nats$, $\alpha^K$ is $\beta$-rational for $(\boldsymbol{\E}_{k \sim \xi^K}[\mu^k], r^K)$. Let $\zeta \in \Delta\Nats^2$ be s.t. for any $J,j \in \Nats$ 
+Consider $\{\mu^k\}_{k \in \Nats}$ a countable family of $\I$-meta-environments, $\{r^K\}_{K \in \Nats}$ a countable family of reward functions and $\{\xi^K \in \Delta\Nats\}_{K \in \Nats}$ s.t. given $k \in \Supp \xi^K$, $\Dom{r^K} \supseteq \HD{\mu^k}$. We think of $\xi^K$ as the advisor's belief about the environment in universe $K$. Let $\beta: (0,\infty) \rightarrow (0,\infty)$ be s.t. $\beta(t) = \omega(t^{2/3})$ and $\{\alpha^K\}_{K \in \Nats}$ be a family of autonomous $\Adi$-metapolicies s.t. for every $K \in \Nats$, $\alpha^K$ is $\beta$-rational for $(\BE{k \sim \xi^K}[\mu^k], r^K)$. Let $\zeta \in \Delta\Nats^2$ be s.t. for any $J,j \in \Nats$ 
 
 $$\Pr_{(K,k) \in \zeta}[k = j \mid K = J] = \xi^J(j)$$ 
 
 We think of $\zeta$ as the agent's prior and the equation above as stating the agent's belief that the advisor's beliefs are "calibrated". Consider $\pi^\zeta$ a $\zeta$-Bayes optimal $\Adi$-metapolicy, i.e.
 
-$$\pi^\zeta \in \Argmax{\pi \in \Pi_{\Adi}}{\E_{(K,k) \in \zeta}[\EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^\pi(t)]}$$ 
+$$\pi^\zeta \in \Argmax{\pi \in \Pi_{\Adi}}{\E{(K,k) \in \zeta}[\EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^\pi(t)]}$$ 
 Then, for every $K \in \Nats$
 
-$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \E_{k \in \xi^K}[\EU_{\mu^k,r^K}^\pi(t)] - \E_{k \in \xi^K}[\EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^{\pi^\zeta}(t)]) = 0$$
+$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \E{k \in \xi^K}[\EU_{\mu^k,r^K}^\pi(t)] - \E{k \in \xi^K}[\EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^{\pi^\zeta}(t)]) = 0$$
 
 ***
 
@@ -313,17 +313,17 @@ $$\EU_{\upsilon_t}^{\pi^*_t}(t) \geq \max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t
 
 Also
 
-$$\E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t)] \geq \E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t); \upsilon \in \Hy_\epsilon]$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t); \upsilon \in \Hy_\epsilon]$$
 
 Combining, we get
 
-$$\E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E_{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t); \upsilon \in \Hy_\epsilon] - \epsilon$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t); \upsilon \in \Hy_\epsilon] - \epsilon$$
 
-$$\E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E_{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)] -  \E_{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t); \upsilon \not\in \Hy_\epsilon] - \epsilon$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)] -  \E{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t); \upsilon \not\in \Hy_\epsilon] - \epsilon$$
 
 By definition of $\Hy_\epsilon$, this implies
 
-$$\E_{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E_{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)] -  2\epsilon$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)] -  2\epsilon$$
 
 For any $\upsilon \in \Hy$, we get
 
@@ -371,15 +371,15 @@ Consider $\Hy$ a finite set, $L: \Hy \rightarrow [0,\infty)$, $\zeta \in \Delta\
 
 i. For any $k \in \Hy$, $\zeta(k) \geq \beta\epsilon$.
 
-ii. $\E_{\zeta}[L] \geq \epsilon$
+ii. $\E{\zeta}[L] \geq \epsilon$
 
 Then
 
-$$\E_{\zeta}[e^{-\beta L}] \leq 1 - (1 - e^{-1})\beta\epsilon$$
+$$\E{\zeta}[e^{-\beta L}] \leq 1 - (1 - e^{-1})\beta\epsilon$$
 
 \#Proof of Proposition A.2
 
-Without loss of generality, we can assume that $\E_\zeta[L] = \epsilon$, because otherwise we can rescale $L$ by a constant in $(0,1)$ which will only make $\E_{\zeta}[e^{-\beta L}]$ larger. It now follows from conditions i+ii that for any $k$, $L(k) \leq \beta^{-1}$ and therefore $\beta L(k) \in [0,1]$. We have
+Without loss of generality, we can assume that $\E\zeta[L] = \epsilon$, because otherwise we can rescale $L$ by a constant in $(0,1)$ which will only make $\E{\zeta}[e^{-\beta L}]$ larger. It now follows from conditions i+ii that for any $k$, $L(k) \leq \beta^{-1}$ and therefore $\beta L(k) \in [0,1]$. We have
 
 $$L(k) = (1 - \beta L(k)) \cdot 0 + \beta L(k) \cdot \beta^{-1}$$
 
@@ -387,7 +387,7 @@ Since $e^{-\beta x}$ is a convex function, we get
 
 $$e^{-\beta L(k)} \leq (1 - \beta L(k)) \cdot e^{-\beta \cdot 0} + \beta L(k) \cdot e^{-\beta \cdot \beta^{-1}} = 1 - \beta L(k) + e^{-1} \beta L(k) = 1-(1-e^{-1})\beta L(k)$$
 
-$$\E_\zeta[e^{-\beta L}] \leq 1-(1-e^{-1})\beta \E_\zeta[L] = 1-(1-e^{-1})\beta\epsilon$$
+$$\E\zeta[e^{-\beta L}] \leq 1-(1-e^{-1})\beta \E\zeta[L] = 1-(1-e^{-1})\beta\epsilon$$
 
 \#Proposition A.3
 
@@ -395,7 +395,7 @@ Consider $\Hy$ and $\A$ finite sets, $L: \Hy \times \A \rightarrow [0,1]$, $\zet
 
 i. For any $k \in \Hy$, $\zeta(k) \geq \beta\epsilon$.
 
-ii. For any $a \in A$, $\E_{k \in \zeta}[L(k,a)] \geq \epsilon$.
+ii. For any $a \in A$, $\E{k \in \zeta}[L(k,a)] \geq \epsilon$.
 
 iii. For any $k \in \Hy$ and $a \in A$, $\alpha(k)(a) \leq \exp[-\beta L(k,a)] \max_{b \in \A} \alpha(k)(b)$.
 
@@ -405,23 +405,23 @@ $$I \geq \frac{(1-e^{-1})^2}{8\Abs{\A}^2} \beta^2 \epsilon^2$$
 
 \#Proof of Proposition A.3
 
-Define $\bar{\alpha} \in \Delta\A$ by $\bar{\alpha}:=\E_\zeta[\alpha]$. We have
+Define $\bar{\alpha} \in \Delta\A$ by $\bar{\alpha}:=\E\zeta[\alpha]$. We have
 
-$$I = \E_{\zeta}[\KL{\alpha}{\bar{\alpha}}]$$
+$$I = \E{\zeta}[\KL{\alpha}{\bar{\alpha}}]$$
 
 Applying Pinsker's inequality
 
-$$I \geq 2\E_{\zeta}[\Dtv(\alpha,\bar{\alpha})^2]=\frac{1}{2}\E_\zeta[\Norm{\alpha-\bar{\alpha}}_1^2] \geq \frac{1}{2}\E_\zeta[\Norm{\alpha-\bar{\alpha}}_1]^2$$
+$$I \geq 2\E{\zeta}[\Dtv(\alpha,\bar{\alpha})^2]=\frac{1}{2}\E\zeta[\Norm{\alpha-\bar{\alpha}}_1^2] \geq \frac{1}{2}\E\zeta[\Norm{\alpha-\bar{\alpha}}_1]^2$$
 
 By Proposition A.1
 
-$$I \geq \frac{1}{8\Abs{\A}^2}\E_\zeta[\Norm{\frac{\alpha}{\Norm{\alpha}_\infty}-\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}}_\infty]^2 \geq \frac{1}{8\Abs{\A}^2}\Norm{\E_\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}-\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}]}_\infty^2=\frac{1}{8\Abs{\A}^2}\Norm{\E_\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}]-\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}}_\infty^2$$
+$$I \geq \frac{1}{8\Abs{\A}^2}\E\zeta[\Norm{\frac{\alpha}{\Norm{\alpha}_\infty}-\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}}_\infty]^2 \geq \frac{1}{8\Abs{\A}^2}\Norm{\E\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}-\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}]}_\infty^2=\frac{1}{8\Abs{\A}^2}\Norm{\E\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}]-\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}}_\infty^2$$
 
-$$I \geq \frac{1}{8\Abs{\A}^2}(\Norm{\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}}_\infty-\Norm{\E_\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}]}_\infty)^2=\frac{1}{8\Abs{\A}^2}(1-\Norm{\E_\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}]}_\infty)^2$$
+$$I \geq \frac{1}{8\Abs{\A}^2}(\Norm{\frac{\bar{\alpha}}{\Norm{\bar{\alpha}}_\infty}}_\infty-\Norm{\E\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}]}_\infty)^2=\frac{1}{8\Abs{\A}^2}(1-\Norm{\E\zeta[\frac{\alpha}{\Norm{\alpha}_\infty}]}_\infty)^2$$
 
 By condition iii, $\alpha(k)(a) / \Norm{\alpha(k)}_\infty \leq \exp[-\beta L(k,a)]$ and therefore
 
-$$I \geq \frac{1}{8\Abs{\A}^2}(1-\max_{a \in \A} \E_{k \sim \zeta}[e^{-\beta L(k,a)}])^2$$
+$$I \geq \frac{1}{8\Abs{\A}^2}(1-\max_{a \in \A} \E{k \sim \zeta}[e^{-\beta L(k,a)}])^2$$
 
 Applying Proposition A.2, we get
 
@@ -441,7 +441,7 @@ In the above, $Z_t(h)$ and $\tilde{Z}_t(h)$ are normalization factor chosen to m
 
 Define $L_t: \HD{\bar{\Hy}} \times \A \rightarrow [0,1]$ by
 
-$$L_t(ha):=\E_{k \sim \zeta_t(h)}[\max_{b \in A}{\W^{\upsilon^k_t}_t(\underline{h}b)}-\W^{\upsilon^k_t}_t(\underline{h}a)]$$
+$$L_t(ha):=\E{k \sim \zeta_t(h)}[\max_{b \in A}{\W^{\upsilon^k_t}_t(\underline{h}b)}-\W^{\upsilon^k_t}_t(\underline{h}a)]$$
 
 Denote $\epsilon_t:=\beta(t)^{-1}t^{-1/3}$. Define the following $\Adi$-metapolicy $\pi^*$:
 
@@ -463,17 +463,17 @@ $$\xi^k_t(h)(i):= [[i,k \in S_t^k(h)]]\frac{\tilde{\xi}^k_t(h)(i)}{\sum_{j \in S
 
 That is, $\xi^k$ behaves as if, at each moment of time, we update on a bit of information saying whether the true universe is in the set of low probability universes. Denote $\rho_t:= \zeta^0 \ltimes ({\nu_t}\bowtie{\pi^*_t}) \in \Delta([N] \times \Adih)$, where the dependence of ${\nu^k_t}\bowtie{\pi^*_t}$ on $k$ is used to view it as Markov kernel from $[N]$ to $\Adih$. It is easy to see that, since the probability of ever receiving a "low probability" bit is at most $(N-1)t^{-1/3}$, we have
 
-$$\Prb_{(k,x)\sim\rho_t}[\exists n \in \Nats: \zeta_t(x_{:n}) \ne \xi_t^k(x_{:n})] \leq (N-1)t^{-1/3}$$
+$$\Pr_{(k,x)\sim\rho_t}[\exists n \in \Nats: \zeta_t(x_{:n}) \ne \xi_t^k(x_{:n})] \leq (N-1)t^{-1/3}$$
 
-For any $h \in \HD{\bar{\Hy}}$, we have
+For any $h \in \HD{\bar{\Hy}}$ we have
 
-$$\E_{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:\Abs{h}+1})) \mid x_{:\Abs{h}}=h] = \Ent(\xi^k_t(h)) -\E_{(k,x)\sim\rho_t}[\KL{\tilde{\xi}^k_t(x_{:\Abs{h}+1})}{\xi^k_t(x_{:\Abs{h}})} +H(\tilde{\xi}^k_t(x_{:\Abs{h}+1}))-H(\xi^k_t(x_{:\Abs{h}+1}))\mid x_{:\Abs{h}}=h]$$
+$$\E{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:\Abs{h}+1})) \mid h] = \Ent(\xi^k_t(h)) -\E{(k,x)\sim\rho_t}[\KL{\tilde{\xi}^k_t(x_{:\Abs{h}+1})}{\xi^k_t(x_{:\Abs{h}})} +\Ent(\tilde{\xi}^k_t(x_{:\Abs{h}+1}))-\Ent(\xi^k_t(x_{:\Abs{h}+1}))\mid h]$$
 
-Taking expected value over $h$, we conclude??? that for any $n \in \Nats$
+Taking expected value over $h$, we conclude that for any $n \in \Nats$
 
-$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\xi^k_t(x_{:n+1}))] = \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\xi^k_t(x_{:n}))] - \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\KL{\xi^k_t(x_{:n+1})}{\xi^k_t(x_{:n})}]$$
+$$\E{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:n+1}))] = \E{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:n}))] - \E{(k,x)\sim\rho_t}[\KL{\tilde{\xi}^k_t(x_{:n+1})}{\xi^k_t(x_{:n})} +\Ent(\tilde{\xi}^k_t(x_{:n+1}))-\Ent(\xi^k_t(x_{:n+1}))]$$
 
-$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\xi^k_t(x_{:n}))] = \Ent(\zeta^0) - \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\sum_{m < n} \KL{\xi^k_t(x_{:m+1})}{\xi^k_t(x_{:m})}]$$
+$$\E{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:n}))] = \Ent(\zeta^0) - \E{(k,x)\sim\rho_t}[\sum_{m < n} (\KL{\xi^k_t(x_{:m+1})}{\xi^k_t(x_{:m})}+\Ent(\tilde{\xi}^k_t(x_{:m+1}))-\Ent(\xi^k_t(x_{:m+1})))]$$
 
 Applying Proposition A.3???, we get
 
