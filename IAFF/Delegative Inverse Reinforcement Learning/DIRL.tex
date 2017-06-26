@@ -28,6 +28,7 @@
 \newcommand{\Prb}{\operatorname{Pr}}
 \newcommand{\PP}[2]{\operatorname{Pr}_{\substack{#1 \\ #2}}}
 \newcommand{\PPP}[3]{\operatorname{Pr}_{\substack{#1 \\ #2 \\ #3}}}
+%\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
 \newcommand{\E}{\operatorname{E}}
 \newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
 \newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
@@ -460,15 +461,15 @@ $$S_t^k(h):=\{i \in [N] \mid \tilde{\xi}^k_t(h)(i) > t^{-1/3}\}$$
 
 $$\xi^k_t(h)(i):= [[i,k \in S_t^k(h)]]\frac{\tilde{\xi}^k_t(h)(i)}{\sum_{j \in S_t^k(h)}\tilde{\xi}^k_t(h)(j)}+[[i,k \not\in S_t^k(h)]]\frac{\tilde{\xi}^k_t(h)(i)}{\sum_{j \in [N] \setminus S_t^k(h)}\tilde{\xi}^k_t(h)(j)}$$
 
-That is, $\xi^k$ behaves as if, at each moment of time, we update on a bit of information saying whether the true universe is in the set of low probability universes. It is easy to see that, since the probability of ever receiving a "low probability" bit is at most $(N-1)t^{-1/3}$, we have
+That is, $\xi^k$ behaves as if, at each moment of time, we update on a bit of information saying whether the true universe is in the set of low probability universes. Denote $\rho_t:= \zeta^0 \ltimes ({\nu_t}\bowtie{\pi^*_t}) \in \Delta([N] \times \Adih)$, where the dependence of ${\nu^k_t}\bowtie{\pi^*_t}$ on $k$ is used to view it as Markov kernel from $[N]$ to $\Adih$. It is easy to see that, since the probability of ever receiving a "low probability" bit is at most $(N-1)t^{-1/3}$, we have
 
-$$\PP{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\exists n \in \Nats: \zeta_t(x_{:n}) \ne \xi_t^k(x_{:n})] \leq (N-1)t^{-1/3}$$
+$$\Prb_{(k,x)\sim\rho_t}[\exists n \in \Nats: \zeta_t(x_{:n}) \ne \xi_t^k(x_{:n})] \leq (N-1)t^{-1/3}$$
 
 For any $h \in \HD{\bar{\Hy}}$, we have
 
-$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\xi^k_t(x_{:\Abs{h}+1})) \mid x_{:\Abs{h}}=h] = \Ent(\xi^k_t(h)) - \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\KL{\xi^k_t(x_{:n+1})}{\xi^k_t(x_{:n})} \mid x_{:\Abs{h}}=h]$$
+$$\E_{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:\Abs{h}+1})) \mid x_{:\Abs{h}}=h] = \Ent(\xi^k_t(h)) -\E_{(k,x)\sim\rho_t}[\KL{\tilde{\xi}^k_t(x_{:\Abs{h}+1})}{\xi^k_t(x_{:\Abs{h}})} +H(\tilde{\xi}^k_t(x_{:\Abs{h}+1}))-H(\xi^k_t(x_{:\Abs{h}+1}))\mid x_{:\Abs{h}}=h]$$
 
-Taking expected value over $h$, we conclude that for any $n \in \Nats$
+Taking expected value over $h$, we conclude??? that for any $n \in \Nats$
 
 $$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\xi^k_t(x_{:n+1}))] = \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\xi^k_t(x_{:n}))] - \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\KL{\xi^k_t(x_{:n+1})}{\xi^k_t(x_{:n})}]$$
 
