@@ -459,11 +459,13 @@ $$\tilde{\zeta}^{!k}_t(hao)(i):=\frac{\zeta^{!k}_t(h)(i) \cdot \nu^i(ha)(o)}{\su
 
 $$S_t^k(h):=\{i \in [N] \mid \tilde{\zeta}^{!k}_t(h)(i) > t^{-1/3}\}$$
 
-TODO: when low probability signal comes through, exact universe is revealed!
+$$\zeta^{!k}_t(h)(i):= [[k,i \in S_t^k(h)]]\frac{\tilde{\zeta}^{!k}_t(h)(i)}{\sum_{j \in S_t^k(h)}\tilde{\zeta}^{!k}_t(h)(j)}+[[k \not\in S_t^k(h),\,i=k]]$$
 
-$$\zeta^{!k}_t(h)(i):= [[i,k \in S_t^k(h)]]\frac{\tilde{\zeta}^{!k}_t(h)(i)}{\sum_{j \in S_t^k(h)}\tilde{\zeta}^{!k}_t(h)(j)}+[[i,k \not\in S_t^k(h)]]\frac{\tilde{\zeta}^{!k}_t(h)(i)}{\sum_{j \in [N] \setminus S_t^k(h)}\tilde{\zeta}^{!k}_t(h)(j)}$$
+That is, $\zeta^{!k}$ is a belief state that, besides updating on observations, behaves as if, at each moment of time, if the true universe $k$ is low probability according to current belief state (i.e. $k \not\in S^k_t(h)$), then the true universe is "magically" revealed (i.e. $\zeta^{!k}$ becomes the Kronecker delta), and otherwise it updates on the true universe *not* being revealed. Denote 
 
-That is, $\zeta^{!k}$ behaves as if, at each moment of time, we update on a bit of information saying whether the true universe is in the set of low probability universes (this bit is $[[k \not\in S_t^k(h)]]$). Denote $\rho_t:= \zeta^0 \ltimes ({\nu_t}\bowtie{\pi^*_t}) \in \Delta([N] \times \Adih)$, where the dependence of ${\nu^k_t}\bowtie{\pi^*_t}$ on $k$ is used to view it as Markov kernel from $[N]$ to $\Adih$. It is easy to see that, since the probability of ever receiving a "low probability" bit is at most $(N-1)t^{-1/3}$, we have
+$$\rho_t:= \zeta^0 \ltimes ({\nu_t}\bowtie{\pi^*_t}) \in \Delta([N] \times \Adih)$$
+
+Here, the dependence of ${\nu^k_t}\bowtie{\pi^*_t}$ on $k$ is used to view it as Markov kernel from $[N]$ to $\Adih$. It is easy to see that, since the probability of "magic\ revelation" ever happening is at most $(N-1)t^{-1/3}$, we have
 
 $$\Pr_{(k,x)\sim\rho_t}[\exists n \in \Nats: \zeta_t(x_{:n}) \ne \zeta^{!k}_t(x_{:n})] \leq (N-1)t^{-1/3}$$
 
@@ -473,19 +475,27 @@ $$\Dtv(\rho_t,\rho_t^!) \leq (N-1)t^{-1/3}$$
 
 Given $k \in [N]$ and $h \in \HD{\bar{\Hy}}$, we define the set $h^{!k}$ by 
 
-$$h^{!k} := \{(j,x) \in [N] \times \Adih \mid \forall m \leq \Abs{h}:[[k \in S^k_t(h_{:m})]]=[[j \in S^j_t(h_{:m})]],\,h \sqsubset x\}$$
+$$h^{!k} := \{(j,x) \in [N] \times \Adih \mid h \sqsubset x,\, \forall m \leq \Abs{h}:k \in S^k_t(h_{:m}) \land j \in S^j_t(h_{:m}) \lor k \not\in S^k_t(h_{:m}) \land j=k\}$$
 
-We have
+We have 
+
+$$\Pr_{(j,x)\sim\rho^!_t}[j = i \mid h^{!k}] = \zeta^{!k}(h)(i)$$
+
+It follow that
 
 $$\E{(j,x)\sim\rho^!_t}[\Ent(\zeta^{!j}_t(x_{:\Abs{h}+1})) \mid h^{!k}] = \Ent(\zeta^{!k}_t(h)) -\E{(j,x)\sim\rho^!_t}[\KL{\zeta^{!j}_t(x_{:\Abs{h}+1})}{\tilde{\zeta}^{!j}_t(x_{:\Abs{h}+1})}+\KL{\tilde{\zeta}^{!j}_t(x_{:\Abs{h}+1})}{\zeta^{!j}_t(x_{:\Abs{h}})}\mid h^{!k}]$$
 
 $$\E{(j,x)\sim\rho^!_t}[\Ent(\zeta^{!j}_t(x_{:\Abs{h}+1})) \mid h^{!k}] \leq \Ent(\zeta^{!k}_t(h)) -\E{(j,x)\sim\rho^!_t}[\KL{\tilde{\zeta}^{!j}_t(x_{:\Abs{h}+1})}{\zeta^{!j}_t(x_{:\Abs{h}})}\mid h^{!k}]$$
 
-If $\pi^{!k}(h)=\bot$, we can apply Proposition A.3???
+If $\pi^{!k}(h)=\bot$, we can apply Proposition A.3: condition i follows from the definition of $S^k_t$ and the observation that $\beta(t)\epsilon_t = t^{-1/3}$, condition ii follows from the fact we are in the second case in the definition of $\pi^{!k}$ (see definition of $\pi^*$) and condition iii follows from the strict $\beta(t)$-rationality of $\alpha^k(t)$. We conclude
 
-...Taking expected value over $h$, we conclude that for any $n \in \Nats$
+$$\E{(j,x)\sim\rho^!_t}[\Ent(\zeta^{!j}_t(x_{:\Abs{h}+1})) \mid h^{!k}] \leq \Ent(\zeta^{!k}_t(h)) -  \frac{(1-e^{-1})^2}{8\Abs{\A}^2} \beta(t)^2 \epsilon_t^2[[\pi^{!k}(h)=\bot]]$$
 
-$$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n+1}))] = \E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] - \E{(k,x)\sim\rho^!_t}[\KL{\tilde{\zeta}^{!k}_t(x_{:n+1})}{\zeta^{!k}_t(x_{:n})} +\Ent(\tilde{\zeta}^{!k}_t(x_{:n+1}))-\Ent(\zeta^{!k}_t(x_{:n+1}))]$$
+$$\E{(j,x)\sim\rho^!_t}[\Ent(\zeta^{!j}_t(x_{:\Abs{h}+1})) \mid h^{!k}] \leq \Ent(\zeta^{!k}_t(h)) -  \frac{(1-e^{-1})^2}{8\Abs{\A}^2} t^{-2/3}[[\pi^{!k}(h)=\bot]]$$
+
+Taking $\rho^!_t$-expected value over $(k,h)$, we conclude that for any $n \in \Nats$
+
+$$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n+1}))] = \E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] - \frac{(1-e^{-1})^2}{8\Abs{\A}^2} t^{-2/3} \Pr_{(k,x)\sim\rho^!_t}[\pi^{!k}(x_{:n})=\bot]$$
 
 $$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] = \Ent(\zeta^0) - \E{(k,x)\sim\rho^!_t}[\sum_{m < n} (\KL{\tilde{\zeta}^{!k}_t(x_{:m+1})}{\zeta^{!k}_t(x_{:m})}+\Ent(\tilde{\zeta}^{!k}_t(x_{:m+1}))-\Ent(\zeta^{!k}_t(x_{:m+1})))]$$
 
