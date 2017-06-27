@@ -451,29 +451,37 @@ $$\pi^*_t(h):=\begin{cases} \Argmin{a \in \A} L_t(ha) \text{ if } h \in \HD{\bar
  
 \#Proof of Proposition A.4
 
-For every $k \in [N]$, we define $\xi^k_t, \tilde{\xi}^k_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ and $S_t^k: \HD{\bar{\Hy}} \rightarrow 2^{[N]}$ recursively as follows
+For every $k \in [N]$, we define $\zeta^{!k}_t, \tilde{\zeta}^{!k}_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ and $S_t^k: \HD{\bar{\Hy}} \rightarrow 2^{[N]}$ recursively as follows
 
-$$\tilde{\xi}^k_t(\Estr):=\zeta^0$$
+$$\tilde{\zeta}^{!k}_t(\Estr):=\zeta^0$$
 
-$$\tilde{\xi}^k_t(hao)(i):=\frac{\xi^k_t(h)(i) \cdot \nu^i(ha)(o)}{\sum_{j < N} \xi^k_t(h)(j) \cdot \nu^j(ha)(o)}$$
+$$\tilde{\zeta}^{!k}_t(hao)(i):=\frac{\zeta^{!k}_t(h)(i) \cdot \nu^i(ha)(o)}{\sum_{j < N} \zeta^{!k}_t(h)(j) \cdot \nu^j(ha)(o)}$$
 
-$$S_t^k(h):=\{i \in [N] \mid \tilde{\xi}^k_t(h)(i) > t^{-1/3}\}$$
+$$S_t^k(h):=\{i \in [N] \mid \tilde{\zeta}^{!k}_t(h)(i) > t^{-1/3}\}$$
 
-$$\xi^k_t(h)(i):= [[i,k \in S_t^k(h)]]\frac{\tilde{\xi}^k_t(h)(i)}{\sum_{j \in S_t^k(h)}\tilde{\xi}^k_t(h)(j)}+[[i,k \not\in S_t^k(h)]]\frac{\tilde{\xi}^k_t(h)(i)}{\sum_{j \in [N] \setminus S_t^k(h)}\tilde{\xi}^k_t(h)(j)}$$
+$$\zeta^{!k}_t(h)(i):= [[i,k \in S_t^k(h)]]\frac{\tilde{\zeta}^{!k}_t(h)(i)}{\sum_{j \in S_t^k(h)}\tilde{\zeta}^{!k}_t(h)(j)}+[[i,k \not\in S_t^k(h)]]\frac{\tilde{\zeta}^{!k}_t(h)(i)}{\sum_{j \in [N] \setminus S_t^k(h)}\tilde{\zeta}^{!k}_t(h)(j)}$$
 
-That is, $\xi^k$ behaves as if, at each moment of time, we update on a bit of information saying whether the true universe is in the set of low probability universes. Denote $\rho_t:= \zeta^0 \ltimes ({\nu_t}\bowtie{\pi^*_t}) \in \Delta([N] \times \Adih)$, where the dependence of ${\nu^k_t}\bowtie{\pi^*_t}$ on $k$ is used to view it as Markov kernel from $[N]$ to $\Adih$. It is easy to see that, since the probability of ever receiving a "low probability" bit is at most $(N-1)t^{-1/3}$, we have
+That is, $\zeta^{!k}$ behaves as if, at each moment of time, we update on a bit of information saying whether the true universe is in the set of low probability universes. Denote $\rho_t:= \zeta^0 \ltimes ({\nu_t}\bowtie{\pi^*_t}) \in \Delta([N] \times \Adih)$, where the dependence of ${\nu^k_t}\bowtie{\pi^*_t}$ on $k$ is used to view it as Markov kernel from $[N]$ to $\Adih$. It is easy to see that, since the probability of ever receiving a "low probability" bit is at most $(N-1)t^{-1/3}$, we have
 
-$$\Pr_{(k,x)\sim\rho_t}[\exists n \in \Nats: \zeta_t(x_{:n}) \ne \xi_t^k(x_{:n})] \leq (N-1)t^{-1/3}$$
+$$\Pr_{(k,x)\sim\rho_t}[\exists n \in \Nats: \zeta_t(x_{:n}) \ne \zeta^{!k}_t(x_{:n})] \leq (N-1)t^{-1/3}$$
 
-For any $h \in \HD{\bar{\Hy}}$ we have
+Let $\pi^{!k}$ be defined exactly as $\pi^*$ but with $\zeta$ replaced by $\zeta^{!k}$. Denote $\rho^!_t:=\zeta^0\ltimes(\nu_t\bowtie\pi^!_t)$. From the above, we get
 
-$$\E{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:\Abs{h}+1})) \mid h] = \Ent(\xi^k_t(h)) -\E{(k,x)\sim\rho_t}[\KL{\tilde{\xi}^k_t(x_{:\Abs{h}+1})}{\xi^k_t(x_{:\Abs{h}})} +\Ent(\tilde{\xi}^k_t(x_{:\Abs{h}+1}))-\Ent(\xi^k_t(x_{:\Abs{h}+1}))\mid h]$$
+$$\Dtv(\rho_t,\rho_t^!) \leq ?$$ 
+
+...For any $h \in \HD{\bar{\Hy}}$ we have
+
+$$\E{(k,x)\sim\rho_t}[\Ent(\zeta^{!k}_t(x_{:\Abs{h}+1})) \mid h] = \Ent(\zeta^{!k}_t(h)) -\E{(k,x)\sim\rho_t}[\KL{\tilde{\zeta}^{!k}_t(x_{:\Abs{h}+1})}{\zeta^{!k}_t(x_{:\Abs{h}})} +\Ent(\tilde{\zeta}^{!k}_t(x_{:\Abs{h}+1}))-\Ent(\zeta^{!k}_t(x_{:\Abs{h}+1}))\mid h]$$
 
 Taking expected value over $h$, we conclude that for any $n \in \Nats$
 
-$$\E{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:n+1}))] = \E{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:n}))] - \E{(k,x)\sim\rho_t}[\KL{\tilde{\xi}^k_t(x_{:n+1})}{\xi^k_t(x_{:n})} +\Ent(\tilde{\xi}^k_t(x_{:n+1}))-\Ent(\xi^k_t(x_{:n+1}))]$$
+$$\E{(k,x)\sim\rho_t}[\Ent(\zeta^{!k}_t(x_{:n+1}))] = \E{(k,x)\sim\rho_t}[\Ent(\zeta^{!k}_t(x_{:n}))] - \E{(k,x)\sim\rho_t}[\KL{\tilde{\zeta}^{!k}_t(x_{:n+1})}{\zeta^{!k}_t(x_{:n})} +\Ent(\tilde{\zeta}^{!k}_t(x_{:n+1}))-\Ent(\zeta^{!k}_t(x_{:n+1}))]$$
 
-$$\E{(k,x)\sim\rho_t}[\Ent(\xi^k_t(x_{:n}))] = \Ent(\zeta^0) - \E{(k,x)\sim\rho_t}[\sum_{m < n} (\KL{\xi^k_t(x_{:m+1})}{\xi^k_t(x_{:m})}+\Ent(\tilde{\xi}^k_t(x_{:m+1}))-\Ent(\xi^k_t(x_{:m+1})))]$$
+$$\E{(k,x)\sim\rho_t}[\Ent(\zeta^{!k}_t(x_{:n}))] = \Ent(\zeta^0) - \E{(k,x)\sim\rho_t}[\sum_{m < n} (\KL{\tilde{\zeta}^{!k}_t(x_{:m+1})}{\zeta^{!k}_t(x_{:m})}+\Ent(\tilde{\zeta}^{!k}_t(x_{:m+1}))-\Ent(\zeta^{!k}_t(x_{:m+1})))]$$
+
+Using the relationship between $\xi_t^k$ and $\zeta_t$, we get
+
+$$\E{(k,x)\sim\rho_t}[\Ent(\zeta_t(x_{:n}))] = \Ent(\zeta^0) - \E{(k,x)\sim\rho_t}[\sum_{m < n} (\KL{\tilde{\zeta}_t(x_{:m+1})}{\zeta_t(x_{:m})}+\Ent(\tilde{\zeta}_t(x_{:m+1}))-\Ent(\zeta_t(x_{:m+1})))]+O(t^{-1/3}n)???$$
 
 Applying Proposition A.3???, we get
 
