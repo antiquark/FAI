@@ -189,19 +189,17 @@ Given an $\I$-universe $\upsilon=(\mu,r)$, we define the $\Adi$-reward function 
 
 We now introduce the conditions on the advisor policy which will allow us to prove a learnability theorem. First, we specify an advisor that always remains "approximately rational."
 
-The notation $\E{x \sim \rho}[X \mid h]$ will be used to mean $\E{x \sim \rho}[X \mid h \sqsubset x]$. Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$, $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ and $\A^\upsilon_t: \HD{\mu} \rightarrow 2^\A$ by
+The notation $\E{x \sim \rho}[X \mid h]$ will be used to mean $\E{x \sim \rho}[X \mid h \sqsubset x]$. Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$ and $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ by
 
 $$\V_t^\upsilon(h):=\max_{\pi \in \Pi} {\E{x \sim \mu\bowtie\pi}[\frac{\sum_{n=\Abs{h}}^\infty e^{-n/t} r(x_{:n})}{\sum_{n=\Abs{h}}^\infty e^{-n/t}} \mid h]}$$
 
-$$\W_t^\upsilon(ha):=r(h)+\E{o \sim \mu(ha)}[V_t^\upsilon(hao)]$$
-
-$$\A^\upsilon_t(h) := \Argmax{a \in \A} \W_t^\upsilon(h)$$
+$$\W_t^\upsilon(ha):=(1-e^{-1/t})r(h)+e^{-1/t}\E{o \sim \mu(ha)}[V_t^\upsilon(hao)]$$
 
 \#Definition 3
 
 Fix an interface $\I$. Consider a universe $\upsilon=(\mu,r)$. Let $t,\beta \in (0,\infty)$. A policy $\alpha$ is called *strictly $\beta$-rational* for $(\upsilon,t)$ when for any $h \in \Dom{\mu}$ and $a \in \A$
 
-$$\alpha(h)(a) \leq \exp{[\beta(\W^{\upsilon}_t(ha)-\V^\upsilon_t(h))]} \max_{a^* \in \A^\upsilon_t(h)} \alpha(h)(a^*)$$
+$$\alpha(h)(a) \leq \exp{[\beta(\W^{\upsilon}_t(ha)-\V^\upsilon_t(h))]} \max_{a^* \in \A} \alpha(h)(a^*)$$
 
 ***
 
@@ -451,6 +449,26 @@ $$e^{-\beta x^*} x^* = \frac{1}{e\beta}$$
 
 \#Proposition A.5
 
+TBD
+
+\#Proof of Proposition A.5
+
+For any $x \in \IH$, it is easy to see that
+
+$$\max_{\pi \in \Pi_\I} \EU_{\upsilon}^{\pi}(t)=\V^{\upsilon}_t(\Estr)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
+
+$$\Ut^{r}_t(x)=(1-e^{-1/t})\sum_{n=0}^\infty e^{-n/t} r(x_{:n})$$
+
+$$\max_{\pi \in \Pi_\I} \EU_{\upsilon}^{\pi}(t) - \Ut^{r}_t(x)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
+
+$$\max_{\pi \in \Pi_\I} \EU_{\upsilon}^{\pi}(t) - \Ut^{r}_t(x)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-\W^{\upsilon}_t(x_{:n+1/2})+\W^{\upsilon}_t(x_{:n+1/2})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
+
+...and $\I$-policy $\pi^0$ we have
+
+$$\max_{\pi \in \Pi_\I} \EU_{\upsilon}^{\pi}(t) - \EU_{\upsilon}^{\pi^0}(t)=\E{x \sim \mu_t \bowtie \pi^0}[\frac{\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-\W^{\upsilon}_t(x_{:n+1/2}))}{\sum_{n=0}^\infty e^{-n/t}}]$$
+
+\#Proposition A.6
+
 Consider the setting of Theorem, but assume that $\Hy = \{\upsilon^k = (\mu^k,r^k)\}_{k < N}$ for some $N \in \Nats$ (i.e. it is finite) and that $\alpha^k(t)$ is *strictly* $\beta(t)$-rational for $\bar{\upsilon}^k[\alpha^k]$. Denote $\nu^k:=\bar{\mu}^k[\alpha^k]$ and $\HD{\bar{\Hy}}:= \bigcup_{k < N} \HD{\nu^k}$. Denote $\zeta^0 \in \Delta[N]$ the uniform probability distribution. For any $t > N^3$, define $\zeta_t,\tilde{\zeta}_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ recursively as follows
 
 $$\tilde{\zeta}_t(\Estr):=\zeta^0$$
@@ -463,7 +481,7 @@ In the above, $Z_t(h)$ and $\tilde{Z}_t(h)$ are normalization factor chosen to m
 
 Define $L_t: \HD{\bar{\Hy}} \times \A \rightarrow [0,1]$ by
 
-$$L_t(ha):=\E{k \sim \zeta_t(h)}[\max_{b \in A}{\W^{\upsilon^k_t}_t(\underline{h}b)}-\W^{\upsilon^k_t}_t(\underline{h}a)]$$
+$$L_t(ha):=\E{k \sim \zeta_t(h)}[\V^{\upsilon^k_t}_t(\underline{h})-\W^{\upsilon^k_t}_t(\underline{h}a)]$$
 
 Denote $\epsilon_t:=\beta(t)^{-1}t^{-1/3}$. Define the following $\Adi$-metapolicy $\pi^*$:
 
@@ -471,7 +489,7 @@ $$\pi^*_t(h):=\begin{cases} \Argmin{a \in \A} L_t(ha) \text{ if } h \in \HD{\bar
 
 (Technically, we only defined $\pi^*_t$ for $t > N^3$, but it doesn't matter.) Then, $\pi^*$ learns $\bar{\Hy}$.
  
-\#Proof of Proposition A.5
+\#Proof of Proposition A.6
 
 For every $k \in [N]$, we define $\zeta^{!k}_t, \tilde{\zeta}^{!k}_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ and $S_t^k: \HD{\bar{\Hy}} \rightarrow 2^{[N]}$ recursively as follows
 
@@ -526,10 +544,6 @@ $$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] \leq \Ent(\zeta^0) - \frac{(
 $$\E{(k,x)\sim\rho^!_t}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
 
 $$\E{(k,x)\sim\rho^!_t}[\Abs{\{n \in \Nats \mid x_n \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
-
-For any $k \in [N]$, and $\I$-policy $\pi^0$ we have
-
-$$\max_{\pi \in \Pi_\I} \EU_{\upsilon^k}^{\pi}(t) - \EU_{\upsilon^k}^{\pi^0}(t)=\E{\mu^k_t \bowtie \pi^0}[\sum_{n=0}^\infty e^{-n/t} (?-?)]$$
 
 TBD
 
