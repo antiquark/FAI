@@ -131,13 +131,13 @@ Here and throughout, we use geometric time discount, however this choice is most
 
 Denote $\Pi_{\I}$\ the space of $\I$-policies. An $\I$-*metapolicy* is a family $\{\pi_t \in \Pi_\I\}_{t \in (0, \infty)}$, where the parameter $t$ is thought of as setting the scale of the time discount. An $\I$-*meta-universe* is a family $\{\upsilon_t \in \Upsilon\}_{t \in (0, \infty)}$. This latter concept is useful for analyzing multi-agent systems, where the environment contains other agents and we study the asymptotics when all agents' time discount scales go to infinity. We won't focus on the multi-agent case in this essay, but for future reference, it seems useful to make sure the results hold in the greater generality of meta-universes.
 
-Given an $\I$-policy $\pi$, an $\I$-universe $\upsilon$ and $t > 0$, we denote $\EU_\upsilon^\pi(t):=\E{\mu\bowtie\pi}[\Ut^r_t]$ (this is well-defined since $\Ut^r_t$ is defined on the support of $\mu\bowtie\pi$). We will omit $\I$ when it is obvious from the context.
+Given an $\I$-policy $\pi$, an $\I$-universe $\upsilon$ and $t > 0$, we denote $\EU_\upsilon^\pi(t):=\E{\mu\bowtie\pi}[\Ut^r_t]$ (this is well-defined since $\Ut^r_t$ is defined on the support of $\mu\bowtie\pi$). We also denote  $\EU_\upsilon^*(t):=\max_{\pi \in \Pi_\I} \EU_\upsilon^\pi(t)$. We will omit $\I$ when it is obvious from the context.
 
 \#Definition 1
 
 Fix an interface $\I$. Consider $\pi^*$ a metapolicy and $\Hy$ a set of meta-universes. $\pi^*$ is said to *learn* $\Hy$ when for any $\upsilon \in \Hy$
 
-$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t) - \EU_{\upsilon_t}^{\pi^*_t}(t)) = 0$$
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon_t}^{*}(t) - \EU_{\upsilon_t}^{\pi^*_t}(t)) = 0$$
 
 $\Hy$ is said to be *learnable* when there exists $\pi^*$ that learns $\Hy$.
 
@@ -213,7 +213,7 @@ $$\hat{\kappa}_t(h):= \prod_{n = 0}^{\Abs{h}} \kappa_t(h_{:n})$$
 
 We think of $\hat{\kappa}_t(h)$ as the *accumulated* probability the event occurred during history $h$. Consider a meta-universe $\upsilon=(\mu,r)$. $\kappa$ is said to be a $\upsilon$-*avoidable transition probability* when there is a meta-policy $\pi^*$ s.t.
 
-i. $\lim_{t \rightarrow \infty} {(\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)-\EU_{\upsilon_t}^{\pi^*_t}(t))} = 0$
+i. $\lim_{t \rightarrow \infty} {(\EU_{\upsilon_t}^{*}(t)-\EU_{\upsilon_t}^{\pi^*_t}(t))} = 0$
 
 ii. $\lim_{t \rightarrow \infty} \E{x \sim \mu_t\bowtie\pi^*_t}[\lim_{n \rightarrow \infty} \hat{\kappa}_t(x_{:n})] = 0$
 
@@ -295,7 +295,7 @@ $$\Hy^K:= \{(\mu^k, r^K) \mid k \in \Supp \xi^K\}$$
 Assume $\Hy^K$ is learnable. Then, for every $k \in \Nats$
 
 
-$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \EU_{\mu^k,r^K}^\pi(t) - \EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^{\pi^\zeta}(t)) = 0$$
+$$\lim_{t \rightarrow \infty} (\EU_{\mu^k,r^K}^*(t) - \EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^{\pi^\zeta}(t)) = 0$$
 
 ***
 
@@ -307,7 +307,7 @@ We also believe that to some extent DIRL is effective against [acausal attack](h
 
 Fix $\pi^*$ a metapolicy that learns $\Hy$. Consider $\epsilon > 0$ and let $\Hy_\epsilon \subseteq \Hy$ be finite s.t. $\zeta(\Hy \setminus \Hy_\epsilon) < \epsilon$. For $t \gg 0$ and every $\upsilon \in \Hy_\epsilon$ we have
 
-$$\EU_{\upsilon_t}^{\pi^*_t}(t) \geq \max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t) - \epsilon$$
+$$\EU_{\upsilon_t}^{\pi^*_t}(t) \geq \EU_{\upsilon_t}^{*}(t) - \epsilon$$
 
 Also
 
@@ -315,17 +315,17 @@ $$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \s
 
 Combining, we get
 
-$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t); \upsilon \in \Hy_\epsilon] - \epsilon$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{*}(t); \upsilon \in \Hy_\epsilon] - \epsilon$$
 
-$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)] -  \E{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t); \upsilon \not\in \Hy_\epsilon] - \epsilon$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{*}(t)] -  \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{*}(t); \upsilon \not\in \Hy_\epsilon] - \epsilon$$
 
 By definition of $\Hy_\epsilon$, this implies
 
-$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t)] -  2\epsilon$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[ \EU_{\upsilon_t}^{*}(t)] -  2\epsilon$$
 
 For any $\upsilon \in \Hy$, we get
 
-$$\EU_{\upsilon_t}^{\pi^\zeta_t}(t) \geq \max_{\pi \in \Pi} \EU_{\upsilon_t}^{\pi}(t) - \frac{2\epsilon}{\zeta(\upsilon)}$$
+$$\EU_{\upsilon_t}^{\pi^\zeta_t}(t) \geq \EU_{\upsilon_t}^{*}(t) - \frac{2\epsilon}{\zeta(\upsilon)}$$
 
 Taking $\epsilon$ to 0, we get the desired result.
 
@@ -339,7 +339,7 @@ ii. $t^k < t^{k+1}$
 
 iii. $\lim_{k \rightarrow \infty} t^k = \infty$
 
-iv. For any $l < k$ and $t \geq t^k$, $\EU_{\upsilon^l_t}^{\pi^k_t}(t) \geq \max_{\pi \in \Pi} \EU_{\upsilon^l_t}^\pi(t) - \frac{1}{k+1}$.
+iv. For any $l < k$ and $t \geq t^k$, $\EU_{\upsilon^l_t}^{\pi^k_t}(t) \geq \EU_{\upsilon^l_t}^*(t) - \frac{1}{k+1}$.
 
 Now define $\pi^*_t:=\pi_t^{\max\{k \mid t \geq t^k\}}$. Clearly, $\pi^*$ learns $\Hy$.
 
@@ -449,23 +449,27 @@ $$e^{-\beta x^*} x^* = \frac{1}{e\beta}$$
 
 \#Proposition A.5
 
-TBD
+Consider a universe $\upsilon=(\mu,r)$, a policy $\pi^0$ and $t \in (0,\infty)$. Then,
+
+$$\EU_{\upsilon}^{*}(t) - \EU_{\upsilon}^{\pi^0}(t)=\sum_{n=0}^\infty e^{-n/t} \E{x\sim\mu\bowtie\pi^0}[\V^{\upsilon}_t(x_{:n})-\W^{\upsilon}_t(x_{:n+1/2})]$$
 
 \#Proof of Proposition A.5
 
 For any $x \in \IH$, it is easy to see that
 
-$$\max_{\pi \in \Pi_\I} \EU_{\upsilon}^{\pi}(t)=\V^{\upsilon}_t(\Estr)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
+$$\EU_{\upsilon}^{*}(t)=\V^{\upsilon}_t(\Estr)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
 
 $$\Ut^{r}_t(x)=(1-e^{-1/t})\sum_{n=0}^\infty e^{-n/t} r(x_{:n})$$
 
-$$\max_{\pi \in \Pi_\I} \EU_{\upsilon}^{\pi}(t) - \Ut^{r}_t(x)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
+$$\EU_{\upsilon}^{*}(t) - \Ut^{r}_t(x)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
 
-$$\max_{\pi \in \Pi_\I} \EU_{\upsilon}^{\pi}(t) - \Ut^{r}_t(x)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-\W^{\upsilon}_t(x_{:n+1/2})+\W^{\upsilon}_t(x_{:n+1/2})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
+$$\EU_{\upsilon}^{*}(t) - \Ut^{r}_t(x)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-\W^{\upsilon}_t(x_{:n+1/2})+\W^{\upsilon}_t(x_{:n+1/2})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
 
-...and $\I$-policy $\pi^0$ we have
+Taking expected value over $x$, we get
 
-$$\max_{\pi \in \Pi_\I} \EU_{\upsilon}^{\pi}(t) - \EU_{\upsilon}^{\pi^0}(t)=\E{x \sim \mu_t \bowtie \pi^0}[\frac{\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-\W^{\upsilon}_t(x_{:n+1/2}))}{\sum_{n=0}^\infty e^{-n/t}}]$$
+$$\EU_{\upsilon}^{*}(t) - \EU_{\upsilon}^{\pi^0}(t)=\sum_{n=0}^\infty e^{-n/t} (\E{\mu\bowtie\pi^0}[\V^{\upsilon}_t(x_{:n})-\W^{\upsilon}_t(x_{:n+1/2})]+\E{\mu\bowtie\pi^0}[\W^{\upsilon}_t(x_{:n+1/2})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1})])$$
+
+It is easy to see that the second term vanishes, yielding the desired result.
 
 \#Proposition A.6
 
@@ -544,6 +548,20 @@ $$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] \leq \Ent(\zeta^0) - \frac{(
 $$\E{(k,x)\sim\rho^!_t}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
 
 $$\E{(k,x)\sim\rho^!_t}[\Abs{\{n \in \Nats \mid x_n \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
+
+For any $k \in [N]$, Proposition A.5 yields
+
+$$\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{!k}}(t)=\sum_{n=0}^\infty e^{-n/t} \E{x \sim \nu^k\bowtie\pi^{!k}}[\V^{\upsilon^k[\alpha^k]}_t(x_{:n})-\W^{\upsilon^k[\alpha^k]}_t(x_{:n}\pi^{!k}(x_{:n}))]$$
+
+Averaging over $k$, we get
+
+$$\frac{1}{N}\sum_{k < N}(\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{!k}}(t))=\sum_{n=0}^\infty e^{-n/t} \E{(k,x)\sim\rho^!_t}[\V^{\upsilon^k[\alpha^k]}_t(x_{:n})-\W^{\upsilon^k[\alpha^k]}_t(x_{:n}\pi^{!k}(x_{:n}))]$$
+
+When $\pi^{!k}(x_{:n}) \ne \bot$, the loss is smaller than $\epsilon_t$ (by construction of $\pi^{!k})$. When $\pi^{!k}(x_{:n}) = \bot$, the loss is at most $\Abs{\A}e^{-1}\beta(t)^{-1}$, by Proposition A.4. We get
+
+$$\frac{1}{N}\sum_{k < N}(\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{!k}}(t)) \leq \sum_{n=0}^\infty e^{-n/t} \E{(k,x)\sim\rho^!_t}[[[\pi^{!k}(x_{:n}) \ne \bot]]\epsilon_t+[[\pi^{!k}(x_{:n}) = \bot]]\Abs{\A}e^{-1}\beta(t)^{-1}]$$
+
+$$\frac{1}{N}\sum_{k < N}(\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{!k}}(t)) \leq \frac{\beta(t)^{-1}t^{-1/3}}{1 - e^{-1/t}}+\frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}\Abs{\A}e^{-1}\beta(t)^{-1}$$
 
 TBD
 
