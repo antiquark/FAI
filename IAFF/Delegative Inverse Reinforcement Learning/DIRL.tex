@@ -193,7 +193,7 @@ The notation $\E{x \sim \rho}[X \mid h]$ will be used to mean $\E{x \sim \rho}[X
 
 $$\V_t^\upsilon(h):=\max_{\pi \in \Pi} {\E{x \sim \mu\bowtie\pi}[\frac{\sum_{n=\Abs{h}}^\infty e^{-n/t} r(x_{:n})}{\sum_{n=\Abs{h}}^\infty e^{-n/t}} \mid h]}$$
 
-$$\W_t^\upsilon(ha):=\E{o \sim \mu(ha)}[V_t^\upsilon(hao)]$$
+$$\W_t^\upsilon(ha):=r(h)+\E{o \sim \mu(ha)}[V_t^\upsilon(hao)]$$
 
 $$\A^\upsilon_t(h) := \Argmax{a \in \A} \W_t^\upsilon(h)$$
 
@@ -526,6 +526,10 @@ $$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] \leq \Ent(\zeta^0) - \frac{(
 $$\E{(k,x)\sim\rho^!_t}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
 
 $$\E{(k,x)\sim\rho^!_t}[\Abs{\{n \in \Nats \mid x_n \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
+
+For any $k \in [N]$, and $\I$-policy $\pi^0$ we have
+
+$$\max_{\pi \in \Pi_\I} \EU_{\upsilon^k}^{\pi}(t) - \EU_{\upsilon^k}^{\pi^0}(t)=\E{\mu^k_t \bowtie \pi^0}[\sum_{n=0}^\infty e^{-n/t} (?-?)]$$
 
 TBD
 
