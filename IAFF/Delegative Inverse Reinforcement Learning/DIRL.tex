@@ -391,7 +391,7 @@ $$\E\zeta[e^{-\beta L}] \leq 1-(1-e^{-1})\beta \E\zeta[L] = 1-(1-e^{-1})\beta\ep
 
 \#Proposition A.3
 
-Consider $\Hy$ and $\A$ finite sets, $L: \Hy \times \A \rightarrow [0,1]$, $\zeta \in \Delta\Hy$, $\alpha: \Hy \rightarrow \Delta\A$, $\beta \in (0,\infty)$ and $\epsilon \in (0,1)$. Assume that
+Consider $\Hy$ and $\A$ finite sets, $L: \Hy \times \A \rightarrow [0,\infty)$, $\zeta \in \Delta\Hy$, $\alpha: \Hy \rightarrow \Delta\A$ and $\beta,\epsilon \in (0,\infty)$. Assume that
 
 i. For any $k \in \Hy$, $\zeta(k) \geq \beta\epsilon$.
 
@@ -429,6 +429,28 @@ $$I \geq \frac{1}{8\Abs{\A}^2}(1-(1-(1-e^{-1})\beta\epsilon))^2=\frac{(1-e^{-1})
 
 \#Proposition A.4
 
+Consider $\A$ a finite set, $L: \A \rightarrow [0,\infty)$ and $\alpha \in \Delta\A$ and $\beta \in (0,\infty)$ s.t. for any $a \in \A$
+
+$$\alpha(a) \leq e^{-\beta L(a)} \max_{b \in \A} \alpha(b)$$
+
+Then, $\E{\alpha}[L] \leq \Abs{\A} e^{-1}\beta^{-1}$.
+
+\#Proof of Proposition A.4
+
+We have
+
+$$\E{\alpha}[L] = \sum_{a \in \A} \alpha(a) L(a) \leq \max_{b \in \A} \alpha(b) \sum_{a \in \A} e^{-\beta L(a)} L(a) \leq \Abs{A} \max_{x \in [0,\infty)} e^{-\beta x} x$$
+
+We compute $\max_{x \in [0,\infty)} e^{-\beta x} x$:
+
+$$0=\frac{d}{dx}(e^{-\beta x}x)|_{x=x^*} = -\beta e^{-\beta x^*} x^* + e^{-\beta x^*}$$
+
+$$x^* = \frac{1}{\beta}$$
+
+$$e^{-\beta x^*} x^* = \frac{1}{e\beta}$$
+
+\#Proposition A.5
+
 Consider the setting of Theorem, but assume that $\Hy = \{\upsilon^k = (\mu^k,r^k)\}_{k < N}$ for some $N \in \Nats$ (i.e. it is finite) and that $\alpha^k(t)$ is *strictly* $\beta(t)$-rational for $\bar{\upsilon}^k[\alpha^k]$. Denote $\nu^k:=\bar{\mu}^k[\alpha^k]$ and $\HD{\bar{\Hy}}:= \bigcup_{k < N} \HD{\nu^k}$. Denote $\zeta^0 \in \Delta[N]$ the uniform probability distribution. For any $t > N^3$, define $\zeta_t,\tilde{\zeta}_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ recursively as follows
 
 $$\tilde{\zeta}_t(\Estr):=\zeta^0$$
@@ -449,7 +471,7 @@ $$\pi^*_t(h):=\begin{cases} \Argmin{a \in \A} L_t(ha) \text{ if } h \in \HD{\bar
 
 (Technically, we only defined $\pi^*_t$ for $t > N^3$, but it doesn't matter.) Then, $\pi^*$ learns $\bar{\Hy}$.
  
-\#Proof of Proposition A.4
+\#Proof of Proposition A.5
 
 For every $k \in [N]$, we define $\zeta^{!k}_t, \tilde{\zeta}^{!k}_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ and $S_t^k: \HD{\bar{\Hy}} \rightarrow 2^{[N]}$ recursively as follows
 
@@ -495,15 +517,15 @@ $$\E{(j,x)\sim\rho^!_t}[\Ent(\zeta^{!j}_t(x_{:\Abs{h}+1})) \mid h^{!k}] \leq \En
 
 Taking $\rho^!_t$-expected value over $(k,h)$, we conclude that for any $n \in \Nats$
 
-$$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n+1}))] = \E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] - \frac{(1-e^{-1})^2}{8\Abs{\A}^2} t^{-2/3} \Pr_{(k,x)\sim\rho^!_t}[\pi^{!k}(x_{:n})=\bot]$$
+$$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n+1}))] \leq \E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] - \frac{(1-e^{-1})^2}{8\Abs{\A}^2} t^{-2/3} \Pr_{(k,x)\sim\rho^!_t}[\pi^{!k}(x_{:n})=\bot]$$
 
-$$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] = \Ent(\zeta^0) - \E{(k,x)\sim\rho^!_t}[\sum_{m < n} (\KL{\tilde{\zeta}^{!k}_t(x_{:m+1})}{\zeta^{!k}_t(x_{:m})}+\Ent(\tilde{\zeta}^{!k}_t(x_{:m+1}))-\Ent(\zeta^{!k}_t(x_{:m+1})))]$$
+By induction, it follows that
 
-Applying Proposition A.3???, we get
+$$\E{(k,x)\sim\rho^!_t}[\Ent(\zeta^{!k}_t(x_{:n}))] \leq \Ent(\zeta^0) - \frac{(1-e^{-1})^2}{8\Abs{\A}^2} t^{-2/3}\E{(k,x)\sim\rho^!_t}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ado\}}]$$
 
-$$0 \leq \EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Ent(\zeta_t(x_{:n}))] \leq \ln{N} - \frac{(1-e^{-1})^2}{8\Abs{\A}^2} \beta(t)^2 \epsilon_t^2\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ado\}}]$$
+$$\E{(k,x)\sim\rho^!_t}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
 
-$$\EE{k \sim \zeta^0}{x \sim {\nu^k_t}\bowtie{\pi^*_t}}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
+$$\E{(k,x)\sim\rho^!_t}[\Abs{\{n \in \Nats \mid x_n \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
 
 TBD
 
