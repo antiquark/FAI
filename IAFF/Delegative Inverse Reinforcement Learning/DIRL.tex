@@ -471,7 +471,7 @@ $$\EU_{\upsilon}^{*}(t) - \EU_{\upsilon}^{\pi^0}(t)=\sum_{n=0}^\infty e^{-n/t} (
 
 It is easy to see that the second term vanishes, yielding the desired result.
 
-\#Proposition A.6
+\#Lemma A
 
 Consider the setting of Theorem, but assume that $\Hy = \{\upsilon^k = (\mu^k,r^k)\}_{k < N}$ for some $N \in \Nats$ (i.e. it is finite) and that $\alpha^k(t)$ is *strictly* $\beta(t)$-rational for $\bar{\upsilon}^k[\alpha^k]$. Denote $\nu^k:=\bar{\mu}^k[\alpha^k]$ and $\HD{\bar{\Hy}}:= \bigcup_{k < N} \HD{\nu^k}$. Denote $\zeta^0 \in \Delta[N]$ the uniform probability distribution. For any $t > N^3$, define $\zeta_t,\tilde{\zeta}_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ recursively as follows
 
@@ -493,7 +493,7 @@ $$\pi^*_t(h):=\begin{cases} \Argmin{a \in \A} L_t(ha) \text{ if } h \in \HD{\bar
 
 (Technically, we only defined $\pi^*_t$ for $t > N^3$, but it doesn't matter.) Then, $\pi^*$ learns $\bar{\Hy}$.
  
-\#Proof of Proposition A.6
+\#Proof of Lemma A
 
 For every $k \in [N]$, we define $\zeta^{!k}_t, \tilde{\zeta}^{!k}_t: \HD{\bar{\Hy}} \rightarrow \Delta[N]$ and $S_t^k: \HD{\bar{\Hy}} \rightarrow 2^{[N]}$ recursively as follows
 
@@ -549,7 +549,7 @@ $$\E{(k,x)\sim\rho^!_t}[\Abs{\{m \in [n] \mid x_m \in \bot \times \Ado\}}] \leq 
 
 $$\E{(k,x)\sim\rho^!_t}[\Abs{\{n \in \Nats \mid x_n \in \bot \times \Ado\}}] \leq \frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}$$
 
-For any $k \in [N]$, Proposition A.5 yields
+So, the expected number of delegations is $O(t^{2/3})$. For any $k \in [N]$, Proposition A.5 yields
 
 $$\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{!k}}(t)=\sum_{n=0}^\infty e^{-n/t} \E{x \sim \nu^k\bowtie\pi^{!k}}[\V^{\upsilon^k[\alpha^k]}_t(x_{:n})-\W^{\upsilon^k[\alpha^k]}_t(x_{:n}\pi^{!k}(x_{:n}))]$$
 
@@ -561,7 +561,27 @@ When $\pi^{!k}(x_{:n}) \ne \bot$, the loss is smaller than $\epsilon_t$ (by cons
 
 $$\frac{1}{N}\sum_{k < N}(\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{!k}}(t)) \leq \sum_{n=0}^\infty e^{-n/t} \E{(k,x)\sim\rho^!_t}[[[\pi^{!k}(x_{:n}) \ne \bot]]\epsilon_t+[[\pi^{!k}(x_{:n}) = \bot]]\Abs{\A}e^{-1}\beta(t)^{-1}]$$
 
-$$\frac{1}{N}\sum_{k < N}(\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{!k}}(t)) \leq \frac{\beta(t)^{-1}t^{-1/3}}{1 - e^{-1/t}}+\frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}\Abs{\A}e^{-1}\beta(t)^{-1}$$
+The contribution of the first term on the right hand side can be bounded using the observation
+
+$$\sum_{n=0}^\infty e^{-n/t} = 1 + \sum_{n=1}^\infty e^{-n/t} \leq 1 + \sum_{n=1}^\infty \int_{n-1}^n e^{-s/t} ds = 1 + \int_0^{\infty} e^{-s/t} ds = 1 + t$$
+
+The contribution the of second term on the right hand side can be bounded via the expected number of delegations. We get
+
+$$\frac{1}{N}\sum_{k < N}(\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{!k}}(t)) \leq (1+t)\beta(t)^{-1}t^{-1/3}+\frac{8 \Abs{\A}^2 \ln{N}}{(1-e^{-1})^2}t^{2/3}\Abs{\A}e^{-1}\beta(t)^{-1}$$
+
+$$\frac{1}{N}\sum_{k < N}(\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{!k}}(t)) \leq (\frac{1}{t}+1+\frac{8 \Abs{\A}^3 \ln{N}}{e(1-e^{-1})^2})\frac{t^{2/3}}{\beta(t)}$$
+
+We use the relationship between $\rho_t$ and $\rho^!_t$ on the second term on the left hand side (whose contribution is the $\rho^!_t$-expected value of the utility function, whose range lies in [0,1]), and get
+
+$$\frac{1}{N}\sum_{k < N}(\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^{*}}(t)) \leq (\frac{1}{t}+1+\frac{8 \Abs{\A}^3 \ln{N}}{e(1-e^{-1})^2})\frac{t^{2/3}}{\beta(t)}+\frac{N-1}{t^{1/3}}$$
+
+Using the assumption $\beta=\omega(t^{2/3})$, we conclude that for each $k \in [N]$
+
+$$\lim_{t \rightarrow \infty} (\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\bar{\upsilon}^k[\alpha^k]}^{\pi^*}(t)) = 0$$
+
+\#Proof of Theorem
+
+By Lemma A and Proposition 2...
 
 TBD
 
