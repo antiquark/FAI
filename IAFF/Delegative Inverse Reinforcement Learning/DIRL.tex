@@ -209,7 +209,7 @@ Now we deal with the possibility of the advisor becoming "corrupt". In practical
 
 Fix an interface $\I$. Consider a family $\{\kappa_t: \FH \rightarrow [0,1]\}_{t \in (0,\infty)}$, where we think of $\kappa_t(h)$ as the probability of a certain event occurring right after history $h$, conditional on it not occurring before. Define $\hat{\kappa}_t: \FH \rightarrow [0,1]$ by
 
-$$\hat{\kappa}_t(h):= \prod_{n = 0}^{\Abs{h}} \kappa_t(h_{:n})$$
+$$\hat{\kappa}_t(h):= 1-\prod_{n = 0}^{\Abs{h}} (1 - \kappa_t(h_{:n}))$$
 
 We think of $\hat{\kappa}_t(h)$ as the *accumulated* probability the event occurred during history $h$. Consider a meta-universe $\upsilon=(\mu,r)$. $\kappa$ is said to be a $\upsilon$-*avoidable transition probability* when there is a meta-policy $\pi^*$ s.t.
 
@@ -581,11 +581,17 @@ $$\lim_{t \rightarrow \infty} (\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\b
 
 \#Proposition A.6
 
-Let $\upsilon$ be a meta-universe, $\kappa$ a $\upsilon$-avoidable transition probability and $\pi^0$ a metapolicy. Then, for all $t \in (0,\infty)$
+Let $\upsilon = (\mu,r)$ be a meta-universe, $\kappa$ a $\upsilon$-avoidable transition probability and $\pi^0$ a metapolicy. Then, for all $t \in (0,\infty)$
 
 $$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq \EU_{\upsilon}^{\pi^0}(t)$$
 
 \#Proof of Proposition A.6
+
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) = (1-e^{-1/t})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-n/t} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \V^{-\upsilon}_t(x_{:m})+{(1-\hat{\kappa}_t(x_{:n}))}r_t(x_{:n}))]$$
+
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-1/t})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-n/t} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \E{y\sim\mu\bowtie\pi^0}[\frac{\sum_{l=m}^\infty e^{-l/t} r(y_{:l})}{\sum_{l=m}^\infty e^{-l/t}} \mid x_{:m}]+(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
+
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-1/t})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-n/t} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \frac{\sum_{l=m}^\infty e^{-l/t} r(x_{:l})}{\sum_{l=m}^\infty e^{-l/t}} +(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
 
 TBD
 
