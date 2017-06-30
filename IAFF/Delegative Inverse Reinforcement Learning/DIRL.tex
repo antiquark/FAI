@@ -611,13 +611,37 @@ Let $\upsilon$ be a meta-universe and $\kappa$ a $\upsilon$-avoidable transition
 
 \#Proof of Proposition A.7
 
-TBD
+It is easy to see for any policy $\pi$ and $t \in (0,\infty)$
+
+$$\EU_{\upsilon^\kappa}^{\pi^*}(t) \geq (1-\E{x \sim \mu_t\bowtie\pi^*_t}[\lim_{n \rightarrow \infty} \hat{\kappa}_t(x_{:n})]) \EU_{\upsilon}^{\pi^*}(t)$$
+
+Let $\pi^*$ be as in Definition 4. Proposition A.6 and the above imply that
+
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon}^{\pi^*}(t)-\EU_{\upsilon^\kappa}^{\pi^*}(t)) = 0$$
+
+Using condition i, we get
+
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon}^{*}(t)-\EU_{\upsilon^\kappa}^{\pi^*}(t)) = 0$$
+
+By Proposition A.6, $\EU_{\upsilon}^{*}(t) \geq \EU_{\upsilon^\kappa}^{*}(t)$, therefore
+
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^\kappa}^{*}(t)-\EU_{\upsilon^\kappa}^{\pi^*}(t)) = 0$$
+
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^\kappa}^{\pi^!}(t)-\EU_{\upsilon^\kappa}^{\pi^*}(t)) = 0$$
+
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^\kappa}^{\pi^!}(t)-\EU_{\upsilon}^{*}(t)) = 0$$
+
+By Proposition A.6, $\EU_{\upsilon}^{\pi^!}(t) \geq \EU_{\upsilon^\kappa}^{\pi^!}(t)$, therefore
+
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon}^{\pi^!}(t)-\EU_{\upsilon}^{*}(t)) = 0$$
 
 \#Proof of Theorem
 
-By Lemma A and Proposition 2...
+For any $k \in \Nats$, let $\kappa^k$ and $\alpha^{k*}$ be for $\alpha^k$ as in Definition 5. Denote $\psi^k:=(\upsilon^k)^{\kappa^k}$ and 
 
-TBD
+$$\bar{\Hy}^\kappa:=\{\bar{\psi}^k[\alpha^{k*}] \mid k \in \Nats \}$$
+
+By Lemma A and Proposition 2, $\bar{\Hy}^\kappa$ is learnable. Let $\pi^*$ be a metapolicy that learns it. For any $k \in \Nats$, $\pi^*$ learns $\bar{\psi}^k[\alpha^{k*}]$. It is easy to see that for any policy $\pi$, $\EU_{\bar{\psi}^k[\alpha^{k*}]}^\pi(t)=\EU_{\bar{\psi}^k[\alpha^{k}]}^\pi(t)$ (once the corruption occurs, the reward is constant, so the advisor has no effect), therefore $\pi^*$ learns $\bar{\psi}^k[\alpha^{k}]$ . By Proposition A.7, we conclude that $\pi^*$ learns $\bar{\upsilon}^k[\alpha^k]$.
 
 \end{document}
 
