@@ -587,13 +587,23 @@ $$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq \EU_{\upsilon}^{\pi^0}(t)$$
 
 \#Proof of Proposition A.6
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) = (1-e^{-1/t})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-n/t} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \V^{-\upsilon}_t(x_{:m})+{(1-\hat{\kappa}_t(x_{:n}))}r_t(x_{:n}))]$$
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) = (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \V^{-\upsilon}_t(x_{:m})+{(1-\hat{\kappa}_t(x_{:n}))}r_t(x_{:n}))]$$
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-1/t})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-n/t} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \E{y\sim\mu\bowtie\pi^0}[\frac{\sum_{l=m}^\infty e^{-l/t} r(y_{:l})}{\sum_{l=m}^\infty e^{-l/t}} \mid x_{:m}]+(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \E{y\sim\mu\bowtie\pi^0}[\frac{\sum_{l=m}^\infty e^{-\frac{l}{t}} r(y_{:l})}{\sum_{l=m}^\infty e^{-\frac{l}{t}}} \mid x_{:m}]+(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-1/t})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-n/t} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \frac{\sum_{l=m}^\infty e^{-l/t} r(x_{:l})}{\sum_{l=m}^\infty e^{-l/t}} +(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \frac{\sum_{l=m}^\infty e^{-\frac{l}{t}} r(x_{:l})}{\sum_{l=m}^\infty e^{-\frac{l}{t}}} +(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
 
-TBD
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} ((1-e^{-\frac{1}{t}})\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \sum_{l=m}^\infty e^{-\frac{l-m}{t}} r(x_{:l}) +(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
+
+Regrouping the sum to collect the terms $r(x_{:n})$ for the same value of $n$, we get
+
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty ((1-e^{-\frac{1}{t}})\sum_{m=0}^n \sum_{l=m}^\infty e^{-\frac{l}{t}}\prod_{k=0}^{m-1}{(1-\kappa_t(x_{:k}))}\kappa_t(x_{:m})e^{-\frac{n-m}{t}}  + e^{-\frac{n}{t}}(1-\hat{\kappa}_t(x_{:n})))r(x_{:n})]$$
+ 
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}((1-e^{-\frac{1}{t}})\sum_{m=0}^n  \frac{e^{-\frac{m}{t}}}{1-e^{-\frac{1}{t}}}  \prod_{k=0}^{m-1}{(1-\kappa_t(x_{:k}))}\kappa_t(x_{:m})e^{\frac{m}{t}}+ 1-\hat{\kappa}_t(x_{:n}))r(x_{:n})]$$
+
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}(\sum_{m=0}^n \prod_{k=0}^{m-1}{(1-\kappa_t(x_{:k}))}\kappa_t(x_{:m})+ \prod_{k=0}^{n}{(1-\kappa_t(x_{:k}))})r(x_{:n})]$$
+
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}r(x_{:n})] = \EU_{\upsilon}^{\pi^0}(t)$$
 
 \#Proposition A.7
 
