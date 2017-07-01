@@ -76,6 +76,8 @@
 
 % Paper specific
 
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
 \newcommand{\Ob}{\mathcal{O}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\I}{\mathcal{I}}
@@ -110,7 +112,15 @@ All the proofs are in the Appendix.
 
 \section{Notation}
 
-Whatever...
+The set of natural numbers $\Nats$ is defined to begin from 0. Given $n \in \Nats$, $[n]$ denotes the set $\{m \in \Nats \mid m < n\}$. Given a logical formula $\varphi$, $[[\varphi]] \in \{0,1\}$ denotes its truth value.
+
+Given a set $\X$, we denote $\X^*:=\bigsqcup_{n \in \Nats} X^n$, the set of finite strings over the alphabet $\X$. We also denote by $\X^\omega$ the set of *infinite* strings over alphabet $\X$. Given $\alpha \in \X^* \sqcup \X^\omega$ and $n \in \Nats$, $\alpha_n \in \X$ is the $n$-th symbol in $\alpha$ (i.e. $\alpha = \alpha_0\alpha_1\alpha_2 \ldots$) and $\alpha_{:n} \in \X^*$ is the prefix of length $n$ of $\alpha$ (ending in $\alpha_{n-1}$). Given $\alpha,\beta \in \X^*$, $\Abs{\alpha} \in \Nats$ is the length of $\alpha$ and $\alpha\beta \in \X^*$ is the concatenation of $\alpha$ and $\beta$. The latter notation is also applicable when $\beta \in \X$. The notation $\alpha \sqsubseteq \beta$ means that $\alpha$ is a prefix of $\beta$. Given sets $\X,\Y$, $x \in \X$ and $y \in \Y$, we sometimes use the notation $xy = (x,y) \in \X \times \Y$. Given $\alpha \in (\X \times \Y)^*$, and $n \in \Nats$, $\alpha_{:n+1/2} \in (\X \times \Y)^* \times \X$ is defined by $\alpha_{:n+1/2} = (\alpha_n, x)$ where $\alpha_n=(x,y)$.
+
+Given sets $A$ and $B$, the notation $f: A \PF B$ means that $f$ is a *partial* mapping from $A$ to $B$, i.e. a mapping from some set $\Dom{f} \subseteq A$ to $B$. 
+
+Given a topological space $A$, $\Delta A$ is the space of Borel probability measures on $A$. When no topology is specified, $A$ is understood to be discrete: in this case, $\mu \in \Delta A$ can also be regarded as a function from $A$ to $[0,1]$. The space $\X^\omega$ is understood to have the product topology. Given discrete spaces $A,B$, $\mu \in \Delta A$ and $\nu \in \Delta B$, $\Ent(\mu)$ denotes the Shannon entropy of $\mu$ (in natural base) and $\KL{\mu}{\nu}$ denotes the Kullback-Leibler divergence from $\nu$ to $\mu$.
+
+The symbols $o,O,\omega,\Omega,\Theta$ will refer to usual $O$-notation.
 
 \section{Results}
 
@@ -190,7 +200,7 @@ Given an $\I$-universe $\upsilon=(\mu,r)$, we define the $\Adi$-reward function 
 
 We now introduce the conditions on the advisor policy which will allow us to prove a learnability theorem. First, we specify an advisor that always remains "approximately rational."
 
-The notation $\E{x \sim \rho}[X \mid h]$ will be used to mean $\E{x \sim \rho}[X \mid h \sqsubset x]$. Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$ and $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ by
+The notation $\E{x \sim \rho}[X \mid h]$ will be used to mean $\E{x \sim \rho}[X \mid h \sqsubseteq x]$. Given a universe $\upsilon=(\mu,r)$ and $t \in (0, \infty)$ we define $\V_t^\upsilon: \HD{\mu} \rightarrow [0,1]$ and $\W_t^\upsilon: \HD{\mu} \times \A \rightarrow [0,1]$ by
 
 $$\V_t^\upsilon(h):=\max_{\pi \in \Pi} {\E{x \sim \mu\bowtie\pi}[\frac{\sum_{n=\Abs{h}}^\infty e^{-n/t} r(x_{:n})}{\sum_{n=\Abs{h}}^\infty e^{-n/t}} \mid h]}$$
 
@@ -304,7 +314,15 @@ We also believe that to some extent DIRL is effective against [acausal attack](h
 
 \section{Appendix}
 
-\#Proof of Proposition 1
+\#Proposition A.0
+
+Fix an interface $\I$. Consider $\Hy$ a countable learnable set of meta-universes. Consider any $\zeta \in \Delta\Hy$ s.t. $\Supp \zeta = \Hy$. Consider $\pi^\zeta$ a metapolicy s.t.
+
+$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi}(t)]-\max_{\pi \in \Pi} \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)]) = 0$$
+
+Then, $\pi^\zeta$ learns $\Hy$.
+
+\#Proof of Proposition A.0
 
 Fix $\pi^*$ a metapolicy that learns $\Hy$. Consider $\epsilon > 0$ and let $\Hy_\epsilon \subseteq \Hy$ be finite s.t. $\zeta(\Hy \setminus \Hy_\epsilon) < \epsilon$. For $t \gg 0$ and every $\upsilon \in \Hy_\epsilon$ we have
 
@@ -312,23 +330,27 @@ $$\EU_{\upsilon_t}^{\pi^*_t}(t) \geq \EU_{\upsilon_t}^{*}(t) - \epsilon$$
 
 Also
 
-$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t); \upsilon \in \Hy_\epsilon]$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t)] -\epsilon \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^*_t}(t); \upsilon \in \Hy_\epsilon]-\epsilon$$
 
 Combining, we get
 
-$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{*}(t); \upsilon \in \Hy_\epsilon] - \epsilon$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{*}(t); \upsilon \in \Hy_\epsilon] - 2\epsilon$$
 
-$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{*}(t)] -  \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{*}(t); \upsilon \not\in \Hy_\epsilon] - \epsilon$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{*}(t)] -  \E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{*}(t); \upsilon \not\in \Hy_\epsilon] - 2\epsilon$$
 
 By definition of $\Hy_\epsilon$, this implies
 
-$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[ \EU_{\upsilon_t}^{*}(t)] -  2\epsilon$$
+$$\E{\upsilon \sim \zeta}[\EU_{\upsilon_t}^{\pi^\zeta_t}(t)] \geq \E{\upsilon \sim \zeta}[ \EU_{\upsilon_t}^{*}(t)] -  3\epsilon$$
 
 For any $\upsilon \in \Hy$, we get
 
-$$\EU_{\upsilon_t}^{\pi^\zeta_t}(t) \geq \EU_{\upsilon_t}^{*}(t) - \frac{2\epsilon}{\zeta(\upsilon)}$$
+$$\EU_{\upsilon_t}^{\pi^\zeta_t}(t) \geq \EU_{\upsilon_t}^{*}(t) - \frac{3\epsilon}{\zeta(\upsilon)}$$
 
 Taking $\epsilon$ to 0, we get the desired result.
+
+\#Proof of Proposition 1
+
+Immediate from Proposition A.0.
 
 \#Proof of Proposition 2
 
@@ -520,7 +542,7 @@ $$\Dtv(\rho_t,\rho_t^!) \leq (N-1)t^{-1/3}$$
 
 Given $k \in [N]$ and $h \in \HD{\bar{\Hy}}$, we define the set $h^{!k}$ by 
 
-$$h^{!k} := \{(j,x) \in [N] \times \Adih \mid h \sqsubset x,\, \forall m \leq \Abs{h}:k \in S^k_t(h_{:m}) \land j \in S^j_t(h_{:m}) \lor k \not\in S^k_t(h_{:m}) \land j=k\}$$
+$$h^{!k} := \{(j,x) \in [N] \times \Adih \mid h \sqsubseteq x,\, \forall m \leq \Abs{h}:k \in S^k_t(h_{:m}) \land j \in S^j_t(h_{:m}) \lor k \not\in S^k_t(h_{:m}) \land j=k\}$$
 
 We have 
 
@@ -666,9 +688,9 @@ $$\lim_{t \rightarrow \infty} (\EU_{\upsilon^K}^*(t)-\EU_{\bar{\upsilon}^K[\alph
 
 $$\lim_{t \rightarrow \infty} (\max_{\pi\in\Pi_{\I}} \E{k\in\xi^K}[\EU_{\psi^{kK}}^\pi(t)]-\E{k\in\xi^K}[\EU_{\bar{\psi}^{kK}[\alpha^K]}^{\pi^\zeta}(t)]) = 0$$
 
-\#Proof of Corollary 1
+\#Proof of Corollary 2
 
-TBD
+Immediate from Corollary 1 and Proposition A.0.
 
 \end{document}
 
