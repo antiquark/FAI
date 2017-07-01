@@ -89,7 +89,6 @@
 \newcommand{\Adih}{\Adao^\omega}
 \DeclareMathOperator{\HD}{hdom}
 \newcommand{\Hy}{\mathcal{H}}
-\newcommand{\Co}{\mathcal{C}}
 
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\V}{\operatorname{V}}
@@ -208,33 +207,35 @@ Now we deal with the possibility of the advisor becoming "corrupt". In practical
 
 \#Definition 4
 
-Fix an interface $\I$. Consider a family $\{\Co_t \subseteq \FH \}_{t \in (0,\infty)}$ s.t. for any $h,g \in \FH$, if $h \in \Co_t$ then $hg \in \Co_t$. We think of $\Co_t$ as the set of histories in which a certain event occurred. Consider a meta-universe $\upsilon=(\mu,r)$. $\Co$ is said to be a $\upsilon$-*avoidable event* when there is a meta-policy $\pi^*$ and $D: (0,\infty) \rightarrow \Nats$ s.t.
+Fix an interface $\I$. Consider a family $\{\kappa_t: \FH \rightarrow [0,1]\}_{t \in (0,\infty)}$, where we think of $\kappa_t(h)$ as the probability of a certain event occurring right after history $h$, conditional on it not occurring before. Define $\hat{\kappa}_t: \FH \rightarrow [0,1]$ by
+
+$$\hat{\kappa}_t(h):= 1-\prod_{n = 0}^{\Abs{h}} (1 - \kappa_t(h_{:n}))$$
+
+We think of $\hat{\kappa}_t(h)$ as the *accumulated* probability the event occurred during history $h$. Consider a meta-universe $\upsilon=(\mu,r)$. $\kappa$ is said to be a $\upsilon$-*avoidable transition probability* when there is a meta-policy $\pi^*$ s.t.
 
 i. $\lim_{t \rightarrow \infty} {(\EU_{\upsilon_t}^{*}(t)-\EU_{\upsilon_t}^{\pi^*_t}(t))} = 0$
 
-ii. $D = \omega(t)$
-
-iii. $\lim_{t \rightarrow \infty} \Pr_{x \sim \mu_t\bowtie\pi^*_t}[\exists n \leq D(t): x_{:n} \in \Co_t] = 0$
+ii. $\lim_{t \rightarrow \infty} \E{x \sim \mu_t\bowtie\pi^*_t}[\lim_{n \rightarrow \infty} \hat{\kappa}_t(x_{:n})] = 0$
 
 ***
 
-That is, $\Co$ is $\upsilon$-avoidable when it is possible to avoid the event for a long time while retaining most of the value. Consider a meta-universe $\upsilon=(\mu,r)$ and $\Co$ a $\upsilon$-avoidable event. Denote $-\upsilon:=(\mu,1-r)$. We define the reward function $r^\Co_t$ by
+That is, $\kappa$ is $\upsilon$-avoidable when it is possible to avoid the associated event while retaining most of the value. Consider a meta-universe $\upsilon=(\mu,r)$ and $\kappa$ a $\upsilon$-avoidable transition probability. Denote $-\upsilon:=(\mu,1-r)$. We define the reward function $r^\kappa_t$ by
 
-$$r^\Co_t(h):=\begin{cases} r_t(h) \text{ if } h \not\in \Co_t \\ \V^{-\upsilon}_t(h_{:n}) \text{ if } h \in \Co_t \text{ and } n = \min\{m \in \Nats \mid h_{:m} \in \Co_t\}\end{cases}$$
+$$r^\kappa_t(h):=\kappa_t(\Estr) \V^{-\upsilon}_t(\Estr)+\sum_{n=1}^{\Abs{h}} (1-\hat{\kappa}_t(h_{:n-1}))\kappa_t(h_{:n}) \V^{-\upsilon}_t(h_{:n})+(1-\hat{\kappa}_t(h))r_t(h)$$
 
-We think of $r^\Co$ as representing a process wherein once the event represented by $\Co$ occurs, the agent starts *minimizing* the utility function. We also use the notation $\upsilon^\Co:=(\mu,r^\Co)$.
+We think of $r^\kappa$ as representing a process wherein once the event represented by $\kappa$ occurs, the agent starts *minimizing* the utility function. We also use the notation $\upsilon^\kappa:=(\mu,r^\kappa)$.
 
 \#Definition 5
 
-Consider a meta-universe $\upsilon=(\mu,r)$ and $\beta: (0,\infty) \rightarrow (0,\infty)$, where we think of the argument of the function $\beta$ as the time discount scale. An autonomous $\Adi$-metapolicy $\alpha$ is called *$\beta$-rational* for $\upsilon$ when there exists a $\upsilon$-avoidable event $\Co$ (that we think of as the advisor becoming "corrupt") and an autonomous $\Adi$-metapolicy $\alpha^*$ (representing advisor policy conditional on non-corruption) s.t. 
+Consider a meta-universe $\upsilon=(\mu,r)$ and $\beta: (0,\infty) \rightarrow (0,\infty)$, where we think of the argument of the function $\beta$ as the time discount scale. An autonomous $\Adi$-metapolicy $\alpha$ is called *$\beta$-rational* for $\upsilon$ when there exists a $\upsilon$-avoidable transition probability $\kappa$ (that we think of as the probability for the advisor to become "corrupt") and autonomous $\Adi$-metapolicies $\alpha^*,\alpha_*$ (representing advisor policy conditional on non-corruption and corruption respectively) s.t. 
 
-i. For any $h \in \Adfh$ s.t. $\underline{h} \not\in \Co_t$, $\alpha_t(h) = \alpha^*_t(h)$.
+i. For any $h \in \Adfh$, $\alpha_t(h) = \hat{\kappa}_t(\underline{h}) \alpha_*(h) + (1 - \hat{\kappa}_t(\underline{h}))\alpha^*(h)$.
 
-ii. $\alpha^*_t$ is strictly $\beta(t)$-rational for $(\bar{\upsilon}^\Co_t[\alpha^*], t)$.
+ii. $\alpha^*_t$ is strictly $\beta(t)$-rational for $(\bar{\upsilon}^\kappa_t[\alpha^*], t)$.
 
 ***
 
-Our definition of $\beta$-rationality requires the advisor to be extremely averse to corruption: the advisor behaves as if, once a corruption occurs, the agent policy becomes the worst possible. In general, this seems much too strong: by the time corruption occurs, the agent might have already converged into accurate beliefs about the universe that allow it to detect the corruption and keep operating without the advisor. Even better, the agent can usually outperform *the worst possible policy* using the prior alone. Moreover, we can allow for corruption to depend on unobservable random events and differentiate between different degrees of corruption and treat them accordingly. We leave those further improvements for future work.
+Our definition of $\beta$-rationality requires the advisor to be extremely averse to corruption: the advisor behaves as if, once a corruption occurs, the agent policy becomes the worst possible. In general, this seems much too strong: by the time corruption occurs, the agent might have already converged into accurate beliefs about the universe that allow it to detect the corruption and keep operating without the advisor. Even better, the agent can usually outperform *the worst possible policy* using the prior alone. Moreover, we can differentiate between different degrees of corruption and treat them accordingly. We leave those further improvements for future work.
 
 We are now ready to formulate the main result.
 
@@ -580,9 +581,9 @@ $$\lim_{t \rightarrow \infty} (\EU_{\bar{\upsilon}^k[\alpha^k]}^{*}(t) - \EU_{\b
 
 \#Proposition A.6
 
-Let $\upsilon = (\mu,r)$ be a meta-universe, $\{\Co_t \subseteq \FH\}_{t \in (0,\infty)}$ and $\pi^0$ a metapolicy. Then, for all $t \in (0,\infty)$
+Let $\upsilon = (\mu,r)$ be a meta-universe, $\kappa$ a $\upsilon$-avoidable transition probability and $\pi^0$ a metapolicy. Then, for all $t \in (0,\infty)$
 
-$$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq \EU_{\upsilon}^{\pi^0}(t)$$
+$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq \EU_{\upsilon}^{\pi^0}(t)$$
 
 \#Proof of Proposition A.6
 
