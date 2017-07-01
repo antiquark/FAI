@@ -270,7 +270,9 @@ $$\BE{k \sim \xi}[\mu^k](ha):=\frac{\E{k \sim \xi}[ \hat{\mu}^k(h)\mu^k(ha)]}{\E
 
 \#Corollary 1
 
-Consider $\{\mu^k\}_{k \in \Nats}$ a countable family of $\I$-meta-environments, $\{r^K\}_{K \in \Nats}$ a countable family of reward functions and $\{\xi^K \in \Delta\Nats\}_{K \in \Nats}$ s.t. given $k \in \Supp \xi^K$, $\Dom{r^K} \supseteq \HD{\mu^k}$. We think of $\xi^K$ as the advisor's belief about the environment in universe $K$. Let $\beta: (0,\infty) \rightarrow (0,\infty)$ be s.t. $\beta(t) = \omega(t^{2/3})$ and $\{\alpha^K\}_{K \in \Nats}$ be a family of autonomous $\Adi$-metapolicies s.t. for every $K \in \Nats$, $\alpha^K$ is $\beta$-rational for $(\BE{k \sim \xi^K}[\mu^k], r^K)$. Let $\zeta \in \Delta\Nats^2$ be s.t. for any $J,j \in \Nats$ 
+Consider $\{\mu^k\}_{k \in \Nats}$ a countable family of $\I$-meta-environments, $\{r^K\}_{K \in \Nats}$ a countable family of reward functions and $\{\xi^K \in \Delta\Nats\}_{K \in \Nats}$ s.t. given $k \in \Supp \xi^K$, $\Dom{r^K} \supseteq \HD{\mu^k}$. We think of $\xi^K$ as the advisor's belief about the environment in universe $K$. Let $\beta: (0,\infty) \rightarrow (0,\infty)$ be s.t. $\beta(t) = \omega(t^{2/3})$ and $\{\alpha^K\}_{K \in \Nats}$ be a family of autonomous $\Adi$-metapolicies s.t. for every $K \in \Nats$, $\alpha^K$ is $\beta$-rational for $(\BE{k \sim \xi^K}[\mu^k], r^K)$. Let $\zeta \in \Delta\Nats^2$ be s.t. for any $J,j \in \Nats$
+
+$$\Pr_{(K,k) \in \zeta}[K = J] > 0$$ 
 
 $$\Pr_{(K,k) \in \zeta}[k = j \mid K = J] = \xi^J(j)$$ 
 
@@ -279,7 +281,7 @@ We think of $\zeta$ as the agent's prior and the equation above as stating the a
 $$\pi^\zeta \in \Argmax{\pi \in \Pi_{\Adi}}{\E{(K,k) \in \zeta}[\EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^\pi(t)]}$$ 
 Then, for every $K \in \Nats$
 
-$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi} \E{k \in \xi^K}[\EU_{\mu^k,r^K}^\pi(t)] - \E{k \in \xi^K}[\EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^{\pi^\zeta}(t)]) = 0$$
+$$\lim_{t \rightarrow \infty} (\max_{\pi \in \Pi_\I} \E{k \in \xi^K}[\EU_{\mu^k,r^K}^\pi(t)] - \E{k \in \xi^K}[\EU_{\bar{\mu}^k[\alpha^K],\bar{r}^K}^{\pi^\zeta}(t)]) = 0$$
 
 ***
 
@@ -298,7 +300,7 @@ $$\lim_{t \rightarrow \infty} (\EU_{\mu^k,r^K}^*(t) - \EU_{\bar{\mu}^k[\alpha^K]
 
 ***
 
-We also believe that to some extent DIRL is effective against [acausal attack](https://ordinaryideas.wordpress.com/2016/11/30/what-does-the-universal-prior-actually-look-like/). Indeed, the optimality we get from the Theorem + Proposition 1 holds for any prior. However, the speed of convergence to optimality certainly depends on the prior.  It is therefore desirable to analyze this dependency and bound the damage an adversary can do by controlling a certain portion of the prior. We live this for future work.
+We also believe that to some extent DIRL is effective against [acausal attack](https://ordinaryideas.wordpress.com/2016/11/30/what-does-the-universal-prior-actually-look-like/). Indeed, the optimality we get from the Theorem + Proposition 1 holds for any prior. However, the speed of convergence to optimality certainly depends on the prior.  It is therefore desirable to analyze this dependency and bound the damage an adversary can do by controlling a certain portion of the prior. We leave this for future work.
 
 \section{Appendix}
 
@@ -586,63 +588,87 @@ $$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq \EU_{\upsilon}^{\pi^0}(t)$$
 
 \#Proof of Proposition A.6
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) = (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \V^{-\upsilon}_t(x_{:m})+{(1-\hat{\kappa}_t(x_{:n}))}r_t(x_{:n}))]$$
+Denote $\chi_t := \chi_{\Co_t}$ the characteristic function of $\Co_t$. For notational convenience, the expression $\chi_t(x_{:-1})$ will be understood to mean 0.
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \E{y\sim\mu\bowtie\pi^0}[\frac{\sum_{l=m}^\infty e^{-\frac{l}{t}} r(y_{:l})}{\sum_{l=m}^\infty e^{-\frac{l}{t}}} \mid x_{:m}]+(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
+$$\EU_{\upsilon^\Co}^{\pi^0}(t) = (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} (\sum_{m=0}^{n} (1-\chi_{t}(x_{:m-1}))\chi_t(x_{:m}) \V^{-\upsilon}_t(x_{:m})+{(1-\chi_t(x_{:n}))}r_t(x_{:n}))]$$
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} (\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \frac{\sum_{l=m}^\infty e^{-\frac{l}{t}} r(x_{:l})}{\sum_{l=m}^\infty e^{-\frac{l}{t}}} +(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
+$$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} (\sum_{m=0}^{n} (1-\chi_{t}(x_{:m-1}))\chi_t(x_{:m}) \E{y\sim\mu\bowtie\pi^0}[\frac{\sum_{l=m}^\infty e^{-\frac{l}{t}} r(y_{:l})}{\sum_{l=m}^\infty e^{-\frac{l}{t}}} \mid x_{:m}]+(1-\chi_t(x_{:n}))r_t(x_{:n}))]$$
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} ((1-e^{-\frac{1}{t}})\sum_{m=0}^{n} \prod_{l=0}^{m-1}{(1-\kappa_t(x_{:l}))}\kappa_t(x_{:m}) \sum_{l=m}^\infty e^{-\frac{l-m}{t}} r(x_{:l}) +(1-\hat{\kappa}_t(x_{:n}))r_t(x_{:n}))]$$
+$$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} (\sum_{m=0}^{n} (1-\chi_{t}(x_{:m-1}))\chi_t(x_{:m}) \frac{\sum_{l=m}^\infty e^{-\frac{l}{t}} r(x_{:l})}{\sum_{l=m}^\infty e^{-\frac{l}{t}}} +(1-\chi_t(x_{:n}))r_t(x_{:n}))]$$
+
+$$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}} ((1-e^{-\frac{1}{t}})\sum_{m=0}^{n} (1-\chi_{t}(x_{:m-1}))\chi_t(x_{:m}) \sum_{l=m}^\infty e^{-\frac{l-m}{t}} r(x_{:l}) +(1-\chi_t(x_{:n}))r_t(x_{:n}))]$$
 
 Regrouping the sum to collect the terms $r(x_{:n})$ for the same value of $n$, we get
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty ((1-e^{-\frac{1}{t}})\sum_{m=0}^n \sum_{l=m}^\infty e^{-\frac{l}{t}}\prod_{k=0}^{m-1}{(1-\kappa_t(x_{:k}))}\kappa_t(x_{:m})e^{-\frac{n-m}{t}}  + e^{-\frac{n}{t}}(1-\hat{\kappa}_t(x_{:n})))r(x_{:n})]$$
+$$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty ((1-e^{-\frac{1}{t}})\sum_{m=0}^n \sum_{l=m}^\infty e^{-\frac{l}{t}}(1-\chi_{t}(x_{:m-1}))\chi_t(x_{:m})e^{-\frac{n-m}{t}}  + e^{-\frac{n}{t}}(1-\chi_t(x_{:n})))r(x_{:n})]$$
  
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}((1-e^{-\frac{1}{t}})\sum_{m=0}^n  \frac{e^{-\frac{m}{t}}}{1-e^{-\frac{1}{t}}}  \prod_{k=0}^{m-1}{(1-\kappa_t(x_{:k}))}\kappa_t(x_{:m})e^{\frac{m}{t}}+ 1-\hat{\kappa}_t(x_{:n}))r(x_{:n})]$$
+$$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}((1-e^{-\frac{1}{t}})\sum_{m=0}^n  \frac{e^{-\frac{m}{t}}}{1-e^{-\frac{1}{t}}}  (1-\chi_{t}(x_{:m-1}))\chi_t(x_{:m})e^{\frac{m}{t}}+ 1-\chi_t(x_{:n}))r(x_{:n})]$$
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}(\sum_{m=0}^n \prod_{k=0}^{m-1}{(1-\kappa_t(x_{:k}))}\kappa_t(x_{:m})+ \prod_{k=0}^{n}{(1-\kappa_t(x_{:k}))})r(x_{:n})]$$
+$$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}(\sum_{m=0}^n (1-\chi_{t}(x_{:m-1}))\chi_t(x_{:m})+  1-\chi_t(x_{:n}))r(x_{:n})]$$
 
-$$\EU_{\upsilon^\kappa}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}r(x_{:n})] = \EU_{\upsilon}^{\pi^0}(t)$$
+$$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}(\chi_t(x_{:n}) + 1-\chi_t(x_{:n}))r(x_{:n})]$$
+
+$$\EU_{\upsilon^\Co}^{\pi^0}(t) \leq (1-e^{-\frac{1}{t}})\E{x\sim\mu\bowtie\pi^0}[\sum_{n=0}^\infty e^{-\frac{n}{t}}r(x_{:n})] = \EU_{\upsilon}^{\pi^0}(t)$$
 
 \#Proposition A.7
 
-Let $\upsilon$ be a meta-universe and $\kappa$ a $\upsilon$-avoidable transition probability. Suppose $\pi^!$ is a metapolicy that learns $\upsilon^\kappa$. Then, $\pi^!$ learns $\upsilon$ as well.
+Let $\upsilon$ be a meta-universe and $\Co$ a $\upsilon$-avoidable event. Suppose $\pi^!$ is a metapolicy that learns $\upsilon^\Co$. Then, $\pi^!$ learns $\upsilon$ as well.
 
 \#Proof of Proposition A.7
 
 It is easy to see for any policy $\pi$ and $t \in (0,\infty)$
 
-$$\EU_{\upsilon^\kappa}^{\pi^*}(t) \geq (1-\E{x \sim \mu_t\bowtie\pi^*_t}[\lim_{n \rightarrow \infty} \hat{\kappa}_t(x_{:n})]) \EU_{\upsilon}^{\pi^*}(t)$$
+$$\EU_{\upsilon^\Co}^{\pi^*}(t) \geq (1-\Pr_{x \sim \mu_t\bowtie\pi^*_t}[\exists n \leq D(t): x_{:n} \in \Co_t]) (\EU_{\upsilon}^{\pi^*}(t) - e^{-D(t)/t})$$
 
 Let $\pi^*$ be as in Definition 4. Proposition A.6 and the above imply that
 
-$$\lim_{t \rightarrow \infty} (\EU_{\upsilon}^{\pi^*}(t)-\EU_{\upsilon^\kappa}^{\pi^*}(t)) = 0$$
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon}^{\pi^*}(t)-\EU_{\upsilon^\Co}^{\pi^*}(t)) = 0$$
 
 Using condition i, we get
 
-$$\lim_{t \rightarrow \infty} (\EU_{\upsilon}^{*}(t)-\EU_{\upsilon^\kappa}^{\pi^*}(t)) = 0$$
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon}^{*}(t)-\EU_{\upsilon^\Co}^{\pi^*}(t)) = 0$$
 
-By Proposition A.6, $\EU_{\upsilon}^{*}(t) \geq \EU_{\upsilon^\kappa}^{*}(t)$, therefore
+By Proposition A.6, $\EU_{\upsilon}^{*}(t) \geq \EU_{\upsilon^\Co}^{*}(t)$, therefore
 
-$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^\kappa}^{*}(t)-\EU_{\upsilon^\kappa}^{\pi^*}(t)) = 0$$
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^\Co}^{*}(t)-\EU_{\upsilon^\Co}^{\pi^*}(t)) = 0$$
 
-$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^\kappa}^{\pi^!}(t)-\EU_{\upsilon^\kappa}^{\pi^*}(t)) = 0$$
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^\Co}^{\pi^!}(t)-\EU_{\upsilon^\Co}^{\pi^*}(t)) = 0$$
 
-$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^\kappa}^{\pi^!}(t)-\EU_{\upsilon}^{*}(t)) = 0$$
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^\Co}^{\pi^!}(t)-\EU_{\upsilon}^{*}(t)) = 0$$
 
-By Proposition A.6, $\EU_{\upsilon}^{\pi^!}(t) \geq \EU_{\upsilon^\kappa}^{\pi^!}(t)$, therefore
+By Proposition A.6, $\EU_{\upsilon}^{\pi^!}(t) \geq \EU_{\upsilon^\Co}^{\pi^!}(t)$, therefore
 
 $$\lim_{t \rightarrow \infty} (\EU_{\upsilon}^{\pi^!}(t)-\EU_{\upsilon}^{*}(t)) = 0$$
 
 \#Proof of Theorem
 
-For any $k \in \Nats$, let $\kappa^k$ and $\alpha^{k*}$ be for $\alpha^k$ as in Definition 5. Denote $\psi^k:=(\upsilon^k)^{\kappa^k}$ and 
+For any $k \in \Nats$, let $\Co^k$ and $\alpha^{k*}$ be for $\alpha^k$ as in Definition 5. Denote $\psi^k:=(\upsilon^k)^{\Co^k}$ and 
 
-$$\bar{\Hy}^\kappa:=\{\bar{\psi}^k[\alpha^{k*}] \mid k \in \Nats \}$$
+$$\bar{\Hy}^\Co:=\{\bar{\psi}^k[\alpha^{k*}] \mid k \in \Nats \}$$
 
-By Lemma A and Proposition 2, $\bar{\Hy}^\kappa$ is learnable. Let $\pi^*$ be a metapolicy that learns it. For any $k \in \Nats$, $\pi^*$ learns $\bar{\psi}^k[\alpha^{k*}]$. It is easy to see that for any policy $\pi$, $\EU_{\bar{\psi}^k[\alpha^{k*}]}^\pi(t)=\EU_{\bar{\psi}^k[\alpha^{k}]}^\pi(t)$ ($\psi^k$ is defined s.t. once the corruption occurs, the reward is constant, so the advisor has no effect)???, therefore $\pi^*$ learns $\bar{\psi}^k[\alpha^{k}]$ . By Proposition A.7, we conclude that $\pi^*$ learns $\bar{\upsilon}^k[\alpha^k]$.
+By Lemma A and Proposition 2, $\bar{\Hy}^\Co$ is learnable. Let $\pi^*$ be a metapolicy that learns it. For any $k \in \Nats$, $\pi^*$ learns $\bar{\psi}^k[\alpha^{k*}]$. It is easy to see that for any policy $\pi$, $\EU_{\bar{\psi}^k[\alpha^{k*}]}^\pi(t)=\EU_{\bar{\psi}^k[\alpha^{k}]}^\pi(t)$ ($\psi^k$ is defined s.t. once the corruption occurs, the reward is constant, so the advisor has no effect after this point), therefore $\pi^*$ learns $\bar{\psi}^k[\alpha^{k}]$. By Proposition A.7, we conclude that $\pi^*$ learns $\bar{\upsilon}^k[\alpha^k]$.
 
-TODO: Probability of past corruption has to update on past behavior of $\alpha$!!!
+\#Proof of Corollary 1
+
+Denote $\upsilon^K:=(\BE{k\in\zeta^K}[\mu^k],r^K)$. By the Theorem, $\{\bar{\upsilon}^K[\alpha^K]\}_{K \in \Nats}$ is learnable. Denote $\psi^{kK}:=(\mu^k,r^K)$. It is easy to see that for any $\Adi$-policy $\pi$ and $t\in(0,\infty)$,
+
+$$\E{k \in \xi^K}[\EU_{\psi^{kK}[\alpha^K]}^\pi(t)] = \EU_{\bar{\upsilon}^K[\alpha^K]}^\pi(t)$$
+
+By the calibration condition
+
+$$\E{(K,k)\sim\zeta}[\EU_{\psi^{kK}[\alpha^K]}^\pi(t)] = \E{(K,k) \in \zeta}[\E{j \in \xi^K}[\EU_{\psi^{jK}[\alpha^K]}^\pi(t)]]=\E{(K,k) \in \zeta}[\EU_{\bar{\upsilon}^K[\alpha^K]}^\pi(t)]$$
+
+Applying Proposition 1, we conclude that $\pi^\zeta$ learns $\{\bar{\upsilon}^K[\alpha^K]\}_{K \in \Nats}$. That is, for any $K \in \Nats$
+
+$$\lim_{t \rightarrow \infty} (\EU_{\bar{\upsilon}^K[\alpha^K]}^*(t)-\EU_{\bar{\upsilon}^K[\alpha^K]}^{\pi^\zeta}(t)) = 0$$
+
+$$\lim_{t \rightarrow \infty} (\EU_{\upsilon^K}^*(t)-\EU_{\bar{\upsilon}^K[\alpha^K]}^{\pi^\zeta}(t)) = 0$$
+
+$$\lim_{t \rightarrow \infty} (\max_{\pi\in\Pi_{\I}} \E{k\in\xi^K}[\EU_{\psi^{kK}}^\pi(t)]-\E{k\in\xi^K}[\EU_{\bar{\psi}^{kK}[\alpha^K]}^{\pi^\zeta}(t)]) = 0$$
+
+\#Proof of Corollary 1
+
+TBD
 
 \end{document}
 
