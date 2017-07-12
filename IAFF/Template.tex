@@ -22,21 +22,23 @@
 \DeclareMathOperator{\Supp}{supp}
 \DeclareMathOperator{\Stab}{stab}
 \DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Dom}{dom}
 
 % operators that require brackets
-\DeclareMathOperator{\Prb}{Pr}
-\DeclareMathOperator{\E}{E}
-\newcommand{\EE}[2]{\operatorname{E}_{\substack{#1 \\ #2}}}
-\newcommand{\EEE}[3]{\operatorname{E}_{\substack{#1 \\ #2 \\ #3}}}
-\DeclareMathOperator{\Var}{Var}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\Var}{\operatorname{Var}}
 
 % operators that require parentheses
-\DeclareMathOperator{\Ent}{H}
-\DeclareMathOperator{\Hom}{Hom}
-\DeclareMathOperator{\End}{End}
-\DeclareMathOperator{\Sym}{Sym}
+\newcommand{\Ent}{\operatorname{H}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
 
-\DeclareMathOperator{\Prj}{pr}
+\newcommand{\Prj}{\operatorname{pr}}
 
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
 \newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
@@ -67,24 +69,12 @@
 \newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
-\newcommand{\Markov}{\xrightarrow{\textnormal{mk}}}
-
-\newcommand{\Prob}{\mathcal{P}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
 
 % Paper specific
 
-\newcommand{\Ob}{\mathcal{O}}
-\newcommand{\T}{\mathcal{T}}
-\newcommand{\B}{\mathcal{B}}
-\newcommand{\UM}{\mathcal{U}}
-\newcommand{\W}{\operatorname{W}}
-\newcommand{\SW}{\operatorname{\Sigma W}}
-\newcommand{\I}{\operatorname{id}}
-\newcommand{\Lip}{\operatorname{Lip}}
-\newcommand{\NormL}[1]{\Norm{#1}_{\operatorname{Lip}}}
-\newcommand{\Dkr}{\operatorname{d}_{\text{KR}}}
-\newcommand{\Ball}{\operatorname{B}}
-\newcommand{\F}{\mathcal{F}}
+% TBD
 
 \begin{document}
 
