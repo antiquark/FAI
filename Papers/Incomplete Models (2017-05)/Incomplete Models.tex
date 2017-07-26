@@ -191,8 +191,6 @@ Another ingredient we will need is a notion of regular conditional probability f
 
 $K_* \mu \in \PM\left(Y\right)$ denotes the pushforward of $\mu$ by $K$ (i.e. the pushforward of $\mu \ltimes K$ by the projection to $Y$). When $X,Y$ are Polish and $\pi: X \rightarrow Y$ is Borel measurable, $\mu \mid \pi: Y \M X$ is defined to be s.t. $\pi_* \mu \ltimes \left(\mu \mid \pi\right)$ is supported on the graph of $\pi$ and $\left(\mu \mid \pi\right)_* \pi_* \mu = \mu$ (i.e. $\mu \mid \pi$ is a regular conditional probability). By the disintegration theorem, $\mu \mid \pi$ exists and is defined up to coincidence $\pi_* \mu$-almost everywhere.
 %
-%For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem (in order to prove Lemma~\ref{lmm:update_incomplete}). In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in \Ob^n$ and $r > 0$, $\B_r\left(y\right)$ will denote the open ball of radius $r$ with center at $y$.
-%
 % TODO: Rewrite into a (non-unique) notion of "regular conditional probability" for *any* Polish space; demote Lebsgue differntiation into an example; the proof of the Lebesgue differentiation example should be where?
 
 \begin{samepage}
@@ -204,30 +202,33 @@ Let $X,Y$ be Polish spaces, $\pi: X \rightarrow Y$ continuous and $M \subseteq \
 %Consider any $M \subseteq \PMO$. For each $n \in \Nats$, we define $M \mid \Ob^n$ to be the minimal subset of $\Ob^n \times \PMO$ with the following properties:
 %
 \begin{enumerate}[i.]
-\item $N$ is closed.
-%\item If $y \in \Ob^n$, $\mu \in \PMO$ and $\nu \in M$ are s.t. $y \in \Sp \PO_{n*}\nu$ and $\mu = \lim_{r \rightarrow 0}{\left(\nu \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\left(y,\mu\right) \in M \mid \Ob^n$. Here, $\nu \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\right)\right)$ is the conditional probability measure and the limit is understood to be in the weak topology.
-\item For every $y \in \Ob^n$, the set $N_y:=\{\nu \in \PMO \mid \left(y,\nu\right) \in N\}$ is convex.
-\item For every $\mu \in M$ and $\mu$-almost every $y \in Y$, $(\mu \mid \pi)(y) \in N_y$.
+\item\label{con:def__update_incomplete__clos} $N$ is closed.
+\item\label{con:def__update_incomplete__conv} For every $y \in \Ob^n$, the set $N_y:=\{\nu \in \PMO \mid \left(y,\nu\right) \in N\}$ is convex.
+\item For every $\mu \in M$ and $\pi_*\mu$-almost every $y \in Y$, $(\mu \mid \pi)(y) \in N_y$.
 \end{enumerate}
-%
-%It is easy to see that a minimal set with these properties always exists and is unique.
-%
+
 \end{definition}
 \end{samepage}
+
+Note that given $N$ an upper bound for $M \mid \pi$ and any $N' \subseteq Y \times \PM(X)$ s.t. $N \subseteq N'$, $N'$ is also an upper bound for $M \mid \pi$.
+
+We give a few examples for Definition~\ref{def:update_incomplete}. The proofs that these examples are valid are in Appendix~\ref{sec:examples}.
 
 \begin{samepage}
 \begin{example}
 
-Suppose that $M$ is convex and for each $n \in \Nats$, $\Ob_n$ is a finite set. Then, for each $y \in \Ob^n$
+Suppose that $M$ is convex and $Y$ is a finite set (in particular, this example is applicable when the $\Ob_n$ are finite sets, $X=\OO$ and $Y=\Ob^n$). Then, there is a unique $N$ which is a \emph{minimal} upper bound for $M \mid \pi$ and we have
 
 \begin{equation}
-M \mid y = \overline{\{(\nu \mid y\OO) \mid \nu \in M,\, \nu(y\OO) > 0\}}
+N_y = \overline{\{(\mu \mid \pi^{-1}(y)) \mid \mu \in M,\, \mu\left(\pi^{-1}(y)\right) > 0\}}
 \end{equation}
+
+Here, $\mu \mid \pi^{-1}(y)$ is the conditional probability measure.
 
 \end{example}
 \end{samepage}
-
-\begin{samepage}
+%
+\Comment{\begin{samepage}
 \begin{example}
 
 Suppose that $M$ is convex, for each $n \in \Nats$, $\Ob_n = [0,1]$ and for each $\nu \in M$ and $n \in \Nats$, $\PO_{n*}\nu$ is absolutely continuous w.r.t. the Lebesgue measure on $\Ob^n=[0,1]^n$ and its PDF (Radon-Nikodym derivative) is continuous and positive everywhere. Then, $M \mid \Ob^n$ is the closure of the set of all $(y,\mu) \in \Ob^n \times \PMO$ for which there exists $\nu \in M$ s.t. for any $m \geq n$ and $A \subseteq [0,1]^{m-n}$ measurable
@@ -237,22 +238,34 @@ Suppose that $M$ is convex, for each $n \in \Nats$, $\Ob_n = [0,1]$ and for each
 \end{equation}
 
 \end{example}
+\end{samepage}}
+%
+\begin{samepage}
+\begin{example}
+
+Consider some $I \subseteq \Nats$ and suppose that for each $n \in I$, we are given $K_n: \Ob^n \M \Ob_n$. Define $M^K$ by
+
+\begin{equation}
+M^K:=\{\mu \in \PMO \mid \forall n \in I: \PO_{n+1*}\mu = \PO_{n*}\mu \ltimes K_n\}
+\end{equation}
+
+For each $n \in \Nats$, define $M^K_n$ by
+
+\begin{equation}
+M^K_n = \{(y,\mu) \in \Ob^n \times \PMO \mid \Sp{\mu} \subseteq y\OO,\, \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
+\end{equation}
+
+Then, $M^K_n$ is an upper bound for $M^K \mid \PO_n$.
+
+\end{example}
 \end{samepage}
 
 \begin{samepage}
 \begin{example}
 
-Consider some $I \subseteq \Nats$ and suppose that for each $n \in I$, we are given $K_n: \Ob^n \M \Ob_n$. Define $M_K$ by
+Assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$. In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in \Ob^n$ and $r > 0$, $\B_r\left(y\right)$ will denote the open ball of radius $r$ with center at $y$. 
 
-\begin{equation}
-M_K:=\{\mu \in \PMO \mid \forall n \in I: \PO_{n+1*}\mu = \PO_{n*}\mu \ltimes K_n\}
-\end{equation}
-
-Let $n \in \Nats$ and $y \in \Ob^n$ be s.t. for any $m < n$, if $m \in I$ then $y_m \in \Sp{K_n(y_{:m})}$. Then???
-
-\begin{equation}
-M_K \mid y = \{\mu \in \PMO \mid \Sp{\mu} \subseteq y\OO,\, \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
-\end{equation}
+Fix any $M \subseteq \PMO$. Then, for any $n \in \Nats$, there is a unique $M_n \subseteq \Ob^n \times \PMO$ which is minimal among sets satisfying conditions \ref{con:def__update_incomplete__clos} and \ref{con:def__update_incomplete__conv} of Definition~\ref{def:update_incomplete} and s.t. for any $y \in \Ob^n$, $\nu \in \PMO$ and $\mu \in M$, if $y \in \Sp \PO_{n*}\mu$ and $\nu = \lim_{r \rightarrow 0}{\left(\mu \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\left(y,\nu\right) \in M_n$ (the limit is defined using the the weak topology). Moreover, $M_n$ is an upper bound for $M \mid \PO_n$.
 
 \end{example}
 \end{samepage}
@@ -809,7 +822,7 @@ N_0\left(\omega\right) &:= 0 \\
 N_{k+1}\left(\omega\right) &:= \begin{cases}\inf \{n \in \Nats \mid \sum_{m=N_k\left(\omega\right)}^{n-1} Y_m\left(\omega\right) \geq 1\} \text{ if } N_k\left(\omega\right) < \infty\\\infty \text{ if } N_k\left(\omega\right) = \infty\end{cases}
 \end{align*}
 
-For each $k \in \Nats$, $N_k$ is a stopping time w.r.t. ${\F}$. As easy to see, for each $k \in \Nats$, ${\Sqn{X^0_{\min\left(n,N_k\right)}}}$ is a uniformly integrable submartingale. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem~\ref{thm:optional_stopping} (see Appendix), we get
+For each $k \in \Nats$, $N_k$ is a stopping time w.r.t. ${\F}$. As easy to see, for each $k \in \Nats$, ${\Sqn{X^0_{\min\left(n,N_k\right)}}}$ is a uniformly integrable submartingale. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem~\ref{thm:optional_stopping} (see Appendix~\ref{sec:theorems}), we get
 
 $$\E\left[X^0_{N_{k+1}} \mid \F_{N_k}\right] \geq X^0_{N_{k}}$$
 
@@ -1164,7 +1177,7 @@ Define $V \subseteq U$ by
 
 $$V := \{\mu \in U \mid \DKR\left(\mu,\mu_0\right) < \epsilon,\, \E_\mu\left[f\right] < \E_{\mu_0}\left[f\right] + \epsilon\}$$
 
-Obviously $V$ is open and $V \subseteq B^{-1}\left(f\right)$, hence $B^{-1}\left(f\right)$ is open. Applying Theorem~\ref{thm:selection} (see Appendix), we get the desired result.
+Obviously $V$ is open and $V \subseteq B^{-1}\left(f\right)$, hence $B^{-1}\left(f\right)$ is open. Applying Theorem~\ref{thm:selection} (see Appendix~\ref{sec:theorems}), we get the desired result.
 \end{proof}
 
 \begin{samepage}
@@ -1365,7 +1378,8 @@ Finally, we think that the current work may have some bearing on the so-called \
 
 \appendix
 
-\section{Appendix}
+\section{Appendix: Useful Theorems}
+\label{sec:theorems}
 
 The following variant of the Optional Stopping Theorem appears in \cite{Durrett_2010} as Theorem 5.4.7.
 
@@ -1415,6 +1429,11 @@ Then, there exists $\beta: X \rightarrow Y$ continuous s.t. for all $x \in X$, $
 
 \end{theorem}
 \end{samepage}
+
+\section{Appendix: Examples of Definition \ref{def:update_incomplete}}
+\label{sec:examples}
+
+TBD
 
 \section*{Acknowledgments}
 
