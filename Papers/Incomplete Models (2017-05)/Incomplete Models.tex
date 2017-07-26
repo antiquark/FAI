@@ -19,7 +19,7 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}%[section]
-\newtheorem{example}{Example}[section]
+\newtheorem{example}{Example}%[section]
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}%[section]
@@ -202,6 +202,38 @@ Consider any $M \subseteq \PMO$. For each $n \in \Nats$, we define $M \mid \Ob^n
 It is easy to see that a minimal set with these properties always exists and is unique.
 
 \end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{example}
+
+Suppose that $M$ is convex and for each $n \in \Nats$, $\Ob_n$ is a finite set. Then, for each $y \in \Ob^n$
+
+\begin{equation}
+M \mid y = \overline{\{(\nu \mid y\Ob^n) \mid \nu \in M,\, \nu(y\Ob^n) > 0\}}
+\end{equation}
+
+\end{example}
+\end{samepage}
+
+\begin{samepage}
+\begin{example}
+
+Suppose that $M$ is convex, for each $n \in \Nats$, $\Ob_n = [0,1]$ and for each $\nu \in M$ and $n \in \Nats$, $\PO_{n*}\nu$ is absolutely continuous w.r.t. the Lebesgue measure on $\Ob^n=[0,1]^n$ and its PDF (Radon-Nikodym derivative) is continuous and positive everywhere. Then, $M \mid \Ob^n$ is the closure of the set of all $(y,\mu) \in \Ob^n \times \PMO$ for which there exists $\nu \in M$ s.t. for any $m \geq n$ and $A \subseteq [0,1]^{m-n}$ measurable
+
+\begin{equation}
+\mu\left(\left(\PO_m\right)^{-1}(y \times A)\right)=\frac{\int_A \frac{d\PO_{m*}\nu(z)}{dz}\prod_{k=n}^{m-1} dz_k}{\int_{[0,1]^{m-n}} \frac{d\PO_{m*}\nu(z)}{dz}\prod_{k=n}^{m-1} dz_k}
+\end{equation}
+
+\end{example}
+\end{samepage}
+
+\begin{samepage}
+\begin{example}
+
+?
+
+\end{example}
 \end{samepage}
 
 We are now ready to formulate the main result.
