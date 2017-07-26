@@ -103,7 +103,7 @@
 
 %+Abstract
 \begin{abstract}
-We consider the task of forecasting an infinite sequence of future observation based on some number of past observations, where the probability measure generating the observations is \enquote{suspected} to satisfy one or more of a set of \emph{incomplete} models, i.e. convex sets in the space of probability measures. This setting is in some sense intermediate between the \emph{realizable} setting where the probability measure comes from some known set of probability measures (which can be addressed using e.g. Bayesian inference) and the \emph{unrealizable} setting where the probability measure is completely arbitrary. We demonstrate a method of forecasting which guarantees that, whenever the true probability measure satisfies an incomplete model in a given countable set, the forecast converges to the same incomplete model in the (appropriately normalized) Kantorovich-Rubinstein metric. This is analogous to merging of opinions for Bayesian inference, except that convergence in the Kantorovich-Rubinstein metric is weaker than convergence in total variation.
+We consider the task of forecasting an infinite sequence of future observations based on some number of past observations, where the probability measure generating the observations is \enquote{suspected} to satisfy one or more of a set of \emph{incomplete} models, i.e. convex sets in the space of probability measures. This setting is in some sense intermediate between the \emph{realizable} setting where the probability measure comes from some known set of probability measures (which can be addressed using e.g. Bayesian inference) and the \emph{unrealizable} setting where the probability measure is completely arbitrary. We demonstrate a method of forecasting which guarantees that, whenever the true probability measure satisfies an incomplete model in a given countable set, the forecast converges to the same incomplete model in the (appropriately normalized) Kantorovich-Rubinstein metric. This is analogous to merging of opinions for Bayesian inference, except that convergence in the Kantorovich-Rubinstein metric is weaker than convergence in total variation.
 \end{abstract}
 %-Abstract
 
@@ -167,7 +167,7 @@ $\PMO$ can be regarded as a compact subset of the dual space $\Lp\left(\OO,\rho\
 \DKR^\rho\left(\mu,\nu\right):=\sup_{\N{f}_\rho \leq 1}{\left(\E_\mu\left[f\right] - \E_\nu\left[f\right]\right)}
 \end{equation}
 
-We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is slightly different from the conventional definition but strongly equivalent. Other names used in the literature for the strongly equivalent metric are \enquote{1st Wassertein metric} and \enquote{earth mover's distance.}}.
+We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is slightly different from the conventional definition but strongly equivalent. Other names used in the literature for the strongly equivalent metric are \enquote{1st Wasserstein metric} and \enquote{earth mover's distance.}}.
 
 Fix any $x \in \OO$. It is easy to see that
 
@@ -193,7 +193,7 @@ Consider any $M \subseteq \PMO$. For each $n \in \Nats$, we define $M \mid \Ob^n
 
 \begin{enumerate}[i.]
 
-\item If $y \in \Ob^n$, $\mu \in \PMO$ and $\nu \in M$ are s.t. $y \in \Sp \PO_{n*}\nu$ and $\mu = \lim_{r \rightarrow 0}{\left(\nu \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\left(y,\mu\right) \in M \mid \Ob^n$. Here, $\nu \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\right)\right)$ is the conditional probability measure.
+\item If $y \in \Ob^n$, $\mu \in \PMO$ and $\nu \in M$ are s.t. $y \in \Sp \PO_{n*}\nu$ and $\mu = \lim_{r \rightarrow 0}{\left(\nu \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\left(y,\mu\right) \in M \mid \Ob^n$. Here, $\nu \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\right)\right)$ is the conditional probability measure and the limit is understood to be in the weak topology.
 \item For each $y \in \Ob^n$, the set $M \mid y:=\{\mu \in \PMO \mid \left(y,\mu\right) \in M \mid \Ob^n\}$ is convex.
 \item $M \mid \Ob^n$ is closed.
 
@@ -266,7 +266,7 @@ A \emph{gambler} is a family of measurable mappings
 
 \end{definition}
 
-A gambler is considered to observe a forecaster and bet against it. Given $y \in \Ob^n$ and $\BM \in \PMO^n$, $G_n\left(y,\BM\right)=\beta$ means that, if $y$ are the first $n$ observations and $\left(\BM,\nu\right)$ are the first $n + 1$ forecasts (where $\nu$ is the forecast made after observing all of $y$), the gambler will make bet $\beta$.
+A gambler is considered to observe a forecaster and bet against it. Given $y \in \Ob^n$ and $\BM \in \PMO^n$, $G_n\left(y,\BM\right)=\beta$ means that, if $y$ are the first $n$ observations and $\BM$ are the first $n$ forecasts (made after observing $n-1$ out of the $n$ observations), the gambler will make bet $\beta$ (which is in itself a function of the forecast the forecaster makes after the $n$-th observation).
 
 We now introduce some notation regarding the interaction of gamblers and forecasters. 
 
@@ -294,11 +294,11 @@ In the definition of $\SV G^F_0$, $\Ob^{-1}$ is considered to be equal to $\Ob^0
 We define the measurable mappings $\SVM G^F_n, \SVX G^F_n: \Ob^{n-1} \rightarrow \Reals$ by
 
 \begin{equation}
-\SVM G^F_n\left(y\right):=\min_{y\OO} \SV G^F_n
+\SVM G^F_n\left(y\right):=\min_{y\OO} \SV G^F_n(y)
 \end{equation}
 
 \begin{equation}
-\SVX G^F_n\left(y\right):=\max_{y\OO} \SV G^F_n
+\SVX G^F_n\left(y\right):=\max_{y\OO} \SV G^F_n(y)
 \end{equation}
 
 We are now ready to state the formally state the definition of \enquote{dominance} alluded to in the beginning of the section.
@@ -658,7 +658,13 @@ By Corollary~\ref{crl:dominate_one}, there is a forecaster $F^G$ that dominates 
 
 In this section we construct a tool for proving asymptotic convergence results about dominant forecasters. We start by introducing a notion of \enquote{prudent gambling,} which requires that bets are only made when the expected payoff is a certain fraction of the risk. First, we need some notation.
 
-Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K\left(x\right) \in \PM\left(Y\right)$. Given $\mu \in \PM\left(X\right)$, $\mu \ltimes K \in \PM\left(X \times Y\right)$ denotes the semidirect product of $\mu$ and $K$. $K_* \mu \in \PM\left(Y\right)$ denotes the pushforward of $\mu$ by $K$ (i.e. the pushforward of $\mu \ltimes K$ by the projection to $Y$). When $X,Y$ are Polish and $\pi: X \rightarrow Y$ is Borel measurable, $\mu \mid \pi: Y \M X$ is defined to be s.t. $\pi_* \mu \ltimes \left(\mu \mid \pi\right)$ is supported on the graph of $\pi$ and $\left(\mu \mid \pi\right)_* \pi_* \mu = \mu$ (i.e. $\mu \mid \pi$ is a regular conditional probability). By the disintegration theorem, $\mu \mid \pi$ exists and is defined up to coincidence $\pi_* \mu$-almost everywhere. Given $g: X \rightarrow \Reals$ measurable, we will also use the notation 
+Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K\left(x\right) \in \PM\left(Y\right)$. Given $\mu \in \PM\left(X\right)$, $\mu \ltimes K \in \PM\left(X \times Y\right)$ denotes the semidirect product of $\mu$ and $K$, that is, the unique measure satisfying
+
+\begin{equation}
+(\mu \ltimes K)(A \times B) = \int_A K(x)(B)\, \mu(dx)
+\end{equation} 
+
+$K_* \mu \in \PM\left(Y\right)$ denotes the pushforward of $\mu$ by $K$ (i.e. the pushforward of $\mu \ltimes K$ by the projection to $Y$). When $X,Y$ are Polish and $\pi: X \rightarrow Y$ is Borel measurable, $\mu \mid \pi: Y \M X$ is defined to be s.t. $\pi_* \mu \ltimes \left(\mu \mid \pi\right)$ is supported on the graph of $\pi$ and $\left(\mu \mid \pi\right)_* \pi_* \mu = \mu$ (i.e. $\mu \mid \pi$ is a regular conditional probability). By the disintegration theorem, $\mu \mid \pi$ exists and is defined up to coincidence $\pi_* \mu$-almost everywhere. Given $g: X \rightarrow \Reals$ measurable, we will also use the notation 
 
 \begin{equation}
 \E_{\mu}\left[g \mid \pi^{-1}\left(y\right)\right]:=\E_{\left(\mu \mid \pi\right)\left(y\right)}\left[g\right]
