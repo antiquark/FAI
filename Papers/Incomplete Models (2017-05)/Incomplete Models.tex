@@ -185,6 +185,8 @@ Therefore, formulating a non-vacuous convergence theorem requires \enquote{renor
 
 Another ingredient we will need is a notion of regular conditional probability for incomplete models. For this purpose we will assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$, since this will allow us to use the Lebesgue differentiation theorem (in order to prove Lemma~\ref{lmm:update_incomplete}). In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in \Ob^n$ and $r > 0$, $\B_r\left(y\right)$ will denote the open ball of radius $r$ with center at $y$.
 
+% TODO: Rewrite into a (non-unique) notion of "regular conditional probability" for *any* Polish space; demote Lebsgue differntiation into an example; the proof of the Lebesgue differentiation example should be where?
+
 \begin{samepage}
 \begin{definition}
 \label{def:update_incomplete}
@@ -210,7 +212,7 @@ It is easy to see that a minimal set with these properties always exists and is 
 Suppose that $M$ is convex and for each $n \in \Nats$, $\Ob_n$ is a finite set. Then, for each $y \in \Ob^n$
 
 \begin{equation}
-M \mid y = \overline{\{(\nu \mid y\Ob^n) \mid \nu \in M,\, \nu(y\Ob^n) > 0\}}
+M \mid y = \overline{\{(\nu \mid y\OO) \mid \nu \in M,\, \nu(y\OO) > 0\}}
 \end{equation}
 
 \end{example}
@@ -231,7 +233,17 @@ Suppose that $M$ is convex, for each $n \in \Nats$, $\Ob_n = [0,1]$ and for each
 \begin{samepage}
 \begin{example}
 
-?
+Suppose again that the $\Ob_n$ are finite sets? Consider some $I \subseteq \Nats$ and suppose that for each $n \in I$, we are given $K_n: \Ob^n \M \Ob_n$. Define $M_K$ by
+
+\begin{equation}
+M_K:=\{\mu \in \PMO \mid \forall n \in I: \PO_{n+1*}\mu = \PO_{n*}\mu \ltimes K_n\}
+\end{equation}
+
+Let $n \in \Nats$ and $y \in \Ob^n$ be s.t. for any $m < n$, if $m \in I$ then $y_m \in \Sp{K_n(y_{:m})}$. Then???
+
+\begin{equation}
+M_K \mid y = \{\mu \in \PMO \mid \Sp{\mu} \subseteq y\OO,\, \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
+\end{equation}
 
 \end{example}
 \end{samepage}
