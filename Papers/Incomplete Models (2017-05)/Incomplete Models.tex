@@ -164,7 +164,7 @@ In order to formulate a claim about forecast convergence, we will need a metric 
 $\PMO$ can be regarded as a compact subset of the dual space $\Lp\left(\OO,\rho\right)'$, yielding the following metrization of $\PMO$:
 
 \begin{equation}
-\DKR^\rho\left(\mu,\nu\right):=\sup_{\N{f}_\rho \leq 1}{\left(\E_\mu[f] - \E_\nu[f]\right)}
+\DKR^\rho\left(\mu,\nu\right):=\sup_{\N{f}_\rho \leq 1}{\left(\E_\mu\left[f\right] - \E_\nu\left[f\right]\right)}
 \end{equation}
 
 We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is slightly different from the conventional definition but strongly equivalent. Other names used in the literature for the strongly equivalent metric are \enquote{1st Wassertein metric} and \enquote{earth mover's distance.}}.
@@ -251,7 +251,7 @@ Given a compact Polish space $X$, $C\left(X\right)$ will denote the Banach space
 We regard $\GMO$ as the space of \emph{bets} that can be made against a forecaster. Given $\beta \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \OO$, the value of the bet $\beta$ is
 
 \begin{equation}
-\V{\beta}\left(\mu,x\right):=\beta\left(\mu,x\right) - \E_{x' \sim \mu}[\beta\left(\mu,x'\right)]
+\V{\beta}\left(\mu,x\right):=\beta\left(\mu,x\right) - \E_{x' \sim \mu}\left[\beta\left(\mu,x'\right)\right]
 \end{equation}
 
 Note that this defines a bounded linear operator $\V: \Gm\left(X\right) \rightarrow \Gm\left(X\right)$.
@@ -372,13 +372,13 @@ Define ${Z_1, Z_2, Z \subseteq Y_1 \times \Gm\left(X\right) \times \PM\left(X\ri
 
 $${Z_1:=\{\left(y,\beta,\mu\right) \in Y_1 \times \Gm\left(X\right) \times \PM\left(X\right) \mid \Sp \mu \subseteq y \times Y_2\}}$$
 
-$${Z_2:=\{\left(y,\beta,\mu\right) \in Y_1 \times \Gm\left(X\right) \times \PM\left(X\right) \mid \E_\mu[\beta\left(\mu\right)] = \max_{y_2 \in Y_2} \beta\left(\mu,y,y_2\right)\}}$$
+$${Z_2:=\{\left(y,\beta,\mu\right) \in Y_1 \times \Gm\left(X\right) \times \PM\left(X\right) \mid \E_\mu\left[\beta\left(\mu\right)\right] = \max_{y_2 \in Y_2} \beta\left(\mu,y,y_2\right)\}}$$
 
 $${Z:=Z_1 \cap Z_2 =\{\left(y,\beta,\mu\right) \in Y_1 \times \Gm\left(X\right) \times \PM\left(X\right) \mid \Sp \mu \subseteq \Argmax{y \times Y_2} \beta\left(\mu\right)\}}$$
 
 We can view ${Z}$ as the graph of a \emph{multivalued} mapping from ${Y_1 \times \Gm\left(X\right)}$ to ${\PM\left(X\right)}$ (i.e a mapping from ${Y_1 \times \Gm\left(X\right)}$ to $2^{\PM\left(X\right)}$). We will now show that this multivalued mapping has a \emph{selection}, i.e. a single-valued Borel measurable mapping whose graph is a subset of $Z$. Obviously, the selection is the desired ${\alpha}$.
 
-Fix $\rho$ a metrization of $Y_1$. $Z_1$ is the vanishing locus of the continuous function $\E_{\left(y_1, y_2\right) \sim \mu}[\rho\left(y_1,y\right)]$. $Z_2$ is the vanishing locus of the continuous function $\E_\mu[\beta\left(\mu\right)] - \max_{y_2 \in Y_2} \beta\left(\mu,y,y_2\right)$. Therefore $Z_{1,2}$ are closed and so is $Z$. In particular, the fiber ${Z_{y\beta}}$ of ${Z}$ over any ${\left(y,\beta\right) \in Y_1 \times \Gm\left(X\right)}$ is also closed. 
+Fix $\rho$ a metrization of $Y_1$. $Z_1$ is the vanishing locus of the continuous function $\E_{\left(y_1, y_2\right) \sim \mu}\left[\rho\left(y_1,y\right)\right]$. $Z_2$ is the vanishing locus of the continuous function $\E_\mu\left[\beta\left(\mu\right)\right] - \max_{y_2 \in Y_2} \beta\left(\mu,y,y_2\right)$. Therefore $Z_{1,2}$ are closed and so is $Z$. In particular, the fiber ${Z_{y\beta}}$ of ${Z}$ over any ${\left(y,\beta\right) \in Y_1 \times \Gm\left(X\right)}$ is also closed. 
 
 For any ${y \in Y_1}$, ${\beta \in \Gm\left(X\right)}$, define ${i_y: Y_2 \rightarrow X}$ by ${i_y\left(y_2\right):=\left(y,y_2\right)}$ and ${\beta_y \in \Gm\left(Y_{2}\right)}$ by $\beta_y\left(\nu,y'\right):=\beta\left(i_{y*}\nu,y,y'\right)$. Applying Lemma~\ref{lmm:unwinnable} to ${\beta_y}$ we get ${\nu \in \PM\left(Y_2\right)}$ s.t.
 
@@ -546,7 +546,7 @@ By induction on ${m}$, we conclude:
 $$\SVM \Bd_b G_{m}\left(y_{:m-1},\BM_{:m}\right) \geq \SVM \Bd_b G_{m-1}\left(y_{:m-2},\BM_{:m-1}\right) \geq -b$$
 \end{proof}
 
-Next, we show that for any gambler there is \enquote{limited budget} gambler s.t. any forecaster that dominates it also dominates the original gambler.
+Next, we show that for any gambler there is \enquote{limited budget} gambler s.t. any forecaster that dominates it also dominates the original gambler. For any $x \in \Reals$, we denote $x_+:=\max(x,0)$.
 
 \begin{proposition}
 \label{prp:frugal_gambler}
@@ -582,7 +582,7 @@ Equation~\ref{eqn:prp_furgal_gambler__svm_b_zeta} follows from Proposition~\ref{
 
 Consider $x \in \OO$ s.t. condition~\ref{eqn:def_dominance__loss} holds. Denote
 
-\[b_0: = \max\left( -\inf_{n \in \Nats} {\SVM G^F_{n}\left(x_{:n-1}\right)},0\right)\]
+\[b_0: = \left( -\inf_{n \in \Nats} {\SVM G^F_{n}\left(x_{:n-1}\right)}\right)_+\]
 
 By Proposition~\ref{prp:b_no_effect}, for any $b > b_0$ we have $\Bd_b G^F = G^F$. We get
 
@@ -661,7 +661,7 @@ In this section we construct a tool for proving asymptotic convergence results a
 Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K\left(x\right) \in \PM\left(Y\right)$. Given $\mu \in \PM\left(X\right)$, $\mu \ltimes K \in \PM\left(X \times Y\right)$ denotes the semidirect product of $\mu$ and $K$. $K_* \mu \in \PM\left(Y\right)$ denotes the pushforward of $\mu$ by $K$ (i.e. the pushforward of $\mu \ltimes K$ by the projection to $Y$). When $X,Y$ are Polish and $\pi: X \rightarrow Y$ is Borel measurable, $\mu \mid \pi: Y \M X$ is defined to be s.t. $\pi_* \mu \ltimes \left(\mu \mid \pi\right)$ is supported on the graph of $\pi$ and $\left(\mu \mid \pi\right)_* \pi_* \mu = \mu$ (i.e. $\mu \mid \pi$ is a regular conditional probability). By the disintegration theorem, $\mu \mid \pi$ exists and is defined up to coincidence $\pi_* \mu$-almost everywhere. Given $g: X \rightarrow \Reals$ measurable, we will also use the notation 
 
 \begin{equation}
-\E_{\mu}[g \mid \pi^{-1}\left(y\right)]:=\E_{\left(\mu \mid \pi\right)\left(y\right)}[g]
+\E_{\mu}\left[g \mid \pi^{-1}\left(y\right)\right]:=\E_{\left(\mu \mid \pi\right)\left(y\right)}\left[g\right]
 \end{equation}
 
 We remind that $\PO_n$ is the projection mapping from $\OO$ to $\Ob^n$ and $y\OO:= \left(\PO_{n}\right)^{-1}\left(y\right)$.
@@ -678,7 +678,7 @@ A \emph{gambling strategy} is a uniformly bounded family of measurable mappings
 Given a gambling strategy $S$ and $\mu^* \in \PMO$, $S$ is said to be \emph{$\mu^*$-prudent} when there is $\alpha > 0$ s.t. for any $n \in \Nats$, $\PO_{n*} \mu^*$-almost any $y \in \Ob^n$ and any $\mu \in \PMO$
 
 \begin{equation}
-\E_{\mu^*}[S_n\left(y; \mu\right) \mid y\OO] - \E_\mu[S_n\left(y; \mu\right)] \geq \alpha \left(\max_{y\OO}{S_n\left(y; \mu\right)} - \min_{y\OO}{S_n\left(y; \mu\right)}\right)
+\E_{\mu^*}\left[S_n\left(y; \mu\right) \mid y\OO\right] - \E_\mu\left[S_n\left(y; \mu\right)\right] \geq \alpha \left(\max_{y\OO}{S_n\left(y; \mu\right)} - \min_{y\OO}{S_n\left(y; \mu\right)}\right)
 \end{equation}
 
 \end{definition}
@@ -704,7 +704,7 @@ Consider $\mu^* \in \PMO$, $S$ a $\mu^*$-prudent gambling strategy and a forecas
 
 \begin{equation}
 \label{eqn:thm_prudent}
-\sum_{n=0}^\infty \left(\E_{\mu^*}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO]-\E_{F_n\left(x_{:n}\right)}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)]\right) < +\infty
+\sum_{n=0}^\infty \left(\E_{\mu^*}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO\right]-\E_{F_n\left(x_{:n}\right)}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)\right]\right) < +\infty
 \end{equation}
 
 \end{theorem}
@@ -719,13 +719,13 @@ We start by showing, in a more abstract setting (not specific to forecasting), t
 \begin{lemma}
 \label{lmm:prudent}
 
-Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow [0,M]}$ stochastic processes adapted to $\F$ (i.e. $X_n$ and $Y_n$ are $\F_n$-measurable). Assume the following conditions\footnote{Equalities and inequalities between random variables are implicitly understood as holding almost surely.}:
+Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow \left[0,M\right]}$ stochastic processes adapted to $\F$ (i.e. $X_n$ and $Y_n$ are $\F_n$-measurable). Assume the following conditions\footnote{Equalities and inequalities between random variables are implicitly understood as holding almost surely.}:
 
 \begin{enumerate}[i.]
 
-\item $\E[\A{X_0}] < +\infty$
+\item $\E\left[\A{X_0}\right] < +\infty$
 \item $\forall n \in \Nats, m \geq n: \A{X_n - X_m} \leq \sum_{l=n}^{m-1} Y_l + M$
-\item $\E[X_{n+1} \mid \F_n] \geq X_n + \alpha Y_n$
+\item $\E\left[X_{n+1} \mid \F_n\right] \geq X_n + \alpha Y_n$
 
 \end{enumerate}
 
@@ -758,27 +758,27 @@ N_{k+1}\left(\omega\right) &:= \begin{cases}\inf \{n \in \Nats \mid \sum_{m=N_k\
 
 For each $k \in \Nats$, $N_k$ is a stopping time w.r.t. ${\F}$. As easy to see, for each $k \in \Nats$, ${\Sqn{X^0_{\min\left(n,N_k\right)}}}$ is a uniformly integrable submartingale. Using the fact that ${N_{k} \leq N_{k+1}}$ to apply Theorem~\ref{thm:optional_stopping} (see Appendix), we get
 
-$$\E[X^0_{N_{k+1}} \mid \F_{N_k}] \geq X^0_{N_{k}}$$
+$$\E\left[X^0_{N_{k+1}} \mid \F_{N_k}\right] \geq X^0_{N_{k}}$$
 
-Clearly, ${\Sq{X^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E[\A{X^0_{N_k}}] < \infty}$ (${X^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{X^0_{\min\left(n,N_k\right)}}}$). We conclude that ${\Sq{X^0_{N_k}}{k}}$ is a submartingale.
+Clearly, ${\Sq{X^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E\left[\A{X^0_{N_k}}\right] < \infty}$ (${X^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{X^0_{\min\left(n,N_k\right)}}}$). We conclude that ${\Sq{X^0_{N_k}}{k}}$ is a submartingale.
 
 It is easy to see that ${\A{X^0_{N_{k+1}}-X^0_{N_k}}} \leq 3$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
 
-$$\Pr[X^0_{N_k} - X_0 < -k^{\frac{3}{4}}] \leq \exp\left(-\frac{k^{\frac{3}{2}}}{2 \cdot 3^2k}\right)=\exp\left(-\frac{k^{\frac{1}{2}}}{18}\right)$$
+$$\Pr\left[X^0_{N_k} - X_0 < -k^{\frac{3}{4}}\right] \leq \exp\left(-\frac{k^{\frac{3}{2}}}{2 \cdot 3^2k}\right)=\exp\left(-\frac{k^{\frac{1}{2}}}{18}\right)$$
 
 It follows that
 
-$$\sum_{k=1}^\infty \Pr[X^0_{N_k} - X_0 < -k^{\frac{3}{4}}] < \infty$$
+$$\sum_{k=1}^\infty \Pr\left[X^0_{N_k} - X_0 < -k^{\frac{3}{4}}\right] < \infty$$
 
-$$\Pr[\exists k \in \Nats \forall l > k: X^0_{N_l} - X_0 \geq -l^{\frac{3}{4}}] = 1$$
+$$\Pr\left[\exists k \in \Nats \forall l > k: X^0_{N_l} - X_0 \geq -l^{\frac{3}{4}}\right] = 1$$
 
-$$\Pr[\exists k \in \Nats \forall l > k: X_{N_l} - X_0 \geq \alpha \sum_{n=0}^{N_l - 1} Y_n - l^{\frac{3}{4}}] = 1$$
+$$\Pr\left[\exists k \in \Nats \forall l > k: X_{N_l} - X_0 \geq \alpha \sum_{n=0}^{N_l - 1} Y_n - l^{\frac{3}{4}}\right] = 1$$
 
-%$$\Pr[\exists m \in \Nats \forall k \in \Nats: X^0_{N_k} \leq m - \alpha k] = 0$$
+%$$\Pr\left[\exists m \in \Nats \forall k \in \Nats: X^0_{N_k} \leq m - \alpha k\right] = 0$$
 
 It is easy to see that if $\omega \in \Omega$ is s.t. $\sum_{n=0}^\infty Y_n\left(\omega\right) = \infty$ then $\sum_{n=0}^{N_l\left(\omega\right) - 1} Y_n\left(\omega\right) \geq l$. We get
 
-$$\Pr[\sum_{n=0}^\infty  Y_n = \infty \implies \exists k \in \Nats \forall l > k: X_{N_l} - X_0 \geq \alpha l - l^{\frac{3}{4}}]=1$$
+$$\Pr\left[\sum_{n=0}^\infty  Y_n = \infty \implies \exists k \in \Nats \forall l > k: X_{N_l} - X_0 \geq \alpha l - l^{\frac{3}{4}}\right]=1$$
 
 To complete the proof, observe that if ${\omega \in \Omega}$ is s.t. ${\inf_n X_n\left(\omega\right) = -\infty}$ then ${\sum_{n=0}^\infty  Y_n\left(\omega\right) = \infty}$ (since ${\A{X_n\left(\omega\right) - X_0\left(\omega\right)} \leq \sum_{m=0}^{n-1} Y_n\left(\omega\right) + 1}$).
 \end{proof}
@@ -787,14 +787,14 @@ To complete the proof, observe that if ${\omega \in \Omega}$ is s.t. ${\inf_n X_
 \begin{corollary}
 \label{crl:prudent}
 
-Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X'_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow [0,M]}$ stochastic processes adapted to $\F$ and $\Sqn{X_n: \Omega \rightarrow \Reals}$ an arbitrary stochastic process. Assume the following conditions:
+Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X'_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow \left[0,M\right]}$ stochastic processes adapted to $\F$ and $\Sqn{X_n: \Omega \rightarrow \Reals}$ an arbitrary stochastic process. Assume the following conditions:
 
 \begin{enumerate}[i.]
 
 \item $\A{X_n - X'_n} \leq M$
-\item $\E[\A{X_0}] < +\infty$
+\item $\E\left[\A{X_0}\right] < +\infty$
 \item $\A{X_{n+1} - X_n} \leq Y_n$
-\item $\E[X_{n+1} - X_n \mid \F_n] \geq \alpha Y_n$
+\item $\E\left[X_{n+1} - X_n \mid \F_n\right] \geq \alpha Y_n$
 
 \end{enumerate}
 
@@ -812,17 +812,17 @@ Then, for almost all $\omega \in \Omega$
 
 \begin{proof}
 
-Define ${X''_n:= \E[X_n \mid \F_n]}$. We have
+Define ${X''_n:= \E\left[X_n \mid \F_n\right]}$. We have
 
-$$\E[\A{X''_0}] = \E[\A{\E[X_0 \mid \F_0]}] \leq \E[\E[\A{X_0} \mid \F_0]] = \E[\A{X_0}] < \infty$$
+$$\E\left[\A{X''_0}\right] = \E\left[\A{\E\left[X_0 \mid \F_0\right]}\right] \leq \E\left[\E\left[\A{X_0} \mid \F_0\right]\right] = \E\left[\A{X_0}\right] < \infty$$
 
-$$\A{X''_n - X'_n} = \A{\E[X_n \mid \F_n] - X'_n} = \A{\E[X_n - X'_n \mid \F_n]} \leq M$$
+$$\A{X''_n - X'_n} = \A{\E\left[X_n \mid \F_n\right] - X'_n} = \A{\E\left[X_n - X'_n \mid \F_n\right]} \leq M$$
 
 $$\A{X''_n - X_n} \leq \A{X''_n - X'_n} + \A{X'_n - X_n} \leq 2M$$
 
 $$\forall m \geq n: \A{X''_{m}-X''_n} \leq \A{X_{m}-X_n} + 4M \leq \sum_{l=n}^{n-1} Y_l + 4M$$
 
-$$\E[X''_{n+1}-X''_n \mid \F_n] = \E[\E[X_{n+1} \mid \F_{n+1}]-\E[X_n \mid \F_n] \mid \F_n] = \E[X_{n+1}-X_n \mid \F_n] \geq \alpha Y_n$$
+$$\E\left[X''_{n+1}-X''_n \mid \F_n\right] = \E\left[\E\left[X_{n+1} \mid \F_{n+1}\right]-\E\left[X_n \mid \F_n\right] \mid \F_n\right] = \E\left[X_{n+1}-X_n \mid \F_n\right] \geq \alpha Y_n$$
 
 Applying Lemma~\ref{lmm:prudent} to $X''$ and using ${\A{X''_n - X_n} \leq 2M}$, we get the desired result.
 \end{proof}
@@ -933,21 +933,21 @@ $$Y_n\left(x\right):=\max_{x_{:n}\OO} \overline{\PG{S}}^F_{n}\left(x_{:n}\right)
 
 Clearly, ${\F}$ is a filtration of ${\OO}$, ${X,X',Y}$ are stochastic processes and ${X',Y}$ are adapted to ${\F}$. ${S}$ is uniformly bounded, therefore ${\PG{S}}$  is uniformly bounded and so is ${Y}$. Obviously, ${Y}$ is also non-negative.
 
-By Proposition~\ref{prp:pg_bounded_uncertainty}, ${\A{X_n-X'_n}}$ are uniformly bounded. ${X_0}$ vanishes and in particular ${\E[\A{X_0}] < \infty}$. We have
+By Proposition~\ref{prp:pg_bounded_uncertainty}, ${\A{X_n-X'_n}}$ are uniformly bounded. ${X_0}$ vanishes and in particular ${\E\left[\A{X_0}\right] < \infty}$. We have
 
 $$\A{X_{n+1}\left(x\right)-X_n\left(x\right)} = \A{\overline{\V{\PG{S}}}_{n}^F\left(x_{:n},x\right)} \leq Y_n\left(x\right)$$
 
 Moreover:
 
-$$\E[X_{n+1} - X_n \mid \F_n]\left(x\right) = \E_{x' \sim \mu^*}[\overline{\V{\PG{S}}}_{n}^F\left(x_{:n},x'\right) \mid x' \in x_{:n}\OO]$$
+$$\E\left[X_{n+1} - X_n \mid \F_n\right]\left(x\right) = \E_{x' \sim \mu^*}\left[\overline{\V{\PG{S}}}_{n}^F\left(x_{:n},x'\right) \mid x' \in x_{:n}\OO\right]$$
 
 (As before, the notation on the right hand side signifies the use of a regular conditional probability)
 
-$$\E[X_{n+1} - X_n \mid \F_n]\left(x\right) = \E_{x' \sim \mu^*}[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right) \mid x' \in x_{:n}\OO] - \E_{x' \sim F_n\left(x_{:n}\right)}[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right)]$$
+$$\E\left[X_{n+1} - X_n \mid \F_n\right]\left(x\right) = \E_{x' \sim \mu^*}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right) \mid x' \in x_{:n}\OO\right] - \E_{x' \sim F_n\left(x_{:n}\right)}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right)\right]$$
 
 Let $\alpha > 0$ be as in Definition~\ref{def:prudent}. By definition of $\PG{S}$, $\overline{\PG{S}}_{n}^F\left(x_{:n}\right)$ is equal to either $S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)$ or 0. In either case, we get that for $\mu^*$-almost any $x \in \OO$
 
-$$\E[X_{n+1} - X_n \mid \F_n]\left(x\right) \geq \alpha \left(\max_{x_{:n}\OO} \overline{\PG{S}}_{n}^F\left(x_{:n}\right) - \min_{x_{:n}\OO} \overline{\PG{S}}_{n}^F\left(x_{:n}\right)\right) = \alpha Y_n\left(x\right)$$
+$$\E\left[X_{n+1} - X_n \mid \F_n\right]\left(x\right) \geq \alpha \left(\max_{x_{:n}\OO} \overline{\PG{S}}_{n}^F\left(x_{:n}\right) - \min_{x_{:n}\OO} \overline{\PG{S}}_{n}^F\left(x_{:n}\right)\right) = \alpha Y_n\left(x\right)$$
 
 By Corollary~\ref*{crl:prudent}\ref{itm:crl_prudent__inf}, for $\mu^*$-almost any $x \in \OO$
 
@@ -959,17 +959,18 @@ Since $F$ dominates $\PG{S}$, it follows that
 
 By Corollary~\ref*{crl:prudent}\ref{itm:crl_prudent__sup}, $\sum_n Y_n\left(x\right) < \infty$. By Proposition~\ref{prp:when_bounded_play}, it follows that for any $n \gg 0$, $\PG{S}^F_n\left(x_{:n}\right) = S_n\left(x_{:n}\right)$. We get, for $n \gg 0$
 
-$$\E_{\mu^*}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO]-\E_{F_n\left(x_{:n}\right)}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)] = \E_{\mu^*}[\overline{\PG{S}}^F_n\left(x_{:n}\right) \mid x_{:n}\OO]-\E_{F_n\left(x_{:n}\right)}[\overline{\PG{S}}^F_n\left(x_{:n}\right)]$$
+\begin{align*}
+&\E_{\mu^*}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO\right]-\E_{F_n\left(x_{:n}\right)}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)\right] = \\ 
+&\E_{\mu^*}\left[\overline{\PG{S}}^F_n\left(x_{:n}\right) \mid x_{:n}\OO\right]-\E_{F_n\left(x_{:n}\right)}\left[\overline{\PG{S}}^F_n\left(x_{:n}\right)\right] \leq Y_n\left(x\right)
+\end{align*}
 
-$$\E_{\mu^*}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO]-\E_{F_n\left(x_{:n}\right)}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)] \leq Y_n\left(x\right)$$
-
-$$\sum_{n=0}^\infty \left(\E_{\mu^*}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO]-\E_{F_n\left(x_{:n}\right)}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)]\right) < +\infty$$
+$$\sum_{n=0}^\infty \left(\E_{\mu^*}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO\right]-\E_{F_n\left(x_{:n}\right)}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)\right]\right) < +\infty$$
 \end{proof}
 
 \section{Proof of Main Theorem}
 \label{sec:construction}
 
-In order to prove Theorem~\ref{thm:main}, we will need, given an incomplete model $M \subseteq \PMO$ and $\epsilon > 0$, a gambling strategy $S^{M\epsilon}$ s.t. $S^{M\epsilon}$ is $\mu$-prudent for any $\mu \in M$ and s.t. Theorem~\ref{thm:prudent} implies that any $F$ that dominates $S^{M\epsilon}$ satisfies equation~\ref{eqn:thm_main} \enquote{within $\epsilon$.} This motivates the following definition and lemma.
+In order to prove Theorem~\ref{thm:main}, we will need, given an incomplete model $M \subseteq \PMO$ and $\epsilon > 0$, a gambling strategy $S^{M\epsilon}$ s.t. $S^{M\epsilon}$ is $\mu$-prudent for any $\mu \in M$ and s.t. Theorem~\ref{thm:prudent} implies that any $F$ that dominates $S^{M\epsilon}$ satisfies equation~\ref{eqn:thm_main} \enquote{within $\epsilon$.} This motivates the following definition and lemma. We remind that, given $x \in \Reals$, $x_+:=\max(x,0)$.
 
 \begin{samepage}
 \begin{definition}
@@ -978,8 +979,8 @@ Consider $X$ a compact Polish metric space, $M \subseteq \PM\left(X\right)$ conv
 
 \begin{enumerate}[i.]
 
-\item $\N{\beta\left(\mu\right)} \leq \max\left(r_\mu - r_0,0\right)$
-\item $\forall \nu \in M: \E_\nu[\beta\left(\mu\right)] - \E_\mu[\beta\left(\mu\right)] \geq \frac{1}{2}\left(r_\mu - r_0\right) r_\mu$
+\item $\N{\beta\left(\mu\right)} \leq \left(r_\mu - r_0\right)_+$
+\item $\forall \nu \in M: \E_\nu\left[\beta\left(\mu\right)\right] - \E_\mu\left[\beta\left(\mu\right)\right] \geq \frac{1}{2}\left(r_\mu - r_0\right) r_\mu$
 
 \end{enumerate}
 
@@ -1012,7 +1013,7 @@ Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $\varphi \in \
 \begin{enumerate}[i.]
 
 \item $\N{f}_\rho \leq \N{\varphi}$
-\item $\forall \mu \in \PM\left(X\right): \A{\E_\mu[f] - \varphi\left(\mu\right)} < \epsilon$
+\item $\forall \mu \in \PM\left(X\right): \A{\E_\mu\left[f\right] - \varphi\left(\mu\right)} < \epsilon$
 
 \end{enumerate}
 
@@ -1027,11 +1028,11 @@ $$\max_{\mu \in \PM\left(X\right)} \min_{\nu \in A}\, \DKR\left(\mu,\nu\right) <
 
 Using the Goldstine theorem, choose $f \in \Lp\left(X\right)$ s.t. $\N{f}_\rho \leq 1$ and for any $\nu \in A$ 
 
-$$\A{\E_\nu[f] - \varphi\left(\nu\right)} < \frac{\epsilon}{2}$$
+$$\A{\E_\nu\left[f\right] - \varphi\left(\nu\right)} < \frac{\epsilon}{2}$$
 
 Consider any $\mu \in \PM\left(X\right)$. Choose $\nu \in A$ s.t. $\DKR\left(\mu,\nu\right) < \frac{\epsilon}{4}$. We get
 
-$$\A{\E_\mu[f] - \varphi\left(\mu\right)} \leq \A{\E_\mu[f] - \E_\nu[f]} + \A{\E_\nu[f] - \varphi\left(\nu\right)} + \A{\varphi\left(\nu\right) - \varphi\left(\mu\right)} < \frac{\epsilon}{4} + \frac{\epsilon}{2} + \frac{\epsilon}{4} = \epsilon$$
+$$\A{\E_\mu\left[f\right] - \varphi\left(\mu\right)} \leq \A{\E_\mu\left[f\right] - \E_\nu\left[f\right]} + \A{\E_\nu\left[f\right] - \varphi\left(\nu\right)} + \A{\varphi\left(\nu\right) - \varphi\left(\mu\right)} < \frac{\epsilon}{4} + \frac{\epsilon}{2} + \frac{\epsilon}{4} = \epsilon$$
 \end{proof}
 
 \begin{samepage}
@@ -1043,7 +1044,7 @@ Consider $X$ a compact Polish space, $\rho$ a metrization of $X$, $M \subseteq \
 \begin{enumerate}[i.]
 
 \item $\N{f}_\rho < r - r_0$
-\item $\inf_{\nu \in M} \E_\nu[f] - \E_\mu[f] > \frac{1}{2}\left(r-r_0\right)r$
+\item $\inf_{\nu \in M} \E_\nu\left[f\right] - \E_\mu\left[f\right] > \frac{1}{2}\left(r-r_0\right)r$
 
 \end{enumerate}
 
@@ -1066,7 +1067,7 @@ Taking $\delta$ to 0 we get $\varphi\left(\nu\right) \geq \varphi\left(\mu_0\rig
 
 $$\N{f}_\rho \leq \frac{3}{4} \left(r - r_0\right) < r - r_0$$ 
 
-$$\E_\nu[f] \geq \varphi\left(\nu\right) - \frac{1}{16} r \left(r - r_0\right) \geq \varphi\left(\mu_0\right) + \frac{11}{16} r \left(r - r_0\right) \geq \E_{\mu_0}[f] +  \frac{5}{8} r \left(r - r_0\right) > \E_{\mu_0}[f] +  \frac{1}{2} r \left(r - r_0\right)$$
+$$\E_\nu\left[f\right] \geq \varphi\left(\nu\right) - \frac{1}{16} r \left(r - r_0\right) \geq \varphi\left(\mu_0\right) + \frac{11}{16} r \left(r - r_0\right) \geq \E_{\mu_0}\left[f\right] +  \frac{5}{8} r \left(r - r_0\right) > \E_{\mu_0}\left[f\right] +  \frac{1}{2} r \left(r - r_0\right)$$
 \end{proof}
 
 \begin{samepage}
@@ -1084,7 +1085,7 @@ Then, there exists $\beta': U \rightarrow \Lp\left(X,\rho\right)$ continuous s.t
 \begin{enumerate}[i.]
 
 \item $\N{\beta'\left(\mu\right)}_\rho < r_\mu - r_0$
-\item $\inf_{\nu \in M} \E_\nu[\beta'\left(\mu\right)] - \E_\mu[\beta'\left(\mu\right)] > \frac{1}{2} \left(r_\mu - r_0\right) r_\mu$
+\item $\inf_{\nu \in M} \E_\nu\left[\beta'\left(\mu\right)\right] - \E_\mu\left[\beta'\left(\mu\right)\right] > \frac{1}{2} \left(r_\mu - r_0\right) r_\mu$
 
 \end{enumerate}
 
@@ -1095,20 +1096,20 @@ Then, there exists $\beta': U \rightarrow \Lp\left(X,\rho\right)$ continuous s.t
 
 Define $B: U \rightarrow 2^{\Lp\left(X,\rho\right)}$ by
 
-$$B\left(\mu\right):=\{f \in \Lp\left(X,\rho\right) \mid \N{f}_\rho < r_\mu - r_0,\, \inf_{\nu \in M} \E_\nu[f] - \E_\mu[f] > \frac{1}{2}\left(r_\mu - r_0\right) r_\mu\}$$
+$$B\left(\mu\right):=\{f \in \Lp\left(X,\rho\right) \mid \N{f}_\rho < r_\mu - r_0,\, \inf_{\nu \in M} \E_\nu\left[f\right] - \E_\mu\left[f\right] > \frac{1}{2}\left(r_\mu - r_0\right) r_\mu\}$$
 
 By Lemma~\ref{lmm:separation}, for any $\mu \in U$, $B\left(\mu\right) \ne \varnothing$. Clearly, $B\left(\mu\right)$ is convex. Fix $f \in \Lp\left(X,\rho\right)$ and consider $B^{-1}\left(f\right):=\{\mu \in U \mid f \in B\left(\mu\right)\}$. Consider any $\mu_0 \in B^{-1}\left(f\right)$, and take $\epsilon > 0$ s.t.
 
 \begin{enumerate}[i.]
 
 \item $\N{f}_\rho < r_{\mu_0}  - \epsilon - r_0$
-\item $\inf_{\nu \in M} \E_\nu[f] - \E_{\mu_0}[f] -\epsilon > \frac{1}{2}\left(r_{\mu_0} + \epsilon  - r_0\right) \left(r_{\mu_0} + \epsilon\right)$
+\item $\inf_{\nu \in M} \E_\nu\left[f\right] - \E_{\mu_0}\left[f\right] -\epsilon > \frac{1}{2}\left(r_{\mu_0} + \epsilon  - r_0\right) \left(r_{\mu_0} + \epsilon\right)$
 
 \end{enumerate}
 
 Define $V \subseteq U$ by 
 
-$$V := \{\mu \in U \mid \DKR\left(\mu,\mu_0\right) < \epsilon,\, \E_\mu[f] < \E_{\mu_0}[f] + \epsilon\}$$
+$$V := \{\mu \in U \mid \DKR\left(\mu,\mu_0\right) < \epsilon,\, \E_\mu\left[f\right] < \E_{\mu_0}\left[f\right] + \epsilon\}$$
 
 Obviously $V$ is open and $V \subseteq B^{-1}\left(f\right)$, hence $B^{-1}\left(f\right)$ is open. Applying Theorem~\ref{thm:selection} (see Appendix), we get the desired result.
 \end{proof}
@@ -1137,7 +1138,7 @@ $$\lim_{k \rightarrow \infty} \DKR\left(\mu_k,M\right) = \DKR\left(\mu, M\right)
 
 Denote the metric on $X$ by $\rho$. 
 
-$$\limsup_{k \rightarrow \infty}{\N{\beta\left(\mu_k\right)}_\rho} \leq \limsup_{k \rightarrow \infty}{\max\left(\DKR\left(\mu_k,M\right) - r_0, 0\right)} = 0$$
+$$\limsup_{k \rightarrow \infty}{\N{\beta\left(\mu_k\right)}_\rho} \leq \limsup_{k \rightarrow \infty}{\left(\DKR\left(\mu_k,M\right) - r_0\right)_+} = 0$$
 
 Therefore, $\beta$ is continuous everywhere.
 \end{proof}
@@ -1148,9 +1149,9 @@ Define $Z_{1,2,3} \subseteq Y \times \Gm\left(X\right) \times \PM\left(X\right)^
 
 $$Z_1:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid \zeta \in M\left(y\right)\}$$
 
-$$Z_2:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid \N{\beta\left(\mu\right)} \leq \max\left(\DKR\left(\mu,\xi\right) - \epsilon, 0\right)\}$$
+$$Z_2:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid \N{\beta\left(\mu\right)} \leq \left(\DKR\left(\mu,\xi\right) - \epsilon\right)_+\}$$
 
-$$Z_3:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid \E_\nu[\beta\left(\mu\right)] - \E_\mu[\beta\left(\mu\right)] \geq \frac{1}{2}\max\left(\DKR\left(\mu,\zeta\right) - \epsilon, 0\right) \DKR\left(\mu,\zeta\right)\}$$
+$$Z_3:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid \E_\nu\left[\beta\left(\mu\right)\right] - \E_\mu\left[\beta\left(\mu\right)\right] \geq \frac{1}{2}\left(\DKR\left(\mu,\zeta\right) - \epsilon\right)_+ \DKR\left(\mu,\zeta\right)\}$$
 
 Define $Z := Z_1 \cap Z_2 \cap Z_3$. It is easy to see that $Z_{1,2,3}$ are closed and therefore $Z$ also. Define $Z' \subseteq Y \times \Gm\left(X\right) \times \PM\left(X\right)^3$ by
 
@@ -1160,8 +1161,8 @@ $Z'$ is closed since it is the projection of $Z$ and $\PM\left(X\right)$ is comp
 
 \begin{enumerate}[i.]
 
-\item $\N{\beta\left(\mu\right)} \leq \max\left(\DKR\left(\mu,\xi\right) - \epsilon, 0\right)$
-\item $\E_\nu[\beta\left(\mu\right)] - \E_\mu[\beta\left(\mu\right)] \geq \frac{1}{2}\max\left(\DKR\left(\mu,M\left(y\right)\right) - \epsilon, 0\right) \DKR\left(\mu,M\left(y\right)\right)$
+\item $\N{\beta\left(\mu\right)} \leq \left(\DKR\left(\mu,\xi\right) - \epsilon\right)_+$
+\item $\E_\nu\left[\beta\left(\mu\right)\right] - \E_\mu\left[\beta\left(\mu\right)\right] \geq \frac{1}{2}\left(\DKR\left(\mu,M\left(y\right)\right) - \epsilon\right)_+ \DKR\left(\mu,M\left(y\right)\right)$
 
 \end{enumerate}
 
@@ -1205,23 +1206,27 @@ Consider $X$ a compact Polish space, $d \in \Nats$, $Y$ a compact subset of $\Re
 
 Let $\Sq{f_k \in C\left(X\right)}{k}$ be dense in $C\left(X\right)$. For any $y \in Y$ and $r > 0$ we denote $\chi_{yr}: Y \rightarrow \{0,1\}$ the characteristic function of $\B_r\left(y\right)$ and $\chi^\pi_{yr}: X \rightarrow \{0,1\}$ the characteristic function of $\pi^{-1}\left(\B_r\left(y\right)\right)$. For any $k \in \Nats$ and $y_0 \in \Sp \pi_* \mu$ we have $\mu\left(\pi^{-1}\left(\B_r\left(y_0\right)\right)\right) = \pi_*\mu\left(\B_r\left(y_0\right)\right) > 0$ and
 
-$$\E_{\mu}[f_k \mid \pi^{-1}\left(\B_r\left(y_0\right)\right)] = \frac{\E_{\mu}[\chi^\pi_{y_0r} f_k]}{\mu\left(\pi^{-1}\left(\B_r\left(y_0\right)\right)\right)} = \frac{\E_{y \sim \pi_* \mu}[\E_{\mu}[\chi^\pi_{y_0r} f_k \mid \pi^{-1}\left(y\right)]]}{\pi_*\mu\left(\B_r\left(y_0\right)\right)} = \frac{\E_{y \sim \pi_* \mu}[\chi_{y_0r} \E_{\mu}[f_k \mid \pi^{-1}\left(y\right)]]}{\pi_*\mu\left(\B_r\left(y_0\right)\right)}$$
+$$\E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y_0\right)\right)\right] = \frac{\E_{\mu}\left[\chi^\pi_{y_0r} f_k\right]}{\mu\left(\pi^{-1}\left(\B_r\left(y_0\right)\right)\right)} = \frac{\E_{y \sim \pi_* \mu}\left[\E_{\mu}\left[\chi^\pi_{y_0r} f_k \mid \pi^{-1}\left(y\right)\right]\right]}{\pi_*\mu\left(\B_r\left(y_0\right)\right)}$$
+
+$$\E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y_0\right)\right)\right] = \frac{\E_{y \sim \pi_* \mu}\left[\chi_{y_0r} \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right]\right]}{\pi_*\mu\left(\B_r\left(y_0\right)\right)}$$
 
 In particular, the above holds for $\pi_* \mu$-almost any $y_0 \in Y$. Applying the Lebesgue differentiation theorem, we conclude that there is $A \subseteq Y$ s.t. $\pi_*\mu\left(A\right) = 1$ and for any $y \in A$
 
-$$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)] = \E_{\mu}[f_k \mid \pi^{-1}\left(y\right)]$$
+$$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] = \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right]$$
 
 Now consider any $f \in C\left(X\right)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\N{f-f_k} < \epsilon$ and therefore, for any $y \in A$
 
-$$\limsup_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)] \leq \limsup_{r \rightarrow 0} \E_{\mu}[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)] + \epsilon = \E_{\mu}[f_k \mid \pi^{-1}\left(y\right)] + \epsilon  \leq \E_{\mu}[f \mid \pi^{-1}\left(y\right)] + 2\epsilon$$
+$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \limsup_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] + \epsilon = \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right] + \epsilon  $$
+
+$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right] + 2\epsilon$$
 
 Similarly
 
-$$\liminf_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)] \geq \E_{\mu}[f \mid \pi^{-1}\left(y\right)] - 2\epsilon$$
+$$\liminf_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \geq \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right] - 2\epsilon$$
 
 Taking $\epsilon$ to 0, we conclude that
 
-$$\lim_{r \rightarrow 0} \E_{\mu}[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)] = \E_{\mu}[f \mid \pi^{-1}\left(y\right)]$$
+$$\lim_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] = \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right]$$
 
 $$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}\left(\B_r\left(y\right)\right) = \left(\mu \mid \pi\right)\left(y\right)$$
 \end{proof}
@@ -1245,11 +1250,11 @@ $$\lim_{r \rightarrow 0} {\mu^* \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\ri
 
 Therefore, ${\left(\mu^* \mid \PO_n\right)\left(y\right) \in M \mid y}$. Since $S_n\left(y\right)$ is $\left(M \mid y,\, \epsilon\right)$-savvy, for any $\mu \in \PM\left(X\right)$, denoting $r_{\mu y}:=\DKR^n\left(\mu,\,M \mid y\right)$:
 
-$$\E_{\mu^*}[S_n\left(y;\mu\right) \mid y\OO] - \E_{\mu}[S_n\left(y;\mu\right)] \geq \frac{1}{2} \max\left(r_{\mu y} - \epsilon, 0\right) r_{\mu y} \geq \frac{1}{2} \N{S_n\left(y;\mu\right)} r_{\mu y}$$
+$$\E_{\mu^*}\left[S_n\left(y;\mu\right) \mid y\OO\right] - \E_{\mu}\left[S_n\left(y;\mu\right)\right] \geq \frac{1}{2} \left(r_{\mu y} - \epsilon\right)_+ r_{\mu y} \geq \frac{1}{2} \N{S_n\left(y;\mu\right)} r_{\mu y}$$
 
 When $r_{\mu y} \leq \epsilon$, $S_n\left(y;\mu\right) = 0$, hence for any $\mu \in \PM\left(X\right)$, $\N{S_n\left(y;\mu\right)} r_{\mu y} \geq \N{S_n\left(y;\mu\right)} \epsilon$. We get
 
-$$\E_{\mu^*}[S_n\left(y;\mu\right) \mid y\OO] - \E_{\mu}[S_n\left(y;\mu\right)] \geq \frac{\epsilon}{2} \N{S_n\left(y;\mu\right)}$$
+$$\E_{\mu^*}\left[S_n\left(y;\mu\right) \mid y\OO\right] - \E_{\mu}\left[S_n\left(y;\mu\right)\right] \geq \frac{\epsilon}{2} \N{S_n\left(y;\mu\right)}$$
 \end{proof}
 
 \begin{samepage}
@@ -1269,11 +1274,11 @@ Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s
 
 By Corollary~\ref{crl:savvy_is_prudent}, $S$ is $\mu$-prudent. By Theorem~\ref{thm:prudent}, for $\mu$-almost any $x \in X$
 
-$$\lim_{n \rightarrow \infty} {\left(\E_{\mu}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO]-\E_{F_n\left(x_{:n}\right)}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)]\right)} = 0$$
+$$\lim_{n \rightarrow \infty} {\left(\E_{\mu}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO\right]-\E_{F_n\left(x_{:n}\right)}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)\right]\right)} = 0$$
 
 On the other hand, by Lemma~\ref{lmm:update_incomplete}, $\left(\mu \mid \PO_n\right)\left(x_{:n}\right) \in M \mid x_{:n}$ and hence, since $S_n\left(x_{:n}\right)$ is $\left(M \mid x_{:n} \, \epsilon\right)$-savvy, denoting $r_n:=\DKR^n\left(F_n\left(x_{:n}\right),\, M \mid x_{:n}\right)$: 
 
-$$\E_{\mu}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO]-\E_{F_n\left(x_{:n}\right)}[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)] \geq \frac{1}{2} \left(r_{n} - \epsilon\right) r_n$$
+$$\E_{\mu}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO\right]-\E_{F_n\left(x_{:n}\right)}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)\right] \geq \frac{1}{2} \left(r_{n} - \epsilon\right) r_n$$
 
 We get
 
@@ -1331,7 +1336,7 @@ We define ${X_M: \Omega \rightarrow \Reals}$ is an analogous way\footnote{This t
 Then:
 
 \begin{equation}
-\E[X_N \mid \F_M] \geq X_M
+\E\left[X_N \mid \F_M\right] \geq X_M
 \end{equation}
 
 \end{theorem}
