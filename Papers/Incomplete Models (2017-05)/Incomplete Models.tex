@@ -181,7 +181,7 @@ Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x\left(\{
 \lim_{n \rightarrow \infty} \DKR^\rho\left(\mu_n, \delta_x\right) = 0
 \end{equation}
 
-Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. We denote $\DKR^n:=\DKR^{\rho_n}$.
+Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. In the special case when $\Ob_n=\Ob$ for all $n \in \Nats$ and some fixed space $\Ob$, there is a natural class of metrizations with the property that $\rho_n(yx,yx')=\rho(x,x')$ for some fixed metric $\rho$ on $\OO$ and any $y \in \Ob^n$, $x,x' \in \OO$\footnote{In this special case, the need for renormalization is a side effect of our choice of notation where the forecaster produces a probability measure over the entire sequence rather than over \emph{future} observations only.}. We denote $\DKR^n:=\DKR^{\rho_n}$.
 
 Another ingredient we will need is a notion of regular conditional probability for incomplete models. Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K\left(x\right) \in \PM\left(Y\right)$. Given $\mu \in \PM\left(X\right)$, $\mu \ltimes K \in \PM\left(X \times Y\right)$ denotes the semidirect product of $\mu$ and $K$, that is, the unique measure satisfying
 
@@ -199,12 +199,10 @@ $K_* \mu \in \PM\left(Y\right)$ denotes the pushforward of $\mu$ by $K$ (i.e. th
 
 Let $X,Y$ be Polish spaces, $\pi: X \rightarrow Y$ continuous and $M \subseteq \PM(X)$. We say that $N \subseteq Y \times \PM(X)$ is an \emph{upper bound for $M \mid \pi$} when 
 %
-%Consider any $M \subseteq \PMO$. For each $n \in \Nats$, we define $M \mid \Ob^n$ to be the minimal subset of $\Ob^n \times \PMO$ with the following properties:
-%
 \begin{enumerate}[i.]
 \item\label{con:def__update_incomplete__clos} $N$ is closed.
-\item\label{con:def__update_incomplete__conv} For every $y \in \Ob^n$, the set $N_y:=\{\nu \in \PMO \mid \left(y,\nu\right) \in N\}$ is convex.
-\item For every $\mu \in M$ and $\pi_*\mu$-almost every $y \in Y$, $(\mu \mid \pi)(y) \in N_y$.
+\item\label{con:def__update_incomplete__conv} For every $y \in \Ob^n$, the set $N(y):=\{\nu \in \PMO \mid \left(y,\nu\right) \in N\}$ is convex.
+\item For every $\mu \in M$ and $\pi_*\mu$-almost every $y \in Y$, $(\mu \mid \pi)(y) \in N(y)$.
 \end{enumerate}
 
 \end{definition}
@@ -217,10 +215,10 @@ We give a few examples for Definition~\ref{def:update_incomplete}. The proofs th
 \begin{samepage}
 \begin{example}
 
-Suppose that $M$ is convex and $Y$ is a finite set (in particular, this example is applicable when the $\Ob_n$ are finite sets, $X=\OO$ and $Y=\Ob^n$). Then, there is a unique $N$ which is a \emph{minimal} upper bound for $M \mid \pi$ and we have
+Suppose that $M$ is convex and $Y$ is a finite set (in particular, this example is applicable when the $\Ob_n$ are finite sets, $X=\OO$, $Y=\Ob^n$ and $\pi=\PO_n$). Then, there is a unique $N$ which is a \emph{minimal} upper bound for $M \mid \pi$ and we have
 
 \begin{equation}
-N_y = \overline{\{(\mu \mid \pi^{-1}(y)) \mid \mu \in M,\, \mu\left(\pi^{-1}(y)\right) > 0\}}
+N(y) = \overline{\{(\mu \mid \pi^{-1}(y)) \mid \mu \in M,\, \mu\left(\pi^{-1}(y)\right) > 0\}}
 \end{equation}
 
 Here, $\mu \mid \pi^{-1}(y)$ is the conditional probability measure.
@@ -263,9 +261,9 @@ Then, $M^K_n$ is an upper bound for $M^K \mid \PO_n$.
 \begin{samepage}
 \begin{example}
 
-Assume that for all $n \in \Nats$, $\Ob_n$ is a compact subset of $\Reals^{d_n}$ for some $d_n \in \Nats$. In particular, $\Ob^n$ is a subset of $\Reals^{\sum_{m < n} d_n}$, and we will regard it as a metric space using the Euclidean metric. For any $y \in \Ob^n$ and $r > 0$, $\B_r\left(y\right)$ will denote the open ball of radius $r$ with center at $y$. 
+Suppose that $Y$ is a compact subset of $\Reals^{d}$ for some $d \in \Nats$ (in particular, this example is applicable when each $\Ob_n$ is a compact subset of $\Reals^{d_n}$, $X=\OO$, $Y=\Ob^n$ and $\pi=\PO_n$; in that case $d=\sum_{m < n} d_n$). We regard $Y$ as a metric space using the Euclidean metric. For any $y \in Y$ and $r > 0$, $\B_r\left(y\right)$ will denote the open ball of radius $r$ with center at $y$. 
 
-Fix any $M \subseteq \PMO$. Then, for any $n \in \Nats$, there is a unique $M_n \subseteq \Ob^n \times \PMO$ which is minimal among sets satisfying conditions \ref{con:def__update_incomplete__clos} and \ref{con:def__update_incomplete__conv} of Definition~\ref{def:update_incomplete} and s.t. for any $y \in \Ob^n$, $\nu \in \PMO$ and $\mu \in M$, if $y \in \Sp \PO_{n*}\mu$ and $\nu = \lim_{r \rightarrow 0}{\left(\mu \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\left(y,\nu\right) \in M_n$ (the limit is defined using the the weak topology). Moreover, $M_n$ is an upper bound for $M \mid \PO_n$.
+Fix any $M \subseteq \PM(X)$. Then, there is a unique $N \subseteq Y \times \PM(X)$ which is minimal among sets satisfying conditions \ref{con:def__update_incomplete__clos} and \ref{con:def__update_incomplete__conv} of Definition~\ref{def:update_incomplete} and s.t. for any $y \in Y$, $\nu \in \PM(X)$ and $\mu \in M$, if $y \in \Sp \pi_*\mu$ and $\nu = \lim_{r \rightarrow 0}{\left(\mu \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\left(y,\nu\right) \in N$ (the limit is defined using the the weak topology). Moreover, $N$ is an upper bound for $M \mid \pi$.
 
 \end{example}
 \end{samepage}
@@ -281,16 +279,16 @@ Given a metric space $X$ with metric $\rho: X \times X \rightarrow \Reals$, $x \
 \begin{theorem}
 \label{thm:main}
 
-Fix any $\MC \subseteq 2^{\PMO}$ countable. Then, there exists a forecaster $F^\MC$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
+Fix any $\MC \subseteq 2^{\PMO}$ countable. For every $M \in \MC$ and $n \in \Nats$, let $M_n$ be an upper bound for $M \mid \PO_n$. Then, there exists a forecaster $F$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
 
 \begin{equation}
 \label{eqn:thm_main}
-\lim_{n \rightarrow 0} \DKR^n\left(F^\MC_n\left(x_{:n}\right),\, M \mid x_{:n}\right) = 0
+\lim_{n \rightarrow 0} \DKR^n\left(F_n\left(x_{:n}\right),\, M_n(x_{:n})\right) = 0
 \end{equation}
 
 \end{theorem}
 
-Note that $F^\MC$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice. Informally, we can think of this choice as determining the duration of the future time period over which we need our forecast to be reliable.
+Note that $F$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice. Informally, we can think of this choice as determining the duration of the future time period over which we need our forecast to be reliable.
 
 \section{Dominant Forecasters}
 \label{sec:garrabrant}
@@ -1251,70 +1249,20 @@ Moreover, $A_y$ is non-empty by Corollary~\ref{crl:savvy}.
 Consider any $U \subseteq \Gm\left(X\right)$ open. Then, $A \cap \left(Y \times U\right)$ is Borel and therefore its image under the projection to $Y$ is analytic and in particular universally measurable. Applying the Kuratowski--Ryll-Nardzewski measurable selection theorem, we obtain a measurable selection of the multivalued mapping with graph $A$. This selection is the desired $S^\epsilon$.
 \end{proof}
 
-We will also need to show that Definition~\ref{def:update_incomplete} is compatible with the standard notion of regular conditional probability. This is established by the following lemma.
-
-We remind that given $X,Y$ Polish, $\pi: X \rightarrow Y$ Borel measurable and $\mu \in \PM\left(X\right)$, $\mu \mid \pi: Y \M\ X$ stands for any corresponding regular conditional probability.
+We now obtain a relation between the notions of savviness and prudence. We remind that given $X,Y$ Polish, $\pi: X \rightarrow Y$ Borel measurable and $\mu \in \PM\left(X\right)$, $\mu \mid \pi: Y \M\ X$ stands for any corresponding regular conditional probability.
 
 \begin{samepage}
-\begin{lemma}
-\label{lmm:update_incomplete}
-
-Consider $X$ a compact Polish space, $d \in \Nats$, $Y$ a compact subset of $\Reals^d$, $\pi: X \rightarrow Y$ continuous and $\mu \in \PM\left(X\right)$. Then, for $\pi_*\mu$-almost any $y \in Y$
-
-\begin{equation}
-\lim_{r \rightarrow 0}{\mu \mid \pi^{-1}\left(\B_r\left(y\right)\right) = \left(\mu \mid \pi\right)\left(y\right)}
-\end{equation}
-
-\end{lemma}
-\end{samepage}
-
-\begin{proof}
-
-Let $\Sq{f_k \in C\left(X\right)}{k}$ be dense in $C\left(X\right)$. For any $y \in Y$ and $r > 0$ we denote $\chi_{yr}: Y \rightarrow \{0,1\}$ the characteristic function of $\B_r\left(y\right)$ and $\chi^\pi_{yr}: X \rightarrow \{0,1\}$ the characteristic function of $\pi^{-1}\left(\B_r\left(y\right)\right)$. For any $k \in \Nats$ and $y_0 \in \Sp \pi_* \mu$ we have $\mu\left(\pi^{-1}\left(\B_r\left(y_0\right)\right)\right) = \pi_*\mu\left(\B_r\left(y_0\right)\right) > 0$ and
-
-$$\E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y_0\right)\right)\right] = \frac{\E_{\mu}\left[\chi^\pi_{y_0r} f_k\right]}{\mu\left(\pi^{-1}\left(\B_r\left(y_0\right)\right)\right)} = \frac{\E_{y \sim \pi_* \mu}\left[\E_{\mu}\left[\chi^\pi_{y_0r} f_k \mid \pi^{-1}\left(y\right)\right]\right]}{\pi_*\mu\left(\B_r\left(y_0\right)\right)}$$
-
-$$\E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y_0\right)\right)\right] = \frac{\E_{y \sim \pi_* \mu}\left[\chi_{y_0r} \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right]\right]}{\pi_*\mu\left(\B_r\left(y_0\right)\right)}$$
-
-In particular, the above holds for $\pi_* \mu$-almost any $y_0 \in Y$. Applying the Lebesgue differentiation theorem, we conclude that there is $A \subseteq Y$ s.t. $\pi_*\mu\left(A\right) = 1$ and for any $y \in A$
-
-$$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] = \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right]$$
-
-Now consider any $f \in C\left(X\right)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\N{f-f_k} < \epsilon$ and therefore, for any $y \in A$
-
-$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \limsup_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] + \epsilon = \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right] + \epsilon  $$
-
-$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right] + 2\epsilon$$
-
-Similarly
-
-$$\liminf_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \geq \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right] - 2\epsilon$$
-
-Taking $\epsilon$ to 0, we conclude that
-
-$$\lim_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] = \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right]$$
-
-$$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}\left(\B_r\left(y\right)\right) = \left(\mu \mid \pi\right)\left(y\right)$$
-\end{proof}
-
-We can now obtain a relation between the notions of savviness and prudence.
-
-\begin{samepage}
-\begin{corollary}
+\begin{proposition}
 \label{crl:savvy_is_prudent}
 
-Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M \mid y,\, \epsilon\right)$-savvy (relatively to $\rho_n$). Then, $S$ is $\mu^*$-prudent for any $\mu^* \in M$.
+Consider $M \subseteq \PMO$, $\Sqn{M_n \subseteq \Ob^n \times \PMO}$ and $\epsilon > 0$. Assume $M_n$ is an upper bound for $M \mid \PO_n$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M_n(y),\, \epsilon\right)$-savvy (relatively to $\rho_n$). Then, $S$ is $\mu^*$-prudent for any $\mu^* \in M$.
 
-\end{corollary}
+\end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Fix any $\mu^* \in M$. By Lemma~\ref{lmm:update_incomplete}, for $\PO_{n*} \mu$-almost any $y \in Y$
-
-$$\lim_{r \rightarrow 0} {\mu^* \mid \left(\PO_n\right)^{-1}\left(\B_r\left(y\right)\right)} = \left(\mu^* \mid \PO_n\right)\left(y\right)$$
-
-Therefore, ${\left(\mu^* \mid \PO_n\right)\left(y\right) \in M \mid y}$. Since $S_n\left(y\right)$ is $\left(M \mid y,\, \epsilon\right)$-savvy, for any $\mu \in \PM\left(X\right)$, denoting $r_{\mu y}:=\DKR^n\left(\mu,\,M \mid y\right)$:
+Fix any $\mu^* \in M$. By Definition~\ref{def:update_incomplete}, for $\PO_{n*}\mu$-almost any $y\in\Ob^n$, ${\left(\mu^* \mid \PO_n\right)\left(y\right) \in M_n(y)}$. Since $S_n\left(y\right)$ is $\left(M_n(y),\, \epsilon\right)$-savvy, for any $\mu \in \PM\left(X\right)$, denoting $r_{\mu y}:=\DKR^n\left(\mu,\,M_n(y)\right)$:
 
 $$\E_{\mu^*}\left[S_n\left(y;\mu\right) \mid y\OO\right] - \E_{\mu}\left[S_n\left(y;\mu\right)\right] \geq \frac{1}{2} \left(r_{\mu y} - \epsilon\right)_+ r_{\mu y} \geq \frac{1}{2} \N{S_n\left(y;\mu\right)} r_{\mu y}$$
 
@@ -1378,7 +1326,7 @@ Finally, we think that the current work may have some bearing on the so-called \
 
 \appendix
 
-\section{Appendix: Useful Theorems}
+\section{Appendix: Some Useful Theorems}
 \label{sec:theorems}
 
 The following variant of the Optional Stopping Theorem appears in \cite{Durrett_2010} as Theorem 5.4.7.
@@ -1432,6 +1380,48 @@ Then, there exists $\beta: X \rightarrow Y$ continuous s.t. for all $x \in X$, $
 
 \section{Appendix: Examples of Definition \ref{def:update_incomplete}}
 \label{sec:examples}
+
+\begin{samepage}
+\begin{lemma}
+\label{lmm:update_incomplete}
+
+Consider $X$ a compact Polish space, $d \in \Nats$, $Y$ a compact subset of $\Reals^d$, $\pi: X \rightarrow Y$ continuous and $\mu \in \PM\left(X\right)$. Then, for $\pi_*\mu$-almost any $y \in Y$
+
+\begin{equation}
+\lim_{r \rightarrow 0}{\mu \mid \pi^{-1}\left(\B_r\left(y\right)\right) = \left(\mu \mid \pi\right)\left(y\right)}
+\end{equation}
+
+\end{lemma}
+\end{samepage}
+
+\begin{proof}
+
+Let $\Sq{f_k \in C\left(X\right)}{k}$ be dense in $C\left(X\right)$. For any $y \in Y$ and $r > 0$ we denote $\chi_{yr}: Y \rightarrow \{0,1\}$ the characteristic function of $\B_r\left(y\right)$ and $\chi^\pi_{yr}: X \rightarrow \{0,1\}$ the characteristic function of $\pi^{-1}\left(\B_r\left(y\right)\right)$. For any $k \in \Nats$ and $y_0 \in \Sp \pi_* \mu$ we have $\mu\left(\pi^{-1}\left(\B_r\left(y_0\right)\right)\right) = \pi_*\mu\left(\B_r\left(y_0\right)\right) > 0$ and
+
+$$\E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y_0\right)\right)\right] = \frac{\E_{\mu}\left[\chi^\pi_{y_0r} f_k\right]}{\mu\left(\pi^{-1}\left(\B_r\left(y_0\right)\right)\right)} = \frac{\E_{y \sim \pi_* \mu}\left[\E_{\mu}\left[\chi^\pi_{y_0r} f_k \mid \pi^{-1}\left(y\right)\right]\right]}{\pi_*\mu\left(\B_r\left(y_0\right)\right)}$$
+
+$$\E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y_0\right)\right)\right] = \frac{\E_{y \sim \pi_* \mu}\left[\chi_{y_0r} \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right]\right]}{\pi_*\mu\left(\B_r\left(y_0\right)\right)}$$
+
+In particular, the above holds for $\pi_* \mu$-almost any $y_0 \in Y$. Applying the Lebesgue differentiation theorem, we conclude that there is $A \subseteq Y$ s.t. $\pi_*\mu\left(A\right) = 1$ and for any $y \in A$
+
+$$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] = \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right]$$
+
+Now consider any $f \in C\left(X\right)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\N{f-f_k} < \epsilon$ and therefore, for any $y \in A$
+
+$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \limsup_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] + \epsilon = \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right] + \epsilon  $$
+
+$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right] + 2\epsilon$$
+
+Similarly
+
+$$\liminf_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \geq \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right] - 2\epsilon$$
+
+Taking $\epsilon$ to 0, we conclude that
+
+$$\lim_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] = \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right]$$
+
+$$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}\left(\B_r\left(y\right)\right) = \left(\mu \mid \pi\right)\left(y\right)$$
+\end{proof}
 
 TBD
 
