@@ -32,6 +32,7 @@
 %\newtheorem{note}{Note}[section]
 
 \AtAppendix{\counterwithin{theorem}{section}}
+\AtAppendix{\counterwithin{proposition}{section}}
 
 \newcommand{\Comment}[1]{}
 
@@ -197,7 +198,7 @@ $K_* \mu \in \PM\left(Y\right)$ denotes the pushforward of $\mu$ by $K$ (i.e. th
 \begin{definition}
 \label{def:update_incomplete}
 
-Let $X,Y$ be Polish spaces, $\pi: X \rightarrow Y$ continuous and $M \subseteq \PM(X)$. We say that $N: Y \rightarrow 2^{\PM(X)}$ is an \emph{upper bound for $M \mid \pi$} when 
+Let $X,Y$ be compact Polish spaces, $\pi: X \rightarrow Y$ continuous and $M \subseteq \PM(X)$. We say that $N: Y \rightarrow 2^{\PM(X)}$ is an \emph{upper bound for $M \mid \pi$} when 
 %
 \begin{enumerate}[i.]
 \item\label{con:def__update_incomplete__clos} The set $\Gr{N}:=\{(y,\mu)\in Y\times\PM(X) \mid \mu \in N(y)\}$ is closed.
@@ -1406,7 +1407,7 @@ We got that $A$ is convex and therefore $N(y)=\overline{A}$ is also convex.
 
 \begin{samepage}
 \begin{proposition}
-\label{prp:?}
+\label{prp:four_factors}
 
 Consider $W_{1,2,3,4}$ Polish spaces, $X:=\prod_{i=1}^4 W_i$, $Y:=\prod_{i=1}^3 W_i$ and $Z = W_1 \times W_2$. Let $\pi^Y: X \rightarrow Y$, $\pi^Z: X \rightarrow Z$ and $\pi^W: X \rightarrow W_1$ be the projection mappings, $\mu \in \PM(X)$ and $K: Z \M W_3$. Assume that $\pi^Y_* \mu = \pi^Z_*\mu \ltimes K$. Then, for $\pi^W_* \mu$-almost any $w \in W_1$
 
@@ -1419,16 +1420,48 @@ Consider $W_{1,2,3,4}$ Polish spaces, $X:=\prod_{i=1}^4 W_i$, $Y:=\prod_{i=1}^3 
 
 \begin{proof}
 
-TBD
+We know that $\mu = \left(\mu \mid \pi^W\right)_* \pi^W_* \mu$. It follows that
+
+\[\pi^Y_*\mu = \pi^Y_* \left(\mu \mid \pi^W\right)_* \pi^W_* \mu = \pi^Z_*\left(\mu \mid \pi^W\right)_* \pi^W_* \mu \ltimes K\]
+
+Define $K': Z \M Y$ by $K'(z):=\delta_z \times K(z)$ and denote composition of Markov kernels by $\circ$. Since pushforward commutes with composition, we have
+
+\[\pi^Y_*\mu = \left(\pi^Y \circ\mu \mid \pi^W\right)_* \pi^W_* \mu = \left(K'  \circ \pi^Z \circ \mu \mid \pi^W\right)_* \pi^W_* \mu\]
+
+Let $\pi^{YW}: Y \rightarrow W$ be the projection mapping and denote $\nu = \pi^Y_* \mu$. We get
+
+\[\nu = \left(\pi^Y \circ\mu \mid \pi^W\right)_* \pi^{YW}_* \nu = \left(K'  \circ \pi^Z \circ \mu \mid \pi^W\right)_* \pi^{YW}_* \nu\]
+
+We also know that
+
+\[\Sp{\pi^{YW}_* \nu \ltimes \mu \mid \pi^W} = \Sp{\pi^{W}_* \mu \ltimes \mu \mid \pi^W \subseteq \Gr{\pi^W}}\]
+ 
+As easy to see, the above implies
+
+\[\Sp{\pi^{YW}_* \nu \ltimes \left(\pi^Y \circ\mu \mid \pi^W\right)} \subseteq \Gr{\pi^{YW}}\]
+
+\[\Sp{\pi^{YW}_* \nu \ltimes \left(K'  \circ \pi^Z \circ \mu \mid \pi^W\right)} \subseteq \Gr{\pi^{YW}}\]
+
+By the uniqueness of regular conditional probability, we conclude that for $\pi^W_* \mu$-almost any $w \in W_1$
+
+\[\left(\nu \mid \pi^{YW}\right)(w)= \left(\pi^Y \circ\mu \mid \pi^W\right)(w) = \left(K'  \circ \pi^Z \circ \mu \mid \pi^W\right)(w)\]
+
+This immediately implies the desired result.
 \end{proof}
 
 \begin{proof}[Proof of Example~\ref{exm:update_incomplete_kernels}]
-TBD
+Fix $\rho$ a metrization of $\OO$. The condition $\Sp{\mu} \subseteq y\OO$ is closed because it is equivalent to the vanishing of the continuous function $\E_{x\sim\mu}\left[\rho\left(x,y\OO\right)\right]$. The other condition in the definition of $M^K_n$ is closed because pushforward and semidirect product are continuous in the weak topology. This gives us condition~\ref{con:def__update_incomplete__clos}. Condition~\ref{con:def__update_incomplete__conv} holds since the convex combination of measures supported on $y\OO$ is supported on $y\OO$ and since pushforward and semidirect product commute with convex combinations.
+
+Consider any $\mu \in M^K$. We know that for any $m \geq n$, $\PO_{m+1*}\mu=\PO_{m*}\mu \ltimes K_m$. Applying Proposition~\ref{prp:four_factors}, this implies that for $\PO_{n*}\mu$-almost any $y\in\Ob^n$
+
+\[\PO_{m+1*}\left(\mu \mid \PO_n\right)(y)=\PO_{m*}\left(\mu \mid \PO_n\right)(y) \ltimes K_m\]
+
+We conclude that $\left(\mu \mid \PO_n\right)(y) \in M^K_n(y)$, proving condition~\ref{con:def__update_incomplete__cond}.
 \end{proof}
 
 \begin{samepage}
-\begin{lemma}
-\label{lmm:update_incomplete}
+\begin{proposition}
+\label{prp:differentiation}
 
 Consider $X$ a compact Polish space, $d \in \Nats$, $Y$ a compact subset of $\Reals^d$, $\pi: X \rightarrow Y$ continuous and $\mu \in \PM\left(X\right)$. Then, for $\pi_*\mu$-almost any $y \in Y$
 
@@ -1436,7 +1469,7 @@ Consider $X$ a compact Polish space, $d \in \Nats$, $Y$ a compact subset of $\Re
 \lim_{r \rightarrow 0}{\mu \mid \pi^{-1}\left(\B_r\left(y\right)\right) = \left(\mu \mid \pi\right)\left(y\right)}
 \end{equation}
 
-\end{lemma}
+\end{proposition}
 \end{samepage}
 
 \begin{proof}
@@ -1468,7 +1501,9 @@ $$\lim_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\r
 $$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}\left(\B_r\left(y\right)\right) = \left(\mu \mid \pi\right)\left(y\right)$$
 \end{proof}
 
-TBD
+\begin{proof}[Proof of Example~\ref{exm:update_incomplete_euclid}]
+There is a unique minimum since all three defining properties of $N$ are closed w.r.t. arbitrary set intersections. To see $N$ is an upper bound, note that conditions $\ref{con:def__update_incomplete__clos}$ and $\ref{con:def__update_incomplete__conv}$ are part of the definition whereas condition $\ref{con:def__update_incomplete__cond}$ follows immediately from Proposition~\ref{prp:differentiation}.
+\end{proof}
 
 \section*{Acknowledgments}
 
