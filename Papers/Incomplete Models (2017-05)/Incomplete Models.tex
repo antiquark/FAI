@@ -181,7 +181,7 @@ Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x\left(\{
 \lim_{n \rightarrow \infty} \DKR^\rho\left(\mu_n, \delta_x\right) = 0
 \end{equation}
 
-Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. In the special case when $\Ob_n=\Ob$ for all $n \in \Nats$ and some fixed space $\Ob$, there is a natural class of metrizations with the property that $\rho_n(yx,yx')=\rho(x,x')$ for some fixed metric $\rho$ on $\OO$ and any $y \in \Ob^n$, $x,x' \in \OO$\footnote{In this special case, the need for renormalization is a side effect of our choice of notation where the forecaster produces a probability measure over the entire sequence rather than over \emph{future} observations only.}. We denote $\DKR^n:=\DKR^{\rho_n}$.
+Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. In the special case when $\Ob_n=\Ob$ for all $n \in \Nats$ and some fixed space $\Ob$, there is a natural class of metrizations with the property that $\rho_n(yx,yx')=\rho(x,x')$ for some fixed metric $\rho$ on $\OO$ and any $y \in \Ob^n$, $x,x' \in \OO$\footnote{In this special case, the need for renormalization is a side effect of our choice of notation where the forecaster produces a probability measure over the entire sequence rather than over future observations only. Also, in this case the choice of $\rho$ determines everything, since we only use Kantorovich-Rubinstein distance between measures with support in $y\OO$ for the same $y \in \Ob^n$.}. We denote $\DKR^n:=\DKR^{\rho_n}$.
 
 Another ingredient we will need is a notion of regular conditional probability for incomplete models. Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K\left(x\right) \in \PM\left(Y\right)$. Given $\mu \in \PM\left(X\right)$, $\mu \ltimes K \in \PM\left(X \times Y\right)$ denotes the semidirect product of $\mu$ and $K$, that is, the unique measure satisfying
 
@@ -1404,7 +1404,23 @@ It follows that for any $q \in (0,1)$
 We got that $A$ is convex and therefore $N(y)=\overline{A}$ is also convex.
 \end{proof}
 
-Given $X,Y,Z$ Polish spaces, $K: Z \M X$ and $\pi: X \rightarrow Y$ continuous, we define $\pi_* K: Z \M Y$ by $\left(\pi_* K\right)(z):=\pi_*\left(K(z)\right)$...
+\begin{samepage}
+\begin{proposition}
+\label{prp:?}
+
+Consider $W_{1,2,3,4}$ Polish spaces, $X:=\prod_{i=1}^4 W_i$, $Y:=\prod_{i=1}^3 W_i$ and $Z = W_1 \times W_2$. Let $\pi^Y: X \rightarrow Y$, $\pi^Z: X \rightarrow Z$ and $\pi^W: X \rightarrow W_1$ be the projection mappings, $\mu \in \PM(X)$ and $K: Z \M W_3$. Assume that $\pi^Y_* \mu = \pi^Z_*\mu \ltimes K$. Then, for $\pi^W_* \mu$-almost any $w \in W_1$
+
+\begin{equation}
+\pi^Y_* \left(\mu \mid \pi^W\right)(w) = \pi^Z_* \left(\mu \mid \pi^W\right)(w) \ltimes K
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+TBD
+\end{proof}
 
 \begin{proof}[Proof of Example~\ref{exm:update_incomplete_kernels}]
 TBD
