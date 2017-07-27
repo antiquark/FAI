@@ -197,28 +197,28 @@ $K_* \mu \in \PM\left(Y\right)$ denotes the pushforward of $\mu$ by $K$ (i.e. th
 \begin{definition}
 \label{def:update_incomplete}
 
-Let $X,Y$ be Polish spaces, $\pi: X \rightarrow Y$ continuous and $M \subseteq \PM(X)$. We say that $N \subseteq Y \times \PM(X)$ is an \emph{upper bound for $M \mid \pi$} when 
+Let $X,Y$ be Polish spaces, $\pi: X \rightarrow Y$ continuous and $M \subseteq \PM(X)$. We say that $N: Y \rightarrow 2^{\PM(X)}$ is an \emph{upper bound for $M \mid \pi$} when 
 %
 \begin{enumerate}[i.]
-\item\label{con:def__update_incomplete__clos} $N$ is closed.
-\item\label{con:def__update_incomplete__conv} For every $y \in \Ob^n$, the set $N(y):=\{\nu \in \PMO \mid \left(y,\nu\right) \in N\}$ is convex.
-\item For every $\mu \in M$ and $\pi_*\mu$-almost every $y \in Y$, $(\mu \mid \pi)(y) \in N(y)$.
+\item\label{con:def__update_incomplete__clos} The set $\Gr{N}:=\{(y,\mu)\in Y\times\PM(X) \mid \mu \in N(y)\}$ is closed.
+\item\label{con:def__update_incomplete__conv} For every $y \in \Ob^n$, $N(y)$ is convex.
+\item\label{con:def__update_incomplete__cond} For every $\mu \in M$ and $\pi_*\mu$-almost every $y \in Y$, $(\mu \mid \pi)(y) \in N(y)$.
 \end{enumerate}
 
 \end{definition}
 \end{samepage}
 
-Note that given $N$ an upper bound for $M \mid \pi$ and any $N' \subseteq Y \times \PM(X)$ s.t. $N \subseteq N'$, $N'$ is also an upper bound for $M \mid \pi$.
-
 We give a few examples for Definition~\ref{def:update_incomplete}. The proofs that these examples are valid are in Appendix~\ref{sec:examples}.
 
 \begin{samepage}
 \begin{example}
+\label{exm:update_incomplete_finite}
 
-Suppose that $M$ is convex and $Y$ is a finite set (in particular, this example is applicable when the $\Ob_n$ are finite sets, $X=\OO$, $Y=\Ob^n$ and $\pi=\PO_n$). Then, there is a unique $N$ which is a \emph{minimal} upper bound for $M \mid \pi$ and we have
+Suppose that $M$ is convex and $Y$ is a finite set (in particular, this example is applicable when the $\Ob_n$ are finite sets, $X=\OO$, $Y=\Ob^n$ and $\pi=\PO_n$). Then, there is a unique $N: Y \rightarrow 2^{\PM(X)}$ which is a \emph{minimal} (w.r.t. set inclusion) upper bound for $M \mid \pi$ and we have
 
 \begin{equation}
-N(y) = \overline{\{(\mu \mid \pi^{-1}(y)) \mid \mu \in M,\, \mu\left(\pi^{-1}(y)\right) > 0\}}
+\label{eqn:exm__update_incomplete_finite}
+N(y) = \overline{\{\left(\mu \mid \pi^{-1}(y)\right) \mid \mu \in M,\, \mu\left(\pi^{-1}(y)\right) > 0\}}
 \end{equation}
 
 Here, $\mu \mid \pi^{-1}(y)$ is the conditional probability measure.
@@ -240,6 +240,7 @@ Suppose that $M$ is convex, for each $n \in \Nats$, $\Ob_n = [0,1]$ and for each
 %
 \begin{samepage}
 \begin{example}
+\label{exm:update_incomplete_kernels}
 
 Consider some $I \subseteq \Nats$ and suppose that for each $n \in I$, we are given $K_n: \Ob^n \M \Ob_n$. Define $M^K$ by
 
@@ -247,10 +248,10 @@ Consider some $I \subseteq \Nats$ and suppose that for each $n \in I$, we are gi
 M^K:=\{\mu \in \PMO \mid \forall n \in I: \PO_{n+1*}\mu = \PO_{n*}\mu \ltimes K_n\}
 \end{equation}
 
-For each $n \in \Nats$, define $M^K_n$ by
+For each $n \in \Nats$, define $M^K_n: \Ob^n \rightarrow 2^{\PMO}$ by
 
 \begin{equation}
-M^K_n = \{(y,\mu) \in \Ob^n \times \PMO \mid \Sp{\mu} \subseteq y\OO,\, \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
+M^K_n(y) = \{\mu \in \PMO \mid \Sp{\mu} \subseteq y\OO,\, \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
 \end{equation}
 
 Then, $M^K_n$ is an upper bound for $M^K \mid \PO_n$.
@@ -260,10 +261,11 @@ Then, $M^K_n$ is an upper bound for $M^K \mid \PO_n$.
 
 \begin{samepage}
 \begin{example}
+\label{exm:update_incomplete_euclid}
 
 Suppose that $Y$ is a compact subset of $\Reals^{d}$ for some $d \in \Nats$ (in particular, this example is applicable when each $\Ob_n$ is a compact subset of $\Reals^{d_n}$, $X=\OO$, $Y=\Ob^n$ and $\pi=\PO_n$; in that case $d=\sum_{m < n} d_n$). We regard $Y$ as a metric space using the Euclidean metric. For any $y \in Y$ and $r > 0$, $\B_r\left(y\right)$ will denote the open ball of radius $r$ with center at $y$. 
 
-Fix any $M \subseteq \PM(X)$. Then, there is a unique $N \subseteq Y \times \PM(X)$ which is minimal among sets satisfying conditions \ref{con:def__update_incomplete__clos} and \ref{con:def__update_incomplete__conv} of Definition~\ref{def:update_incomplete} and s.t. for any $y \in Y$, $\nu \in \PM(X)$ and $\mu \in M$, if $y \in \Sp \pi_*\mu$ and $\nu = \lim_{r \rightarrow 0}{\left(\mu \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\left(y,\nu\right) \in N$ (the limit is defined using the the weak topology). Moreover, $N$ is an upper bound for $M \mid \pi$.
+Fix any $M \subseteq \PM(X)$. Then, there is a unique $N: Y \rightarrow 2^{\PM(X)}$ which is minimal among mappings which both satisfy conditions \ref{con:def__update_incomplete__clos} and \ref{con:def__update_incomplete__conv} of Definition~\ref{def:update_incomplete} and are s.t. for any $y \in Y$, $\nu \in \PM(X)$ and $\mu \in M$, if $y \in \Sp \pi_*\mu$ and $\nu = \lim_{r \rightarrow 0}{\left(\mu \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\nu \in N(y)$ (the limit is defined using the the weak topology). Moreover, $N$ is an upper bound for $M \mid \pi$.
 
 \end{example}
 \end{samepage}
@@ -283,7 +285,7 @@ Fix any $\MC \subseteq 2^{\PMO}$ countable. For every $M \in \MC$ and $n \in \Na
 
 \begin{equation}
 \label{eqn:thm_main}
-\lim_{n \rightarrow 0} \DKR^n\left(F_n\left(x_{:n}\right),\, M_n(x_{:n})\right) = 0
+\lim_{n \rightarrow 0} \DKR^n\left(F_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right) = 0
 \end{equation}
 
 \end{theorem}
@@ -1255,14 +1257,14 @@ We now obtain a relation between the notions of savviness and prudence. We remin
 \begin{proposition}
 \label{crl:savvy_is_prudent}
 
-Consider $M \subseteq \PMO$, $\Sqn{M_n \subseteq \Ob^n \times \PMO}$ and $\epsilon > 0$. Assume $M_n$ is an upper bound for $M \mid \PO_n$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M_n(y),\, \epsilon\right)$-savvy (relatively to $\rho_n$). Then, $S$ is $\mu^*$-prudent for any $\mu^* \in M$.
+Consider $M \subseteq \PMO$, $\Sqn{M_n: \Ob^n \rightarrow 2^{\PMO}}$ and $\epsilon > 0$. Assume $M_n$ is an upper bound for $M \mid \PO_n$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M_n(y),\epsilon\right)$-savvy (relatively to $\rho_n$). Then, $S$ is $\mu^*$-prudent for any $\mu^* \in M$.
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-Fix any $\mu^* \in M$. By Definition~\ref{def:update_incomplete}, for $\PO_{n*}\mu$-almost any $y\in\Ob^n$, ${\left(\mu^* \mid \PO_n\right)\left(y\right) \in M_n(y)}$. Since $S_n\left(y\right)$ is $\left(M_n(y),\, \epsilon\right)$-savvy, for any $\mu \in \PM\left(X\right)$, denoting $r_{\mu y}:=\DKR^n\left(\mu,\,M_n(y)\right)$:
+Fix any $\mu^* \in M$. By Definition~\ref{def:update_incomplete}, for $\PO_{n*}\mu$-almost any $y\in\Ob^n$, ${\left(\mu^* \mid \PO_n\right)\left(y\right) \in M_n(y)}$. Since $S_n\left(y\right)$ is $\left(M_n(y),\epsilon\right)$-savvy, for any $\mu \in \PM\left(X\right)$, denoting $r_{\mu y}:=\DKR^n\left(\mu,\,M_n(y)\right)$:
 
 $$\E_{\mu^*}\left[S_n\left(y;\mu\right) \mid y\OO\right] - \E_{\mu}\left[S_n\left(y;\mu\right)\right] \geq \frac{1}{2} \left(r_{\mu y} - \epsilon\right)_+ r_{\mu y} \geq \frac{1}{2} \N{S_n\left(y;\mu\right)} r_{\mu y}$$
 
@@ -1275,10 +1277,10 @@ $$\E_{\mu^*}\left[S_n\left(y;\mu\right) \mid y\OO\right] - \E_{\mu}\left[S_n\lef
 \begin{corollary}
 \label{crl:vicinity_convergence}
 
-Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M \mid y,\, \epsilon\right)$-savvy. Let $F$ be a forecaster that dominates $\PG{S}$. Then, for any $\mu \in M$ and $\mu$-almost any $x \in \OO$
+Consider $M \subseteq \PMO$, $\Sqn{M_n : \Ob^n \rightarrow 2^{\PMO}}$ and $\epsilon > 0$. Assume $M_n$ is an upper bound for $M \mid \PO_n$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M_n(y),\epsilon\right)$-savvy. Let $F$ be a forecaster that dominates $\PG{S}$. Then, for any $\mu \in M$ and $\mu$-almost any $x \in \OO$
 
 \begin{equation}
-\limsup_{n \rightarrow \infty} \DKR^n\left(F_n\left(x_{:n}\right),\, M \mid x_{:n}\right) \leq \epsilon
+\limsup_{n \rightarrow \infty} \DKR^n\left(F_n\left(x_{:n}\right),\, M_n\left(x_{:n}\right)\right) \leq \epsilon
 \end{equation}
 
 \end{corollary}
@@ -1286,11 +1288,11 @@ Consider $M \subseteq \PMO$ and $\epsilon > 0$. Let $S$ be a gambling strategy s
 
 \begin{proof}
 
-By Corollary~\ref{crl:savvy_is_prudent}, $S$ is $\mu$-prudent. By Theorem~\ref{thm:prudent}, for $\mu$-almost any $x \in X$
+By Proposition~\ref{crl:savvy_is_prudent}, $S$ is $\mu$-prudent. By Theorem~\ref{thm:prudent}, for $\mu$-almost any $x \in X$
 
 $$\lim_{n \rightarrow \infty} {\left(\E_{\mu}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO\right]-\E_{F_n\left(x_{:n}\right)}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)\right]\right)} = 0$$
 
-On the other hand, by Lemma~\ref{lmm:update_incomplete}, $\left(\mu \mid \PO_n\right)\left(x_{:n}\right) \in M \mid x_{:n}$ and hence, since $S_n\left(x_{:n}\right)$ is $\left(M \mid x_{:n} \, \epsilon\right)$-savvy, denoting $r_n:=\DKR^n\left(F_n\left(x_{:n}\right),\, M \mid x_{:n}\right)$: 
+On the other hand, $\left(\mu \mid \PO_n\right)\left(x_{:n}\right) \in M_n\left(x_{:n}\right)$ and hence, since $S_n\left(x_{:n}\right)$ is $\left(M_n\left(x_{:n}\right),\epsilon\right)$-savvy, denoting $r_n:=\DKR^n\left(F_n\left(x_{:n}\right), M_n\left(x_{:n}\right)\right)$: 
 
 $$\E_{\mu}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO\right]-\E_{F_n\left(x_{:n}\right)}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)\right] \geq \frac{1}{2} \left(r_{n} - \epsilon\right) r_n$$
 
@@ -1305,13 +1307,13 @@ We are finally ready to complete the proof of the main theorem.
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
 
-Consider any $M \in \MC$ and a positive integer $k$. By Lemma~\ref{lmm:savvy}, for any $n \in \Nats$, there exists ${S^{Mk}_{n}: \Ob^n \rightarrow \GMO}$ measurable s.t. for all $y \in \Ob^n$, $S^{Mk}_{n}\left(y\right)$ is $\left(M \mid y,\,\frac{1}{k}\right)$-savvy. We fix such a $S^{Mk}_{n}$ for each $M$ and $k$. It is easy to see that the $\DKR^n$-diameter of $\PMO$ is at most 2, therefore $\N{S^{Mk}_{n}\left(y\right)} \leq 2$ and $\Sqn{S^{Mk}_{n}}$ is a gambling strategy. By Theorem~\ref{thm:exist_dominant}, there is a forecaster $F^\MC$ that dominates $\PG{S}^{Mk}$ for all $M$ and $k$. By Corollary~\ref{crl:vicinity_convergence}, for any $M \in \MC$, $\mu \in M$, positive integer $k$ and $\mu$-almost any $x \in X$
+Consider any $M \in \MC$ and a positive integer $k$. By Lemma~\ref{lmm:savvy}, for any $n \in \Nats$, there exists ${S^{Mk}_{n}: \Ob^n \rightarrow \GMO}$ measurable s.t. for all $y \in \Ob^n$, $S^{Mk}_{n}\left(y\right)$ is $\left(M_n(y),\frac{1}{k}\right)$-savvy. We fix such a $S^{Mk}_{n}$ for each $M$ and $k$. It is easy to see that the $\DKR^n$-diameter of $\PMO$ is at most 2, therefore $\N{S^{Mk}_{n}\left(y\right)} \leq 2$ and $\Sqn{S^{Mk}_{n}}$ is a gambling strategy. By Theorem~\ref{thm:exist_dominant}, there is a forecaster $F$ that dominates $\PG{S}^{Mk}$ for all $M$ and $k$. By Corollary~\ref{crl:vicinity_convergence}, for any $M \in \MC$, $\mu \in M$, positive integer $k$ and $\mu$-almost any $x \in X$
 
-$$\limsup_{n \rightarrow \infty} {\DKR^n\left(F^\MC_n\left(x_{:n}\right),\,M \mid x_{:n}\right)} \leq \frac{1}{k}$$
+$$\limsup_{n \rightarrow \infty} {\DKR^n\left(F_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right)} \leq \frac{1}{k}$$
 
 It follows that
 
-$$\lim_{n \rightarrow \infty} {\DKR^n\left(F^\MC_n\left(x_{:n}\right),\,M \mid x_{:n}\right)} = 0$$
+$$\lim_{n \rightarrow \infty} {\DKR^n\left(F_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right)} = 0$$
 \end{proof}
 
 \section{Discussion}
@@ -1380,6 +1382,33 @@ Then, there exists $\beta: X \rightarrow Y$ continuous s.t. for all $x \in X$, $
 
 \section{Appendix: Examples of Definition \ref{def:update_incomplete}}
 \label{sec:examples}
+
+\begin{proof}[Proof of Example~\ref{exm:update_incomplete_finite}]
+
+In this case, condition~\ref{con:def__update_incomplete__clos} means that $N$ must be \emph{pointwise} closed and condition~\ref{con:def__update_incomplete__cond} means that for every $\mu \in M$ and $y \in Y$ s.t. $\mu\left(\pi^{-1}(y)\right) > 0$, $\mu \mid \pi^{-1}(y) \in N(y)$. Since all three conditions are closed w.r.t. arbitrary set intersections, there is a unique minimum (it is the intersection of all multivalued mappings satisfying the conditions). It remains to show that $N(y)$ defined by equation \ref{eqn:exm__update_incomplete_finite} is convex. Fix $y \in Y$ and denote $A$ the set appearing on the right hand side of equation \ref{eqn:exm__update_incomplete_finite} under the closure. Consider any $\mu_1,\mu_2 \in M$ s.t. $\mu_1\left(\pi^{-1}(y)\right),\mu_2\left(\pi^{-1}(y)\right) > 0$ and $p \in (0,1)$. We have 
+
+\[p\mu_1+(1-p)\mu_2 \in M\]
+
+\[\left(p\mu_1+(1-p)\mu_2\right) \mid \pi^{-1}(y) \in A\]
+
+\[\frac{\mu_1\left(\pi^{-1}(y)\right)p\left(\mu_1\mid \pi^{-1}(y)\right)+\mu_2\left(\pi^{-1}(y)\right)(1-p)\left(\mu_2\mid \pi^{-1}(y)\right)}{\mu_1\left(\pi^{-1}(y)\right)p+\mu_2\left(\pi^{-1}(y)\right)(1-p)} \in A\]
+
+It is easy to see that for any $q \in (0,1)$ there is $p \in (0,1)$ s.t.
+
+\[q = \frac{\mu_1\left(\pi^{-1}(y)\right)p}{\mu_1\left(\pi^{-1}(y)\right)p+\mu_2\left(\pi^{-1}(y)\right)(1-p)}\]
+
+It follows that for any $q \in (0,1)$
+
+\[q\left(\mu_1\mid \pi^{-1}(y)\right)+(1-q)\left(\mu_2\mid \pi^{-1}(y)\right) \in A\]
+
+We got that $A$ is convex and therefore $N(y)=\overline{A}$ is also convex.
+\end{proof}
+
+Given $X,Y,Z$ Polish spaces, $K: Z \M X$ and $\pi: X \rightarrow Y$ continuous, we define $\pi_* K: Z \M Y$ by $\left(\pi_* K\right)(z):=\pi_*\left(K(z)\right)$...
+
+\begin{proof}[Proof of Example~\ref{exm:update_incomplete_kernels}]
+TBD
+\end{proof}
 
 \begin{samepage}
 \begin{lemma}
