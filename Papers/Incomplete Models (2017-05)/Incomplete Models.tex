@@ -293,6 +293,21 @@ Fix any $\MC \subseteq 2^{\PMO}$ countable. For every $M \in \MC$ and $n \in \Na
 
 Note that $F$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice. Informally, we can think of this choice as determining the duration of the future time period over which we need our forecast to be reliable.
 
+The example from the Introduction section can now be realized as follows. Take $\Ob_n=\Ob=\{0,1\}$ and let $M^K \subseteq \PMO$ be as in Example~\ref{exm:update_incomplete_kernels}, where $I = 2\Nats+1$ and $\Pr_{o\sim K_{2n+1}(y)}\left[o=y_{2n}\right]=1$. Define $\rho_n$  by
+
+\begin{equation}
+\rho_n(x,x'):=\begin{cases} \max\{2^{n-m} \mid x_{m} \ne x'_{m}\} \text{ if } x \ne x' \\ 0 \text{ if } x=x'\end{cases}
+\end{equation}
+
+If $M^K \in \MC$, and $x\in\OO$ is s.t. $x_{2n+1}=x_{2n}$, then for any $k \in \Nats$, the forecaster $F$ of Theorem~\ref{thm:main} satisfies
+
+\begin{align}
+\lim_{n\rightarrow\infty} \Pr_{x' \sim F_{2n}\left(x_{:2n}\right)}&\left[x'_{2(n+k)+1}=x'_{2(n+k)}\right] = 1\\
+\lim_{n\rightarrow\infty} \Pr_{x' \sim F_{2n+1}\left(x_{:2n+1}\right)}&\left[x'_{2(n+k)+1}=x'_{2(n+k)}\right] = 1
+\end{align}
+
+If we only cared about predicting the next observation (as opposed to producing a probability measure over the entire sequence), this example (and any other instance of Example~\ref{exm:update_incomplete_kernels}, at least in the case $\Ob_n=\Ob$ finite) would be a special case of the \enquote{sleeping experts} setting in online learning (see \cite{Freund_1997}). However, our formalism is much more general, even for predicting the next observation. For instance, we can consider $\Ob=\{0,1,2,3\}$ and have an incomplete model specifying that the next observation is an odd number (thus, the \enquote{expert} specializes by predicting specific \emph{properties} of the observation rather than only making predictions at specific times). As another example, we can consider $\Ob=\{0,1,2\}$ and an incomplete model specifying that the probability distribution $\left(p_0,p_1,p_2\right)$ of each observation satisfies $p_0,p_1,p_2 \geq 0.1$. This model would capture any environment that can be regarded as some process observed through a noisy sensor that has a probability of 0.3 to output a uniformly random observation instead of the real state of the process.
+
 \section{Dominant Forecasters}
 \label{sec:garrabrant}
 
