@@ -127,13 +127,13 @@ The realizable setting is often unrealistic, in particular because it requires t
 
 The spirit of our approach is that the environment might be very complex, but at the same time it might posses some simple features, and it is these features that the forecast must capture. For example, if we consider a sequence of observations $\{o_n \in \{0,1\}\}_{n \in \Nats}$ s.t. $o_{2k+1}=o_{2k}$, then whatever is the behavior of the even observations $o_{2k}$, the property $o_{2k+1}=o_{2k}$ should asymptotically be assigned high probability by the forecast (this idea was discussed in \cite{Hutter_2009} as \enquote{open problem 4j}).
 
-Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PMO$ of probability measures on the space of sequences $\OO$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\MC$ is discrete.} set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself). However, our notion of learning is not \emph{agnostic}, i.e. we don't compare the performance of the forecaster to the performance of forecasters from a fixed class, but require that the forecaster converges to any correct incomplete model in an \emph{absolute} sense.
+Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PMO$ of probability measures on the space of sequences $\OO$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\MC$ is discrete.} set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
 
-The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, with a countable set of gamblers making bets. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit (this \emph{is} a form of agnostic learning). The existence of such a pricing follows from the Kakutani-Glicksberg-Fan fixed point theorem and the Kuratowski-Rill-Nardzewski measurable selection theorem (the latter in order to show that the dependence on observation history can be made measurable). The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit.
+The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, with a countable set of gamblers making bets. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit. The existence of such a pricing follows from the Kakutani-Glicksberg-Fan fixed point theorem and the Kuratowski-Rill-Nardzewski measurable selection theorem (the latter in order to show that the dependence on observation history can be made measurable). The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit.
 
 The above method is fairly general, but for our purposes, we associate with each incomplete model $M \in \MC$ a set of gamblers that make bets which are guaranteed to be profitable assuming the true environment $\mu$ satisfies the incomplete model (i.e. $\mu \in M$). The existence of these gamblers follows from the Hahn-Banach separation theorem (where the incomplete model defines the convex set in question) and selection theorems used to ensure that the choice of separating functional depends in a sufficiently \enquote{regular} way on the market pricing. In order to show that the forecaster we described satisfies the desired convergence property, we use tools from martingale theory.
 
-The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant forecaster}. Section~\ref{sec:prudent} introduces the concept of a \emph{prudent gambling strategy}, which is a technique for proving convergence theorems about dominant forecasters. Section~\ref{sec:construction} describes the gamblers associated with incomplete models and proves the main theorem.
+The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant forecaster}. Section~\ref{sec:prudent} introduces the concept of a \emph{prudent gambling strategy}, which is a technique for proving convergence theorems about dominant forecasters. Section~\ref{sec:construction} describes the gamblers associated with incomplete models and completes the proof of the main theorem.
 
 \section{Learning Incomplete Models}
 \label{sec:learning}
@@ -168,7 +168,7 @@ $\PMO$ can be regarded as a compact subset of the dual space $\Lp\left(\OO,\rho\
 \DKR^\rho\left(\mu,\nu\right):=\sup_{\N{f}_\rho \leq 1}{\left(\E_\mu\left[f\right] - \E_\nu\left[f\right]\right)}
 \end{equation}
 
-We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is slightly different from the conventional definition but strongly equivalent. Other names used in the literature for the strongly equivalent metric are \enquote{1st Wasserstein metric} and \enquote{earth mover's distance.}}.
+We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is slightly different from the conventional definition but strongly equivalent (i.e. each metric is bounded by a constant multiple of the other). Other names used in the literature for the strongly equivalent metric are \enquote{1st Wasserstein metric} and \enquote{earth mover's distance.}}.
 
 Fix any $x \in \OO$. It is easy to see that
 
@@ -198,7 +198,7 @@ $K_* \mu \in \PM\left(Y\right)$ denotes the pushforward of $\mu$ by $K$ (i.e. th
 \begin{definition}
 \label{def:update_incomplete}
 
-Let $X,Y$ be compact Polish spaces, $\pi: X \rightarrow Y$ continuous and $M \subseteq \PM(X)$. We say that $N: Y \rightarrow 2^{\PM(X)}$ is an \emph{upper bound for $M \mid \pi$} when 
+Let $X,Y$ be compact Polish spaces, $\pi: X \rightarrow Y$ continuous and $M \subseteq \PM(X)$. We say that $N: Y \rightarrow 2^{\PM(X)}$ is a \emph{regular upper bound for $M \mid \pi$} when 
 %
 \begin{enumerate}[i.]
 \item\label{con:def__update_incomplete__clos} The set $\Gr{N}:=\{(y,\mu)\in Y\times\PM(X) \mid \mu \in N(y)\}$ is closed.
@@ -209,13 +209,15 @@ Let $X,Y$ be compact Polish spaces, $\pi: X \rightarrow Y$ continuous and $M \su
 \end{definition}
 \end{samepage}
 
+Note that, although technically we haven't assumed $M$ is convex, we might as well have assumed it, since it is not hard to see that, if $N$ is a regular upper bound for $M \mid \pi$ and $M'$ is the convex hull of $M$, then $N$ is a regular upper bound for $M' \mid \pi$. The same remark applies to Theorem~\ref{thm:main} below.
+
 We give a few examples for Definition~\ref{def:update_incomplete}. The proofs that these examples are valid are in Appendix~\ref{sec:examples}.
 
 \begin{samepage}
 \begin{example}
 \label{exm:update_incomplete_finite}
 
-Suppose that $M$ is convex and $Y$ is a finite set (in particular, this example is applicable when the $\Ob_n$ are finite sets, $X=\OO$, $Y=\Ob^n$ and $\pi=\PO_n$). Then, there is a unique $N: Y \rightarrow 2^{\PM(X)}$ which is a \emph{minimal} (w.r.t. set inclusion) upper bound for $M \mid \pi$ and we have
+Suppose that $M$ is convex and $Y$ is a finite set (in particular, this example is applicable when the $\Ob_n$ are finite sets, $X=\OO$, $Y=\Ob^n$ and $\pi=\PO_n$). Then, there is a unique $N: Y \rightarrow 2^{\PM(X)}$ which is a \emph{minimal} (w.r.t. set inclusion) regular upper bound for $M \mid \pi$ and we have
 
 \begin{equation}
 \label{eqn:exm__update_incomplete_finite}
@@ -255,7 +257,7 @@ For each $n \in \Nats$, define $M^K_n: \Ob^n \rightarrow 2^{\PMO}$ by
 M^K_n(y) = \{\mu \in \PMO \mid \Sp{\mu} \subseteq y\OO,\, \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
 \end{equation}
 
-Then, $M^K_n$ is an upper bound for $M^K \mid \PO_n$.
+Then, $M^K_n$ is a regular upper bound for $M^K \mid \PO_n$.
 
 \end{example}
 \end{samepage}
@@ -266,7 +268,7 @@ Then, $M^K_n$ is an upper bound for $M^K \mid \PO_n$.
 
 Suppose that $Y$ is a compact subset of $\Reals^{d}$ for some $d \in \Nats$ (in particular, this example is applicable when each $\Ob_n$ is a compact subset of $\Reals^{d_n}$, $X=\OO$, $Y=\Ob^n$ and $\pi=\PO_n$; in that case $d=\sum_{m < n} d_n$). We regard $Y$ as a metric space using the Euclidean metric. For any $y \in Y$ and $r > 0$, $\B_r\left(y\right)$ will denote the open ball of radius $r$ with center at $y$. 
 
-Fix any $M \subseteq \PM(X)$. Then, there is a unique $N: Y \rightarrow 2^{\PM(X)}$ which is minimal among mappings which both satisfy conditions \ref{con:def__update_incomplete__clos} and \ref{con:def__update_incomplete__conv} of Definition~\ref{def:update_incomplete} and are s.t. for any $y \in Y$, $\nu \in \PM(X)$ and $\mu \in M$, if $y \in \Sp \pi_*\mu$ and $\nu = \lim_{r \rightarrow 0}{\left(\mu \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\nu \in N(y)$ (the limit is defined using the the weak topology). Moreover, $N$ is an upper bound for $M \mid \pi$.
+Fix any $M \subseteq \PM(X)$. Then, there is a unique $N: Y \rightarrow 2^{\PM(X)}$ which is minimal among mappings which both satisfy conditions \ref{con:def__update_incomplete__clos} and \ref{con:def__update_incomplete__conv} of Definition~\ref{def:update_incomplete} and are s.t. for any $y \in Y$, $\nu \in \PM(X)$ and $\mu \in M$, if $y \in \Sp \pi_*\mu$ and $\nu = \lim_{r \rightarrow 0}{\left(\mu \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right)}$, then $\nu \in N(y)$ (the limit is defined using the the weak topology). Moreover, $N$ is a regular upper bound for $M \mid \pi$.
 
 \end{example}
 \end{samepage}
@@ -282,16 +284,16 @@ Given a metric space $X$ with metric $\rho: X \times X \rightarrow \Reals$, $x \
 \begin{theorem}
 \label{thm:main}
 
-Fix any $\MC \subseteq 2^{\PMO}$ countable. For every $M \in \MC$ and $n \in \Nats$, let $M_n$ be an upper bound for $M \mid \PO_n$. Then, there exists a forecaster $F$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
+Fix any $\MC \subseteq 2^{\PMO}$ countable. For every $M \in \MC$ and $n \in \Nats$, let $M_n$ be a regular upper bound for $M \mid \PO_n$. Then, there exists a forecaster $F^\MC$ s.t. for any $M \in \MC$, $\mu \in M$ and $\mu$-almost any $x \in \OO$
 
 \begin{equation}
 \label{eqn:thm_main}
-\lim_{n \rightarrow 0} \DKR^n\left(F_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right) = 0
+\lim_{n \rightarrow 0} \DKR^n\left(F^\MC_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right) = 0
 \end{equation}
 
 \end{theorem}
 
-Note that $F$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice. Informally, we can think of this choice as determining the duration of the future time period over which we need our forecast to be reliable.
+Note that $F^\MC$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice. Informally, we can think of this choice as determining the duration of the future time period over which we need our forecast to be reliable. It also might depend on the choice of regular upper bounds (of course, if there are \emph{minimal} regular upper bounds, these yield a forecaster than works for any other regular upper bounds).
 
 The example from the Introduction section can now be realized as follows. Take $\Ob_n=\Ob=\{0,1\}$ and let $M^K \subseteq \PMO$ be as in Example~\ref{exm:update_incomplete_kernels}, where $I = 2\Nats+1$ and $\Pr_{o\sim K_{2n+1}(y)}\left[o=y_{2n}\right]=1$. Define $\rho_n$  by
 
@@ -299,14 +301,16 @@ The example from the Introduction section can now be realized as follows. Take $
 \rho_n(x,x'):=\begin{cases} \max\{2^{n-m} \mid x_{m} \ne x'_{m}\} \text{ if } x \ne x' \\ 0 \text{ if } x=x'\end{cases}
 \end{equation}
 
-If $M^K \in \MC$, and $x\in\OO$ is s.t. $x_{2n+1}=x_{2n}$, then for any $k \in \Nats$, the forecaster $F$ of Theorem~\ref{thm:main} satisfies
+If $M^K \in \MC$, and $x\in\OO$ is s.t. $x_{2n+1}=x_{2n}$, then for any $k \in \Nats$, the forecaster $F^\MC$ of Theorem~\ref{thm:main} satisfies
 
 \begin{align}
 \lim_{n\rightarrow\infty} \Pr_{x' \sim F_{2n}\left(x_{:2n}\right)}&\left[x'_{2(n+k)+1}=x'_{2(n+k)}\right] = 1\\
 \lim_{n\rightarrow\infty} \Pr_{x' \sim F_{2n+1}\left(x_{:2n+1}\right)}&\left[x'_{2(n+k)+1}=x'_{2(n+k)}\right] = 1
 \end{align}
 
-If we only cared about predicting the next observation (as opposed to producing a probability measure over the entire sequence), this example (and any other instance of Example~\ref{exm:update_incomplete_kernels}, at least in the case $\Ob_n=\Ob$ finite) would be a special case of the \enquote{sleeping experts} setting in online learning (see \cite{Freund_1997}). However, our formalism is much more general, even for predicting the next observation. For instance, we can consider $\Ob=\{0,1,2,3\}$ and have an incomplete model specifying that the next observation is an odd number (thus, the \enquote{expert} specializes by predicting specific \emph{properties} of the observation rather than only making predictions at specific times). As another example, we can consider $\Ob=\{0,1,2\}$ and an incomplete model specifying that the probability distribution $\left(p_0,p_1,p_2\right)$ of each observation satisfies $p_0,p_1,p_2 \geq 0.1$. This model would capture any environment that can be regarded as some process observed through a noisy sensor that has a probability of 0.3 to output a uniformly random observation instead of the real state of the process.
+If we only cared about predicting the next observation (as opposed to producing a probability measure over the entire sequence), this example (and any other instance of Example~\ref{exm:update_incomplete_kernels}, at least in the case $\Ob_n=\Ob$ finite) would be a special case of the \enquote{sleeping experts} setting in online learning (see \cite{Freund_1997}). However, our formalism is much more general, even for predicting the next observation. For instance, we can consider $\Ob=\{0,1,2,3\}$ and have an incomplete model specifying that the next observation is an odd number (thus, the \enquote{expert} specializes by predicting specific \emph{properties} of the observation rather than only making predictions at specific times). As another example, we can consider $\Ob=\{0,1,2\}$ and an incomplete model specifying that the probability distribution $\left(p_0,p_1,p_2\right)$ of each observation satisfies $p_0,p_1,p_2 \geq 0.1$. This model would capture any environment that can be regarded as a process observed through a noisy sensor that has a probability of 0.3 to output a uniformly random observation instead of the real state of the process.
+
+The rest of the paper is devoted to proving Theorem~\ref{thm:main}.
 
 \section{Dominant Forecasters}
 \label{sec:garrabrant}
@@ -1273,7 +1277,7 @@ We now obtain a relation between the notions of savviness and prudence. We remin
 \begin{proposition}
 \label{crl:savvy_is_prudent}
 
-Consider $M \subseteq \PMO$, $\Sqn{M_n: \Ob^n \rightarrow 2^{\PMO}}$ and $\epsilon > 0$. Assume $M_n$ is an upper bound for $M \mid \PO_n$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M_n(y),\epsilon\right)$-savvy (relatively to $\rho_n$). Then, $S$ is $\mu^*$-prudent for any $\mu^* \in M$.
+Consider $M \subseteq \PMO$, $\Sqn{M_n: \Ob^n \rightarrow 2^{\PMO}}$ and $\epsilon > 0$. Assume $M_n$ is a regular upper bound for $M \mid \PO_n$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M_n(y),\epsilon\right)$-savvy (relatively to $\rho_n$). Then, $S$ is $\mu^*$-prudent for any $\mu^* \in M$.
 
 \end{proposition}
 \end{samepage}
@@ -1293,7 +1297,7 @@ $$\E_{\mu^*}\left[S_n\left(y;\mu\right) \mid y\OO\right] - \E_{\mu}\left[S_n\lef
 \begin{corollary}
 \label{crl:vicinity_convergence}
 
-Consider $M \subseteq \PMO$, $\Sqn{M_n : \Ob^n \rightarrow 2^{\PMO}}$ and $\epsilon > 0$. Assume $M_n$ is an upper bound for $M \mid \PO_n$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M_n(y),\epsilon\right)$-savvy. Let $F$ be a forecaster that dominates $\PG{S}$. Then, for any $\mu \in M$ and $\mu$-almost any $x \in \OO$
+Consider $M \subseteq \PMO$, $\Sqn{M_n : \Ob^n \rightarrow 2^{\PMO}}$ and $\epsilon > 0$. Assume $M_n$ is a regular upper bound for $M \mid \PO_n$. Let $S$ be a gambling strategy s.t. for each $n \in \Nats$ and $y \in \Ob^n$, $S_n\left(y\right)$ is $\left(M_n(y),\epsilon\right)$-savvy. Let $F$ be a forecaster that dominates $\PG{S}$. Then, for any $\mu \in M$ and $\mu$-almost any $x \in \OO$
 
 \begin{equation}
 \limsup_{n \rightarrow \infty} \DKR^n\left(F_n\left(x_{:n}\right),\, M_n\left(x_{:n}\right)\right) \leq \epsilon
@@ -1323,13 +1327,13 @@ We are finally ready to complete the proof of the main theorem.
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
 
-Consider any $M \in \MC$ and a positive integer $k$. By Lemma~\ref{lmm:savvy}, for any $n \in \Nats$, there exists ${S^{Mk}_{n}: \Ob^n \rightarrow \GMO}$ measurable s.t. for all $y \in \Ob^n$, $S^{Mk}_{n}\left(y\right)$ is $\left(M_n(y),\frac{1}{k}\right)$-savvy. We fix such a $S^{Mk}_{n}$ for each $M$ and $k$. It is easy to see that the $\DKR^n$-diameter of $\PMO$ is at most 2, therefore $\N{S^{Mk}_{n}\left(y\right)} \leq 2$ and $\Sqn{S^{Mk}_{n}}$ is a gambling strategy. By Theorem~\ref{thm:exist_dominant}, there is a forecaster $F$ that dominates $\PG{S}^{Mk}$ for all $M$ and $k$. By Corollary~\ref{crl:vicinity_convergence}, for any $M \in \MC$, $\mu \in M$, positive integer $k$ and $\mu$-almost any $x \in X$
+Consider any $M \in \MC$ and a positive integer $k$. By Lemma~\ref{lmm:savvy}, for any $n \in \Nats$, there exists ${S^{Mk}_{n}: \Ob^n \rightarrow \GMO}$ measurable s.t. for all $y \in \Ob^n$, $S^{Mk}_{n}\left(y\right)$ is $\left(M_n(y),\frac{1}{k}\right)$-savvy. We fix such a $S^{Mk}_{n}$ for each $M$ and $k$. It is easy to see that the $\DKR^n$-diameter of $\PMO$ is at most 2, therefore $\N{S^{Mk}_{n}\left(y\right)} \leq 2$ and $\Sqn{S^{Mk}_{n}}$ is a gambling strategy. By Theorem~\ref{thm:exist_dominant}, there is a forecaster $F^\MC$ that dominates $\PG{S}^{Mk}$ for all $M$ and $k$. By Corollary~\ref{crl:vicinity_convergence}, for any $M \in \MC$, $\mu \in M$, positive integer $k$ and $\mu$-almost any $x \in X$
 
-$$\limsup_{n \rightarrow \infty} {\DKR^n\left(F_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right)} \leq \frac{1}{k}$$
+$$\limsup_{n \rightarrow \infty} {\DKR^n\left(F^\MC_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right)} \leq \frac{1}{k}$$
 
 It follows that
 
-$$\lim_{n \rightarrow \infty} {\DKR^n\left(F_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right)} = 0$$
+$$\lim_{n \rightarrow \infty} {\DKR^n\left(F^\MC_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right)} = 0$$
 \end{proof}
 
 \section{Discussion}
@@ -1396,7 +1400,7 @@ Then, there exists $\beta: X \rightarrow Y$ continuous s.t. for all $x \in X$, $
 \end{theorem}
 \end{samepage}
 
-\section{Appendix: Examples of Definition \ref{def:update_incomplete}}
+\section{Appendix: Examples of Regular Upper Bounds}
 \label{sec:examples}
 
 \begin{proof}[Proof of Example~\ref{exm:update_incomplete_finite}]
@@ -1517,7 +1521,7 @@ $$\lim_{r \rightarrow 0} \mu \mid \pi^{-1}\left(\B_r\left(y\right)\right) = \lef
 \end{proof}
 
 \begin{proof}[Proof of Example~\ref{exm:update_incomplete_euclid}]
-There is a unique minimum since all three defining properties of $N$ are closed w.r.t. arbitrary set intersections. To see $N$ is an upper bound, note that conditions $\ref{con:def__update_incomplete__clos}$ and $\ref{con:def__update_incomplete__conv}$ are part of the definition whereas condition $\ref{con:def__update_incomplete__cond}$ follows immediately from Proposition~\ref{prp:differentiation}.
+There is a unique minimum since all three defining properties of $N$ are closed w.r.t. arbitrary set intersections. To see $N$ is a regular upper bound, note that conditions $\ref{con:def__update_incomplete__clos}$ and $\ref{con:def__update_incomplete__conv}$ are part of the definition whereas condition $\ref{con:def__update_incomplete__cond}$ follows immediately from Proposition~\ref{prp:differentiation}.
 \end{proof}
 
 \section*{Acknowledgments}
