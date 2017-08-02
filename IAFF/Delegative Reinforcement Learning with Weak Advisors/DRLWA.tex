@@ -1,0 +1,120 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Comment}[1]{}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Dom}{dom}
+
+% operators that require brackets
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\Var}{\operatorname{Var}}
+
+% operators that require parentheses
+\newcommand{\Ent}{\operatorname{H}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
+
+\newcommand{\Prj}{\operatorname{pr}}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Sq}[2]{\{#1\}_{#2 \in \Nats}}
+\newcommand{\Sqn}[1]{\Sq{#1}{n}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+
+% Paper specific
+
+% TBD
+
+\begin{document}
+
+[Previously](https://agentfoundations.org/item?id=1550), we defined a setting called "Delegative Inverse Reinforcement Learning" (DIRL) in which the agent can delegate actions to an "advisor" and the reward is only visible to the advisor as well. We proved a sublinear regret bound (converted to traditional normalization in online learning, the bound is $O(n^{2/3})$) for one-shot DIRL (as opposed to standard regret bounds in RL which are only applicable in the *episodic* setting). However, this required a rather strong assumption about the advisor: in particular, the advisor had to choose the optimal action with maximal likelihood. Here, we consider "Delegative Reinforcement Learning" (DRL), i.e. a similar setting in which the reward is directly observable by the agent. We also restrict our attention to finite MDP environments (we believe these results can be generalized to a much bigger class of environments, but not to arbitrary environments). On the other hand, the assumption about the advisor is much weaker: the advisor is only required to avoid *catastrophic* actions (i.e. actions that lose value to zeroth order in inverse time discount) and assign some positive probability to the optimal action. As before, we prove a one-shot regret bound (in traditional normalization, $O(n^{3/4})$). Analogously to [before](https://agentfoundations.org/item?id=1587), we allow for "corrupt" states in which both the advisor and the reward signal stop being reliable.
+
+***
+
+Appendix A contains the proofs...
+
+\section{Notation}
+
+Whatever...
+
+\section{Results}
+
+Foo
+
+\#Definition 1
+
+Bar
+
+\#Lemma 1
+
+Foo
+
+***
+
+Bar
+
+\section{Appendix A}
+
+\#Proposition A.1
+
+Hahaha
+
+\#Proof of Proposition A.1
+
+Mwhahaha
+
+\end{document}
+
+
+
