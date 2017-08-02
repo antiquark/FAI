@@ -121,17 +121,31 @@ $$M=(\St_M, \A_M, \T_M: \St_M \times \A_M \M \St_M, \R_M: \St_M \rightarrow [0,1
 
 Here, $\St_M$ is a finite set (the set of states), $\A_M$ is a finite set (the set of actions), $\T_M$ is the transition kernel and $\R_M$ is the reward function (we could allow it to depend on the previous state and action as well, but this is equivalent up to redefining the state space).
 
+A *stationary policy* for $M$ is any $\pi: \St_M \M \A_M$.
+
 ***
 
 All MDPs will be assumed to be finite, so we drop the adjective "finite" from now on. Given $K: X \M Y$ and $A \subseteq Y$ (corr. $y \in Y$), we will use the notation $K(A \mid x)$ (corr $K(y \mid x)$) to stand for $\Pr_{y' \sim K(x)}[y' \in A]$ (corr. $\Pr_{y' \sim K(x)}[y' = y]$). In particular, given a general environment $\mu: \FH \times \A \PF \Delta\Ob$, we will use the notation $\mu(o \mid ha)$ (what we previously denoted as $\mu(ha)(o)$).
 
 \#Definition 2
 
-Let $\I=(\A,\Ob)$ be an interface. An $\I$-universe $\upsilon=(\mu,r)$ is said to be of *MDP-type* when there is an MDP $M$ and $S: \HD{\mu} \rightarrow \St_M$ s.t. $\A_M=\A$ and for any $h \in \HD{\mu}$, $a \in \A$ and $o \in \Ob$
+Let $\I=(\A,\Ob)$ be an interface. An $\I$-universe $\upsilon=(\mu,r)$ is said to be *of MDP type* when there is an MDP $M$ and $S: \HD{\mu} \rightarrow \St_M$ s.t. $\A_M=\A$ and for any $h \in \HD{\mu}$, $a \in \A$ and $o \in \Ob$
 
 $$\T_M(s \mid S(h),a) =\Pr_{o \sim \mu(ha)}[S(hao)=s]$$
 
 $$r(h)=\R_M(S(h))$$
+
+Given $\pi$ a stationary policy for $M$, we define the $\I$-policy $\pi^S$ by 
+
+$$\pi^S(h) := \pi(S(h))$$
+
+***
+
+Now now the relevant notion of a "good advisor."
+
+\#Definition 3
+
+Given an MDP $M$, a stationary policy $\pi$ for $M$ is said to be *sane* when...
 
 TBD
 
