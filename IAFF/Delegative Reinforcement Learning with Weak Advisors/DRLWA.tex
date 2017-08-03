@@ -107,7 +107,9 @@ Appendix A contains the proofs...
 
 \section{Notation}
 
-Whatever...
+%Given a set $X$, the notation $X^*$ means $\bigsqcup_{n \in \Nats} X^n$ and the notation $X^+$ means $X^* \setminus \Estr$, where $\Estr \in X^0$.
+
+The notation $K: X \M Y$ means $K$ is Markov kernel from $X$ to $Y$. When $Y$ is a finite set, this is the same as a measurable function $K: X \rightarrow \Delta Y$, and we use these notations interchangeably. Given $K: X \M Y$ and $A \subseteq Y$ (corr. $y \in Y$), we will use the notation $K(A \mid x)$ (corr $K(y \mid x)$) to stand for $\Pr_{y' \sim K(x)}\left[y' \in A\right]$ (corr. $\Pr_{y' \sim K(x)}\left[y' = y\right]$). Given $Y$ is a finite set, $\mu \in \Delta Y^\omega$, $h \in Y^*$ and $y \in Y$, the notation $\mu(y \mid h)$ means $\Pr_{x \sim \mu}\left[x_{\Abs{h}} = y \mid x_{:\Abs{h}}=h\right]$.
 
 \section{Results}
 
@@ -117,27 +119,37 @@ We start by explaining the relation between the formalism of general environment
 
 A *finite Markov Decision Process* (MDP) is a tuple 
 
-$$M=(\St_M, \A_M, \T_M: \St_M \times \A_M \M \St_M, \R_M: \St_M \rightarrow [0,1])$$
+$$M=\left(\St_M,\ \A_M,\ \T_M: \St_M \times \A_M \M \St_M,\ \R_M: \St_M \rightarrow [0,1]\right)$$
 
-Here, $\St_M$ is a finite set (the set of states), $\A_M$ is a finite set (the set of actions), $\T_M$ is the transition kernel and $\R_M$ is the reward function (we could allow it to depend on the previous state and action as well, but this is equivalent up to redefining the state space).
+Here, $\St_M$ is a finite set (the set of states), $\A_M$ is a finite set (the set of actions), $\T_M$ is the transition kernel and $\R_M$ is the reward function.
 
-A *stationary policy* for $M$ is any $\pi: \St_M \M \A_M$.
+A *stationary policy* for $M$ is any $\pi: \St_M \M \A_M$. The space of stationary policies is denoted $\Pi_M$. Given $\pi \in \Pi_M$, we define $\pi^M: \St_M \M \St_M^\omega$ by requiring that for any $s_0 \in \St_M$, $s \in \St_M$, $n \in \Nats$ and $h \in \St_M^{n+1}$
+
+$$\Supp{\pi^M\left(s_{0}\right)} \subseteq s_0 \St_M^\omega$$
+
+$$\pi^M\left(s_{0}\right)(s \mid h):=\T_M\left(s \mid h_n, \pi\left(h_n\right)\right)$$
+
+We define $\V_M : \St_M \times (0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times \A_M \times (0,1) \rightarrow [0,1]$ by
+
+$$\V_M(s,\gamma):=\max_{\pi \in \Pi_M} \frac{?}{?}$$
+
+TBD
 
 ***
 
-All MDPs will be assumed to be finite, so we drop the adjective "finite" from now on. Given $K: X \M Y$ and $A \subseteq Y$ (corr. $y \in Y$), we will use the notation $K(A \mid x)$ (corr $K(y \mid x)$) to stand for $\Pr_{y' \sim K(x)}[y' \in A]$ (corr. $\Pr_{y' \sim K(x)}[y' = y]$). In particular, given a general environment $\mu: \FH \times \A \PF \Delta\Ob$, we will use the notation $\mu(o \mid ha)$ (what we previously denoted as $\mu(ha)(o)$).
+All MDPs will be assumed to be finite, so we drop the adjective "finite" from now on.
 
 \#Definition 2
 
 Let $\I=(\A,\Ob)$ be an interface. An $\I$-universe $\upsilon=(\mu,r)$ is said to be *of MDP type* when there is an MDP $M$ and $S: \HD{\mu} \rightarrow \St_M$ s.t. $\A_M=\A$ and for any $h \in \HD{\mu}$, $a \in \A$ and $o \in \Ob$
 
-$$\T_M(s \mid S(h),a) =\Pr_{o \sim \mu(ha)}[S(hao)=s]$$
+$$\T_M\left(s \mid S(h),a\right) =\Pr_{o \sim \mu(ha)}\left[S(hao)=s\right]$$
 
-$$r(h)=\R_M(S(h))$$
+$$r(h)=\R_M\left(S(h)\right)$$
 
 Given $\pi$ a stationary policy for $M$, we define the $\I$-policy $\pi^S$ by 
 
-$$\pi^S(h) := \pi(S(h))$$
+$$\pi^S(h) := \pi\left(S(h)\right)$$
 
 ***
 
@@ -145,7 +157,7 @@ Now now the relevant notion of a "good advisor."
 
 \#Definition 3
 
-Given an MDP $M$, a stationary policy $\pi$ for $M$ is said to be *sane* when...
+Given an MDP $M$, $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *strictly $\epsilon$-sane* when...
 
 TBD
 
