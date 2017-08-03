@@ -123,17 +123,39 @@ $$M=\left(\St_M,\ \A_M,\ \T_M: \St_M \times \A_M \M \St_M,\ \R_M: \St_M \rightar
 
 Here, $\St_M$ is a finite set (the set of states), $\A_M$ is a finite set (the set of actions), $\T_M$ is the transition kernel and $\R_M$ is the reward function.
 
-A *stationary policy* for $M$ is any $\pi: \St_M \M \A_M$. The space of stationary policies is denoted $\Pi_M$. Given $\pi \in \Pi_M$, we define $\pi^M: \St_M \M \St_M^\omega$ by requiring that for any $s_0 \in \St_M$, $s \in \St_M$, $n \in \Nats$ and $h \in \St_M^{n+1}$
+A *stationary policy* for $M$ is any $\pi: \St_M \M \A_M$. The space of stationary policies is denoted $\Pi_M$. Given $\pi \in \Pi_M$, we define $\T_{M\pi}: \St_M \M \St_M$ by
 
-$$\Supp{\pi^M\left(s_{0}\right)} \subseteq s_0 \St_M^\omega$$
+$$\T_{M\pi}(t \mid s) := \T_M\left(t \mid s, \pi(s)\right)$$
 
-$$\pi^M\left(s_{0}\right)(s \mid h):=\T_M\left(s \mid h_n, \pi\left(h_n\right)\right)$$
+%$$\pi^M_0(s) = \delta_s$$
+%
+%$$\pi^M_{n+1}\left(s \mid s_0\right) = \E{s_n \sim \pi^M_n(s_0)}\left[\T_M\left(s \mid s_n, \pi\left(s_n\right)\right)\right]$$
+%
+%we define $\pi^M: \St_M \M \St_M^\omega$ by requiring that for any $s_0 \in \St_M$, $s \in \St_M$, $n \in \Nats$ and $h \in \St_M^{n+1}$
+%
+%$$\Supp{\pi^M\left(s_{0}\right)} \subseteq s_0 \St_M^\omega$$
+%
+%$$\pi^M\left(s_{0}\right)(s \mid h):=\T_M\left(s \mid h_n, \pi\left(h_n\right)\right)$$
 
 We define $\V_M : \St_M \times (0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times \A_M \times (0,1) \rightarrow [0,1]$ by
 
-$$\V_M(s,\gamma):=\max_{\pi \in \Pi_M} \frac{?}{?}$$
+$$\V_M(s,\gamma):=(1-\gamma)\max_{\pi \in \Pi_M} \sum_{n=0}^\infty \gamma^n \E{\T_{M\pi}^n(s)}\left[\R_M\right]$$
 
-TBD
+$$\Q_M(s,a,\gamma):=(1-\gamma)\R_M(s)+\gamma\E{t \sim \T_M(s,a)}\left[\V_M(t)\right]$$
+
+Here, $\T_{M\pi}^n: \St_M \M \St_M$ is just the $n$-th power of $\T_{M\pi}$ in the sense of Markov kernel composition.
+
+As well known, $\V_M$ and $\Q_M$ are rational functions in $\gamma$ for $1-\gamma \ll 1$, therefore in this limit we have the Taylor expansions
+
+$$\V_M(s,\gamma)=\sum_{k=0}^\infty {\frac{1}{k!} \V_M^k(s)\cdot(1-\gamma)^k}$$
+
+$$\Q_M(s,a,\gamma)=\sum_{k=0}^\infty {\frac{1}{k!} \Q_M^k(s,a)\cdot(1-\gamma)^k}$$
+
+Given any $s \in \St_M$, we define $\Sq{\A_M^k(s) \subseteq \A_M}{k}$ recursively by
+
+$$\A^0_M(s) := \Argmax{a \in \A_M} \Q_M^0(s,a)$$
+
+$$\A^{k+1}_M(s) := \Argmax{a \in \A_M^k(s)} \Q_M^{k+1}(s,a)$$
 
 ***
 
@@ -157,7 +179,11 @@ Now now the relevant notion of a "good advisor."
 
 \#Definition 3
 
-Given an MDP $M$, $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *strictly $\epsilon$-sane* when...
+Given an MDP $M$ and $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *strictly $\epsilon$-sane* when for any $s \in \St_M$
+
+$$\Supp{\pi(s)} \subseteq \A_M^0(s)$$
+
+$$\exists a \in \A_M^1(s): \pi(a \mid s) \geq \epsilon$$
 
 TBD
 
