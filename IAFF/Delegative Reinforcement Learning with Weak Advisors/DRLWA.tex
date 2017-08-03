@@ -143,7 +143,7 @@ We define $\V_M : \St_M \times (0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times 
 
 $$\V_M(s,\gamma):=(1-\gamma)\max_{\pi \in \Pi_M} \sum_{n=0}^\infty \gamma^n \E{\T_{M\pi}^n(s)}\left[\R_M\right]$$
 
-$$\Q_M(s,a,\gamma):=(1-\gamma)\R_M(s)+\gamma\E{t \sim \T_M(s,a)}\left[\V_M(t)\right]$$
+$$\Q_M(s,a,\gamma):=(1-\gamma)\R_M(s)+\gamma\E{t \sim \T_M(s,a)}\left[\V_M(t,\gamma)\right]$$
 
 Here, $\T_{M\pi}^n: \St_M \M \St_M$ is just the $n$-th power of $\T_{M\pi}$ in the sense of Markov kernel composition.
 
@@ -173,7 +173,7 @@ $$r(h)=\R_M\left(S(h)\right)$$
 
 ***
 
-Now now the relevant notion of a "good advisor."
+Now now define the relevant notion of a "good advisor."
 
 \#Definition 3
 
@@ -204,7 +204,7 @@ Now, we deal with corrupt states.
 
 \#Definition 4
 
-Given an MDP $M$, $s_0 \in \St_M$ and $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *locally $\epsilon$-sane at $s_0$* when there is $\Co \subseteq \St_M \setminus s_0$ (the set of corrupt states) s.t. for any $n \in \Nats$, $\Supp{\T_{M\pi}\left(s_0\right)} \subseteq \St_M \setminus \Co$ and for any $s \in \St_M \setminus \Co$
+Given an MDP $M$, $s_0 \in \St_M$ and $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *locally $\epsilon$-sane at $s_0$* when there is $\Co \subseteq \St_M$ (the set of corrupt states) s.t. for any $n \in \Nats$, $\Supp{\T_{M\pi}^n\left(s_0\right)} \subseteq \St_M \setminus \Co$ and for any $s \in \St_M \setminus \Co$
 
 $$\Supp{\pi(s)} \subseteq \A_M^0(s)$$
 
@@ -214,7 +214,15 @@ $$\exists a \in \A_M^1(s): \pi(a \mid s) \geq \epsilon$$
 
 Of course, this requirement is still unrealistic for humans in the real world. In particular, it makes the formalism unsuitable for modeling the use of AI for catastrophe mitigation (which is ultimately what we are interested in!) since it assumes the advisor is already capable of avoiding any catastrophe. In following work, we plan to relax the assumptions further.
 
-TBD
+\#Corollary 2
+
+Fix an interface $\I$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\I}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$, $\sigma^k$ is a locally $\epsilon$-sane at $S^k(\Estr)$ stationary policy for $M^k$, and $\hat{\sigma}^k$ is an $\I$-policy s.t. for each $h \in \HD{\mu^k}$, $\hat{\sigma}^k(h)=\sigma^k\left(S^k(h)\right)$. For each $k \in [N]$, let $\Co^k \subseteq \St_{M^k}$ be the corresponding set of corrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \not\in \Co^k$ and $S^j(h) \not\in \Co^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\I}$-policy $\pi^*$ s.t. for any $k \in [N]$
+
+$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\hat{\sigma}^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)?$$
+
+\#Corollary 3
+
+Assume the same conditions as in Corollary 2, except that $\Hy$ may be countable infinite. Then, $\bar{\Hy}$ is learnable.
 
 \section{Appendix A}
 
