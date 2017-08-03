@@ -99,7 +99,7 @@
 
 \begin{document}
 
-[Previously](https://agentfoundations.org/item?id=1550), we defined a setting called "Delegative Inverse Reinforcement Learning" (DIRL) in which the agent can delegate actions to an "advisor" and the reward is only visible to the advisor as well. We proved a sublinear regret bound (converted to traditional normalization in online learning, the bound is $O(n^{2/3})$) for one-shot DIRL (as opposed to standard regret bounds in RL which are only applicable in the *episodic* setting). However, this required a rather strong assumption about the advisor: in particular, the advisor had to choose the optimal action with maximal likelihood. Here, we consider "Delegative Reinforcement Learning" (DRL), i.e. a similar setting in which the reward is directly observable by the agent. We also restrict our attention to finite MDP environments (we believe these results can be generalized to a much bigger class of environments, but not to arbitrary environments). On the other hand, the assumption about the advisor is much weaker: the advisor is only required to avoid *catastrophic* actions (i.e. actions that lose value to zeroth order in inverse time discount) and assign some positive probability to the optimal action. As before, we prove a one-shot regret bound (in traditional normalization, $O(n^{3/4})$). Analogously to [before](https://agentfoundations.org/item?id=1587), we allow for "corrupt" states in which both the advisor and the reward signal stop being reliable.
+[Previously](https://agentfoundations.org/item?id=1550), we defined a setting called "Delegative Inverse Reinforcement Learning" (DIRL) in which the agent can delegate actions to an "advisor" and the reward is only visible to the advisor as well. We proved a sublinear regret bound (converted to traditional normalization in online learning, the bound is $O(n^{2/3})$) for one-shot DIRL (as opposed to standard regret bounds in RL which are only applicable in the *episodic* setting). However, this required a rather strong assumption about the advisor: in particular, the advisor had to choose the optimal action with maximal likelihood. Here, we consider "Delegative Reinforcement Learning" (DRL), i.e. a similar setting in which the reward is directly observable by the agent. We also restrict our attention to finite MDP environments (we believe these results can be generalized to a much bigger class of environments, but not to arbitrary environments). On the other hand, the assumption about the advisor is much weaker: the advisor is only required to avoid *catastrophic* actions (i.e. actions that lose value to zeroth order in inverse time discount) and assign some positive probability to a nearly optimal action. As before, we prove a one-shot regret bound (in traditional normalization, $O(n^{3/4})$). Analogously to [before](https://agentfoundations.org/item?id=1587), we allow for "corrupt" states in which both the advisor and the reward signal stop being reliable.
 
 ***
 
@@ -110,6 +110,8 @@ Appendix A contains the proofs...
 %Given a set $X$, the notation $X^*$ means $\bigsqcup_{n \in \Nats} X^n$ and the notation $X^+$ means $X^* \setminus \Estr$, where $\Estr \in X^0$.
 
 The notation $K: X \M Y$ means $K$ is Markov kernel from $X$ to $Y$. When $Y$ is a finite set, this is the same as a measurable function $K: X \rightarrow \Delta Y$, and we use these notations interchangeably. Given $K: X \M Y$ and $A \subseteq Y$ (corr. $y \in Y$), we will use the notation $K(A \mid x)$ (corr $K(y \mid x)$) to stand for $\Pr_{y' \sim K(x)}\left[y' \in A\right]$ (corr. $\Pr_{y' \sim K(x)}\left[y' = y\right]$). Given $Y$ is a finite set, $\mu \in \Delta Y^\omega$, $h \in Y^*$ and $y \in Y$, the notation $\mu(y \mid h)$ means $\Pr_{x \sim \mu}\left[x_{\Abs{h}} = y \mid x_{:\Abs{h}}=h\right]$.
+
+We will parameterize our geometric time discount by $\gamma=e^{-1/t}$, thus all functions that were previously defined to depend on $t$ are now considered functions of $\gamma$.
 
 \section{Results}
 
@@ -163,15 +165,11 @@ All MDPs will be assumed to be finite, so we drop the adjective "finite" from no
 
 \#Definition 2
 
-Let $\I=(\A,\Ob)$ be an interface. An $\I$-universe $\upsilon=(\mu,r)$ is said to be *of MDP type* when there is an MDP $M$ and $S: \HD{\mu} \rightarrow \St_M$ s.t. $\A_M=\A$ and for any $h \in \HD{\mu}$, $a \in \A$ and $o \in \Ob$
+Let $\I=(\A,\Ob)$ be an interface. An $\I$-universe $\upsilon=(\mu,r)$ is said to be *an $\Ob$-realization of MDP $M$ with state function $S: \HD{\mu} \rightarrow \St_M$* when $\A_M=\A$ and for any $h \in \HD{\mu}$, $a \in \A$ and $o \in \Ob$
 
 $$\T_M\left(s \mid S(h),a\right) =\Pr_{o \sim \mu(ha)}\left[S(hao)=s\right]$$
 
 $$r(h)=\R_M\left(S(h)\right)$$
-
-Given $\pi$ a stationary policy for $M$, we define the $\I$-policy $\pi^S$ by 
-
-$$\pi^S(h) := \pi\left(S(h)\right)$$
 
 ***
 
@@ -179,11 +177,42 @@ Now now the relevant notion of a "good advisor."
 
 \#Definition 3
 
-Given an MDP $M$ and $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *strictly $\epsilon$-sane* when for any $s \in \St_M$
+Given an MDP $M$ and $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *$\epsilon$-sane* when for any $s \in \St_M$
 
 $$\Supp{\pi(s)} \subseteq \A_M^0(s)$$
 
 $$\exists a \in \A_M^1(s): \pi(a \mid s) \geq \epsilon$$
+
+***
+
+
+We can now formulate the regret bound.
+
+\#Theorem 1
+
+Fix an interface $\I$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r) \in \Upsilon_{\I}\}_{k \in [N]}$ for some $N \in \Nats$ (note that $r$ doesn't depend on $k$). Assume that for each $k \in [N]$, $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$, $\sigma^k$ is a $\epsilon$-sane stationary policy for $M^k$, and $\hat{\sigma}^k$ is an $\I$-policy s.t. for each $h \in \HD{\mu^k}$, $\hat{\sigma}^k(h)=\sigma^k\left(S^k(h)\right)$. Then, there is an $\bar{\I}$-policy $\pi^*$ s.t. for any $k \in [N]$
+
+$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\hat{\sigma}^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)?$$
+
+\#Corollary 1
+
+Fix an interface $\I$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r) \in \Upsilon_{\I}\}_{k \in \Nats}$. Assume that for each $k \in \Nats$, $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$, $\sigma^k$ is a $\epsilon$-sane stationary policy for $M^k$, and $\hat{\sigma}^k$ is an $\I$-policy s.t. for each $h \in \HD{\mu^k}$, $\hat{\sigma}^k(h)=\sigma^k\left(S^k(h)\right)$. Define $\bar{\Hy}:=\Sqn{\bar{\upsilon^k}\left[\hat{\sigma}^k\right]}$. Then, $\bar{\Hy}$ is learnable.
+
+***
+
+Now, we deal with corrupt states.
+
+\#Definition 4
+
+Given an MDP $M$, $s_0 \in \St_M$ and $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *locally $\epsilon$-sane at $s_0$* when there is $\Co \subseteq \St_M \setminus s_0$ (the set of corrupt states) s.t. for any $n \in \Nats$, $\Supp{\T_{M\pi}\left(s_0\right)} \subseteq \St_M \setminus \Co$ and for any $s \in \St_M \setminus \Co$
+
+$$\Supp{\pi(s)} \subseteq \A_M^0(s)$$
+
+$$\exists a \in \A_M^1(s): \pi(a \mid s) \geq \epsilon$$
+
+***
+
+Of course, this requirement is still unrealistic for humans in the real world. In particular, it makes the formalism unsuitable for modeling the use of AI for catastrophe mitigation (which is ultimately what we are interested in!) since it assumes the advisor is already capable of avoiding any catastrophe. In following work, we plan to relax the assumptions further.
 
 TBD
 
