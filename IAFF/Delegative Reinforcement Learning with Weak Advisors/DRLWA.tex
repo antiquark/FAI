@@ -247,6 +247,16 @@ $$\II{(i,j)\sim\zeta\times\zeta}{\omega\sim\mu}\left[i;j,X_{ij}(\omega)\right] \
 
 Mwhahaha
 
+\#Proposition A.N2
+
+Fix $\epsilon,\delta \in (0,1)$, $N \in \Nats$ and an interface $\In=(\A,\Ob)$ and let $\A!$ denote the set of total orders on $\A$. Given $\theta \in \A!$ and $a,b \in \A!$, the notation $a <_\theta b$ means that $a$ is less than $b$ according to order $\theta$. Consider some $\pi: \FH \M \A!$ and $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exists an $\bar{\In}$-policy $\bar{\pi}$ s.t. for any $\In$-environment $\mu$ and $k \in [N]$
+
+i. $$\E{x \sim \bar{\mu}[\sigma^k]\bowtie\bar{\pi}}\left[\Abs{\{n \in \Nats \mid x_n \in \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
+
+ii. $$\Pr_{x \sim \bar{\mu}[\sigma^k]\bowtie\bar{\pi}}\left[\forall n \in \Nats, a \in \A: x_n \in a \times \Ob \implies \sigma^k\left(a \mid x_{:n}\right) > 0\right] \geq 1 - \delta$$
+
+iii. $$\Pr_{x \sim \bar{\mu}[\sigma^k]\bowtie\bar{\pi}}\left[\forall n \in \Nats, a,b \in \A: \left(x_n \in a \times \Ob \land b >_{\pi(x_{:n})?} a\right) \implies \sigma^k\left(b \mid x_{:n}\right) < \epsilon\right] \geq 1 - \delta$$
+
 \end{document}
 
 
