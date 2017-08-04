@@ -100,6 +100,8 @@
 \newcommand{\Q}{\operatorname{Q}}
 \newcommand{\EU}{\operatorname{EU}}
 
+\newcommand{\D}{\mathcal{D}}
+
 \begin{document}
 
 [Previously](https://agentfoundations.org/item?id=1550), we defined a setting called "Delegative Inverse Reinforcement Learning" (DIRL) in which the agent can delegate actions to an "advisor" and the reward is only visible to the advisor as well. We proved a sublinear regret bound (converted to traditional normalization in online learning, the bound is $O(n^{2/3})$) for one-shot DIRL (as opposed to standard regret bounds in RL which are only applicable in the *episodic* setting). However, this required a rather strong assumption about the advisor: in particular, the advisor had to choose the optimal action with maximal likelihood. Here, we consider "Delegative Reinforcement Learning" (DRL), i.e. a similar setting in which the reward is directly observable by the agent. We also restrict our attention to finite MDP environments (we believe these results can be generalized to a much bigger class of environments, but not to arbitrary environments). On the other hand, the assumption about the advisor is much weaker: the advisor is only required to avoid *catastrophic* actions (i.e. actions that lose value to zeroth order in inverse time discount) and assign some positive probability to a nearly optimal action. As before, we prove a one-shot regret bound (in traditional normalization, $O(n^{3/4})$). Analogously to [before](https://agentfoundations.org/item?id=1587), we allow for "corrupt" states in which both the advisor and the reward signal stop being reliable.
@@ -184,7 +186,7 @@ Now now define the relevant notion of a "good advisor."
 
 \#Definition 3
 
-Given an MDP $M$ and $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *$\epsilon$-sane* when for any $s \in \St_M$
+Given an MDP $M$ and $\epsilon > 0$, a stationary (?) policy $\pi$ for $M$ is said to be *$\epsilon$-sane* when for any $s \in \St_M$
 
 $$\Supp{\pi(s)} \subseteq \A_M^0(s)$$
 
@@ -249,13 +251,22 @@ Mwhahaha
 
 \#Proposition A.N2
 
-Fix $\epsilon,\delta \in (0,1)$, $N \in \Nats$ and an interface $\In=(\A,\Ob)$ and let $\A!$ denote the set of total orders on $\A$. Given $\theta \in \A!$ and $a,b \in \A!$, the notation $a <_\theta b$ means that $a$ is less than $b$ according to order $\theta$. Consider some $\pi: \FH \M \A!$ and $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exists an $\bar{\In}$-policy $\bar{\pi}$ s.t. for any $\In$-environment $\mu$ and $k \in [N]$
+Fix $\epsilon,\delta \in (0,1)$, $N \in \Nats$ and an interface $\In=(\A,\Ob)$ and let $\A!$ denote the set of total orders on $\A$. Given $\theta \in \A!$ and $a,b \in \A!$, the notation $a <_\theta b$ means that $a$ is less than $b$ according to order $\theta$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exists $\D: \Adfh \times \A! \rightarrow \Ada$ with the following property. Given $x \in \left(\A! \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Given $\pi: \FH \M \A!$, an $\In$-environment $\mu$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D,\pi\right]\in \Delta\left(\A! \times \Adao\right)^\omega$ as follows
+ 
+$$\Xi\left[\mu,\sigma^k,\D,\pi\right]\left(\theta,a,o \mid x\right):=\pi\left(\theta \mid \underline{\underline{x}}\right)\D\left(a \mid \underline{x},\theta\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
 
-i. $$\E{x \sim \bar{\mu}[\sigma^k]\bowtie\bar{\pi}}\left[\Abs{\{n \in \Nats \mid x_n \in \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
+We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
 
-ii. $$\Pr_{x \sim \bar{\mu}[\sigma^k]\bowtie\bar{\pi}}\left[\forall n \in \Nats, a \in \A: x_n \in a \times \Ob \implies \sigma^k\left(a \mid x_{:n}\right) > 0\right] \geq 1 - \delta$$
+i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in \A! \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
 
-iii. $$\Pr_{x \sim \bar{\mu}[\sigma^k]\bowtie\bar{\pi}}\left[\forall n \in \Nats, a,b \in \A: \left(x_n \in a \times \Ob \land b >_{\pi(x_{:n})?} a\right) \implies \sigma^k\left(b \mid x_{:n}\right) < \epsilon\right] \geq 1 - \delta$$
+ii. $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, a \in \A: x_n \in \A! \times a \times \Ob \implies \sigma^k\left(a \mid \underline{\underline{x_{:n}}}\right) > 0\right] \geq 1 - \delta$$
+
+iii.  $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, a,b \in \A, \theta \in \A!: \left(x_n \in \theta \times a \times \Ob \land a <_\theta b\right) \implies \sigma^k\left(b \mid \underline{\underline{x_{:n}}}\right) \leq \epsilon\right] \geq 1 - \delta$$
+
+\#Proof of Proposition A.N2
+
+TBD
 
 \end{document}
 
