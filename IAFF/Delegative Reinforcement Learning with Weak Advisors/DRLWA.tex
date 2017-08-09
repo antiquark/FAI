@@ -101,6 +101,7 @@
 \newcommand{\EU}{\operatorname{EU}}
 
 \newcommand{\D}{\mathcal{D}}
+\newcommand{\Do}{\mathfrak{D}}
 \newcommand{\F}{\mathcal{F}}
 
 \begin{document}
@@ -271,7 +272,25 @@ TBD
 
 \#Proof of Theorem 1
 
-Fix $\gamma \in (0,1)$ and $T \in \Nats$. Denote $\F:=\bigcup_{k \in [N]} \HD{\mu^k}$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space and $Z,\tilde{Z}:  \Omega \times \F \rightarrow \Delta[N]$, $\Gamma: \Omega \times \F \rightarrow [N]$ and $\Pi: \Omega \times \F \rightarrow \A!$ measurable in the $\Omega$ argument s.t.
+Fix $\gamma \in (0,1)$ and $T \in \Nats$. For each $n \in \Nats$, denote 
+
+$$\Do_n:=(\A \times \Ob)^n \cap \bigcup_{k \in [N]} \HD{\mu^k}$$
+
+Let $(\Omega,P \in \Delta\Omega)$ be a probability space and $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$. Let the following be stochastic processes adapted to $\F$
+
+$$Z_n,\tilde{Z}_n: \Omega \rightarrow \left(\Do_n \M [N]\right)$$
+
+$$\Gamma_n: \Omega \rightarrow \left(\Do_n \rightarrow [N]\right)$$
+
+$$\Pi_n: \Omega \rightarrow \left(\Do_n \rightarrow \A!\right)$$
+
+We construct $\Omega$, $\F$, $Z$, $\tilde{Z}$, $\Gamma$ and $\Pi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$ and $h \in \Do_{nT+m}$
+
+$$\tilde{Z}_0(k \mid \Estr)=Z_0(k \mid \Estr)=\frac{1}{N}$$
+
+$$\Gamma_{nT+m}\left(h\right)=\Gamma_{nT}\left(h_{:nT}\right)$$
+
+$$\Pr\left[\Gamma_{nT+m}(h)=k \mid \F_{nT}\right] = Z_{nT}\left(k \mid h_{:nT}\right)$$
 
 TBD
 
