@@ -278,9 +278,19 @@ iii.  $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nat
 
 TBD
 
+\#Proposition A.N3
+
+Consider a universe $\upsilon=(\mu,r)$, a policy $\pi^0$, $\gamma\in(0,1)$ and $T \in \Nats^+$. Then
+
+$$\EU^*_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq \sum_{n=0}^\infty \gamma^{nT}\E{x \sim \mu\bowtie\pi}\left[\V_\gamma^\upsilon\Big(x_{:nT}\Big)-\V_\gamma^\upsilon\left(x_{:(n+1)T}\right)+\max_{\pi \in \Pi}{\sum_{m = 0}^{T-1}}\gamma^m r\left(x_{:nT+m}\right)?-\sum_{m = 0}^{T-1}{\gamma^m r\left(x_{:nT+m}\right)}\right]$$
+
+\#Proof of Proposition A.N3
+
+TBD
+
 \#Proof of Theorem 1
 
-Fix $\gamma,\delta \in (0,1)$ and $T \in \Nats$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. For each $n \in \Nats$, denote 
+Fix $\gamma,\delta \in (0,1)$ and $T \in \Nats^+$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. For each $n \in \Nats$, denote 
 
 $$\Do_n:=(\A \times \Ob)^n \cap \bigcup_{k \in [N]} \HD{\mu^k}$$
 
@@ -290,9 +300,9 @@ $$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \left(\Do_n \M [N]\right)$$
 
 $$\Gamma_n: \Omega \rightarrow \left(\Do_n \rightarrow [N]\right)$$
 
-$$\Pi_n: \Omega \rightarrow \left(\Do_n \rightarrow 2^\A\right)$$
+$$\Psi_n: \Omega \rightarrow \left(\Do_n \rightarrow 2^\A\right)$$
 
-For any $n \in \Nats$ and $h \in \Do_n$, the notation $\Gamma(h)$ means $\Gamma_n(h)$ and the same applies to $\Z$, $\tilde{\Z}$, $\Pi$. We construct $\Omega$, $\F$, $\Z$, $\tilde{\Z}$, $\Gamma$ and $\Pi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$, $h \in \Do_{nT+m}$, $a \in \A$ and $o \in \Ob$
+For any $n \in \Nats$ and $h \in \Do_n$, the notation $\Gamma(h)$ means $\Gamma_n(h)$ and the same applies to $\Z$, $\tilde{\Z}$, $\Theta$. We construct $\Omega$, $\F$, $\Z$, $\tilde{\Z}$, $\Gamma$ and $\Psi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$, $h \in \Do_{nT+m}$, $a \in \A$ and $o \in \Ob$
 
 $$\tilde{\Z}(k \mid \Estr)=\Z(k \mid \Estr)=\frac{1}{N}$$
 
@@ -300,16 +310,16 @@ $$\Gamma\left(h\right)=\Gamma\left(h_{:nT}\right)$$
 
 $$\Pr\left[\Gamma(h)=k \mid \F_{nT}\right] = \Z\left(k \mid h_{:nT}\right)$$
 
-$$\Pi(h) = \A^1_{\Gamma(h)}\left(S^{\Gamma(h)}(h)\right)$$
+$$\Psi(h) = \A^1_{\Gamma(h)}\left(S^{\Gamma(h)}(h)\right)$$
 
 
-$$\tilde{\Z}(k \mid hao)=\frac{\Z(k \mid h) \mu^k(o \mid ha)}{\sum_{j \in [N]} \Z(j \mid h) \mu^j(o \mid ha)}$$
+$$\tilde{\Z}(k \mid hao)=\frac{\Z(k \mid h) \mu^k(o \mid ha)}{\sum_{j = 0}^{N-1} \Z(j \mid h) \mu^j(o \mid ha)}$$
 
-$$\Z(k \mid hao) = \frac{[[\tilde{\Z}(k \mid hao) \geq \delta]]\cdot[[a \in \Pi(h) \lor k \ne \Gamma(h)]]}{\sum_{j \in [N]}[[\tilde{\Z}(j \mid hao) \geq \delta]]\cdot[[a \in \Pi(h) \lor j \ne \Gamma(h)]]}$$
+$$\Z(k \mid hao) = \frac{[[\tilde{\Z}(k \mid hao) \geq \delta]]\cdot[[a \in \Psi(h) \lor k \ne \Gamma(h)]]}{\sum_{j = 0}^{N-1}[[\tilde{\Z}(j \mid hao) \geq \delta]]\cdot[[a \in \Psi(h) \lor j \ne \Gamma(h)]]}$$
 
 Let $\D$ be as in Proposition A.N2. We now construct an $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\underline{h} \in \Do_n$ and $a \in \Ada$
 
-$$\pi^*(a \mid h)=\Pr\left[\D\left(h,\Pi\left(\underline{h}\right)\right)=a \mid \forall m \in [n]: h_m \in \D\left(h_{:m},\Pi\left(\underline{h_{:m}}\right)\right) \times \Ado\right]$$
+$$\pi^*(a \mid h)=\Pr\left[\D\left(h,\Psi\left(\underline{h}\right)\right)=a \mid \forall m \in [n]: h_m \in \D\left(h_{:m},\Psi\left(\underline{h_{:m}}\right)\right) \times \Ado\right]$$
 
 That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
 
