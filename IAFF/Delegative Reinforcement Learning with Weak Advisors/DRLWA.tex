@@ -104,6 +104,7 @@
 \newcommand{\Do}{\mathfrak{D}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\B}{\mathcal{B}}
+\newcommand{\Z}{Z}
 
 \begin{document}
 
@@ -279,21 +280,27 @@ $$\Do_n:=(\A \times \Ob)^n \cap \bigcup_{k \in [N]} \HD{\mu^k}$$
 
 Let $(\Omega,P \in \Delta\Omega)$ be a probability space and $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$. Let the following be stochastic processes adapted to $\F$
 
-$$Z_n,\tilde{Z}_n: \Omega \rightarrow \left(\Do_n \M [N]\right)$$
+$$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \left(\Do_n \M [N]\right)$$
 
 $$\Gamma_n: \Omega \rightarrow \left(\Do_n \rightarrow [N]\right)$$
 
 $$\Pi_n: \Omega \rightarrow \left(\Do_n \rightarrow 2^\A\right)$$
 
-For any $n \in \Nats$ and $h \in \Do_n$, the notation $Z(h)$ means $Z_n(h)$ and the same applies to $\tilde{Z}$, $\Gamma$, $\Pi$. We construct $\Omega$, $\F$, $Z$, $\tilde{Z}$, $\Gamma$ and $\Pi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$ and $h \in \Do_{nT+m}$
+For any $n \in \Nats$ and $h \in \Do_n$, the notation $\Gamma(h)$ means $\Gamma_n(h)$ and the same applies to $\Z$, $\tilde{\Z}$, $\Pi$. We construct $\Omega$, $\F$, $\Z$, $\tilde{\Z}$, $\Gamma$ and $\Pi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$ and $h \in \Do_{nT+m}$
 
-$$\tilde{Z}(k \mid \Estr)=Z(k \mid \Estr)=\frac{1}{N}$$
+$$\tilde{\Z}(k \mid \Estr)=\Z(k \mid \Estr)=\frac{1}{N}$$
 
 $$\Gamma\left(h\right)=\Gamma\left(h_{:nT}\right)$$
 
-$$\Pr\left[\Gamma(h)=k \mid \F_{nT}\right] = Z_{}\left(k \mid h_{:nT}\right)$$
+$$\Pr\left[\Gamma(h)=k \mid \F_{nT}\right] = \Z\left(k \mid h_{:nT}\right)$$
 
 $$\Pi(h) = \A^1_{\Gamma(h)}\left(S^{\Gamma(h)}(h)\right)$$
+
+
+$$\forall a \in \A, o \in \Ob:\tilde{\Z}(k \mid hao)=\frac{\Z(k \mid h) \mu^k(o \mid ha)}{\sum_{j \in [N]} \Z(j \mid h) \mu^j(o \mid ha)}$$
+
+$$\Z(k \mid h) = ?$$
+
 TBD
 
 \end{document}
