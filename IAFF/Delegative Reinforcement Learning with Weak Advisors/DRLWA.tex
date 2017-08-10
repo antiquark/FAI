@@ -103,6 +103,7 @@
 \newcommand{\D}{\mathcal{D}}
 \newcommand{\Do}{\mathfrak{D}}
 \newcommand{\F}{\mathcal{F}}
+\newcommand{\B}{\mathcal{B}}
 
 \begin{document}
 
@@ -253,18 +254,18 @@ Mwhahaha
 
 \#Proposition A.N2
 
-Fix $\epsilon,\delta \in (0,1)$, $N \in \Nats$ and an interface $\In=(\A,\Ob)$ and let $\A!$ denote the set of total orders on $\A$. Given $\theta \in \A!$ and $a,b \in \A!$, the notation $a <_\theta b$ means that $a$ is less than $b$ according to order $\theta$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exists $\D: \Adfh \times \A! \rightarrow \Ada$ with the following property. Given $x \in \left(\A! \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
-Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M \A!$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D,\pi\right]\in \Delta\left(\A! \times \Adao\right)^\omega$ as follows
+Fix $\epsilon,\delta \in (0,1)$, $N \in \Nats$ and an interface $\In=(\A,\Ob)$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exists $\D: \Adfh \times 2^\A \rightarrow \Ada$ with the following property. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M 2^\A$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D,\pi\right]\in \Delta\left(2^\A \times \Adao\right)^\omega$ as follows
  
-$$\Xi\left[\mu,\sigma^k,\D,\pi\right]\left(\theta,a,o \mid x\right):=\pi\left(\theta \mid \underline{\underline{x}}\right)\D\left(a \mid \underline{x},\theta\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
+$$\Xi\left[\mu,\sigma^k,\D,\pi\right]\left(\B,a,o \mid x\right):=\pi\left(\B \mid \underline{\underline{x}}\right)\D\left(a \mid \underline{x},\B\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
 
 We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
 
-i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in \A! \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
+i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in 2^\A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
 
-ii. $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, a \in \A: x_n \in \A! \times a \times \Ob \implies \sigma^k\left(a \mid \underline{\underline{x_{:n}}}\right) > 0\right] \geq 1 - \delta$$
+ii. $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, a \in \A: x_n \in 2^\A \times a \times \Ob \implies \sigma^k\left(a \mid \underline{\underline{x_{:n}}}\right) > 0\right] \geq 1 - \delta$$
 
-iii.  $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, a,b \in \A, \theta \in \A!: \left(x_n \in \theta \times a \times \Ob \land a <_\theta b\right) \implies \sigma^k\left(b \mid \underline{\underline{x_{:n}}}\right) \leq \epsilon\right] \geq 1 - \delta$$
+iii.  $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, \B \in 2^\A, a \in \A \setminus \B: x_n \in \B \times a \times \Ob \implies \forall b \in \B: \sigma^k\left(b \mid \underline{\underline{x_{:n}}}\right) \leq \epsilon\right] \geq 1 - \delta$$
 
 \#Proof of Proposition A.N2
 
@@ -272,7 +273,7 @@ TBD
 
 \#Proof of Theorem 1
 
-Fix $\gamma \in (0,1)$ and $T \in \Nats$. For each $n \in \Nats$, denote 
+Fix $\gamma \in (0,1)$ and $T \in \Nats$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. For each $n \in \Nats$, denote 
 
 $$\Do_n:=(\A \times \Ob)^n \cap \bigcup_{k \in [N]} \HD{\mu^k}$$
 
@@ -282,16 +283,17 @@ $$Z_n,\tilde{Z}_n: \Omega \rightarrow \left(\Do_n \M [N]\right)$$
 
 $$\Gamma_n: \Omega \rightarrow \left(\Do_n \rightarrow [N]\right)$$
 
-$$\Pi_n: \Omega \rightarrow \left(\Do_n \rightarrow \A!\right)$$
+$$\Pi_n: \Omega \rightarrow \left(\Do_n \rightarrow 2^\A\right)$$
 
-We construct $\Omega$, $\F$, $Z$, $\tilde{Z}$, $\Gamma$ and $\Pi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$ and $h \in \Do_{nT+m}$
+For any $n \in \Nats$ and $h \in \Do_n$, the notation $Z(h)$ means $Z_n(h)$ and the same applies to $\tilde{Z}$, $\Gamma$, $\Pi$. We construct $\Omega$, $\F$, $Z$, $\tilde{Z}$, $\Gamma$ and $\Pi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$ and $h \in \Do_{nT+m}$
 
-$$\tilde{Z}_0(k \mid \Estr)=Z_0(k \mid \Estr)=\frac{1}{N}$$
+$$\tilde{Z}(k \mid \Estr)=Z(k \mid \Estr)=\frac{1}{N}$$
 
-$$\Gamma_{nT+m}\left(h\right)=\Gamma_{nT}\left(h_{:nT}\right)$$
+$$\Gamma\left(h\right)=\Gamma\left(h_{:nT}\right)$$
 
-$$\Pr\left[\Gamma_{nT+m}(h)=k \mid \F_{nT}\right] = Z_{nT}\left(k \mid h_{:nT}\right)$$
+$$\Pr\left[\Gamma(h)=k \mid \F_{nT}\right] = Z_{}\left(k \mid h_{:nT}\right)$$
 
+$$\Pi(h) = \A^1_{\Gamma(h)}\left(S^{\Gamma(h)}(h)\right)$$
 TBD
 
 \end{document}
