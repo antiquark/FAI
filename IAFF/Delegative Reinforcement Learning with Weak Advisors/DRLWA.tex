@@ -87,7 +87,7 @@
 \newcommand{\IH}{(\A \times \Ob)^\omega}
 \newcommand{\Ado}{\bar{\Ob}}
 \newcommand{\Ada}{\bar{\A}}
-\newcommand{\Adi}{{\bar{\I}}}
+\newcommand{\Adi}{{\bar{\In}}}
 \newcommand{\Adao}{\overline{\A \times \Ob}}
 \newcommand{\Adfh}{\Adao^*}
 \newcommand{\Adih}{\Adao^\omega}
@@ -239,6 +239,8 @@ Assume the same conditions as in Corollary 2, except that $\Hy$ may be countable
 
 \section{Appendix A}
 
+First, we prove an information theoretic bound that shows that for Thompson sampling, the expected information gain is bounded below by a function of the loss.
+
 \#Proposition A.N1
 
 Consider a probability space $(\Omega, \mu \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $\{X_{ij}: \Omega \rightarrow R\}_{i,j \in [N]}$. Assume that for any $i,j \in [N]$ 
@@ -252,6 +254,10 @@ $$\II{(i,j)\sim\zeta\times\zeta}{\omega\sim\mu}\left[i;j,X_{ij}(\omega)\right] \
 \#Proof of Proposition A.N1
 
 Mwhahaha
+
+***
+
+Now, we describe a "delegation routine" $\D$ that can transform any "proto-policy" $\pi$ that recommends some *set* of actions from $\A$ into an actual $\Adi$-policy s.t (i) on each round, either a recommended action is taken, or all recommended actions are "unsafe" (i.e. the advisor would be unlikely to take any of them) or delegation is performed and (ii) the total number of delegations is small.
 
 \#Proposition A.N2
 
@@ -274,7 +280,7 @@ TBD
 
 \#Proof of Theorem 1
 
-Fix $\gamma \in (0,1)$ and $T \in \Nats$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. For each $n \in \Nats$, denote 
+Fix $\gamma,\delta \in (0,1)$ and $T \in \Nats$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. For each $n \in \Nats$, denote 
 
 $$\Do_n:=(\A \times \Ob)^n \cap \bigcup_{k \in [N]} \HD{\mu^k}$$
 
@@ -286,7 +292,7 @@ $$\Gamma_n: \Omega \rightarrow \left(\Do_n \rightarrow [N]\right)$$
 
 $$\Pi_n: \Omega \rightarrow \left(\Do_n \rightarrow 2^\A\right)$$
 
-For any $n \in \Nats$ and $h \in \Do_n$, the notation $\Gamma(h)$ means $\Gamma_n(h)$ and the same applies to $\Z$, $\tilde{\Z}$, $\Pi$. We construct $\Omega$, $\F$, $\Z$, $\tilde{\Z}$, $\Gamma$ and $\Pi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$ and $h \in \Do_{nT+m}$
+For any $n \in \Nats$ and $h \in \Do_n$, the notation $\Gamma(h)$ means $\Gamma_n(h)$ and the same applies to $\Z$, $\tilde{\Z}$, $\Pi$. We construct $\Omega$, $\F$, $\Z$, $\tilde{\Z}$, $\Gamma$ and $\Pi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$, $h \in \Do_{nT+m}$, $a \in \A$ and $o \in \Ob$
 
 $$\tilde{\Z}(k \mid \Estr)=\Z(k \mid \Estr)=\frac{1}{N}$$
 
@@ -297,9 +303,15 @@ $$\Pr\left[\Gamma(h)=k \mid \F_{nT}\right] = \Z\left(k \mid h_{:nT}\right)$$
 $$\Pi(h) = \A^1_{\Gamma(h)}\left(S^{\Gamma(h)}(h)\right)$$
 
 
-$$\forall a \in \A, o \in \Ob:\tilde{\Z}(k \mid hao)=\frac{\Z(k \mid h) \mu^k(o \mid ha)}{\sum_{j \in [N]} \Z(j \mid h) \mu^j(o \mid ha)}$$
+$$\tilde{\Z}(k \mid hao)=\frac{\Z(k \mid h) \mu^k(o \mid ha)}{\sum_{j \in [N]} \Z(j \mid h) \mu^j(o \mid ha)}$$
 
-$$\Z(k \mid h) = ?$$
+$$\Z(k \mid hao) = \frac{[[\tilde{\Z}(k \mid hao) \geq \delta]]\cdot[[a \in \Pi(h) \lor k \ne \Gamma(h)]]}{\sum_{j \in [N]}[[\tilde{\Z}(j \mid hao) \geq \delta]]\cdot[[a \in \Pi(h) \lor j \ne \Gamma(h)]]}$$
+
+Let $\D$ be as in Proposition A.N2. We now construct an $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\underline{h} \in \Do_n$ and $a \in \Ada$
+
+$$\pi^*(a \mid h)=\Pr\left[\D\left(h,\Pi\left(\underline{h}\right)\right)=a \mid \forall m \in [n]: h_m \in \D\left(h_{:m},\Pi\left(\underline{h_{:m}}\right)\right) \times \Ado\right]$$
+
+That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
 
 TBD
 
