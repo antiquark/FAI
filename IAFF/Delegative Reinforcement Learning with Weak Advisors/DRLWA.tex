@@ -243,13 +243,9 @@ First, we prove an information theoretic bound that shows that for Thompson samp
 
 \#Proposition A.N1
 
-Consider a probability space $(\Omega, \mu \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $\{X_{ij}: \Omega \rightarrow R\}_{i,j \in [N]}$. Assume that for any $i,j \in [N]$ 
+Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $\{X_{ij}: \Omega \rightarrow R\}_{i,j \in [N]}$. Fix $\zeta \in \Delta[N]$. Then
 
-$$\E{\mu}\left[X_{ii}\right] \geq \E{\mu}\left[X_{ij}\right]$$ 
-
-Fix $\zeta \in \Delta[N]$. Then
-
-$$\II{(i,j)\sim\zeta\times\zeta}{\omega\sim\mu}\left[i;j,X_{ij}(\omega)\right] \geq 2 \left(\min_{i \in \Nats} {\zeta(i)}\right) \left(\EE{i \in \zeta}{\omega \in \mu}\left[X_{ii}(\omega)\right]-\EE{(i,j) \in \zeta \times \zeta}{\omega \in \mu}\left[X_{ij}(\omega)\right]\right)^2$$
+$$\II{(i,j)\sim\zeta\times\zeta}{\omega \sim P}\left[i;j,X_{ij}(\omega)\right] \geq 2 \left(\min_{i \in \Nats} {\zeta(i)}\right) \left(\EE{i \in \zeta}{\omega \in P}\left[X_{ii}(\omega)\right]-\EE{(i,j) \in \zeta \times \zeta}{\omega \in P}\left[X_{ij}(\omega)\right]\right)^2$$
 
 \#Proof of Proposition A.N1
 
@@ -280,11 +276,33 @@ TBD
 
 \#Proposition A.N3
 
-Consider a universe $\upsilon=(\mu,r)$, a policy $\pi^0$, $\gamma\in(0,1)$ and $T \in \Nats^+$. Then
+Consider a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. Suppose that $\psi: \St_M \rightarrow \A$ is a Blackwell optimal policy and denote $\pi^* := \psi \circ S$. Let $\pi^0$ be a policy s.t. for any $h \in \HD{\mu}$
 
-$$\EU^*_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq \sum_{n=0}^\infty \gamma^{nT}\E{x \sim \mu\bowtie\pi}\left[\V_\gamma^\upsilon\Big(x_{:nT}\Big)-\V_\gamma^\upsilon\left(x_{:(n+1)T}\right)+\max_{\pi \in \Pi}{\sum_{m = 0}^{T-1}}\gamma^m r\left(x_{:nT+m}\right)?-\sum_{m = 0}^{T-1}{\gamma^m r\left(x_{:nT+m}\right)}\right]$$
+$$\Supp \pi^0(h) \subseteq \A_M^1\left(S(h)\right)$$
+
+Then, for any $\gamma\in(0,1)$ and $T \in \Nats$
+
+$$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^0}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1+T\left(1-\gamma\right)\right)$$
 
 \#Proof of Proposition A.N3
+
+TBD
+
+\#Proposition A.N4
+
+Consider a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. Suppose that $\psi: \St_M \rightarrow \A$ is a Blackwell optimal policy. Let $\pi^0$ be a policy s.t. for any $h \in \HD{\mu}$
+
+$$\Supp \pi^0(h) \subseteq \A_M^0\left(S(h)\right)$$
+
+For any $n \in \Nats$, let $\pi^*_n$ be a policy s.t. for any $h \in \HD{\mu}$
+
+$$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \psi\left(S(h)\right) \text{ otherwise} \end{cases}$$
+
+Then, for any $\gamma\in(0,1)$ and $T \in \Nats^+$
+
+$$\EU^*_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + O\left(\frac{1}{T}\right)$$
+
+\#Proof of Proposition A.N4
 
 TBD
 
