@@ -308,31 +308,34 @@ TBD
 
 \#Proof of Theorem 1
 
-Fix $\gamma,\delta \in (0,1)$ and $T \in \Nats^+$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. For each $n \in \Nats$, denote 
+Fix $\gamma,\delta \in (0,1)$ and $T \in \Nats^+$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space\Comment{ and $\{\F_n \subseteq 2^\Omega\}_{n \in \Nats \sqcup \{-1\}}$ a filtration of $\Omega$}. Let $K: \Omega \rightarrow [N]$ be \Comment{measurable w.r.t. $\F_{-1}$}a random variable and the following be stochastic processes\Comment{ adapted to $\F$}
 
-$$\Do_n:=(\A \times \Ob)^n \cap \bigcup_{k \in [N]} \HD{\mu^k}$$
+$$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \Delta[N]$$
+%
+$$\Gamma_n: \Omega \rightarrow [N]$$
+%
+$$\Psi_n: \Omega \rightarrow 2^\A$$
+%
+$$A_n: \Omega \rightarrow \Ada$$
+%
+$$\Theta_n: \Omega \rightarrow \Ado$$
 
-Let $(\Omega,P \in \Delta\Omega)$ be a probability space and $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$. Let the following be stochastic processes adapted to $\F$
+We also define $A\Theta_{:n}: \Omega \rightarrow \Adfh$ by
 
-$$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \left(\Do_n \M [N]\right)$$
+$$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
 
-$$\Gamma_n: \Omega \rightarrow \left(\Do_n \rightarrow [N]\right)$$
+(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\Gamma$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $n \in \Nats$, $m \in [T]$, $a \in \A$ and $o \in \Ob$
 
-$$\Psi_n: \Omega \rightarrow \left(\Do_n \rightarrow 2^\A\right)$$
-
-For any $n \in \Nats$ and $h \in \Do_n$, the notation $\Gamma(h)$ means $\Gamma_n(h)$ and the same applies to $\Z$, $\tilde{\Z}$, $\Theta$. We construct $\Omega$, $\F$, $\Z$, $\tilde{\Z}$, $\Gamma$ and $\Psi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$, $h \in \Do_{nT+m}$, $a \in \A$ and $o \in \Ob$
-
-$$\tilde{\Z}(k \mid \Estr)=\Z(k \mid \Estr)=\frac{1}{N}$$
-
-$$\Gamma\left(h\right)=\Gamma\left(h_{:nT}\right)$$
-
-$$\Pr\left[\Gamma(h)=k \mid \F_{nT}\right] = \Z\left(k \mid h_{:nT}\right)$$
-
-$$\Psi(h) = \A^1_{\Gamma(h)}\left(S^{\Gamma(h)}(h)\right)$$
-
-
+$$\tilde{\Z}_0(k)=\Z_0(k)\equiv\frac{1}{N}$$
+%
+%$$\Gamma_{nT+m}=\Gamma_{nT}$$
+%
+$$\Pr\left[\Gamma_{n} = k \mid Z_{nT}\right] = \Z_{nT}\left(k\right)$$
+%
+$$\Psi_{nT+m} = \A^1_{\Gamma_n}\left(S^{\Gamma_n}(A\Theta_{:nT+m})\right)$$
+%
 $$\tilde{\Z}(k \mid hao)=\frac{\Z(k \mid h) \mu^k(o \mid ha)}{\sum_{j = 0}^{N-1} \Z(j \mid h) \mu^j(o \mid ha)}$$
-
+%
 $$\Z(k \mid hao) = \frac{[[\tilde{\Z}(k \mid hao) \geq \delta]]\cdot[[a \in \Psi(h) \lor k \ne \Gamma(h)]]}{\sum_{j = 0}^{N-1}[[\tilde{\Z}(j \mid hao) \geq \delta]]\cdot[[a \in \Psi(h) \lor j \ne \Gamma(h)]]}$$
 
 Let $\D$ be as in Proposition A.N2. We now construct an $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\underline{h} \in \Do_n$ and $a \in \Ada$
@@ -342,7 +345,7 @@ $$\pi^*(a \mid h)=\Pr\left[\D\left(h,\Psi\left(\underline{h}\right)\right)=a \mi
 That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
 
 % Dealing with low probability events
-% Add the environment *and* the sampling of $k$ from $[N]$ to $\Omega$?
+% Add the environment, the actually selected actions and the sampling of $k$ from $[N]$ to $\Omega$? This would eliminate the need to condition in the definition of $\pi^*$...
 
 TBD
 

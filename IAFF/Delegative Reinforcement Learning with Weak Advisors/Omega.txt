@@ -1,0 +1,32 @@
+For each $n \in \Nats$, denote 
+
+$$\Do_n:=(\A \times \Ob)^n \cap \bigcup_{k \in [N]} \HD{\mu^k}$$
+
+Let $(\Omega,P \in \Delta\Omega)$ be a probability space and $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$. Let the following be stochastic processes adapted to $\F$
+
+$$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \left(\Do_n \M [N]\right)$$
+
+$$\Gamma_n: \Omega \rightarrow \left(\Do_n \rightarrow [N]\right)$$
+
+$$\Psi_n: \Omega \rightarrow \left(\Do_n \rightarrow 2^\A\right)$$
+
+For any $n \in \Nats$ and $h \in \Do_n$, the notation $\Gamma(h)$ means $\Gamma_n(h)$ and the same applies to $\Z$, $\tilde{\Z}$, $\Theta$. We construct $\Omega$, $\F$, $\Z$, $\tilde{\Z}$, $\Gamma$ and $\Psi$ s.t. for any $k \in [N]$, $n \in \Nats$, $m \in [T]$, $h \in \Do_{nT+m}$, $a \in \A$ and $o \in \Ob$
+
+$$\tilde{\Z}(k \mid \Estr)=\Z(k \mid \Estr)=\frac{1}{N}$$
+
+$$\Gamma\left(h\right)=\Gamma\left(h_{:nT}\right)$$
+
+$$\Pr\left[\Gamma(h)=k \mid \F_{nT}\right] = \Z\left(k \mid h_{:nT}\right)$$
+
+$$\Psi(h) = \A^1_{\Gamma(h)}\left(S^{\Gamma(h)}(h)\right)$$
+
+
+$$\tilde{\Z}(k \mid hao)=\frac{\Z(k \mid h) \mu^k(o \mid ha)}{\sum_{j = 0}^{N-1} \Z(j \mid h) \mu^j(o \mid ha)}$$
+
+$$\Z(k \mid hao) = \frac{[[\tilde{\Z}(k \mid hao) \geq \delta]]\cdot[[a \in \Psi(h) \lor k \ne \Gamma(h)]]}{\sum_{j = 0}^{N-1}[[\tilde{\Z}(j \mid hao) \geq \delta]]\cdot[[a \in \Psi(h) \lor j \ne \Gamma(h)]]}$$
+
+Let $\D$ be as in Proposition A.N2. We now construct an $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\underline{h} \in \Do_n$ and $a \in \Ada$
+
+$$\pi^*(a \mid h)=\Pr\left[\D\left(h,\Psi\left(\underline{h}\right)\right)=a \mid \forall m \in [n]: h_m \in \D\left(h_{:m},\Psi\left(\underline{h_{:m}}\right)\right) \times \Ado\right]$$
+
+That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
