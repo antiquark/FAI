@@ -190,11 +190,11 @@ Now now define the relevant notion of a "good advisor."
 
 \#Definition 3
 
-Given an MDP $M$ and $\epsilon > 0$, a stationary (?) policy $\pi$ for $M$ is said to be *$\epsilon$-sane* when for any $s \in \St_M$
+Let $\upsilon = (\mu,r)$ be a universe and $\epsilon > 0$. A policy $\pi$ for is said to be *$\epsilon$-sane for $\upsilon$* when there are $M$, $S$ s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$ and for any $h \in \HD{\mu}$
 
-$$\Supp{\pi(s)} \subseteq \A_M^0(s)$$
+$$\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$$
 
-$$\exists a \in \A_M^1(s): \pi(a \mid s) \geq \epsilon$$
+$$\exists a \in \A_M^1\left(S(h)\right): \pi(a \mid h) \geq \epsilon$$
 
 ***
 
@@ -203,13 +203,13 @@ We can now formulate the regret bound.
 
 \#Theorem 1
 
-Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$ (note that $r$ doesn't depend on $k$). Assume that for each $k \in [N]$, $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$, $\sigma^k$ is a $\epsilon$-sane stationary policy for $M^k$, and $\hat{\sigma}^k$ is an $\In$-policy s.t. for each $h \in \HD{\mu^k}$, $\hat{\sigma}^k(h)=\sigma^k\left(S^k(h)\right)$. Then, there is an $\bar{\In}$-metapolicy $\pi^*$ s.t. for any $k \in [N]$
+Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$ (note that $r$ doesn't depend on $k$). Assume that for each $k \in [N]$, $\sigma^k$ is a $\epsilon$-sane policy for $\upsilon^k$. Then, there is an $\bar{\In}$-metapolicy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\hat{\sigma}^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)?$$
+$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)?$$
 
 \#Corollary 1
 
-Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r) \in \Upsilon_{\In}\}_{k \in \Nats}$. Assume that for each $k \in \Nats$, $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$, $\sigma^k$ is a $\epsilon$-sane stationary policy for $M^k$, and $\hat{\sigma}^k$ is an $\In$-policy s.t. for each $h \in \HD{\mu^k}$, $\hat{\sigma}^k(h)=\sigma^k\left(S^k(h)\right)$. Define $\bar{\Hy}:=\Sqn{\bar{\upsilon^k}\left[\hat{\sigma}^k\right]}$. Then, $\bar{\Hy}$ is learnable.
+Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r) \in \Upsilon_{\In}\}_{k \in \Nats}$. Assume that for each $k \in \Nats$, $\sigma^k$ is a $\epsilon$-sane policy for $\upsilon^k$. Define $\bar{\Hy}:=\Sqn{\bar{\upsilon}^k\left[\sigma^k\right]}$. Then, $\bar{\Hy}$ is learnable.
 
 ***
 
@@ -292,6 +292,10 @@ $$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\
 
 TBD
 
+***
+
+The following shows that for any policy that doesn't make "irreversible errors," regret can be approximated by "episodic regret" for sufficiently large episode duration.
+
 \#Proposition A.N4
 
 Consider a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. Suppose that $\psi: \St_M \rightarrow \A$ is a Blackwell optimal policy. Let $\pi^0$ be a policy s.t. for any $h \in \HD{\mu}$
@@ -350,9 +354,25 @@ $$\pi^*(a \mid h)=\Pr\left[A_n = a \mid A\Theta_{:n} = h\right]$$
 
 That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
 
-In order to proof $\pi^*$ has the desired property, we will require several more stochastic processes (thus $\Omega$ is constructed to accommodate them). For any $k \in [N]$, we have
+In order to prove $\pi^*$ has the desired property, we will define the stochastic processes $\Z^!$, $\tilde{\Z}^!$, $\Gamma^!$, $\Psi^!$, $A^!$ and $\Theta^!$, each process of the same type as its shriekless counterpart (thus $\Omega$ is constructed to accommodate them). These processes are required to satisfy the following:
 
+$$\tilde{\Z}^!_0(k)\equiv\frac{1}{N}$$
+%
+$$\Z_{n}^!(k) = \frac{\tilde{\Z}^!_{n}(k)[[\tilde{\Z}^!_{n}(k) \geq \delta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}^!_{n}(j)[[\tilde{\Z}^!_{n}(j) \geq \delta]]}[[\tilde{\Z}^!_{n}(K) \geq \delta]] + [[K = k]]\cdot [[\tilde{\Z}^!_{n}(K) < \delta]]$$
+%
+$$\Pr\left[\Gamma^!_{l} = k \mid Z^!_{lT}\right] = \Z^!_{lT}\left(k\right)$$
+%
+$$\Psi^!_{n} = \A^1_{\Gamma^!_l}\left(S^{\Gamma^!_l}(A\Theta^!_{:n})\right)$$
+%
+$$\Pr\left[\Theta^!_{n} = o \mid A\Theta^!_{:n}\right] = \mu^K\left(o \mid A\Theta^!_{:n}\right)$$
+%
+$$A^!_n = \D^{!K}\left(A\Theta^!_{:n}, \Psi^!_n\right)$$
+%
+$$\tilde{\Z}^!_{n+1}(k)=\frac{\Z^!_{n}(k) \mu^k\left(\Theta^!_{n} \mid A\Theta^!_{:n}A_{n}^!\right)[[A^!_{n} \in \Psi^!_{n} \lor k \ne \Gamma^!_l]]}{\sum_{j = 0}^{N-1} \Z^!_n(j) \mu^j(\Theta^!_n \mid A\Theta^!_{:n}A^!_n)[[A^!_{n} \in \Psi^!_{n} \lor j \ne \Gamma^!_l]]}$$
 
+For any $k \in [N]$, we construct the $\Adi$-policy $\pi^{!k}$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta^!_{:n}=h,\ K = k\right] > 0$ and $a \in \Ada$
+
+$$\pi^{!k}(a \mid h)=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
 
 TBD
 
