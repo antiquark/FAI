@@ -94,6 +94,7 @@
 \DeclareMathOperator{\HD}{hdom}
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\Co}{\mathcal{C}}
+\newcommand{\UC}{\mathcal{U}}
 
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\V}{\operatorname{V}}
@@ -192,9 +193,9 @@ Now now define the relevant notion of a "good advisor."
 
 Let $\upsilon = (\mu,r)$ be a universe and $\epsilon > 0$. A policy $\pi$ for is said to be *$\epsilon$-sane for $\upsilon$* when there are $M$, $S$ s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$ and for any $h \in \HD{\mu}$
 
-$$\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$$
+i. $\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$
 
-$$\exists a \in \A_M^1\left(S(h)\right): \pi(a \mid h) \geq \epsilon$$
+ii. $\exists a \in \A_M^1\left(S(h)\right): \pi(a \mid h) \geq \epsilon$
 
 ***
 
@@ -217,11 +218,13 @@ Now, we deal with corrupt states.
 
 \#Definition 4
 
-Given an MDP $M$, $s_0 \in \St_M$ and $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *locally $\epsilon$-sane at $s_0$* when there is $\Co \subseteq \St_M$ (the set of corrupt states) s.t. for any $n \in \Nats$, $\Supp{\T_{M\pi}^n\left(s_0\right)} \subseteq \St_M \setminus \Co$ and for any $s \in \St_M \setminus \Co$
+Let $\upsilon = (\mu,r)$ be a universe and $\epsilon > 0$. A policy $\pi$ for is said to be *locally $\epsilon$-sane for $\upsilon$* when there are $M$, $S$ and $\UC \subseteq \St_M$ (the set of uncorrupt states) s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$, $S(\Estr) \in \UC$ and for any $h \in \HD{\mu}$, if $S(h) \in \UC$ then
 
-$$\Supp{\pi(s)} \subseteq \A_M^0(s)$$
+i. If $a \in \Supp{\pi(h)}$ and $o \in \Supp{\mu(ha)}$ then $S\left(hao\right) \in \UC$.
 
-$$\exists a \in \A_M^1(s): \pi(a \mid s) \geq \epsilon$$
+ii. $\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$
+
+iii. $\exists a \in \A_M^1\left(S(h)\right): \pi(a \mid h) \geq \epsilon$
 
 ***
 
@@ -229,7 +232,7 @@ Of course, this requirement is still unrealistic for humans in the real world. I
 
 \#Corollary 2
 
-Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$, $\sigma^k$ is a locally $\epsilon$-sane at $S^k(\Estr)$ stationary policy for $M^k$, and $\hat{\sigma}^k$ is an $\In$-policy s.t. for each $h \in \HD{\mu^k}$, $\hat{\sigma}^k(h)=\sigma^k\left(S^k(h)\right)$. For each $k \in [N]$, let $\Co^k \subseteq \St_{M^k}$ be the corresponding set of corrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \not\in \Co^k$ and $S^j(h) \not\in \Co^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
+Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $\upsilon^k$. For each $k \in [N]$, let $\UC^k \subseteq \St_{M^k}$ be the corresponding set of uncorrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \UC^k$ and $S^j(h) \in \UC^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
 
 $$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\hat{\sigma}^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)?$$
 
@@ -373,6 +376,16 @@ $$\tilde{\Z}^!_{n+1}(k)=\frac{\Z^!_{n}(k) \mu^k\left(\Theta^!_{n} \mid A\Theta^!
 For any $k \in [N]$, we construct the $\Adi$-policy $\pi^{!k}$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta^!_{:n}=h,\ K = k\right] > 0$ and $a \in \Ada$
 
 $$\pi^{!k}(a \mid h)=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
+
+Given any $\Adi$-policy $\pi$ and $\In$-policy $\sigma$, we denote $\left[\sigma\right]\underline{\pi}$ the $\In$-policy defined by
+
+$$\left[\sigma\right]\underline{\pi}(h):=\begin{cases} \pi(h) \text{ if } \pi(h) \in \A \\ \sigma(\underline{h}) \text{ if } \pi(h) = \bot \end{cases}$$
+
+Condition iii of Proposition A.N2 and the $\epsilon$-sanity of $\sigma^k$ imply that $\Supp{\left[\sigma^k\right]\underline{\pi}^{!k}(h)} \subseteq \A^0_k\left(S^k(h)\right)$. This means we can apply Proposition A.N4 and get
+
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{!k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^{!k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^{!k}}\left[r\left(x_{:nT+m}\right)\right]\right) + O\left(\frac{1}{T}\right)$$
+
+Here, $\pi^{!k}_n$ is defined as $\pi^*_n$ in Proposition A.N4.
 
 TBD
 
