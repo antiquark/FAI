@@ -253,22 +253,26 @@ Mwhahaha
 
 ***
 
-Now, we describe a "delegation routine" $\D$ that can transform any "proto-policy" $\pi$ that recommends some *set* of actions from $\A$ into an actual $\Adi$-policy s.t (i) on each round, either a recommended action is taken, or all recommended actions are "unsafe" (i.e. the advisor would be unlikely to take any of them) or delegation is performed and (ii) the total number of delegations is small.
+Now, we describe a "delegation routine" $\D$ that can transform any "proto-policy" $\pi$ that recommends some *set* of actions from $\A$ into an actual $\Adi$-policy s.t (i)  with high probability, on each round, either a "safe" recommended action is taken, or all recommended actions are "unsafe" or delegation is performed and (ii) the expected number of delegations is small. For technical reasons, we also need to the modified routines $\D^{!k}$ which behave the same way as $\D$ except for some low probability cases.
 
 \#Proposition A.N2
 
-Fix $\epsilon,\delta \in (0,1)$, $N \in \Nats$ and an interface $\In=(\A,\Ob)$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exists $\D: \Adfh \times 2^\A \rightarrow \Ada$ with the following property. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
-Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M 2^\A$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D,\pi\right]\in \Delta\left(2^\A \times \Adao\right)^\omega$ as follows
+Fix $\epsilon,\delta \in (0,1)$, $N \in \Nats$ and an interface $\In=(\A,\Ob)$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\D: \Adfh \times 2^\A \rightarrow \Ada$ and $\{\D^{!k}: \Adfh \times 2^\A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M 2^\A$, $\D': \Adfh \times 2^\A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D',\pi\right]\in \Delta\left(2^\A \times \Adao\right)^\omega$ as follows
  
-$$\Xi\left[\mu,\sigma^k,\D,\pi\right]\left(\B,a,o \mid x\right):=\pi\left(\B \mid \underline{\underline{x}}\right)\D\left(a \mid \underline{x},\B\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
+$$\Xi\left[\mu,\sigma^k,\D',\pi\right]\left(\B,a,o \mid x\right):=\pi\left(\B \mid \underline{\underline{x}}\right)\D'\left(a \mid \underline{x},\B\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
 
 We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
 
-i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in 2^\A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
+i. Both for $\D'=\D$ and for $\D'=\D^{!k}$
 
-ii. $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, a \in \A: x_n \in 2^\A \times a \times \Ob \implies \sigma^k\left(a \mid \underline{\underline{x_{:n}}}\right) > 0\right] \geq 1 - \delta$$
+$$\E{x \sim\Xi\left[\mu,\sigma^k,\D',\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in 2^\A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
 
-iii.  $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, \B \in 2^\A, a \in \A \setminus \B: x_n \in \B \times a \times \Ob \implies \forall b \in \B: \sigma^k\left(b \mid \underline{\underline{x_{:n}}}\right) \leq \epsilon\right] \geq 1 - \delta$$
+ii. $\Dtv\left(\Xi\left[\mu,\sigma^k,\D,\pi\right],\Xi\left[\mu,\sigma^k,\D^{!k},\pi\right]\right) \leq N\delta$
+
+iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, $\sigma^k\left(\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
+
+iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \pi\left(\underline{x}\right)$ then $\forall a \in \pi\left(\underline{x}\right): \sigma^k\left(a \mid \underline{x}\right) \leq \epsilon$
 
 \#Proof of Proposition A.N2
 
@@ -339,7 +343,6 @@ $$\Pr\left[\Theta_{n} = o \mid A\Theta_{:n}\right] = \mu^K\left(o \mid A\Theta_{
 $$A_n = \D\left(A\Theta_{:n}, \Psi_n\right)$$
 %
 $$\tilde{\Z}_{n+1}(k)=\frac{\Z_{n}(k) \mu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)[[A_{n} \in \Psi_{n} \lor k \ne \Gamma_l]]}{\sum_{j = 0}^{N-1} \Z_n(j) \mu^j(\Theta_n \mid A\Theta_{:n}A_n)[[A_{n} \in \Psi_{n} \lor j \ne \Gamma_l]]}$$
-%
 
 We now construct the $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta_{:n}=h\right] > 0$ and $a \in \Ada$
 
@@ -347,7 +350,9 @@ $$\pi^*(a \mid h)=\Pr\left[A_n = a \mid A\Theta_{:n} = h\right]$$
 
 That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
 
-In order to proof $\pi^*$ has the desired property, we will require several more stochastic processes (thus $\Omega$ is constructed to accommodate them)...
+In order to proof $\pi^*$ has the desired property, we will require several more stochastic processes (thus $\Omega$ is constructed to accommodate them). For any $k \in [N]$, we have
+
+
 
 TBD
 
