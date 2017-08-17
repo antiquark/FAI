@@ -308,7 +308,7 @@ TBD
 
 \#Proof of Theorem 1
 
-Fix $\gamma,\delta \in (0,1)$ and $T \in \Nats^+$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space\Comment{ and $\{\F_n \subseteq 2^\Omega\}_{n \in \Nats \sqcup \{-1\}}$ a filtration of $\Omega$}. Let $K: \Omega \rightarrow [N]$ be \Comment{measurable w.r.t. $\F_{-1}$}a random variable and the following be stochastic processes\Comment{ adapted to $\F$}
+Fix $\gamma \in (0,1)$, $\delta\in\left(0,N^{-1}\right)$ and $T \in \Nats^+$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space\Comment{ and $\{\F_n \subseteq 2^\Omega\}_{n \in \Nats \sqcup \{-1\}}$ a filtration of $\Omega$}. Let $K: \Omega \rightarrow [N]$ be \Comment{measurable w.r.t. $\F_{-1}$}a random variable and the following be stochastic processes\Comment{ adapted to $\F$}
 
 $$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \Delta[N]$$
 %
@@ -324,28 +324,30 @@ We also define $A\Theta_{:n}: \Omega \rightarrow \Adfh$ by
 
 $$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
 
-(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\Gamma$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $n \in \Nats$, $m \in [T]$, $a \in \A$ and $o \in \Ob$
+(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ be as in Proposition A.N2. We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\Gamma$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
 
-$$\tilde{\Z}_0(k)=\Z_0(k)\equiv\frac{1}{N}$$
+$$\tilde{\Z}_0(k)\equiv\frac{1}{N}$$
 %
-%$$\Gamma_{nT+m}=\Gamma_{nT}$$
+$$\Z_{n}(k) = \frac{\tilde{\Z}_{n}(k)[[\tilde{\Z}_{n}(k) \geq \delta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}_{n}(j)[[\tilde{\Z}_{n}(j) \geq \delta]]}$$
 %
-$$\Pr\left[\Gamma_{n} = k \mid Z_{nT}\right] = \Z_{nT}\left(k\right)$$
+$$\Pr\left[\Gamma_{l} = k \mid Z_{lT}\right] = \Z_{lT}\left(k\right)$$
 %
-$$\Psi_{nT+m} = \A^1_{\Gamma_n}\left(S^{\Gamma_n}(A\Theta_{:nT+m})\right)$$
+$$\Psi_{n} = \A^1_{\Gamma_l}\left(S^{\Gamma_l}(A\Theta_{:n})\right)$$
 %
-$$\tilde{\Z}(k \mid hao)=\frac{\Z(k \mid h) \mu^k(o \mid ha)}{\sum_{j = 0}^{N-1} \Z(j \mid h) \mu^j(o \mid ha)}$$
+$$\Pr\left[\Theta_{n} = o \mid A\Theta_{:n}\right] = \mu^K\left(o \mid A\Theta_{:n}\right)$$
 %
-$$\Z(k \mid hao) = \frac{[[\tilde{\Z}(k \mid hao) \geq \delta]]\cdot[[a \in \Psi(h) \lor k \ne \Gamma(h)]]}{\sum_{j = 0}^{N-1}[[\tilde{\Z}(j \mid hao) \geq \delta]]\cdot[[a \in \Psi(h) \lor j \ne \Gamma(h)]]}$$
+$$A_n = \D\left(A\Theta_{:n}, \Psi_n\right)$$
+%
+$$\tilde{\Z}_{n+1}(k)=\frac{\Z_{n}(k) \mu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)[[A_{n} \in \Psi_{n} \lor k \ne \Gamma_l]]}{\sum_{j = 0}^{N-1} \Z_n(j) \mu^j(\Theta_n \mid A\Theta_{:n}A_n)[[A_{n} \in \Psi_{n} \lor j \ne \Gamma_l]]}$$
+%
 
-Let $\D$ be as in Proposition A.N2. We now construct an $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\underline{h} \in \Do_n$ and $a \in \Ada$
+We now construct the $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta_{:n}=h\right] > 0$ and $a \in \Ada$
 
-$$\pi^*(a \mid h)=\Pr\left[\D\left(h,\Psi\left(\underline{h}\right)\right)=a \mid \forall m \in [n]: h_m \in \D\left(h_{:m},\Psi\left(\underline{h_{:m}}\right)\right) \times \Ado\right]$$
+$$\pi^*(a \mid h)=\Pr\left[A_n = a \mid A\Theta_{:n} = h\right]$$
 
 That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
 
-% Dealing with low probability events
-% Add the environment, the actually selected actions and the sampling of $k$ from $[N]$ to $\Omega$? This would eliminate the need to condition in the definition of $\pi^*$...
+In order to proof $\pi^*$ has the desired property, we will require several more stochastic processes (thus $\Omega$ is constructed to accommodate them)...
 
 TBD
 
