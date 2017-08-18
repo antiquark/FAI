@@ -425,13 +425,21 @@ $$\Supp{\pi^{!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right
 %
 $$\Supp{\pi^{!!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right)$$
 
-Therefore, we can apply Proposition A.N3 to the term $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get
+Therefore, we can apply Proposition A.N3 to the terms $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get
 
 $$R^{?k}(\gamma) \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
-% Use bound on number of delegations on the first term
+We have
 
-...Now, we apply Proposition A.N1 to each term of the outer sum on the right hand side...
+$$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \Pr_{x\sim\rho^{!k}_n}\left[\exists m \in [T]: x_{nT+m} \in \bot\Ado\right]$$
+
+Thus, using condition i of Proposition A.N2, we can bound the contribution of the $\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)$ terms and get
+
+$$R^{?k}(\gamma) \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{\left(\ln N\right)\left(1-\gamma^T\right)}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+
+$$R^{?k}(\gamma) \leq \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right)^2} + O\left(\frac{\left(\ln N\right)\left(1-\gamma^T\right)}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+
+Now, we apply Proposition A.N1 to each term in the sum over $n$???
 
 TBD
 
