@@ -195,7 +195,7 @@ Let $\upsilon = (\mu,r)$ be a universe and $\epsilon > 0$. A policy $\pi$ for is
 
 i. $\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$
 
-ii. $\exists a \in \A_M^1\left(S(h)\right): \pi(a \mid h) \geq \epsilon$
+ii. $\exists a \in \A_M^1\left(S(h)\right): \pi(a \mid h) > \epsilon$
 
 ***
 
@@ -224,7 +224,7 @@ i. If $a \in \Supp{\pi(h)}$ and $o \in \Supp{\mu(ha)}$ then $S\left(hao\right) \
 
 ii. $\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$
 
-iii. $\exists a \in \A_M^1\left(S(h)\right): \pi(a \mid h) \geq \epsilon$
+iii. $\exists a \in \A_M^1\left(S(h)\right): \pi(a \mid h) > \epsilon$
 
 ***
 
@@ -273,9 +273,9 @@ $$\E{x \sim\Xi\left[\mu,\sigma^k,\D',\pi\right]}\left[\Abs{\{n \in \Nats \mid x_
 
 ii. $\Dtv\left(\Xi\left[\mu,\sigma^k,\D,\pi\right],\Xi\left[\mu,\sigma^k,\D^{!k},\pi\right]\right) \leq N\delta$
 
-iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, $\sigma^k\left(\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
+iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \ne \bot$ then $\sigma^k\left(\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
 
-iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \pi\left(\underline{x}\right)$ then $\forall a \in \pi\left(\underline{x}\right): \sigma^k\left(a \mid \underline{x}\right) \leq \epsilon$
+iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \pi\left(\underline{x}\right) \cup \{\bot\}$ then $\forall a \in \pi\left(\underline{x}\right): \sigma^k\left(a \mid \underline{x}\right) \leq \epsilon$
 
 \#Proof of Proposition A.N2
 
@@ -319,7 +319,7 @@ TBD
 
 \#Proof of Theorem 1
 
-Fix $\gamma \in (0,1)$, $\delta\in\left(0,N^{-1}\right)$ and $T \in \Nats^+$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space\Comment{ and $\{\F_n \subseteq 2^\Omega\}_{n \in \Nats \sqcup \{-1\}}$ a filtration of $\Omega$}. Let $K: \Omega \rightarrow [N]$ be \Comment{measurable w.r.t. $\F_{-1}$}a random variable and the following be stochastic processes\Comment{ adapted to $\F$}
+Fix $\gamma \in (0,1)$, $\delta\in\left(0,N^{-1}\right)$ and $T \in \Nats^+$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$ and denote $\nu^k:=\bar{\mu}^k\left[\sigma^k\right]$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space\Comment{ and $\{\F_n \subseteq 2^\Omega\}_{n \in \Nats \sqcup \{-1\}}$ a filtration of $\Omega$}. Let $K: \Omega \rightarrow [N]$ be \Comment{measurable w.r.t. $\F_{-1}$}a random variable and the following be stochastic processes\Comment{ adapted to $\F$}
 
 $$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \Delta[N]$$
 %
@@ -345,11 +345,11 @@ $$\Pr\left[\Gamma_{l} = k \mid Z_{lT}\right] = \Z_{lT}\left(k\right)$$
 %
 $$\Psi_{n} = \A^1_{\Gamma_l}\left(S^{\Gamma_l}(A\Theta_{:n})\right)$$
 %
-$$\Pr\left[\Theta_{n} = o \mid A\Theta_{:n}\right] = \mu^K\left(o \mid A\Theta_{:n}\right)$$
+$$\Pr\left[\Theta_{n} = o \mid A\Theta_{:n}\right] = \nu^K\left(o \mid A\Theta_{:n}\right)$$
 %
 $$A_n = \D\left(A\Theta_{:n}, \Psi_n\right)$$
 %
-$$\tilde{\Z}_{n+1}(k)=\frac{\Z_{n}(k) \mu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)[[A_{n} \in \Psi_{n} \lor k \ne \Gamma_l]]}{\sum_{j = 0}^{N-1} \Z_n(j) \mu^j(\Theta_n \mid A\Theta_{:n}A_n)[[A_{n} \in \Psi_{n} \lor j \ne \Gamma_l]]}$$
+$$\tilde{\Z}_{n+1}(k)=\frac{\Z_{n}(k) \nu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)[[A_{n} \in \Psi_{n} \lor k \ne \Gamma_l]]}{\sum_{j = 0}^{N-1} \Z_n(j) \nu^j(\Theta_n \mid A\Theta_{:n}A_n)[[A_{n} \in \Psi_{n} \lor j \ne \Gamma_l]]}$$
 
 We now construct the $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta_{:n}=h\right] > 0$ and $a \in \Ada$
 
@@ -367,25 +367,63 @@ $$\Pr\left[\Gamma^!_{l} = k \mid Z^!_{lT}\right] = \Z^!_{lT}\left(k\right)$$
 %
 $$\Psi^!_{n} = \A^1_{\Gamma^!_l}\left(S^{\Gamma^!_l}(A\Theta^!_{:n})\right)$$
 %
-$$\Pr\left[\Theta^!_{n} = o \mid A\Theta^!_{:n}\right] = \mu^K\left(o \mid A\Theta^!_{:n}\right)$$
+$$\Pr\left[\Theta^!_{n} = o \mid A\Theta^!_{:n}\right] = \nu^K\left(o \mid A\Theta^!_{:n}\right)$$
 %
 $$A^!_n = \D^{!K}\left(A\Theta^!_{:n}, \Psi^!_n\right)$$
 %
-$$\tilde{\Z}^!_{n+1}(k)=\frac{\Z^!_{n}(k) \mu^k\left(\Theta^!_{n} \mid A\Theta^!_{:n}A_{n}^!\right)[[A^!_{n} \in \Psi^!_{n} \lor k \ne \Gamma^!_l]]}{\sum_{j = 0}^{N-1} \Z^!_n(j) \mu^j(\Theta^!_n \mid A\Theta^!_{:n}A^!_n)[[A^!_{n} \in \Psi^!_{n} \lor j \ne \Gamma^!_l]]}$$
+$$\tilde{\Z}^!_{n+1}(k)=\frac{\Z^!_{n}(k) \nu^k\left(\Theta^!_{n} \mid A\Theta^!_{:n}A_{n}^!\right)[[A^!_{n} \in \Psi^!_{n} \lor k \ne \Gamma^!_l]]}{\sum_{j = 0}^{N-1} \Z^!_n(j) \nu^j(\Theta^!_n \mid A\Theta^!_{:n}A^!_n)[[A^!_{n} \in \Psi^!_{n} \lor j \ne \Gamma^!_l]]}$$
 
-For any $k \in [N]$, we construct the $\Adi$-policy $\pi^{!k}$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta^!_{:n}=h,\ K = k\right] > 0$ and $a \in \Ada$
+For any $k \in [N]$, we construct the $\Adi$-policy $\pi^{?k}$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta^!_{:n}=h,\ K = k\right] > 0$ and $a \in \Ada$
 
-$$\pi^{!k}(a \mid h)=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
+$$\pi^{?k}(a \mid h)=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
 
-Given any $\Adi$-policy $\pi$ and $\In$-policy $\sigma$, we denote $\left[\sigma\right]\underline{\pi}$ the $\In$-policy defined by
+Given any $\Adi$-policy $\pi$ and $\In$-policy $\sigma$ we define $\alpha_{\sigma\pi}: \FH \M \Adfh$ by
 
-$$\left[\sigma\right]\underline{\pi}(h):=\begin{cases} \pi(h) \text{ if } \pi(h) \in \A \\ \sigma(\underline{h}) \text{ if } \pi(h) = \bot \end{cases}$$
+$$\alpha_{\sigma\pi} (g \mid h) := [[h = \underline{g}]]C_h\prod_{n = 0}^{\Abs{h}-1} \sum_{a \in \A}\left([[g_n \in \bot a\Ob]] \pi\left(\bot \mid g_{:n}\right)\sigma\left(a \mid h_{:n}\right)+[[g_n \in a\bot\Ob]]\pi\left(a \mid g_{:n}\right)\right)$$
 
-Condition iii of Proposition A.N2 and the $\epsilon$-sanity of $\sigma^k$ imply that $\Supp{\left[\sigma^k\right]\underline{\pi}^{!k}(h)} \subseteq \A^0_k\left(S^k(h)\right)$. This means we can apply Proposition A.N4 and get
+Here, $C_h \in \Reals$ is a constant defined s.t. the probabilities sum to 1. We define the $\In$-policy $\left[\sigma\right]\underline{\pi}$ by
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{!k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^{!k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^{!k}}\left[r\left(x_{:nT+m}\right)\right]\right) + O\left(\frac{1}{T}\right)$$
+$$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$
 
-Here, $\pi^{!k}_n$ is defined as $\pi^*_n$ in Proposition A.N4.
+Condition iii of Proposition A.N2 and condition i of $\epsilon$-sanity for $\sigma^k$ imply that for any $h \in \HD{\mu^k}$
+
+$$\Supp{\left[\sigma^k\right]\underline{\pi}^{?k}(h)} \subseteq \A^0_k\left(S^k\left(h\right)\right)$$
+
+This means we can apply Proposition A.N4 and get
+
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + O\left(\frac{1}{T}\right)$$
+
+Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition A.N4. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
+
+$$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \Pr\left[A^!_{\Abs{h}} = a \mid A\Theta^!_{:{\Abs{h}}} = h,\ K = k,\ \Gamma^!_n = k\right] \text{ otherwise} \end{cases}$$
+
+$$\pi^{!!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \pi^{!k}_n(a \mid h) + \pi^{!k}_n(\bot \mid h) \cdot \psi^k\left(S^k\left(\underline{h}\right)\right) \text{ if } \Abs{h} \geq nT \text{ and } a \ne \bot \\ 0 \text{ if } \Abs{h} \geq nT \text{ and } a = \bot \end{cases}$$
+
+Here, $\psi^k$ is a Blackwell optimal policy for $M^k$. Denote $\rho^{*k}_n:=\mu^k\bowtie\pi^{*k}_n$, $\rho^{!!k}_n:=\nu^k\bowtie\pi^{!!k}_n$, $\rho^{!k}_n:=\nu^k\bowtie\pi^{!k}_n$, $\rho^{?k}:=\nu^k\bowtie\pi^{?k}$, $R^{?k}(\gamma)=\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma)$. For each $n \in \Nats$, denote
+
+$$\EU_n^{*k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]$$
+
+$$\EU_n^{!!k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{!!k}_n}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
+
+$$\EU_n^{!k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{!k}_n}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
+
+$$\EU_n^{?k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
+
+We have
+
+$$R^{?k}(\gamma) \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}\right)$$
+
+$$R^{?k}(\gamma) \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)+\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}\right)$$
+
+Condition iv of Proposition A.N2 and condition ii of $\epsilon$-sanity for $\sigma^k$ imply that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
+
+$$\Supp{\pi^{!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right) \cup \{\bot\}$$
+%
+$$\Supp{\pi^{!!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right)$$
+
+Therefore, we can apply Proposition A.N3 to the term $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get...
+
+...Now, we apply Proposition A.N1 to each term of the outer sum on the right hand side...
 
 TBD
 
