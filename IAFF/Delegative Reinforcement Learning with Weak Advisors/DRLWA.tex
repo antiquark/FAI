@@ -281,15 +281,23 @@ iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\under
 
 TBD
 
+\#Definition A.N1
+
+Consider $k \in \Nats$ and a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. A policy $\pi$ is called *$k$-optimal for $\upsilon$* when for any $h \in \HD{\mu}$
+
+$$\Supp \pi(h) \subseteq \A_M^k\left(S(h)\right)$$
+
+$\pi$ is called *Blackwell optimal for $\upsilon$* when it is $k$-optimal for any $k \in \Nats$. By standard results in MDP theory, a stationary Blackwell optimal policy always exists, and any Blackwell optimal policy has optimal expected utility for any $\gamma$ sufficiently close to 1.
+
+***
+
+The following proposition relates optimality in terms of expected utility to expected *truncated* utility, where truncated utility is defined by only summing rewards within a time duration $T$.
+
 \#Proposition A.N3
 
-Consider a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. Suppose that $\psi: \St_M \rightarrow \A$ is a Blackwell optimal policy and denote $\pi^* := \psi \circ S$. Let $\pi^0$ be a policy s.t. for any $h \in \HD{\mu}$
+Fix an MDP $M$. Then, for any $\gamma\in(0,1)$, $T \in \Nats$, universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, $\pi^1$ a $1$-optimal policy for $\upsilon$ and $\pi^*$ a Blackwell optimal policy for $\upsilon$, we have
 
-$$\Supp \pi^0(h) \subseteq \A_M^1\left(S(h)\right)$$
-
-Then, for any $\gamma\in(0,1)$ and $T \in \Nats$
-
-$$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^0}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1+T\left(1-\gamma\right)\right)$$
+$$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^1}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1+T\left(1-\gamma\right)\right)$$
 
 \#Proof of Proposition A.N3
 
@@ -301,13 +309,9 @@ The following shows that for any policy that doesn't make "irreversible errors,"
 
 \#Proposition A.N4
 
-Consider a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. Suppose that $\psi: \St_M \rightarrow \A$ is a Blackwell optimal policy. Let $\pi^0$ be a policy s.t. for any $h \in \HD{\mu}$
+Consider a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. Suppose that $\pi^*$ is a Blackwell optimal policy for $\upsilon$ and $\pi^0$ is a $0$-optimal policy for $\upsilon$. For any $n \in \Nats$, let $\pi^*_n$ be a policy s.t. for any $h \in \HD{\mu}$
 
-$$\Supp \pi^0(h) \subseteq \A_M^0\left(S(h)\right)$$
-
-For any $n \in \Nats$, let $\pi^*_n$ be a policy s.t. for any $h \in \HD{\mu}$
-
-$$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \psi\left(S(h)\right) \text{ otherwise} \end{cases}$$
+$$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \pi^*(h) \text{ otherwise} \end{cases}$$
 
 Then, for any $\gamma\in(0,1)$ and $T \in \Nats^+$
 
@@ -397,9 +401,9 @@ Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition A.N4.
 
 $$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \Pr\left[A^!_{\Abs{h}} = a \mid A\Theta^!_{:{\Abs{h}}} = h,\ K = k,\ \Gamma^!_n = k\right] \text{ otherwise} \end{cases}$$
 
-$$\pi^{!!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \pi^{!k}_n(a \mid h) + \pi^{!k}_n(\bot \mid h) \cdot \psi^k\left(S^k\left(\underline{h}\right)\right) \text{ if } \Abs{h} \geq nT \text{ and } a \ne \bot \\ 0 \text{ if } \Abs{h} \geq nT \text{ and } a = \bot \end{cases}$$
+$$\pi^{!!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \pi^{!k}_n(a \mid h) + \pi^{!k}_n(\bot \mid h) \cdot \pi^{*k}_n\left(a \mid \underline{h}\right) \text{ if } \Abs{h} \geq nT \text{ and } a \ne \bot \\ 0 \text{ if } \Abs{h} \geq nT \text{ and } a = \bot \end{cases}$$
 
-Here, $\psi^k$ is a Blackwell optimal policy for $M^k$. Denote $\rho^{*k}_n:=\mu^k\bowtie\pi^{*k}_n$, $\rho^{!!k}_n:=\nu^k\bowtie\pi^{!!k}_n$, $\rho^{!k}_n:=\nu^k\bowtie\pi^{!k}_n$, $\rho^{?k}:=\nu^k\bowtie\pi^{?k}$, $R^{?k}(\gamma)=\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma)$. For each $n \in \Nats$, denote
+Denote $\rho^{*k}_n:=\mu^k\bowtie\pi^{*k}_n$, $\rho^{!!k}_n:=\nu^k\bowtie\pi^{!!k}_n$, $\rho^{!k}_n:=\nu^k\bowtie\pi^{!k}_n$, $\rho^{?k}:=\nu^k\bowtie\pi^{?k}$, $R^{?k}(\gamma)=\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma)$. For each $n \in \Nats$, denote
 
 $$\EU_n^{*k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]$$
 
@@ -421,7 +425,11 @@ $$\Supp{\pi^{!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right
 %
 $$\Supp{\pi^{!!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right)$$
 
-Therefore, we can apply Proposition A.N3 to the term $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get...
+Therefore, we can apply Proposition A.N3 to the term $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get
+
+$$R^{?k}(\gamma) \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+
+% Use bound on number of delegations on the first term
 
 ...Now, we apply Proposition A.N1 to each term of the outer sum on the right hand side...
 
