@@ -339,7 +339,7 @@ We also define $A\Theta_{:n}: \Omega \rightarrow \Adfh$ by
 
 $$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
 
-(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ be as in Proposition A.N2. We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\Gamma$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
+(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ and $\D^{!k}$ be as in Proposition A.N2. We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\Gamma$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
 
 $$\tilde{\Z}_0(k)\equiv\frac{1}{N}$$
 %
@@ -353,11 +353,13 @@ $$\Pr\left[\Theta_{n} = o \mid A\Theta_{:n}\right] = \nu^K\left(o \mid A\Theta_{
 %
 $$A_n = \D\left(A\Theta_{:n}, \Psi_n\right)$$
 %
-$$\tilde{\Z}_{n+1}(k)=\frac{\Z_{n}(k) \nu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)[[A_{n} \in \Psi_{n} \lor k \ne \Gamma_l]]}{\sum_{j = 0}^{N-1} \Z_n(j) \nu^j(\Theta_n \mid A\Theta_{:n}A_n)[[A_{n} \in \Psi_{n} \lor j \ne \Gamma_l]]}$$
+$$\tilde{\Z}_{n+1}(k)\sum_{j = 0}^{N-1} \Z_n(j) [[A_n = \D^{!j}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^j(\Theta_n \mid A\Theta_{:n}A_n)=\Z_{n}(k) [[A_n = \D^{!k}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)$$
+
+Note that the last equation has the form of a Bayesian update which is allowed to be arbitrary when update is on "impossible" information.
 
 We now construct the $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta_{:n}=h\right] > 0$ and $a \in \Ada$
 
-$$\pi^*(a \mid h)=\Pr\left[A_n = a \mid A\Theta_{:n} = h\right]$$
+$$\pi^*(a \mid h):=\Pr\left[A_n = a \mid A\Theta_{:n} = h\right]$$
 
 That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
 
@@ -374,12 +376,12 @@ $$\Psi^!_{n} = \A^1_{\Gamma^!_l}\left(S^{\Gamma^!_l}(A\Theta^!_{:n})\right)$$
 $$\Pr\left[\Theta^!_{n} = o \mid A\Theta^!_{:n}\right] = \nu^K\left(o \mid A\Theta^!_{:n}\right)$$
 %
 $$A^!_n = \D^{!K}\left(A\Theta^!_{:n}, \Psi^!_n\right)$$
-%
-$$\tilde{\Z}^!_{n+1}(k)=\frac{\Z^!_{n}(k) \nu^k\left(\Theta^!_{n} \mid A\Theta^!_{:n}A_{n}^!\right)[[A^!_{n} \in \Psi^!_{n} \lor k \ne \Gamma^!_l]]}{\sum_{j = 0}^{N-1} \Z^!_n(j) \nu^j(\Theta^!_n \mid A\Theta^!_{:n}A^!_n)[[A^!_{n} \in \Psi^!_{n} \lor j \ne \Gamma^!_l]]}$$
+
+$$\tilde{\Z}^!_{n+1}(k)=\frac{\Z^!_{n}(k) [[A^!_n = \D^{!k}\left(A\Theta^!_{:n}, \Psi^!_n\right)]] \nu^k\left(\Theta^!_{n} \mid A\Theta^!_{:n}A^!_{n}\right)}{\sum_{j = 0}^{N-1} \Z^!_n(j) [[A^!_n = \D^{!j}\left(A\Theta^!_{:n}, \Psi^!_n\right)]] \nu^j(\Theta^!_n \mid A\Theta^!_{:n}A^!_n)}$$
 
 For any $k \in [N]$, we construct the $\Adi$-policy $\pi^{?k}$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta^!_{:n}=h,\ K = k\right] > 0$ and $a \in \Ada$
 
-$$\pi^{?k}(a \mid h)=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
+$$\pi^{?k}(a \mid h):=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
 
 Given any $\Adi$-policy $\pi$ and $\In$-policy $\sigma$ we define $\alpha_{\sigma\pi}: \FH \M \Adfh$ by
 
@@ -403,7 +405,7 @@ $$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < n
 
 $$\pi^{!!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \pi^{!k}_n(a \mid h) + \pi^{!k}_n(\bot \mid h) \cdot \pi^{*k}_n\left(a \mid \underline{h}\right) \text{ if } \Abs{h} \geq nT \text{ and } a \ne \bot \\ 0 \text{ if } \Abs{h} \geq nT \text{ and } a = \bot \end{cases}$$
 
-Denote $\rho^{*k}_n:=\mu^k\bowtie\pi^{*k}_n$, $\rho^{!!k}_n:=\nu^k\bowtie\pi^{!!k}_n$, $\rho^{!k}_n:=\nu^k\bowtie\pi^{!k}_n$, $\rho^{?k}:=\nu^k\bowtie\pi^{?k}$, $R^{?k}(\gamma)=\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma)$. For each $n \in \Nats$, denote
+Denote $\rho^{*k}_n:=\mu^k\bowtie\pi^{*k}_n$, $\rho^{!!k}_n:=\nu^k\bowtie\pi^{!!k}_n$, $\rho^{!k}_n:=\nu^k\bowtie\pi^{!k}_n$, $\rho^{?k}:=\nu^k\bowtie\pi^{?k}$, $R^{?k}=\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma)$. For each $n \in \Nats$, denote
 
 $$\EU_n^{*k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]$$
 
@@ -415,9 +417,9 @@ $$\EU_n^{?k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x
 
 We have
 
-$$R^{?k}(\gamma) \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}\right)$$
 
-$$R^{?k}(\gamma) \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)+\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)+\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}\right)$$
 
 Condition iv of Proposition A.N2 and condition ii of $\epsilon$-sanity for $\sigma^k$ imply that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
 
@@ -427,7 +429,7 @@ $$\Supp{\pi^{!!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\righ
 
 Therefore, we can apply Proposition A.N3 to the terms $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get
 
-$$R^{?k}(\gamma) \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
 We have
 
@@ -435,11 +437,21 @@ $$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \Pr_{x\sim\rho^{!k}_n}\left[\exist
 
 Thus, using condition i of Proposition A.N2, we can bound the contribution of the $\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)$ terms and get
 
-$$R^{?k}(\gamma) \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{\left(\ln N\right)\left(1-\gamma^T\right)}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
-$$R^{?k}(\gamma) \leq \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right)^2} + O\left(\frac{\left(\ln N\right)\left(1-\gamma^T\right)}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+Define the random variables $\Sqn{U^!_n : \Omega \rightarrow [0,1]}$ by 
 
-Now, we apply Proposition A.N1 to each term in the sum over $n$???
+$$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} r\left(A\Theta^!_{:nT+m}\right)$$
+
+Averaging the previous inequality over $k$, we get
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \Gamma^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\frac{1-\gamma^T}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+
+% Decompose expected utility into expected utility of expected utility conditional on Z^!
+% Use convexity of square
+% Apply A.N1 to get the expected difference in Z^! entropy
+
+...Now, we apply Proposition A.N1 to each term in the sum over $n$
 
 TBD
 
