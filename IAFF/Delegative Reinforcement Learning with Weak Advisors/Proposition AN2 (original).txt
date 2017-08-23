@@ -1,0 +1,12 @@
+Fix $\epsilon,\delta \in (0,1)$, $N \in \Nats$ and an interface $\In=(\A,\Ob)$ and let $\A!$ denote the set of total orders on $\A$. Given $\theta \in \A!$ and $a,b \in \A!$, the notation $a <_\theta b$ means that $a$ is less than $b$ according to order $\theta$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exists $\D: \Adfh \times \A! \rightarrow \Ada$ with the following property. Given $x \in \left(\A! \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M \A!$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D,\pi\right]\in \Delta\left(\A! \times \Adao\right)^\omega$ as follows
+ 
+$$\Xi\left[\mu,\sigma^k,\D,\pi\right]\left(\theta,a,o \mid x\right):=\pi\left(\theta \mid \underline{\underline{x}}\right)\D\left(a \mid \underline{x},\theta\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
+
+We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
+
+i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in \A! \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
+
+ii. $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, a \in \A: x_n \in \A! \times a \times \Ob \implies \sigma^k\left(a \mid \underline{\underline{x_{:n}}}\right) > 0\right] \geq 1 - \delta$$
+
+iii.  $$\Pr_{x \sim \Xi\left[\mu,\sigma^k,\D,\pi\right]}\left[\forall n \in \Nats, a,b \in \A, \theta \in \A!: \left(x_n \in \theta \times a \times \Ob \land a <_\theta b\right) \implies \sigma^k\left(b \mid \underline{\underline{x_{:n}}}\right) \leq \epsilon\right] \geq 1 - \delta$$

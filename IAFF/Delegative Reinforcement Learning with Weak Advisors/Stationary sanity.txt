@@ -1,0 +1,15 @@
+\#Definition 3
+
+Given an MDP $M$ and $\epsilon > 0$, a stationary (?) policy $\pi$ for $M$ is said to be *$\epsilon$-sane* when for any $s \in \St_M$
+
+$$\Supp{\pi(s)} \subseteq \A_M^0(s)$$
+
+$$\exists a \in \A_M^1(s): \pi(a \mid s) \geq \epsilon$$
+
+\#Definition 4
+
+Given an MDP $M$, $s_0 \in \St_M$ and $\epsilon > 0$, a stationary policy $\pi$ for $M$ is said to be *locally $\epsilon$-sane at $s_0$* when there is $\Co \subseteq \St_M$ (the set of corrupt states) s.t. for any $n \in \Nats$, $\Supp{\T_{M\pi}^n\left(s_0\right)} \subseteq \St_M \setminus \Co$ and for any $s \in \St_M \setminus \Co$
+
+$$\Supp{\pi(s)} \subseteq \A_M^0(s)$$
+
+$$\exists a \in \A_M^1(s): \pi(a \mid s) \geq \epsilon$$

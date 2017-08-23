@@ -24,13 +24,19 @@
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Dom}{dom}
 
+% autosize deliminaters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+
 % operators that require brackets
 \newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
 \newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
 \newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
 \newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
 \newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
 \newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
 \newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
 \newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
 \newcommand{\Var}{\operatorname{Var}}
@@ -43,8 +49,9 @@
 
 \newcommand{\Prj}{\operatorname{pr}}
 
-\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}\left(#1 \| #2\right)}
 \newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
 
 \newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
 \newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
@@ -106,6 +113,7 @@
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\B}{\mathcal{B}}
 \newcommand{\Z}{Z}
+\newcommand{\J}{J}
 
 \begin{document}
 
@@ -246,13 +254,27 @@ First, we prove an information theoretic bound that shows that for Thompson samp
 
 \#Proposition A.N1
 
-Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $\{X_{ij}: \Omega \rightarrow R\}_{i,j \in [N]}$. Fix $\zeta \in \Delta[N]$. Then
+Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $\J: \Omega \rightarrow [N]$. Assume that $K_*P = J_*P = \zeta \in \Delta[N]$ and $\I{}[K;J] = 0$. Then
 
-$$\II{(i,j)\sim\zeta\times\zeta}{\omega \sim P}\left[i;j,X_{ij}(\omega)\right] \geq 2 \left(\min_{i \in \Nats} {\zeta(i)}\right) \left(\EE{i \in \zeta}{\omega \in P}\left[X_{ii}(\omega)\right]-\EE{(i,j) \in \zeta \times \zeta}{\omega \in P}\left[X_{ij}(\omega)\right]\right)^2$$
+$$\I{}\left[K;J,U\right] \geq 2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\E{}\left[U \mid J = K\right]-\E{}\left[U\right]\right)^2$$
 
 \#Proof of Proposition A.N1
 
-Mwhahaha
+We have
+
+$$\I{}\left[K;J,U\right] = \I{}\big[K;J\big] + \I{}\left[K;U \mid J\right] = \I{}\left[K;U \mid J\right] = \E{}\left[\KL{U_*\left(P \mid K,J\right)}{\ U_*\left(P \mid J\right)}\right]$$
+
+Using Pinsker's inequality, we get
+
+$$\Ia{}{K;J,U} \geq 2\Ea{}{\Dtva{U_*\left(P \mid K,J\right),U_*\left(P \mid J\right)}^2} \geq 2\Ea{}{\AP{\Ea{}{U \mid K,J}-\Ea{}{U \mid J}}^2}$$
+
+Denote $U_{kj} := \Ea{}{U \mid K = k, J = j}$. We get
+
+$$\Ia{}{K;J,U} \geq 2\Ea{(k,j)\sim\zeta\times\zeta}{\AP{U_{kj}-\Ea{k'\sim\zeta}{U_{k'j}}}^2} \geq 2\Ea{(k,j)\sim\zeta\times\zeta}{[[k=j]]\AP{U_{kj}-\Ea{k'\sim\zeta}{U_{k'j}}}^2}$$
+
+$$\Ia{}{K;J,U} \geq 2\Ea{j \sim \zeta}{\zeta(j)\AP{U_{jj}-\Ea{k\sim\zeta}{U_{kj}}}^2} \geq 2 \AP{\min_{j \in [N]} \zeta(j)}\Ea{j \sim \zeta}{\AP{U_{jj}-\Ea{k\sim\zeta}{U_{kj}}}^2}$$
+
+$$\Ia{}{K;J,U}\geq 2 \AP{\min_{j \in [N]} \zeta(j)} \AP{\Ea{j \sim \zeta}{U_{jj}}-\Ea{(k,j)\sim\zeta\times\zeta}{U_{kj}}}^2=2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\E{}\left[U \mid J = K\right]-\E{}\left[U\right]\right)^2$$
 
 ***
 
@@ -327,7 +349,7 @@ Fix $\gamma \in (0,1)$, $\delta\in\left(0,N^{-1}\right)$ and $T \in \Nats^+$. Fo
 
 $$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \Delta[N]$$
 %
-$$\Gamma_n: \Omega \rightarrow [N]$$
+$$\J_n: \Omega \rightarrow [N]$$
 %
 $$\Psi_n: \Omega \rightarrow 2^\A$$
 %
@@ -339,15 +361,15 @@ We also define $A\Theta_{:n}: \Omega \rightarrow \Adfh$ by
 
 $$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
 
-(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ and $\D^{!k}$ be as in Proposition A.N2. We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\Gamma$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
+(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ and $\D^{!k}$ be as in Proposition A.N2. We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
 
 $$\tilde{\Z}_0(k)\equiv\frac{1}{N}$$
 %
 $$\Z_{n}(k) = \frac{\tilde{\Z}_{n}(k)[[\tilde{\Z}_{n}(k) \geq \delta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}_{n}(j)[[\tilde{\Z}_{n}(j) \geq \delta]]}$$
 %
-$$\Pr\left[\Gamma_{l} = k \mid Z_{lT}\right] = \Z_{lT}\left(k\right)$$
+$$\Pr\left[\J_{l} = k \mid Z_{lT}\right] = \Z_{lT}\left(k\right)$$
 %
-$$\Psi_{n} = \A^1_{\Gamma_l}\left(S^{\Gamma_l}(A\Theta_{:n})\right)$$
+$$\Psi_{n} = \A^1_{\J_l}\left(S^{\J_l}(A\Theta_{:n})\right)$$
 %
 $$\Pr\left[\Theta_{n} = o \mid A\Theta_{:n}\right] = \nu^K\left(o \mid A\Theta_{:n}\right)$$
 %
@@ -363,15 +385,15 @@ $$\pi^*(a \mid h):=\Pr\left[A_n = a \mid A\Theta_{:n} = h\right]$$
 
 That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
 
-In order to prove $\pi^*$ has the desired property, we will define the stochastic processes $\Z^!$, $\tilde{\Z}^!$, $\Gamma^!$, $\Psi^!$, $A^!$ and $\Theta^!$, each process of the same type as its shriekless counterpart (thus $\Omega$ is constructed to accommodate them). These processes are required to satisfy the following:
+In order to prove $\pi^*$ has the desired property, we will define the stochastic processes $\Z^!$, $\tilde{\Z}^!$, $\J^!$, $\Psi^!$, $A^!$ and $\Theta^!$, each process of the same type as its shriekless counterpart (thus $\Omega$ is constructed to accommodate them). These processes are required to satisfy the following:
 
 $$\tilde{\Z}^!_0(k)\equiv\frac{1}{N}$$
 %
 $$\Z_{n}^!(k) = \frac{\tilde{\Z}^!_{n}(k)[[\tilde{\Z}^!_{n}(k) \geq \delta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}^!_{n}(j)[[\tilde{\Z}^!_{n}(j) \geq \delta]]}[[\tilde{\Z}^!_{n}(K) \geq \delta]] + [[K = k]]\cdot [[\tilde{\Z}^!_{n}(K) < \delta]]$$
 %
-$$\Pr\left[\Gamma^!_{l} = k \mid Z^!_{lT}\right] = \Z^!_{lT}\left(k\right)$$
+$$\Pr\left[\J^!_{l} = k \mid Z^!_{lT}\right] = \Z^!_{lT}\left(k\right)$$
 %
-$$\Psi^!_{n} = \A^1_{\Gamma^!_l}\left(S^{\Gamma^!_l}(A\Theta^!_{:n})\right)$$
+$$\Psi^!_{n} = \A^1_{\J^!_l}\left(S^{\J^!_l}(A\Theta^!_{:n})\right)$$
 %
 $$\Pr\left[\Theta^!_{n} = o \mid A\Theta^!_{:n}\right] = \nu^K\left(o \mid A\Theta^!_{:n}\right)$$
 %
@@ -401,7 +423,7 @@ $$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma)
 
 Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition A.N4. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
 
-$$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \Pr\left[A^!_{\Abs{h}} = a \mid A\Theta^!_{:{\Abs{h}}} = h,\ K = k,\ \Gamma^!_n = k\right] \text{ otherwise} \end{cases}$$
+$$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \Pr\left[A^!_{\Abs{h}} = a \mid A\Theta^!_{:{\Abs{h}}} = h,\ K = k,\ \J^!_n = k\right] \text{ otherwise} \end{cases}$$
 
 $$\pi^{!!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \pi^{!k}_n(a \mid h) + \pi^{!k}_n(\bot \mid h) \cdot \pi^{*k}_n\left(a \mid \underline{h}\right) \text{ if } \Abs{h} \geq nT \text{ and } a \ne \bot \\ 0 \text{ if } \Abs{h} \geq nT \text{ and } a = \bot \end{cases}$$
 
@@ -449,15 +471,15 @@ $$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} r\left(A\Theta^!
 
 Averaging the previous inequality over $k$, we get
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \Gamma^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \J^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \Gamma^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \Gamma^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
 We apply Proposition A.N1 to each term in the sum over $n$.
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\Gamma^!_n,U^!_n\right]\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\Ent\Big(Z^!_{nT}\Big)-\Ent\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 

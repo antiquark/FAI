@@ -1,0 +1,3 @@
+Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $\{X_{ij}: \Omega \rightarrow R\}_{i,j \in [N]}$. Fix $\zeta \in \Delta[N]$. Then
+
+$$\II{(i,j)\sim\zeta\times\zeta}{\omega \sim P}\left[i;j,X_{ij}(\omega)\right] \geq 2 \left(\min_{i \in \Nats} {\zeta(i)}\right) \left(\EE{i \in \zeta}{\omega \in P}\left[X_{ii}(\omega)\right]-\EE{(i,j) \in \zeta \times \zeta}{\omega \in P}\left[X_{ij}(\omega)\right]\right)^2$$
