@@ -206,7 +206,7 @@ We can now formulate the regret bound.
 
 Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$ (note that $r$ doesn't depend on $k$). Assume that for each $k \in [N]$, $\sigma^k$ is a $\epsilon$-sane policy for $\upsilon^k$. Then, there is an $\bar{\In}$-metapolicy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)?$$
+$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
 
 \#Corollary 1
 
@@ -234,7 +234,7 @@ Of course, this requirement is still unrealistic for humans in the real world. I
 
 Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $\upsilon^k$. For each $k \in [N]$, let $\UC^k \subseteq \St_{M^k}$ be the corresponding set of uncorrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \UC^k$ and $S^j(h) \in \UC^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\hat{\sigma}^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)?$$
+$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\hat{\sigma}^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
 
 \#Corollary 3
 
@@ -437,7 +437,7 @@ $$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \Pr_{x\sim\rho^{!k}_n}\left[\exist
 
 Thus, using condition i of Proposition A.N2, we can bound the contribution of the $\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)$ terms and get
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\delta}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
 We denote
 
@@ -453,13 +453,27 @@ $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{n
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \Gamma^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \Gamma^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \Gamma^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
 We apply Proposition A.N1 to each term in the sum over $n$.
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\Gamma^!_n,U^!_n\right]\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\Gamma^!_n,U^!_n\right]\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq \sqrt{\frac{1}{2\delta}(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\Ent\Big(Z^!_{nT}\Big)-\Ent\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\Ent\Big(Z^!_{nT}\Big)-\Ent\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\ln N} + O\left(\frac{1-\gamma^T}{\delta}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\delta}} + \frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+
+Condition ii of Proposition A.N2 implies that
+
+$$\Dtv\left(\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^*,\ \bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^{?k}\right) \leq 2N\delta$$
+
+Here, the factor of 2 comes from the difference between the equations for $Z_n$ and $Z^!_n$ (we can construct and intermediate policy between $\pi^*$ and $\pi^{?k}$ and use the triangle inequality for $\Dtv$). We conclude
+
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left(\delta+\sqrt{\frac{1-\gamma^T}{\delta}} +\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+
+Now we set $\delta:=\left(1-\gamma\right)^{1/4}$,  $T:=\Floor{\left(1-\gamma\right)^{-1/4}}$. Since $\gamma^T \rightarrow 1$ as $\gamma \rightarrow 1$, we can use the approximation $1-\gamma^T \approx T(1-\gamma) \approx (1-\gamma)^{3/4}$. This immediately gives the desired result.
 
 TBD
 
