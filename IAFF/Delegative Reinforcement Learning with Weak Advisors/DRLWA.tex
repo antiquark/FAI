@@ -316,9 +316,25 @@ $$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \delta \ln\left(1 + \epsilon(1-\eps
 
 \#Proof of Proposition A.N5
 
-For each $h \in \Adfh$m $\B \subseteq \A$ and $k \in [N]$, define
+We define $\Sq{\A_k: \Adfh \times 2^\A \rightarrow 2^A}{k}$, $\zeta: \Adfh \M [N]$, $\Sq{\zeta^{!k}: \Adfh \M [N]}{k}$, $\D$ and $\Sq{\D^{!k}}{k}$ by simultaneous recursion. For each $h \in \Adfh$, $a \in \Ada$, $o \in \Ado$, $\B \subseteq \A$ and $k \in [N]$, we require
 
 $$\A_k(h, \B):=\{a \in \A \mid \sigma^k\AP{a \mid \underline{h}} > 0 \land \AP{a \in \B \lor \forall b \in \B: \sigma^k\AP{b \mid \underline{h}} \leq \epsilon}\}$$
+%
+$$\zeta(k \mid \Estr):=\frac{1}{N}$$
+%
+$$\zeta(k \mid hao):=\begin{cases} \zeta(k \mid h)[[a \in \A_k(h,\B?)]]??? \text{ if } a\ne\bot \\ \AP{\sum_{j=0}^{N-1} \zeta(j \mid h)\cdot \sigma^j\AP{b \mid \underline{h}}}^{-1} \zeta(k \mid h)\cdot \sigma^k\AP{b \mid \underline{h}} \text{ if } a = \bot,\ o \in b\Ob \end{cases}$$
+%
+$$\zeta^{!k}...\ ?$$
+%
+$$\D(h,\B) := \begin{cases} \text{any element of } \Argmax{a \in \A} \Pa{k\sim\zeta(h)}{a \in \A_k(h,\B)} \text{ if } \max_{a \in \A} \Pa{k\sim\zeta(h)}{a \in \A_k(h,\B)} \geq 1-\delta \\ \bot \text{ otherwise} \end{cases}$$
+%
+$$\D^{!k}(h,\B):=\begin{cases} \D(h,\B) \text{ if } \D(h,\B) \in \A_k(h,\B) \\ \text{any element of } \A_k(h,\B) \text{ otherwise} \end{cases}???$$
+
+% Define \zeta so that it discards any hypothesis with prob. < \delta
+% This ensures that delegation occurs iff there is no action which is good with probability 1
+% Alternative would be discarding hypothesis according to which prev. action was bad
+% That would complicate notation since \D has to depend on the history of recommendation sets either
+% \D^{!k} should be defined using \zeta^{!k}, not through \D
 
 TBD
 
