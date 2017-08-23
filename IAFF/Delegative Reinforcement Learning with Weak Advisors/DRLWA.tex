@@ -439,19 +439,27 @@ Thus, using condition i of Proposition A.N2, we can bound the contribution of th
 
 $$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
+We denote
+
+$$\xi(\gamma,T,\delta,\epsilon):=\frac{1-\gamma^T}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
+
 Define the random variables $\Sqn{U^!_n : \Omega \rightarrow [0,1]}$ by 
 
 $$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} r\left(A\Theta^!_{:nT+m}\right)$$
 
 Averaging the previous inequality over $k$, we get
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \Gamma^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\frac{1-\gamma^T}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \Gamma^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
-% Decompose expected utility into expected utility of expected utility conditional on Z^!
-% Use convexity of square
-% Apply A.N1 to get the expected difference in Z^! entropy
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \Gamma^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
-...Now, we apply Proposition A.N1 to each term in the sum over $n$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \Gamma^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+
+We apply Proposition A.N1 to each term in the sum over $n$.
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\Gamma^!_n,U^!_n\right]\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq \sqrt{\frac{1}{2\delta}(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\Ent\Big(Z^!_{nT}\Big)-\Ent\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
 TBD
 
