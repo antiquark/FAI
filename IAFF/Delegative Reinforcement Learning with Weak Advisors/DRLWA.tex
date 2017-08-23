@@ -29,6 +29,7 @@
 \newcommand{\AB}[1]{\left[#1\right]}
 
 % operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
 \newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
 \newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
 \newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
@@ -299,7 +300,31 @@ iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\unde
 
 iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \pi\left(\underline{x}\right) \cup \{\bot\}$ then $\forall a \in \pi\left(\underline{x}\right): \sigma^k\left(a \mid \underline{x}\right) \leq \epsilon$
 
+***
+
+In order to prove Proposition A.N2, we need another mutual information bound.
+
+\#Proposition A.N5
+
+Consider $\epsilon,\delta \in (0,1)$, $\A$ a finite set, $\B \subseteq \A$, $N \in \Nats$, $\zeta \in \Delta[N]$ and $\sigma: [N] \M \A$. Suppose that for every $a \in \A$
+
+$$\Pa{k \sim \zeta}{\sigma(a \mid k) > 0 \land \AP{a \in \B \lor \forall b \in \B: \sigma(b \mid k) \leq \epsilon}} \leq 1 - \delta$$
+
+Then
+
+$$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)$$
+
+\#Proof of Proposition A.N5
+
+For each $h \in \Adfh$m $\B \subseteq \A$ and $k \in [N]$, define
+
+$$\A_k(h, \B):=\{a \in \A \mid \sigma^k\AP{a \mid \underline{h}} > 0 \land \AP{a \in \B \lor \forall b \in \B: \sigma^k\AP{b \mid \underline{h}} \leq \epsilon}\}$$
+
+TBD
+
 \#Proof of Proposition A.N2
+
+Define...
 
 TBD
 
