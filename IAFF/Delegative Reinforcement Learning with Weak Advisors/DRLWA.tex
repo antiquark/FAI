@@ -291,9 +291,9 @@ $$\Xi\left[\mu,\sigma^k,\D',\pi\right]\left(\B,a,o \mid x\right):=\pi\left(\B \m
 
 We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
 
-i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\D^{!k},\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in 2^\A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
+i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\D^{!k},\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in 2^\A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
 
-ii. $\Dtv\left(\Xi\left[\mu,\sigma^k,\D,\pi\right],\Xi\left[\mu,\sigma^k,\D^{!k},\pi\right]\right) \leq N\delta$
+ii. $\Dtv\left(\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\D,\pi\right]},\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\D^{!j},\pi\right]}\right) \leq (N-1)\delta$
 
 iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \ne \bot$ then $\sigma^k\left(\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
 
@@ -305,17 +305,49 @@ In order to prove Proposition A.N2, we need another mutual information bound.
 
 \#Proposition A.N5
 
-Consider $N \in \Nats$, $\epsilon,\delta \in (0,1)$, $\A$ a finite set, $\B \subseteq \A$, $\zeta \in \Delta[N]$ and $\sigma: [N] \M \A$. Suppose that for every $a \in \A$
+Consider $N \in \Nats$, $\A$ a finite set, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\delta \in (0,1)$, $\B \subseteq \A$, $\zeta \in \Delta[N]$ and $\sigma: [N] \M \A$. Suppose that for every $a \in \A$
 
 $$\Pa{k \sim \zeta}{\sigma(a \mid k) > 0 \land \AP{a \in \B \lor \forall b \in \B: \sigma(b \mid k) \leq \epsilon}} \leq 1 - \delta$$
 
 Then
 
-$$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)$$
+$$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \delta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)$$
 
 \#Proof of Proposition A.N5
 
+We have
+
+$$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} = \Ea{k \sim \zeta}{\KL{\sigma(k)}{\sigma_*\zeta}}$$
+
+Define $q \in (0,1)$ by
+
+$$q:=\frac{1}{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}$$
+
+Let $a^* \in \A$ be s.t. $\AP{\sigma_*\zeta}\AP{a^*} > q\epsilon$ and either $a^* \in \B$ or every $a \in \B$ has $\AP{\sigma_*\zeta}(a) \leq q\epsilon$. For every $k \in [N]$, denote
+
+$$\A_k := \{a \in \A \mid \sigma(a \mid k) > 0 \land \AP{a \in \B \lor \forall b \in \B: \sigma(b \mid k) \leq \epsilon}\}$$
+
+If $a^* \not\in \A_k$ then either $\sigma\AP{a^* \mid k} = 0$ or there is $a \in \B$ s.t. $\AP{\sigma_*\zeta}(a) \leq q\epsilon$ and $\sigma(b \mid k) \geq \epsilon$. This implies
+
+$$\KL{\sigma(k)}{\sigma_*\zeta} \geq \min\AP{\KL{0}{q\epsilon},\KL{\epsilon}{q\epsilon}}$$
+
+We have
+
+$$\KL{0}{q\epsilon} = \ln{\frac{1}{1-q\epsilon}}=\ln{\frac{1}{1-\frac{\epsilon}{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}}=\ln{\frac{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}-\epsilon}}=\ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$
+
+$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{\frac{\epsilon}{q\epsilon }}+(1-\epsilon)\ln{\frac{1-\epsilon}{1-q\epsilon}}=\ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\frac{1-\epsilon}{1-\frac{\epsilon}{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}}$$
+
+$$\KL{\epsilon}{q\epsilon} = \ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\frac{(1-\epsilon)\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}{(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}$$
+
+$$\KL{\epsilon}{q\epsilon} = \ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\AP{(1-\epsilon)\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}}$$
+
+$$\KL{\epsilon}{q\epsilon} = \ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\AP{1-\epsilon+\epsilon(1-\epsilon)^{1+(1-\epsilon)/\epsilon}}}$$
+
+$$\KL{\epsilon}{q\epsilon} = \ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\AP{1-\epsilon+\epsilon(1-\epsilon)^{1/\epsilon}}}$$
+
 TBD
+
+% TODO: Add the condition on \epsilon to dependent propositions.
 
 \#Proof of Proposition A.N2
 
@@ -341,9 +373,11 @@ Denote $\Xi^{!k}:= \Xi\AB{\mu,\sigma^k,\D^{!k},\pi}$. Proposition A.N5 implies t
 
 $$\ln N \leq \sum_{n=0}^\infty \Ea{x \sim \Xi^{!k}}{\Ena{\zeta^{!k}\AP{\underline{x}_{:n+1}}}-\Ena{\zeta^{!k}\AP{\underline{x}_{:n}}}} \leq \sum_{n=0}^\infty \Pa{x \sim \Xi^{!k}}{x_n \in 2^\A\times\bot\times\Ob}\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)$$
 
-This gives us condition i...
+This gives us condition i.
 
-TBD
+Condition ii follows because the only difference is in the equation for $\zeta$ vs. $\zeta^{!j}$. That is, $\zeta$ may "discard" the "correct" element of $[N]$ but this happens with probability at most $\delta$ per discard and there are at most $N-1$ discards.
+
+Conditions iii and iv are obvious from the definition.
 
 \#Definition A.N1
 
@@ -531,7 +565,7 @@ $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\delta}} + 
 
 Condition ii of Proposition A.N2 implies that
 
-$$\Dtv\left(\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^*,\ \bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^{?k}\right) \leq 2N\delta$$
+$$\Dtv\left(\frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^*},\ \frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^{?k}}\right) \leq 2(N-1)\delta$$
 
 Here, the factor of 2 comes from the difference between the equations for $Z_n$ and $Z^!_n$ (we can construct and intermediate policy between $\pi^*$ and $\pi^{?k}$ and use the triangle inequality for $\Dtv$). We conclude
 
