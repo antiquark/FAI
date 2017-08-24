@@ -43,7 +43,8 @@
 \newcommand{\Var}{\operatorname{Var}}
 
 % operators that require parentheses
-\newcommand{\Ent}{\operatorname{H}}
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
 \newcommand{\Hom}{\operatorname{Hom}}
 \newcommand{\End}{\operatorname{End}}
 \newcommand{\Sym}{\operatorname{Sym}}
@@ -283,16 +284,14 @@ Now, we describe a "delegation routine" $\D$ that can transform any "proto-polic
 
 \#Proposition A.N2
 
-Fix $\epsilon,\delta \in (0,1)$, $N \in \Nats$ and an interface $\In=(\A,\Ob)$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\D: \Adfh \times 2^\A \rightarrow \Ada$ and $\{\D^{!k}: \Adfh \times 2^\A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Fix $N \in \Nats$, $\epsilon \in (0,1)$, $\delta \in (0,\frac{1}{N})$ and an interface $\In=(\A,\Ob)$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\D: \Adfh \times 2^\A \rightarrow \Ada$ and $\{\D^{!k}: \Adfh \times 2^\A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
 Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M 2^\A$, $\D': \Adfh \times 2^\A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D',\pi\right]\in \Delta\left(2^\A \times \Adao\right)^\omega$ as follows
  
 $$\Xi\left[\mu,\sigma^k,\D',\pi\right]\left(\B,a,o \mid x\right):=\pi\left(\B \mid \underline{\underline{x}}\right)\D'\left(a \mid \underline{x},\B\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
 
 We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
 
-i. Both for $\D'=\D$ and for $\D'=\D^{!k}$
-
-$$\E{x \sim\Xi\left[\mu,\sigma^k,\D',\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in 2^\A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
+i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\D^{!k},\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in 2^\A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
 
 ii. $\Dtv\left(\Xi\left[\mu,\sigma^k,\D,\pi\right],\Xi\left[\mu,\sigma^k,\D^{!k},\pi\right]\right) \leq N\delta$
 
@@ -306,7 +305,7 @@ In order to prove Proposition A.N2, we need another mutual information bound.
 
 \#Proposition A.N5
 
-Consider $\epsilon,\delta \in (0,1)$, $\A$ a finite set, $\B \subseteq \A$, $N \in \Nats$, $\zeta \in \Delta[N]$ and $\sigma: [N] \M \A$. Suppose that for every $a \in \A$
+Consider $N \in \Nats$, $\epsilon,\delta \in (0,1)$, $\A$ a finite set, $\B \subseteq \A$, $\zeta \in \Delta[N]$ and $\sigma: [N] \M \A$. Suppose that for every $a \in \A$
 
 $$\Pa{k \sim \zeta}{\sigma(a \mid k) > 0 \land \AP{a \in \B \lor \forall b \in \B: \sigma(b \mid k) \leq \epsilon}} \leq 1 - \delta$$
 
@@ -316,31 +315,33 @@ $$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \delta \ln\left(1 + \epsilon(1-\eps
 
 \#Proof of Proposition A.N5
 
-We define $\Sq{\A_k: \Adfh \times 2^\A \rightarrow 2^A}{k}$, $\zeta: \Adfh \M [N]$, $\Sq{\zeta^{!k}: \Adfh \M [N]}{k}$, $\D$ and $\Sq{\D^{!k}}{k}$ by simultaneous recursion. For each $h \in \Adfh$, $a \in \Ada$, $o \in \Ado$, $\B \subseteq \A$ and $k \in [N]$, we require
-
-$$\A_k(h, \B):=\{a \in \A \mid \sigma^k\AP{a \mid \underline{h}} > 0 \land \AP{a \in \B \lor \forall b \in \B: \sigma^k\AP{b \mid \underline{h}} \leq \epsilon}\}$$
-%
-$$\zeta(k \mid \Estr):=\frac{1}{N}$$
-%
-$$\zeta(k \mid hao):=\begin{cases} \zeta(k \mid h)[[a \in \A_k(h,\B?)]]??? \text{ if } a\ne\bot \\ \AP{\sum_{j=0}^{N-1} \zeta(j \mid h)\cdot \sigma^j\AP{b \mid \underline{h}}}^{-1} \zeta(k \mid h)\cdot \sigma^k\AP{b \mid \underline{h}} \text{ if } a = \bot,\ o \in b\Ob \end{cases}$$
-%
-$$\zeta^{!k}...\ ?$$
-%
-$$\D(h,\B) := \begin{cases} \text{any element of } \Argmax{a \in \A} \Pa{k\sim\zeta(h)}{a \in \A_k(h,\B)} \text{ if } \max_{a \in \A} \Pa{k\sim\zeta(h)}{a \in \A_k(h,\B)} \geq 1-\delta \\ \bot \text{ otherwise} \end{cases}$$
-%
-$$\D^{!k}(h,\B):=\begin{cases} \D(h,\B) \text{ if } \D(h,\B) \in \A_k(h,\B) \\ \text{any element of } \A_k(h,\B) \text{ otherwise} \end{cases}???$$
-
-% Define \zeta so that it discards any hypothesis with prob. < \delta
-% This ensures that delegation occurs iff there is no action which is good with probability 1
-% Alternative would be discarding hypothesis according to which prev. action was bad
-% That would complicate notation since \D has to depend on the history of recommendation sets either
-% \D^{!k} should be defined using \zeta^{!k}, not through \D
-
 TBD
 
 \#Proof of Proposition A.N2
 
-Define...
+We define $\Sq{\A_k: \Adfh \times 2^\A \rightarrow 2^A}{k}$, $\tilde{\zeta}: \Adfh \M [N]$, $\zeta: \Adfh \M [N]$, $\Sq{\tilde{\zeta}^{!k}: \Adfh \M [N]}{k}$, $\Sq{\zeta^{!k}: \Adfh \M [N]}{k}$, $\D$ and $\Sq{\D^{!k}}{k}$ recursively. For each $h \in \Adfh$, $a \in \Ada$, $o \in \Ado$, $\B \subseteq \A$ and $j,k \in [N]$, we require
+
+$$\A_k(h, \B):=\{a \in \A \mid \sigma^k\AP{a \mid \underline{h}} > 0 \land \AP{a \in \B \lor \forall b \in \B: \sigma^k\AP{b \mid \underline{h}} \leq \epsilon}\}$$
+%
+$$\tilde{\zeta}(k \mid \Estr)=\tilde{\zeta}^{!j}(k \mid \Estr):=\frac{1}{N}$$
+%
+$$\tilde{\zeta}(k \mid hao):=\begin{cases} \zeta(k \mid h) \text{ if } a\ne\bot \\ \frac{1}{N} \text{ if } a=\bot,\ \sum_{i=0}^{N-1} \zeta(i \mid h)\cdot \sigma^i\AP{b \mid \underline{h}}=0 \\ \AP{\sum_{i=0}^{N-1} \zeta(i \mid h)\cdot \sigma^i\AP{b \mid \underline{h}}}^{-1} \zeta(k \mid h)\cdot \sigma^k\AP{b \mid \underline{h}} \text{ otherwise, assuming } o \in b\Ob \end{cases}$$
+%
+$$\tilde{\zeta}^{!j}(k \mid hao):=\begin{cases} \zeta^{!j}(k \mid h) \text{ if } a\ne\bot \\ \AP{\sum_{i=0}^{N-1} \zeta^{!j}(i \mid h)\cdot \sigma^i\AP{b \mid \underline{h}}}^{-1} \zeta^{!j}(k \mid h)\cdot \sigma^k\AP{b \mid \underline{h}} \text{ if } a=\bot,\ o \in b\Ob \end{cases}$$
+%
+$$\zeta(k \mid h) := \frac{\tilde{\zeta}(k \mid h) [[\tilde{\zeta}(k \mid h) \geq \delta]]}{\sum_{i=0}^{N-1} \tilde{\zeta}(i \mid h) [[\tilde{\zeta}(i \mid h) \geq \delta]]}$$
+%
+$$\zeta^{!j}(k \mid h) := \frac{\tilde{\zeta}^{!j}(k \mid h) [[\tilde{\zeta}^{!j}(k \mid h) \geq \delta]]}{\sum_{i=0}^{N-1} \tilde{\zeta}^{!j}(i \mid h) [[\tilde{\zeta}^{!j}(i \mid h) \geq \delta]]}[[\tilde{\zeta}^{!j}(j \mid h) \geq \delta]] + [[k = j]] \cdot [[\tilde{\zeta}^{!j}(j \mid h) < \delta]]$$
+%
+$$\D(h,\B) := \begin{cases} \text{any } a \text{ s.t. } \forall k \in \Supp \zeta(h): a \in \A_k(h,\B) \text{ if such exits} \\ \bot \text{ otherwise} \end{cases}$$
+%
+$$\D^{!j}(h,\B) := \begin{cases} \text{any } a \text{ s.t. } \forall k \in \Supp \zeta^{!j}(h): a \in \A_k(h,\B) \text{ if such exits} \\ \bot \text{ otherwise} \end{cases}$$
+
+Denote $\Xi^{!k}:= \Xi\AB{\mu,\sigma^k,\D^{!k},\pi}$. Proposition A.N5 implies that for any $k \in [N]$
+
+$$\ln N \leq \sum_{n=0}^\infty \Ea{x \sim \Xi^{!k}}{\Ena{\zeta^{!k}\AP{\underline{x}_{:n+1}}}-\Ena{\zeta^{!k}\AP{\underline{x}_{:n}}}} \leq \sum_{n=0}^\infty \Pa{x \sim \Xi^{!k}}{x_n \in 2^\A\times\bot\times\Ob}\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)$$
+
+This gives us condition i...
 
 TBD
 
@@ -522,7 +523,7 @@ We apply Proposition A.N1 to each term in the sum over $n$.
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\Ent\Big(Z^!_{nT}\Big)-\Ent\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\ln N} + O\left(\frac{1-\gamma^T}{\delta}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
