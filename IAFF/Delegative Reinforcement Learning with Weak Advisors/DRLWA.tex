@@ -123,7 +123,7 @@
 
 ***
 
-Appendix A contains the proofs...
+Appendix A contains the proofs and Appendix B contains a proposition proved before.
 
 \section{Notation}
 
@@ -151,7 +151,7 @@ Here, $\St_M$ is a finite set (the set of states), $\A_M$ is a finite set (the s
 
 A *stationary policy* for $M$ is any $\pi: \St_M \M \A_M$. The space of stationary policies is denoted $\Pi_M$. Given $\pi \in \Pi_M$, we define $\T_{M\pi}: \St_M \M \St_M$ by
 
-$$\T_{M\pi}(t \mid s) := \T_M\left(t \mid s, \pi(s)\right)$$
+$$\T_{M\pi}(t \mid s) := \sum_{a \in \A_M} {\T_M\left(t \mid s, a\right) \pi(a \mid s)}$$
 
 %$$\pi^M_0(s) = \delta_s$$
 %
@@ -284,7 +284,7 @@ Now, we describe a "delegation routine" $\D$ that can transform any "proto-polic
 
 \#Proposition A.N2
 
-Fix $N \in \Nats$, $\epsilon \in (0,1)$, $\delta \in (0,\frac{1}{N})$ and an interface $\In=(\A,\Ob)$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\D: \Adfh \times 2^\A \rightarrow \Ada$ and $\{\D^{!k}: \Adfh \times 2^\A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\delta \in (0,\frac{1}{N})$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\D: \Adfh \times 2^\A \rightarrow \Ada$ and $\{\D^{!k}: \Adfh \times 2^\A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
 Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M 2^\A$, $\D': \Adfh \times 2^\A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D',\pi\right]\in \Delta\left(2^\A \times \Adao\right)^\omega$ as follows
  
 $$\Xi\left[\mu,\sigma^k,\D',\pi\right]\left(\B,a,o \mid x\right):=\pi\left(\B \mid \underline{\underline{x}}\right)\D'\left(a \mid \underline{x},\B\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
@@ -301,7 +301,7 @@ iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\under
 
 ***
 
-In order to prove Proposition A.N2, we need another mutual information bound.
+In order to prove Proposition , we need another mutual information bound.
 
 \#Proposition A.N5
 
@@ -347,8 +347,6 @@ It follows that
 
 $$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \Pa{k \sim \zeta}{a^* \not \in \A_k} \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}} \geq \delta  \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$ 
 
-% TODO: Add the condition on \epsilon to dependent propositions.
-
 \#Proof of Proposition A.N2
 
 We define $\Sq{\A_k: \Adfh \times 2^\A \rightarrow 2^A}{k}$, $\tilde{\zeta}: \Adfh \M [N]$, $\zeta: \Adfh \M [N]$, $\Sq{\tilde{\zeta}^{!k}: \Adfh \M [N]}{k}$, $\Sq{\zeta^{!k}: \Adfh \M [N]}{k}$, $\D$ and $\Sq{\D^{!k}}{k}$ recursively. For each $h \in \Adfh$, $a \in \Ada$, $o \in \Ado$, $\B \subseteq \A$ and $j,k \in [N]$, we require
@@ -385,7 +383,7 @@ Consider $k \in \Nats$ and a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realiz
 
 $$\Supp \pi(h) \subseteq \A_M^k\left(S(h)\right)$$
 
-$\pi$ is called *Blackwell optimal for $\upsilon$* when it is $k$-optimal for any $k \in \Nats$. By standard results in MDP theory, a stationary Blackwell optimal policy always exists, and any Blackwell optimal policy has optimal expected utility for any $\gamma$ sufficiently close to 1.
+$\pi$ is called *Blackwell optimal for $\upsilon$* when it is $k$-optimal for any $k \in \Nats$. Obviously, a stationary Blackwell optimal policy always exists. It is a standard (up to straightforward adaption to our formalism) result in MDP theory that any Blackwell optimal policy has maximal expected utility for any $\gamma$ sufficiently close to 1.
 
 ***
 
@@ -398,6 +396,34 @@ Fix an MDP $M$. Then, for any $\gamma\in(0,1)$, $T \in \Nats$, universe $\upsilo
 $$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^1}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1+T\left(1-\gamma\right)\right)$$
 
 \#Proof of Proposition A.N3
+
+Let 
+
+By Proposition B.N1
+
+Let $\pi^*_1$ be a policy s.t. for any $h \in \HD{\mu}$
+
+$$\pi^*_1(h):=\begin{cases} \pi^1(h) \text{ if } \Abs{h} < T \\ \pi^*(h) \text{ otherwise} \end{cases}$$
+
+$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi^*_1}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+
+$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi^*_1}{\V_M\Big(S\AP{x_{:n}},\gamma\Big)-\Q_M\AP{S\AP{x_{:n}},x_n^\A,\gamma}}}$$
+
+$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^\infty{\gamma^n \sum_{k=0}^\infty{\frac{(1-\gamma)^k}{k!} \Ea{x\sim\mu\bowtie\pi^*_1}{\V_M^k\Big(S\AP{x_{:n}}\Big)-\Q_M^k\AP{S\AP{x_{:n}},x_n^\A}}}}$$
+
+Using the Blackwell optimality of $\pi^*$ and 1-optimality of $\pi^1$, we get that for $1-\gamma \ll 1$
+
+$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^{T-1}{\gamma^n \sum_{k=2}^\infty{\frac{(1-\gamma)^k}{k!} \Ea{x\sim\mu\bowtie\pi^1}{\V_M^k\Big(S\AP{x_{:n}}\Big)-\Q_M^k\AP{S\AP{x_{:n}},x_n^\A}}}}$$
+
+$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) \leq \sum_{n=0}^{T-1}{\gamma^n \max_{s \in \St_M} \max_{a \in \A_M^1(s)} \sum_{k=2}^\infty{\frac{(1-\gamma)^k}{k!} \AP{\V_M^k(s)-\Q_M^k\AP{s,a}}}}$$
+
+$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = O\AP{T(1-\gamma)^2}$$
+
+$$(1-\gamma)\sum_{n=0}^{\infty} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^*_1}\left[r\left(x_{:n}\right)\right]\right) = O\AP{T(1-\gamma)^2}$$
+
+$$\sum_{n=0}^{\infty} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^*_1}\left[r\left(x_{:n}\right)\right]\right) = O\AP{T(1-\gamma)}$$
+
+% Step 2: compare finite sum to infinite sum
 
 TBD
 
@@ -437,7 +463,7 @@ We also define $A\Theta_{:n}: \Omega \rightarrow \Adfh$ by
 
 $$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
 
-(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ and $\D^{!k}$ be as in Proposition A.N2. We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
+(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ and $\D^{!k}$ be as in Proposition A.N2 (we assume w.l.o.g. that $\epsilon < \frac{1}{\Abs{\A}}$). We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
 
 $$\tilde{\Z}_0(k)\equiv\frac{1}{N}$$
 %
@@ -574,6 +600,18 @@ $$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) 
 Now we set $\delta:=\left(1-\gamma\right)^{1/4}$,  $T:=\Floor{\left(1-\gamma\right)^{-1/4}}$. Since $\gamma^T \rightarrow 1$ as $\gamma \rightarrow 1$, we can use the approximation $1-\gamma^T \approx T(1-\gamma) \approx (1-\gamma)^{3/4}$. This immediately gives the desired result.
 
 TBD
+
+\section{Appendix B}
+
+The following appeared [before](https://agentfoundations.org/item?id=1550) as Proposition A.5:
+
+\#Proposition B.N1
+
+Given $\alpha \in \A \times \Ob$, $\alpha^\A \in \A$ and $\alpha^\Ob \in \Ob$ are defined s.t. $\alpha = \AP{\alpha^\A,\alpha^\Ob}$. 
+
+Consider a universe $\upsilon=(\mu,r)$, a policy $\pi$ and $\gamma \in (0,1)$. Then,
+
+$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
 
 \end{document}
 
