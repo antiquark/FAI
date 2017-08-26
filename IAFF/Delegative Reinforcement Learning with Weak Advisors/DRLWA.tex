@@ -393,17 +393,15 @@ The following proposition relates optimality in terms of expected utility to exp
 
 Fix an MDP $M$. Then, for any $\gamma\in(0,1)$, $T \in \Nats$, universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, $\pi^1$ a $1$-optimal policy for $\upsilon$ and $\pi^*$ a Blackwell optimal policy for $\upsilon$, we have
 
-$$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^1}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1+T\left(1-\gamma\right)\right)$$
+$$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^1}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1 + T\left(1-\gamma\right)\right)$$
 
 \#Proof of Proposition A.N3
-
-Let 
-
-By Proposition B.N1
 
 Let $\pi^*_1$ be a policy s.t. for any $h \in \HD{\mu}$
 
 $$\pi^*_1(h):=\begin{cases} \pi^1(h) \text{ if } \Abs{h} < T \\ \pi^*(h) \text{ otherwise} \end{cases}$$
+
+By Proposition B.N1
 
 $$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi^*_1}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
 
@@ -423,9 +421,19 @@ $$(1-\gamma)\sum_{n=0}^{\infty} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r
 
 $$\sum_{n=0}^{\infty} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^*_1}\left[r\left(x_{:n}\right)\right]\right) = O\AP{T(1-\gamma)}$$
 
-% Step 2: compare finite sum to infinite sum
+Denote $\rho^*:=\mu\bowtie\pi^*$, $\rho^1:=\mu\bowtie\pi^1$. Using again the Blackwell optimality of $\pi^*$
 
-TBD
+$$\sum_{n=0}^{T - 1} \gamma^n \left(\E{x \sim \rho^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \rho^1}\left[r\left(x_{:n}\right)\right]\right) + \frac{\gamma^T}{1-\gamma}\AP{\E{x \sim \rho^*}\left[\V_M\AP{S\AP{x_{:T}}}\right]-\E{x \sim \rho^1}\left[\V_M\AP{S\AP{x_{:T}}}\right]} = O\AP{T(1-\gamma)}$$
+
+Since both $\pi^*$ and $\pi^1$ are in particular 0-optimal, we have
+
+$$\Ea{x \sim \rho^*}{\V_M^0\AP{S\AP{x_{:T}}}}=\Ea{x \sim \rho^1}{\V_M^0\AP{S\AP{x_{:T}}}}=\V_M^0\AP{S\AP{\Estr}}$$
+
+It follows
+
+$$\sum_{n=0}^{T - 1} \gamma^n \left(\E{x \sim \rho^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \rho^1}\left[r\left(x_{:n}\right)\right]\right) \pm \frac{\gamma^T}{1-\gamma}O\AP{1-\gamma}= O\AP{T(1-\gamma)}$$
+
+$$\sum_{n=0}^{T - 1} \gamma^n \left(\E{x \sim \rho^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \rho^1}\left[r\left(x_{:n}\right)\right]\right) = O\AP{\gamma^T+T(1-\gamma)}$$
 
 ***
 
@@ -439,11 +447,41 @@ $$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \pi^*(h) \text{
 
 Then, for any $\gamma\in(0,1)$ and $T \in \Nats^+$
 
-$$\EU^*_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + O\left(\frac{1}{T}\right)$$
+$$\EU^*_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
 
 \#Proof of Proposition A.N4
 
-TBD
+By Proposition B.N1, for any $l \in \Nats$
+
+$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi_l^*}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi_l^*}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+
+$\pi^*_l$ becomes Blackwell optimal after $lT$, therefore for $1 - \gamma \ll 1$, 
+
+$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi_l^*}(\gamma) = \sum_{n=0}^{lT-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+
+$$\EU_{\upsilon}^{\pi_{l}^*}(\gamma) - \EU_{\upsilon}^{\pi_{l+1}^*}(\gamma) = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+
+$$(1-\gamma)\sum_{n=0}^\infty {\gamma^n\AP{\Ea{x \sim \mu\bowtie\pi^*_l}{r\AP{x_{:n}}}-\Ea{x \sim \mu\bowtie\pi^*_{l+1}}{r\AP{x_{:n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+
+$\pi^*_l$ and $\pi^*_{l+1}$ coincide until $lT$, therefore
+
+$$(1-\gamma)\sum_{n=lT}^\infty {\gamma^n\AP{\Ea{x \sim \mu\bowtie\pi^*_l}{r\AP{x_{:n}}}-\Ea{x \sim \mu\bowtie\pi^*_{l+1}}{r\AP{x_{:n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+
+Denote $\rho^*_l:=\mu\bowtie\pi^*_l$, $\rho^0:=\mu\bowtie\pi^0$. We also use the shorthand notations $r_n:=r\AP{x_{:n}}$, $\V_n:=\V^\upsilon_\gamma\AP{x_{:n}}$, $\Q_n:=\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}$. Both $\pi^*_l$ and $\pi^*_{l+1}$ is Blackwell optimal after $(l+1)T$, therefore
+
+$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + \gamma^{(l+1)T}\AP{\Ea{\rho^*_l}{\V_{(l+1)T}}-\Ea{\rho^0}{\V_{(l+1)T}}}= \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n-\Q_n}}$$
+
+Since $\pi^0$ is 0-optimal, we get
+
+$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + O\AP{\gamma^{(l+1)T}(1-\gamma)}= \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n-\Q_n}}$$
+
+Summing over $l$, we get
+
+$$(1-\gamma)\sum_{l=0}^\infty\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + O\AP{\frac{\gamma^T(1-\gamma)}{1-\gamma^{T}}}= \sum_{n=0}^{\infty}{\gamma^n \Ea{\rho^0}{\V_n-\Q_n}}$$
+
+Applying Proposition B.N1 to the right hand side
+
+$$(1-\gamma)\sum_{l=0}^\infty\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + O\AP{\frac{\gamma^T(1-\gamma)}{1-\gamma^{T}}}= \EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma)$$
 
 \#Proof of Theorem 1
 
@@ -521,7 +559,7 @@ $$\Supp{\left[\sigma^k\right]\underline{\pi}^{?k}(h)} \subseteq \A^0_k\left(S^k\
 
 This means we can apply Proposition A.N4 and get
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + O\left(\frac{1}{T}\right)$$
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
 
 Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition A.N4. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
 
@@ -541,9 +579,9 @@ $$\EU_n^{?k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x
 
 We have
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)+\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)+\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
 
 Condition iv of Proposition A.N2 and condition ii of $\epsilon$-sanity for $\sigma^k$ imply that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
 
@@ -553,7 +591,7 @@ $$\Supp{\pi^{!!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\righ
 
 Therefore, we can apply Proposition A.N3 to the terms $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
 We have
 
@@ -561,11 +599,11 @@ $$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \Pr_{x\sim\rho^{!k}_n}\left[\exist
 
 Thus, using condition i of Proposition A.N2, we can bound the contribution of the $\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)$ terms and get
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\delta}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\delta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
 We denote
 
-$$\xi(\gamma,T,\delta,\epsilon):=\frac{1-\gamma^T}{\delta\epsilon}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
+$$\xi(\gamma,T,\delta,\epsilon):=\frac{1-\gamma^T}{\delta\epsilon}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
 
 Define the random variables $\Sqn{U^!_n : \Omega \rightarrow [0,1]}$ by 
 
@@ -585,9 +623,9 @@ $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\ln N} + O\left(\frac{1-\gamma^T}{\delta}+\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\ln N} + O\left(\frac{1-\gamma^T}{\delta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\delta}} + \frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\delta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
 Condition ii of Proposition A.N2 implies that
 
@@ -595,7 +633,7 @@ $$\Dtv\left(\frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\
 
 Here, the factor of 2 comes from the difference between the equations for $Z_n$ and $Z^!_n$ (we can construct and intermediate policy between $\pi^*$ and $\pi^{?k}$ and use the triangle inequality for $\Dtv$). We conclude
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left(\delta+\sqrt{\frac{1-\gamma^T}{\delta}} +\frac{1}{T}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left(\delta+\sqrt{\frac{1-\gamma^T}{\delta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
 Now we set $\delta:=\left(1-\gamma\right)^{1/4}$,  $T:=\Floor{\left(1-\gamma\right)^{-1/4}}$. Since $\gamma^T \rightarrow 1$ as $\gamma \rightarrow 1$, we can use the approximation $1-\gamma^T \approx T(1-\gamma) \approx (1-\gamma)^{3/4}$. This immediately gives the desired result.
 
