@@ -335,17 +335,17 @@ We have
 
 $$\KL{0}{q\epsilon} = \ln{\frac{1}{1-q\epsilon}}=\ln{\frac{1}{1-\frac{\epsilon}{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}}=\ln{\frac{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}-\epsilon}}=\ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$
 
-$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{\frac{\epsilon}{q\epsilon }}+(1-\epsilon)\ln{\frac{1-\epsilon}{1-q\epsilon}}=\ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\frac{1-\epsilon}{1-\frac{\epsilon}{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}}$$
+$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{\frac{\epsilon}{q\epsilon }}+(1-\epsilon)\ln{\frac{1-\epsilon}{1-q\epsilon}}= \epsilon \ln{\frac{1}{q}}+(1-\epsilon)\ln{(1-\epsilon)} - \epsilon \ln{\frac{1}{1-q\epsilon}}+\ln{\frac{1}{1-q\epsilon}}$$
 
-$$\KL{\epsilon}{q\epsilon} = \ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\frac{(1-\epsilon)\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}{(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}$$
+$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{\frac{1-q\epsilon}{q}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}=\epsilon \ln{\AP{\frac{1}{q}-\epsilon}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}$$
 
-$$\KL{\epsilon}{q\epsilon} = \ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\AP{(1-\epsilon)\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}}$$
+$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{(1-\epsilon)^{-(1-\epsilon)/\epsilon}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}} = \ln{(1-\epsilon)^{-(1-\epsilon)}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}=\ln{\frac{1}{1-q\epsilon}}$$
 
-$$\KL{\epsilon}{q\epsilon} = \ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\AP{1-\epsilon+\epsilon(1-\epsilon)^{1+(1-\epsilon)/\epsilon}}}$$
+$$\KL{\epsilon}{q\epsilon} = \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$
 
-$$\KL{\epsilon}{q\epsilon} = \ln{\AP{\epsilon+(1-\epsilon)^{-(1-\epsilon)/\epsilon}}}+(1-\epsilon)\ln{\AP{1-\epsilon+\epsilon(1-\epsilon)^{1/\epsilon}}}$$
+It follows that
 
-TBD
+$$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \Pa{k \sim \zeta}{a^* \not \in \A_k} \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}} \geq \delta  \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$ 
 
 % TODO: Add the condition on \epsilon to dependent propositions.
 
