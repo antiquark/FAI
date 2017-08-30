@@ -123,7 +123,7 @@
 
 ***
 
-Appendix A contains the proofs and Appendix B contains a proposition proved before.
+Appendix A contains the proofs and Appendix B contains propositions proved before.
 
 \section{Notation}
 
@@ -214,7 +214,7 @@ We can now formulate the regret bound.
 
 \#Theorem 1
 
-Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$ (note that $r$ doesn't depend on $k$). Assume that for each $k \in [N]$, $\sigma^k$ is a $\epsilon$-sane policy for $\upsilon^k$. Then, there is an $\bar{\In}$-metapolicy $\pi^*$ s.t. for any $k \in [N]$
+Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$ (note that $r$ doesn't depend on $k$). Assume that for each $k \in [N]$, $\sigma^k$ is an $\epsilon$-sane policy for $\upsilon^k$. Then, there is an $\bar{\In}$-metapolicy $\pi^*$ s.t. for any $k \in [N]$
 
 $$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
 
@@ -244,7 +244,7 @@ Of course, this requirement is still unrealistic for humans in the real world. I
 
 Fix an interface $\In$ and $\epsilon > 0$. Consider $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $\upsilon^k$. For each $k \in [N]$, let $\UC^k \subseteq \St_{M^k}$ be the corresponding set of uncorrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \UC^k$ and $S^j(h) \in \UC^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\hat{\sigma}^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
+$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
 
 \#Corollary 3
 
@@ -603,7 +603,7 @@ $$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)
 
 We denote
 
-$$\xi(\gamma,T,\delta,\epsilon):=\frac{1-\gamma^T}{\delta\epsilon}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
+$$\xi(\gamma,T,\delta):=\frac{1-\gamma^T}{\delta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
 
 Define the random variables $\Sqn{U^!_n : \Omega \rightarrow [0,1]}$ by 
 
@@ -611,17 +611,17 @@ $$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} r\left(A\Theta^!
 
 Averaging the previous inequality over $k$, we get
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \J^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \J^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\xi(\gamma,T,\delta)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\xi(\gamma,T,\delta)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\delta)\right)$$
 
 We apply Proposition A.N1 to each term in the sum over $n$.
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\xi(\gamma,T,\delta)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta,\epsilon)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta)\right)$$
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\ln N} + O\left(\frac{1-\gamma^T}{\delta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
@@ -635,9 +635,55 @@ Here, the factor of 2 comes from the difference between the equations for $Z_n$ 
 
 $$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left(\delta+\sqrt{\frac{1-\gamma^T}{\delta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
-Now we set $\delta:=\left(1-\gamma\right)^{1/4}$,  $T:=\Floor{\left(1-\gamma\right)^{-1/4}}$. Since $\gamma^T \rightarrow 1$ as $\gamma \rightarrow 1$, we can use the approximation $1-\gamma^T \approx T(1-\gamma) \approx (1-\gamma)^{3/4}$. This immediately gives the desired result.
+Now we set $\delta:=\left(1-\gamma\right)^{1/4}$,  $T:=\Floor{\left(1-\gamma\right)^{-1/4}}$. Since $\gamma^T \rightarrow 1$ as $\gamma \rightarrow 1$, we can use the approximation $1-\gamma^T \approx T(1-\gamma) \approx (1-\gamma)^{3/4}$. We get
+
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
+
+\#Proof of Corollary 1
+
+Follows immediately from Theorem 1 and Proposition B.N2.
+
+\#Definition A.N2
+
+Consider an MDP $M$ and $\UC \subseteq \St_M$. The MDP $M/\UC^\complement$ is defined by by
+
+$$\St_{M / \UC^\complement} := \UC \sqcup \{\bot\}$$
+%
+$$\A_{M / \UC^\complement} := \A_M$$
+%
+$$\T_{M / \UC^\complement}(t \mid s, a) := \begin{cases} \T_M(t \mid s,a) \text{ if } t,s \in \UC \\ \T_M(\St_M \setminus \UC \mid s,a) \text{ if } t = \bot,\ s \in \UC \\ 0 \text { if } t\in\UC,\ s = \bot  \\ 1 \text{ if } t=s=\bot\end{cases}$$
+%
+$$\R_{M / \UC^\complement}(s) := \begin{cases} \R_M(s) \text{ if } s \in \UC \\ 0 \text{ if } s=\bot \end{cases}$$
+
+\#Definition A.N3
+
+Fix an interface $\In=(\A,\Ob)$. Consider an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of $M$ with state function $S$, and $\UC \subseteq \St_M$ s.t. $S(\Estr) \in \UC$. Denote $\Ob':=\Ob\sqcup\{\bot\}$ and $\In':=(\A,\Ob')$. The $\In'$-universe $\upsilon/_S\UC^\complement=(\mu/_S\UC^\complement,r')$ is defined by
+
+$$\mu/_S\UC^\complement(o \mid ha) = \begin{cases} \mu(o \mid ha) \text{ if } hao \in \FH \text{ and } S(hao)\in\UC \\ 0 \text{ if } hao \in \FH \text{ and } S(hao)\not\in\UC \\ \T_{M/\UC^\complement}\AP{\bot \mid S(h),a} \text{ if } h \in \FH \text{ and } o = \bot \\ 0 \text{ if } h \not\in \FH \text{ and } o \ne \bot \\ 1 \text{ if } h\not\in\FH \text{ and } o = \bot \end{cases}$$
+
+$$r'(h):=\begin{cases} r(h) \text{ if } h \in \FH \\ 0 \text{ otherwise} \end{cases}$$
+
+It is easy to see that $\upsilon/_S \UC^\complement$ is an $\Ob'$-realization of $M/\UC^\complement$ with state function $S'$ defined by
+
+$$S'(h):=\begin{cases} S(h) \text{ if } h \in \FH \\ \bot \text{ otherwise} \end{cases}$$
+
+\#Proposition A.N6
 
 TBD
+
+% Step 1: Value of initial state is almost the same for M and M\U^C when locally sane policy exists
+% Step 2: Locally sane policy for M is sane for M\U^C universe (leaving U results on observation \bot)
+% Step 3: Apply Theorem to get a policy simultaneously optimal for all M\U^C universes
+% Step 4: Running this policy in the M universes gets at least as much expected utility
+% Step 5: The expected utility this policy gets is optimal for M too, because of Step 1 
+
+\#Proof of Corollary 2
+
+TBD
+
+\#Proof of Corollary 3
+
+Follows immediately from Corollary 2 and Proposition B.N2.
 
 \section{Appendix B}
 
@@ -650,6 +696,14 @@ Given $\alpha \in \A \times \Ob$, $\alpha^\A \in \A$ and $\alpha^\Ob \in \Ob$ ar
 Consider a universe $\upsilon=(\mu,r)$, a policy $\pi$ and $\gamma \in (0,1)$. Then,
 
 $$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+
+***
+
+The followed appeared as Proposition 2:
+
+\#Proposition B.N2
+
+Fix an interface $\In$. Let $\Hy$ be a countable set of meta-universes s.t. any finite $\mathcal{G} \subseteq \Hy$ is learnable. Then, $\Hy$ is learnable.
 
 \end{document}
 
