@@ -119,7 +119,7 @@
 
 \begin{document}
 
-[Previously](https://agentfoundations.org/item?id=1550), we defined a setting called "Delegative Inverse Reinforcement Learning" (DIRL) in which the agent can delegate actions to an "advisor" and the reward is only visible to the advisor as well. We proved a sublinear regret bound (converted to traditional normalization in online learning, the bound is $O(n^{2/3})$) for one-shot DIRL (as opposed to standard regret bounds in RL which are only applicable in the *episodic* setting). However, this required a rather strong assumption about the advisor: in particular, the advisor had to choose the optimal action with maximal likelihood. Here, we consider "Delegative Reinforcement Learning" (DRL), i.e. a similar setting in which the reward is directly observable by the agent. We also restrict our attention to finite MDP environments (we believe these results can be generalized to a much bigger class of environments, but not to arbitrary environments). On the other hand, the assumption about the advisor is much weaker: the advisor is only required to avoid *catastrophic* actions (i.e. actions that lose value to zeroth order in inverse time discount) and assign some positive probability to a nearly optimal action. As before, we prove a one-shot regret bound (in traditional normalization, $O(n^{3/4})$). Analogously to [before](https://agentfoundations.org/item?id=1587), we allow for "corrupt" states in which both the advisor and the reward signal stop being reliable.
+[Previously](https://agentfoundations.org/item?id=1550), we defined a setting called "Delegative Inverse Reinforcement Learning" (DIRL) in which the agent can delegate actions to an "advisor" and the reward is only visible to the advisor as well. We proved a sublinear regret bound (converted to traditional normalization in online learning, the bound is $O(n^{2/3})$) for one-shot DIRL (as opposed to standard regret bounds in RL which are only applicable in the *episodic* setting). However, this required a rather strong assumption about the advisor: in particular, the advisor had to choose the optimal action with maximal likelihood. Here, we consider "Delegative Reinforcement Learning" (DRL), i.e. a similar setting in which the reward is directly observable by the agent. We also restrict our attention to finite MDP environments (we believe these results can be generalized to a much larger class of environments, but not to arbitrary environments). On the other hand, the assumption about the advisor is much weaker: the advisor is only required to avoid *catastrophic* actions (i.e. actions that lose value to zeroth order in inverse time discount) and assign some positive probability to a nearly optimal action. As before, we prove a one-shot regret bound (in traditional normalization, $O(n^{3/4})$). Analogously to [before](https://agentfoundations.org/item?id=1587), we allow for "corrupt" states in which both the advisor and the reward signal stop being reliable.
 
 ***
 
@@ -256,13 +256,13 @@ Assume the same conditions as in Corollary 2, except that $\Hy$ may be countable
 
 First, we prove an information theoretic bound that shows that for Thompson sampling, the expected information gain is bounded below by a function of the loss.
 
-\#Proposition A.N1
+\#Proposition A.1
 
 Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $\J: \Omega \rightarrow [N]$. Assume that $K_*P = J_*P = \zeta \in \Delta[N]$ and $\I{}[K;J] = 0$. Then
 
 $$\I{}\left[K;J,U\right] \geq 2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\E{}\left[U \mid J = K\right]-\E{}\left[U\right]\right)^2$$
 
-\#Proof of Proposition A.N1
+\#Proof of Proposition A.1
 
 We have
 
@@ -284,7 +284,7 @@ $$\Ia{}{K;J,U}\geq 2 \AP{\min_{j \in [N]} \zeta(j)} \AP{\Ea{j \sim \zeta}{U_{jj}
 
 Now, we describe a "delegation routine" $\D$ that can transform any "proto-policy" $\pi$ that recommends some *set* of actions from $\A$ into an actual $\Adi$-policy s.t (i)  with high probability, on each round, either a "safe" recommended action is taken, or all recommended actions are "unsafe" or delegation is performed and (ii) the expected number of delegations is small. For technical reasons, we also need to the modified routines $\D^{!k}$ which behave the same way as $\D$ except for some low probability cases.
 
-\#Proposition A.N2
+\#Proposition A.2
 
 Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\delta \in (0,\frac{1}{N})$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\D: \Adfh \times 2^\A \rightarrow \Ada$ and $\{\D^{!k}: \Adfh \times 2^\A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
 Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M 2^\A$, $\D': \Adfh \times 2^\A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D',\pi\right]\in \Delta\left(2^\A \times \Adao\right)^\omega$ as follows
@@ -303,9 +303,9 @@ iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\under
 
 ***
 
-In order to prove Proposition , we need another mutual information bound.
+In order to prove Proposition A.2, we need another mutual information bound.
 
-\#Proposition A.N5
+\#Proposition A.3
 
 Consider $N \in \Nats$, $\A$ a finite set, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\delta \in (0,1)$, $\B \subseteq \A$, $\zeta \in \Delta[N]$ and $\sigma: [N] \M \A$. Suppose that for every $a \in \A$
 
@@ -315,7 +315,7 @@ Then
 
 $$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \delta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)$$
 
-\#Proof of Proposition A.N5
+\#Proof of Proposition A.3
 
 We have
 
@@ -349,7 +349,7 @@ It follows that
 
 $$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \Pa{k \sim \zeta}{a^* \not \in \A_k} \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}} \geq \delta  \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$ 
 
-\#Proof of Proposition A.N2
+\#Proof of Proposition A.2
 
 We define $\Sq{\A_k: \Adfh \times 2^\A \rightarrow 2^A}{k}$, $\tilde{\zeta}: \Adfh \M [N]$, $\zeta: \Adfh \M [N]$, $\Sq{\tilde{\zeta}^{!k}: \Adfh \M [N]}{k}$, $\Sq{\zeta^{!k}: \Adfh \M [N]}{k}$, $\D$ and $\Sq{\D^{!k}}{k}$ recursively. For each $h \in \Adfh$, $a \in \Ada$, $o \in \Ado$, $\B \subseteq \A$ and $j,k \in [N]$, we require
 
@@ -369,7 +369,7 @@ $$\D(h,\B) := \begin{cases} \text{any } a \text{ s.t. } \forall k \in \Supp \zet
 %
 $$\D^{!j}(h,\B) := \begin{cases} \text{any } a \text{ s.t. } \forall k \in \Supp \zeta^{!j}(h): a \in \A_k(h,\B) \text{ if such exits} \\ \bot \text{ otherwise} \end{cases}$$
 
-Denote $\Xi^{!k}:= \Xi\AB{\mu,\sigma^k,\D^{!k},\pi}$. Proposition A.N5 implies that for any $k \in [N]$
+Denote $\Xi^{!k}:= \Xi\AB{\mu,\sigma^k,\D^{!k},\pi}$. Proposition A.3 implies that for any $k \in [N]$
 
 $$\ln N \leq \sum_{n=0}^\infty \Ea{x \sim \Xi^{!k}}{\Ena{\zeta^{!k}\AP{\underline{x}_{:n+1}}}-\Ena{\zeta^{!k}\AP{\underline{x}_{:n}}}} \leq \sum_{n=0}^\infty \Pa{x \sim \Xi^{!k}}{x_n \in 2^\A\times\bot\times\Ob}\delta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1-\epsilon}{\epsilon}}\right)$$
 
@@ -379,7 +379,7 @@ Condition ii follows because the only difference is in the equation for $\zeta$ 
 
 Conditions iii and iv are obvious from the definition.
 
-\#Definition A.N1
+\#Definition A.1
 
 Consider $k \in \Nats$ and a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. A policy $\pi$ is called *$k$-optimal for $\upsilon$* when for any $h \in \HD{\mu}$
 
@@ -391,19 +391,19 @@ $\pi$ is called *Blackwell optimal for $\upsilon$* when it is $k$-optimal for an
 
 The following proposition relates optimality in terms of expected utility to expected *truncated* utility, where truncated utility is defined by only summing rewards within a time duration $T$.
 
-\#Proposition A.N3
+\#Proposition A.4
 
 Fix an MDP $M$. Then, for any $\gamma\in(0,1)$, $T \in \Nats$, universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, $\pi^1$ a $1$-optimal policy for $\upsilon$ and $\pi^*$ a Blackwell optimal policy for $\upsilon$, we have
 
 $$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^1}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1 + T\left(1-\gamma\right)\right)$$
 
-\#Proof of Proposition A.N3
+\#Proof of Proposition A.4
 
 Let $\pi^*_1$ be a policy s.t. for any $h \in \HD{\mu}$
 
 $$\pi^*_1(h):=\begin{cases} \pi^1(h) \text{ if } \Abs{h} < T \\ \pi^*(h) \text{ otherwise} \end{cases}$$
 
-By Proposition B.N1
+By Proposition B.1
 
 $$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi^*_1}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
 
@@ -441,7 +441,7 @@ $$\sum_{n=0}^{T - 1} \gamma^n \left(\E{x \sim \rho^*}\left[r\left(x_{:n}\right)\
 
 The following shows that for any policy that doesn't make "irreversible errors," regret can be approximated by "episodic regret" for sufficiently large episode duration.
 
-\#Proposition A.N4
+\#Proposition A.5
 
 Consider a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. Suppose that $\pi^*$ is a Blackwell optimal policy for $\upsilon$ and $\pi^0$ is a $0$-optimal policy for $\upsilon$. For any $n \in \Nats$, let $\pi^*_n$ be a policy s.t. for any $h \in \HD{\mu}$
 
@@ -451,9 +451,9 @@ Then, for any $\gamma\in(0,1)$ and $T \in \Nats^+$
 
 $$\EU^*_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
 
-\#Proof of Proposition A.N4
+\#Proof of Proposition A.5
 
-By Proposition B.N1, for any $l \in \Nats$
+By Proposition B.1, for any $l \in \Nats$
 
 $$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi_l^*}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi_l^*}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
 
@@ -481,7 +481,7 @@ Summing over $l$, we get
 
 $$(1-\gamma)\sum_{l=0}^\infty\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + O\AP{\frac{\gamma^T(1-\gamma)}{1-\gamma^{T}}}= \sum_{n=0}^{\infty}{\gamma^n \Ea{\rho^0}{\V_n-\Q_n}}$$
 
-Applying Proposition B.N1 to the right hand side
+Applying Proposition B.1 to the right hand side
 
 $$(1-\gamma)\sum_{l=0}^\infty\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + O\AP{\frac{\gamma^T(1-\gamma)}{1-\gamma^{T}}}= \EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma)$$
 
@@ -503,7 +503,7 @@ We also define $A\Theta_{:n}: \Omega \rightarrow \Adfh$ by
 
 $$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
 
-(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ and $\D^{!k}$ be as in Proposition A.N2 (we assume w.l.o.g. that $\epsilon < \frac{1}{\Abs{\A}}$). We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
+(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ and $\D^{!k}$ be as in Proposition A.2 (we assume w.l.o.g. that $\epsilon < \frac{1}{\Abs{\A}}$). We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
 
 $$\tilde{\Z}_0(k)\equiv\frac{1}{N}$$
 %
@@ -555,15 +555,15 @@ Here, $C_h \in \Reals$ is a constant defined s.t. the probabilities sum to 1. We
 
 $$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$
 
-Condition iii of Proposition A.N2 and condition i of $\epsilon$-sanity for $\sigma^k$ imply that for any $h \in \HD{\mu^k}$
+Condition iii of Proposition A.2 and condition i of $\epsilon$-sanity for $\sigma^k$ imply that for any $h \in \HD{\mu^k}$
 
 $$\Supp{\left[\sigma^k\right]\underline{\pi}^{?k}(h)} \subseteq \A^0_k\left(S^k\left(h\right)\right)$$
 
-This means we can apply Proposition A.N4 and get
+This means we can apply Proposition A.5 and get
 
 $$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
 
-Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition A.N4. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
+Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition A.5. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
 
 $$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \Pr\left[A^!_{\Abs{h}} = a \mid A\Theta^!_{:{\Abs{h}}} = h,\ K = k,\ \J^!_n = k\right] \text{ otherwise} \end{cases}$$
 
@@ -585,13 +585,13 @@ $$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)
 
 $$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)+\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
 
-Condition iv of Proposition A.N2 and condition ii of $\epsilon$-sanity for $\sigma^k$ imply that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
+Condition iv of Proposition A.2 and condition ii of $\epsilon$-sanity for $\sigma^k$ imply that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
 
 $$\Supp{\pi^{!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right) \cup \{\bot\}$$
 %
 $$\Supp{\pi^{!!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right)$$
 
-Therefore, we can apply Proposition A.N3 to the terms $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get
+Therefore, we can apply Proposition A.4 to the terms $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get
 
 $$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
@@ -599,7 +599,7 @@ We have
 
 $$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \Pr_{x\sim\rho^{!k}_n}\left[\exists m \in [T]: x_{nT+m} \in \bot\Ado\right]$$
 
-Thus, using condition i of Proposition A.N2, we can bound the contribution of the $\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)$ terms and get
+Thus, using condition i of Proposition A.2, we can bound the contribution of the $\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)$ terms and get
 
 $$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\delta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
@@ -619,7 +619,7 @@ $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{n
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\delta)\right)$$
 
-We apply Proposition A.N1 to each term in the sum over $n$.
+We apply Proposition A.1 to each term in the sum over $n$.
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\xi(\gamma,T,\delta)\right)$$
 
@@ -629,7 +629,7 @@ $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\ln N} + O
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\delta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
-Condition ii of Proposition A.N2 implies that
+Condition ii of Proposition A.2 implies that
 
 $$\Dtv\left(\frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^*},\ \frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^{?k}}\right) \leq 2(N-1)\delta$$
 
@@ -643,9 +643,9 @@ $$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) 
 
 \#Proof of Corollary 1
 
-Follows immediately from Theorem 1 and Proposition B.N2.
+Follows immediately from Theorem 1 and Proposition B.2.
 
-\#Definition A.N2
+\#Definition A.2
 
 Consider an MDP $M$ and $\UC \subseteq \St_M$. The MDP $M/\Co$ is defined by by
 
@@ -657,7 +657,7 @@ $$\T_{M / \Co}(t \mid s, a) := \begin{cases} \T_M(t \mid s,a) \text{ if } t,s \i
 %
 $$\R_{M / \Co}(s) := \begin{cases} \R_M(s) \text{ if } s \in \UC \\ 0 \text{ if } s=\bot \end{cases}$$
 
-\#Proposition A.N6
+\#Proposition A.6
 
 Consider an MDP $M$ and some $\UC\subseteq\St_M$. Suppose that for every $s \in \UC$ there is $a \in \A_M^k(s)$ s.t. $\T_M(\UC \mid s, a) = 1$. Then, for every $s \in \St_M$ and $j \in [k]$
 
@@ -667,7 +667,7 @@ Moreover, if $a \in \A$ is s.t. $\T_M(\UC \mid s,a) = 1$ then
 
 $$\Q_M^j(s,a) = \Q_{M/\Co}^j(s,a)$$
 
-\#Proof of Proposition A.N6
+\#Proof of Proposition A.6
 
 It is obvious that for any $s \in \UC$ and $\gamma\in(0,1)$, $\V_{M/\Co}(s,\gamma) \leq \V_M(s,\gamma)$. Now consider any $\pi: \St_M \rightarrow \A$ s.t. for any $s \in \UC$, $\pi(s) \in \A_M^k(s)$ and $\T_{M\pi}(\UC \mid s) = 1$. Fix $s \in \UC$. For any $n \in \Nats$, $\Supp{\T_{M\pi}^n(s)} \subseteq \UC$ and therefore
 
@@ -685,7 +685,7 @@ $$\Abs{\V_{M/\Co}(s,\gamma) - \V_M(s,\gamma)} = O\AP{(1-\gamma)^k}$$
 
 This implies the equation for $V^j$ and the equation for $Q^j$ is implied in turn.
 
-\#Definition A.N3
+\#Definition A.4
 
 Fix an interface $\In=(\A,\Ob)$. Consider an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of $M$ with state function $S$, and $\UC \subseteq \St_M$ s.t. $S(\Estr) \in \UC$. Denote $\Ob':=\Ob\sqcup\{\bot\}$ and $\In':=(\A,\Ob')$. The $\In'$-universe $\upsilon/_S\Co=(\mu/_S\Co,r')$ is defined by
 
@@ -697,23 +697,17 @@ It is easy to see that $\upsilon/_S \Co$ is an $\Ob'$-realization of $M/\Co$ wit
 
 $$S'(h):=\begin{cases} S(h) \text{ if } h \in \FH \\ \bot \text{ otherwise} \end{cases}$$
 
-\#Proposition A.N7
+\#Proposition A.7
 
 Fix an interface $\In=(\A,\Ob)$. Consider $\epsilon > 0$ and $\upsilon=(\mu,r)$ an $\Ob$-realization of $M$ with state function $S$. Suppose that $\pi$ is a locally $\epsilon$-sane policy for $\mu$ and $\UC \subseteq \St_M$ is the corresponding set of uncorrupt states. Let $\pi'$ be any $\In'$-policy s.t. for any $h \in \FH$, $\pi(h) = \pi(h')$. Then, $\pi'$ is $\epsilon$-sane for $\upsilon/_S \Co$.
 
-\#Proof of Proposition A.N7
+\#Proof of Proposition A.7
 
-Without loss of generality, assumes all states of $M$ are reachable from $S(\Estr)$ (otherwise, $\upsilon$ is an $\Ob$-realization of the MDP we get by discarding the unreachable states). Consider any $h \in \HD{\mu/_S\Co}$. If $S'(h)=\bot$ then conditions i+ii of Definition 3 are trivial. Otherwise, we have $h \in \HD{\mu}$ and $s:=S(h)\in\UC$. We apply Proposition A.N6 for $k=2$ (by condition iv of Definition 4) and get that: conditions i+ii of Definition 4 imply condition i of Definition 3 and conditions i+iii of Definition 4 imply condition ii of Definition 3.
-
-% Step 1: Value of initial state is almost the same for M and M\U^C when locally sane policy exists
-% Step 2: Locally sane policy for M is sane for M\U^C universe (leaving U results on observation \bot)
-% Step 3: Apply Theorem to get a policy simultaneously optimal for all M\U^C universes
-% Step 4: Running this policy in the M universes gets at least as much expected utility
-% Step 5: The expected utility this policy gets is optimal for M too, because of Step 1 
+Without loss of generality, assumes all states of $M$ are reachable from $S(\Estr)$ (otherwise, $\upsilon$ is an $\Ob$-realization of the MDP we get by discarding the unreachable states). Consider any $h \in \HD{\mu/_S\Co}$. If $S'(h)=\bot$ then conditions i+ii of Definition 3 are trivial. Otherwise, we have $h \in \HD{\mu}$ and $s:=S(h)\in\UC$. We apply Proposition A.6 for $k=2$ (by condition iv of Definition 4) and get that: conditions i+ii of Definition 4 imply condition i of Definition 3 and conditions i+iii of Definition 4 imply condition ii of Definition 3.
 
 \#Proof of Corollary 2
 
-For every $k \in [N]$, denote $\psi^k:=\upsilon^k/_{S^k} \UC^{k\complement}$. By Proposition A.N7, $\sigma^k$ is $\epsilon$-sane for $\psi^k$ (where we abuse notation by arbitrarily extending $\sigma^k$ to an $\In'$-policy). Moreover, it is easy to see that all the $\psi^k$ share the same reward function $r'$. Apply Theorem 1 to $\Hy':=\{\psi^k\}_{k \in [N]}$. We get $\pi^*$ s.t. for every $k \in [N]$ and $\gamma\in(0,1)$
+For every $k \in [N]$, denote $\psi^k:=\upsilon^k/_{S^k} \UC^{k\complement}$. By Proposition A.7, $\sigma^k$ is $\epsilon$-sane for $\psi^k$ (where we abuse notation by arbitrarily extending $\sigma^k$ to an $\In'$-policy). Moreover, it is easy to see that all the $\psi^k$ share the same reward function $r'$. Apply Theorem 1 to $\Hy':=\{\psi^k\}_{k \in [N]}$. We get $\pi^*$ s.t. for every $k \in [N]$ and $\gamma\in(0,1)$
 
 $$\EU_{\psi^k}^*(\gamma) - \EU_{\bar{\psi}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
 
@@ -721,7 +715,7 @@ Obviously $\EU_{\bar{\psi}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) \leq \EU_{\ba
 
 $$\EU_{\psi^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) \leq O\left((1-\gamma)^{1/4}\right)$$
 
-On the other hand, by Proposition A.N6 
+On the other hand, by Proposition A.6 
 
 $$\EU_{\psi^k}^*(\gamma) = \V_{M^k/\UC^{k\complement}}\AP{S(\Estr),\gamma} = \V_{M^k}\AP{S(\Estr),\gamma} - O\AP{1-\gamma} = \EU_{\upsilon^k}^*(\gamma) - O\AP{1-\gamma}$$
 
@@ -733,13 +727,13 @@ $$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^
 
 \#Proof of Corollary 3
 
-Follows immediately from Corollary 2 and Proposition B.N2.
+Follows immediately from Corollary 2 and Proposition B.2.
 
 \section{Appendix B}
 
 The following appeared [before](https://agentfoundations.org/item?id=1550) as Proposition A.5:
 
-\#Proposition B.N1
+\#Proposition B.1
 
 Given $\alpha \in \A \times \Ob$, $\alpha^\A \in \A$ and $\alpha^\Ob \in \Ob$ are defined s.t. $\alpha = \AP{\alpha^\A,\alpha^\Ob}$. 
 
@@ -751,7 +745,7 @@ $$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma) = \sum_{n=0}^\inft
 
 The followed appeared as Proposition 2:
 
-\#Proposition B.N2
+\#Proposition B.2
 
 Fix an interface $\In$. Let $\Hy$ be a countable set of meta-universes s.t. any finite $\mathcal{G} \subseteq \Hy$ is learnable. Then, $\Hy$ is learnable.
 
