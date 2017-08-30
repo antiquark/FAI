@@ -236,6 +236,8 @@ ii. $\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$
 
 iii. $\exists a \in \A_M^1\left(S(h)\right): \pi(a \mid h) > \epsilon$
 
+iv. $\exists a \in \A_M^2\AP{S(h)}: \T_M\AP{\UC \mid S(h), a} = 1$
+
 ***
 
 Of course, this requirement is still unrealistic for humans in the real world. In particular, it makes the formalism unsuitable for modeling the use of AI for catastrophe mitigation (which is ultimately what we are interested in!) since it assumes the advisor is already capable of avoiding any catastrophe. In following work, we plan to relax the assumptions further.
@@ -701,7 +703,7 @@ Fix an interface $\In=(\A,\Ob)$. Consider $\epsilon > 0$ and $\upsilon=(\mu,r)$ 
 
 \#Proof of Proposition A.N7
 
-TBD
+Without loss of generality, assumes all states of $M$ are reachable from $S(\Estr)$ (otherwise, $\upsilon$ is an $\Ob$-realization of the MDP we get by discarding the unreachable states). Consider any $h \in \HD{\mu/_S\Co}$. If $S'(h)=\bot$ then conditions i+ii of Definition 3 are trivial. Otherwise, we have $h \in \HD{\mu}$ and $s:=S(h)\in\UC$. We apply Proposition A.N6 for $k=2$ (by condition iv of Definition 4) and get that: conditions i+ii of Definition 4 imply condition i of Definition 3 and conditions i+iii of Definition 4 imply condition ii of Definition 3.
 
 % Step 1: Value of initial state is almost the same for M and M\U^C when locally sane policy exists
 % Step 2: Locally sane policy for M is sane for M\U^C universe (leaving U results on observation \bot)
@@ -711,7 +713,23 @@ TBD
 
 \#Proof of Corollary 2
 
-TBD
+For every $k \in [N]$, denote $\psi^k:=\upsilon^k/_{S^k} \UC^{k\complement}$. By Proposition A.N7, $\sigma^k$ is $\epsilon$-sane for $\psi^k$ (where we abuse notation by arbitrarily extending $\sigma^k$ to an $\In'$-policy). Moreover, it is easy to see that all the $\psi^k$ share the same reward function $r'$. Apply Theorem 1 to $\Hy':=\{\psi^k\}_{k \in [N]}$. We get $\pi^*$ s.t. for every $k \in [N]$ and $\gamma\in(0,1)$
+
+$$\EU_{\psi^k}^*(\gamma) - \EU_{\bar{\psi}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
+
+Obviously $\EU_{\bar{\psi}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) \leq \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma)$ and therefore
+
+$$\EU_{\psi^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) \leq O\left((1-\gamma)^{1/4}\right)$$
+
+On the other hand, by Proposition A.N6 
+
+$$\EU_{\psi^k}^*(\gamma) = \V_{M^k/\UC^{k\complement}}\AP{S(\Estr),\gamma} = \V_{M^k}\AP{S(\Estr),\gamma} - O\AP{1-\gamma} = \EU_{\upsilon^k}^*(\gamma) - O\AP{1-\gamma}$$
+
+We conclude
+
+$$\EU_{\upsilon^k}^*(\gamma) - O\AP{1-\gamma} - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) \leq O\left((1-\gamma)^{1/4}\right)$$
+
+$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
 
 \#Proof of Corollary 3
 
