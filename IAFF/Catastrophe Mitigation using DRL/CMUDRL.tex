@@ -1,0 +1,120 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Comment}[1]{}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Dom}{dom}
+
+% operators that require brackets
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\Var}{\operatorname{Var}}
+
+% operators that require parentheses
+\newcommand{\Ent}{\operatorname{H}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
+
+\newcommand{\Prj}{\operatorname{pr}}
+
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Sq}[2]{\{#1\}_{#2 \in \Nats}}
+\newcommand{\Sqn}[1]{\Sq{#1}{n}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\lvert #1 \rvert}
+\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\Ceil}[1]{\lceil #1 \rceil}
+\newcommand{\Chev}[1]{\langle #1 \rangle}
+\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+
+\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
+\newcommand{\Markov}{\xrightarrow{\textnormal{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+
+% Paper specific
+
+% TBD
+
+\begin{document}
+
+[Previously](https://agentfoundations.org/item?id=1656) we derived a regret bound for DRL which assumed the advisor is "locally sane." Such an advisor can only take actions that don't lose any value in the long term. In particular, if the environment contains a latent *catastrophe* that manifests with a certain rate (such as the possibility of an UFAI), a locally sane advisor has to take the optimal course of action to mitigate it, since every delay yields a positive probability of the catastrophe manifesting and leading to permanent loss of value. This state of affairs is unsatisfactory, since we would like to have performance guarantees for an AI that can mitigate catastrophes that the human operator cannot mitigate on their own. To address this problem, we introduce a new form of DRL where in every hypothetical environment the set of uncorrupted states is divided into "dangerous" (impending catastrophe) and "safe" (catastrophe was mitigated). The advisor is then only required to be locally sane in safe states, whereas in dangerous states certain "leaking" of long-term value is allowed. We derive a regret bound in this setting as a function of the time discount factor, the expected value and standard deviation of the catastrophe mitigation time for the optimal policy, and the "value leak" rate (i.e. essentially the rate of catastrophe occurrence). The form of this regret bound implies that in certain asymptotic regimes, the agent attains near-optimal expected utility (and in particular mitigates the catastrophe with probability close to 1), whereas the advisor on its own *fails* to mitigate the catastrophe with probability close to 1. Thus, this formalism can be regarded as a simple model of aligned superintelligence: the agent is *aligned* since near-optimal utility is achieved despite the presence of corrupted states (which are treated more or less the same as before) and it is *super*intelligent since its performance is vastly better than the performance of the advisor.
+
+***
+
+Appendix A contains the proofs...
+
+\section{Notation}
+
+Whatever...
+
+\section{Results}
+
+Foo
+
+\#Definition 1
+
+Bar
+
+\#Lemma 1
+
+Foo
+
+***
+
+Bar
+
+\section{Appendix A}
+
+\#Proposition A.1
+
+Hahaha
+
+\#Proof of Proposition A.1
+
+Mwhahaha
+
+\end{document}
+
+
+
