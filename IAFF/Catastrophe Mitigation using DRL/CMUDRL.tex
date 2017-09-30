@@ -24,24 +24,37 @@
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Dom}{dom}
 
+% autosize deliminaters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+
 % operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
 \newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
 \newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
 \newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
 \newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
 \newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
 \newcommand{\Var}{\operatorname{Var}}
 
 % operators that require parentheses
-\newcommand{\Ent}{\operatorname{H}}
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
 \newcommand{\Hom}{\operatorname{Hom}}
 \newcommand{\End}{\operatorname{End}}
 \newcommand{\Sym}{\operatorname{Sym}}
 
 \newcommand{\Prj}{\operatorname{pr}}
 
+\newcommand{\D}{\mathrm{d}}
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
 \newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
 
 \newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
 \newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
@@ -91,14 +104,16 @@
 \DeclareMathOperator{\HD}{hdom}
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\UC}{\mathcal{U}}
-\newcommand{\Co}{\mathcal{C}}
+\newcommand{\SF}{\St^{\text{F}}}
+\newcommand{\SD}{\St^{\text{D}}}
+\newcommand{\SC}{\St^{\text{C}}}
 
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\V}{\operatorname{V}}
 \newcommand{\Q}{\operatorname{Q}}
 \newcommand{\EU}{\operatorname{EU}}
 
-\newcommand{\D}{\mathcal{D}}
+\newcommand{\Dl}{\mathcal{D}}
 \newcommand{\Do}{\mathfrak{D}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\B}{\mathcal{B}}
@@ -119,13 +134,89 @@ Whatever...
 
 \section{Results}
 
-We start by giving the new (weaker) condition on the advisor policy. For notational simplicity, we assume the policy is stationary. It is easy to generalize these results to non-stationary advisor policies and to policies that depend on irrelevant additional information (i.e. policies for universes that are *realizations* of the MDP).
+We start by formalising the concept of a "mitigable catastrophe" in the language of MDPs.
 
 \#Definition 1
 
-Consider an MDP $M$ and $\epsilon,\delta \in (0,1)$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* when there is a partition of $\St_M$ into subsets $\St_M:=\mathcal{S}_M^\text{F} \sqcup \mathcal{S}_M^\text{D} \sqcup \mathcal{S}_M^\text{C}$...
+Fix $\delta\in(0,1)$ and $\tau_1,\tau_2 \in (0,\infty)$. A *catastrophe MDP $M$ with $\delta$-mitigation policy $\pi^1: \St_M \M \A_M$ and moments $\tau_1,\tau_2$* is an MDP together with a partition of $\St_M$ into subsets $\St_M:=\SF_M \sqcup \SD_M \sqcup \SC_M$ (safe, dangerous and corrupt states respectively) and an initial state $s_0 \in \SD_M$ s.t.
 
-Bar
+i. $\pi^1$ is 1-optimal.
+
+ii. For any $s \in \SF_M$, $\T_{M\pi^1}\AP{\SF_M \mid s}=1$.
+
+iii. For any $s \in \SD_M$, $\T_{M\pi^1}\AP{\SC_M \mid s} < \delta$.
+
+iv. $$\sum_{n=0}^\infty n \AP{\T_{M\pi^1}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi^1}^{n}\AP{\SF_M \mid s_0}} \leq \tau_1$$
+
+v. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi^1}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi^1}^{n}\AP{\SF_M \mid s_0}} \leq \tau_2$$
+
+***
+
+Next, we introduce the notion of an MDP perturbation. We will use it by considering perturbations of a catastrophe MDP which "eliminate the catastrophe."
+
+\#Definition 2
+
+Fix $\delta\in(0,1)$ and consider a catastrophe MDP $M$ (in general, it doesn't have to be the same $\delta$ as in Definition 1). An MDP $\tilde{M}$ is said to be a *$\delta$-perturbation of $M$* when
+
+i. $\St_{\tilde{M}} = \St_M$
+
+ii. $\A_{\tilde{M}} = \A_M$
+
+iii. $\R_{\tilde{M}}=\R_M$
+
+iv. For any $s \in \SF_M$ and $a \in \A_M$, $\T_{\tilde{M}}\AP{s,a}=\T_{M}\AP{s,a}$
+
+v. For any $s \in \SD_M$ and $a \in \A_M$, $\Dtva{\T_{\tilde{M}}\AP{s,a},\T_{M}\AP{s,a}} < \delta$
+
+***
+
+Similarly, we can consider perturbations of a policy.
+
+\#Definition 3
+
+Fix $\delta\in(0,1)$ and consider a catastrophe MDP $M$. Given $\pi: \St_M \M \A_M$ and $\tilde{\pi}: \St_M \M \A_M$, $\tilde{\pi}$ is said to be a *$\delta$-perturbation of $\pi$* when
+
+i. For any $s \in \SF_M$, $\tilde{\pi}(s) = \pi(s)$.
+
+ii. For any $s \in \SD_M$, $\Dtva{\tilde{\pi}(s),\pi(s)} < \delta$.
+
+***
+
+We will also need to introduce policy-specific value functions and Q-functions.
+
+\#Definition 4
+
+Fix an MDP $M$ and $\pi: \St_M \M \A_M$. We define $\V_{M\pi}: \St_M \times (0,1) \rightarrow [0,1]$ and $\Q_{M\pi}: \St_M \times \A_M \times (0,1) \rightarrow [0,1]$ by
+
+$$\V_{M\pi}(s,\gamma) := (1-\gamma) \sum_{n=0}^\infty \gamma^n \Ea{\T_{M\pi}^n(s)}{\R_M}$$
+
+$$\Q_{M\pi}(s,a,\gamma) := (1-\gamma) \R_M(s) + \gamma \Ea{t \sim \T_{M\pi}(s)}{\V_{M\pi}(t,\gamma)}$$
+
+For each $k \in \Nats$, we also define $\V_{M\pi}^k: \St_M \rightarrow [0,1]$ and $\Q_{M\pi}^k: \St_M \times \A_M \rightarrow [0,1]$ by
+
+$$\V_{M\pi}^k(s) := \frac{\D^k \V_{M\pi}(s,\gamma)}{\D\gamma^k}\bigg\vert_{\gamma=1}$$
+
+$$\Q_{M\pi}^k(s,a) := \frac{\D^k \Q_{M\pi}(s,a,\gamma)}{\D\gamma^k}\bigg\vert_{\gamma=1}$$
+
+***
+
+Now we give the new (weaker) condition on the advisor policy. For notational simplicity, we assume the policy is stationary. It is easy to generalize these results to non-stationary advisor policies and to policies that depend on irrelevant additional information (i.e. policies for universes that are *realizations* of the MDP).
+
+\#Definition 5
+
+Fix $\epsilon,\delta \in (0,1)$. Consider a catastrophe MDP $M$ with $\delta$-mitigation policy $\pi^1: \St_M \M \A_M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
+
+i. For any $s \in \SF_M$, $\T_{M\pi}\AP{\SF_M \mid s} = 1$.
+
+ii. For any $s \in \SD_M$, $\T_{\tilde{M}\tilde{\pi}}\AP{\SC_M \mid s} = 0$.
+
+iii. For any $s \in \St_M \setminus \SC_M$, $\Ea{a \sim \tilde{\pi}(s)}{\Q_{\tilde{M}\pi^1}^0\AP{s,a}} \geq \V_{\tilde{M}\pi^1}^0\AP{s}$
+
+iv. if $s \in \St_M \setminus \SC_M$ is s.t. $\Ea{a \sim \tilde{\pi}(s)}{\Q_{\tilde{M}\pi^1}^0\AP{s,a}} = \V_{\tilde{M}\pi^1}^0\AP{s}$ then there is $a \in \A_M$ s.t. $\Q_{\tilde{M}\pi^1}^1\AP{s,a} \geq \V_{\tilde{M}\pi^1}^1\AP{s}$ and $\tilde{\pi}(a \mid s) > \epsilon$???
+
+v. Condition about 2nd order??
+
+If $M$ is an arbitrary MDP...
 
 \#Lemma 1
 
