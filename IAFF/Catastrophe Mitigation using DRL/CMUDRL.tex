@@ -107,6 +107,7 @@
 \newcommand{\SF}{\St^{\text{F}}}
 \newcommand{\SD}{\St^{\text{D}}}
 \newcommand{\SC}{\St^{\text{C}}}
+\newcommand{\MF}{M^{\text{F}}}
 
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\V}{\operatorname{V}}
@@ -134,17 +135,29 @@ Whatever...
 
 \section{Results}
 
-We start by formalising the concept of a "mitigable catastrophe" in the language of MDPs.
+We start by formalising the concepts of a "catastrophe" and "catastrophe mitigation" in the language of MDPs.
 
 \#Definition 1
 
-Fix $\delta\in(0,1)$ and $\tau_1,\tau_2 \in (0,\infty)$. A *catastrophe MDP $M$ with $\delta$-mitigation policy $\pi^1: \St_M \M \A_M$ and moments $\tau_1,\tau_2$* is an MDP together with a partition of $\St_M$ into subsets $\St_M:=\SF_M \sqcup \SD_M \sqcup \SC_M$ (safe, dangerous and corrupt states respectively) and an initial state $s_0 \in \SD_M$ s.t.
+Fix $\delta \in (0,1)$. A *$\delta$-catastrophe MDP* is an MDP $M$ together with a partition of $\St_M$ into subsets $\St_M:=\SF_M \sqcup \SD_M \sqcup \SC_M$ (safe, dangerous and corrupt states respectively) s.t. there is some $\pi^2: \St_M \rightarrow \A_M$ with the properties
+
+i. $\pi^2$ is 2-optimal.
+
+ii. For any $s \in \SF_M$, $\T_{M\pi^2}\AP{\SF_M \mid s}=1$.
+
+iii. For any $s \in \SD_M$, $\T_{M\pi^2}\AP{\SC_M \mid s} < \delta$.
+
+\#Definition 2
+
+Fix $\delta\in(0,1)$ and a $\delta$-catastrophe MDP $M$. Consider some $\pi^1: \St_M \rightarrow \A_M$. $\pi^1$ is said to be a *mitigation policy for $M$* when
 
 i. $\pi^1$ is 1-optimal.
 
 ii. For any $s \in \SF_M$, $\T_{M\pi^1}\AP{\SF_M \mid s}=1$.
 
 iii. For any $s \in \SD_M$, $\T_{M\pi^1}\AP{\SC_M \mid s} < \delta$.
+
+Fix $\tau_1,\tau_2 \in (0,\infty)$ and $s_0 \in \SD_M$. $\pi^1$ is said to have *mitigation time moments $\tau_1,\tau_2$ at $s_0$* when
 
 iv. $$\sum_{n=0}^\infty n \AP{\T_{M\pi^1}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi^1}^{n}\AP{\SF_M \mid s_0}} \leq \tau_1$$
 
@@ -154,9 +167,9 @@ v. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi^1}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi^1}^
 
 Next, we introduce the notion of an MDP perturbation. We will use it by considering perturbations of a catastrophe MDP which "eliminate the catastrophe."
 
-\#Definition 2
+\#Definition 3
 
-Fix $\delta\in(0,1)$ and consider a catastrophe MDP $M$ (in general, it doesn't have to be the same $\delta$ as in Definition 1). An MDP $\tilde{M}$ is said to be a *$\delta$-perturbation of $M$* when
+Fix $\delta,\delta'\in(0,1)$ and consider a $\delta'$-catastrophe MDP $M$. An MDP $\tilde{M}$ is said to be a *$\delta$-perturbation of $M$* when
 
 i. $\St_{\tilde{M}} = \St_M$
 
@@ -172,9 +185,9 @@ v. For any $s \in \SD_M$ and $a \in \A_M$, $\Dtva{\T_{\tilde{M}}\AP{s,a},\T_{M}\
 
 Similarly, we can consider perturbations of a policy.
 
-\#Definition 3
+\#Definition 4
 
-Fix $\delta\in(0,1)$ and consider a catastrophe MDP $M$. Given $\pi: \St_M \M \A_M$ and $\tilde{\pi}: \St_M \M \A_M$, $\tilde{\pi}$ is said to be a *$\delta$-perturbation of $\pi$* when
+Fix $\delta,\delta'\in(0,1)$ and consider a $\delta'$-catastrophe MDP $M$. Given $\pi: \St_M \M \A_M$ and $\tilde{\pi}: \St_M \M \A_M$, $\tilde{\pi}$ is said to be a *$\delta$-perturbation of $\pi$* when
 
 i. For any $s \in \SF_M$, $\tilde{\pi}(s) = \pi(s)$.
 
@@ -182,9 +195,9 @@ ii. For any $s \in \SD_M$, $\Dtva{\tilde{\pi}(s),\pi(s)} < \delta$.
 
 ***
 
-We will also need to introduce policy-specific value functions and Q-functions.
+We will also need to introduce policy-specific value functions, Q-functions and relatively $k$-optimal actions.
 
-\#Definition 4
+\#Definition 5
 
 Fix an MDP $M$ and $\pi: \St_M \M \A_M$. We define $\V_{M\pi}: \St_M \times (0,1) \rightarrow [0,1]$ and $\Q_{M\pi}: \St_M \times \A_M \times (0,1) \rightarrow [0,1]$ by
 
@@ -192,33 +205,55 @@ $$\V_{M\pi}(s,\gamma) := (1-\gamma) \sum_{n=0}^\infty \gamma^n \Ea{\T_{M\pi}^n(s
 
 $$\Q_{M\pi}(s,a,\gamma) := (1-\gamma) \R_M(s) + \gamma \Ea{t \sim \T_{M\pi}(s)}{\V_{M\pi}(t,\gamma)}$$
 
-For each $k \in \Nats$, we also define $\V_{M\pi}^k: \St_M \rightarrow [0,1]$ and $\Q_{M\pi}^k: \St_M \times \A_M \rightarrow [0,1]$ by
+For each $k \in \Nats$, we define $\V_{M\pi}^k: \St_M \rightarrow [0,1]$, $\Q_{M\pi}^k: \St_M \times \A_M \rightarrow [0,1]$ and $\A_{M\pi}^k: \St_M \rightarrow 2^{\A_M}$ by
 
 $$\V_{M\pi}^k(s) := \frac{\D^k \V_{M\pi}(s,\gamma)}{\D\gamma^k}\bigg\vert_{\gamma=1}$$
 
 $$\Q_{M\pi}^k(s,a) := \frac{\D^k \Q_{M\pi}(s,a,\gamma)}{\D\gamma^k}\bigg\vert_{\gamma=1}$$
 
+$$\A_{M\pi}^0(s) := \{a \in \A_M \mid \Q_{M\pi}^0(s,a) \geq \V_{M\pi}^0(s)\}$$
+
+$$\A_{M\pi}^{k+1}(s) := \{a \in \A_{M\pi}^k(s) \mid \Q_{M\pi}^{k+1}(s,a) \geq \V_{M\pi}^{k+1}(s) \text{ or } \exists j \leq k: \Q_{M\pi}^{j}(s,a) > \V_{M\pi}^{j}(s)\}$$
+
 ***
 
 Now we give the new (weaker) condition on the advisor policy. For notational simplicity, we assume the policy is stationary. It is easy to generalize these results to non-stationary advisor policies and to policies that depend on irrelevant additional information (i.e. policies for universes that are *realizations* of the MDP).
 
-\#Definition 5
+\#Definition 6
 
-Fix $\epsilon,\delta \in (0,1)$. Consider a catastrophe MDP $M$ with $\delta$-mitigation policy $\pi^1: \St_M \M \A_M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
+Fix $\epsilon,\delta \in (0,1)$. Consider a $\delta$-catastrophe MDP $M$ with mitigation policy $\pi^1: \St_M\ \rightarrow A_M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $M$ when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
 
-i. For any $s \in \SF_M$, $\T_{M\pi}\AP{\SF_M \mid s} = 1$.
+i. For any $s \in \SF_M$: $$\T_{M\pi}\AP{\SF_M \mid s} = 1$$
 
-ii. For any $s \in \SD_M$, $\T_{\tilde{M}\tilde{\pi}}\AP{\SC_M \mid s} = 0$.
+ii. For any $s \in \SD_M$: $$\T_{\tilde{M}\tilde{\pi}}\AP{\SC_M \mid s} = 0$$
 
-iii. For any $s \in \St_M \setminus \SC_M$, $\Ea{a \sim \tilde{\pi}(s)}{\Q_{\tilde{M}\pi^1}^0\AP{s,a}} \geq \V_{\tilde{M}\pi^1}^0\AP{s}$
+iii. For any $s \in \St_M \setminus \SC_M$: $$\Supp{\tilde{\pi}(s)} \subseteq \A_{\tilde{M}\pi^1}^0(s)$$
 
-iv. if $s \in \St_M \setminus \SC_M$ is s.t. $\Ea{a \sim \tilde{\pi}(s)}{\Q_{\tilde{M}\pi^1}^0\AP{s,a}} = \V_{\tilde{M}\pi^1}^0\AP{s}$ then there is $a \in \A_M$ s.t. $\Q_{\tilde{M}\pi^1}^1\AP{s,a} \geq \V_{\tilde{M}\pi^1}^1\AP{s}$ and $\tilde{\pi}(a \mid s) > \epsilon$???
+iv. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}(\pi^1(s) \mid s) > \epsilon$$
 
-v. Condition about 2nd order??
+For $M$ an arbitrary MDP, $s_0 \in \St_M$ and $\tau_1,\tau_2 \in (0,\infty)$, we say $\pi$ is *locally $(\epsilon,\delta)$-sane for $(M,s_0)$ with moments $\tau_1,\tau_2$* when *either* $\pi$ is locally $\epsilon$-sane for $(M,s_0)$ *or* there is *some* way to view $M$ as a $\delta$-catastrophe MDP with $s_0 \in \SD_M$ such that the corresponding mitigation policy $\pi^1$ has moments $\tau_1,\tau_2$ at $s_0$ and $\pi$ is locally $(\epsilon,\delta)$-sane for $M$ in the corresponding sense.
 
-If $M$ is an arbitrary MDP...
+***
 
-\#Lemma 1
+Note that a locally $(\epsilon,\delta)$-sane policy still has to be $0$-optimal in $\SF_M$. This requirement seems reasonably realistic, since, roughly speaking, it only means that there is *some* way to "rearrange the universe" that the agent can achieve, and that would be "endorsed" by the advisor, s.t this rearrangement doesn't destroy substantially much value and s.t. after this rearrangement, there is no "impending catastrophe" that the agent has to prevent and the advisor wouldn't be able to prevent in its place. In particular, this rearrangement may involve creating some subagents inside the environment and *destroying the original agent*, in which case any policy on $\SF_M$ is "vacuously" optimal (since all actions have no effect).
+
+We can now formulate the main result.
+
+\#Theorem 1
+
+Fix $N \in \Nats$, $\epsilon \in (0,1)$, $\A$ a finite set and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now consider for each $k \in [N]$, an MDP $M_k$ s.t.
+
+i. $\A_{M_k} = \A$
+
+ii. $\St_{M_k} \supseteq \St_{\MF_k}$
+
+iii. For each $s \in \St_{\MF_k}$ and $a \in \A$, $\T_{M_k}(s,a) \mid \St_{\MF_k} = \T_{\MF_k}(s,a)$.
+
+iv. For each $s \in \St_{\MF_k}$, $\R_{M_k}(s)=\R_{\MF_k}(s)$.
+
+Consider also $\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$, $s^k_0 \in \St_{M_k}$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $(M_k,s^k_0)$ with moments $\tau_{1,2}$. We assume that for each $k \in \Nats$ s.t. $M_k$ should be regarded as a catastrophe MDP (for the purpose of $\sigma^k$'s sanity), $\St_{\MF_k} = \SF_{M_k}$.
+
+Let $\Ob:= \prod_k \St_{M_k}$ and $\In=(\A,\Ob)$. Define the $\In$-universe $\upsilon^k=(\mu^k,r^k)$ by... %reward functions should be compatible... The classical formulation is having a known state space, and each hypothesis corresponds to a different transition tensor + reward vector
 
 Foo
 
