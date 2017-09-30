@@ -24,16 +24,27 @@
 \DeclareMathOperator{\Img}{Im}
 \DeclareMathOperator{\Dom}{dom}
 
+% autosize deliminaters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+
 % operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
 \newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
 \newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
 \newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
 \newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
 \newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
 \newcommand{\Var}{\operatorname{Var}}
 
 % operators that require parentheses
-\newcommand{\Ent}{\operatorname{H}}
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
 \newcommand{\Hom}{\operatorname{Hom}}
 \newcommand{\End}{\operatorname{End}}
 \newcommand{\Sym}{\operatorname{Sym}}
@@ -42,6 +53,7 @@
 
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
 \newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
 
 \newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
 \newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
