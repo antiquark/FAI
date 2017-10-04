@@ -229,9 +229,9 @@ ii. For any $s \in \SD_M$: $$\T_{\tilde{M}\tilde{\pi}}\AP{\SC_M \mid s} = 0$$
 
 iii. For any $s \in \St_M \setminus \SC_M$: $$\Supp{\tilde{\pi}(s)} \subseteq \A_{\tilde{M}\pi^1}^0(s)$$
 
-iv. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}(\pi^1(s) \mid s) > \epsilon$$
+iv. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}\AP{\pi^1(s) \mid s} > \epsilon$$
 
-For $M$ an arbitrary MDP, $s_0 \in \St_M$ and $\tau_1,\tau_2 \in (0,\infty)$, we say $\pi$ is *locally $(\epsilon,\delta)$-sane for $(M,s_0)$ with moments $\tau_1,\tau_2$* when *either* $\pi$ is locally $\epsilon$-sane for $(M,s_0)$ *or* there is *some* way to view $M$ as a $\delta$-catastrophe MDP with $s_0 \in \SD_M$ such that the corresponding mitigation policy $\pi^1$ has moments $\tau_1,\tau_2$ at $s_0$ and $\pi$ is locally $(\epsilon,\delta)$-sane for $M$ in the corresponding sense.
+\Comment{For $M$ an arbitrary MDP, $s_0 \in \St_M$ and $\tau_1,\tau_2 \in (0,\infty)$, we say $\pi$ is *locally $(\epsilon,\delta)$-sane for $\AP{M,s_0}$ with moments $\tau_1,\tau_2$* when *either* $\pi$ is locally $\epsilon$-sane for $\AP{M,s_0}$ *or* there is *some* way to view $M$ as a $\delta$-catastrophe MDP with $s_0 \in \SD_M$ such that the corresponding mitigation policy $\pi^1$ has moments $\tau_1,\tau_2$ at $s_0$ and $\pi$ is locally $(\epsilon,\delta)$-sane for $M$ in the corresponding sense.}
 
 ***
 
@@ -241,23 +241,27 @@ We can now formulate the main result.
 
 \#Theorem 1
 
-Fix $N \in \Nats$, $\epsilon \in (0,1)$, $\A$ a finite set and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now consider for each $k \in [N]$, an MDP $M_k$ s.t.
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,1)$ and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r^k)$ which is an $\Ob$-realization of a catastrophe MDP $M_k$ with state function $S^k$ s.t.
 
-i. $\A_{M_k} = \A$
+i. $\SF_{M_k} = \St_{\MF_k}$
 
-ii. $\St_{M_k} \supseteq \St_{\MF_k}$
+ii. For each $s \in \St_{\MF_k}$ and $a \in \A$, $\T_{M_k}(s,a) \mid \St_{\MF_k} = \T_{\MF_k}(s,a)$.
 
-iii. For each $s \in \St_{\MF_k}$ and $a \in \A$, $\T_{M_k}(s,a) \mid \St_{\MF_k} = \T_{\MF_k}(s,a)$.
+iii. For each $s \in \St_{\MF_k}$, $\R_{M_k}(s)=\R_{\MF_k}(s)$.
 
-iv. For each $s \in \St_{\MF_k}$, $\R_{M_k}(s)=\R_{\MF_k}(s)$.
+iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \St_{M^k} \setminus \SC_{M^k}$ and $S^j(h) \in \St_{M^j} \setminus \SC_{M^j}$, then $r^k(h)=r^j(h)$.
 
-Consider also $\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$, $s^k_0 \in \St_{M_k}$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $(M_k,s^k_0)$ with moments $\tau_{1,2}$. We assume that for each $k \in \Nats$ s.t. $M_k$ should be regarded as a catastrophe MDP (for the purpose of $\sigma^k$'s sanity), $\St_{\MF_k} = \SF_{M_k}$.
+Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M_k$. Assume $M_k$ has a mitigation policy with mitigation time moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
-Let $\Ob:= \prod_k \St_{M_k}$ and $\In=(\A,\Ob)$. Define the $\In$-universe $\upsilon^k=(\mu^k,r^k)$ by... %reward functions should be compatible... The classical formulation is having a known state space, and each hypothesis corresponds to a different transition tensor + reward vector
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha) = O\AP{\tau_2 \alpha + (\tau_1 \alpha)^{1/4} + \delta \AP{\tau_2 + \tau_1 \alpha^{-3/4}}}$$
 
-Foo
+Here, $\epsilon$ and the $\MF_k$ are regarded as *fixed* and we don't explicitly examine their effect on regret, whereas $\alpha$, $\delta$, $\tau_{1,2}$ and the $M_k$ are regarded as variable with the asymptotics $\alpha,\delta \rightarrow 0$, $\tau_{1,2} \rightarrow \infty$.
 
 ***
+
+% Why fixing \MF_k is not a strong requirement...
+% Discussion of asymptotics when advisor does poorly and agent does well...
+% Implications for "structural" case...
 
 Bar
 
