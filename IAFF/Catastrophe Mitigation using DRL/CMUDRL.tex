@@ -249,7 +249,7 @@ ii. For each $s \in \St_{\MF_k}$ and $a \in \A$, $\T_{M_k}(s,a) \mid \St_{\MF_k}
 
 iii. For each $s \in \St_{\MF_k}$, $\R_{M_k}(s)=\R_{\MF_k}(s)$.
 
-iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \St_{M^k} \setminus \SC_{M^k}$ and $S^j(h) \in \St_{M^j} \setminus \SC_{M^j}$, then $r^k(h)=r^j(h)$.
+iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \St_{M^k} \setminus \SC_{M^k}$ and $S^j(h) \in \St_{M^j} \setminus \SC_{M^j}$, then $r^k(h)=r^j(h)$ (this condition means that in uncorrupted states, the reward is observable).
 
 Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M_k$. Assume $M_k$ has a mitigation policy with mitigation time moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
@@ -259,11 +259,49 @@ Here, $\epsilon$ and the $\MF_k$ are regarded as *fixed* and we don't explicitly
 
 ***
 
-% Why fixing \MF_k is not a strong requirement...
-% Discussion of asymptotics when advisor does poorly and agent does well...
-% Implications for "structural" case...
+To clarify the significance of Theorem 1, we give a simple example.
 
-Bar
+\#Example 1
+
+Let $\A = \{0,1,*\}$, $\Ob=\Bool$. For any $i \in \Nats$ and $k \in [N]$, we fix some $w_i^k \in \Bool^i$ and define the catastrophe MDP $M_i^k$ by
+
+* $\SD_{M_i^k} = \Bool^{\leq i}$, $\SF_{M_i^k} = \{\bot,\top\}$, $\SC_{M_i^k} = \varnothing$ (adding corrupted states is an easy exercise).
+
+* If $x \in \Bool^{< i}$ and $a \in \Bool$ then 
+
+$$\T_{M_i^k}(xa \mid x,a) = 1 - \delta$$
+
+$$\T_{M_i^k}(\bot \mid x,a) = \delta$$
+
+$$\T_{M_i^k}(x \mid xa,*) = 1 - \delta$$
+
+$$\T_{M_i^k}(\bot \mid xa,*) = \delta$$
+
+* If $x = w_i^k$ and $a \in {0,1}$ then
+
+$$\T_{M_i^k}(\top \mid x,a) = 1$$
+
+* If $x \in \Bool^i \setminus w_i^k$ and $a \in {0,1}$ then
+
+$$\T_{M_i^k}(\bot \mid x,a) = 1$$
+
+* If $x \in \{\bot,\top\}$ and $a \in \A$ then
+
+$$\T_{M_i^k}(x \mid x,a) = 1$$
+
+* $\R_{M_i^k}(\bot)=0$, if $x \in \St_{M_i^k} \setminus \bot$ then $\R_{M_i^k}(x)=1$.
+
+* $S^k(\Estr_{\A \times \Ob})=\Estr_{\Bool}$...
+
+?
+
+***
+
+TBD
+
+% Discussion of asymptotics when advisor does poorly and agent does well...
+% Why fixing \MF_k is not a strong requirement...
+% Implications for "structural" case...
 
 \section{Appendix A}
 
