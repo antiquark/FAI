@@ -108,6 +108,8 @@
 \newcommand{\SD}{\St^{\text{D}}}
 \newcommand{\SC}{\St^{\text{C}}}
 \newcommand{\MF}{M^{\text{F}}}
+\newcommand{\MD}{M^{\text{D}}}
+\newcommand{\ME}{M^{\text{E}}}
 \newcommand{\TF}{\tau^{\text{F}}}
 
 \newcommand{\Ut}{\operatorname{U}}
@@ -342,7 +344,7 @@ Here, $\epsilon$ is regarded as *fixed* and we don't explicitly examine its effe
 
 ***
 
-TBD: Proof of Lemma A.N1
+TBD: Proof of Lemma A.N1 % Considering doing it in Appendix B
 
 \#Proposition A.N2
 
@@ -366,9 +368,43 @@ b. For any $s \in \St_M$, $\Abs{\V^2_{M\pi}(s)} = O\AP{\TF_2 + \TF_1 \tau_1 + \t
 
 ***
 
-Note that Proposition A.N2 is really about Markov chains rather than MDPs, but don't make it explicit to avoid introduce more notation.
+Note that Proposition A.N2 is really about Markov chains rather than MDPs, but don't make it explicit to avoid introducing more notation.
 
 TBD: Proof of Proposition A.N2
+
+\#Definition A.N2
+
+Fix $\delta\in(0,1)$ and consider $M$ a $\delta$-catastrophe MDP. We define the MDPs $\MD$ and $\ME$ as follows.
+
+* $\St_{\MD} = \SD_M \sqcup \{\bot,\top\}$...
+
+?
+
+\#Proposition A.N3
+
+% Given regret wrt \MD and \ME implies regret wrt M...
+
+?
+
+***
+
+TBD: Proof of Proposition A.N3
+
+\#Proposition A.N4
+
+% Given regret wrt a \delta-perturbation of M we get regret wrt M?
+% Needs assumption on mitigation time...
+% Role of \delta-perturbation of policy... ?
+
+?
+
+***
+
+TBD: Proof of Proposition A.N4
+
+\#Proof of Theorem 1
+
+TBD
 
 \end{document}
 
