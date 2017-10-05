@@ -253,13 +253,13 @@ iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \
 
 Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M_k$. Assume $M_k$ has a mitigation policy with mitigation time moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha) = O\AP{\tau_2 \alpha + (\tau_1 \alpha)^{1/4} + \delta \AP{\tau_2 + \tau_1 \alpha^{-3/4}}}$$
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}^{\pi^*}(1-\alpha) = O\AP{\tau_2 \alpha + (\tau_1 \alpha)^{1/4} + \delta \AP{\tau_2 + \tau_1 \alpha^{-3/4}}}$$
 
 Here, $\epsilon$ and the $\MF_k$ are regarded as *fixed* and we don't explicitly examine their effect on regret, whereas $\alpha$, $\delta$, $\tau_{1,2}$ and the $M_k$ are regarded as variable with the asymptotics $\alpha,\delta \rightarrow 0$, $\tau_{1,2} \rightarrow \infty$.
 
 ***
 
-To clarify the significance of Theorem 1, we give a simple example.
+To clarify the behavior of the regret bound, we give a simple example.
 
 \#Example 1
 
@@ -267,39 +267,48 @@ Let $\A = \{0,1,*\}$, $\Ob=\Bool$. For any $i \in \Nats$ and $k \in [N]$, we fix
 
 * $\SD_{M_i^k} = \Bool^{\leq i}$, $\SF_{M_i^k} = \{\bot,\top\}$, $\SC_{M_i^k} = \varnothing$ (adding corrupted states is an easy exercise).
 
-* If $x \in \Bool^{< i}$ and $a \in \Bool$ then 
+* If $s \in \Bool^{< i}$ and $a \in \Bool$ then 
 
-$$\T_{M_i^k}(xa \mid x,a) = 1 - \delta$$
+$$\T_{M_i^k}(sa \mid s,a) = 1 - \delta$$
 
-$$\T_{M_i^k}(\bot \mid x,a) = \delta$$
+$$\T_{M_i^k}(\bot \mid s,a) = \delta$$
 
-$$\T_{M_i^k}(x \mid xa,*) = 1 - \delta$$
+$$\T_{M_i^k}(s \mid sa,*) = 1 - \delta$$
 
-$$\T_{M_i^k}(\bot \mid xa,*) = \delta$$
+$$\T_{M_i^k}(\bot \mid sa,*) = \delta$$
 
-* If $x = w_i^k$ and $a \in {0,1}$ then
+* If $a \in {0,1}$ then
 
-$$\T_{M_i^k}(\top \mid x,a) = 1$$
+$$\T_{M_i^k}(\top \mid w_i^k,a) = 1$$
 
-* If $x \in \Bool^i \setminus w_i^k$ and $a \in {0,1}$ then
+* If $s \in \Bool^i \setminus w_i^k$ and $a \in {0,1}$ then
 
-$$\T_{M_i^k}(\bot \mid x,a) = 1$$
+$$\T_{M_i^k}(\bot \mid s,a) = 1$$
 
-* If $x \in \{\bot,\top\}$ and $a \in \A$ then
+* If $s \in \{\bot,\top\}$ and $a \in \A$ then
 
-$$\T_{M_i^k}(x \mid x,a) = 1$$
+$$\T_{M_i^k}(s \mid s,a) = 1$$
 
-* $\R_{M_i^k}(\bot)=0$, if $x \in \St_{M_i^k} \setminus \bot$ then $\R_{M_i^k}(x)=1$.
+* $\R_{M_i^k}(\bot)=0$, if $s \in \St_{M_i^k} \setminus \bot$ then $\R_{M_i^k}(s)=1$.
 
-* $S^k(\Estr_{\A \times \Ob})=\Estr_{\Bool}$...
+* $S_i^k(\Estr_{\A \times \Ob})=\Estr_{\Bool}$ and $S_i^k(hao)=\bot$ iff $o = 0$ (this defines a unique $S_i^k$).
 
-?
+* If $s \in \Bool^{<i} \cup \{\bot,\top\}$ then $\sigma_i^k(a \mid s) = \frac{1}{3}$ for any $a \in \A$.
+
+* $\sigma_i^k(0 \mid w_i^k) = \epsilon$, $\sigma_i^k(* \mid w_i^k) = 1 - \epsilon$.
+
+* If $s \in \Bool^i \setminus w_i^k$ then $\sigma_i^k(0 \mid s) = \delta$, $\sigma_i^k(* \mid s) = 1 - \delta$.
+
+We can take $\tau_1 = i$, $\tau_2 = 0$. Fix any $\lambda \in (0,\infty)$ and consider the asymptotic regime $i \rightarrow \infty$, $\alpha_i = \Theta\Big(i^{-1-\lambda}\Big)$, $\delta_i = O\AP{i^{-7/4-\lambda}}$. According to Theorem 1, we get
+
+$$\EU_{\upsilon_i^k}^*(1-\alpha_i) - \EU_{\bar{\upsilon}_i^k\AB{\sigma_i^k}}^{\pi_i^*}(1-\alpha_i) = O\AP{\AP{i \cdot i^{-1-\lambda}}^{1/4}+i^{-7/4-\lambda}\cdot i \cdot \AP{i^{-1-\lambda}}^{-3/4}} = O\AP{i^{-\lambda/4}}$$
+
+The probability of a catastrophe (i.e ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{i\delta}=O\AP{i^{-3/4-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_i^*$ is $O\AP{i^{-3/4-\lambda}+i^{-\lambda/4}}=O\AP{i^{-\lambda/4}}$. On the other hand, it is easy to see that for $\delta_i = \omega\AP{2^{-i}}$, the policy $\sigma_i^k$ has a probability of catastrophe is $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^i)$ time randomly exploring $\Bool^{\leq i}$ with a probability $\delta$ of a catastrophe on every step.
 
 ***
 
 TBD
 
-% Discussion of asymptotics when advisor does poorly and agent does well...
 % Why fixing \MF_k is not a strong requirement...
 % Implications for "structural" case...
 
