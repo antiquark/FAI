@@ -241,21 +241,21 @@ We can now formulate the main result.
 
 \#Theorem 1
 
-Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,1)$ and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r^k)$ which is an $\Ob$-realization of a catastrophe MDP $M_k$ with state function $S^k$ s.t.
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,1)$ and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now, consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r^k)$ which is an $\Ob$-realization of a catastrophe MDP $M^k$ with state function $S^k$ s.t.
 
-i. $\SF_{M_k} = \St_{\MF_k}$
+i. $\SF_{M^k} = \St_{\MF_k}$
 
-ii. For each $s \in \St_{\MF_k}$ and $a \in \A$, $\T_{M_k}(s,a) \mid \St_{\MF_k} = \T_{\MF_k}(s,a)$.
+ii. For each $s \in \St_{\MF_k}$ and $a \in \A$, $\T_{M^k}(s,a) \mid \St_{\MF_k} = \T_{\MF_k}(s,a)$.
 
-iii. For each $s \in \St_{\MF_k}$, $\R_{M_k}(s)=\R_{\MF_k}(s)$.
+iii. For each $s \in \St_{\MF_k}$, $\R_{M^k}(s)=\R_{\MF_k}(s)$.
 
 iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \St_{M^k} \setminus \SC_{M^k}$ and $S^j(h) \in \St_{M^j} \setminus \SC_{M^j}$, then $r^k(h)=r^j(h)$ (this condition means that in uncorrupted states, the reward is observable).
 
-Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M_k$. Assume $M_k$ has a mitigation policy with mitigation time moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
+Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M^k$. Assume $M^k$ has a mitigation policy with mitigation time moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
 $$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}^{\pi^*}(1-\alpha) = O\AP{\tau_2 \alpha + (\tau_1 \alpha)^{1/4} + \delta \AP{\tau_2 + \tau_1 \alpha^{-3/4}}}$$
 
-Here, $\epsilon$ and the $\MF_k$ are regarded as *fixed* and we don't explicitly examine their effect on regret, whereas $\alpha$, $\delta$, $\tau_{1,2}$ and the $M_k$ are regarded as variable with the asymptotics $\alpha,\delta \rightarrow 0$, $\tau_{1,2} \rightarrow \infty$.
+Here, $\epsilon$ and the $\MF_k$ are regarded as *fixed* and we don't explicitly examine their effect on regret, whereas $\alpha$, $\delta$, $\tau_{1,2}$ and the $M^k$ are regarded as variable with the asymptotics $\alpha,\delta \rightarrow 0$, $\tau_{1,2} \rightarrow \infty$.
 
 ***
 
@@ -263,64 +263,81 @@ To clarify the behavior of the regret bound, we give a simple example.
 
 \#Example 1
 
-Let $\A = \{0,1,*\}$, $\Ob=\Bool$. For any $i \in \Nats$ and $k \in [N]$, we fix some $w_i^k \in \Bool^i$ and define the catastrophe MDP $M_i^k$ by
+Let $\A = \{0,1,*\}$, $\Ob=\Bool$. For any $n \in \Nats$ and $k \in [N]$, we fix some $w_n^k \in \Bool^n$ and define the catastrophe MDP $M_n^k$ by
 
-* $\SD_{M_i^k} = \Bool^{\leq i}$, $\SF_{M_i^k} = \{\bot,\top\}$, $\SC_{M_i^k} = \varnothing$ (adding corrupted states is an easy exercise).
+* $\SD_{M_n^k} = \Bool^{\leq n}$, $\SF_{M_n^k} = \{\bot,\top\}$, $\SC_{M_n^k} = \varnothing$ (adding corrupted states is an easy exercise).
 
-* If $s \in \Bool^{< i}$ and $a \in \Bool$ then 
+* If $s \in \Bool^{< n}$ and $a \in \Bool$ then 
 
-$$\T_{M_i^k}(sa \mid s,a) = 1 - \delta$$
+$$\T_{M_n^k}(sa \mid s,a) = 1 - \delta$$
 
-$$\T_{M_i^k}(\bot \mid s,a) = \delta$$
+$$\T_{M_n^k}(\bot \mid s,a) = \delta$$
 
-$$\T_{M_i^k}(s \mid sa,*) = 1 - \delta$$
+$$\T_{M_n^k}(s \mid sa,*) = 1 - \delta$$
 
-$$\T_{M_i^k}(\bot \mid sa,*) = \delta$$
+$$\T_{M_n^k}(\bot \mid sa,*) = \delta$$
 
 * If $a \in {0,1}$ then
 
-$$\T_{M_i^k}(\top \mid w_i^k,a) = 1$$
+$$\T_{M_n^k}(\top \mid w_n^k,a) = 1$$
 
-* If $s \in \Bool^i \setminus w_i^k$ and $a \in {0,1}$ then
+* If $s \in \Bool^n \setminus w_n^k$ and $a \in {0,1}$ then
 
-$$\T_{M_i^k}(\bot \mid s,a) = 1$$
+$$\T_{M_n^k}(\bot \mid s,a) = 1$$
 
 * If $s \in \{\bot,\top\}$ and $a \in \A$ then
 
-$$\T_{M_i^k}(s \mid s,a) = 1$$
+$$\T_{M_n^k}(s \mid s,a) = 1$$
 
-* $\R_{M_i^k}(\bot)=0$, if $s \in \St_{M_i^k} \setminus \bot$ then $\R_{M_i^k}(s)=1$.
+* $\R_{M_n^k}(\bot)=0$, if $s \in \St_{M_n^k} \setminus \bot$ then $\R_{M_n^k}(s)=1$.
 
-* $S_i^k(\Estr_{\A \times \Ob})=\Estr_{\Bool}$ and $S_i^k(hao)=\bot$ iff $o = 0$ (this defines a unique $S_i^k$).
+* $S_n^k(\Estr_{\A \times \Ob})=\Estr_{\Bool}$ and $S_n^k(hao)=\bot$ iff $o = 0$ (this defines a unique $S_n^k$).
 
-* If $s \in \Bool^{<i} \cup \{\bot,\top\}$ then $\sigma_i^k(a \mid s) = \frac{1}{3}$ for any $a \in \A$.
+* If $s \in \Bool^{<n} \cup \{\bot,\top\}$ then $\sigma_n^k(a \mid s) = \frac{1}{3}$ for any $a \in \A$.
 
-* $\sigma_i^k(0 \mid w_i^k) = \epsilon$, $\sigma_i^k(* \mid w_i^k) = 1 - \epsilon$.
+* $\sigma_n^k(0 \mid w_n^k) = \epsilon$, $\sigma_n^k(* \mid w_n^k) = 1 - \epsilon$.
 
-* If $s \in \Bool^i \setminus w_i^k$ then $\sigma_i^k(0 \mid s) = \delta$, $\sigma_i^k(* \mid s) = 1 - \delta$.
+* If $s \in \Bool^n \setminus w_n^k$ then $\sigma_n^k(0 \mid s) = \delta$, $\sigma_n^k(* \mid s) = 1 - \delta$.
 
-We can take $\tau_1 = i$, $\tau_2 = 0$. Fix any $\lambda \in (0,\infty)$ and consider the asymptotic regime $i \rightarrow \infty$, $\alpha_i = \Theta\Big(i^{-1-\lambda}\Big)$, $\delta_i = O\AP{i^{-7/4-\lambda}}$. According to Theorem 1, we get
+We can take $\tau_1 = n$, $\tau_2 = 0$. Fix any $\lambda \in (0,\infty)$ and consider the asymptotic regime $n \rightarrow \infty$, $\alpha_n = \Theta\Big(n^{-1-\lambda}\Big)$, $\delta_n = O\AP{n^{-7/4-\lambda}}$. According to Theorem 1, we get
 
-$$\EU_{\upsilon_i^k}^*(1-\alpha_i) - \EU_{\bar{\upsilon}_i^k\AB{\sigma_i^k}}^{\pi_i^*}(1-\alpha_i) = O\AP{\AP{i \cdot i^{-1-\lambda}}^{1/4}+i^{-7/4-\lambda}\cdot i \cdot \AP{i^{-1-\lambda}}^{-3/4}} = O\AP{i^{-\lambda/4}}$$
+$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{\AP{n \cdot n^{-1-\lambda}}^{1/4}+n^{-7/4-\lambda}\cdot n \cdot \AP{n^{-1-\lambda}}^{-3/4}} = O\AP{n^{-\lambda/4}}$$
 
-The probability of a catastrophe (i.e ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{i\delta}=O\AP{i^{-3/4-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_i^*$ is $O\AP{i^{-3/4-\lambda}+i^{-\lambda/4}}=O\AP{i^{-\lambda/4}}$. On the other hand, it is easy to see that for $\delta_i = \omega\AP{2^{-i}}$, the policy $\sigma_i^k$ has a probability of catastrophe is $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^i)$ time randomly exploring $\Bool^{\leq i}$ with a probability $\delta$ of a catastrophe on every step.
+The probability of a catastrophe (n.e ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{n\delta}=O\AP{n^{-3/4-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_n^*$ is $O\AP{n^{-3/4-\lambda}+n^{-\lambda/4}}=O\AP{n^{-\lambda/4}}$. On the other hand, it is easy to see that for $\delta_n = \omega\AP{2^{-n}}$, the policy $\sigma_n^k$ has a probability of catastrophe is $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^n)$ time "exploring" $\Bool^{\leq n}$ with a probability $\delta$ of a catastrophe on every step.
+
+Note that this example can be interpreted as a version of Christiano's [approval-directed agent](https://ai-alignment.com/model-free-decisions-6e6609f5d99e), if we regard the state $s \in \Bool^{i}$ as a "plan of action" that the advisor may either approve or not. But in this formalism, it is a special case of consequentialist reasoning.
 
 ***
 
-TBD
-
-% Why fixing \MF_k is not a strong requirement...
-% Implications for "structural" case...
+Theorem 1 speaks of a finite set of environments, but as before (see Proposition 1 [here](https://agentfoundations.org/item?id=1550) and Corollary 3 [here](https://agentfoundations.org/item?id=1656)), there is a "structural" equivalent, n.e. we can use it to produce corollaries about Bayesian agents with priors over a countable set of environments. The difference is, in this case we consider asymptotic regimes in which the environment is also variable, so the probability weight of the environment in the prior will affect the regret bound. We leave out the details for now.
 
 \section{Appendix A}
 
-\#Proposition A.1
+We start by deriving a more general and more precise version of the non-catastrophic regret bound, in which the optimal policy is replaced by an arbitrary "reference policy" (later it will be related to the mitigation policy) and the dependence on the MDPs is expressed via a bound on their $\V^1$ and $\V^2$ functions.
 
-Hahaha
+\#Definition A.N1
 
-\#Proof of Proposition A.1
+Fix $\epsilon\in(0,1)$. Consider an MDP $M$ and policies $\pi,\sigma: \St_M \M \A_M$. $\sigma$ is called *$\epsilon$-sane relatively to $\pi$* when for any $s \in \St_M$
 
-Mwhahaha
+i. $\Supp{\sigma(s)} \subseteq \A_{M\pi}^0$
+
+ii. There is $a \in \A_{M\pi}^1$ s.t. $\sigma(a \mid s) > \epsilon$.
+
+\#Lemma A.N1
+
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$ and $\epsilon \in (0,1)$. Now, consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r)$ which is an $\Ob$-realization of an MDP $M_k$ with state function $S^k$ and policies $\pi^k,\sigma^k: \St_{M^k} \M \A$. Consider also $\alpha\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and assume that 
+
+i. $\sigma^k$ is $\epsilon$-sane relatively to $\pi^k$.
+
+ii. For any $s \in \St_{M^k}$, $\Abs{\V^1_{M^k\pi^k}(s)} \leq \tau_1$.
+
+iii. For any $s \in \St_{M^k}$, $\Abs{\V^2_{M^k\pi^k}(s)} \leq \tau_2$.
+
+Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
+
+$$\EU_{\upsilon^k}^{\pi^k}(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}^{\pi^*}(1-\alpha) \leq O\AP{\tau_2 \alpha + (\tau_1 \alpha)^{1/4}}$$
+
+Here, $\epsilon$ is regarded as *fixed* and we don't explicitly examine its effect on regret, whereas $\alpha$, $\tau_{1,2}$ and the $M_k$ are regarded as variable with the asymptotics $\alpha \rightarrow 0$, $\tau_{1,2} \rightarrow \infty$.
 
 \end{document}
 
