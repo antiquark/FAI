@@ -108,6 +108,7 @@
 \newcommand{\SD}{\St^{\text{D}}}
 \newcommand{\SC}{\St^{\text{C}}}
 \newcommand{\MF}{M^{\text{F}}}
+\newcommand{\TF}{\tau^{\text{F}}}
 
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\V}{\operatorname{V}}
@@ -241,7 +242,7 @@ We can now formulate the main result.
 
 \#Theorem 1
 
-Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,1)$ and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now, consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r^k)$ which is an $\Ob$-realization of a catastrophe MDP $M^k$ with state function $S^k$ s.t.
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,1)$ and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now, consider $\delta\in(0,1)$ and for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r^k)$ which is an $\Ob$-realization of a $\delta$-catastrophe MDP $M^k$ with state function $S^k$ s.t.
 
 i. $\SF_{M^k} = \St_{\MF_k}$
 
@@ -251,7 +252,7 @@ iii. For each $s \in \St_{\MF_k}$, $\R_{M^k}(s)=\R_{\MF_k}(s)$.
 
 iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \St_{M^k} \setminus \SC_{M^k}$ and $S^j(h) \in \St_{M^j} \setminus \SC_{M^j}$, then $r^k(h)=r^j(h)$ (this condition means that in uncorrupted states, the reward is observable).
 
-Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M^k$. Assume $M^k$ has a mitigation policy with mitigation time moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
+Consider also $\alpha\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M^k$. Assume $M^k$ has a mitigation policy with mitigation time moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
 $$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}^{\pi^*}(1-\alpha) = O\AP{\tau_2 \alpha + (\tau_1 \alpha)^{1/4} + \delta \AP{\tau_2 + \tau_1 \alpha^{-3/4}}}$$
 
@@ -303,7 +304,7 @@ We can take $\tau_1 = n$, $\tau_2 = 0$. Fix any $\lambda \in (0,\infty)$ and con
 
 $$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{\AP{n \cdot n^{-1-\lambda}}^{1/4}+n^{-7/4-\lambda}\cdot n \cdot \AP{n^{-1-\lambda}}^{-3/4}} = O\AP{n^{-\lambda/4}}$$
 
-The probability of a catastrophe (n.e ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{n\delta}=O\AP{n^{-3/4-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_n^*$ is $O\AP{n^{-3/4-\lambda}+n^{-\lambda/4}}=O\AP{n^{-\lambda/4}}$. On the other hand, it is easy to see that for $\delta_n = \omega\AP{2^{-n}}$, the policy $\sigma_n^k$ has a probability of catastrophe is $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^n)$ time "exploring" $\Bool^{\leq n}$ with a probability $\delta$ of a catastrophe on every step.
+The probability of a catastrophe (n.e ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{n\delta}=O\AP{n^{-3/4-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_n^*$ is $O\AP{n^{-3/4-\lambda}+n^{-\lambda/4}}=O\AP{n^{-\lambda/4}}$. On the other hand, it is easy to see that for $\delta_n = \omega\AP{2^{-n}}$, the policy $\sigma_n^k$ has a probability of catastrophe $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^n)$ time "exploring" $\Bool^{\leq n}$ with a probability $\delta$ of a catastrophe on every step.
 
 Note that this example can be interpreted as a version of Christiano's [approval-directed agent](https://ai-alignment.com/model-free-decisions-6e6609f5d99e), if we regard the state $s \in \Bool^{i}$ as a "plan of action" that the advisor may either approve or not. But in this formalism, it is a special case of consequentialist reasoning.
 
@@ -338,6 +339,36 @@ Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 $$\EU_{\upsilon^k}^{\pi^k}(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}^{\pi^*}(1-\alpha) \leq O\AP{\tau_2 \alpha + (\tau_1 \alpha)^{1/4}}$$
 
 Here, $\epsilon$ is regarded as *fixed* and we don't explicitly examine its effect on regret, whereas $\alpha$, $\tau_{1,2}$ and the $M_k$ are regarded as variable with the asymptotics $\alpha \rightarrow 0$, $\tau_{1,2} \rightarrow \infty$.
+
+***
+
+TBD: Proof of Lemma A.N1
+
+\#Proposition A.N2
+
+Fix $\tau_1, \tau_2, \TF_1, \TF_2 \in (0,\infty)$. Consider an MDP $M$, a partition $\St_M = \SD_M \sqcup \SF_M$, a state $s_0 \in \SD_M$ and a policy $\pi: \St_M \M \A_M$. Assume that
+
+i. For any $s \in \SF_M$, $\T_{M\pi}\AP{\SF_M \mid s}=1$.
+
+ii. $$\sum_{n=0}^\infty n \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi}^{n}\AP{\SF_M \mid s_0}} \leq \tau_1$$
+
+iii. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi}^{n}\AP{\SF_M \mid s_0}} \leq \tau_2$$
+
+iv. For any $s \in \SF_M$, $\Abs{\V^1_{M\pi}(s)} \leq \TF_1$.
+
+v. For any $s \in \SF_M$, $\Abs{\V^2_{M\pi}(s)} \leq \TF_2$. 
+
+Then:
+
+a. For any $s \in \St_M$, $\Abs{\V^1_{M\pi}(s)} = O\AP{\TF_1 + \tau_1}$
+
+b. For any $s \in \St_M$, $\Abs{\V^2_{M\pi}(s)} = O\AP{\TF_2 + \TF_1 \tau_1 + \tau_2}$
+
+***
+
+Note that Proposition A.N2 is really about Markov chains rather than MDPs, but don't make it explicit to avoid introduce more notation.
+
+TBD: Proof of Proposition A.N2
 
 \end{document}
 
