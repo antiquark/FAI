@@ -111,6 +111,7 @@
 \newcommand{\MD}{M^{\text{D}}}
 \newcommand{\ME}{M^{\text{E}}}
 \newcommand{\TF}{\tau^{\text{F}}}
+\newcommand{\PD}{\pi^{\text{D}}}
 
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\V}{\operatorname{V}}
@@ -140,39 +141,39 @@ Whatever...
 
 We start by formalising the concepts of a "catastrophe" and "catastrophe mitigation" in the language of MDPs.
 
-\#Definition 1
+\#Definition N1
 
-Fix $\delta \in (0,1)$. A *$\delta$-catastrophe MDP* is an MDP $M$ together with a partition of $\St_M$ into subsets $\St_M:=\SF_M \sqcup \SD_M \sqcup \SC_M$ (safe, dangerous and corrupt states respectively) s.t. there is some $\pi^2: \St_M \rightarrow \A_M$ with the properties
+A *catastrophe MDP* is an MDP $M$ together with a partition of $\St_M$ into subsets $\St_M:=\SF_M \sqcup \SD_M \sqcup \SC_M$ (safe, dangerous and corrupt states respectively). 
 
-i. $\pi^2$ is 2-optimal.
+\#Definition N7
 
-ii. For any $s \in \SF_M$, $\T_{M\pi^2}\AP{\SF_M \mid s}=1$.
+Fix a catastrophe MDP $M$. $\pi: \St_M \M \A_M$ is called a *mitigation policy for $M$* when
 
-iii. For any $s \in \SD_M$, $\T_{M\pi^2}\AP{\SC_M \mid s} < \delta$.
+i. For any $s \in \SF_M$, $\T_{M\pi}\AP{\SF_M \mid s}=1$.
 
-\#Definition 2
+ii. For any $s \in \SD_M$, $\T_{M\pi}\AP{\SC_M \mid s}=0$.
 
-Fix $\delta\in(0,1)$ and a $\delta$-catastrophe MDP $M$. Consider some $\pi^1: \St_M \rightarrow \A_M$. $\pi^1$ is said to be a *mitigation policy for $M$* when
+Given $k \in \Nats$, $\pi$ is called a *k-mitigation policy for $M$* when, in addition
 
-i. $\pi^1$ is 1-optimal.
+iii. For any $s \in \St_M \setminus \SC_M$, $\Supp{\pi(s)} \subseteq \A_M^k$.
 
-ii. For any $s \in \SF_M$, $\T_{M\pi^1}\AP{\SF_M \mid s}=1$.
+$M$ is called *proper* when it has a 2-mitigation policy.
 
-iii. For any $s \in \SD_M$, $\T_{M\pi^1}\AP{\SC_M \mid s} < \delta$.
+\#Definition N2
 
-Fix $\tau_1,\tau_2 \in (0,\infty)$ and $s_0 \in \SD_M$. $\pi^1$ is said to have *mitigation time moments $\tau_1,\tau_2$ at $s_0$* when
+Fix $\tau_1,\tau_2 \in (0,\infty)$, a catastrophe MDP $M$, a mitigation policy $\pi$, and a state $s_0 \in \SD_M$. $\pi$ is said to have *mitigation time moments $\tau_1,\tau_2$ at $s_0$* when
 
-iv. $$\sum_{n=0}^\infty n \AP{\T_{M\pi^1}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi^1}^{n}\AP{\SF_M \mid s_0}} \leq \tau_1$$
+i. $$\sum_{n=0}^\infty n \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi}^{n}\AP{\SF_M \mid s_0}} \leq \tau_1$$
 
-v. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi^1}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi^1}^{n}\AP{\SF_M \mid s_0}} \leq \tau_2$$
+ii. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi}^{n}\AP{\SF_M \mid s_0}} \leq \tau_2$$
 
 ***
 
 Next, we introduce the notion of an MDP perturbation. We will use it by considering perturbations of a catastrophe MDP which "eliminate the catastrophe."
 
-\#Definition 3
+\#Definition N3
 
-Fix $\delta,\delta'\in(0,1)$ and consider a $\delta'$-catastrophe MDP $M$. An MDP $\tilde{M}$ is said to be a *$\delta$-perturbation of $M$* when
+Fix $\delta\in(0,1)$ and consider a catastrophe MDP $M$. An MDP $\tilde{M}$ is said to be a *$\delta$-perturbation of $M$* when
 
 i. $\St_{\tilde{M}} = \St_M$
 
@@ -188,9 +189,9 @@ v. For any $s \in \SD_M$ and $a \in \A_M$, $\Dtva{\T_{\tilde{M}}\AP{s,a},\T_{M}\
 
 Similarly, we can consider perturbations of a policy.
 
-\#Definition 4
+\#Definition N4
 
-Fix $\delta,\delta'\in(0,1)$ and consider a $\delta'$-catastrophe MDP $M$. Given $\pi: \St_M \M \A_M$ and $\tilde{\pi}: \St_M \M \A_M$, $\tilde{\pi}$ is said to be a *$\delta$-perturbation of $\pi$* when
+Fix $\delta\in(0,1)$ and consider a catastrophe MDP $M$. Given $\pi: \St_M \M \A_M$ and $\tilde{\pi}: \St_M \M \A_M$, $\tilde{\pi}$ is said to be a *$\delta$-perturbation of $\pi$* when
 
 i. For any $s \in \SF_M$, $\tilde{\pi}(s) = \pi(s)$.
 
@@ -200,7 +201,7 @@ ii. For any $s \in \SD_M$, $\Dtva{\tilde{\pi}(s),\pi(s)} < \delta$.
 
 We will also need to introduce policy-specific value functions, Q-functions and relatively $k$-optimal actions.
 
-\#Definition 5
+\#Definition N5
 
 Fix an MDP $M$ and $\pi: \St_M \M \A_M$. We define $\V_{M\pi}: \St_M \times (0,1) \rightarrow [0,1]$ and $\Q_{M\pi}: \St_M \times \A_M \times (0,1) \rightarrow [0,1]$ by
 
@@ -222,9 +223,9 @@ $$\A_{M\pi}^{k+1}(s) := \{a \in \A_{M\pi}^k(s) \mid \Q_{M\pi}^{k+1}(s,a) \geq \V
 
 Now we give the new (weaker) condition on the advisor policy. For notational simplicity, we assume the policy is stationary. It is easy to generalize these results to non-stationary advisor policies and to policies that depend on irrelevant additional information (i.e. policies for universes that are *realizations* of the MDP).
 
-\#Definition 6
+\#Definition N6
 
-Fix $\epsilon,\delta \in (0,1)$. Consider a $\delta$-catastrophe MDP $M$ with mitigation policy $\pi^1: \St_M\ \rightarrow A_M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $M$ when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
+Fix $\epsilon,\delta \in (0,1)$. Consider a catastrophe MDP $M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $M$ when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ with 1-mitigation policy $\pi^1: \St_M\ \rightarrow A_M$, and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
 
 i. For any $s \in \SF_M$: $$\T_{M\pi}\AP{\SF_M \mid s} = 1$$
 
@@ -234,7 +235,7 @@ iii. For any $s \in \St_M \setminus \SC_M$: $$\Supp{\tilde{\pi}(s)} \subseteq \A
 
 iv. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}\AP{\pi^1(s) \mid s} > \epsilon$$
 
-\Comment{For $M$ an arbitrary MDP, $s_0 \in \St_M$ and $\tau_1,\tau_2 \in (0,\infty)$, we say $\pi$ is *locally $(\epsilon,\delta)$-sane for $\AP{M,s_0}$ with moments $\tau_1,\tau_2$* when *either* $\pi$ is locally $\epsilon$-sane for $\AP{M,s_0}$ *or* there is *some* way to view $M$ as a $\delta$-catastrophe MDP with $s_0 \in \SD_M$ such that the corresponding mitigation policy $\pi^1$ has moments $\tau_1,\tau_2$ at $s_0$ and $\pi$ is locally $(\epsilon,\delta)$-sane for $M$ in the corresponding sense.}
+Given $\tau_{1,2} \in (0,\infty)$ and $s_0 \in \SD_M$, $\pi$ is said to have *moments $\tau_{1,2}$ at $s_0$* when $\pi^1$ has them as mitigation time moments.
 
 ***
 
@@ -244,7 +245,7 @@ We can now formulate the main result.
 
 \#Theorem 1
 
-Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,1)$ and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now, consider $\delta\in(0,1)$ and for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r^k)$ which is an $\Ob$-realization of a $\delta$-catastrophe MDP $M^k$ with state function $S^k$ s.t.
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,1)$ and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now, consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r^k)$ which is an $\Ob$-realization of a proper catastrophe MDP $M^k$ with state function $S^k$ s.t.
 
 i. $\SF_{M^k} = \St_{\MF_k}$
 
@@ -254,7 +255,7 @@ iii. For each $s \in \St_{\MF_k}$, $\R_{M^k}(s)=\R_{\MF_k}(s)$.
 
 iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \St_{M^k} \setminus \SC_{M^k}$ and $S^j(h) \in \St_{M^j} \setminus \SC_{M^j}$, then $r^k(h)=r^j(h)$ (this condition means that in uncorrupted states, the reward is observable).
 
-Consider also $\alpha\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M^k$. Assume $M^k$ has a mitigation policy with mitigation time moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
+Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M^k$. Assume $\sigma^k$ has moments $\tau_{1,2}$ at $S^k(\Estr)$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
 $$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}^{\pi^*}(1-\alpha) = O\AP{\tau_2 \alpha + (\tau_1 \alpha)^{1/4} + \delta \AP{\tau_2 + \tau_1 \alpha^{-3/4}}}$$
 
@@ -398,11 +399,19 @@ $$\T_{\MD}(\top \mid \top) = 1$$
 
 * $\R_{\MD}(\bot) = 0$, $\R_{\MD}(\top) = 1$.
 
+Given $\pi: St_M \M \A_M$, we define $\PD: \St_{\MD} \M \A_M$ by
+
+* For any $s \in \SD_M$, $\PD(s) = \pi(s)$.
+
+* For $s \in \{\bot,\top\}$, $\PD(s)$ is arbitrary (because of how $\T_{\MD}$ is defined, the choice affects nothing).
+
 \#Proposition A.N3
 
-% Given regret wrt \MD implies mitigation time
+Fix $M$ a catastrophe MDP s.t. $\R_M \leq 1/2$. Suppose that $\pi^1$ is a mitigation policy for $M$ that has the 1st moment $\tau_{1}\in(0,\infty)$ at $s_0 \in \SD_M$. Consider any $\pi: M \M \A_M$. Then
 
-?
+$$?$$
+
+% Given regret wrt \MD implies mitigation time
 
 ***
 
