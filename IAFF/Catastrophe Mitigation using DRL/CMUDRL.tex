@@ -304,9 +304,11 @@ $$\T_{M_n^k}(s \mid s,a) = 1$$
 
 We can take $\tau_1 = n$, $\tau_2 = 0$. Fix any $\lambda \in (0,\infty)$ and consider the asymptotic regime $n \rightarrow \infty$, $\alpha_n = \Theta\Big(n^{-1-\lambda}\Big)$, $\delta_n = O\AP{n^{-7/4-\lambda}}$. According to Theorem 1, we get
 
-$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{\AP{n \cdot n^{-1-\lambda}}^{1/4}+n^{-7/4-\lambda}\cdot n \cdot \AP{n^{-1-\lambda}}^{-3/4}} = O\AP{n^{-\lambda/4}}$$
+$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{\AP{n \cdot n^{-1-\lambda}}^{1/4}+n^{-7/4-\lambda}\cdot n \cdot \AP{n^{-1-\lambda}}^{-3/4}} $$
 
-The probability of a catastrophe (n.e ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{n\delta}=O\AP{n^{-3/4-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_n^*$ is $O\AP{n^{-3/4-\lambda}+n^{-\lambda/4}}=O\AP{n^{-\lambda/4}}$. On the other hand, it is easy to see that for $\delta_n = \omega\AP{2^{-n}}$, the policy $\sigma_n^k$ has a probability of catastrophe $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^n)$ time "exploring" $\Bool^{\leq n}$ with a probability $\delta$ of a catastrophe on every step.
+$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{n^{-\lambda/4}}=O\AP{\alpha_n^{\frac{1}{4}\cdot\frac{\lambda}{1+\lambda}}}$$
+
+The probability of a catastrophe (i.e. ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{n\delta}=O\AP{n^{-3/4-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_n^*$ is $O\AP{n^{-3/4-\lambda}+n^{-\lambda/4}}=O\AP{n^{-\lambda/4}}$. On the other hand, it is easy to see that for $\delta_n = \omega\AP{2^{-n}}$, the policy $\sigma_n^k$ has a probability of catastrophe $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^n)$ time "exploring" $\Bool^{\leq n}$ with a probability $\delta$ of a catastrophe on every step.
 
 Note that this example can be interpreted as a version of Christiano's [approval-directed agent](https://ai-alignment.com/model-free-decisions-6e6609f5d99e), if we regard the state $s \in \Bool^{i}$ as a "plan of action" that the advisor may either approve or not. But in this formalism, it is a special case of consequentialist reasoning.
 
@@ -374,15 +376,31 @@ TBD: Proof of Proposition A.N2
 
 \#Definition A.N2
 
-Fix $\delta\in(0,1)$ and consider $M$ a $\delta$-catastrophe MDP. We define the MDPs $\MD$ and $\ME$ as follows.
+Consider $M$ a catastrophe MDP. We define the MDP $\MD$ as follows.
 
-* $\St_{\MD} = \SD_M \sqcup \{\bot,\top\}$...
+* $\St_{\MD} = \SD_M \sqcup \{\bot,\top\}$
 
-?
+* $\A_{\MD} = \A_M$
+
+* For any $s,t \in \SD_M$: 
+
+$$\T_{\MD}(t \mid s) = \T_M(t \mid s)$$
+
+$$\T_{\MD}(\bot \mid s) = \T_M(\SC_M \mid s)$$
+
+$$\T_{\MD}(\top \mid s) = \T_M(\SF_M \mid s)$$
+
+$$\T_{\MD}(\bot \mid \bot) = 1$$
+
+$$\T_{\MD}(\top \mid \top) = 1$$
+
+* For any $s \in \SD_M$, $\R_{\MD}(s) = \R_M(s)$.
+
+* $\R_{\MD}(\bot) = 0$, $\R_{\MD}(\top) = 1$.
 
 \#Proposition A.N3
 
-% Given regret wrt \MD and \ME implies regret wrt M...
+% Given regret wrt \MD implies mitigation time
 
 ?
 
@@ -390,11 +408,17 @@ Fix $\delta\in(0,1)$ and consider $M$ a $\delta$-catastrophe MDP. We define the 
 
 TBD: Proof of Proposition A.N3
 
+\#Definition A.N3
+
+Fix $\delta\in(0,1)$ and consider $M$ a $\delta$-catastrophe MDP. We define the MDP $\ME$ as follows.
+
+* $\St_{\ME} = \SD_M \sqcup \SF_M \sqcup \{\bot,\top\}$...
+
+?
+
 \#Proposition A.N4
 
-% Given regret wrt a \delta-perturbation of M we get regret wrt M?
-% Needs assumption on mitigation time...
-% Role of \delta-perturbation of policy... ?
+% Given regret wrt \MD and \ME implies regret wrt M...
 
 ?
 
@@ -402,7 +426,40 @@ TBD: Proof of Proposition A.N3
 
 TBD: Proof of Proposition A.N4
 
+\#Definition A.N4
+
+% Delta perturbation of non-stationary policy...
+
+?
+
+\#Proposition A.N5
+
+% Given delta perturbation of sigma, we get delta perturbation of pi[sigma]
+
+?
+
+***
+
+TBD: Proof of Proposition A.N5
+
+\#Proposition A.N6
+
+% Given mitigation time bound + regret of a perturbed policy wrt a perturbation of M
+% We get regret for original policy and original M
+
+?
+
+***
+
+TBD: Proof of Proposition A.N6
+
 \#Proof of Theorem 1
+
+% Take perturbations
+% Take DE decomposition
+% Apply Lemma to get regret for D & E
+% Conclude regret for perturbation
+% Conclude regret for original
 
 TBD
 
