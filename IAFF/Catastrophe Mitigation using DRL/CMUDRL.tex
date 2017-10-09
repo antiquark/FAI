@@ -317,6 +317,10 @@ Note that this example can be interpreted as a version of Christiano's [approval
 
 Theorem 1 speaks of a finite set of environments, but as before (see Proposition 1 [here](https://agentfoundations.org/item?id=1550) and Corollary 3 [here](https://agentfoundations.org/item?id=1656)), there is a "structural" equivalent, n.e. we can use it to produce corollaries about Bayesian agents with priors over a countable set of environments. The difference is, in this case we consider asymptotic regimes in which the environment is also variable, so the probability weight of the environment in the prior will affect the regret bound. We leave out the details for now.
 
+\section{Discussion}
+
+TBD
+
 \section{Appendix A}
 
 We start by deriving a more general and more precise version of the non-catastrophic regret bound, in which the optimal policy is replaced by an arbitrary "reference policy" (later it will be related to the mitigation policy) and the dependence on the MDPs is expressed via a bound on their $\V^1$ and $\V^2$ functions.
@@ -399,19 +403,17 @@ $$\T_{\MD}(\top \mid \top) = 1$$
 
 * $\R_{\MD}(\bot) = 0$, $\R_{\MD}(\top) = 1$.
 
-Given $\pi: St_M \M \A_M$, we define $\PD: \St_{\MD} \M \A_M$ by
+\Comment{Given $\pi: \St_M \M \A_M$, we define $\PD: \St_{\MD} \M \A_M$ by
 
 * For any $s \in \SD_M$, $\PD(s) = \pi(s)$.
 
-* For $s \in \{\bot,\top\}$, $\PD(s)$ is arbitrary (because of how $\T_{\MD}$ is defined, the choice affects nothing).
+* For $s \in \{\bot,\top\}$, $\PD(s)$ is arbitrary (because of how $\T_{\MD}$ is defined, the choice affects nothing).}
 
 \#Proposition A.N3
 
-Fix $M$ a catastrophe MDP s.t. $\R_M \leq 1/2$. Suppose that $\pi^1$ is a mitigation policy for $M$ that has the 1st moment $\tau_{1}\in(0,\infty)$ at $s_0 \in \SD_M$. Consider any $\pi: M \M \A_M$. Then
+Fix $M$ a catastrophe MDP s.t. $\R_M \leq 1/2$. Suppose that $\pi^1$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $s_0 \in \SD_M$. Consider any $\pi: \St_{\MD} \M \A_M$. Then, for any $\gamma\in(0,1)$
 
-$$?$$
-
-% Given regret wrt \MD implies mitigation time
+$$\sum_{n=0}^\infty \gamma^{n+1} \AP{\T_{\MD\pi}^{n+1}\AP{\top \mid s_0}-\T_{\MD\pi}^{n}\AP{\top \mid s_0}} \geq 2{\gamma^{\tau+1}}-2\AP{\V_{\MD\pi^1}\AP{s_0,\gamma}-\V_{\MD\pi}\AP{s_0,\gamma}}-1$$
 
 ***
 
@@ -421,9 +423,31 @@ TBD: Proof of Proposition A.N3
 
 Fix $\delta\in(0,1)$ and consider $M$ a $\delta$-catastrophe MDP. We define the MDP $\ME$ as follows.
 
-* $\St_{\ME} = \SD_M \sqcup \SF_M \sqcup \{\bot,\top\}$...
+* $\St_{\ME} = \SD_M \sqcup \SF_M \sqcup \{\bot\}$
 
-?
+* $\A_{\ME} = \A_M$
+
+* For any $s,t \in \SD_M$:
+
+$$\T_{\ME}(t \mid s) = \T_M(t \mid s)$$
+
+$$\T_{\ME}(\bot \mid s) = \T_M(\SC_M \mid s)$$
+
+$$\T_{\ME}(\bot \mid \bot) = 1$$
+
+* For any $s \in \SD_M$, $t \in \SF_M$:
+
+$$\T_{\ME}(t \mid s) = \T_M(t \mid s)$$
+
+* For any $s,t \in \SF_M$:
+
+$$\T_{\ME}(t \mid s) = \T_M(t \mid s)$$
+
+$$\T_{\ME}(\bot \mid s) = \T_M(\SC_M \cup \SD_M \mid s)$$
+
+* For any $s \in \SD_M \cup \SF_M$, $\R_{\ME}(s) = \R_M(s)$.
+
+* $\R_{\ME}(\bot) = 0$
 
 \#Proposition A.N4
 
