@@ -257,7 +257,7 @@ iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \
 
 Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M^k$. Assume $\sigma^k$ has moments $\tau_{1,2}$ at $S^k(\Estr)$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}^{\pi^*}(1-\alpha) = O\AP{\tau_2 \alpha + (\tau_1 \alpha)^{1/4} + \delta \AP{\tau_2 + \tau_1 \alpha^{-3/4}}}$$
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}^{\pi^*}(1-\alpha) = O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot\AP{(\tau_1 \alpha)^{1/4} + \tau_2 \alpha}+\delta\tau_1}$$
 
 Here, $\epsilon$ and the $\MF_k$ are regarded as *fixed* and we don't explicitly examine their effect on regret, whereas $\alpha$, $\delta$, $\tau_{1,2}$ and the $M^k$ are regarded as variable with the asymptotics $\alpha,\delta \rightarrow 0$, $\tau_{1,2} \rightarrow \infty$.
 
@@ -303,13 +303,13 @@ $$\T_{M_n^k}(s \mid s,a) = 1$$
 
 * If $s \in \Bool^n \setminus w_n^k$ then $\sigma_n^k(0 \mid s) = \delta$, $\sigma_n^k(* \mid s) = 1 - \delta$.
 
-We can take $\tau_1 = n$, $\tau_2 = 0$. Fix any $\lambda \in (0,\infty)$ and consider the asymptotic regime $n \rightarrow \infty$, $\alpha_n = \Theta\Big(n^{-1-\lambda}\Big)$, $\delta_n = O\AP{n^{-7/4-\lambda}}$. According to Theorem 1, we get
+We can take $\tau_1 = n$, $\tau_2 = n^2$. Fix $\lambda \in (0,1/3]$ and consider the asymptotic regime $n \rightarrow \infty$, $\alpha_n = \Theta\Big(n^{-7/3}\Big)$, $\delta_n = O\AP{n^{-2-\lambda}}$. According to Theorem 1, we get
 
-$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{\AP{n \cdot n^{-1-\lambda}}^{1/4}+n^{-7/4-\lambda}\cdot n \cdot \AP{n^{-1-\lambda}}^{-3/4}} $$
+$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = \AP{\frac{n^{-2-\lambda}}{n^{-7/3}}\AP{\AP{n \cdot n^{-7/3}}^{1/4}+n^2 \cdot n^{-7/3}}+n^{-2-\lambda}\cdot n}$$
 
-$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{n^{-\lambda/4}}=O\AP{\alpha_n^{\frac{1}{4}\cdot\frac{\lambda}{1+\lambda}}}$$
+$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{n^{-\lambda}}=O\AP{\alpha_n^{3\lambda/7}}$$
 
-The probability of a catastrophe (i.e. ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{n\delta}=O\AP{n^{-3/4-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_n^*$ is $O\AP{n^{-3/4-\lambda}+n^{-\lambda/4}}=O\AP{n^{-\lambda/4}}$. On the other hand, it is easy to see that for $\delta_n = \omega\AP{2^{-n}}$, the policy $\sigma_n^k$ has a probability of catastrophe $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^n)$ time "exploring" $\Bool^{\leq n}$ with a probability $\delta$ of a catastrophe on every step.
+The probability of a catastrophe (i.e. ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{n\delta}=O\AP{n^{-1-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_n^*$ is $O\AP{n^{-1-\lambda}+n^{-\lambda}}=O\AP{n^{-\lambda}}$. On the other hand, it is easy to see that for $\delta_n = \omega\AP{2^{-n}}$, the policy $\sigma_n^k$ has a probability of catastrophe $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^n)$ time "exploring" $\Bool^{\leq n}$ with a probability $\delta$ of a catastrophe on every step.
 
 Note that this example can be interpreted as a version of Christiano's [approval-directed agent](https://ai-alignment.com/model-free-decisions-6e6609f5d99e), if we regard the state $s \in \Bool^{i}$ as a "plan of action" that the advisor may either approve or not. But in this formalism, it is a special case of consequentialist reasoning.
 
