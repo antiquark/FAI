@@ -104,14 +104,21 @@
 \DeclareMathOperator{\HD}{hdom}
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\UC}{\mathcal{U}}
-\newcommand{\SF}{\St^{\text{F}}}
-\newcommand{\SD}{\St^{\text{D}}}
-\newcommand{\SC}{\St^{\text{C}}}
-\newcommand{\MF}{M^{\text{F}}}
-\newcommand{\MD}{M^{\text{D}}}
-\newcommand{\ME}{M^{\text{E}}}
-\newcommand{\TF}{\tau^{\text{F}}}
-\newcommand{\PD}{\pi^{\text{D}}}
+
+\newcommand{\RMC}{\mathrm{C}}
+\newcommand{\RMD}{\mathrm{D}}
+\newcommand{\RME}{\mathrm{E}}
+\newcommand{\RMF}{\mathrm{F}}
+
+\newcommand{\SF}{\St^{\RMF}}
+\newcommand{\SD}{\St^{\RMD}}
+\newcommand{\SC}{\St^{\RMC}}
+\newcommand{\MF}{M^{\RMF}}
+\newcommand{\MD}{M^{\RMD}}
+\newcommand{\ME}{M^{\RME}}
+\newcommand{\TF}{\tau^{\RMF}}
+\newcommand{\PD}{\pi^{\RMD}}
+\newcommand{\UD}{\upsilon^{\RMD}}
 
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\V}{\operatorname{V}}
@@ -403,6 +410,16 @@ $$\T_{\MD}(\top \mid \top) = 1$$
 
 * $\R_{\MD}(\bot) = 0$, $\R_{\MD}(\top) = 1$.
 
+Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Denote $\Ob':=\Ob\sqcup\{\bot,\top\}$ and $\In':=(\A,\Ob')$. We define the $\In'$-universe $\UD=(\mu^\RMD,r^\RMD)$ and the function $S^\RMD: \AP{\A \times \Ob'}^* \rightarrow \St_{\MD}$ as follows
+
+$$\mu^\RMD(o \mid ha) := \begin{cases} \mu(o \mid ha) \text{ if } hao\in\FH \text{ and } S(hao)\in\SD_M \\ 0 \text{ if } hao\in\FH \text{ and } S(hao)\not\in\SD_M \\ \T_M\AP{\SC_M \mid S(h),a} \text{ if } h\in\FH \text{ and } o=\bot \\ \T_M\AP{\SF_M \mid S(h),a} \text{ if } h\in\FH \text{ and } o=\top \\ [[o=\bot]] \text{ if } h_{\Abs{h}-1} \in \A  \bot \\ [[o=\top]] \text{ if } h_{\Abs{h}-1} \in \A  \top \end{cases}$$
+
+$$r^\RMD(h):=\begin{cases} r(h) \text{ if } h\in\FH \\ 0 \text{ if } h_{\Abs{h}-1} \in \A \bot \\ 1 \text{ if } h_{\Abs{h}-1} \in \A \top \end{cases}$$
+
+$$S^\RMD(h):=\begin{cases} S(h) \text{ if } h\in\FH \\ \bot \text{ if } h_{\Abs{h}-1} \in \A\bot \\ \top \text{ if } h_{\Abs{h}-1} \in \A \top \end{cases}$$
+
+It is easy to see that $\UD$ is an $\Ob'$-realization of $\MD$ with state function $S^\RMD$.
+
 \Comment{Given $\pi: \St_M \M \A_M$, we define $\PD: \St_{\MD} \M \A_M$ by
 
 * For any $s \in \SD_M$, $\PD(s) = \pi(s)$.
@@ -411,9 +428,9 @@ $$\T_{\MD}(\top \mid \top) = 1$$
 
 \#Proposition A.N3
 
-Fix $M$ a catastrophe MDP s.t. $\R_M \leq 1/2$. Suppose that $\pi^1$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $s_0 \in \SD_M$. Consider any $\pi: \St_{\MD} \M \A_M$. Then, for any $\gamma\in(0,1)$
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Assume that $\R_M \leq 1/2$. Suppose that $\pi^1$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In'$-policy. Then, for any $\gamma\in(0,1)$
 
-$$\sum_{n=0}^\infty \gamma^{n+1} \AP{\T_{\MD\pi}^{n+1}\AP{\top \mid s_0}-\T_{\MD\pi}^{n}\AP{\top \mid s_0}} \geq 2{\gamma^{\tau+1}}-2\AP{\V_{\MD\pi^1}\AP{s_0,\gamma}-\V_{\MD\pi}\AP{s_0,\gamma}}-1$$
+$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\RMD\AP{x_{:n}}\ne\top,\ S^\RMD\AP{x_{:n+1}}=\top} \geq 2{\gamma^{\tau+1}}-2\AP{\EU_{\UD}^{\pi^1 \circ S}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
 
 ***
 
@@ -452,6 +469,7 @@ $$\T_{\ME}(\bot \mid s) = \T_M(\SC_M \cup \SD_M \mid s)$$
 \#Proposition A.N4
 
 % Given regret wrt \MD and \ME implies regret wrt M...
+% Must be proper?
 
 ?
 
