@@ -410,7 +410,7 @@ $$\T_{\MD}(\top \mid \top) = 1$$
 
 * $\R_{\MD}(\bot) = 0$, $\R_{\MD}(\top) = 1$.
 
-Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Denote $\Ob':=\Ob\sqcup\{\bot,\top\}$ and $\In':=(\A,\Ob')$. We define the $\In'$-universe $\UD=(\mu^\RMD,r^\RMD)$ and the function $S^\RMD: \AP{\A \times \Ob'}^* \rightarrow \St_{\MD}$ as follows
+Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Denote $\Ob':=\Ob\sqcup\{\bot,\top\}$ and $\In':=(\A,\Ob')$. We define the $\In'$-universe $\UD=(\mu^\RMD,r')$ and the function $S^\RMD: \AP{\A \times \Ob'}^* \rightarrow \St_{\MD}$ as follows
 
 $$\mu^\RMD(o \mid ha) := \begin{cases} \mu(o \mid ha) \text{ if } hao\in\FH \text{ and } S(hao)\in\SD_M \\ 0 \text{ if } hao\in\FH \text{ and } S(hao)\not\in\SD_M \\ \T_M\AP{\SC_M \mid S(h),a} \text{ if } h\in\FH \text{ and } o=\bot \\ \T_M\AP{\SF_M \mid S(h),a} \text{ if } h\in\FH \text{ and } o=\top \\ [[o=\bot]] \text{ if } h_{\Abs{h}-1} \in \A  \bot \\ [[o=\top]] \text{ if } h_{\Abs{h}-1} \in \A  \top \end{cases}$$
 
@@ -466,12 +466,21 @@ $$\T_{\ME}(\bot \mid s) = \T_M(\SC_M \cup \SD_M \mid s)$$
 
 * $\R_{\ME}(\bot) = 0$
 
+Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. We define the $\In'$-universe $\upsilon^\RME=(\mu^\RME,r^\RME)$ and the function $S^\RME: \AP{\A \times \Ob'}^* \rightarrow \St_{\ME}$ as follows
+
+$$\mu^\RME(o \mid ha) := \begin{cases} \mu(o \mid ha) \text{ if } hao\in\FH,\ S(h) \in \SD_M \text{ and } S(hao)\not\in\SC_M \\ \mu(o \mid ha) \text{ if } hao\in\FH,\ S(h) \in \SF_M \text{ and } S(hao)\in\SF_M \\ 0 \text{ if } hao\in\FH,\ S(h)\in\SD_M \text{ and } S(hao)\in\SC_M \\ 0 \text{ if } hao\in\FH,\ S(h)\in\SF_M \text{ and } S(hao)\not\in\SF_M \\ \T_M\AP{\SC_M \mid S(h),a} \text{ if } h\in\FH,\ S(h)\in\SD_M \text{ and } o=\bot \\ \T_M\AP{\SC_M \cup \SD_M \mid S(h),a} \text{ if } h\in\FH,\ S(h) \in \SF_M \text{ and } o=\bot \\ [[o=\bot]] \text{ if } h_{\Abs{h}-1} \in \A  \bot\end{cases}$$
+
+$$r^\RME(h):=\begin{cases} r(h) \text{ if } h\in\FH \\ 0 \text{ if } h_{\Abs{h}-1} \in \A \bot\end{cases}$$
+
+$$S^\RME(h):=\begin{cases} S(h) \text{ if } h\in\FH \\ \bot \text{ if } h_{\Abs{h}-1} \in \A\bot\end{cases}$$
+
+It is easy to see that $\upsilon^\RME$ is an $\Ob'$-realization of $\ME$ with state function $S^\RME$.
+
 \#Proposition A.N4
 
-% Given regret wrt \MD and \ME implies regret wrt M...
-% Must be proper?
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^1$ is a mitigation policy for $M$. Let $\pi$ be any $\In'$-policy. Then, for any $\gamma\in(0,1)$
 
-?
+$$\EU_{\upsilon}^{\pi^1 \circ S}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma) \leq \EU_{\upsilon^\RME}^{\pi^1 \circ S}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
 
 ***
 
@@ -479,21 +488,15 @@ TBD: Proof of Proposition A.N4
 
 \#Definition A.N4
 
-% Delta perturbation of non-stationary policy...
+Fix $\delta\in(0,1)$ and a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Let $\pi: \FH \M \A$ be any policy. A policy $\tilde{\pi}: \FH \M \A$ is said to be a *$\delta$-perturbation of $\pi$ over $S$* when
 
-?
+i. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SF_M$, $\tilde{\pi}(h)=\pi(h)$.
+
+ii. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SD_M$, $\Dtva{\tilde{\pi}(h),\pi(h)} < \delta$.
+
+% Given delta perturbation of sigma, we get delta perturbation of [sigma]pi
 
 \#Proposition A.N5
-
-% Given delta perturbation of sigma, we get delta perturbation of pi[sigma]
-
-?
-
-***
-
-TBD: Proof of Proposition A.N5
-
-\#Proposition A.N6
 
 % Given mitigation time bound + regret of a perturbed policy wrt a perturbation of M
 % We get regret for original policy and original M
@@ -502,14 +505,15 @@ TBD: Proof of Proposition A.N5
 
 ***
 
-TBD: Proof of Proposition A.N6
+TBD: Proof of Proposition A.N5
 
 \#Proof of Theorem 1
 
 % Take perturbations
 % Take DE decomposition
 % Apply Lemma to get regret for D & E
-% Conclude regret for perturbation
+% Use regret for D to derive bound on mitigation time
+% Use regret for perturbed E to derive regret for unperturbed E (using mitigation time)
 % Conclude regret for original
 
 TBD
