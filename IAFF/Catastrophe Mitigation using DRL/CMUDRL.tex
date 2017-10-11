@@ -134,7 +134,7 @@
 
 \begin{document}
 
-[Previously](https://agentfoundations.org/item?id=1656) we derived a regret bound for DRL which assumed the advisor is "locally sane." Such an advisor can only take actions that don't lose any value in the long term. In particular, if the environment contains a latent *catastrophe* that manifests with a certain rate (such as the possibility of an UFAI), a locally sane advisor has to take the optimal course of action to mitigate it, since every delay yields a positive probability of the catastrophe manifesting and leading to permanent loss of value. This state of affairs is unsatisfactory, since we would like to have performance guarantees for an AI that can mitigate catastrophes that the human operator cannot mitigate on their own. To address this problem, we introduce a new form of DRL where in every hypothetical environment the set of uncorrupted states is divided into "dangerous" (impending catastrophe) and "safe" (catastrophe was mitigated). The advisor is then only required to be locally sane in safe states, whereas in dangerous states certain "leaking" of long-term value is allowed. We derive a regret bound in this setting as a function of the time discount factor, the expected value and standard deviation of the catastrophe mitigation time for the optimal policy, and the "value leak" rate (i.e. essentially the rate of catastrophe occurrence). The form of this regret bound implies that in certain asymptotic regimes, the agent attains near-optimal expected utility (and in particular mitigates the catastrophe with probability close to 1), whereas the advisor on its own *fails* to mitigate the catastrophe with probability close to 1. Thus, this formalism can be regarded as a simple model of aligned superintelligence: the agent is *aligned* since near-optimal utility is achieved despite the presence of corrupted states (which are treated more or less the same as before) and it is *super*intelligent since its performance is vastly better than the performance of the advisor.
+[Previously](https://agentfoundations.org/item?id=1656) we derived a regret bound for DRL which assumed the advisor is "locally sane." Such an advisor can only take actions that don't lose any value in the long term. In particular, if the environment contains a latent *catastrophe* that manifests with a certain rate (such as the possibility of an UFAI), a locally sane advisor has to take the optimal course of action to mitigate it, since every delay yields a positive probability of the catastrophe manifesting and leading to permanent loss of value. This state of affairs is unsatisfactory, since we would like to have performance guarantees for an AI that can mitigate catastrophes that the human operator cannot mitigate on their own. To address this problem, we introduce a new form of DRL where in every hypothetical environment the set of uncorrupted states is divided into "dangerous" (impending catastrophe) and "safe" (catastrophe was mitigated). The advisor is then only required to be locally sane in safe states, whereas in dangerous states certain "leaking" of long-term value is allowed. We derive a regret bound in this setting as a function of the time discount factor, the expected value and standard deviation of the catastrophe mitigation time for the optimal policy, and the "value leak" rate (i.e. essentially the rate of catastrophe occurrence). The form of this regret bound implies that in certain asymptotic regimes, the agent attains near-optimal expected utility (and in particular mitigates the catastrophe with probability close to 1), whereas the advisor on its own *fails* to mitigate the catastrophe with probability close to 1. %Thus, this formalism can be regarded as a simple model of aligned superintelligence: the agent is *aligned* since near-optimal utility is achieved despite the presence of corrupted states (which are treated more or less the same as before) and it is *super*intelligent since its performance is vastly better than the performance of the advisor.
 
 ***
 
@@ -232,17 +232,17 @@ Now we give the new (weaker) condition on the advisor policy. For notational sim
 
 \#Definition N6
 
-Fix $\epsilon,\delta \in (0,1)$. Consider a catastrophe MDP $M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $M$ when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ with 1-mitigation policy $\pi^1: \St_M\ \rightarrow A_M$, and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
+Fix $\epsilon,\delta \in (0,1)$. Consider a catastrophe MDP $M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $M$ when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ with 1-mitigation policy $\pi^*: \St_M\ \rightarrow A_M$, and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
 
 i. For any $s \in \SF_M$: $$\T_{M\pi}\AP{\SF_M \mid s} = 1$$
 
 ii. For any $s \in \SD_M$: $$\T_{\tilde{M}\tilde{\pi}}\AP{\SC_M \mid s} = 0$$
 
-iii. For any $s \in \St_M \setminus \SC_M$: $$\Supp{\tilde{\pi}(s)} \subseteq \A_{\tilde{M}\pi^1}^0(s)$$
+iii. For any $s \in \St_M \setminus \SC_M$: $$\Supp{\tilde{\pi}(s)} \subseteq \A_{\tilde{M}\pi^*}^0(s)$$
 
-iv. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}\AP{\pi^1(s) \mid s} > \epsilon$$
+iv. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}\AP{\pi^*(s) \mid s} > \epsilon$$
 
-Given $\tau_{1,2} \in (0,\infty)$ and $s_0 \in \SD_M$, $\pi$ is said to have *moments $\tau_{1,2}$ at $s_0$* when $\pi^1$ has them as mitigation time moments.
+Given $\tau_{1,2} \in (0,\infty)$ and $s_0 \in \SD_M$, $\pi$ is said to have *moments $\tau_{1,2}$ at $s_0$* when $\pi^*$ has them as mitigation time moments.
 
 ***
 
@@ -428,9 +428,9 @@ It is easy to see that $\UD$ is an $\Ob'$-realization of $\MD$ with state functi
 
 \#Proposition A.N3
 
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Assume that $\R_M \leq 1/2$. Suppose that $\pi^1$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In'$-policy. Then, for any $\gamma\in(0,1)$
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Assume that $\R_M \leq 1/2$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In'$-policy. Then, for any $\gamma\in(0,1)$
 
-$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\RMD\AP{x_{:n}}\ne\top,\ S^\RMD\AP{x_{:n+1}}=\top} \geq 2{\gamma^{\tau+1}}-2\AP{\EU_{\UD}^{\pi^1 \circ S}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
+$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\RMD\AP{x_{:n}}\ne\top,\ S^\RMD\AP{x_{:n+1}}=\top} \geq 2{\gamma^{\tau+1}}-2\AP{\EU_{\UD}^{\pi^* \circ S}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
 
 ***
 
@@ -478,9 +478,9 @@ It is easy to see that $\upsilon^\RME$ is an $\Ob'$-realization of $\ME$ with st
 
 \#Proposition A.N4
 
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^1$ is a mitigation policy for $M$. Let $\pi$ be any $\In'$-policy. Then, for any $\gamma\in(0,1)$
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$. Let $\pi$ be any $\In'$-policy. Then, for any $\gamma\in(0,1)$
 
-$$\EU_{\upsilon}^{\pi^1 \circ S}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma) \leq \EU_{\upsilon^\RME}^{\pi^1 \circ S}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
+$$\EU_{\upsilon}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma) \leq \EU_{\upsilon^\RME}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
 
 ***
 
@@ -496,18 +496,29 @@ ii. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SD_M$, $\Dtva{\tilde{\pi}(h),\pi(h)} 
 
 % Given delta perturbation of sigma, we get delta perturbation of [sigma]pi
 
+\#Definition A.N5
+
+Fix $\delta\in(0,1)$ and a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$. Then, we define the environment $\mu^{\tilde{M}}$ by
+
+$$\mu^{\tilde{M}}(o \mid ha) := \frac{\T_{\tilde{M}}\AP{S(hao) \mid S(h),a}}{\T_{M}\AP{S(hao) \mid S(h),a}}\mu(o \mid ha)$$
+
+We also denote $\upsilon^{\tilde{M}}:=\AP{\mu^{\tilde{M}},r}$. It is easy to see that $\upsilon^{\tilde{M}}$ is an $\Ob$-realization of $\tilde{M}$ with state function $S$.
+
 \#Proposition A.N5
 
-% Given mitigation time bound + regret of a perturbed policy wrt a perturbation of M
-% We get regret for original policy and original M
+Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\tau\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Assume that $\R_M \leq 1/2$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau$ at $S(\Estr)$. Consider some $\pi: \FH \M \A$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\pi}$ is a $\delta$-perturbation of $\pi$. Then
 
-?
+$$\EU_{\upsilon}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma) \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma)   + O\AP{\delta\AP{\tau+\frac{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma)}{1-\gamma}}}$$
 
 ***
 
 TBD: Proof of Proposition A.N5
 
 \#Proof of Theorem 1
+
+For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the 1-mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$...
+
+% Apply properiety asumption? Do we honestly need the 2nd order, despite the relativity of V & Q?
 
 % Take perturbations
 % Take DE decomposition
