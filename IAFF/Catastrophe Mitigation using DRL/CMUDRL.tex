@@ -214,13 +214,13 @@ Fix an MDP $M$ and $\pi: \St_M \M \A_M$. We define $\V_{M\pi}: \St_M \times (0,1
 
 $$\V_{M\pi}(s,\gamma) := (1-\gamma) \sum_{n=0}^\infty \gamma^n \Ea{\T_{M\pi}^n(s)}{\R_M}$$
 
-$$\Q_{M\pi}(s,a,\gamma) := (1-\gamma) \R_M(s) + \gamma \Ea{t \sim \T_{M\pi}(s)}{\V_{M\pi}(t,\gamma)}$$
+$$\Q_{M\pi}(s,a,\gamma) := (1-\gamma) \R_M(s) + \gamma \Ea{t \sim \T_{M}(s,a)}{\V_{M\pi}(t,\gamma)}$$
 
-For each $k \in \Nats$, we define $\V_{M\pi}^k: \St_M \rightarrow [0,1]$, $\Q_{M\pi}^k: \St_M \times \A_M \rightarrow [0,1]$ and $\A_{M\pi}^k: \St_M \rightarrow 2^{\A_M}$ by
+For each $k \in \Nats$, we define $\V_{M\pi}^k: \St_M \rightarrow \Reals$, $\Q_{M\pi}^k: \St_M \times \A_M \rightarrow \Reals$ and $\A_{M\pi}^k: \St_M \rightarrow 2^{\A_M}$ by
 
-$$\V_{M\pi}^k(s) := \frac{\D^k \V_{M\pi}(s,\gamma)}{\D\gamma^k}\bigg\vert_{\gamma=1}$$
+$$\V_{M\pi}^k(s) := (-1)^k \frac{\D^k \V_{M\pi}(s,\gamma)}{\D\gamma^k}\bigg\vert_{\gamma=1}$$
 
-$$\Q_{M\pi}^k(s,a) := \frac{\D^k \Q_{M\pi}(s,a,\gamma)}{\D\gamma^k}\bigg\vert_{\gamma=1}$$
+$$\Q_{M\pi}^k(s,a) := (-1)^k \frac{\D^k \Q_{M\pi}(s,a,\gamma)}{\D\gamma^k}\bigg\vert_{\gamma=1}$$
 
 $$\A_{M\pi}^0(s) := \{a \in \A_M \mid \Q_{M\pi}^0(s,a) \geq \V_{M\pi}^0(s)\}$$
 
@@ -230,7 +230,7 @@ $$\A_{M\pi}^{k+1}(s) := \{a \in \A_{M\pi}^k(s) \mid \Q_{M\pi}^{k+1}(s,a) \geq \V
 
 Now we give the new (weaker) condition on the advisor policy. For notational simplicity, we assume the policy is stationary. It is easy to generalize these results to non-stationary advisor policies and to policies that depend on irrelevant additional information (i.e. policies for universes that are *realizations* of the MDP).
 
-\#Definition N7
+\#Definition N8
 
 Given a catastrophe MDP $M$, we denote $M^\flat$ the MDP defined by
 
@@ -248,13 +248,13 @@ Given a catastrophe MDP $M$, we denote $M^\flat$ the MDP defined by
 
 Fix $\epsilon,\delta \in (0,1)$. Consider a catastrophe MDP $M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $M$ when there exists a 1-mitigation policy $\pi^*: \St_M\ \rightarrow A_M$, a $\delta$-perturbation $\tilde{M}$ of $M$ with and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
 
-i. For any $s \in \SF_M$: $$\T_{M\pi}\AP{\SF_M \mid s} = 1$$
+i. $\tilde{\pi}$ is a mitigation policy for $\tilde{M}$.
 
-ii. For any $s \in \SD_M$: $$\T_{\tilde{M}\tilde{\pi}}\AP{\SC_M \mid s} = 0$$
+ii. For any $s \in \St_M \setminus \SC_M$: $$\Supp{\tilde{\pi}(s)} \subseteq \A_{\tilde{M}^\flat\pi^*}^0(s)$$
 
-iii. For any $s \in \St_M \setminus \SC_M$: $$\Supp{\tilde{\pi}(s)} \subseteq \A_{\tilde{M}^\flat\pi^*}^0(s)$$
+iii. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}\AP{\pi^*(s) \mid s} > \epsilon$$
 
-iv. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}\AP{\pi^*(s) \mid s} > \epsilon$$
+% Alternatively we could allow \pi^* to be stochastic and require \tilde{\pi} to be of the form \epsilon \pi^* + (1 - \epsilon) \pi'
 
 Given $\tau_{1,2} \in (0,\infty)$ and $s_0 \in \SD_M$, $\pi$ is said to have *moments $\tau_{1,2}$ at $s_0$* when $\pi^*$ has them as mitigation time moments.
 
@@ -530,7 +530,7 @@ TBD: Proof of Proposition A.N5
 
 \#Proof of Theorem 1
 
-For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic 1-mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Choose some $\sigma^{k\RMD}: \St_{\MD} \M \A$ and $\sigma^{k\RME}: \St_{\MD} \M \A$ s.t. for any $s \in \SD_M$, $\sigma^{k\RMD}(s) = \sigma^{k\RME}(s) = \tilde{\sigma}^k(s)$ and for any $s \in \SF$, $\sigma^{k\RME}(s) = \tilde{\sigma}^k(s)$.
+For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic 1-mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Choose some $\sigma^{k\RMD}: \St_{\MD} \M \A$ and $\sigma^{k\RME}: \St_{\ME} \M \A$ s.t. for any $s \in \SD_M$, $\sigma^{k\RMD}(s) = \sigma^{k\RME}(s) = \tilde{\sigma}^k(s)$ and for any $s \in \SF$, $\sigma^{k\RME}(s) = \tilde{\sigma}^k(s)$.
 
 % Take perturbations
 % Take DE decomposition
