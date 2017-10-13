@@ -242,7 +242,7 @@ Given a catastrophe MDP $M$, we denote $M^\flat$ the MDP defined by
 
 * For any $s\not\in\SF_M$, $\R_{M^\flat}(s) = 0$.
 
-* For any $s \in \SF_M$, $\R_{M^\flat}(s) = \frac{\R_M(s)+1}{2}$.
+* For any $s \in \SF_M$, $\R_{M^\flat}(s) = \frac{1}{2} + \frac{1}{2}\R_M(s)$.
 
 \#Definition N6
 
@@ -404,59 +404,9 @@ TBD: Proof of Proposition A.N2
 
 Consider $M$ a catastrophe MDP. We define the MDP $\MD$ as follows.
 
-* $\St_{\MD} = \SD_M \sqcup \{\bot,\top\}$
+* $\St_{\MD} = \SD_M \sqcup \SF_M \sqcup \{\bot\}$
 
 * $\A_{\MD} = \A_M$
-
-* For any $s,t \in \SD_M$: 
-
-$$\T_{\MD}(t \mid s) = \T_M(t \mid s)$$
-
-$$\T_{\MD}(\bot \mid s) = \T_M(\SC_M \mid s)$$
-
-$$\T_{\MD}(\top \mid s) = \T_M(\SF_M \mid s)$$
-
-$$\T_{\MD}(\bot \mid \bot) = 1$$
-
-$$\T_{\MD}(\top \mid \top) = 1$$
-
-* For any $s \in \SD_M$, $\R_{\MD}(s) = \R_M(s)$.
-
-* $\R_{\MD}(\bot) = 0$, $\R_{\MD}(\top) = 1$.
-
-Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Denote $\Ob':=\Ob\sqcup\{\bot,\top\}$ and $\In':=(\A,\Ob')$. We define the $\In'$-universe $\UD=(\mu^\RMD,r')$ and the function $S^\RMD: \AP{\A \times \Ob'}^* \rightarrow \St_{\MD}$ as follows
-
-$$\mu^\RMD(o \mid ha) := \begin{cases} \mu(o \mid ha) \text{ if } hao\in\FH \text{ and } S(hao)\in\SD_M \\ 0 \text{ if } hao\in\FH \text{ and } S(hao)\not\in\SD_M \\ \T_M\AP{\SC_M \mid S(h),a} \text{ if } h\in\FH \text{ and } o=\bot \\ \T_M\AP{\SF_M \mid S(h),a} \text{ if } h\in\FH \text{ and } o=\top \\ [[o=\bot]] \text{ if } h_{\Abs{h}-1} \in \A  \bot \\ [[o=\top]] \text{ if } h_{\Abs{h}-1} \in \A  \top \end{cases}$$
-
-$$r^\RMD(h):=\begin{cases} r(h) \text{ if } h\in\FH \\ 0 \text{ if } h_{\Abs{h}-1} \in \A \bot \\ 1 \text{ if } h_{\Abs{h}-1} \in \A \top \end{cases}$$
-
-$$S^\RMD(h):=\begin{cases} S(h) \text{ if } h\in\FH \\ \bot \text{ if } h_{\Abs{h}-1} \in \A\bot \\ \top \text{ if } h_{\Abs{h}-1} \in \A \top \end{cases}$$
-
-It is easy to see that $\UD$ is an $\Ob'$-realization of $\MD$ with state function $S^\RMD$.
-
-\Comment{Given $\pi: \St_M \M \A_M$, we define $\PD: \St_{\MD} \M \A_M$ by
-
-* For any $s \in \SD_M$, $\PD(s) = \pi(s)$.
-
-* For $s \in \{\bot,\top\}$, $\PD(s)$ is arbitrary (because of how $\T_{\MD}$ is defined, the choice affects nothing).}
-
-\#Proposition A.N3
-
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Assume that $\R_M \leq 1/2$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In'$-policy. Then, for any $\gamma\in(0,1)$
-
-$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\RMD\AP{x_{:n}}\ne\top,\ S^\RMD\AP{x_{:n+1}}=\top} \geq 2{\gamma^{\tau+1}}-2\AP{\EU_{\UD}^{\pi^* \circ S}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
-
-***
-
-TBD: Proof of Proposition A.N3
-
-\#Definition A.N3
-
-Fix $\delta\in(0,1)$ and consider $M$ a $\delta$-catastrophe MDP. We define the MDP $\ME$ as follows.
-
-* $\St_{\ME} = \SD_M \sqcup \SF_M \sqcup \{\bot\}$
-
-* $\A_{\ME} = \A_M$
 
 * For any $s,t \in \SD_M$:
 
@@ -466,35 +416,79 @@ $$\T_{\ME}(\bot \mid s) = \T_M(\SC_M \mid s)$$
 
 $$\T_{\ME}(\bot \mid \bot) = 1$$
 
-* For any $s \in \SD_M$, $t \in \SF_M$:
+* For any $s \in \SD_M \cup \SF_M$, $t \in \SF_M$:
 
 $$\T_{\ME}(t \mid s) = \T_M(t \mid s)$$
 
-* For any $s,t \in \SF_M$:
-
-$$\T_{\ME}(t \mid s) = \T_M(t \mid s)$$
+* For any $s \in \SF_M$:
 
 $$\T_{\ME}(\bot \mid s) = \T_M(\SC_M \cup \SD_M \mid s)$$
 
-* For any $s \in \SD_M \cup \SF_M$, $\R_{\ME}(s) = \R_M(s)$.
+* For any $s \in \SD_M$, $\R_{\MD}(s) = \frac{1}{3}\R_M(s)$.
+
+* For any $s \in \SF_M$, $\R_{\MD}(s) = \frac{2}{3} + \frac{1}{3}\R_M(s)$.
+
+* $\R_{\MD}(\bot) = 0$
+
+Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Denote $\Ob':=\Ob\times\{\Re,\Im\}$, $\Ob^\star:=\Ob' \sqcup \{\bot\}$ and $\In^\star:=(\A,\Ob^\star)$. Denote $\beta: \Ob' \rightarrow \Ob$ the projection mapping and $\beta^*: \AP{\A \times \Ob'}^* \rightarrow \AP{\A \times \Ob}^*$ corresponding. We define the $\In^\star$-universe $\UD=(\mu^\RMD,r^\star)$ and the function $S^\star: \AP{\A \times \Ob^\star}^* \rightarrow \St_{\MD}$ as follows
+
+$$\mu^\RMD(o\Re \mid ha) := \begin{cases} \mu\AP{o \mid \beta^*(h)a} \text{ if } h\in\AP{\A \times \Ob'}^* \text{ and } S\AP{\beta^*(h)},S\AP{\beta^*(h)ao}\in\SD_M \\ 0 \text{ otherwise} \end{cases}$$
+
+$$\mu^\RMD(o\Im \mid ha) := \begin{cases} \mu\AP{o \mid \beta^*(h)a} \text{ if } h\in\AP{\A \times \Ob'}^* \text{ and } S\AP{\beta^*(h)ao}\in\SF_M \\ 0 \text{ otherwise} \end{cases}$$
+
+$$\mu^\RMD(\bot \mid ha) := 1 - \sum_{o \in O} \AP{\mu^\RMD(o\Re \mid ha) + \mu^\RMD(o\Im \mid ha)}$$
+
+$$r^\star(h):=\begin{cases} \frac{1}{3}r(\Estr) \text{ if } h = \Estr \\ \frac{1}{3}r\AP{\beta^*(h)} \text{ if } h\in\AP{\A \times \Ob'}^*,\ \Abs{h}>0 \text{ and } h_{:\Abs{h}-1}\in\A\Ob\Re \\ \frac{2}{3} + \frac{1}{3}r\AP{\beta^*(h)} \text{ if } h\in\AP{\A \times \Ob'}^*,\ \Abs{h}>0 \text{ and } h_{:\Abs{h}-1}\in\A\Ob\Im \\ 0 \text{ if } h\not\in\AP{\A \times \Ob'}^* \end{cases}$$
+
+$$S^\star(h):=\begin{cases} S\AP{\beta^*(h)} \text{ if } h\in\AP{\A \times \Ob'}^* \\ \bot \text{ otherwise} \end{cases}$$
+
+It is easy to see that $\UD$ is an $\Ob^\star$-realization of $\MD$ with state function $S^\star$.
+
+\Comment{Given $\pi: \St_M \M \A_M$, we define $\PD: \St_{\MD} \M \A_M$ by
+
+* For any $s \in \SD_M$, $\PD(s) = \pi(s)$.
+
+* For $s \in \{\bot,\top\}$, $\PD(s)$ is arbitrary (because of how $\T_{\MD}$ is defined, the choice affects nothing).}
+
+\#Proposition A.N3
+
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
+
+$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\star\AP{x_{:n}}\not\in\SF_M,\ S^\star\AP{x_{:n+1}}\in\SF_M} \geq 2{\gamma^{\tau+1}}-3\AP{\EU_{\UD}^{\pi^* \circ S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
+
+***
+
+TBD: Proof of Proposition A.N3
+
+\#Definition A.N3
+
+Consider $M$ a catastrophe MDP. We define the MDP $\ME$ as follows.
+
+* $\St_{\ME} = \St_{\MD}$
+
+* $\A_{\ME} = \A_M$
+
+* $\T_{\ME} = \T_{\MD}$
+
+* For any $s \in \SD_M \cup \SF_M$, $\R_{\ME}(s) = \frac{1}{3}\R_M(s)$.
 
 * $\R_{\ME}(\bot) = 0$
 
-Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. We define the $\In'$-universe $\upsilon^\RME=(\mu^\RME,r^\RME)$ and the function $S^\RME: \AP{\A \times \Ob'}^* \rightarrow \St_{\ME}$ as follows
+Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. We define the $\In^\star$-universe $\upsilon^\RME=(\mu^\RME,r^\star)$ as follows
 
-$$\mu^\RME(o \mid ha) := \begin{cases} \mu(o \mid ha) \text{ if } hao\in\FH,\ S(h) \in \SD_M \text{ and } S(hao)\not\in\SC_M \\ \mu(o \mid ha) \text{ if } hao\in\FH,\ S(h) \in \SF_M \text{ and } S(hao)\in\SF_M \\ 0 \text{ if } hao\in\FH,\ S(h)\in\SD_M \text{ and } S(hao)\in\SC_M \\ 0 \text{ if } hao\in\FH,\ S(h)\in\SF_M \text{ and } S(hao)\not\in\SF_M \\ \T_M\AP{\SC_M \mid S(h),a} \text{ if } h\in\FH,\ S(h)\in\SD_M \text{ and } o=\bot \\ \T_M\AP{\SC_M \cup \SD_M \mid S(h),a} \text{ if } h\in\FH,\ S(h) \in \SF_M \text{ and } o=\bot \\ [[o=\bot]] \text{ if } h_{\Abs{h}-1} \in \A  \bot\end{cases}$$
+$$\mu^\RME(o\Re \mid ha) := \begin{cases} \mu\AP{o \mid \beta^*(h)a} \text{ if } h\in\AP{\A \times \Ob'}^* \text{ and } S\AP{\beta^*(h)},S\AP{\beta^*(h)ao}\in\SD_M \\ \mu\AP{o \mid \beta^*(h)a} \text{ if } h\in\AP{\A \times \Ob'}^* \text{ and } S\AP{\beta^*(h)ao}\in\SF_M \\ 0 \text{ otherwise} \end{cases}$$
 
-$$r^\RME(h):=\begin{cases} r(h) \text{ if } h\in\FH \\ 0 \text{ if } h_{\Abs{h}-1} \in \A \bot\end{cases}$$
+$$\mu^\RME(o\Im \mid ha) := 0$$
 
-$$S^\RME(h):=\begin{cases} S(h) \text{ if } h\in\FH \\ \bot \text{ if } h_{\Abs{h}-1} \in \A\bot\end{cases}$$
+$$\mu^\RME(\bot \mid ha) := 1 - \sum_{o \in O} \mu^\RME(o\Re \mid ha)$$
 
-It is easy to see that $\upsilon^\RME$ is an $\Ob'$-realization of $\ME$ with state function $S^\RME$.
+It is easy to see that $\upsilon^\RME$ is an $\Ob^\star$-realization of $\ME$ with state function $S^\star$.
 
 \#Proposition A.N4
 
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$. Let $\pi$ be any $\In'$-policy. Then, for any $\gamma\in(0,1)$
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
 
-$$\EU_{\upsilon}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma) \leq \EU_{\upsilon^\RME}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
+$$\EU_{\upsilon}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon}^{\pi^\Re???}(\gamma) \leq \EU_{\upsilon^\RME}^{\pi^* \circ S^\star}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
 
 ***
 
