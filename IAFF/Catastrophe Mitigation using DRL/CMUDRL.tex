@@ -454,7 +454,9 @@ It is easy to see that $\UD$ is an $\Ob^\star$-realization of $\MD$ with state f
 
 Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
 
-$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\star\AP{x_{:n}}\not\in\SF_M,\ S^\star\AP{x_{:n+1}}\in\SF_M} \geq 2{\gamma^{\tau+1}}-3\AP{\EU_{\UD}^{\pi^* \circ S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
+$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\star\AP{x_{:n}}\not\in\SF_M,\ S^\star\AP{x_{:n+1}}\in\SF_M} \geq 2{\gamma^{\tau+1}}-3\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
+
+Here, $\pi^* S^\star$ is the $\In^\star$-policy defined by $\pi^*S^\star(h):=\pi^*\AP{S^\star(h)}$, where $\pi^*(\bot)$ can be chosen arbitrarily.
 
 ***
 
@@ -484,11 +486,13 @@ $$\mu^\RME(\bot \mid ha) := 1 - \sum_{o \in O} \mu^\RME(o\Re \mid ha)$$
 
 It is easy to see that $\upsilon^\RME$ is an $\Ob^\star$-realization of $\ME$ with state function $S^\star$.
 
+Given $h = a_0 o_0 a_1 o_1 \ldots a_{n-1} o_{n-1} \in \AP{\A \times \Ob}^n$, we will use the notation $\Re^*h := a_0 o_0 \Re a_1 o_1 \Re \ldots a_{n-1} o_{n-1} \Re \in \AP{\A \times \Ob'}^n$. Given an $\In^\star$-policy $\pi$, the $\In$-policy $\pi\Re^*$ is defined by $\pi\Re^*(h) := \pi\AP{\Re^*h}$.
+
 \#Proposition A.N4
 
 Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
 
-$$\EU_{\upsilon}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon}^{\pi^\Re???}(\gamma) \leq \EU_{\upsilon^\RME}^{\pi^* \circ S^\star}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
+$$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
 
 ***
 
@@ -496,7 +500,7 @@ TBD: Proof of Proposition A.N4
 
 \#Definition A.N4
 
-Fix $\delta\in(0,1)$ and a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Let $\pi: \FH \M \A$ be any policy. A policy $\tilde{\pi}: \FH \M \A$ is said to be a *$\delta$-perturbation of $\pi$ over $S$* when
+Consider $\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$, a catastrophe MDP $M$ and some $S: \FH \rightarrow \St_M \sqcup \{\bot\}$. Let $\pi: \FH \M \A$ be any policy. A policy $\tilde{\pi}: \FH \M \A$ is said to be a *$\delta$-perturbation of $\pi$ over $S$* when
 
 i. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SF_M$, $\tilde{\pi}(h)=\pi(h)$.
 
@@ -514,9 +518,9 @@ We also denote $\upsilon^{\tilde{M}}:=\AP{\mu^{\tilde{M}},r}$. It is easy to see
 
 \#Proposition A.N5
 
-Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\tau\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Assume that $\R_M \leq 1/2$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau$ at $S(\Estr)$. Consider some $\pi: \FH \M \A$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\pi}$ is a $\delta$-perturbation of $\pi$. Then
+Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\tau\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau$ at $S(\Estr)$. Consider some $\In^\star$-policy $\pi$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\pi}$ is a $\delta$-perturbation of $\pi$ over $S^\star$. Then
 
-$$\EU_{\upsilon}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma) \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma)   + O\AP{\delta\AP{\tau+\frac{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* \circ S}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma)}{1-\gamma}}}$$
+$$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma)   + O\AP{\delta\AP{\tau+\frac{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma)}{1-\gamma}}}$$
 
 ***
 
