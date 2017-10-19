@@ -154,25 +154,25 @@ A *catastrophe MDP* is an MDP $M$ together with a partition of $\St_M$ into subs
 
 \#Definition N7
 
-Fix a catastrophe MDP $M$. $\pi: \St_M \M \A_M$ is called a *mitigation policy for $M$* when
+Fix a catastrophe MDP $M$. Define $\A_M^\sharp: \St_M \rightarrow 2^{\A_M}$ by
 
-i. For any $s \in \SF_M$, $\T_{M\pi}\AP{\SF_M \mid s}=1$.
+$$\A_M^\sharp(s):=\begin{cases} \{a \in \A_M \mid \Supp{\T(s,a)} \subseteq \SF_M\} \text{ if } s \in \SF_M \\ \{a \in \A_M \mid \Supp{\T(s,a)} \cap \SC_M = \varnothing\} \text{ if } s \in \SD_M \\ \A_M \text{ if } s \in \SC_M \end{cases}$$
 
-ii. For any $s \in \SD_M$, $\T_{M\pi}\AP{\SC_M \mid s}=0$.
+$\pi: \St_M \M \A_M$ is called a *mitigation policy for $M$* when for any $s \in \St_M$, $\Supp{\pi(s)} \subseteq \A_M^\sharp(s)$. It is called a *proper mitigation policy for $M$* when, in addition, for any $s \in \SD_M$, $\lim_{n \rightarrow \infty} \T_{M\pi}^n\AP{\SF_M \mid s} = 1$.
 
-Given $k \in \Nats$, $\pi$ is called a *k-mitigation policy for $M$* when, in addition
+\Comment{Given $k \in \Nats$, $\pi$ is called a *k-mitigation policy for $M$* when, in addition
 
 iii. For any $s \in \St_M \setminus \SC_M$, $\Supp{\pi(s)} \subseteq \A_M^k$.
 
-%$M$ is called *proper* when it has a 2-mitigation policy.
+$M$ is called *proper* when it has a 2-mitigation policy.}
 
 \#Definition N2
 
-Fix $\tau_1,\tau_2 \in (0,\infty)$, a catastrophe MDP $M$, a mitigation policy $\pi$, and a state $s_0 \in \SD_M$. $\pi$ is said to have *mitigation time moments $\tau_1,\tau_2$ at $s_0$* when
+Fix $\tau_1,\tau_2 \in (0,\infty)$, a catastrophe MDP $M$ and a proper mitigation policy $\pi$. $\pi$ is said to have *mitigation time moments $\tau_1,\tau_2$* when for any $s \in \SD_M$
 
-i. $$\sum_{n=0}^\infty n \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi}^{n}\AP{\SF_M \mid s_0}} \leq \tau_1$$
+i. $$\sum_{n=0}^\infty n \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} \leq \tau_1$$
 
-ii. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi}^{n}\AP{\SF_M \mid s_0}} \leq \tau_2$$
+ii. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} \leq \tau_2$$
 
 ***
 
@@ -246,17 +246,20 @@ Given a catastrophe MDP $M$, we denote $M^\flat$ the MDP defined by
 
 \#Definition N6
 
-Fix $\epsilon,\delta \in (0,1)$. Consider a catastrophe MDP $M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $M$ when there exists a 1-mitigation policy $\pi^*: \St_M\ \rightarrow A_M$, a $\delta$-perturbation $\tilde{M}$ of $M$ with and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
+Fix $\epsilon,\delta \in (0,1)$. Consider a catastrophe MDP $M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $M$ when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ with a *deterministic* proper mitigation policy $\pi^*: \St_M \rightarrow \A_M$ and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
 
-i. $\tilde{\pi}$ is a mitigation policy for $\tilde{M}$.
+i. For any $s \in \SF_M$, $\pi^*(s) \in \A^1_{M}(s)$.
 
-ii. For any $s \in \St_M \setminus \SC_M$: $$\Supp{\tilde{\pi}(s)} \subseteq \A_{\tilde{M}^\flat\pi^*}^0(s)$$
+ii. $\tilde{\pi}$ is a mitigation policy for $\tilde{M}$.
 
-iii. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}\AP{\pi^*(s) \mid s} > \epsilon$$
+iii. For any $s \in \St_M \setminus \SC_M$: $$\Supp{\tilde{\pi}(s)} \subseteq \A_{\tilde{M}^\flat\pi^*}^0(s)$$
 
-% Alternatively we could allow \pi^* to be stochastic and require \tilde{\pi} to be of the form \epsilon \pi^* + (1 - \epsilon) \pi'
+iv. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}\AP{\pi^*(s) \mid s} > \epsilon$$
 
-Given $\tau_{1,2} \in (0,\infty)$ and $s_0 \in \SD_M$, $\pi$ is said to have *moments $\tau_{1,2}$ at $s_0$* when $\pi^*$ has them as mitigation time moments.
+% Alternatively we could allow \pi^* to be stochastic...
+% and require \tilde{\pi} to be of the form \epsilon \pi^* + (1 - \epsilon) \pi'
+
+Given $\tau_{1,2} \in (0,\infty)$, $\pi$ is said to *have moments $\tau_{1,2}$* when $\pi^*$ has them as mitigation time moments.
 
 ***
 
@@ -276,7 +279,7 @@ iii. For each $s \in \St_{\MF_k}$, $\R_{M^k}(s)=\R_{\MF_k}(s)$.
 
 iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \St_{M^k} \setminus \SC_{M^k}$ and $S^j(h) \in \St_{M^j} \setminus \SC_{M^j}$, then $r^k(h)=r^j(h)$ (this condition means that in uncorrupted states, the reward is observable).
 
-Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M^k$. Assume $\sigma^k$ has moments $\tau_{1,2}$ at $S^k(\Estr)$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
+Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M^k$. Assume $\sigma^k$ has moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
 $$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k}}^{\pi^*}(1-\alpha) = O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot\AP{(\tau_1 \alpha)^{1/4} + \tau_2 \alpha}+\delta\tau_1}$$
 
@@ -376,27 +379,29 @@ TBD: Proof of Lemma A.N1 % Considering doing it in Appendix B
 
 \#Proposition A.N2
 
-Fix $\tau_1, \tau_2, \TF_1, \TF_2 \in (0,\infty)$. Consider an MDP $M$, a partition $\St_M = \SD_M \sqcup \SF_M$, a state $s_0 \in \SD_M$ and a policy $\pi: \St_M \M \A_M$. Assume that
+Fix $\tau_1, \tau_2, \TF_1, \TF_2 \in (0,\infty)$. Consider an MDP $M$, a partition $\St_M = \SD_M \sqcup \SF_M$ and a policy $\pi: \St_M \M \A_M$. Assume that for any $s \in \SD_M$
 
-i. For any $s \in \SF_M$, $\T_{M\pi}\AP{\SF_M \mid s}=1$.
+i. $$\sum_{n=0}^\infty n \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} \leq \tau_1$$
 
-ii. $$\sum_{n=0}^\infty n \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi}^{n}\AP{\SF_M \mid s_0}} \leq \tau_1$$
+ii. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} \leq \tau_2$$
 
-iii. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s_0}-\T_{M\pi}^{n}\AP{\SF_M \mid s_0}} \leq \tau_2$$
+Assume further than for any $s \in \SF_M$
 
-iv. For any $s \in \SF_M$, $\Abs{\V^1_{M\pi}(s)} \leq \TF_1$.
+iii. $\T_{M\pi}\AP{\SF_M \mid s}=1$
 
-v. For any $s \in \SF_M$, $\Abs{\V^2_{M\pi}(s)} \leq \TF_2$. 
+iv. $\Abs{\V^1_{M\pi}(s)} \leq \TF_1$
 
-Then:
+v. $\Abs{\V^2_{M\pi}(s)} \leq \TF_2$
 
-a. For any $s \in \St_M$, $\Abs{\V^1_{M\pi}(s)} = O\AP{\TF_1 + \tau_1}$
+Then, for any $s \in \St_M$
 
-b. For any $s \in \St_M$, $\Abs{\V^2_{M\pi}(s)} = O\AP{\TF_2 + \TF_1 \tau_1 + \tau_2}$
+a. $\Abs{\V^1_{M\pi}(s)} = O\AP{\TF_1 + \tau_1}$
+
+b. $\Abs{\V^2_{M\pi}(s)} = O\AP{\TF_2 + \TF_1 \tau_1 + \tau_2}$
 
 ***
 
-Note that Proposition A.N2 is really about Markov chains rather than MDPs, but don't make it explicit to avoid introducing more notation.
+Note that Proposition A.N2 is really about Markov chains rather than MDPs, but we don't make it explicit to avoid introducing more notation.
 
 TBD: Proof of Proposition A.N2
 
@@ -526,12 +531,24 @@ $$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gam
 
 TBD: Proof of Proposition A.N5
 
+\#Proposition A.N6
+
+Consider $M$ a catastrophe MDP, some $s \in \St_M \setminus \SC_M$ and $\pi^*$ a proper mitigation policy. Then
+
+$$\A_{M^\flat\pi^*}^0\AP{s} \cap \A_M^\sharp(s) \subseteq \A_{\MD\pi^*}^0\AP{s}$$
+
+$$\A_{M^\flat\pi^*}^0\AP{s} \cap \A_M^\sharp(s) \subseteq \A_{\ME\pi^*}^0\AP{s}$$
+
+***
+
+TBD: Proof of Proposition A.N6
+
 \#Proof of Theorem 1
 
-For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic 1-mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Choose some $\sigma^{k\RMD}: \St_{\MD} \M \A$ and $\sigma^{k\RME}: \St_{\ME} \M \A$ s.t. for any $s \in \SD_M$, $\sigma^{k\RMD}(s) = \sigma^{k\RME}(s) = \tilde{\sigma}^k(s)$ and for any $s \in \SF$, $\sigma^{k\RME}(s) = \tilde{\sigma}^k(s)$.
+For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic 1-mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\sigma^{k}$ is $\epsilon$-sane relatively to $\pi^k$: condition i of Definition A.N1 follows by Proposition A.N6 from conditions i and ii of Definition N6, and condition ii of Definition A.N2 follows from condition iii of Definition N6. Moreover, by Proposition A.N2, we have...
 
-% Take perturbations
-% Take DE decomposition
+% V Take perturbations
+% V Take DE decomposition
 % Apply Lemma to get regret for D & E
 % Use regret for D to derive bound on mitigation time
 % Use regret for perturbed E to derive regret for unperturbed E (using mitigation time)
