@@ -150,7 +150,7 @@ We start by formalising the concepts of a "catastrophe" and "catastrophe mitigat
 
 \#Definition N1
 
-A *catastrophe MDP* is an MDP $M$ together with a partition of $\St_M$ into subsets $\St_M:=\SF_M \sqcup \SD_M \sqcup \SC_M$ (safe, dangerous and corrupt states respectively). $M$ is said to be a *proper* catastrophe MDP when there exists $\pi: \St_M \M \A_M$ a 2-optimal policy s.t. for any $s\in\SF_M$, $\T_M\AP{\SF_M \mid s} = 1$.
+A *catastrophe MDP* is an MDP $M$ together with a partition of $\St_M$ into subsets $\St_M:=\SF_M \sqcup \SD_M \sqcup \SC_M$ (safe, dangerous and corrupt states respectively).
 
 \#Definition N7
 
@@ -158,13 +158,19 @@ Fix a catastrophe MDP $M$. Define $\A_M^\sharp: \St_M \rightarrow 2^{\A_M}$ by
 
 $$\A_M^\sharp(s):=\begin{cases} \{a \in \A_M \mid \Supp{\T(s,a)} \subseteq \SF_M\} \text{ if } s \in \SF_M \\ \{a \in \A_M \mid \Supp{\T(s,a)} \cap \SC_M = \varnothing\} \text{ if } s \in \SD_M \\ \A_M \text{ if } s \in \SC_M \end{cases}$$
 
-$\pi: \St_M \M \A_M$ is called a *mitigation policy for $M$* when for any $s \in \St_M$, $\Supp{\pi(s)} \subseteq \A_M^\sharp(s)$. It is called a *proper mitigation policy for $M$* when, in addition, for any $s \in \SD_M$, $\lim_{n \rightarrow \infty} \T_{M\pi}^n\AP{\SF_M \mid s} = 1$.
+$\pi: \St_M \M \A_M$ is called a *mitigation policy for $M$* when 
 
-\Comment{Given $k \in \Nats$, $\pi$ is called a *k-mitigation policy for $M$* when, in addition
+i. For any $s \in \St_M$, $\Supp{\pi(s)} \subseteq \A_M^\sharp(s)$. 
 
-iii. For any $s \in \St_M \setminus \SC_M$, $\Supp{\pi(s)} \subseteq \A_M^k$.
+$\pi$ is called a *proper mitigation policy for $M$* when condition i holds and
 
-$M$ is called *proper* when it has a 2-mitigation policy.}
+ii. For any $s \in \SD_M$, $\lim_{n \rightarrow \infty} \T_{M\pi}^n\AP{\SF_M \mid s} = 1$. 
+
+\Comment{Given $k \in \Nats$, $\pi$ is called a *proper k-mitigation policy for $M$* when conditions i+ii hold and
+
+iii. For any $s \in \St_D$, $\Supp{\pi(s)} \subseteq \A_M^k(s)$.
+
+iv. For any $s \in \St_F$, $\Supp{\pi(s)} \subseteq \A_M^{k+1}(s)$.}
 
 \#Definition N2
 
@@ -246,9 +252,9 @@ Given a catastrophe MDP $M$, we denote $M^\flat$ the MDP defined by
 
 \#Definition N6
 
-Fix $\epsilon,\delta \in (0,1)$. Consider a catastrophe MDP $M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $M$ when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ with a *deterministic* proper mitigation policy $\pi^*: \St_M \rightarrow \A_M$ and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
+Fix $\epsilon,\delta,\gamma \in (0,1)$. Consider a catastrophe MDP $M$. A policy $\pi: \St_M \M \A_M$ is said to be *locally $(\epsilon,\delta)$-sane* for $(M,\gamma)$ when there exists a $\delta$-perturbation $\tilde{M}$ of $M$ with a *deterministic* proper mitigation policy $\pi^*: \St_M \rightarrow \A_M$ and a $\delta$-perturbation $\tilde{\pi}$ of $\pi$ s.t.
 
-i. For any $s \in \SF_M$, $\pi^*(s) \in \A^1_{M}(s)$.
+i. For all $s \in \St_M$, $\V_{M\pi^*}(s,\gamma) = \V_M(s,\gamma)$.
 
 ii. $\tilde{\pi}$ is a mitigation policy for $\tilde{M}$.
 
@@ -269,7 +275,7 @@ We can now formulate the main result.
 
 \#Theorem 1
 
-Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,1)$ and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now, consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r^k)$ which is an $\Ob$-realization of a proper catastrophe MDP $M^k$ with state function $S^k$ s.t.
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,1)$ and for each $k \in [N]$, an MDP $\MF_k$ s.t. $\A_{\MF_k} = \A$. Now, consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r^k)$ which is an $\Ob$-realization of a catastrophe MDP $M^k$ with state function $S^k$ s.t.
 
 i. $\SF_{M^k} = \St_{\MF_k}$
 
@@ -279,7 +285,7 @@ iii. For each $s \in \St_{\MF_k}$, $\R_{M^k}(s)=\R_{\MF_k}(s)$.
 
 iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \St_{M^k} \setminus \SC_{M^k}$ and $S^j(h) \in \St_{M^j} \setminus \SC_{M^j}$, then $r^k(h)=r^j(h)$ (this condition means that in uncorrupted states, the reward is observable).
 
-Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $M^k$. Assume $\sigma^k$ has moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
+Consider also $\alpha,\delta\in(0,1)$, $\tau_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $(M^k,1-\alpha)$. Assume $\sigma^k$ has moments $\tau_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
 $$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^kS^k}}^{\pi^*}(1-\alpha) = O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot\AP{(\tau_1 \alpha)^{1/4} + \tau_2 \alpha}+\tau_1\delta}$$
 
@@ -377,25 +383,7 @@ The $O$-notation refers to the asymptotics where $\epsilon$ is *fixed* (so we do
 
 TBD: Proof of Lemma A.N1 % Write it in Appendix B
 
-\#Proposition A.N2
-
-Fix $\tau_1, \tau_2, \TF_1, \TF_2 \in (0,\infty)$. Consider a catastrophe MDP $M$ and a mitigation policy $\pi: \St_M \M \A_M$ with mitigation time moments $\tau_1, \tau_2$. Assume than for any $s \in \SF_M$
-
-i. $\Abs{\V^1_{M\pi}(s)} \leq \TF_1$
-
-ii. $\Abs{\V^2_{M\pi}(s)} \leq \TF_2$
-
-Then, for any $s \in \St_M \setminus \SC_M$
-
-a. $\Abs{\V^1_{M\pi}(s)} = O\AP{\TF_1 + \tau_1}$
-
-b. $\Abs{\V^2_{M\pi}(s)} = O\AP{\TF_2 + \TF_1 \tau_1 + \tau_2}$
-
-***
-
-Note that Proposition A.N2 is really about Markov chains rather than MDPs, but we don't make it explicit to avoid introducing more notation.
-
-TBD: Proof of Proposition A.N2
+We will not apply Lemma A.N1 directly the the universes of Theorem 1. Instead, we will define new universes using the following constructions.
 
 \#Definition A.N2
 
@@ -441,24 +429,6 @@ $$S^\star(h):=\begin{cases} S\AP{\beta^*(h)} \text{ if } h\in\AP{\A \times \Ob'}
 
 It is easy to see that $\UD$ is an $\Ob^\star$-realization of $\MD$ with state function $S^\star$.
 
-\Comment{Given $\pi: \St_M \M \A_M$, we define $\PD: \St_{\MD} \M \A_M$ by
-
-* For any $s \in \SD_M$, $\PD(s) = \pi(s)$.
-
-* For $s \in \{\bot,\top\}$, $\PD(s)$ is arbitrary (because of how $\T_{\MD}$ is defined, the choice affects nothing).}
-
-\#Proposition A.N3
-
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
-
-$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\star\AP{x_{:n}}\not\in\SF_M,\ S^\star\AP{x_{:n+1}}\in\SF_M} \geq 2{\gamma^{\tau+1}}-3\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
-
-Here, $\pi^* S^\star$ is the $\In^\star$-policy defined by $\pi^*S^\star(h):=\pi^*\AP{S^\star(h)}$, where $\pi^*(\bot)$ can be chosen arbitrarily.
-
-***
-
-TBD: Proof of Proposition A.N3
-
 \#Definition A.N3
 
 Consider $M$ a catastrophe MDP. We define the catastrophe MDP $\ME$ as follows.
@@ -488,6 +458,84 @@ Given $h = a_0 o_0 a_1 o_1 \ldots a_{n-1} o_{n-1} \in \AP{\A \times \Ob}^n$, we 
 $$\Re^*h := a_0 o_0 \Re a_1 o_1 \Re \ldots a_{n-1} o_{n-1} \Re \in \AP{\A \times \Ob'}^n$$ 
 
 Given an $\In^\star$-policy $\pi$, the $\In$-policy $\pi\Re^*$ is defined by $\pi\Re^*(h) := \pi\AP{\Re^*h}$.
+
+***
+
+In order to utilize condition iii of Definition N6, we need to establish the following relation between $M^\flat$ and $\MD$, $\ME$.
+
+\#Proposition A.N6
+
+Consider $M$ a catastrophe MDP, some $s \in \St_M \setminus \SC_M$ and $\pi^*$ a proper mitigation policy. Then
+
+$$\A_{M^\flat\pi^*}^0\AP{s} \cap \A_M^\sharp(s) \subseteq \A_{\MD\pi^*}^0\AP{s}$$
+
+$$\A_{M^\flat\pi^*}^0\AP{s} \cap \A_M^\sharp(s) \subseteq \A_{\ME\pi^*}^0\AP{s}$$
+
+***
+
+For the purpose of the proof, the following notation will be convenient
+
+\#Definition A.N6
+
+Consider $\St$ a finite set and some $\T: \St \M \St$. We define $\T^\infty: \St \M \St$ by
+
+$$\T^\infty := \lim_{n \rightarrow \infty} \frac{1}{n} \sum_{m = 0}^{n-1} \T^m$$
+
+As well known, the limit above always exists.
+
+\#Proof of Proposition A.N6
+
+Consider any $s \in \St \setminus \SC_M$ and $a \in \A_{M^\flat\pi^*}^0\AP{s} \cap \A_M^\sharp(s)$. Since $a \in \A_{M^\flat\pi^*}^0\AP{s}$, we have
+
+$$\Ea{\AP{\T_{M^\flat\pi^*}^\infty \circ \T_{M^\flat}}(s,a)}{\R_{M^\flat}} = \Ea{\T_{M^\flat}(s,a)}{\V^0_{M^\flat\pi^*}} = \Q_{M^\flat\pi^*}^0(s,a) \geq \V_{M^\flat\pi^*}^0(s) = \Ea{\T_{M^\flat\pi^*}^\infty(s)}{\R_{M^\flat}}$$
+
+Let $N$ be either of $\MD$ and $\ME$. Since $a \in \A_M^\sharp(s)$, we get
+
+$$\Ea{\AP{\T_{M^\flat\pi^*}^\infty \circ \T_{N}}(s,a)}{\R_{M^\flat}} \geq \Ea{\T_{M^\flat\pi^*}^\infty(s)}{\R_{M^\flat}}$$
+
+Since $\pi^*$ is a mitigation policy, we get
+
+$$\Ea{\AP{\T_{N\pi^*}^\infty \circ \T_{N}}(s,a)}{\R_{M^\flat}} \geq \Ea{\T_{N\pi^*}^\infty(s)}{\R_{M^\flat}}$$
+
+Finally, since $\pi^*$ is proper, $\Supp{\T_{N\pi^*}^\infty(s)} \subseteq \SF_M$ and $\Supp{\AP{\T_{N\pi^*}^\infty \circ \T_{N}}(s,a)} \subseteq \SF_M$. We conclude
+
+$$\Q_{N\pi^*}^0(s,a) = \Ea{\AP{\T_{N\pi^*}^\infty \circ \T_{N}}(s,a)}{\R_{N}} \geq \Ea{\T_{N\pi^*}^\infty(s)}{\R_{N}} = \V_{N\pi^*}^0(s)$$
+
+***
+
+?
+
+\#Proposition A.N2
+
+Fix $\tau_1, \tau_2, \TF_1, \TF_2 \in (0,\infty)$. Consider a catastrophe MDP $M$ and a mitigation policy $\pi: \St_M \M \A_M$ with mitigation time moments $\tau_1, \tau_2$. Assume than for any $s \in \SF_M$
+
+i. $\Abs{\V^1_{M\pi}(s)} \leq \TF_1$
+
+ii. $\Abs{\V^2_{M\pi}(s)} \leq \TF_2$
+
+Then, for any $s \in \St_M \setminus \SC_M$
+
+a. $\Abs{\V^1_{M\pi}(s)} = O\AP{\TF_1 + \tau_1}$
+
+b. $\Abs{\V^2_{M\pi}(s)} = O\AP{\TF_2 + \TF_1 \tau_1 + \tau_2}$
+
+***
+
+Note that Proposition A.N2 is really about Markov chains rather than MDPs, but we don't make it explicit to avoid introducing more notation.
+
+TBD: Proof of Proposition A.N2
+
+\#Proposition A.N3
+
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
+
+$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\star\AP{x_{:n}}\not\in\SF_M,\ S^\star\AP{x_{:n+1}}\in\SF_M} \geq 2{\gamma^{\tau+1}}-3\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
+
+Here, $\pi^* S^\star$ is the $\In^\star$-policy defined by $\pi^*S^\star(h):=\pi^*\AP{S^\star(h)}$, where $\pi^*(\bot)$ can be chosen arbitrarily.
+
+***
+
+TBD: Proof of Proposition A.N3
 
 \#Proposition A.N4
 
@@ -527,28 +575,6 @@ $$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gam
 
 TBD: Proof of Proposition A.N5
 
-\#Proposition A.N6
-
-Consider $M$ a catastrophe MDP, some $s \in \St_M \setminus \SC_M$ and $\pi^*$ a proper mitigation policy. Then
-
-$$\A_{M^\flat\pi^*}^0\AP{s} \cap \A_M^\sharp(s) \subseteq \A_{\MD\pi^*}^0\AP{s}$$
-
-$$\A_{M^\flat\pi^*}^0\AP{s} \cap \A_M^\sharp(s) \subseteq \A_{\ME\pi^*}^0\AP{s}$$
-
-***
-
-TBD: Proof of Proposition A.N6
-
-\#Proposition A.N7
-
-Consider $M$ a catastrophe MDP and $\pi^*$ a proper mitigation policy for $M$ with 1st mitigation time moment $\tau$ s.t. for any $s\in\SF_M$, $\Supp{\pi^*(s)} \subseteq \A_M^1(s)$. Then, for any $s \in \St_M \setminus \SC_M$ and $\gamma\in(0,1)$
-
-$$\V_M(s,\gamma) - \V_{M\pi^*}(s,\gamma) = O\AP{\AP{\tau + \max_{s\in\SF_M}\Abs{\V_{M}^2(s)}}(1-\gamma)}$$
-
-***
-
-TBD: Proof of Proposition A.N7
-
 \#Proof of Theorem 1
 
 For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic proper mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\tilde{\sigma}^{k}$ is $\epsilon$-sane relatively to $\pi^k$: condition i of Definition A.N1 follows by Proposition A.N6 from conditions ii and iii of Definition N6, and condition ii of Definition A.N2 follows from condition iv of Definition N6. Moreover, by Proposition A.N2, we have
@@ -587,11 +613,7 @@ Clearly $\AB{\sigma^k S^{k\star}}\underline{\pi}^\sharp\Re^* = \AB{\sigma^k S^{k
 
 $$\EU_{\upsilon^k}^{\pi^k S^{k}}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^{k}}}^{\pi^*}(1-\alpha) \leq O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot\AP{(\tau_1 \alpha)^{1/4} + \tau_2 \alpha}+\tau_1\delta}$$
 
-Applying Proposition A.N7 to the first term on the left hand side, we conclude
-
-$$\EU_{\upsilon^k}^{*}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^{k}}}^{\pi^*}(1-\alpha) = O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot\AP{(\tau_1 \alpha)^{1/4} + \tau_2 \alpha}+\tau_1\delta + \AP{\tau_1 + \max_{s\in\SF_{M^k}}\Abs{\V_{M}^2(s)}}\alpha}$$
-
-Since $M^k$ is proper, we have $\max_{s\in\SF_{M^k}}\Abs{\V_{M}^2(s)} = O(1)$. Also, $\tau_1 \alpha = O(\tau_2^{1/2} \alpha)$. We arrive at
+By condition i of Definition N6, this implies
 
 $$\EU_{\upsilon^k}^{*}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^{k}}}^{\pi^*}(1-\alpha) = O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot\AP{(\tau_1 \alpha)^{1/4} + \tau_2 \alpha}+\tau_1\delta}$$
 
