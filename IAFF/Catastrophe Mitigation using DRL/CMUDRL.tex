@@ -74,8 +74,8 @@
 \newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
 \newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
 
-\newcommand{\Abs}[1]{\lvert #1 \rvert}
-\newcommand{\Norm}[1]{\lVert #1 \rVert}
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
 \newcommand{\Floor}[1]{\lfloor #1 \rfloor}
 \newcommand{\Ceil}[1]{\lceil #1 \rceil}
 \newcommand{\Chev}[1]{\langle #1 \rangle}
@@ -507,7 +507,7 @@ Now we will establish a bound on $\V^1$ and $\V^2$ in terms of mitigation time m
 
 \#Proposition A.N2
 
-Fix $\tau_1, \tau_2, \TF_1, \TF_2 \in (0,\infty)$. Consider a catastrophe MDP $M$ and a mitigation policy $\pi: \St_M \M \A_M$ with mitigation time moments $\tau_1, \tau_2$. Assume than for any $s \in \SF_M$
+Fix $\tau_1, \tau_2, \TF_1, \TF_2 \in (0,\infty)$. Consider a catastrophe MDP $M$ and a proper mitigation policy $\pi: \St_M \M \A_M$ with mitigation time moments $\tau_1, \tau_2$. Assume than for any $s \in \SF_M$
 
 i. $\Abs{\V^1_{M\pi}(s)} \leq \TF_1$
 
@@ -524,6 +524,53 @@ b. $\Abs{\V^2_{M\pi}(s)} = O\AP{\TF_2 + \TF_1 \tau_1 + \tau_2}$
 Note that Proposition A.N2 is really about Markov chains rather than MDPs, but we don't make it explicit to avoid introducing more notation.
 
 \#Proof of Proposition A.N2
+
+Let $\mu_{M\pi s}\in\Delta\St_M^\omega$ be the Markov chain with transition matrix $\T_{M\pi}$ and initial state $s$. For any $\gamma\in(0,1$), we have
+
+$$\V_{M\pi}(s,\gamma) = \Ea{x\sim\mu_{M\pi s}}{(1-\gamma)\sum_{n=0}^\infty \gamma^n \R_M\AP{x_n}}$$
+
+Given $x\in\St_M^\omega$, we define $\tau(x) \in \Nats \sqcup \{\infty\}$ by 
+
+$$\tau(x)=\min\{n \in \Nats \mid x_n \in \SF_M\}$$
+
+It is easy to see that $\V_{M\pi}(s,\gamma)$ can be rewritten as
+
+$$\V_{M\pi}(s,\gamma) = \Ea{x\sim\mu_{M\pi s}}{(1-\gamma)\AP{\sum_{n=0}^{\tau(x)-1} \gamma^n \R_M\Big(x_n\Big) + \frac{\gamma^{\tau(x)}}{1-\gamma}\V_{M\pi}\AP{x_{\tau(x)},\gamma}}}$$
+
+The expression above is well defined because $\pi$ is a proper mitigation policy and therefore $\tau(x)$ is finite with probability 1.
+
+$$\V_{M\pi}(s,\gamma) = \Ea{x\sim\mu_{M\pi s}}{(1-\gamma)\sum_{n=0}^{\tau(x)-1} \gamma^n \R_M\Big(x_n\Big) + \gamma^{\tau(x)}\V_{M\pi}\AP{x_{\tau(x)},\gamma}}$$
+
+We define
+
+$$\V_{M\pi}^\RMD(s,\gamma) := \Ea{x\sim\mu_{M\pi s}}{(1-\gamma)\sum_{n=0}^{\tau(x)-1} \gamma^n \R_M\Big(x_n\Big) }$$
+
+$$\V_{M\pi}^\RMF(s,\gamma) := \Ea{x\sim\mu_{M\pi s}}{\gamma^{\tau(x)}\V_{M\pi}\AP{x_{\tau(x)},\gamma}}$$
+
+%Denote $\V_{M\pi}'(s,\gamma):=\frac{\D\V_{M\pi}(s,\gamma)}{\D\gamma}$.
+We have
+
+$$\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma} = \Ea{x\sim\mu_{M\pi s}}{\sum_{n=0}^{\tau(x)-1} \AP{-\gamma^n+(1-\gamma)\cdot n\gamma^{n-1}} \R_M\Big(x_n\Big)}$$
+
+$$\Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}} \leq \Ea{x\sim\mu_{M\pi s}}{\tau(x)+(1-\gamma)\sum_{n=0}^{\tau(x)-1} n\gamma^{n-1} \R_M\Big(x_n\Big) }$$
+
+The second term can be regarded as a weighted average (since $1-\gamma=\sum_{n=0}^\infty \gamma^n$), where the maximal term in the average is at most $\tau(x)-1$, hence
+
+$$\Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}} \leq 2 \tau_1$$
+
+Also, we have
+
+$$\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma} = \Ea{x\sim\mu_{M\pi s}}{\gamma^{\tau(x)-1}\AP{\tau(x)\V_{M\pi}\AP{x_{\tau(x)},\gamma}+\gamma\V_{M\pi}'\AP{x_{\tau(x)},\gamma}}}$$
+
+$$\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}} \leq \Ea{x\sim\mu_{M\pi s}}{ \tau(x)+\tau_1^\RMF} = \tau_1 + \tau_1^\RMF$$
+
+We conclude
+
+$$\Abs{\V_{M\pi}^1(s)} \leq \sup_{\gamma\in(0,1)}\AP{\Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}}+\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}}} \leq 3 \tau_1 + \tau_1^\RMF$$
+
+Now we analyze the second derivatives.
+
+$$\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2} = \Ea{x\sim\mu_{M\pi s}}{\sum_{n=0}^{\tau(x)-1} \AP{-2n\gamma^{n-1}+(1-\gamma)\cdot n(n-1)\gamma^{n-2}} \R_M\Big(x_n\Big)}$$
 
 TBD
 
