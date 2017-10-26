@@ -619,37 +619,43 @@ $$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gam
 
 In order to prove Proposition A.N5, we will need to use the relative regret bound for $\MD$ to get a certain statistical bound on mitigation time.
 
+\#Definition A.N7
+
+Consider a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. We define $\tau_S: \HD{\mu} \rightarrow \Nats \sqcup \{\infty\}$ as follows
+
+$$\tau_S(x) := \min\{n \in \Nats \mid S\AP{x_{:n}} \in \SF_M\}$$
+
 \#Proposition A.N3
 
 Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
 
-$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\star\AP{x_{:n}}\not\in\SF_M,\ S^\star\AP{x_{:n+1}}\in\SF_M} \geq {\gamma^{\bar{\tau}}}-\frac{3}{2}\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-\frac{1}{2}$$
+$$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq {\gamma^{\bar{\tau}}}-\frac{3}{2}\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-\frac{1}{2}$$
 
 Here, $\pi^* S^\star$ is the $\In^\star$-policy defined by $\pi^*S^\star(h):=\pi^*\AP{S^\star(h)}$, where $\pi^*(\bot)$ can be chosen arbitrarily.
 
 \#Proof of Proposition A.N3
 
-For any $x \in \HD{\mu^\RMD}$, define $\tau(x):=\min\{n \in \Nats \mid S^\star\AP{x_{:n}} \in \SF_M\} \in \Nats \sqcup \{\infty\}$. We have
+For any $x \in \HD{\mu^\RMD}$, we have
 
-$$\Ut^{r^\star}_\gamma(x) \leq (1-\gamma)\AP{\frac{1}{3}\sum_{n=0}^{\tau(x)-1}{\gamma^n} + \sum_{n=\tau(x)}^\infty \gamma^n} = (1-\gamma)\AP{\frac{1}{3} \cdot \frac{1 - \gamma^{\tau(x)}}{1-\gamma}+\frac{\gamma^{\tau(x)}}{1-\gamma}}=\frac{1}{3}+\frac{2}{3}\gamma^{\tau(x)}$$
+$$\Ut^{r^\star}_\gamma(x) \leq (1-\gamma)\AP{\frac{1}{3}\sum_{n=0}^{\tau_{S^\star}(x)-1}{\gamma^n} + \sum_{n=\tau_{S^\star}(x)}^\infty \gamma^n} = (1-\gamma)\AP{\frac{1}{3} \cdot \frac{1 - \gamma^{\tau_{S^\star}(x)}}{1-\gamma}+\frac{\gamma^{\tau_{S^\star}(x)}}{1-\gamma}}=\frac{1}{3}+\frac{2}{3}\gamma^{\tau_{S^\star}(x)}$$
 
 It follows that
 
-$$\EU_{\UD}^\pi(\gamma) \leq \frac{1}{3}+\frac{2}{3}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau(x)}}$$
+$$\EU_{\UD}^\pi(\gamma) \leq \frac{1}{3}+\frac{2}{3}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}}$$
 
 If $x \in \HD{\mu^\RMD}$ is s.t. for all $n\in\Nats$, $S^\star\AP{x_{:n}}\ne\bot$, then
 
-$$\Ut^{r^\star}_\gamma(x) \geq (1-\gamma)\cdot \frac{2}{3} \sum_{n=\tau(x)}^\infty \gamma^n = \frac{2}{3}\gamma^{\tau(x)}$$
+$$\Ut^{r^\star}_\gamma(x) \geq (1-\gamma)\cdot \frac{2}{3} \sum_{n=\tau_{S^\star}(x)}^\infty \gamma^n = \frac{2}{3}\gamma^{\tau_{S^\star}(x)}$$
 
 Since $\pi^*$ is a mitigation policy, it follows that
 
-$$\EU_{\UD}^{\pi^*S^\star}(\gamma) \geq \frac{2}{3}\Ea{x\sim\mu^\RMD\bowtie\pi^*S^\star}{\gamma^{\tau(x)}} \geq \frac{2}{3}\gamma^{\bar{\tau}}$$
+$$\EU_{\UD}^{\pi^*S^\star}(\gamma) \geq \frac{2}{3}\Ea{x\sim\mu^\RMD\bowtie\pi^*S^\star}{\gamma^{\tau_{S^\star}(x)}} \geq \frac{2}{3}\gamma^{\bar{\tau}}$$
 
 Subtracting the two inequalities, we get
 
-$$\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma) \geq \frac{2}{3}\gamma^{\bar{\tau}} - \frac{1}{3} - \frac{2}{3}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau(x)}}$$
+$$\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma) \geq \frac{2}{3}\gamma^{\bar{\tau}} - \frac{1}{3} - \frac{2}{3}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}}$$
 
-$$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau(x)}} \geq \gamma^{\bar{\tau}} - \frac{3}{2}\AP{\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma)}-\frac{1}{2}$$
+$$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq \gamma^{\bar{\tau}} - \frac{3}{2}\AP{\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma)}-\frac{1}{2}$$
 
 ***
 
@@ -677,7 +683,24 @@ Indeed, any discrepancy between the behavior of $\ME$ and $M$ involves transitio
 
 ?
 
+\#Proposition A.N7
+
+Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Denote $\tilde{\mu}:=\mu^{\tilde{M}}$, $\tilde{\upsilon}:=\AP{\tilde{\mu},r}$. Then, there is some $C\in(0,\infty)$ which doesn't depend on anything s.t.
+
+$$\Abs{\EU_{\tilde{\upsilon}}^{\tilde{\pi}}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma)} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-C\delta}^{\tau_S(x)}}???$$
+
+% This relies on never leaving \SF... ? 
+% This works out in Proposition A.N5 since the reference regret is in \ME...
+% Maybe we should redefine \bot to line in \SF_\ME so that any policy is automatically mitigation?
+
+\#Proof of Proposition A.N7
+
+TBD
+
 \#Proof of Proposition A.N5
+
+% Relating perturbation effect to E[(1-\delta)^\tau]
+% Estimating E[(1-\delta)^\tau] from E[(1-\alpha)^\tau]
 
 TBD
 
