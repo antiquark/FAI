@@ -176,9 +176,9 @@ iv. For any $s \in \St_F$, $\Supp{\pi(s)} \subseteq \A_M^{k+1}(s)$.}
 
 Fix $\tau_1,\tau_2 \in (0,\infty)$, a catastrophe MDP $M$ and a proper mitigation policy $\pi$. $\pi$ is said to have *mitigation time moments $\tau_1,\tau_2$* when for any $s \in \SD_M$
 
-i. $$\sum_{n=0}^\infty n \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} \leq \tau_1$$
+i. $$\sum_{n=0}^\infty (n+1) \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} = \tau_1$$
 
-ii. $$\sum_{n=0}^\infty n^2 \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} \leq \tau_2$$
+ii. $$\sum_{n=0}^\infty (n+1)^2 \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} = \tau_2$$
 
 ***
 
@@ -515,9 +515,9 @@ ii. $\Abs{\V^2_{M\pi}(s)} \leq \TF_2$
 
 Then, for any $s \in \St_M \setminus \SC_M$
 
-a. $\Abs{\V^1_{M\pi}(s)} = O\AP{\TF_1 + \tau_1}$
+a. $\Abs{\V^1_{M\pi}(s)} \leq 3 \tau_1 + \TF_1$
 
-b. $\Abs{\V^2_{M\pi}(s)} = O\AP{\TF_2 + \TF_1 \tau_1 + \tau_2}$
+b. $\Abs{\V^2_{M\pi}(s)} \leq 3 \tau_2 + 2 \tau_1 \TF_1 + \TF_2$
 
 ***
 
@@ -541,7 +541,7 @@ The expression above is well defined because $\pi$ is a proper mitigation policy
 
 $$\V_{M\pi}(s,\gamma) = \Ea{x\sim\mu_{M\pi s}}{(1-\gamma)\sum_{n=0}^{\tau(x)-1} \gamma^n \R_M\Big(x_n\Big) + \gamma^{\tau(x)}\V_{M\pi}\AP{x_{\tau(x)},\gamma}}$$
 
-We define
+Let us decompose $\V_{M\pi}(s,\gamma)$ as $\V_{M\pi}^\RMD(s,\gamma)+\V_{M\pi}^\RMF(s,\gamma)$ defined as follows
 
 $$\V_{M\pi}^\RMD(s,\gamma) := \Ea{x\sim\mu_{M\pi s}}{(1-\gamma)\sum_{n=0}^{\tau(x)-1} \gamma^n \R_M\Big(x_n\Big) }$$
 
@@ -560,35 +560,69 @@ $$\Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}} \leq 2 \tau_1$$
 
 Also, we have
 
-$$\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma} = \Ea{x\sim\mu_{M\pi s}}{\gamma^{\tau(x)-1}\AP{\tau(x)\V_{M\pi}\AP{x_{\tau(x)},\gamma}+\gamma\V_{M\pi}'\AP{x_{\tau(x)},\gamma}}}$$
+$$\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma} = \Ea{x\sim\mu_{M\pi s}}{\tau(x)\gamma^{\tau(x)-1}\V_{M\pi}\AP{x_{\tau(x)},\gamma}+\gamma^{\tau(x)}\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}}$$
 
-$$\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}} \leq \Ea{x\sim\mu_{M\pi s}}{ \tau(x)+\tau_1^\RMF} = \tau_1 + \tau_1^\RMF$$
+$$\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}} \leq \Ea{x\sim\mu_{M\pi s}}{ \tau(x)+\Abs{\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}}} = \tau_1 + \Ea{x\sim\mu_{M\pi s}}{\Abs{\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}}}$$
+
+$$\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}} \leq \tau_1 + \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^1\AP{x_{\tau(x)}}}} \leq \tau_1 + \tau_1^\RMF$$
 
 We conclude
 
-$$\Abs{\V_{M\pi}^1(s)} \leq \sup_{\gamma\in(0,1)}\AP{\Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}}+\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}}} \leq 3 \tau_1 + \tau_1^\RMF$$
+$$\Abs{\V_{M\pi}^1(s)} \leq \Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}}+\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}} \leq 3 \tau_1 + \tau_1^\RMF$$
 
 Now we analyze the second derivatives.
 
 $$\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2} = \Ea{x\sim\mu_{M\pi s}}{\sum_{n=0}^{\tau(x)-1} \AP{-2n\gamma^{n-1}+(1-\gamma)\cdot n(n-1)\gamma^{n-2}} \R_M\Big(x_n\Big)}$$
+
+$$\Abs{\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2}} \leq \Ea{x\sim\mu_{M\pi s}}{2\frac{\AP{\tau(x)-1}\tau(x)}{2} + \max\AP{\AP{\tau(x)-1}\AP{\tau(x)-2},0}} \leq 2\tau_2$$
+
+Denote $\V_{M\pi}'\AP{x_{\tau(x)},\gamma}:=\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}$, $\V_{M\pi}''\AP{x_{\tau(x)},\gamma}:=\frac{\D^2\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma^2}$.
+
+$$\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2} = \Ea{x\sim\mu_{M\pi s}}{\tau(x)\AP{\tau(x)-1}\gamma^{\tau(x)-2}\V_{M\pi}\AP{x_{\tau(x)},\gamma}+2\tau(x)\gamma^{\tau(x)-1}\V_{M\pi}'\AP{x_{\tau(x)},\gamma}+\gamma^{\tau(x)}\V_{M\pi}''\AP{x_{\tau(x)},\gamma}}$$
+
+$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}} \leq \Ea{x\sim\mu_{M\pi s}}{\tau(x)\AP{\tau(x)-1}+2\tau(x)\Abs{\V_{M\pi}'\AP{x_{\tau(x)},\gamma}}+\Abs{\V_{M\pi}''\AP{x_{\tau(x)},\gamma}}}$$
+
+$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}} \leq \tau_2 + 2 \tau_1 \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}'\AP{x_{\tau(x)},\gamma}}}+\Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}''\AP{x_{\tau(x)},\gamma}}}$$
+
+$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}} \leq \tau_2 + 2 \tau_1 \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^1\AP{x_{\tau(x)}}}}+\Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^2\AP{x_{\tau(x)}}}} \leq \tau_2 + 2 \tau_1 \tau_1^\RMF +\tau_2^\RMF$$
+
+$$\Abs{\V_{M\pi}^2(s)} \leq \Abs{\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}}+\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}} \leq 3 \tau_2 + 2 \tau_1 \tau_1^\RMF +\tau_2^\RMF$$
+
+***
+
+To transform the regret bounds for "auxiliary" universes obtained from Lemma A.N1 to regret bounds for the original universes, we will need the following.
+
+\#Proposition A.N5
+
+Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\tau\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau$ at $S(\Estr)$. Consider some $\In^\star$-policy $\pi$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\pi}$ is a $\delta$-perturbation of $\pi$ over $S^\star$. Then
+
+$$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma)   + O\AP{\delta\AP{\tau+\frac{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma)}{1-\gamma}}}$$
+
+***
+
+In order to prove Proposition A.N5, we will need to use the regret bound for $\MD$ to get a certain statistical bound on mitigation time.
+
+\#Proposition A.N3
+
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
+
+$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\star\AP{x_{:n}}\not\in\SF_M,\ S^\star\AP{x_{:n+1}}\in\SF_M} \geq 2{\gamma^{\tau}}-3\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
+
+Here, $\pi^* S^\star$ is the $\In^\star$-policy defined by $\pi^*S^\star(h):=\pi^*\AP{S^\star(h)}$, where $\pi^*(\bot)$ can be chosen arbitrarily.
+
+\#Proof of Proposition A.N3
+
+For any $x \in \AP{\A \times \Ob^\star}^\omega$, we have
+
+$$? \leq ? \leq ?$$
+
+% Relationship between utility and mitigation time (two sided inequality)...
 
 TBD
 
 ***
 
 ?
-
-\#Proposition A.N3
-
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
-
-$$\sum_{n=0}^\infty \gamma^{n+1} \Pa{x \sim \mu^\RMD \bowtie \pi}{S^\star\AP{x_{:n}}\not\in\SF_M,\ S^\star\AP{x_{:n+1}}\in\SF_M} \geq 2{\gamma^{\tau+1}}-3\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
-
-Here, $\pi^* S^\star$ is the $\In^\star$-policy defined by $\pi^*S^\star(h):=\pi^*\AP{S^\star(h)}$, where $\pi^*(\bot)$ can be chosen arbitrarily.
-
-***
-
-TBD: Proof of Proposition A.N3
 
 \#Proposition A.N4
 
@@ -617,12 +651,6 @@ Fix $\delta\in(0,1)$ and a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realiza
 $$\mu^{\tilde{M}}(o \mid ha) := \frac{\T_{\tilde{M}}\AP{S(hao) \mid S(h),a}}{\T_{M}\AP{S(hao) \mid S(h),a}}\mu(o \mid ha)$$
 
 We also denote $\upsilon^{\tilde{M}}:=\AP{\mu^{\tilde{M}},r}$. It is easy to see that $\upsilon^{\tilde{M}}$ is an $\Ob$-realization of $\tilde{M}$ with state function $S$.
-
-\#Proposition A.N5
-
-Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\tau\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\tau$ at $S(\Estr)$. Consider some $\In^\star$-policy $\pi$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\pi}$ is a $\delta$-perturbation of $\pi$ over $S^\star$. Then
-
-$$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma)   + O\AP{\delta\AP{\tau+\frac{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma)}{1-\gamma}}}$$
 
 ***
 
