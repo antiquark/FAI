@@ -389,7 +389,7 @@ We will not apply Lemma A.N1 directly the the universes of Theorem 1. Instead, w
 
 Consider $M$ a catastrophe MDP. We define the catastrophe MDP $\MD$ as follows.
 
-* $\SF_{\MD}:=\SF_M$, $\SD_{\MD}:=\SD_M$, $\SC_{\MD}:=\{\bot\}$.
+* $\SF_{\MD}:=\SF_M \sqcup \{\bot\}$, $\SD_{\MD}:=\SD_M$, $\SC_{\MD}:=\varnothing$.
 
 * $\A_{\MD} = \A_M$
 
@@ -433,7 +433,7 @@ It is easy to see that $\UD$ is an $\Ob^\star$-realization of $\MD$ with state f
 
 Consider $M$ a catastrophe MDP. We define the catastrophe MDP $\ME$ as follows.
 
-* $\SF_{\MD}:=\SF_M$, $\SD_{\MD}:=\SD_M$, $\SC_{\MD}:=\{\bot\}$.
+* $\SF_{\ME}:=\SF_M \sqcup \{\bot\}$, $\SD_{\ME}:=\SD_M$, $\SC_{\ME}:=\varnothing$.
 
 * $\A_{\ME} = \A_M$
 
@@ -685,15 +685,14 @@ Indeed, any discrepancy between the behavior of $\ME$ and $M$ involves transitio
 
 \#Proposition A.N7
 
-Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Denote $\tilde{\mu}:=\mu^{\tilde{M}}$, $\tilde{\upsilon}:=\AP{\tilde{\mu},r}$. Then, there is some $C\in(0,\infty)$ which doesn't depend on anything s.t.
+Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that for any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Denote $\tilde{\mu}:=\mu^{\tilde{M}}$, $\tilde{\upsilon}:=\AP{\tilde{\mu},r}$. Then, there is some $C\in(0,\infty)$ which doesn't depend on anything s.t.
 
 $$\Abs{\EU_{\tilde{\upsilon}}^{\tilde{\pi}}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma)} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-C\delta}^{\tau_S(x)}}???$$
 
-% This relies on never leaving \SF... ? 
-% This works out in Proposition A.N5 since the reference regret is in \ME...
-% Maybe we should redefine \bot to line in \SF_\ME so that any policy is automatically mitigation?
-
 \#Proof of Proposition A.N7
+
+% Small total variation distance => conditioning on high probability event yields same distribution...
+% Compute the probability of high probability event continuing to happen until \SF...
 
 TBD
 
