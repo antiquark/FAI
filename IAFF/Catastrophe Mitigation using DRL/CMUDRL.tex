@@ -27,6 +27,7 @@
 % autosize deliminaters
 \newcommand{\AP}[1]{\left(#1\right)}
 \newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
 
 % operators that require brackets
 \newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
@@ -623,7 +624,7 @@ In order to prove Proposition A.N5, we will need to use the relative regret boun
 
 Consider a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. We define $\tau_S: \HD{\mu} \rightarrow \Nats \sqcup \{\infty\}$ as follows
 
-$$\tau_S(x) := \min\{n \in \Nats \mid S\AP{x_{:n}} \in \SF_M\}$$
+$$\tau_S(x) := \min\AC{n \in \Nats \mid S\AP{x_{:n}} \in \SF_M}$$
 
 \#Proposition A.N3
 
@@ -681,13 +682,61 @@ Indeed, any discrepancy between the behavior of $\ME$ and $M$ involves transitio
 
 ***
 
-?
+As a final ingredient towards the proof of Proposition A.N5, we need to bound the effect of $\delta$-perturbations in terms of mitigation time.
 
 \#Proposition A.N7
 
-Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that for any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Denote $\tilde{\mu}:=\mu^{\tilde{M}}$, $\tilde{\upsilon}:=\AP{\tilde{\mu},r}$. Then, there is some $C\in(0,\infty)$ which doesn't depend on anything s.t.
+Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that for any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$.\Comment{ Denote $\tilde{\mu}:=\mu^{\tilde{M}}$, $\tilde{\upsilon}:=\AP{\tilde{\mu},r}$.} Then, there is some $C\in(0,\infty)$ which doesn't depend on anything s.t.
 
-$$\Abs{\EU_{\tilde{\upsilon}}^{\tilde{\pi}}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma)} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-C\delta}^{\tau_S(x)}}???$$
+%$$\Abs{\EU_{\tilde{\upsilon}}^{\tilde{\pi}}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma)} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-C\delta}^{\tau_S(x)}}???$$
+
+$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-C\delta}^{\tau_S(x)}}???$$
+
+***
+
+In order to prove Proposition A.N7, we need to characterize the total variation distance between any two probability measures in terms of the probability of events (in some extended probability space) conditioning on which would make these measures equal.
+
+\#Proposition A.N8
+
+Fix $\Omega$ be a measurable space and $\mu,\nu \in \Delta\Omega$. Then, there are $\zeta,\mu',\nu' \in \Delta\Omega$ s.t.
+
+$$\mu = \AP{1-\Dtva{\mu,\nu}} \zeta + \Dtva{\mu,\nu} \mu'$$
+
+$$\nu = \AP{1-\Dtva{\mu,\nu}} \zeta + \Dtva{\mu,\nu} \nu'$$
+
+Conversely, suppose that $\zeta,\mu',\nu' \in \Delta\Omega$ and $p \in [0,1]$ are s.t.
+
+$$\mu = \AP{1-p} \zeta + p \mu'$$
+
+$$\nu = \AP{1-p} \zeta + p \nu'$$
+
+Then, $\Dtva{\mu,\nu} \leq p$.
+
+\#Proof of Proposition A.N8
+
+Choose some $\xi \in \Delta\Omega$ s.t. $\mu$ and $\nu$ are absolutely continuous w.r.t. $\xi$ (for example, take $\xi = \frac{\mu+\nu}{2}$). We have
+
+$$\frac{1}{2}\int_\Omega\AP{\max\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}+\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}}\xi(\D x)=\frac{1}{2}\int_\Omega\AP{\frac{\mu(\D x)}{\xi(\D x)}+\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)=1$$
+
+$$\frac{1}{2}\int_\Omega\AP{\max\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}}\xi(\D x)=\frac{1}{2}\int_\Omega\Abs{\frac{\mu(\D x)}{\xi(\D x)}-\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)=\Dtva{\mu,\nu}$$
+
+Taking the difference between these equations, we get
+
+$$\int_\Omega\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)=1-\Dtva{\mu,\nu}$$
+
+Define $\zeta,\mu',\nu' \in \Delta\Omega$ by
+
+$$\zeta(X) := \frac{\int_X\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)}{\int_\Omega\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)}=\frac{\int_X\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)}{1-\Dtva{\mu,\nu}}$$
+
+$$\mu'(X):=\frac{\int_X \AP{\frac{\mu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}{\int_\Omega \AP{\frac{\mu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}=\frac{\int_X \AP{\frac{\mu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}{\Dtva{\mu,\nu}}$$
+
+$$\nu'(X):=\frac{\int_X \AP{\frac{\nu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}{\int_\Omega \AP{\frac{\nu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}=\frac{\int_X \AP{\frac{\nu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}{\Dtva{\mu,\nu}}$$
+
+It is now easy to see that we get the desired result.
+
+To show the other direction, observer that...
+
+TBD
 
 \#Proof of Proposition A.N7
 
@@ -705,7 +754,7 @@ TBD
 
 ***
 
-?
+Finally, we are read to prove the main theorem.
 
 \#Proof of Theorem 1
 
