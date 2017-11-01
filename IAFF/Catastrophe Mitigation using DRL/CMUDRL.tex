@@ -686,11 +686,9 @@ As a final ingredient towards the proof of Proposition A.N5, we need to bound th
 
 \#Proposition A.N7
 
-Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that for any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$.\Comment{ Denote $\tilde{\mu}:=\mu^{\tilde{M}}$, $\tilde{\upsilon}:=\AP{\tilde{\mu},r}$.} Then, there is some $C\in(0,\infty)$ which doesn't depend on anything s.t.
+Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that for any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Then,
 
-%$$\Abs{\EU_{\tilde{\upsilon}}^{\tilde{\pi}}(\gamma)-\EU_{\upsilon}^{\pi}(\gamma)} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-C\delta}^{\tau_S(x)}}???$$
-
-$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-C\delta}^{\tau_S(x)}}???$$
+$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-2\delta}^{\tau_S(x)}}$$
 
 ***
 
@@ -734,11 +732,23 @@ $$\nu'(X):=\frac{\int_X \AP{\frac{\nu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}
 
 It is now easy to see that we get the desired result.
 
-To show the other direction, observer that...
+The other direction is trivial:
 
-TBD
+$$\Abs{\mu(X)-\nu(X)}=p\Abs{\mu'(X)-\nu'(X)} \leq p$$
 
 \#Proof of Proposition A.N7
+
+Using Proposition A.N8, it is straightforward to construct a probability space $(\Omega,P)$, measurable mappings $h, \tilde{h}: \Omega \rightarrow (\A \times \Ob)^\omega$ and measurable sets $\Omega = E_0 \supseteq E_1 \supseteq E_2 \supseteq \dots$ s.t.
+
+i. $h_* P = \mu \bowtie \pi$
+
+ii. $\tilde{h}_*P = \mu^{\tilde{M}} \bowtie \tilde{\pi}$
+
+iii. For any $n \in \Nats$ and $\omega \in E_n$, $h(\omega)_{:n} = \tilde{h}(\omega)_{:n}$.
+
+iv. For any $n \in \Nats$ and $x \in (\A \times \Ob)^n$, if $S(x)\in\SD_M$ then $P\AP{E_{n+1} \mid h^{-1}\AP{x(\A \times \Ob)^\omega} \cap E_n} \geq 1 - 2\delta$.
+
+v. For any $n \in \Nats$ and $x \in (\A \times \Ob)^n$, if $S(x)\in\SF_M$ then $P\AP{E_{n+1} \mid h^{-1}\AP{x(\A \times \Ob)^\omega} \cap E_n} = 1$.
 
 % Small total variation distance => conditioning on high probability event yields same distribution...
 % Compute the probability of high probability event continuing to happen until \SF...
