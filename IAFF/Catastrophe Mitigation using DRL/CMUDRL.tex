@@ -197,7 +197,7 @@ iii. $\R_{\tilde{M}}=\R_M$
 
 iv. For any $s \in \SF_M$ and $a \in \A_M$, $\T_{\tilde{M}}\AP{s,a}=\T_{M}\AP{s,a}$
 
-v. For any $s \in \SD_M$ and $a \in \A_M$, $\Dtva{\T_{\tilde{M}}\AP{s,a},\T_{M}\AP{s,a}} < \delta$
+v. For any $s \in \SD_M$ and $a \in \A_M$, there exists $\zeta \in \Delta\St_M$ s.t. $\T_{M}\AP{s,a}=(1-\delta)\T_{\tilde{M}}\AP{s,a}+\delta\zeta$.
 
 ***
 
@@ -209,7 +209,7 @@ Fix $\delta\in(0,1)$ and consider a catastrophe MDP $M$. Given $\pi: \St_M \M \A
 
 i. For any $s \in \SF_M$, $\tilde{\pi}(s) = \pi(s)$.
 
-ii. For any $s \in \SD_M$, $\Dtva{\tilde{\pi}(s),\pi(s)} < \delta$.
+ii. For any $s \in \SD_M$, there exists $\alpha\in\Delta\A$ s.t. $\pi(s)=(1-\delta)\tilde{\pi}(s)+\delta\alpha$.
 
 ***
 
@@ -600,7 +600,7 @@ Consider $\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$, a catastrophe MDP $M$ 
 
 i. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SF_M$, $\tilde{\pi}(h)=\pi(h)$.
 
-ii. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SD_M$, $\Dtva{\tilde{\pi}(h),\pi(h)} < \delta$.
+ii. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SD_M$, there exists $\alpha\in\Delta\A$ s.t $\pi(h)=(1-\delta)\tilde{\pi}(h)+\delta\alpha$.
 
 \#Definition A.N5
 
@@ -696,9 +696,9 @@ iii. For any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M 
 
 Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Then,
 
-$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-2\delta}^{\tau_S(x)}}???$$
+$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 1-\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}???$$
 
-***
+\Comment{***
 
 In order to prove Proposition A.N7, we need to characterize the total variation distance between any two probability measures in terms of the probability of events (in some extended probability space) conditioning on which would make these measures equal.
 
@@ -742,15 +742,15 @@ It is now easy to see that we get the desired result.
 
 The other direction is trivial:
 
-$$\Abs{\mu(X)-\nu(X)}=p\Abs{\mu'(X)-\nu'(X)} \leq p$$
+$$\Abs{\mu(X)-\nu(X)}=p\Abs{\mu'(X)-\nu'(X)} \leq p$$}
 
 \#Proof of Proposition A.N7
 
-Using Proposition A.N8, it is straightforward to construct a probability space $(\Omega,P)$, measurable mappings $h, \tilde{h}: \Omega \rightarrow (\A \times \Ob)^\omega$ and measurable sets $\Omega = E_0 \supseteq E_1 \supseteq E_2 \supseteq \dots$ s.t.
+\Comment{Using Proposition A.N8, }It is straightforward to construct a probability space $(\Omega,P)$, measurable mappings $h, \tilde{h}: \Omega \rightarrow (\A \times \Ob)^\omega$ and measurable sets $\Omega = E_0 \supseteq E_1 \supseteq E_2 \supseteq \dots$ s.t.
 
 i. $h_* P = \mu \bowtie \pi$
 
-ii. $\tilde{h}_*P = \mu^{\tilde{M}} \bowtie \tilde{\pi}$
+ii.  $\tilde{h}_*P = \mu^{\tilde{M}} \bowtie \tilde{\pi}$
 
 iii. For any $n \in \Nats$ and $\omega \in E_n$, $h(\omega)_{:n} = \tilde{h}(\omega)_{:n}$.
 
@@ -760,7 +760,7 @@ v. For any $n \in \Nats$ and $x \in (\A \times \Ob)^n$, if $S(x)\in\SF_M$ then $
 
 Denote $E_\infty := \bigcap_{n = 0}^\infty E_n$. Clearly, for any $\omega \in E_\infty$, $h(\omega)=\tilde{h}(\omega)$. Also, we have
 
-$$P\AP{E_\infty} \geq \Ea{x\sim\mu\bowtie\pi}{\AP{1-2\delta}^{\tau_S(x)}}???$$
+$$P\AP{E_\infty} \geq \Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}???$$
 
 % Shouldn't the distribution for the expected value be conditioned on E_*?
 
