@@ -686,9 +686,17 @@ As a final ingredient towards the proof of Proposition A.N5, we need to bound th
 
 \#Proposition A.N7
 
-Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that for any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Then,
+Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that 
 
-$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-2\delta}^{\tau_S(x)}}$$
+i. $S(\Estr) \not\in \SC_M$
+
+ii. For any $h \in S^{-1}\AP{\SD_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SC_M \mid s,a} = 0$.
+
+iii. For any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. 
+
+Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Then,
+
+$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 1-\Ea{x\sim\mu\bowtie\pi}{\AP{1-2\delta}^{\tau_S(x)}}???$$
 
 ***
 
@@ -750,10 +758,13 @@ iv. For any $n \in \Nats$ and $x \in (\A \times \Ob)^n$, if $S(x)\in\SD_M$ then 
 
 v. For any $n \in \Nats$ and $x \in (\A \times \Ob)^n$, if $S(x)\in\SF_M$ then $P\AP{E_{n+1} \mid h^{-1}\AP{x(\A \times \Ob)^\omega} \cap E_n} = 1$.
 
-% Small total variation distance => conditioning on high probability event yields same distribution...
-% Compute the probability of high probability event continuing to happen until \SF...
+Denote $E_\infty := \bigcap_{n = 0}^\infty E_n$. Clearly, for any $\omega \in E_\infty$, $h(\omega)=\tilde{h}(\omega)$. Also, we have
 
-TBD
+$$P\AP{E_\infty} \geq \Ea{x\sim\mu\bowtie\pi}{\AP{1-2\delta}^{\tau_S(x)}}???$$
+
+% Shouldn't the distribution for the expected value be conditioned on E_*?
+
+Applying the other direction of Proposition A.N8, we get the desired result.
 
 \#Proof of Proposition A.N5
 
