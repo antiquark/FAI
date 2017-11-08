@@ -618,9 +618,95 @@ $$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gam
 
 ***
 
-In order to prove Proposition A.N5, we will need to use the relative regret bound for $\MD$ to get a certain statistical bound on mitigation time.
+In order to prove Proposition A.N5, we need a relative regret bound for $M$ derived from a relative regret bound for $\ME$.
 
-\#Definition A.N7
+\#Proposition A.N4
+
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\not\in\SC_M$. Suppose that $\pi^*$ is a mitigation policy for $M$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
+
+$$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
+
+\#Proof of Proposition A.N4
+
+$\pi^*$ is a mitigation policy, therefore for any $s \in \St_M \setminus \SC_M$, $\T_{\ME\pi^*}(s)=\T_{M\pi^*}(s)$. It follows that 
+
+$$\EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma) = \frac{1}{3}\EU_{\upsilon}^{\pi^* S}(\gamma)$$
+
+Also, it is easy to see from the definition of $\T_{\ME}$ and $r^\star$ that
+
+$$\EU_{\upsilon^\RME}^{\pi}(\gamma) \leq \frac{1}{3}\EU_{\upsilon}^{\pi\Re^*}(\gamma)$$
+
+Indeed, any discrepancy between the behavior of $\ME$ and $M$ involves transition to the state $\bot$ which yields 0 reward forever. Subtracting these inequalities, we get the desired result.
+
+***
+
+Another observation we need to prove Proposition A.N5 is a bound on the effect of $\delta$-perturbations in terms of mitigation time.
+
+\#Proposition A.N7
+
+Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that 
+
+i. $S(\Estr) \not\in \SC_M$
+
+ii. For any $h \in S^{-1}\AP{\SD_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SC_M \mid s,a} = 0$.
+
+iii. For any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. 
+
+Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Then,
+
+$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 2\AP{1-\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}}$$
+
+\#Proof of Proposition A.N7
+
+It is straightforward to construct a probability space $(\Omega,P)$, $X: \Omega \rightarrow (A \times \Ob)^\omega$ measurable and $\Sqn{C_n \subseteq \Omega}$ measurable s.t.
+
+i. $h_*(P) = \mu\bowtie\pi$
+
+ii. For any $n \in \Nats$ and $h \in (A \times \Ob)^n$ s.t. $S(h) \in \SD_M$: 
+
+$$\Pa{}{C_n \mid X_{:n} = h} = 2\delta$$
+
+iii. For any $n \in \Nats$ and $h \in (A \times \Ob)^n$ s.t. $S(h) \in \SF_M$: 
+
+$$\Pa{}{C_n \mid X_{:n} = h} = 0$$
+
+iv. For any $n \in \Nats$, $h \in (A \times \Ob)^n$ and $h' \in (A \times \Ob)^{n+1}$:
+
+$$\Pa{}{X_{:n+1}=h' \mid X_{:n} = h \text{ and not } C_n} = \Pa{x \sim \mu^{\tilde{M}}\bowtie\tilde{\pi}}{x_{:n+1}=h' \mid x_{:n} = h}$$
+
+Denote $D:=\cap_{n=0}^\infty \Omega \setminus C_n$. We have
+
+$$P(D) = \Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}$$
+
+$$\Dtva{P,\ P \mid D} \leq 1 - P(D)$$
+
+$$\Dtva{\mu\bowtie\pi,\ h_*\AP{P \mid D}} \leq 1 - P(D)$$
+
+Also, it is easy to see that for any $A \subseteq (\A \times \Ob)^\omega$ measurable
+
+$$h_*\AP{P \mid D}(A)=\frac{\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}\chi_A}}{P(D)}$$
+
+It follows that
+
+$$\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}} = \frac{1}{2}\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\Abs{\frac{\AP{1-2\delta}^{\tau_S(x)}}{P(D)}-1}}$$
+
+$$\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}} = \frac{1}{2P(D)}\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\Abs{\AP{1-2\delta}^{\tau_S(x)}-P(D)}}$$
+
+Using the fact that $\AP{1-2\delta}^{\tau_S(x)}\in[0,1]$ and the convexity of the function $\Abs{t-P(D)}$
+
+$$\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq \frac{1}{2P(D)}\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}\AP{1-P(D)}+\AP{1-\AP{1-2\delta}^{\tau_S(x)}}P(D)}$$
+
+$$\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq \frac{1}{2P(D)}\AP{P(D)\AP{1-P(D)} + \AP{1-P(D)}P(D)}=1-P(D)$$
+
+Using the triangle inequality, we conclude
+
+$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}}\leq\Dtva{\mu\bowtie\pi,\ h_*\AP{P \mid D}}+\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}}=2\AP{1-\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}}$$
+
+***
+
+As a final ingredient towards the proof of Proposition A.N5, we will need to use the relative regret bound for $\MD$ to get a certain statistical bound on mitigation time.
+
+\#Definition 
 
 Consider a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. We define $\tau_S: \HD{\mu} \rightarrow \Nats \sqcup \{\infty\}$ as follows
 
@@ -658,118 +744,12 @@ $$\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma) \geq \frac{2}{3}\gamm
 
 $$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq \gamma^{\bar{\tau}} - \frac{3}{2}\AP{\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma)}-\frac{1}{2}$$
 
-***
-
-Another observation we need to prove Proposition A.N5 is a relative regret bound for $M$ derived from a relative regret bound for $\ME$.
-
-\#Proposition A.N4
-
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\not\in\SC_M$. Suppose that $\pi^*$ is a mitigation policy for $M$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
-
-$$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
-
-\#Proof of Proposition A.N4
-
-$\pi^*$ is a mitigation policy, therefore for any $s \in \St_M \setminus \SC_M$, $\T_{\ME\pi^*}(s)=\T_{M\pi^*}(s)$. It follows that 
-
-$$\EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma) = \frac{1}{3}\EU_{\upsilon}^{\pi^* S}(\gamma)$$
-
-Also, it is easy to see from the definition of $\T_{\ME}$ and $r^\star$ that
-
-$$\EU_{\upsilon^\RME}^{\pi}(\gamma) \leq \frac{1}{3}\EU_{\upsilon}^{\pi\Re^*}(\gamma)$$
-
-Indeed, any discrepancy between the behavior of $\ME$ and $M$ involves transition to the state $\bot$ which yields 0 reward forever. Subtracting these inequalities, we get the desired result.
-
-***
-
-As a final ingredient towards the proof of Proposition A.N5, we need to bound the effect of $\delta$-perturbations in terms of mitigation time.
-
-\#Proposition A.N7
-
-Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that 
-
-i. $S(\Estr) \not\in \SC_M$
-
-ii. For any $h \in S^{-1}\AP{\SD_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SC_M \mid s,a} = 0$.
-
-iii. For any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. 
-
-Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Then,
-
-$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 1-\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}???$$
-
-\Comment{***
-
-In order to prove Proposition A.N7, we need to characterize the total variation distance between any two probability measures in terms of the probability of events (in some extended probability space) conditioning on which would make these measures equal.
-
-\#Proposition A.N8
-
-Fix $\Omega$ be a measurable space and $\mu,\nu \in \Delta\Omega$. Then, there are $\zeta,\mu',\nu' \in \Delta\Omega$ s.t.
-
-$$\mu = \AP{1-\Dtva{\mu,\nu}} \zeta + \Dtva{\mu,\nu} \mu'$$
-
-$$\nu = \AP{1-\Dtva{\mu,\nu}} \zeta + \Dtva{\mu,\nu} \nu'$$
-
-Conversely, suppose that $\zeta,\mu',\nu' \in \Delta\Omega$ and $p \in [0,1]$ are s.t.
-
-$$\mu = \AP{1-p} \zeta + p \mu'$$
-
-$$\nu = \AP{1-p} \zeta + p \nu'$$
-
-Then, $\Dtva{\mu,\nu} \leq p$.
-
-\#Proof of Proposition A.N8
-
-Choose some $\xi \in \Delta\Omega$ s.t. $\mu$ and $\nu$ are absolutely continuous w.r.t. $\xi$ (for example, take $\xi = \frac{\mu+\nu}{2}$). We have
-
-$$\frac{1}{2}\int_\Omega\AP{\max\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}+\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}}\xi(\D x)=\frac{1}{2}\int_\Omega\AP{\frac{\mu(\D x)}{\xi(\D x)}+\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)=1$$
-
-$$\frac{1}{2}\int_\Omega\AP{\max\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}}\xi(\D x)=\frac{1}{2}\int_\Omega\Abs{\frac{\mu(\D x)}{\xi(\D x)}-\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)=\Dtva{\mu,\nu}$$
-
-Taking the difference between these equations, we get
-
-$$\int_\Omega\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)=1-\Dtva{\mu,\nu}$$
-
-Define $\zeta,\mu',\nu' \in \Delta\Omega$ by
-
-$$\zeta(X) := \frac{\int_X\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)}{\int_\Omega\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)}=\frac{\int_X\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}\xi(\D x)}{1-\Dtva{\mu,\nu}}$$
-
-$$\mu'(X):=\frac{\int_X \AP{\frac{\mu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}{\int_\Omega \AP{\frac{\mu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}=\frac{\int_X \AP{\frac{\mu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}{\Dtva{\mu,\nu}}$$
-
-$$\nu'(X):=\frac{\int_X \AP{\frac{\nu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}{\int_\Omega \AP{\frac{\nu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}=\frac{\int_X \AP{\frac{\nu(\D x)}{\xi(\D x)}-\min\AP{\frac{\mu(\D x)}{\xi(\D x)},\frac{\nu(\D x)}{\xi(\D x)}}} \xi(\D x)}{\Dtva{\mu,\nu}}$$
-
-It is now easy to see that we get the desired result.
-
-The other direction is trivial:
-
-$$\Abs{\mu(X)-\nu(X)}=p\Abs{\mu'(X)-\nu'(X)} \leq p$$}
-
-\#Proof of Proposition A.N7
-
-\Comment{Using Proposition A.N8, }It is straightforward to construct a probability space $(\Omega,P)$, measurable mappings $h, \tilde{h}: \Omega \rightarrow (\A \times \Ob)^\omega$ and measurable sets $\Omega = E_0 \supseteq E_1 \supseteq E_2 \supseteq \dots$ s.t.
-
-i. $h_* P = \mu \bowtie \pi$
-
-ii.  $\tilde{h}_*P = \mu^{\tilde{M}} \bowtie \tilde{\pi}$
-
-iii. For any $n \in \Nats$ and $\omega \in E_n$, $h(\omega)_{:n} = \tilde{h}(\omega)_{:n}$.
-
-iv. For any $n \in \Nats$ and $x \in (\A \times \Ob)^n$, if $S(x)\in\SD_M$ then $P\AP{E_{n+1} \mid h^{-1}\AP{x(\A \times \Ob)^\omega} \cap E_n} \geq 1 - 2\delta$.
-
-v. For any $n \in \Nats$ and $x \in (\A \times \Ob)^n$, if $S(x)\in\SF_M$ then $P\AP{E_{n+1} \mid h^{-1}\AP{x(\A \times \Ob)^\omega} \cap E_n} = 1$.
-
-Denote $E_\infty := \bigcap_{n = 0}^\infty E_n$. Clearly, for any $\omega \in E_\infty$, $h(\omega)=\tilde{h}(\omega)$. Also, we have
-
-$$P\AP{E_\infty} \geq \Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}???$$
-
-% Shouldn't the distribution for the expected value be conditioned on E_*?
-
-Applying the other direction of Proposition A.N8, we get the desired result.
-
 \#Proof of Proposition A.N5
 
-% Relating perturbation effect to E[(1-\delta)^\tau]
+% Apply N4
+% Apply N7
 % Estimating E[(1-\delta)^\tau] from E[(1-\alpha)^\tau]
+% Apply N3
 
 TBD
 
