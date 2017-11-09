@@ -410,9 +410,9 @@ $$\T_{\MD}(t \mid s) = \T_M(t \mid s)$$
 
 $$\T_{\MD}(\bot \mid s) = \T_M(\SC_M \cup \SD_M \mid s)$$
 
-* For any $s \in \SD_M$, $\R_{\MD}(s) = \frac{1}{3}\R_M(s)$.
+* For any $s \in \SD_M$, $\R_{\MD}(s) = \frac{1}{2}\R_M(s)$.
 
-* For any $s \in \SF_M$, $\R_{\MD}(s) = \frac{2}{3} + \frac{1}{3}\R_M(s)$.
+* For any $s \in \SF_M$, $\R_{\MD}(s) = 1$.
 
 * $\R_{\MD}(\bot) = 0$
 
@@ -424,7 +424,7 @@ $$\mu^\RMD(o\Im \mid ha) := \begin{cases} \mu\AP{o \mid \beta^*(h)a} \text{ if }
 
 $$\mu^\RMD(\bot \mid ha) := 1 - \sum_{o \in O} \AP{\mu^\RMD(o\Re \mid ha) + \mu^\RMD(o\Im \mid ha)}$$
 
-$$r^\star(h):=\begin{cases} \frac{1}{3}r(\Estr) \text{ if } h = \Estr \\ \frac{1}{3}r\AP{\beta^*(h)} \text{ if } h\in\AP{\A \times \Ob'}^*,\ \Abs{h}>0 \text{ and } h_{:\Abs{h}-1}\in\A\Ob\Re \\ \frac{2}{3} + \frac{1}{3}r\AP{\beta^*(h)} \text{ if } h\in\AP{\A \times \Ob'}^*,\ \Abs{h}>0 \text{ and } h_{:\Abs{h}-1}\in\A\Ob\Im \\ 0 \text{ if } h\not\in\AP{\A \times \Ob'}^* \end{cases}$$
+$$r^\star(h):=\begin{cases} \frac{1}{2}r(\Estr) \text{ if } h = \Estr \\ \frac{1}{2}r\AP{\beta^*(h)} \text{ if } h\in\AP{\A \times \Ob'}^*,\ \Abs{h}>0 \text{ and } h_{:\Abs{h}-1}\in\A\Ob\Re \\ 1 \text{ if } h\in\AP{\A \times \Ob'}^*,\ \Abs{h}>0 \text{ and } h_{:\Abs{h}-1}\in\A\Ob\Im \\ 0 \text{ if } h\not\in\AP{\A \times \Ob'}^* \end{cases}$$
 
 $$S^\star(h):=\begin{cases} S\AP{\beta^*(h)} \text{ if } h\in\AP{\A \times \Ob'}^* \\ \bot \text{ otherwise} \end{cases}$$
 
@@ -440,7 +440,7 @@ Consider $M$ a catastrophe MDP. We define the catastrophe MDP $\ME$ as follows.
 
 * $\T_{\ME} = \T_{\MD}$
 
-* For any $s \in \SD_M \cup \SF_M$, $\R_{\ME}(s) = \frac{1}{3}\R_M(s)$.
+* For any $s \in \SD_M \cup \SF_M$, $\R_{\ME}(s) = \frac{1}{2}\R_M(s)$.
 
 * $\R_{\ME}(\bot) = 0$
 
@@ -624,17 +624,17 @@ In order to prove Proposition A.N5, we need a relative regret bound for $M$ deri
 
 Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\not\in\SC_M$. Suppose that $\pi^*$ is a mitigation policy for $M$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
 
-$$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
+$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
 
 \#Proof of Proposition A.N4
 
 $\pi^*$ is a mitigation policy, therefore for any $s \in \St_M \setminus \SC_M$, $\T_{\ME\pi^*}(s)=\T_{M\pi^*}(s)$. It follows that 
 
-$$\EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma) = \frac{1}{3}\EU_{\upsilon}^{\pi^* S}(\gamma)$$
+$$\EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma) = \frac{1}{2}\EU_{\upsilon}^{\pi^* S}(\gamma)$$
 
 Also, it is easy to see from the definition of $\T_{\ME}$ and $r^\star$ that
 
-$$\EU_{\upsilon^\RME}^{\pi}(\gamma) \leq \frac{1}{3}\EU_{\upsilon}^{\pi\Re^*}(\gamma)$$
+$$\EU_{\upsilon^\RME}^{\pi}(\gamma) \leq \frac{1}{2}\EU_{\upsilon}^{\pi\Re^*}(\gamma)$$
 
 Indeed, any discrepancy between the behavior of $\ME$ and $M$ involves transition to the state $\bot$ which yields 0 reward forever. Subtracting these inequalities, we get the desired result.
 
@@ -716,7 +716,7 @@ $$\tau_S(x) := \min\AC{n \in \Nats \mid S\AP{x_{:n}} \in \SF_M}$$
 
 Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
 
-$$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq {\gamma^{\bar{\tau}}}-\frac{3}{2}\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-\frac{1}{2}$$
+$$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq 2\gamma^{\bar{\tau}}-2\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
 
 Here, $\pi^* S^\star$ is the $\In^\star$-policy defined by $\pi^*S^\star(h):=\pi^*\AP{S^\star(h)}$, where $\pi^*(\bot)$ can be chosen arbitrarily.
 
@@ -724,25 +724,25 @@ Here, $\pi^* S^\star$ is the $\In^\star$-policy defined by $\pi^*S^\star(h):=\pi
 
 For any $x \in \HD{\mu^\RMD}$, we have
 
-$$\Ut^{r^\star}_\gamma(x) \leq (1-\gamma)\AP{\frac{1}{3}\sum_{n=0}^{\tau_{S^\star}(x)-1}{\gamma^n} + \sum_{n=\tau_{S^\star}(x)}^\infty \gamma^n} = (1-\gamma)\AP{\frac{1}{3} \cdot \frac{1 - \gamma^{\tau_{S^\star}(x)}}{1-\gamma}+\frac{\gamma^{\tau_{S^\star}(x)}}{1-\gamma}}=\frac{1}{3}+\frac{2}{3}\gamma^{\tau_{S^\star}(x)}$$
+$$\Ut^{r^\star}_\gamma(x) \leq (1-\gamma)\AP{\frac{1}{2}\sum_{n=0}^{\tau_{S^\star}(x)-1}{\gamma^n} + \sum_{n=\tau_{S^\star}(x)}^\infty \gamma^n} = (1-\gamma)\AP{\frac{1}{2} \cdot \frac{1 - \gamma^{\tau_{S^\star}(x)}}{1-\gamma}+\frac{\gamma^{\tau_{S^\star}(x)}}{1-\gamma}}=\frac{1}{2}+\frac{1}{2}\gamma^{\tau_{S^\star}(x)}$$
 
 It follows that
 
-$$\EU_{\UD}^\pi(\gamma) \leq \frac{1}{3}+\frac{2}{3}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}}$$
+$$\EU_{\UD}^\pi(\gamma) \leq \frac{1}{2}+\frac{1}{2}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}}$$
 
 If $x \in \HD{\mu^\RMD}$ is s.t. for all $n\in\Nats$, $S^\star\AP{x_{:n}}\ne\bot$, then
 
-$$\Ut^{r^\star}_\gamma(x) \geq (1-\gamma)\cdot \frac{2}{3} \sum_{n=\tau_{S^\star}(x)}^\infty \gamma^n = \frac{2}{3}\gamma^{\tau_{S^\star}(x)}$$
+$$\Ut^{r^\star}_\gamma(x) \geq (1-\gamma)\sum_{n=\tau_{S^\star}(x)}^\infty \gamma^n = \gamma^{\tau_{S^\star}(x)}$$
 
 Since $\pi^*$ is a mitigation policy, it follows that
 
-$$\EU_{\UD}^{\pi^*S^\star}(\gamma) \geq \frac{2}{3}\Ea{x\sim\mu^\RMD\bowtie\pi^*S^\star}{\gamma^{\tau_{S^\star}(x)}} \geq \frac{2}{3}\gamma^{\bar{\tau}}$$
+$$\EU_{\UD}^{\pi^*S^\star}(\gamma) \geq \Ea{x\sim\mu^\RMD\bowtie\pi^*S^\star}{\gamma^{\tau_{S^\star}(x)}} \geq \gamma^{\bar{\tau}}$$
 
 Subtracting the two inequalities, we get
 
-$$\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma) \geq \frac{2}{3}\gamma^{\bar{\tau}} - \frac{1}{3} - \frac{2}{3}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}}$$
+$$\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma) \geq \gamma^{\bar{\tau}} - \frac{1}{2} - \frac{1}{2}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}}$$
 
-$$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq \gamma^{\bar{\tau}} - \frac{3}{2}\AP{\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma)}-\frac{1}{2}$$
+$$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq 2\gamma^{\bar{\tau}} - 2\AP{\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma)}-1$$
 
 \#Proof of Proposition A.N5
 
@@ -759,7 +759,7 @@ Finally, we are read to prove the main theorem.
 
 \#Proof of Theorem 1
 
-For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic proper mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\tilde{\sigma}^{k}$ is $\epsilon$-sane relatively to $\pi^k$: condition i of Definition A.N1 follows by Proposition A.N6 from conditions ii and iii of Definition N6, and condition ii of Definition A.N2 follows from condition iv of Definition N6. Moreover, by Proposition A.N2, we have
+For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic proper mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\tilde{\sigma}^{k}$ is $\epsilon$-sane relatively to $\pi^k$ in the sense of $\tilde{M}^{k\RMD}$ and $\tilde{M}^{k\RME}$ both: condition i of Definition A.N1 follows by Proposition A.N6 from conditions ii and iii of Definition N6, and condition ii of Definition A.N2 follows from condition iv of Definition N6. Moreover, by Proposition A.N2, we have
 
 $$\Abs{\V_{\tilde{M}^\RMD\pi^k}^1(s)} = O\AP{\bar{\tau}_1}$$
 
