@@ -612,9 +612,9 @@ We also denote $\upsilon^{\tilde{M}}:=\AP{\mu^{\tilde{M}},r}$. It is easy to see
 
 \#Proposition A.N5
 
-Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\bar{\tau}\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}$ at $S(\Estr)$. Consider some $\In^\star$-policy $\pi$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\pi}$ is a $\delta$-perturbation of $\pi$ over $S^\star$. Then
+Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\bar{\tau}\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}$. Consider some $\In^\star$-policy $\pi$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\pi}$ is a $\delta$-perturbation of $\pi$ over $S^\star$. Then, there is some $C\in(0,\infty)$ that depends on nothing s.t
 
-$$\frac{1}{3}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma)   + O\AP{\delta\AP{\bar{\tau}+\frac{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma)}{1-\gamma}}}$$
+$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma) + C\delta\AP{\bar{\tau}+\frac{\max\AP{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma),0}}{1-\gamma}}$$
 
 ***
 
@@ -714,7 +714,7 @@ $$\tau_S(x) := \min\AC{n \in \Nats \mid S\AP{x_{:n}} \in \SF_M}$$
 
 \#Proposition A.N3
 
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}\in(0,\infty)$ at $S(\Estr)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}\in(0,\infty)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
 
 $$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq 2\gamma^{\bar{\tau}}-2\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
 
@@ -744,10 +744,30 @@ $$\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma) \geq \gamma^{\bar{\ta
 
 $$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq 2\gamma^{\bar{\tau}} - 2\AP{\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma)}-1$$
 
+***
+
+?
+
+\#Proposition A.N8
+
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}\in(0,\infty)$. Let $\pi$ be any $\In^\star$-policy. Then, there is $C\in(0,\infty)$ that depends on nothing s.t. for any $\gamma,\delta\in(0,1)$, if $\delta \leq 1-\gamma$ then
+
+$$\Ea{x\sim\mu^\RMD\bowtie\pi}{(1-\delta)^{\tau_{S^\star}(x)}} \geq 1 - C\delta\AP{\bar{\tau}+\frac{\max\AP{\EU_{\upsilon^{\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\RMD}}^{\pi}(\gamma),0}}{1-\gamma}}$$
+
+\#Proof of Proposition A.N8
+
+TBD
+
 \#Proof of Proposition A.N5
 
-% Apply N4
-% Apply N7
+It is easy to see that $\tilde{\pi}\Re^*$ is a $\delta$-perturbation of $\pi\Re^*$ over $S$. By Proposition A.N7, we get
+
+$$\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma) \leq \EU_{\upsilon^{\tilde{M}}}^{\pi^* S}(\gamma)-\EU_{\upsilon^{\tilde{M}}}^{\tilde{\pi}\Re^*}(\gamma) + 2\AP{1-\Ea{x\sim\mu^{\tilde{M}}\bowtie\pi^*}{\AP{1-2\delta}^{\tau_S(x)}}} + 2\AP{1-\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}\Re^*}{\AP{1-2\delta}^{\tau_S(x)}}}$$
+
+By Proposition A.N4, we have
+
+$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)???$$
+
 % Estimating E[(1-\delta)^\tau] from E[(1-\alpha)^\tau]
 % Apply N3
 
