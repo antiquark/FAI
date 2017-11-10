@@ -706,19 +706,21 @@ $$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}}\leq\Dtva{\mu\bowtie\p
 
 As a final ingredient towards the proof of Proposition A.N5, we will need to use the relative regret bound for $\MD$ to get a certain statistical bound on mitigation time.
 
-\#Definition 
+\#Definition A.N7
 
-Consider a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. We define $\tau_S: \HD{\mu} \rightarrow \Nats \sqcup \{\infty\}$ as follows
+Let $\mu$ be any environment. We define the closed set $\HD^\omega\mu \subseteq (\A \times \Ob)^\omega$ by
+
+$$\HD^\omega\mu := \AC{x \in (\A \times \Ob)^\omega \mid \forall n \in \Nats: x_{:n} \in \HD{\mu}}$$
+
+Consider a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. We define the measurable function $\tau_S: \HD^\omega{\mu} \rightarrow \Nats \sqcup \{\infty\}$ as follows
 
 $$\tau_S(x) := \min\AC{n \in \Nats \mid S\AP{x_{:n}} \in \SF_M}$$
 
 \#Proposition A.N3
 
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}\in(0,\infty)$. Let $\pi$ be any $\In^\star$-policy. Then, for any $\gamma\in(0,1)$
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}\in(0,\infty)$. Let $\pi$ be any $\In^\star$-policy. Then, there is $C\in(0,\infty)$ that depends on nothing s.t. for any $\gamma,\delta\in(0,1)$, if $\delta \geq 1-\gamma$ then
 
-$$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq 2\gamma^{\bar{\tau}}-2\AP{\EU_{\UD}^{\pi^* S^\star}(\gamma)-\EU_{\UD}^{\pi}(\gamma)}-1$$
-
-Here, $\pi^* S^\star$ is the $\In^\star$-policy defined by $\pi^*S^\star(h):=\pi^*\AP{S^\star(h)}$, where $\pi^*(\bot)$ can be chosen arbitrarily.
+$$\Ea{\mu^\RMD\bowtie\pi}{(1-\delta)^{\tau_{S^\star}}} \geq 1 - C\delta\AP{\bar{\tau}+\frac{\max\AP{\EU_{\upsilon^{\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\RMD}}^{\pi}(\gamma),0}}{1-\gamma}}$$
 
 \#Proof of Proposition A.N3
 
@@ -728,35 +730,51 @@ $$\Ut^{r^\star}_\gamma(x) \leq (1-\gamma)\AP{\frac{1}{2}\sum_{n=0}^{\tau_{S^\sta
 
 It follows that
 
-$$\EU_{\UD}^\pi(\gamma) \leq \frac{1}{2}+\frac{1}{2}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}}$$
+$$\EU_{\UD}^\pi(\gamma) \leq \frac{1}{2}+\frac{1}{2}\Ea{=\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}}}$$
 
-If $x \in \HD{\mu^\RMD}$ is s.t. for all $n\in\Nats$, $S^\star\AP{x_{:n}}\ne\bot$, then
+If $x \in \HD^\omega{\mu^\RMD}$ is s.t. for all $n\in\Nats$, $S^\star\AP{x_{:n}}\ne\bot$, then
 
 $$\Ut^{r^\star}_\gamma(x) \geq (1-\gamma)\sum_{n=\tau_{S^\star}(x)}^\infty \gamma^n = \gamma^{\tau_{S^\star}(x)}$$
 
 Since $\pi^*$ is a mitigation policy, it follows that
 
-$$\EU_{\UD}^{\pi^*S^\star}(\gamma) \geq \Ea{x\sim\mu^\RMD\bowtie\pi^*S^\star}{\gamma^{\tau_{S^\star}(x)}} \geq \gamma^{\bar{\tau}}$$
+$$\EU_{\UD}^{\pi^*S^\star}(\gamma) \geq \Ea{\mu^\RMD\bowtie\pi^*S^\star}{\gamma^{\tau_{S^\star}}} \geq \gamma^{\bar{\tau}}$$
 
 Subtracting the two inequalities, we get
 
-$$\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma) \geq \gamma^{\bar{\tau}} - \frac{1}{2} - \frac{1}{2}\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}}$$
+$$\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma) \geq \gamma^{\bar{\tau}} - \frac{1}{2} - \frac{1}{2}\Ea{\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}}}$$
 
-$$\Ea{x\sim\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}(x)}} \geq 2\gamma^{\bar{\tau}} - 2\AP{\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma)}-1$$
+$$\Ea{\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}}} \geq 2\gamma^{\bar{\tau}} - 2\AP{\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma)}-1$$
 
-***
+Denote $\rho := \max\AP{\EU_{\UD}^{\pi^*S^\star}(\gamma) - \EU_{\UD}^\pi(\gamma),0}$.  By choosing $C$ sufficiently large, we can assume without loss of generality that the right hand side is positive since, unless $\gamma^{\bar{\tau}} \approx 1$, we would have $C\delta\bar{\tau} \geq C(1-\gamma)\bar{\tau} > 1$, and unless $\rho \ll 1$, we would have $C\delta\frac{\rho}{1-\gamma} \geq C\rho > 1$. In either case, the inequality we are trying to prove would hold. Also, note that $\frac{\ln{(1-\delta)}}{\ln{\gamma}} \geq 1$. We get
 
-?
+$$\Ea{\mu^\RMD\bowtie\pi}{(1-\delta)^{\tau_{S^\star}}}=\Ea{\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}\frac{\ln{(1-\delta)}}{\ln{\gamma}}}} \geq \Ea{\mu^\RMD\bowtie\pi}{\gamma^{\tau_{S^\star}}}^{\frac{\ln{(1-\delta)}}{\ln{\gamma}}} \geq \AP{2\gamma^{\bar{\tau}}-2\rho-1}^{\frac{\ln{(1-\delta)}}{\ln{\gamma}}}=(1-\delta)^{\frac{\ln{\AP{2\gamma^{\bar{\tau}}-2\rho-1}}}{\ln{\gamma}}}$$
 
-\#Proposition A.N8
+By the same reasoning as before, we can assume without loss of generality that e.g. $\gamma^{\bar{\tau}} \leq 1 - \frac{1}{2}(1-\gamma)\bar{\tau}$. It follows that
 
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}\in(0,\infty)$. Let $\pi$ be any $\In^\star$-policy. Then, there is $C\in(0,\infty)$ that depends on nothing s.t. for any $\gamma,\delta\in(0,1)$, if $\delta \leq 1-\gamma$ then
+$$2\gamma^{\bar{\tau}}-2\rho-1 \leq 2 - (1 - \gamma)\bar{\tau} - 2\rho - 1 = 1 - (1 - \gamma)\bar{\tau} - 2\rho \leq 1 - (1-\gamma) = \gamma$$
 
-$$\Ea{x\sim\mu^\RMD\bowtie\pi}{(1-\delta)^{\tau_{S^\star}(x)}} \geq 1 - C\delta\AP{\bar{\tau}+\frac{\max\AP{\EU_{\upsilon^{\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\RMD}}^{\pi}(\gamma),0}}{1-\gamma}}$$
+$$\frac{\ln{\AP{2\gamma^{\bar{\tau}}-2\rho-1}}}{\ln{\gamma}} \geq 1$$
 
-\#Proof of Proposition A.N8
+Combining this with the previous inequality implies
 
-TBD
+$$\Ea{\mu^\RMD\bowtie\pi}{(1-\delta)^{\tau_{S^\star}}} \geq 1 - \delta \frac{\ln{\AP{2\gamma^{\bar{\tau}}-2\rho-1}}}{\ln{\gamma}}$$
+
+It is easy to see that there is $x_0 \in (0,1)$ s.t. for any $x \in [x_0,1]$, $2x -1 \geq x^3$ and therefore $\frac{2x-1}{x^3} \geq 1$. Therefore, for any such $x$ and $\rho \ll 1$, $e^{-C\rho}\leq\frac{2x - 1}{x^3} - \frac{2\rho}{x_0^3}\leq\frac{2x - 2\rho - 1}{x^3}$, where it is sufficient to assume that $C > \frac{2}{x_0^3}$. Taking $x=\gamma^{\bar{\tau}}$, we conclude (assuming $C \geq 3$ and observing that $\gamma^{\frac{1}{1-\gamma}}\leq e^{-1}$)
+
+$$\gamma^{\frac{C\rho}{1-\gamma}} \leq e^{-C\rho}\leq\frac{2\gamma^{\bar{\tau}} - 2\rho - 1}{\gamma^{3\bar{\tau}}} \leq \frac{2\gamma^{\bar{\tau}} - 2\rho - 1}{\gamma^{C\bar{\tau}}}$$
+
+$$\gamma^{C\AP{\bar{\tau}+\frac{\rho}{1-\gamma}}} \leq 2\gamma^{\bar{\tau}} - 2\rho - 1$$
+
+Taking logarithm of both sides
+
+$$C\AP{\bar{\tau}+\frac{\rho}{1-\gamma}} \ln{\gamma} \leq \ln{\AP{2\gamma^{\bar{\tau}} - 2\rho - 1}}$$
+
+$$C\AP{\bar{\tau}+\frac{\rho}{1-\gamma}} \geq \frac{\ln{\AP{2\gamma^{\bar{\tau}} - 2\rho - 1}}}{ \ln{\gamma}}$$
+
+Combining with the inequality we had before, we get
+
+$$\Ea{\mu^\RMD\bowtie\pi}{(1-\delta)^{\tau_{S^\star}}} \geq 1 - C\delta\AP{\bar{\tau}+\frac{\rho}{1-\gamma}}$$
 
 \#Proof of Proposition A.N5
 
@@ -773,7 +791,7 @@ The only difference between $\mu^{\tilde{M}\RME}$ and $\mu^{\tilde{M}\RMD}$ is t
 $$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma) + 2\AP{2-\Ea{\mu^{\tilde{M}\RMD}\bowtie\pi^*S^\star}{\AP{1-2\delta}^{\tau_{S^\star}}}-\Ea{\mu^{\tilde{M}\RMD}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_{S^\star}}}}$$
 
 
-Applying Proposition A.N8 to each of the last two terms, we get
+Applying Proposition A.N3 to each of the last two terms, we get
 
 $$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma) + 4C\delta\AP{2\bar{\tau}+\frac{\max\AP{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma),0}}{1-\gamma}}$$
 
