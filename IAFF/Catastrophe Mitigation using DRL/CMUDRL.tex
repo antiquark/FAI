@@ -370,9 +370,9 @@ Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$ and $\epsilon \in (0,1)$. Now, co
 
 i. $\sigma^k$ is $\epsilon$-sane relatively to $\pi^k$.
 
-ii. For any $s \in \St_{M^k}$, $\Abs{\V^1_{M^k\pi^k}(s)} \leq \bar{\tau}_1$.
+ii. For any $s \in \St_{M^k}$ and $\gamma\in(0,1)$ $$\Abs{\frac{\D\V_{M^k\pi^k}(s,\gamma)}{\D\gamma}} \leq \bar{\tau}_1$$
 
-iii. For any $s \in \St_{M^k}$, $\Abs{\V^2_{M^k\pi^k}(s)} \leq \bar{\tau}_2$.
+iii. For any $s \in \St_{M^k}$ and $\gamma\in(0,1)$ $$\Abs{\frac{\D^2\V_{M^k\pi^k}(s,\gamma)}{\D\gamma^2}} \leq \bar{\tau}_2$$
 
 Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
@@ -382,7 +382,7 @@ The $O$-notation refers to the asymptotics where $\epsilon$ is *fixed* (so we do
 
 ***
 
-The proof of Lemma A.N1 is almost identical to the proof the main theorem for ["non-catastrophic" DRL](https://agentfoundations.org/item?id=1656) up to minor modifications needed to pass from absolute to relative regret. We give it in Appendix B.
+The proof of Lemma A.N1 is almost identical to the proof the main theorem for ["non-catastrophic" DRL](https://agentfoundations.org/item?id=1656) up to minor modifications needed to pass from absolute to relative regret, and tracking the contribution of the derivatives of $\V_{M^k\pi^k}$. We give it in Appendix B.
 
 We will not apply Lemma A.N1 directly the the universes of Theorem 1. Instead, we will define new universes using the following constructions.
 
@@ -805,13 +805,13 @@ Finally, we are read to prove the main theorem.
 
 For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic proper mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\tilde{\sigma}^{k}$ is $\epsilon$-sane relatively to $\pi^k$ in the sense of $\tilde{M}^{k\RMD}$ and $\tilde{M}^{k\RME}$ both: condition i of Definition A.N1 follows by Proposition A.N6 from conditions ii and iii of Definition N6, and condition ii of Definition A.N2 follows from condition iv of Definition N6. Moreover, by Proposition A.N2, we have
 
-$$\Abs{\V_{\tilde{M}^\RMD\pi^k}^1(s)} = O\AP{\bar{\tau}_1}$$
+$$\Abs{\frac{\D\V_{\tilde{M}^\RMD\pi^k}(s,\gamma)}{\D\gamma}} = O\AP{\bar{\tau}_1}$$
 
-$$\Abs{\V_{\tilde{M}^\RMD\pi^k}^2(s)} = O\AP{\bar{\tau}_2}$$
+$$\Abs{\frac{\D^2\V_{\tilde{M}^\RMD\pi^k}(s,\gamma)}{\D\gamma^2}} = O\AP{\bar{\tau}_2}$$
 
-$$\Abs{\V_{\tilde{M}^\RME\pi^k}^1(s)} = O\AP{\bar{\tau}_1}$$
+$$\Abs{\frac{\D\V_{\tilde{M}^\RME\pi^k}(s,\gamma)}{\D\gamma}} = O\AP{\bar{\tau}_1}$$
 
-$$\Abs{\V_{\tilde{M}^\RME\pi^k}^2(s)} = O\AP{\bar{\tau}_2}$$
+$$\Abs{\frac{\D^2\V_{\tilde{M}^\RME\pi^k}(s,\gamma)}{\D\gamma^2}} = O\AP{\bar{\tau}_2}$$
 
 Here, we used that $M^\RMF_k$ is fixed (and thus so are $\bar{\tau}_{1,2}^\RMF$, by conditions i-iii) and that $\bar{\tau}_1 = O\AP{\bar{\tau}_2^{1/2}}$.
 
@@ -899,7 +899,11 @@ By Proposition B.N1
 
 $$\EU_{\upsilon}^{\pi^*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi^*_1}{\V_{M\pi^*}\Big(S\AP{x_{:n}},\gamma\Big)-\Q_{M\pi^*}\AP{S\AP{x_{:n}},x_n^\A,\gamma}}}$$
 
-Using Taylor's theorem, we get... ???
+By Taylor's theorem, we have
+
+$$\V_{M\pi^*}\Big(S\AP{x_{:n}},\gamma\Big) = ?$$
+
+???
 
 $$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^\infty{\gamma^n \sum_{k=0}^\infty{\frac{(1-\gamma)^k}{k!} \Ea{x\sim\mu\bowtie\pi^*_1}{\V_M^k\Big(S\AP{x_{:n}}\Big)-\Q_M^k\AP{S\AP{x_{:n}},x_n^\A}}}}$$
 
