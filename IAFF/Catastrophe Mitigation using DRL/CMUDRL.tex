@@ -875,39 +875,49 @@ It is easy to see that the second term vanishes, yielding the desired result.
 
 \#Proposition B.N3
 
-???
-
-Consider a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$. Suppose that $\pi^*$ is a Blackwell optimal policy for $\upsilon$ and $\pi^0$ is a $0$-optimal policy for $\upsilon$. For any $n \in \Nats$, let $\pi^*_n$ be a policy s.t. for any $h \in \HD{\mu}$
+Consider some $\tau\in(0,\infty)$, $T\in\Nats^+$, a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, a stationary policy $\pi^*: \St_M \M \A$ and an arbitrary $\In$-policy $\pi^0: \FH \M \A$. For any $n \in \Nats$, let $\pi^*_n$ be an $\In$-policy s.t. for any $h \in \HD{\mu}$
 
 $$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \pi^*(h) \text{ otherwise} \end{cases}$$
 
-Then, for any $\gamma\in(0,1)$ and $T \in \Nats^+$
+Assume that
 
-$$\EU^*_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
+i. For any $h \in \HD{\mu}$ $$\Supp{\pi^0(h)} \subseteq \A_{M\pi^*}^0\AP{S(h)}$$
+
+ii. For any $s \in \St_M$ and $\gamma\in(0,1)$ $$\Abs{\frac{\D\V_{M\pi}\AP{s,\gamma}}{\D\gamma}} \leq \tau$$
+
+Then, for any $\gamma\in(0,1)$,
+
+$$\EU^{\pi^*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)???$$
 
 \#Proof of Proposition B.N3
 
-???
+For the sake of encumbering the notation less, we will use $S$ implicitly, i.e. given $F$ a function on $\St_M$ and $h \in \HD{\mu}$, $F(h):=F\AP{S(h)}$. Also, we will omit $M\pi^*$, using the shorthand notations $\V:=\V_{M\pi^*}$, $\Q:=\Q_{M\pi^*}$.
 
-By Proposition B.1, for any $l \in \Nats$
+By Proposition B.N1, for any $l \in \Nats$
 
-$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi_l^*}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi_l^*}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+$$\EU_{\upsilon}^{\pi^*}(\gamma) - \EU_{\upsilon}^{\pi_l^*}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi_l^*}{\V\Big(x_{:n},\gamma\Big)-\Q\AP{x_{:n},x_n^\A,\gamma}}}$$
 
-$\pi^*_l$ becomes Blackwell optimal after $lT$, therefore for $1 - \gamma \ll 1$, 
+$\pi^*_l$ coincides with $\pi^*$ after $lT$, therefore the corresponding expected values vanish.
 
-$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi_l^*}(\gamma) = \sum_{n=0}^{lT-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+$$\EU_{\upsilon}^{\pi^*}(\gamma) - \EU_{\upsilon}^{\pi_l^*}(\gamma) = \sum_{n=0}^{lT-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V\Big(x_{:n},\gamma\Big)-\Q\AP{x_{:n},x_n^\A,\gamma}}}$$
 
-$$\EU_{\upsilon}^{\pi_{l}^*}(\gamma) - \EU_{\upsilon}^{\pi_{l+1}^*}(\gamma) = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+$$\EU_{\upsilon}^{\pi_{l}^*}(\gamma) - \EU_{\upsilon}^{\pi_{l+1}^*}(\gamma) = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V\Big(x_{:n},\gamma\Big)-\Q\AP{x_{:n},x_n^\A,\gamma}}}$$
 
-$$(1-\gamma)\sum_{n=0}^\infty {\gamma^n\AP{\Ea{x \sim \mu\bowtie\pi^*_l}{r\AP{x_{:n}}}-\Ea{x \sim \mu\bowtie\pi^*_{l+1}}{r\AP{x_{:n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+$$(1-\gamma)\sum_{n=0}^\infty {\gamma^n\AP{\Ea{x \sim \mu\bowtie\pi^*_l}{r\AP{x_{:n}}}-\Ea{x \sim \mu\bowtie\pi^*_{l+1}}{r\AP{x_{:n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V\Big(x_{:n},\gamma\Big)-\Q\AP{x_{:n},x_n^\A,\gamma}}}$$
 
 $\pi^*_l$ and $\pi^*_{l+1}$ coincide until $lT$, therefore
 
-$$(1-\gamma)\sum_{n=lT}^\infty {\gamma^n\AP{\Ea{x \sim \mu\bowtie\pi^*_l}{r\AP{x_{:n}}}-\Ea{x \sim \mu\bowtie\pi^*_{l+1}}{r\AP{x_{:n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V^{\upsilon}_\gamma\Big(x_{:n}\Big)-\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}}}$$
+$$(1-\gamma)\sum_{n=lT}^\infty {\gamma^n\AP{\Ea{x \sim \mu\bowtie\pi^*_l}{r\AP{x_{:n}}}-\Ea{x \sim \mu\bowtie\pi^*_{l+1}}{r\AP{x_{:n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V\Big(x_{:n},\gamma\Big)-\Q\AP{x_{:n},x_n^\A,\gamma}}}$$
 
-Denote $\rho^*_l:=\mu\bowtie\pi^*_l$, $\rho^0:=\mu\bowtie\pi^0$. We also use the shorthand notations $r_n:=r\AP{x_{:n}}$, $\V_n:=\V^\upsilon_\gamma\AP{x_{:n}}$, $\Q_n:=\Q^{\upsilon}_\gamma\AP{x_{:n},x_n^\A}$. Both $\pi^*_l$ and $\pi^*_{l+1}$ is Blackwell optimal after $(l+1)T$, therefore
+Denote $\rho^*_l:=\mu\bowtie\pi^*_l$, $\rho^0:=\mu\bowtie\pi^0$. We also use the shorthand notations $r_n:=r\AP{x_{:n}}$, $\V_n(\gamma):=\V\AP{x_{:n},\gamma}$, $\Q_n(\gamma):=\Q\AP{x_{:n},x_n^\A,\gamma}$. Both $\pi^*_l$ and $\pi^*_{l+1}$ coincide with $\pi^*$ after $(l+1)T$, therefore
 
-$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + \gamma^{(l+1)T}\AP{\Ea{\rho^*_l}{\V_{(l+1)T}}-\Ea{\rho^0}{\V_{(l+1)T}}}= \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n-\Q_n}}$$
+$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + \gamma^{(l+1)T}\AP{\Ea{\rho^*_l}{\V_{(l+1)T}(\gamma)}-\Ea{\rho^0}{\V_{(l+1)T}(\gamma)}}= \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
+
+Denote $\V'(s,\gamma):=\frac{\D\V(s,\gamma)}{\D\gamma}$. By the mean value theorem, for each $s\in\St_M$ there is $\gamma^*\in(\gamma,1)$ s.t.
+
+$$\V(s,\gamma) = \V^0(s) - \V'(s,\gamma^*)\cdot(1-\gamma)$$
+
+???
 
 Since $\pi^0$ is 0-optimal, we get
 
