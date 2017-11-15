@@ -508,21 +508,21 @@ Now we will establish a bound on $\V^1$ and $\V^2$ in terms of mitigation time m
 
 \#Proposition A.N2
 
-Fix $\bar{\tau}_1, \bar{\tau}_2, \TF_1, \TF_2 \in (0,\infty)$. Consider a catastrophe MDP $M$ and a proper mitigation policy $\pi: \St_M \M \A_M$ with mitigation time moments $\bar{\tau}_1, \bar{\tau}_2$. Assume than for any $s \in \SF_M$
+Fix $\bar{\tau}_1, \bar{\tau}_2, \TF_1, \TF_2 \in (0,\infty)$. Consider a catastrophe MDP $M$ and a proper mitigation policy $\pi: \St_M \M \A_M$ with mitigation time moments $\bar{\tau}_1, \bar{\tau}_2$. Assume than for any $s \in \SF_M$ and $\gamma\in(0,1)$
 
-i. $\Abs{\V^1_{M\pi}(s)} \leq \TF_1$
+i. $$\Abs{\frac{\D\V_{M\pi}(s,\gamma)}{\D\gamma}} \leq \TF_1$$
 
-ii. $\Abs{\V^2_{M\pi}(s)} \leq \TF_2$
+ii. $$\Abs{\frac{\D^2\V_{M\pi}(s,\gamma)}{\D\gamma^2}} \leq \TF_2$$
 
-Then, for any $s \in \St_M \setminus \SC_M$
+Then, for any $s \in \St_M \setminus \SC_M$ and $\gamma\in[0,1]$
 
-a. $\Abs{\V^1_{M\pi}(s)} \leq 3 \bar{\tau}_1 + \TF_1$
+a. $$\Abs{\frac{\D\V_{M\pi}(s,\gamma)}{\D\gamma}} \leq 3 \bar{\tau}_1 + \TF_1$$
 
-b. $\Abs{\V^2_{M\pi}(s)} \leq 3 \bar{\tau}_2 + 2 \bar{\tau}_1 \TF_1 + \TF_2$
+b. $$\Abs{\frac{\D^2\V_{M\pi}(s,\gamma)}{\D\gamma^2}} \leq 3 \bar{\tau}_2 + 2 \bar{\tau}_1 \TF_1 + \TF_2$$
 
 ***
 
-Note that Proposition A.N2 is really about Markov chains rather than MDPs, but we don't make it explicit to avoid introducing more notation.
+Note that, since $\V_{M\pi}(s,\gamma)$ is a rational function of $\gamma$ with no poles on the interval $[0,1]$, some finite bounds of the form i and ii always exist. Note also that Proposition A.N2 is really about Markov chains rather than MDPs, but we don't make it explicit to avoid introducing more notation.
 
 \#Proof of Proposition A.N2
 
@@ -562,13 +562,15 @@ Also, we have
 
 $$\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma} = \Ea{x\sim\mu_{M\pi s}}{\tau(x)\gamma^{\tau(x)-1}\V_{M\pi}\AP{x_{\tau(x)},\gamma}+\gamma^{\tau(x)}\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}}$$
 
-$$\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}} \leq \Ea{x\sim\mu_{M\pi s}}{ \tau(x)+\Abs{\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}}} = \bar{\tau}_1 + \Ea{x\sim\mu_{M\pi s}}{\Abs{\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}}}$$
+$$\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}} \leq \Ea{x\sim\mu_{M\pi s}}{ \tau(x)+\Abs{\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}}} = \bar{\tau}_1 + \Ea{x\sim\mu_{M\pi s}}{\Abs{\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}}} \leq \bar{\tau}_1 + \TF_1$$
 
-$$\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}} \leq \bar{\tau}_1 + \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^1\AP{x_{\tau(x)}}}} \leq \bar{\tau}_1 + \bar{\tau}_1^\RMF$$
+$$\Abs{\frac{\D\V_{M\pi}(s,\gamma)}{\D\gamma}} \leq \Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}}+\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}} \leq 3 \bar{\tau}_1 + \bar{\tau}_1^\RMF$$
+
+\Comment{$$\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}} \leq \bar{\tau}_1 + \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^1\AP{x_{\tau(x)}}}} \leq \bar{\tau}_1 + \bar{\tau}_1^\RMF$$
 
 We conclude
 
-$$\Abs{\V_{M\pi}^1(s)} \leq \Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}}+\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}} \leq 3 \bar{\tau}_1 + \bar{\tau}_1^\RMF$$
+$$\Abs{\V_{M\pi}^1(s)} \leq \Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}}+\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}} \leq 3 \bar{\tau}_1 + \bar{\tau}_1^\RMF$$}
 
 Now we analyze the second derivatives.
 
@@ -582,11 +584,13 @@ $$\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2} = \Ea{x\sim\mu_{M\pi s}}{\tau(
 
 $$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}} \leq \Ea{x\sim\mu_{M\pi s}}{\tau(x)\AP{\tau(x)-1}+2\tau(x)\Abs{\V_{M\pi}'\AP{x_{\tau(x)},\gamma}}+\Abs{\V_{M\pi}''\AP{x_{\tau(x)},\gamma}}}$$
 
-$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}} \leq \bar{\tau}_2 + 2 \bar{\tau}_1 \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}'\AP{x_{\tau(x)},\gamma}}}+\Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}''\AP{x_{\tau(x)},\gamma}}}$$
+$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}} \leq \bar{\tau}_2 + 2 \bar{\tau}_1 \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}'\AP{x_{\tau(x)},\gamma}}}+\Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}''\AP{x_{\tau(x)},\gamma}}} \leq \bar{\tau}_2 + 2\bar{\tau}_1\TF_1+\TF_2$$
 
-$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}} \leq \bar{\tau}_2 + 2 \bar{\tau}_1 \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^1\AP{x_{\tau(x)}}}}+\Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^2\AP{x_{\tau(x)}}}} \leq \bar{\tau}_2 + 2 \bar{\tau}_1 \bar{\tau}_1^\RMF +\bar{\tau}_2^\RMF$$
+$$\Abs{\frac{\D^2\V_{M\pi}(s,\gamma)}{\D\gamma^2}} \leq \Abs{\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2}}+\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}} \leq 3 \bar{\tau}_2 + 2 \bar{\tau}_1 \bar{\tau}_1^\RMF +\bar{\tau}_2^\RMF$$
 
-$$\Abs{\V_{M\pi}^2(s)} \leq \Abs{\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}}+\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}} \leq 3 \bar{\tau}_2 + 2 \bar{\tau}_1 \bar{\tau}_1^\RMF +\bar{\tau}_2^\RMF$$
+\Comment{$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}} \leq \bar{\tau}_2 + 2 \bar{\tau}_1 \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^1\AP{x_{\tau(x)}}}}+\Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^2\AP{x_{\tau(x)}}}} \leq \bar{\tau}_2 + 2 \bar{\tau}_1 \bar{\tau}_1^\RMF +\bar{\tau}_2^\RMF$$
+
+$$\Abs{\V_{M\pi}^2(s)} \leq \Abs{\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}}+\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}} \leq 3 \bar{\tau}_2 + 2 \bar{\tau}_1 \bar{\tau}_1^\RMF +\bar{\tau}_2^\RMF$$}
 
 ***
 
