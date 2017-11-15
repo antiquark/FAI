@@ -358,11 +358,11 @@ We start by deriving a more general and more precise version of the non-catastro
 
 \#Definition A.N1
 
-Fix $\epsilon\in(0,1)$. Consider an MDP $M$ and policies $\pi,\sigma: \St_M \M \A_M$. $\sigma$ is called *$\epsilon$-sane relatively to $\pi$* when for any $s \in \St_M$
+Fix $\epsilon\in(0,1)$. Consider an MDP $M$ and policies $\pi: \St_M \rightarrow \A_M$, $\sigma: \St_M \M \A_M$. $\sigma$ is called *$\epsilon$-sane relatively to $\pi$* when for any $s \in \St_M$
 
 i. $\Supp{\sigma(s)} \subseteq \A_{M\pi}^0$
 
-ii. There is $a \in \A_{M\pi}^1$ s.t. $\sigma(a \mid s) > \epsilon$.
+ii. $\sigma\AP{\pi(s) \mid s} > \epsilon$
 
 \#Lemma A.N1
 
@@ -803,7 +803,7 @@ Finally, we are read to prove the main theorem.
 
 \#Proof of Theorem 1
 
-For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic proper mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\tilde{\sigma}^{k}$ is $\epsilon$-sane relatively to $\pi^k$ in the sense of $\tilde{M}^{k\RMD}$ and $\tilde{M}^{k\RME}$ both: condition i of Definition A.N1 follows by Proposition A.N6 from conditions ii and iii of Definition N6, and condition ii of Definition A.N2 follows from condition iv of Definition N6. Moreover, by Proposition A.N2, we have
+For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic proper mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\tilde{\sigma}^{k}$ is $\epsilon$-sane relatively to $\pi^k$ in the sense of $\tilde{M}^{k\RMD}$ and $\tilde{M}^{k\RME}$ both: condition i of Definition A.N1 follows by Proposition A.N6 from conditions ii and iii of Definition N6, and condition ii of Definition A.N1 follows from condition iv of Definition N6. Moreover, by Proposition A.N2, we have
 
 $$\Abs{\frac{\D\V_{\tilde{M}^\RMD\pi^k}(s,\gamma)}{\D\gamma}} = O\AP{\bar{\tau}_1}$$
 
@@ -872,66 +872,6 @@ Taking expected value over $x$, we get
 $$\EU_{\upsilon}^{\pi^* S} - \EU_{\upsilon}^{\pi^0}=\sum_{n=0}^\infty \gamma^n \AP{\Ea{\mu\bowtie\pi^0}{\V\AP{x_{:n}}-\Q\AP{x_{:n},x_n^\A}}+\Ea{\mu\bowtie\pi^0}{\Q\AP{x_{:n},x_n^\A}-(1-\gamma)r\AP{x_{:n}}-\gamma\V\AP{x_{:n+1}}}}$$
 
 It is easy to see that the second term vanishes, yielding the desired result.
-
-\#Proposition B.N2
-
-Consider some $\gamma\in(0,1)$, $\tau_{1,2}\in(0,\infty)$, $T \in \Nats$, universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of an MDP $M$ with state function $S$, $\pi^*: \St_M \M \A$ and $\pi^1: \FH \M \A$. Assume that
-
-i. For any $h \in \HD{\mu}$, $\Supp{\pi^1(h)} \subseteq \A_{M\pi^*}^1\AP{S(h)}$. 
-
-ii. For any $s \in \St_M$, $\Abs{\V_{M\pi^*}^1(s)} \leq \tau_1$.
-
-iii. For any $s \in \St_M$, $\Abs{\V_{M\pi^*}^2(s)} \leq \tau_2$.
-
-Then,
-
-$$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi S}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^1}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1 + T\left(1-\gamma\right)\right)???$$
-
-\#Proof of Proposition B.N2
-
-???
-
-Let $\pi^*_1$ be a policy s.t. for any $h \in \HD{\mu}$
-
-$$\pi^*_1(h):=\begin{cases} \pi^1(h) \text{ if } \Abs{h} < T \\ \pi^*(h) \text{ otherwise} \end{cases}$$
-
-By Proposition B.N1
-
-$$\EU_{\upsilon}^{\pi^*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim\mu\bowtie\pi^*_1}{\V_{M\pi^*}\Big(S\AP{x_{:n}},\gamma\Big)-\Q_{M\pi^*}\AP{S\AP{x_{:n}},x_n^\A,\gamma}}}$$
-
-By Taylor's theorem, we have
-
-$$\V_{M\pi^*}\Big(S\AP{x_{:n}},\gamma\Big) = ?$$
-
-???
-
-$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^\infty{\gamma^n \sum_{k=0}^\infty{\frac{(1-\gamma)^k}{k!} \Ea{x\sim\mu\bowtie\pi^*_1}{\V_M^k\Big(S\AP{x_{:n}}\Big)-\Q_M^k\AP{S\AP{x_{:n}},x_n^\A}}}}$$
-
-Using the Blackwell optimality of $\pi^*$ and 1-optimality of $\pi^1$, we get that for $1-\gamma \ll 1$
-
-$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = \sum_{n=0}^{T-1}{\gamma^n \sum_{k=2}^\infty{\frac{(1-\gamma)^k}{k!} \Ea{x\sim\mu\bowtie\pi^1}{\V_M^k\Big(S\AP{x_{:n}}\Big)-\Q_M^k\AP{S\AP{x_{:n}},x_n^\A}}}}$$
-
-$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) \leq \sum_{n=0}^{T-1}{\gamma^n \max_{s \in \St_M} \max_{a \in \A_M^1(s)} \sum_{k=2}^\infty{\frac{(1-\gamma)^k}{k!} \AP{\V_M^k(s)-\Q_M^k\AP{s,a}}}}$$
-
-$$\EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^*_1}(\gamma) = O\AP{T(1-\gamma)^2}$$
-
-$$(1-\gamma)\sum_{n=0}^{\infty} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^*_1}\left[r\left(x_{:n}\right)\right]\right) = O\AP{T(1-\gamma)^2}$$
-
-$$\sum_{n=0}^{\infty} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^*_1}\left[r\left(x_{:n}\right)\right]\right) = O\AP{T(1-\gamma)}$$
-
-Denote $\rho^*:=\mu\bowtie\pi^*$, $\rho^1:=\mu\bowtie\pi^1$. Using again the Blackwell optimality of $\pi^*$
-
-$$\sum_{n=0}^{T - 1} \gamma^n \left(\E{x \sim \rho^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \rho^1}\left[r\left(x_{:n}\right)\right]\right) + \frac{\gamma^T}{1-\gamma}\AP{\E{x \sim \rho^*}\left[\V_M\AP{S\AP{x_{:T}}}\right]-\E{x \sim \rho^1}\left[\V_M\AP{S\AP{x_{:T}}}\right]} = O\AP{T(1-\gamma)}$$
-
-Since both $\pi^*$ and $\pi^1$ are in particular 0-optimal, we have
-
-$$\Ea{x \sim \rho^*}{\V_M^0\AP{S\AP{x_{:T}}}}=\Ea{x \sim \rho^1}{\V_M^0\AP{S\AP{x_{:T}}}}=\V_M^0\AP{S\AP{\Estr}}$$
-
-It follows
-
-$$\sum_{n=0}^{T - 1} \gamma^n \left(\E{x \sim \rho^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \rho^1}\left[r\left(x_{:n}\right)\right]\right) \pm \frac{\gamma^T}{1-\gamma}O\AP{1-\gamma}= O\AP{T(1-\gamma)}$$
-
-$$\sum_{n=0}^{T - 1} \gamma^n \left(\E{x \sim \rho^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \rho^1}\left[r\left(x_{:n}\right)\right]\right) = O\AP{\gamma^T+T(1-\gamma)}$$
 
 \#Proposition B.N3
 
