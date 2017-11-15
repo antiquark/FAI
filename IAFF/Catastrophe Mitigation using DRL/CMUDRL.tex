@@ -887,7 +887,7 @@ ii. For any $s \in \St_M$ and $\gamma\in(0,1)$ $$\Abs{\frac{\D\V_{M\pi}\AP{s,\ga
 
 Then, for any $\gamma\in(0,1)$,
 
-$$\EU^{\pi^*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)???$$
+$$\EU^{\pi^*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}$$
 
 \#Proof of Proposition B.N3
 
@@ -900,6 +900,8 @@ $$\EU_{\upsilon}^{\pi^*}(\gamma) - \EU_{\upsilon}^{\pi_l^*}(\gamma) = \sum_{n=0}
 $\pi^*_l$ coincides with $\pi^*$ after $lT$, therefore the corresponding expected values vanish.
 
 $$\EU_{\upsilon}^{\pi^*}(\gamma) - \EU_{\upsilon}^{\pi_l^*}(\gamma) = \sum_{n=0}^{lT-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V\Big(x_{:n},\gamma\Big)-\Q\AP{x_{:n},x_n^\A,\gamma}}}$$
+
+Subtracting the equalities for $l+1$ and $l$, we get
 
 $$\EU_{\upsilon}^{\pi_{l}^*}(\gamma) - \EU_{\upsilon}^{\pi_{l+1}^*}(\gamma) = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V\Big(x_{:n},\gamma\Big)-\Q\AP{x_{:n},x_n^\A,\gamma}}}$$
 
@@ -919,19 +921,28 @@ $$\V(s,\gamma) = \V^0(s) - \V'(s,\gamma^*)\cdot(1-\gamma)$$
 
 $$\V^0(s) - \tau(1-\gamma) \leq \V(s,\gamma) \leq \V^0(s) + \tau(1-\gamma)$$
 
-???
+It follows that
 
-Since $\pi^0$ is 0-optimal, we get
+$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + \gamma^{(l+1)T}\AP{\Ea{\rho^*_l-\rho^0}{\V^0_{(l+1)T}}+ 2\tau(1-\gamma)}\geq \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
 
-$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + O\AP{\gamma^{(l+1)T}(1-\gamma)}= \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n-\Q_n}}$$
+Here, an expected value w.r.t. the difference of two probability measures is understood to mean the corresponding difference of expected values.
+
+It is easy to see that assumption i implies that $\V_n^0$ is a submartingale for $\rho^0$ (whereas it is a martingale for $\mu\bowtie\pi^*$) and therefore
+
+$$\Ea{\rho^*_l-\rho^0}{\V^0_{(l+1)T}} \leq 0$$
+
+
+We get
+
+$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + 2\tau\gamma^{(l+1)T}(1-\gamma)\geq \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
 
 Summing over $l$, we get
 
-$$(1-\gamma)\sum_{l=0}^\infty\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + O\AP{\frac{\gamma^T(1-\gamma)}{1-\gamma^{T}}}= \sum_{n=0}^{\infty}{\gamma^n \Ea{\rho^0}{\V_n-\Q_n}}$$
+$$(1-\gamma) \sum_{l=0}^\infty \sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}\geq \sum_{n=0}^{\infty}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
 
-Applying Proposition B.1 to the right hand side
+Applying Proposition B.N1 to the right hand side
 
-$$(1-\gamma)\sum_{l=0}^\infty\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + O\AP{\frac{\gamma^T(1-\gamma)}{1-\gamma^{T}}}= \EU_{\upsilon}^{*}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma)$$
+$$(1-\gamma) \sum_{l=0}^\infty \sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T} \geq \EU_{\upsilon}^{\pi^*}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma)$$
 
 \#Proof of Lemma A.N1
 
