@@ -841,39 +841,41 @@ $$\EU_{\upsilon^k}^{*}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^{k}}}^{\pi^
 
 \section{Appendix B}
 
+Given $p=(a,o)\in\A\times\Ob$, we denote $p^\A:=a$, $p^\Ob:=o$.
+
 \#Proposition B.N1
 
 Consider a universe $\upsilon=(\mu,r)$ which an $\Ob$-realization of an MDP $M$ with state function $S$, a stationary policy $\pi: \St_M \M \A$, an arbitrary $\In$-policy $\pi^0$ and some $\gamma \in (0,1)$. Then,
 
-$$\EU_{\upsilon}^{\pi S}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma)=\sum_{n=0}^\infty {\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V_{M\pi}\AP{S\AP{x_{:n}},\gamma}-\sum_{a\in\A}  {[[x_{n} \in a\Ob]] \Q_{M\pi}\AP{S\AP{x_{:n}},a,\gamma}}}}$$
+$$\EU_{\upsilon}^{\pi S}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma)=\sum_{n=0}^\infty {\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V_{M\pi}\AP{S\AP{x_{:n}},\gamma}-\Q_{M\pi}\AP{S\AP{x_{:n}},x_n^\A,\gamma}}}$$
 
 \#Proof of Proposition B.N1
 
-???
+For the sake of encumbering the notation less, we will omit the parameter $\gamma$ in functions that depend on it. We will use $S$ implicitly, i.e. given $F$ a function on $\St_M$ and $h \in \HD{\mu}$, $F(h):=F\AP{S(h)}$. Finally, we will omit $M\pi$, using the shorthand notations $\V:=\V_{M\pi}$, $\Q:=\Q_{M\pi}$.
 
-For any $x \in \IH$, it is easy to see that
+For any $x \in \HD^\omega \mu$, it is easy to see that
 
-$$\EU_{\upsilon}^{*}(t)=\V^{\upsilon}_t(\Estr)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
+$$\EU_{\upsilon}^{\pi S}=\V\AP{\Estr}=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{:n}}-\gamma\V\AP{x_{:n+1}}}$$
 
-$$\Ut^{r}_t(x)=(1-e^{-1/t})\sum_{n=0}^\infty e^{-n/t} r(x_{:n})$$
+$$\Ut^{r}(x)=(1-\gamma)\sum_{n=0}^\infty \gamma^n r\AP{x_{:n}}$$
 
-$$\EU_{\upsilon}^{*}(t) - \Ut^{r}_t(x)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
+$$\EU_{\upsilon}^{\pi S} - \Ut^{r}(x)=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{:n}}-(1-\gamma)r\AP{x_{:n}}-\gamma\V\AP{x_{:n+1}}}$$
 
-$$\EU_{\upsilon}^{*}(t) - \Ut^{r}_t(x)=\sum_{n=0}^\infty e^{-n/t} (\V^{\upsilon}_t(x_{:n})-\Q^{\upsilon}_t(x_{:n+1/2})+\Q^{\upsilon}_t(x_{:n+1/2})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1}))$$
+$$\EU_{\upsilon}^{\pi S} - \Ut^{r}(x)=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{:n}}-\Q\AP{x_{:n},x_n^\A}+\Q\AP{x_{:n},x_n^\A}-(1-\gamma)r\AP{x_{:n}}-\gamma\V\AP{x_{:n+1}}}$$
 
 Taking expected value over $x$, we get
 
-$$\EU_{\upsilon}^{*}(t) - \EU_{\upsilon}^{\pi^0}(t)=\sum_{n=0}^\infty e^{-n/t} (\E{\mu\bowtie\pi^0}[\V^{\upsilon}_t(x_{:n})-\Q^{\upsilon}_t(x_{:n+1/2})]+\E{\mu\bowtie\pi^0}[\Q^{\upsilon}_t(x_{:n+1/2})-(1-e^{-1/t})r(x_{:n})-e^{-1/t}\V^{\upsilon}_t(x_{:n+1})])$$
+$$\EU_{\upsilon}^{\pi S} - \EU_{\upsilon}^{\pi^0}=\sum_{n=0}^\infty \gamma^n \AP{\Ea{\mu\bowtie\pi^0}{\V\AP{x_{:n}}-\Q\AP{x_{:n},x_n^\A}}+\Ea{\mu\bowtie\pi^0}{\Q\AP{x_{:n},x_n^\A}-(1-\gamma)r\AP{x_{:n}}-\gamma\V\AP{x_{:n+1}}}}$$
 
 It is easy to see that the second term vanishes, yielding the desired result.
 
 \#Proposition B.N2
 
-???
+??? Dependence on bound for $\V$ !!!
 
-Fix an MDP $M$. Then, for any $\gamma\in(0,1)$, $T \in \Nats$, universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, $\pi^1$ a $1$-optimal policy for $\upsilon$ and $\pi^*$ a Blackwell optimal policy for $\upsilon$, we have
+Consider any $\gamma\in(0,1)$, $T \in \Nats$, universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of an MDP $M$ with state function $S$, $\pi: \St_M \M \A$ and $\pi^1: \FH \M \A$ s.t. for any $h \in \HD{\mu}$, $\Supp{\pi^1(h)} \subseteq \A_{M\pi}^1\AP{S(h)}$. Then,
 
-$$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi^*}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^1}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1 + T\left(1-\gamma\right)\right)$$
+$$\sum_{n=0}^{T-1} \gamma^n \left(\E{x \sim \mu\bowtie\pi S}\left[r\left(x_{:n}\right)\right]-\E{x \sim \mu\bowtie\pi^1}\left[r\left(x_{:n}\right)\right]\right) \leq O\left(1 + T\left(1-\gamma\right)\right)$$
 
 \#Proof of Proposition B.N2
 
