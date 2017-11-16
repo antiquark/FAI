@@ -823,6 +823,8 @@ $$\EU_{\tilde{\upsilon}^{k\RME}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\t
 
 It is easy to see that $\AB{\tilde{\sigma}^k S^{k\star}}\underline{\pi}^\sharp$ is a $\delta$-perturbation of $\AB{\sigma^k S^{k\star}}\underline{\pi}^\sharp$ over $S^{k\star}$??? % Or is it?
 % Given a history that ends in \SF, \tilde{\sigma} may cause a different inner state for \pi^\sharp...
+% Solution 1: define the MDP M[\sigma]...
+% Solution 2: define an environment with an extended action set that records which actions were delegated.
 
 Applying Proposition A.N5, we get
 
@@ -1009,25 +1011,23 @@ For any $k \in [N]$, we construct the $\Adi$-policy $\pi^{?k}$ s.t. for any $n \
 
 $$\pi^{?k}(a \mid h):=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
 
-\Comment{Given any $\Adi$-policy $\pi$ and $\In$-policy $\sigma$ we define $\alpha_{\sigma\pi}: \FH \M \Adfh$ by
+Given any $\Adi$-policy $\pi$ and $\In$-policy $\sigma$ we define $\alpha_{\sigma\pi}: \FH \M \Adfh$ by
 
 $$\alpha_{\sigma\pi} (g \mid h) := [[h = \underline{g}]]C_h\prod_{n = 0}^{\Abs{h}-1} \sum_{a \in \A}\left([[g_n \in \bot a\Ob]] \pi\left(\bot \mid g_{:n}\right)\sigma\left(a \mid h_{:n}\right)+[[g_n \in a\bot\Ob]]\pi\left(a \mid g_{:n}\right)\right)$$
 
 Here, $C_h \in \Reals$ is a constant defined s.t. the probabilities sum to 1. We define the $\In$-policy $\left[\sigma\right]\underline{\pi}$ by
 
-$$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$}
+$$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$
 
-???
+Condition iii of Proposition C.N2 and condition i of Definition A.N1 imply that for any $h \in \HD{\mu^k}$
 
-Condition iii of Proposition A.2 and condition i of $\epsilon$-sanity for $\sigma^k$ imply that for any $h \in \HD{\mu^k}$
+$$\Supp{\left[\sigma^k\right]\underline{\pi}^{?k}(h)} \subseteq \A^0_{M^k\pi^k}\left(S^k\left(h\right)\right)$$
 
-$$\Supp{\left[\sigma^k\right]\underline{\pi}^{?k}(h)} \subseteq \A^0_k\left(S^k\left(h\right)\right)$$
+This means we can apply Proposition B.N3 and get
 
-This means we can apply Proposition A.5 and get
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
-
-Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition A.5. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
+Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition B.N3. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
 
 $$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \Pr\left[A^!_{\Abs{h}} = a \mid A\Theta^!_{:{\Abs{h}}} = h,\ K = k,\ \J^!_n = k\right] \text{ otherwise} \end{cases}$$
 
@@ -1045,31 +1045,36 @@ $$\EU_n^{?k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x
 
 We have
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)+\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma}{1-\gamma^T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)+\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
 
-Condition iv of Proposition A.2 and condition ii of $\epsilon$-sanity for $\sigma^k$ imply that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
+Condition iv of Proposition C.N2 and condition ii of Definition A.N1 imply that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
 
-$$\Supp{\pi^{!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right) \cup \{\bot\}$$
+$$\Supp{\pi^{!k}_n(h)} \subseteq \AC{\pi^k\AP{S^k(h)},\bot}$$
 
-$$\Supp{\pi^{!!k}_n(h)} \subseteq \A^1_k\left(S^k\left(\underline{h}\right)\right)$$
+$$\pi^{!!k}_n\AP{\pi^k\AP{S^k(h)} \mid h} = 1$$
 
-Therefore, we can apply Proposition A.4 to the terms $\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)$ and get
+Therefore, $\pi^{!!k}_n = \pi^{*k}_n$, and we remain with
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
 
 We have
 
 $$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \Pr_{x\sim\rho^{!k}_n}\left[\exists m \in [T]: x_{nT+m} \in \bot\Ado\right]$$
 
-Thus, using condition i of Proposition A.2, we can bound the contribution of the $\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)$ terms and get
+Since $\Z_{nT}^{!}(K) \geq \eta$, it follows that
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\eta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \frac{1}{\eta}\Pr_{x\sim\rho^{?k}}\left[\exists m \in [T]: x_{nT+m} \in \bot\Ado\right] \leq \frac{1}{\eta}\Ea{x\sim\rho^{?k}}{\Abs{\AC{m \in [T] \mid x_{nT+m} \in \bot\Ado}}}$$
 
-We denote
+$$\sum_{n=0}^\infty \AP{\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)} \leq \frac{1}{\eta}\Ea{x\sim\rho^{?k}}{\Abs{\AC{n \in \Nats \mid x_n \in \bot\Ado}}}$$
 
-$$\xi(\gamma,T,\eta):=\frac{1-\gamma^T}{\eta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
+Using condition i of Proposition C.N2, we conclude
+
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+
+%We denote
+%$$\xi(\gamma,T,\eta):=\frac{1-\gamma^T}{\eta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
 
 Define the random variables $\Sqn{U^!_n : \Omega \rightarrow [0,1]}$ by 
 
@@ -1077,29 +1082,30 @@ $$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} r\left(A\Theta^!
 
 Averaging the previous inequality over $k$, we get
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \J^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\xi(\gamma,T,\eta)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\xi(\gamma,T,\eta)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\eta)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
 
-We apply Proposition A.1 to each term in the sum over $n$.
+We apply Proposition C.N1 to each term in the sum over $n$.
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\eta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\xi(\gamma,T,\eta)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\eta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\eta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\eta)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\eta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\eta}\ln N} + O\left(\frac{1-\gamma^T}{\eta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\eta}\ln N} + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
 
-Condition ii of Proposition A.2 implies that
+Condition ii of Proposition C.N2 implies that
 
 $$\Dtv\left(\frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^*},\ \frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^{?k}}\right) \leq 2(N-1)\eta$$
 
 Here, the factor of 2 comes from the difference between the equations for $Z_n$ and $Z^!_n$ (we can construct and intermediate policy between $\pi^*$ and $\pi^{?k}$ and use the triangle inequality for $\Dtv$). We conclude
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left(\eta+\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left(\eta+\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+
+???
 
 Now we set $\eta:=\left(1-\gamma\right)^{1/4}$,  $T:=\Floor{\left(1-\gamma\right)^{-1/4}}$. Since $\gamma^T \rightarrow 1$ as $\gamma \rightarrow 1$, we can use the approximation $1-\gamma^T \approx T(1-\gamma) \approx (1-\gamma)^{3/4}$. We get
 
