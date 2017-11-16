@@ -821,7 +821,10 @@ $$\EU_{\tilde{\upsilon}^{k\RMD}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\t
 
 $$\EU_{\tilde{\upsilon}^{k\RME}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\tilde{\upsilon}^{k\RME}}\AB{\tilde{\sigma}^k S^{k\star}}}^{\pi^\sharp}(1-\alpha) \leq O\AP{\bar{\tau}_2 \alpha + (\bar{\tau}_1 \alpha)^{1/4}}$$
 
-It is easy to see that $\AB{\tilde{\sigma}^k S^{k\star}}\underline{\pi}^\sharp$ is a $\delta$-perturbation of $\AB{\sigma^k S^{k\star}}\underline{\pi}^\sharp$ over $S^{k\star}$. Applying Proposition A.N5, we get
+It is easy to see that $\AB{\tilde{\sigma}^k S^{k\star}}\underline{\pi}^\sharp$ is a $\delta$-perturbation of $\AB{\sigma^k S^{k\star}}\underline{\pi}^\sharp$ over $S^{k\star}$??? % Or is it?
+% Given a history that ends in \SF, \tilde{\sigma} may cause a different inner state for \pi^\sharp...
+
+Applying Proposition A.N5, we get
 
 $$\frac{1}{3}\AP{\EU_{\upsilon^k}^{\pi^k S^{k}}(1-\alpha)-\EU_{\upsilon^k}^{\AB{\sigma^k S^{k\star}}\underline{\pi}^\sharp\Re^*}(1-\alpha)} \leq O\AP{\bar{\tau}_2 \alpha + (\bar{\tau}_1 \alpha)^{1/4} + \delta\AP{\bar{\tau}_1+\frac{\bar{\tau}_2 \alpha + (\bar{\tau}_1 \alpha)^{1/4}}{\alpha}}}$$
 
@@ -946,15 +949,13 @@ $$(1-\gamma) \sum_{l=0}^\infty \sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \r
 
 \#Proof of Lemma A.N1
 
-???
-
-Fix $\gamma \in (0,1)$, $\delta\in\left(0,N^{-1}\right)$ and $T \in \Nats^+$. For each $k \in [N]$, suppose $\upsilon^k$ is an $\Ob$-realization of $M^k$ with state function $S^k$ and denote $\nu^k:=\bar{\mu}^k\left[\sigma^k\right]$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space\Comment{ and $\{\F_n \subseteq 2^\Omega\}_{n \in \Nats \sqcup \{-1\}}$ a filtration of $\Omega$}. Let $K: \Omega \rightarrow [N]$ be \Comment{measurable w.r.t. $\F_{-1}$}a random variable and the following be stochastic processes\Comment{ adapted to $\F$}
+Fix $\gamma \in (0,1)$, $\eta\in\left(0,N^{-1}\right)$ and $T \in \Nats^+$. Denote $\nu^k:=\bar{\mu}^k\left[\sigma^k S^k\right]$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space\Comment{ and $\{\F_n \subseteq 2^\Omega\}_{n \in \Nats \sqcup \{-1\}}$ a filtration of $\Omega$}. Let $K: \Omega \rightarrow [N]$ be \Comment{measurable w.r.t. $\F_{-1}$}a random variable and the following be stochastic processes\Comment{ adapted to $\F$}
 
 $$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \Delta[N]$$
 
 $$\J_n: \Omega \rightarrow [N]$$
 
-$$\Psi_n: \Omega \rightarrow 2^\A$$
+$$\Psi_n: \Omega \rightarrow \A$$
 
 $$A_n: \Omega \rightarrow \Ada$$
 
@@ -964,21 +965,21 @@ We also define $A\Theta_{:n}: \Omega \rightarrow \Adfh$ by
 
 $$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
 
-(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\D$ and $\D^{!k}$ be as in Proposition A.2 (we assume w.l.o.g. that $\epsilon < \frac{1}{\Abs{\A}}$). We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
+(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\Dl$ and $\Dl^{!k}$ be as in Proposition C.N2 (we assume w.l.o.g. that $\epsilon < \frac{1}{\Abs{\A}}$). We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
 
 $$\tilde{\Z}_0(k)\equiv\frac{1}{N}$$
 
-$$\Z_{n}(k) = \frac{\tilde{\Z}_{n}(k)[[\tilde{\Z}_{n}(k) \geq \delta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}_{n}(j)[[\tilde{\Z}_{n}(j) \geq \delta]]}$$
+$$\Z_{n}(k) = \frac{\tilde{\Z}_{n}(k)[[\tilde{\Z}_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}_{n}(j)[[\tilde{\Z}_{n}(j) \geq \eta]]}$$
 
 $$\Pr\left[\J_{l} = k \mid Z_{lT}\right] = \Z_{lT}\left(k\right)$$
 
-$$\Psi_{n} = \A^1_{\J_l}\left(S^{\J_l}(A\Theta_{:n})\right)$$
+$$\Psi_{n} = \pi^{J_l}\AP{A\Theta_{:n}}$$
 
 $$\Pr\left[\Theta_{n} = o \mid A\Theta_{:n}\right] = \nu^K\left(o \mid A\Theta_{:n}\right)$$
 
-$$A_n = \D\left(A\Theta_{:n}, \Psi_n\right)$$
+$$A_n = \Dl\left(A\Theta_{:n}, \Psi_n\right)$$
 
-$$\tilde{\Z}_{n+1}(k)\sum_{j = 0}^{N-1} \Z_n(j) [[A_n = \D^{!j}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^j(\Theta_n \mid A\Theta_{:n}A_n)=\Z_{n}(k) [[A_n = \D^{!k}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)$$
+$$\tilde{\Z}_{n+1}(k)\sum_{j = 0}^{N-1} \Z_n(j) [[A_n = \Dl^{!j}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^j(\Theta_n \mid A\Theta_{:n}A_n)=\Z_{n}(k) [[A_n = \Dl^{!k}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)$$
 
 Note that the last equation has the form of a Bayesian update which is allowed to be arbitrary when update is on "impossible" information.
 
@@ -986,35 +987,37 @@ We now construct the $\Adi$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in \A
 
 $$\pi^*(a \mid h):=\Pr\left[A_n = a \mid A\Theta_{:n} = h\right]$$
 
-That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\D$, and discard from our belief state hypotheses whose probability is below $\delta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\D$ refused to perform.
+That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $\Dl$, and discard from our belief state hypotheses whose probability is below $\eta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $\Dl$ refused to perform.
 
 In order to prove $\pi^*$ has the desired property, we will define the stochastic processes $\Z^!$, $\tilde{\Z}^!$, $\J^!$, $\Psi^!$, $A^!$ and $\Theta^!$, each process of the same type as its shriekless counterpart (thus $\Omega$ is constructed to accommodate them). These processes are required to satisfy the following:
 
 $$\tilde{\Z}^!_0(k)\equiv\frac{1}{N}$$
 
-$$\Z_{n}^!(k) = \frac{\tilde{\Z}^!_{n}(k)[[\tilde{\Z}^!_{n}(k) \geq \delta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}^!_{n}(j)[[\tilde{\Z}^!_{n}(j) \geq \delta]]}[[\tilde{\Z}^!_{n}(K) \geq \delta]] + [[K = k]]\cdot [[\tilde{\Z}^!_{n}(K) < \delta]]$$
+$$\Z_{n}^!(k) = \frac{\tilde{\Z}^!_{n}(k)[[\tilde{\Z}^!_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}^!_{n}(j)[[\tilde{\Z}^!_{n}(j) \geq \eta]]}[[\tilde{\Z}^!_{n}(K) \geq \eta]] + [[K = k]]\cdot [[\tilde{\Z}^!_{n}(K) < \eta]]$$
 
 $$\Pr\left[\J^!_{l} = k \mid Z^!_{lT}\right] = \Z^!_{lT}\left(k\right)$$
 
-$$\Psi^!_{n} = \A^1_{\J^!_l}\left(S^{\J^!_l}(A\Theta^!_{:n})\right)$$
+$$\Psi^!_{n} = \pi^{\J^!_l}\AP{A\Theta^!_{:n}}$$
 
 $$\Pr\left[\Theta^!_{n} = o \mid A\Theta^!_{:n}\right] = \nu^K\left(o \mid A\Theta^!_{:n}\right)$$
 
-$$A^!_n = \D^{!K}\left(A\Theta^!_{:n}, \Psi^!_n\right)$$
+$$A^!_n = \Dl^{!K}\left(A\Theta^!_{:n}, \Psi^!_n\right)$$
 
-$$\tilde{\Z}^!_{n+1}(k)=\frac{\Z^!_{n}(k) [[A^!_n = \D^{!k}\left(A\Theta^!_{:n}, \Psi^!_n\right)]] \nu^k\left(\Theta^!_{n} \mid A\Theta^!_{:n}A^!_{n}\right)}{\sum_{j = 0}^{N-1} \Z^!_n(j) [[A^!_n = \D^{!j}\left(A\Theta^!_{:n}, \Psi^!_n\right)]] \nu^j(\Theta^!_n \mid A\Theta^!_{:n}A^!_n)}$$
+$$\tilde{\Z}^!_{n+1}(k)=\frac{\Z^!_{n}(k) [[A^!_n = \Dl^{!k}\left(A\Theta^!_{:n}, \Psi^!_n\right)]] \nu^k\left(\Theta^!_{n} \mid A\Theta^!_{:n}A^!_{n}\right)}{\sum_{j = 0}^{N-1} \Z^!_n(j) [[A^!_n = \Dl^{!j}\left(A\Theta^!_{:n}, \Psi^!_n\right)]] \nu^j(\Theta^!_n \mid A\Theta^!_{:n}A^!_n)}$$
 
 For any $k \in [N]$, we construct the $\Adi$-policy $\pi^{?k}$ s.t. for any $n \in \Nats$, $h \in \Adfh$ s.t. $\Pr\left[A\Theta^!_{:n}=h,\ K = k\right] > 0$ and $a \in \Ada$
 
 $$\pi^{?k}(a \mid h):=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
 
-Given any $\Adi$-policy $\pi$ and $\In$-policy $\sigma$ we define $\alpha_{\sigma\pi}: \FH \M \Adfh$ by
+\Comment{Given any $\Adi$-policy $\pi$ and $\In$-policy $\sigma$ we define $\alpha_{\sigma\pi}: \FH \M \Adfh$ by
 
 $$\alpha_{\sigma\pi} (g \mid h) := [[h = \underline{g}]]C_h\prod_{n = 0}^{\Abs{h}-1} \sum_{a \in \A}\left([[g_n \in \bot a\Ob]] \pi\left(\bot \mid g_{:n}\right)\sigma\left(a \mid h_{:n}\right)+[[g_n \in a\bot\Ob]]\pi\left(a \mid g_{:n}\right)\right)$$
 
 Here, $C_h \in \Reals$ is a constant defined s.t. the probabilities sum to 1. We define the $\In$-policy $\left[\sigma\right]\underline{\pi}$ by
 
-$$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$
+$$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$}
+
+???
 
 Condition iii of Proposition A.2 and condition i of $\epsilon$-sanity for $\sigma^k$ imply that for any $h \in \HD{\mu^k}$
 
@@ -1062,11 +1065,11 @@ $$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \Pr_{x\sim\rho^{!k}_n}\left[\exist
 
 Thus, using condition i of Proposition A.2, we can bound the contribution of the $\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)$ terms and get
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\delta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\eta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
 We denote
 
-$$\xi(\gamma,T,\delta):=\frac{1-\gamma^T}{\delta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
+$$\xi(\gamma,T,\eta):=\frac{1-\gamma^T}{\eta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
 
 Define the random variables $\Sqn{U^!_n : \Omega \rightarrow [0,1]}$ by 
 
@@ -1074,31 +1077,31 @@ $$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} r\left(A\Theta^!
 
 Averaging the previous inequality over $k$, we get
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \J^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\xi(\gamma,T,\delta)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\E{}\left[U^!_n \mid \J^!_n = K\right]-\E{}\left[U^!_n\right]\right) + O\left(\xi(\gamma,T,\eta)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\xi(\gamma,T,\delta)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\xi(\gamma,T,\eta)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\delta)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\xi(\gamma,T,\eta)\right)$$
 
 We apply Proposition A.1 to each term in the sum over $n$.
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\delta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\xi(\gamma,T,\delta)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\eta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\xi(\gamma,T,\eta)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\delta)\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\eta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\left(\xi(\gamma,T,\eta)\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\delta}\ln N} + O\left(\frac{1-\gamma^T}{\delta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\eta}\ln N} + O\left(\frac{1-\gamma^T}{\eta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\delta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
 Condition ii of Proposition A.2 implies that
 
-$$\Dtv\left(\frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^*},\ \frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^{?k}}\right) \leq 2(N-1)\delta$$
+$$\Dtv\left(\frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^*},\ \frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^{?k}}\right) \leq 2(N-1)\eta$$
 
 Here, the factor of 2 comes from the difference between the equations for $Z_n$ and $Z^!_n$ (we can construct and intermediate policy between $\pi^*$ and $\pi^{?k}$ and use the triangle inequality for $\Dtv$). We conclude
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left(\delta+\sqrt{\frac{1-\gamma^T}{\delta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left(\eta+\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}\right)$$
 
-Now we set $\delta:=\left(1-\gamma\right)^{1/4}$,  $T:=\Floor{\left(1-\gamma\right)^{-1/4}}$. Since $\gamma^T \rightarrow 1$ as $\gamma \rightarrow 1$, we can use the approximation $1-\gamma^T \approx T(1-\gamma) \approx (1-\gamma)^{3/4}$. We get
+Now we set $\eta:=\left(1-\gamma\right)^{1/4}$,  $T:=\Floor{\left(1-\gamma\right)^{-1/4}}$. Since $\gamma^T \rightarrow 1$ as $\gamma \rightarrow 1$, we can use the approximation $1-\gamma^T \approx T(1-\gamma) \approx (1-\gamma)^{3/4}$. We get
 
 $$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
 
@@ -1114,20 +1117,20 @@ $$\I{}\left[K;J,U\right] \geq 2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\
 
 \#Proposition C.N2
 
-Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\delta \in (0,\frac{1}{N})$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\D: \Adfh \times 2^\A \rightarrow \Ada$ and $\{\D^{!k}: \Adfh \times 2^\A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
-Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M 2^\A$, $\D': \Adfh \times 2^\A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\D',\pi\right]\in \Delta\left(2^\A \times \Adao\right)^\omega$ as follows
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\eta \in (0,\frac{1}{N})$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\Dl: \Adfh \times 2^\A \rightarrow \Ada$ and $\{\Dl^{!k}: \Adfh \times 2^\A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M \A$, $\Dl': \Adfh \times \A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\in \Delta\left(\A \times \Adao\right)^\omega$ as follows
  
-$$\Xi\left[\mu,\sigma^k,\D',\pi\right]\left(\B,a,o \mid x\right):=\pi\left(\B \mid \underline{\underline{x}}\right)\D'\left(a \mid \underline{x},\B\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
+$$\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\left(b,a,o \mid x\right):=\pi\left(b \mid \underline{\underline{x}}\right)\Dl'\left(a \mid \underline{x},b\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
 
 We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
 
-i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\D^{!k},\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in 2^\A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\delta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)}=O\left(\frac{\ln N}{\delta \epsilon}\right)$$
+i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\Dl^{!k},\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in \A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\eta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)}=O\left(\frac{\ln N}{\eta \epsilon}\right)$$
 
-ii. $\Dtv\left(\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\D,\pi\right]},\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\D^{!j},\pi\right]}\right) \leq (N-1)\delta$
+ii. $\Dtv\left(\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\Dl,\pi\right]},\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\Dl^{!j},\pi\right]}\right) \leq (N-1)\eta$
 
-iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \ne \bot$ then $\sigma^k\left(\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
+iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \ne \bot$ then $\sigma^k\left(\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
 
-iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\D^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \pi\left(\underline{x}\right) \cup \{\bot\}$ then $\forall a \in \pi\left(\underline{x}\right): \sigma^k\left(a \mid \underline{x}\right) \leq \epsilon$
+iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \AC{\pi\left(\underline{x}\right), \bot}$ then $\sigma^k\left(\pi\left(\underline{x}\right) \mid \underline{x}\right) \leq \epsilon$
 
 \end{document}
 
