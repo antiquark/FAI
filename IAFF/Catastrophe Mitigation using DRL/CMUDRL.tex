@@ -414,13 +414,13 @@ $$\T_{\MD}(\bot \mid s) = \T_M(\SC_M \cup \SD_M \mid s)$$
 
 * $\R_{\MD}(\bot) = 0$
 
-Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Denote $\Ob':=\Ob\times\{\Re,\Im\}$, $\Ob^\star:=\Ob' \sqcup \{\bot\}$ and $\In^\star:=(\A,\Ob^\star)$. Denote $\beta: \Ob' \rightarrow \Ob$ the projection mapping and $\beta^*: \AP{\A \times \Ob'}^* \rightarrow \AP{\A \times \Ob}^*$ corresponding. We define the $\In^\star$-universe $\UD=(\mu^\RMD,r^\star)$ and the function $S^\star: \AP{\A \times \Ob^\star}^* \rightarrow \St_{\MD}$ as follows
+Now, consider an interface $\In=(\A,\Ob)$ and a $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Denote $\Ob':=\Ob\times\{\Re,\Im\}$, $\Ob^\star:=\Ob \times \{\Re,\Im,\bot\}$ and $\In^\star:=(\A,\Ob^\star)$. Denote $\beta: \Ob' \rightarrow \Ob$ the projection mapping and $\beta^*: \AP{\A \times \Ob'}^* \rightarrow \AP{\A \times \Ob}^*$ corresponding. We define the $\In^\star$-universe $\UD=(\mu^\RMD,r^\star)$ and the function $S^\star: \AP{\A \times \Ob^\star}^* \rightarrow \St_{\MD}$ as follows
 
 $$\mu^\RMD(o\Re \mid ha) := \begin{cases} \mu\AP{o \mid \beta^*(h)a} \text{ if } h\in\AP{\A \times \Ob'}^* \text{ and } S\AP{\beta^*(h)},S\AP{\beta^*(h)ao}\in\SD_M \\ 0 \text{ otherwise} \end{cases}$$
 
 $$\mu^\RMD(o\Im \mid ha) := \begin{cases} \mu\AP{o \mid \beta^*(h)a} \text{ if } h\in\AP{\A \times \Ob'}^* \text{ and } S\AP{\beta^*(h)ao}\in\SF_M \\ 0 \text{ otherwise} \end{cases}$$
 
-$$\mu^\RMD(\bot \mid ha) := 1 - \sum_{o \in O} \AP{\mu^\RMD(o\Re \mid ha) + \mu^\RMD(o\Im \mid ha)}$$
+$$\mu^\RMD(o\bot \mid ha) := \frac{1}{\Abs{\Ob}}\AP{1 - \sum_{o \in O} \AP{\mu^\RMD(o\Re \mid ha) + \mu^\RMD(o\Im \mid ha)}}$$
 
 $$r^\star(h):=\begin{cases} \frac{1}{2}r(\Estr) \text{ if } h = \Estr \\ \frac{1}{2}r\AP{\beta^*(h)} \text{ if } h\in\AP{\A \times \Ob'}^*,\ \Abs{h}>0 \text{ and } h_{:\Abs{h}-1}\in\A\Ob\Re \\ 1 \text{ if } h\in\AP{\A \times \Ob'}^*,\ \Abs{h}>0 \text{ and } h_{:\Abs{h}-1}\in\A\Ob\Im \\ 0 \text{ if } h\not\in\AP{\A \times \Ob'}^* \end{cases}$$
 
@@ -603,6 +603,8 @@ i. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SF_M$, $\tilde{\pi}(h)=\pi(h)$.
 ii. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SD_M$, there exists $\alpha\in\Delta\A$ s.t $\pi(h)=(1-\delta)\tilde{\pi}(h)+\delta\alpha$.
 
 \#Definition A.N5
+
+TODO: More general !!!
 
 Fix $\delta\in(0,1)$ and a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$. Then, we define the environment $\mu^{\tilde{M}}$ by
 
@@ -815,7 +817,7 @@ Consider $M$ a catastrophe MDP s.t. $\A_M = \A$ and a policy $\sigma: \St_M \M \
 
 Now consider $\upsilon$ an $\Ob$-realization of $M$ with state function $S$. Then, $\bar{\upsilon}[\sigma S]$ is clearly an $\Ado$-realization of $M[\sigma]$ with the state function $\bar{S}$ defined by $\bar{S}(h):=S\AP{\underline{h}}$.
 
-Note also that $M[\sigma]^\RMD = M^\RMD[\sigma]$ and $M[\sigma]^\RME = M^\RME[\sigma]$ (where interpreting $\sigma$ as a policy for $M^\RMD$ or $M^\RME$ requires choosing an arbitrary value for the state $\bot$).
+Note also that $M[\sigma]^\RMD \cong M^\RMD[\sigma]$ and $M[\sigma]^\RME \cong M^\RME[\sigma]$ (where interpreting $\sigma$ as a policy for $M^\RMD$ or $M^\RME$ requires choosing an arbitrary value for the state $\bot$). Moreover, $\bar{\In}^\star \cong \overline{\In^\star}$, $\bar{\upsilon}[\sigma S]^\RMD = \overline{\upsilon^\RMD}[\sigma S^\star]$, $\bar{\upsilon}[\sigma S]^\RME = \overline{\upsilon^\RME}[\sigma S^\star]$ and $\bar{S}^\star = \overline{S^\star}$.
 
 ***
 
@@ -837,11 +839,14 @@ $$\EU_{\tilde{\upsilon}^{k\RMD}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\t
 
 $$\EU_{\tilde{\upsilon}^{k\RME}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\tilde{\upsilon}^{k\RME}}\AB{\tilde{\sigma}^k S^{k\star}}}^{\pi^\sharp}(1-\alpha) \leq O\AP{(\bar{\tau} \alpha)^{1/4}}$$
 
-%It is easy to see that $\AB{\tilde{\sigma}^k S^{k\star}}\underline{\pi}^\sharp$ is a $\delta$-perturbation of $\AB{\sigma^k S^{k\star}}\underline{\pi}^\sharp$ over $S^{k\star}$???
+It is easy to see that $\tilde{M}^k\AB{\tilde{\sigma}^k}$ is a $2\delta$-perturbation of $M^k\AB{\sigma^k}$. Observe also that
 
-It is easy to see that $\tilde{M}^k\AB{\tilde{\sigma}^k}$ is a $2\delta$-perturbation of $M^k\AB{\sigma^k}$.
+% No, since on the LHD the prob. of advisor actions are renormalized by resulting state probabilities
+% whereas on the RHS the prob. of advisor actions correspon to the actual \tilde{\sigma}
 
-??? What are $M[\sigma]^\RMD$ and $M[\sigma]^\RME$ ???
+$$\upsilon^{k}\AB{\sigma^k S^k}^{\tilde{M}^k\AB{\tilde{\sigma}^k}\RMD} = \overline{\tilde{\upsilon}^{k\RMD}}\AB{\tilde{\sigma}^k S^{k\star}}???$$
+
+$$\upsilon^{k}\AB{\sigma^k S^k}^{\tilde{M}^k\AB{\tilde{\sigma}^k}\RME} = \overline{\tilde{\upsilon}^{k\RME}}\AB{\tilde{\sigma}^k S^{k\star}}???$$
 
 Applying Proposition A.N5, we get
 
