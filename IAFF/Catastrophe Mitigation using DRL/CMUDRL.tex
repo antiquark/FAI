@@ -175,11 +175,9 @@ iv. For any $s \in \St_F$, $\Supp{\pi(s)} \subseteq \A_M^{k+1}(s)$.}
 
 \#Definition N2
 
-Fix $\bar{\tau}_1,\bar{\tau}_2 \in (0,\infty)$, a catastrophe MDP $M$ and a proper mitigation policy $\pi$. $\pi$ is said to have *mitigation time moments $\bar{\tau}_1,\bar{\tau}_2$* when for any $s \in \SD_M$
+Fix $\bar{\tau} \in (0,\infty)$, a catastrophe MDP $M$ and a proper mitigation policy $\pi$. $\pi$ is said to have *expected mitigation time $\bar{\tau}$* when for any $s \in \SD_M$
 
-i. $$\sum_{n=0}^\infty (n+1) \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} = \bar{\tau}_1$$
-
-ii. $$\sum_{n=0}^\infty (n+1)^2 \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} = \bar{\tau}_2$$
+$$\sum_{n=0}^\infty (n+1) \AP{\T_{M\pi}^{n+1}\AP{\SF_M \mid s}-\T_{M\pi}^{n}\AP{\SF_M \mid s}} = \bar{\tau}$$
 
 ***
 
@@ -195,7 +193,7 @@ ii. $\A_{\tilde{M}} = \A_M$
 
 iii. $\R_{\tilde{M}}=\R_M$
 
-iv. For any $s \in \SF_M$ and $a \in \A_M$, $\T_{\tilde{M}}\AP{s,a}=\T_{M}\AP{s,a}$
+iv. For any $s \in \St_M \setminus \SD_M$ and $a \in \A_M$, $\T_{\tilde{M}}\AP{s,a}=\T_{M}\AP{s,a}$
 
 v. For any $s \in \SD_M$ and $a \in \A_M$, there exists $\zeta \in \Delta\St_M$ s.t. $\T_{M}\AP{s,a}=(1-\delta)\T_{\tilde{M}}\AP{s,a}+\delta\zeta$.
 
@@ -207,7 +205,7 @@ Similarly, we can consider perturbations of a policy.
 
 Fix $\delta\in(0,1)$ and consider a catastrophe MDP $M$. Given $\pi: \St_M \M \A_M$ and $\tilde{\pi}: \St_M \M \A_M$, $\tilde{\pi}$ is said to be a *$\delta$-perturbation of $\pi$* when
 
-i. For any $s \in \SF_M$, $\tilde{\pi}(s) = \pi(s)$.
+i. For any $s \in \St_M \setminus \SD_M$, $\tilde{\pi}(s) = \pi(s)$.
 
 ii. For any $s \in \SD_M$, there exists $\alpha\in\Delta\A$ s.t. $\pi(s)=(1-\delta)\tilde{\pi}(s)+\delta\alpha$.
 
@@ -266,7 +264,7 @@ iv. For any $s \in \St_M \setminus \SC_M$: $$\tilde{\pi}\AP{\pi^*(s) \mid s} > \
 % Alternatively we could allow \pi^* to be stochastic...
 % and require \tilde{\pi} to be of the form \epsilon \pi^* + (1 - \epsilon) \pi'
 
-Given $\bar{\tau}_{1,2} \in (0,\infty)$, $\pi$ is said to *have moments $\bar{\tau}_{1,2}$* when $\pi^*$ has them as mitigation time moments.
+Given $\bar{\tau} \in (0,\infty)$, $\pi$ is said to *have potential mitigation time $\bar{\tau}$* when $\pi^*$ has it as expected mitigation time.
 
 ***
 
@@ -286,11 +284,11 @@ iii. For each $s \in \St_{\MF_k}$, $\R_{M^k}(s)=\R_{\MF_k}(s)$.
 
 iv. Given $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \St_{M^k} \setminus \SC_{M^k}$ and $S^j(h) \in \St_{M^j} \setminus \SC_{M^j}$, then $r^k(h)=r^j(h)$ (this condition means that in uncorrupted states, the reward is observable).
 
-Consider also $\alpha,\delta\in(0,1)$, $\bar{\tau}_{1,2} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $(M^k,1-\alpha)$. Assume $\sigma^k$ has moments $\bar{\tau}_{1,2}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
+Consider also $\alpha,\delta\in(0,1)$, $\bar{\tau} \in (0,\infty)$ and $\sigma^k$ a locally $(\epsilon,\delta)$-sane policy for $(M^k,1-\alpha)$. Assume $\sigma^k$ has potential mitigation time $\bar{\tau}$. Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^kS^k}}^{\pi^*}(1-\alpha) = O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot\AP{(\bar{\tau}_1 \alpha)^{1/4} + \bar{\tau}_2 \alpha}+\bar{\tau}_1\delta}$$
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^kS^k}}^{\pi^*}(1-\alpha) = O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot(\bar{\tau}\alpha)^{1/4}+\bar{\tau}\delta}$$
 
-Here, $\sigma^k S^k$ is the $\In$-policy defined by $\sigma^k S^k(h):=\sigma^k\AP{S^k(h)}$. $\epsilon$ and the $\MF_k$ are regarded as *fixed* and we don't explicitly examine their effect on regret, whereas $\alpha$, $\delta$, $\bar{\tau}_{1,2}$ and the $M^k$ are regarded as variable with the asymptotics $\alpha,\delta \rightarrow 0$, $\bar{\tau}_{1,2} \rightarrow \infty$.
+Here, $\sigma^k S^k$ is the $\In$-policy defined by $\sigma^k S^k(h):=\sigma^k\AP{S^k(h)}$. $\epsilon$ and the $\MF_k$ are regarded as *fixed* and we don't explicitly examine their effect on regret, whereas $\alpha$, $\delta$, $\bar{\tau}$ and the $M^k$ are regarded as variable with the asymptotics $\alpha,\delta \rightarrow 0$, $\bar{\tau} \rightarrow \infty$.
 
 ***
 
@@ -594,29 +592,35 @@ $$\Abs{\V_{M\pi}^2(s)} \leq \Abs{\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2}
 
 To transform the relative regret bounds for "auxiliary" universes obtained from Lemma A.N1 to regret bounds for the original universes, we will need the following.
 
-\#Definition A.N4
+\Comment{\#Definition A.N4
 
 Consider $\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$, a catastrophe MDP $M$ and some $S: \FH \rightarrow \St_M \sqcup \{\bot\}$. Let $\pi: \FH \M \A$ be any policy. A policy $\tilde{\pi}: \FH \M \A$ is said to be a *$\delta$-perturbation of $\pi$ over $S$* when
 
 i. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SF_M$, $\tilde{\pi}(h)=\pi(h)$.
 
-ii. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SD_M$, there exists $\alpha\in\Delta\A$ s.t $\pi(h)=(1-\delta)\tilde{\pi}(h)+\delta\alpha$.
+ii. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SD_M$, there exists $\alpha\in\Delta\A$ s.t $\pi(h)=(1-\delta)\tilde{\pi}(h)+\delta\alpha$.}
 
 \#Definition A.N5
 
-TODO: More general !!!
+Fix $\delta\in(0,1)$ and a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$. An environment $\tilde{\mu}$ is said to be *a $\delta$-lift of $\tilde{M}$ to $\mu$* when
 
-Fix $\delta\in(0,1)$ and a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$. Then, we define the environment $\mu^{\tilde{M}}$ by
+i. $(\tilde{\mu},r)$ is an $\Ob$-realization of $\tilde{M}$ with state function $S$.
 
-$$\mu^{\tilde{M}}(o \mid ha) := \frac{\T_{\tilde{M}}\AP{S(hao) \mid S(h),a}}{\T_{M}\AP{S(hao) \mid S(h),a}}\mu(o \mid ha)$$
+ii. $\HD{\tilde{\mu}} \subseteq \HD{\mu}$
 
-We also denote $\upsilon^{\tilde{M}}:=\AP{\mu^{\tilde{M}},r}$. It is easy to see that $\upsilon^{\tilde{M}}$ is an $\Ob$-realization of $\tilde{M}$ with state function $S$.
+iii. For any $h \in \HD{\tilde{\mu}}$ and $a\in\A$, if $S(h) \in \St_M \setminus \SD_M$ then $\mu(ha) = \tilde{\mu}(ha)$.
+
+iv. For any $h \in \HD{\tilde{\mu}}$ and $a\in\A$, if $S(h)\in\SD_M$ then there exists $\zeta\in\Delta\Ob$ s.t. $$\mu(ha) = (1-\delta)\tilde{\mu}(ha) + \delta\zeta$$
+
+It is easy to see that such a lift always exists, for example we can take:
+
+$$\tilde{\mu}(o \mid ha) := \frac{\T_{\tilde{M}}\AP{S(hao) \mid S(h),a}}{\T_{M}\AP{S(hao) \mid S(h),a}}\mu(o \mid ha)$$
 
 \#Proposition A.N5
 
-Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\bar{\tau}\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}$. Consider some $\In^\star$-policy $\pi$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\pi}$ is a $\delta$-perturbation of $\pi$ over $S^\star$. Then, there is some $C\in(0,\infty)$ that depends on nothing s.t
+Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\bar{\tau}\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}$. Consider some $\In^\star$-policy $\pi$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\mu}$ is a $\delta$-lift of $\tilde{M}$ to $\mu$. Denote $\tilde{\upsilon}:=(\tilde{\mu},r)$. Then, there is some $C\in(0,\infty)$ that depends on nothing s.t
 
-$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma) + C\delta\AP{\bar{\tau}+\frac{\max\AP{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma),0}}{1-\gamma}}$$
+$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\tilde{\upsilon}^{\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\tilde{\upsilon}^{\RME}}^{\pi}(\gamma) + C\delta\AP{\bar{\tau}+\frac{\max\AP{\EU_{\tilde{\upsilon}^{\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\tilde{\upsilon}^{\RMD}}^{\pi}(\gamma),0}}{1-\gamma}}$$
 
 ***
 
@@ -646,17 +650,15 @@ Another observation we need to prove Proposition A.N5 is a bound on the effect o
 
 \#Proposition A.N7
 
-Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that 
+Consider $\gamma,\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$, and some $\pi: \FH \M \A$. Assume that for any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\mu}$ a $\delta$-lift of $\tilde{M}$ to $\mu$. Then,
 
-i. $S(\Estr) \not\in \SC_M$
+%i. $S(\Estr) \not\in \SC_M$
 
-ii. For any $h \in S^{-1}\AP{\SD_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SC_M \mid s,a} = 0$.
+%ii. For any $h \in S^{-1}\AP{\SD_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SC_M \mid s,a} = 0$.
 
-iii. For any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. 
+%iii. For any $h \in S^{-1}\AP{\SF_M}$ and $a \in \Supp{\pi(h)}$, $\T_M\AP{\SF_M \mid s,a} = 1$. 
 
-Let $\tilde{M}$ be a $\delta$-perturbation of $M$ and $\tilde{\pi}$ be a $\delta$-perturbation of $\pi$ over $S$. Then,
-
-$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq 2\AP{1-\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}}$$
+$$\Dtva{\mu\bowtie\pi,\ \tilde{\mu}\bowtie\pi} \leq 2\AP{1-\Ea{x\sim\tilde{\mu}\bowtie\pi}{\AP{1-\delta}^{\tau_S(x)}}}$$
 
 \#Proof of Proposition A.N7
 
@@ -666,19 +668,19 @@ i. $h_*(P) = \mu\bowtie\pi$
 
 ii. For any $n \in \Nats$ and $h \in (A \times \Ob)^n$ s.t. $S(h) \in \SD_M$: 
 
-$$\Pa{}{C_n \mid X_{:n} = h} = 2\delta$$
+$$\Pa{}{C_n \mid X_{:n} = h} = \delta$$
 
-iii. For any $n \in \Nats$ and $h \in (A \times \Ob)^n$ s.t. $S(h) \in \SF_M$: 
+iii. For any $n \in \Nats$ and $h \in (A \times \Ob)^n$ s.t. $S(h) \in \St_M \setminus \SD_M$: 
 
 $$\Pa{}{C_n \mid X_{:n} = h} = 0$$
 
 iv. For any $n \in \Nats$, $h \in (A \times \Ob)^n$ and $h' \in (A \times \Ob)^{n+1}$:
 
-$$\Pa{}{X_{:n+1}=h' \mid X_{:n} = h \text{ and not } C_n} = \Pa{x \sim \mu^{\tilde{M}}\bowtie\tilde{\pi}}{x_{:n+1}=h' \mid x_{:n} = h}$$
+$$\Pa{}{X_{:n+1}=h' \mid X_{:n} = h \text{ and not } C_n} = \Pa{x \sim \tilde{\mu}\bowtie\pi}{x_{:n+1}=h' \mid x_{:n} = h}$$
 
 Denote $D:=\cap_{n=0}^\infty \Omega \setminus C_n$. We have
 
-$$P(D) = \Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}$$
+$$P(D) = \Ea{x\sim\tilde{\mu}\bowtie\pi}{\AP{1-\delta}^{\tau_S(x)}}$$
 
 $$\Dtva{P,\ P \mid D} \leq 1 - P(D)$$
 
@@ -686,23 +688,23 @@ $$\Dtva{\mu\bowtie\pi,\ h_*\AP{P \mid D}} \leq 1 - P(D)$$
 
 Also, it is easy to see that for any $A \subseteq (\A \times \Ob)^\omega$ measurable
 
-$$h_*\AP{P \mid D}(A)=\frac{\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}\chi_A}}{P(D)}$$
+$$h_*\AP{P \mid D}(A)=\frac{\Ea{x\sim\tilde{\mu}\bowtie\pi}{\AP{1-\delta}^{\tau_S(x)}\chi_A}}{P(D)}$$
 
 It follows that
 
-$$\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}} = \frac{1}{2}\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\Abs{\frac{\AP{1-2\delta}^{\tau_S(x)}}{P(D)}-1}}$$
+$$\Dtva{h_*\AP{P \mid D},\tilde{\mu}\bowtie\pi} = \frac{1}{2}\Ea{x\sim\tilde{\mu}\bowtie\pi}{\Abs{\frac{\AP{1-\delta}^{\tau_S(x)}}{P(D)}-1}}$$
 
-$$\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}} = \frac{1}{2P(D)}\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\Abs{\AP{1-2\delta}^{\tau_S(x)}-P(D)}}$$
+$$\Dtva{h_*\AP{P \mid D},\tilde{\mu}\bowtie\pi} = \frac{1}{2P(D)}\Ea{x\sim\tilde{\mu}\bowtie\pi}{\Abs{\AP{1-\delta}^{\tau_S(x)}-P(D)}}$$
 
-Using the fact that $\AP{1-2\delta}^{\tau_S(x)}\in[0,1]$ and the convexity of the function $\Abs{t-P(D)}$
+Using the fact that $\AP{1-\delta}^{\tau_S(x)}\in[0,1]$ and the convexity of the function $\Abs{t-P(D)}$
 
-$$\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq \frac{1}{2P(D)}\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}\AP{1-P(D)}+\AP{1-\AP{1-2\delta}^{\tau_S(x)}}P(D)}$$
+$$\Dtva{h_*\AP{P \mid D},\tilde{\mu}\bowtie\pi} \leq \frac{1}{2P(D)}\Ea{x\sim\tilde{\mu}\bowtie\pi}{\AP{1-2\delta}^{\tau_S(x)}\AP{1-P(D)}+\AP{1-\AP{1-\delta}^{\tau_S(x)}}P(D)}$$
 
-$$\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}} \leq \frac{1}{2P(D)}\AP{P(D)\AP{1-P(D)} + \AP{1-P(D)}P(D)}=1-P(D)$$
+$$\Dtva{h_*\AP{P \mid D},\tilde{\mu}\bowtie\pi} \leq \frac{1}{2P(D)}\AP{P(D)\AP{1-P(D)} + \AP{1-P(D)}P(D)}=1-P(D)$$
 
 Using the triangle inequality, we conclude
 
-$$\Dtva{\mu\bowtie\pi,\ \mu^{\tilde{M}}\bowtie\tilde{\pi}}\leq\Dtva{\mu\bowtie\pi,\ h_*\AP{P \mid D}}+\Dtva{h_*\AP{P \mid D},\mu^{\tilde{M}}\bowtie\tilde{\pi}}=2\AP{1-\Ea{x\sim\mu^{\tilde{M}}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_S(x)}}}$$
+$$\Dtva{\mu\bowtie\pi,\ \tilde{\mu}\bowtie\pi}\leq\Dtva{\mu\bowtie\pi,\ h_*\AP{P \mid D}}+\Dtva{h_*\AP{P \mid D},\tilde{\mu}\bowtie\pi}=2\AP{1-\Ea{x\sim\tilde{\mu}\bowtie\pi}{\AP{1-\delta}^{\tau_S(x)}}}$$
 
 ***
 
@@ -784,18 +786,17 @@ By Proposition A.N4, we have
 
 $$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^\RME}^{\pi}(\gamma)$$
 
-Note that $\tilde{M}^\RME$ is a $\delta$-perturbation of $M^\RME$ and $\upsilon^{\RME\tilde{M}^\RME}=\upsilon^{\tilde{M}\RME}$. Conditions i,ii,iii of Proposition A.N7 hold tautologically due to Definition A.N3. Therefore, we can apply Proposition A.N7 and get
+Note that $\tilde{M}^\RME$ is a $\delta$-perturbation of $M^\RME$ and $\tilde{\mu}^\RME$ is a $\delta$-lift of $\tilde{M}^\RME$ to $\mu^\RME$. The condition of Proposition A.N7 holds tautologically due to Definition A.N3. Therefore, we can apply Proposition A.N7 and get
 
-$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma) + 2\AP{2-\Ea{\mu^{\tilde{M}\RME}\bowtie\pi^*S^\star}{\AP{1-2\delta}^{\tau_{S^\star}}}-\Ea{\mu^{\tilde{M}\RME}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_{S^\star}}}}$$
+$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\tilde{\upsilon}^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\tilde{\upsilon}^\RME}^{\pi}(\gamma) + 2\AP{2-\Ea{\tilde{\mu}^\RME\bowtie\pi^*S^\star}{\AP{1-\delta}^{\tau_{S^\star}}}-\Ea{\tilde{\mu}^\RME\bowtie\pi}{\AP{1-\delta}^{\tau_{S^\star}}}}$$
 
-The only difference between $\mu^{\tilde{M}\RME}$ and $\mu^{\tilde{M}\RMD}$ is the appearance of $\Re$ instead of $\Im$. Therefore, we can rewrite the above as
+The only difference between $\tilde{\mu}^\RME$ and $\tilde{\mu}^\RMD$ is the appearance of $\Re$ instead of $\Im$. Therefore, we can rewrite the above as
 
-$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma) + 2\AP{2-\Ea{\mu^{\tilde{M}\RMD}\bowtie\pi^*S^\star}{\AP{1-2\delta}^{\tau_{S^\star}}}-\Ea{\mu^{\tilde{M}\RMD}\bowtie\tilde{\pi}}{\AP{1-2\delta}^{\tau_{S^\star}}}}$$
-
+$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\tilde{\upsilon}^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\tilde{\upsilon}^\RME}^{\pi}(\gamma) + 2\AP{2-\Ea{\tilde{\mu}^\RMD\bowtie\pi^*S^\star}{\AP{1-\delta}^{\tau_{S^\star}}}-\Ea{\tilde{\mu}^\RMD\bowtie\pi}{\AP{1-\delta}^{\tau_{S^\star}}}}$$
 
 Applying Proposition A.N3 to each of the last two terms, we get
 
-$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\upsilon^{\tilde{M}\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RME}}^{\tilde{\pi}}(\gamma) + 4C\delta\AP{2\bar{\tau}+\frac{\max\AP{\EU_{\upsilon^{\tilde{M}\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\tilde{M}\RMD}}^{\tilde{\pi}}(\gamma),0}}{1-\gamma}}$$
+$$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\tilde{\upsilon}^\RME}^{\pi^* S^\star}(\gamma)-\EU_{\tilde{\upsilon}^\RME}^{\pi}(\gamma) + 4C\delta\AP{2\bar{\tau}+\frac{\max\AP{\EU_{\tilde{\upsilon}^\RMD}^{\pi^* S^\star}(\gamma)-\EU_{\tilde{\upsilon}^\RMD}^{\pi}(\gamma),0}}{1-\gamma}}$$
 
 ***
 
@@ -825,7 +826,7 @@ Finally, we are read to prove the main theorem.
 
 \#Proof of Theorem 1
 
-For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic proper mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\tilde{\sigma}^{k}$ is $\epsilon$-sane relatively to $\pi^k$ in the sense of $\tilde{M}^{k\RMD}$ and $\tilde{M}^{k\RME}$ both: condition i of Definition A.N1 follows by Proposition A.N6 from conditions ii and iii of Definition N6, and condition ii of Definition A.N1 follows from condition iv of Definition N6. Moreover, by Proposition A.N2, we have
+For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic proper mitigation policy for $\tilde{M}^k$ of Definition N6. Let $\tilde{\mu}^k$ be a lift of $\tilde{M}^k$ to $\mu^k$ and denote $\tilde{\upsilon}^k:=(\tilde{\mu}^k,r^k)$. Define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\tilde{\sigma}^{k}$ is $\epsilon$-sane relatively to $\pi^k$ in the sense of $\tilde{M}^{k\RMD}$ and $\tilde{M}^{k\RME}$ both: condition i of Definition A.N1 follows by Proposition A.N6 from conditions ii and iii of Definition N6, and condition ii of Definition A.N1 follows from condition iv of Definition N6. Moreover, by Proposition A.N2, we have
 
 $$\Abs{\frac{\D\V_{\tilde{M}^\RMD\pi^k}(s,\gamma)}{\D\gamma}} = O\AP{\bar{\tau}}$$
 
@@ -839,18 +840,9 @@ $$\EU_{\tilde{\upsilon}^{k\RMD}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\t
 
 $$\EU_{\tilde{\upsilon}^{k\RME}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\tilde{\upsilon}^{k\RME}}\AB{\tilde{\sigma}^k S^{k\star}}}^{\pi^\sharp}(1-\alpha) \leq O\AP{(\bar{\tau} \alpha)^{1/4}}$$
 
-It is easy to see that $\tilde{M}^k\AB{\tilde{\sigma}^k}$ is a $2\delta$-perturbation of $M^k\AB{\sigma^k}$. Observe also that
+It is easy to see that $\tilde{M}^k\AB{\tilde{\sigma}^k}$ is a $2\delta$-perturbation of $M^k\AB{\sigma^k}$. Observe also that $\overline{\tilde{\upsilon}^{k\RMD}}\AB{\tilde{\sigma}^k S^{k\star}} = \overline{\tilde{\upsilon}^{k}}\AB{\tilde{\sigma}^k S^{k}}^\RMD$, $\overline{\tilde{\upsilon}^{k\RME}}\AB{\tilde{\sigma}^k S^{k\star}} = \overline{\tilde{\upsilon}^{k}}\AB{\tilde{\sigma}^k S^{k}}^\RME$ and $\overline{\tilde{\mu}^{k}}\AB{\tilde{\sigma}^k S^{k}}$ is a $2\delta$-lift of $\tilde{M}^k\AB{\tilde{\sigma}^k}$ to $\overline{\mu^k}\AB{\sigma^k S^k}$. Applying Proposition A.N5, we get
 
-% No, since on the LHD the prob. of advisor actions are renormalized by resulting state probabilities
-% whereas on the RHS the prob. of advisor actions correspon to the actual \tilde{\sigma}
-
-$$\upsilon^{k}\AB{\sigma^k S^k}^{\tilde{M}^k\AB{\tilde{\sigma}^k}\RMD} = \overline{\tilde{\upsilon}^{k\RMD}}\AB{\tilde{\sigma}^k S^{k\star}}???$$
-
-$$\upsilon^{k}\AB{\sigma^k S^k}^{\tilde{M}^k\AB{\tilde{\sigma}^k}\RME} = \overline{\tilde{\upsilon}^{k\RME}}\AB{\tilde{\sigma}^k S^{k\star}}???$$
-
-Applying Proposition A.N5, we get
-
-$$\frac{1}{2}\AP{\EU_{\upsilon^k}^{\pi^k S^{k}}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^k}}^{\pi^\sharp\Re^*}(1-\alpha)} \leq O\AP{\bar{\tau}_2 \alpha + (\bar{\tau}_1 \alpha)^{1/4} + \delta\AP{\bar{\tau}_1+\frac{\bar{\tau}_2 \alpha + (\bar{\tau}_1 \alpha)^{1/4}}{\alpha}}}???$$
+$$\frac{1}{2}\AP{\EU_{\upsilon^k}^{\pi^k S^{k}}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^k}}^{\pi^\sharp\Re^*}(1-\alpha)} \leq O\AP{(\bar{\tau}\alpha)^{1/4} + \delta\AP{\bar{\tau}+\frac{(\bar{\tau} \alpha)^{1/4}}{\alpha}}}$$
 
 \Comment{Given $h = a_0 b_0 o_0 a_1 b_1 o_1 \ldots a_{n-1} b_{n-1} o_{n-1} \in \overline{\A \times \Ob}^n$, we use the notation 
 
@@ -858,17 +850,13 @@ $$\bar{\Re}^*h := a_0 b_0 o_0 \Re a_1 b_1 o_1 \Re \ldots a_{n-1} b_{n-1} o_{n-1}
 
 We define $\pi^*$ as by $\pi^*(h) := \pi^\star\AP{\bar{\Re}^*h}$.}
 
-Define $\pi^*$ as follows. Given $h = a_0 b_0 o_0 a_1 b_1 o_1 \ldots a_{n-1} b_{n-1} o_{n-1} \in \overline{\A \times \Ob}^n$, we set
+Setting $\pi^* := \pi^\sharp \Re^*$ we get
 
-$$\pi^*(h) := \pi^\sharp\AP{a_0 b_0 o_0 \Re a_1 b_1 o_1 \Re \ldots a_{n-1} b_{n-1} o_{n-1} \Re}$$
-
-Clearly $\AB{\sigma^k S^{k\star}}\underline{\pi}^\sharp\Re^* = \AB{\sigma^k S^{k}}\underline{\pi}^*$ and we get
-
-$$\EU_{\upsilon^k}^{\pi^k S^{k}}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^{k}}}^{\pi^*}(1-\alpha) \leq O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot\AP{(\bar{\tau}_1 \alpha)^{1/4} + \bar{\tau}_2 \alpha}+\bar{\tau}_1\delta}$$
+$$\EU_{\upsilon^k}^{\pi^k S^{k}}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^{k}}}^{\pi^*}(1-\alpha) \leq O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot(\bar{\tau} \alpha)^{1/4}+\bar{\tau}\delta}$$
 
 By condition i of Definition N6, this implies
 
-$$\EU_{\upsilon^k}^{*}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^{k}}}^{\pi^*}(1-\alpha) = O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot\AP{(\bar{\tau}_1 \alpha)^{1/4} + \bar{\tau}_2 \alpha}+\bar{\tau}_1\delta}$$
+$$\EU_{\upsilon^k}^{*}(1-\alpha)-\EU_{\bar{\upsilon}^k\AB{\sigma^k S^{k}}}^{\pi^*}(1-\alpha) \leq O\AP{\max\AP{\frac{\delta}{\alpha},1}\cdot(\bar{\tau} \alpha)^{1/4}+\bar{\tau}\delta}$$
 
 \section{Appendix B}
 
