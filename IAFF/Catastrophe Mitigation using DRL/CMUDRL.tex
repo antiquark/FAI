@@ -135,15 +135,11 @@
 
 \begin{document}
 
-[Previously](https://agentfoundations.org/item?id=1656) we derived a regret bound for DRL which assumed the advisor is "locally sane." Such an advisor can only take actions that don't lose any value in the long term. In particular, if the environment contains a latent *catastrophe* that manifests with a certain rate (such as the possibility of an UFAI), a locally sane advisor has to take the optimal course of action to mitigate it, since every delay yields a positive probability of the catastrophe manifesting and leading to permanent loss of value. This state of affairs is unsatisfactory, since we would like to have performance guarantees for an AI that can mitigate catastrophes that the human operator cannot mitigate on their own. To address this problem, we introduce a new form of DRL where in every hypothetical environment the set of uncorrupted states is divided into "dangerous" (impending catastrophe) and "safe" (catastrophe was mitigated). The advisor is then only required to be locally sane in safe states, whereas in dangerous states certain "leaking" of long-term value is allowed. We derive a regret bound in this setting as a function of the time discount factor, the expected value and standard deviation of the catastrophe mitigation time for the optimal policy, and the "value leak" rate (i.e. essentially the rate of catastrophe occurrence). The form of this regret bound implies that in certain asymptotic regimes, the agent attains near-optimal expected utility (and in particular mitigates the catastrophe with probability close to 1), whereas the advisor on its own *fails* to mitigate the catastrophe with probability close to 1. %Thus, this formalism can be regarded as a simple model of aligned superintelligence: the agent is *aligned* since near-optimal utility is achieved despite the presence of corrupted states (which are treated more or less the same as before) and it is *super*intelligent since its performance is vastly better than the performance of the advisor.
+[Previously](https://agentfoundations.org/item?id=1656) we derived a regret bound for DRL which assumed the advisor is "locally sane." Such an advisor can only take actions that don't lose any value in the long term. In particular, if the environment contains a latent *catastrophe* that manifests with a certain rate (such as the possibility of an UFAI), a locally sane advisor has to take the optimal course of action to mitigate it, since every delay yields a positive probability of the catastrophe manifesting and leading to permanent loss of value. This state of affairs is unsatisfactory, since we would like to have performance guarantees for an AI that can mitigate catastrophes that the human operator cannot mitigate on their own. To address this problem, we introduce a new form of DRL where in every hypothetical environment the set of uncorrupted states is divided into "dangerous" (impending catastrophe) and "safe" (catastrophe was mitigated). The advisor is then only required to be locally sane in safe states, whereas in dangerous states certain "leaking" of long-term value is allowed. We derive a regret bound in this setting as a function of the time discount factor, the expected value of catastrophe mitigation time for the optimal policy, and the "value leak" rate (i.e. essentially the rate of catastrophe occurrence). The form of this regret bound implies that in certain asymptotic regimes, the agent attains near-optimal expected utility (and in particular mitigates the catastrophe with probability close to 1), whereas the advisor on its own *fails* to mitigate the catastrophe with probability close to 1. %Thus, this formalism can be regarded as a simple model of aligned superintelligence: the agent is *aligned* since near-optimal utility is achieved despite the presence of corrupted states (which are treated more or less the same as before) and it is *super*intelligent since its performance is vastly better than the performance of the advisor.
 
 ***
 
 Appendix A proves the main theorem. Appendix B contains the proof of an important lemma which is however almost identical to what appeared in the previous essay. Appendix C contains several propositions from the previous essay which we are used in the proof.
-
-\section{Notation}
-
-Whatever...
 
 \section{Results}
 
@@ -290,9 +286,13 @@ $$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^kS^k}}^{\pi^*}(
 
 Here, $\sigma^k S^k$ is the $\In$-policy defined by $\sigma^k S^k(h):=\sigma^k\AP{S^k(h)}$. $\epsilon$ and the $\MF_k$ are regarded as *fixed* and we don't explicitly examine their effect on regret, whereas $\alpha$, $\delta$, $\bar{\tau}$ and the $M^k$ are regarded as variable with the asymptotics $\alpha,\delta \rightarrow 0$, $\bar{\tau} \rightarrow \infty$.
 
+In most interesting cases, $\delta \gg \alpha$ (i.e. the "mean time between catastrophes" is much shorter than a discount horizon) and $\bar{\tau}\alpha \ll 1$ (i.e. the expected mitigation time is much shorter than the discount horizon), which allows simplifying the above to
+
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^kS^k}}^{\pi^*}(1-\alpha) = O\AP{\delta\bar{\tau}^{1/4}\alpha^{-3/4}}$$
+
 ***
 
-To clarify the behavior of the regret bound, we give a simple example.
+We give a simple example.
 
 \#Example 1
 
@@ -332,27 +332,21 @@ $$\T_{M_n^k}(s \mid s,a) = 1$$
 
 * If $s \in \Bool^n \setminus w_n^k$ then $\sigma_n^k(0 \mid s) = \delta$, $\sigma_n^k(* \mid s) = 1 - \delta$.
 
-We can take $\bar{\tau}_1 = n$, $\bar{\tau}_2 = n^2$. Fix $\lambda \in (0,1/3]$ and consider the asymptotic regime $n \rightarrow \infty$, $\alpha_n = \Theta\Big(n^{-7/3}\Big)$, $\delta_n = O\AP{n^{-2-\lambda}}$. According to Theorem 1, we get
+We have $\bar{\tau} = n$. Consider the asymptotic regime $n \rightarrow \infty$, $\alpha_n = \Theta\AP{n^{-6}}$, $\delta_n = \Theta\AP{n^{-5}}$. According to Theorem 1, we get
 
-$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = \AP{\frac{n^{-2-\lambda}}{n^{-7/3}}\AP{\AP{n \cdot n^{-7/3}}^{1/4}+n^2 \cdot n^{-7/3}}+n \cdot n^{-2-\lambda}}$$
+$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{n^{-5} \cdot n^{1/4} \cdot \AP{n^{-6}}^{-3/4}}=O\AP{n^{-1/4}}=O\AP{\alpha_n^{1/24}}$$
 
-$$\EU_{\upsilon_n^k}^*(1-\alpha_n) - \EU_{\bar{\upsilon}_n^k\AB{\sigma_n^k}}^{\pi_n^*}(1-\alpha_n) = O\AP{n^{-\lambda}}=O\AP{\alpha_n^{3\lambda/7}}$$
-
-The probability of a catastrophe (i.e. ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{n\delta}=O\AP{n^{-1-\lambda}}$. Therefore, the probability of a catastrophe for policy $\pi_n^*$ is $O\AP{n^{-1-\lambda}+n^{-\lambda}}=O\AP{n^{-\lambda}}$. On the other hand, it is easy to see that for $\delta_n = \omega\AP{2^{-n}}$, the policy $\sigma_n^k$ has a probability of catastrophe $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^n)$ time "exploring" $\Bool^{\leq n}$ with a probability $\delta$ of a catastrophe on every step.
+The probability of a catastrophe (i.e. ending up in state $\bot$) for the optimal policy for a given $k$ is $O\AP{\bar{\tau}\delta}=O\AP{n^{-4}}$. Therefore, the probability of a catastrophe for policy $\pi_n^*$ is $O\AP{n^{-4}+n^{-1/4}}=O\AP{n^{-1/4}}$. On the other hand, it is easy to see that the policy $\sigma_n^k$ has a probability of catastrophe $1-o(1)$ (and in particular  regret $\Omega(1)$): it spends $\Omega(2^n)$ time "exploring" $\Bool^{\leq n}$ with a probability $\delta=\Theta\AP{n^{-5}}$ of a catastrophe on every step.
 
 Note that this example can be interpreted as a version of Christiano's [approval-directed agent](https://ai-alignment.com/model-free-decisions-6e6609f5d99e), if we regard the state $s \in \Bool^{i}$ as a "plan of action" that the advisor may either approve or not. But in this formalism, it is a special case of consequentialist reasoning.
 
 ***
 
-Theorem 1 speaks of a finite set of environments, but as before (see Proposition 1 [here](https://agentfoundations.org/item?id=1550) and Corollary 3 [here](https://agentfoundations.org/item?id=1656)), there is a "structural" equivalent, n.e. we can use it to produce corollaries about Bayesian agents with priors over a countable set of environments. The difference is, in this case we consider asymptotic regimes in which the environment is also variable, so the probability weight of the environment in the prior will affect the regret bound. We leave out the details for now.
-
-\section{Discussion}
-
-TBD
+Theorem 1 speaks of a finite set of environments, but as before (see Proposition 1 [here](https://agentfoundations.org/item?id=1550) and Corollary 3 [here](https://agentfoundations.org/item?id=1656)), there is a "structural" equivalent, i.e. we can use it to produce corollaries about Bayesian agents with priors over a countable set of environments. The difference is, in this case we consider asymptotic regimes in which the environment is also variable, so the probability weight of the environment in the prior will affect the regret bound. We leave out the details for now.
 
 \section{Appendix A}
 
-We start by deriving a more general and more precise version of the non-catastrophic regret bound, in which the optimal policy is replaced by an arbitrary "reference policy" (later it will be related to the mitigation policy) and the dependence on the MDPs is expressed via a bound on their $\V^1$ and $\V^2$ functions.
+We start by deriving a more general and more precise version of the non-catastrophic regret bound, in which the optimal policy is replaced by an arbitrary "reference policy" (later it will be related to the mitigation policy) and the dependence on the MDPs is expressed via a bound on the derivative of $\V$ by $\gamma$.
 
 \#Definition A.N1
 
@@ -378,7 +372,7 @@ The $O$-notation refers to the asymptotics where $\epsilon$ is *fixed* (so we do
 
 ***
 
-The proof of Lemma A.N1 is almost identical to the proof the main theorem for ["non-catastrophic" DRL](https://agentfoundations.org/item?id=1656) up to minor modifications needed to pass from absolute to relative regret, and tracking the contribution of the derivatives of $\V_{M^k\pi^k}$. We give it in Appendix B.
+The proof of Lemma A.N1 is almost identical to the proof the main theorem for ["non-catastrophic" DRL](https://agentfoundations.org/item?id=1656) up to minor modifications needed to pass from absolute to relative regret, and tracking the contribution of the derivative of $\V_{M^k\pi^k}$. We give it in Appendix B.
 
 We will not apply Lemma A.N1 directly the the universes of Theorem 1. Instead, we will define new universes using the following constructions.
 
@@ -500,25 +494,21 @@ $$\Q_{N\pi^*}^0(s,a) = \Ea{\AP{\T_{N\pi^*}^\infty \circ \T_{N}}(s,a)}{\R_{N}} \g
 
 ***
 
-Now we will establish a bound on $\V^1$ and $\V^2$ in terms of mitigation time moments, in order to demonstrate conditions ii and iii of Lemma A.N1.
+Now we will establish a bound on the derivative of $\V$ by $\gamma$ in terms of expected mitigation time, in order to demonstrate condition ii of Lemma A.N1.
 
 \#Proposition A.N2
 
-Fix $\bar{\tau}_1, \bar{\tau}_2, \TF_1, \TF_2 \in (0,\infty)$. Consider a catastrophe MDP $M$ and a proper mitigation policy $\pi: \St_M \M \A_M$ with mitigation time moments $\bar{\tau}_1, \bar{\tau}_2$. Assume than for any $s \in \SF_M$ and $\gamma\in(0,1)$
+Fix $\bar{\tau}, \TF_1 \in (0,\infty)$. Consider a catastrophe MDP $M$ and a proper mitigation policy $\pi: \St_M \M \A_M$ with expected mitigation time $\bar{\tau}$. Assume than for any $s \in \SF_M$ and $\gamma\in(0,1)$
 
-i. $$\Abs{\frac{\D\V_{M\pi}(s,\gamma)}{\D\gamma}} \leq \TF_1$$
-
-ii. $$\Abs{\frac{\D^2\V_{M\pi}(s,\gamma)}{\D\gamma^2}} \leq \TF_2$$
+$$\Abs{\frac{\D\V_{M\pi}(s,\gamma)}{\D\gamma}} \leq \TF_1$$
 
 Then, for any $s \in \St_M \setminus \SC_M$ and $\gamma\in[0,1]$
 
-a. $$\Abs{\frac{\D\V_{M\pi}(s,\gamma)}{\D\gamma}} \leq 3 \bar{\tau}_1 + \TF_1$$
-
-b. $$\Abs{\frac{\D^2\V_{M\pi}(s,\gamma)}{\D\gamma^2}} \leq 3 \bar{\tau}_2 + 2 \bar{\tau}_1 \TF_1 + \TF_2$$
+$$\Abs{\frac{\D\V_{M\pi}(s,\gamma)}{\D\gamma}} \leq 3 \bar{\tau}_1 + \TF_1$$
 
 ***
 
-Note that, since $\V_{M\pi}(s,\gamma)$ is a rational function of $\gamma$ with no poles on the interval $[0,1]$, some finite bounds of the form i and ii always exist. Note also that Proposition A.N2 is really about Markov chains rather than MDPs, but we don't make it explicit to avoid introducing more notation.
+Note that, since $\V_{M\pi}(s,\gamma)$ is a rational function of $\gamma$ with no poles on the interval $[0,1]$, some finite $\TF$ always exists. Note also that Proposition A.N2 is really about Markov chains rather than MDPs, but we don't make it explicit to avoid introducing more notation.
 
 \#Proof of Proposition A.N2
 
@@ -568,37 +558,9 @@ We conclude
 
 $$\Abs{\V_{M\pi}^1(s)} \leq \Abs{\frac{\D\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}}+\Abs{\frac{\D\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma}\bigg\vert_{\gamma=1}} \leq 3 \bar{\tau}_1 + \bar{\tau}_1^\RMF$$}
 
-Now we analyze the second derivatives.
-
-$$\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2} = \Ea{x\sim\mu_{M\pi s}}{\sum_{n=0}^{\tau(x)-1} \AP{-2n\gamma^{n-1}+(1-\gamma)\cdot n(n-1)\gamma^{n-2}} \R_M\Big(x_n\Big)}$$
-
-$$\Abs{\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2}} \leq \Ea{x\sim\mu_{M\pi s}}{2\frac{\AP{\tau(x)-1}\tau(x)}{2} + \max\AP{\AP{\tau(x)-1}\AP{\tau(x)-2},0}} \leq 2\bar{\tau}_2$$
-
-Denote $\V_{M\pi}'\AP{x_{\tau(x)},\gamma}:=\frac{\D\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma}$, $\V_{M\pi}''\AP{x_{\tau(x)},\gamma}:=\frac{\D^2\V_{M\pi}\AP{x_{\tau(x)},\gamma}}{\D\gamma^2}$.
-
-$$\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2} = \Ea{x\sim\mu_{M\pi s}}{\tau(x)\AP{\tau(x)-1}\gamma^{\tau(x)-2}\V_{M\pi}\AP{x_{\tau(x)},\gamma}+2\tau(x)\gamma^{\tau(x)-1}\V_{M\pi}'\AP{x_{\tau(x)},\gamma}+\gamma^{\tau(x)}\V_{M\pi}''\AP{x_{\tau(x)},\gamma}}$$
-
-$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}} \leq \Ea{x\sim\mu_{M\pi s}}{\tau(x)\AP{\tau(x)-1}+2\tau(x)\Abs{\V_{M\pi}'\AP{x_{\tau(x)},\gamma}}+\Abs{\V_{M\pi}''\AP{x_{\tau(x)},\gamma}}}$$
-
-$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}} \leq \bar{\tau}_2 + 2 \bar{\tau}_1 \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}'\AP{x_{\tau(x)},\gamma}}}+\Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}''\AP{x_{\tau(x)},\gamma}}} \leq \bar{\tau}_2 + 2\bar{\tau}_1\TF_1+\TF_2$$
-
-$$\Abs{\frac{\D^2\V_{M\pi}(s,\gamma)}{\D\gamma^2}} \leq \Abs{\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2}}+\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}} \leq 3 \bar{\tau}_2 + 2 \bar{\tau}_1 \bar{\tau}_1^\RMF +\bar{\tau}_2^\RMF$$
-
-\Comment{$$\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}} \leq \bar{\tau}_2 + 2 \bar{\tau}_1 \Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^1\AP{x_{\tau(x)}}}}+\Ea{x\sim\mu_{M\pi s}}{\Abs{\V_{M\pi}^2\AP{x_{\tau(x)}}}} \leq \bar{\tau}_2 + 2 \bar{\tau}_1 \bar{\tau}_1^\RMF +\bar{\tau}_2^\RMF$$
-
-$$\Abs{\V_{M\pi}^2(s)} \leq \Abs{\frac{\D^2\V_{M\pi}^\RMD(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}}+\Abs{\frac{\D^2\V_{M\pi}^\RMF(s,\gamma)}{\D\gamma^2}\bigg\vert_{\gamma=1}} \leq 3 \bar{\tau}_2 + 2 \bar{\tau}_1 \bar{\tau}_1^\RMF +\bar{\tau}_2^\RMF$$}
-
 ***
 
 To transform the relative regret bounds for "auxiliary" universes obtained from Lemma A.N1 to regret bounds for the original universes, we will need the following.
-
-\Comment{\#Definition A.N4
-
-Consider $\delta\in(0,1)$, a universe $\upsilon=(\mu,r)$, a catastrophe MDP $M$ and some $S: \FH \rightarrow \St_M \sqcup \{\bot\}$. Let $\pi: \FH \M \A$ be any policy. A policy $\tilde{\pi}: \FH \M \A$ is said to be a *$\delta$-perturbation of $\pi$ over $S$* when
-
-i. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SF_M$, $\tilde{\pi}(h)=\pi(h)$.
-
-ii. For any $h \in \HD{\mu}$ s.t. $S(h)\in\SD_M$, there exists $\alpha\in\Delta\A$ s.t $\pi(h)=(1-\delta)\tilde{\pi}(h)+\delta\alpha$.}
 
 \#Definition A.N5
 
@@ -618,7 +580,7 @@ $$\tilde{\mu}(o \mid ha) := \frac{\T_{\tilde{M}}\AP{S(hao) \mid S(h),a}}{\T_{M}\
 
 \#Proposition A.N5
 
-Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\bar{\tau}\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}$. Consider some $\In^\star$-policy $\pi$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\mu}$ is a $\delta$-lift of $\tilde{M}$ to $\mu$. Denote $\tilde{\upsilon}:=(\tilde{\mu},r)$. Then, there is some $C\in(0,\infty)$ that depends on nothing s.t
+Consider $\gamma,\delta\in(0,1)$ s.t $\delta \geq 1 - \gamma$ and $\bar{\tau}\in(0,\infty)$. Let $\upsilon=(\mu,r)$ be a universe which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has expected mitigation time $\bar{\tau}$. Consider some $\In^\star$-policy $\pi$. Suppose that $\tilde{M}$ is a $\delta$-perturbation of $M$ and $\tilde{\mu}$ is a $\delta$-lift of $\tilde{M}$ to $\mu$. Denote $\tilde{\upsilon}:=(\tilde{\mu},r)$. Then, there is some $C\in(0,\infty)$ that depends on nothing s.t
 
 $$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gamma)} \leq \EU_{\tilde{\upsilon}^{\RME}}^{\pi^* S^\star}(\gamma)-\EU_{\tilde{\upsilon}^{\RME}}^{\pi}(\gamma) + C\delta\AP{\bar{\tau}+\frac{\max\AP{\EU_{\tilde{\upsilon}^{\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\tilde{\upsilon}^{\RMD}}^{\pi}(\gamma),0}}{1-\gamma}}$$
 
@@ -722,7 +684,7 @@ $$\tau_S(x) := \min\AC{n \in \Nats \mid S\AP{x_{:n}} \in \SF_M}$$
 
 \#Proposition A.N3
 
-Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the 1st moment $\bar{\tau}\in(0,\infty)$. Let $\pi$ be any $\In^\star$-policy. Then, there is $C\in(0,\infty)$ that depends on nothing s.t. for any $\gamma,\delta\in(0,1)$, if $\delta \geq 1-\gamma$ then
+Fix an interface $\In$ and an $\In$-universe $\upsilon=(\mu,r)$ which is an $\Ob$-realization of a catastrophe MDP $M$ with state function $S$ s.t. $S(\Estr)\in\SD_M$. Suppose that $\pi^*$ is a mitigation policy for $M$ that has the expected mitigation time $\bar{\tau}\in(0,\infty)$. Let $\pi$ be any $\In^\star$-policy. Then, there is $C\in(0,\infty)$ that depends on nothing s.t. for any $\gamma,\delta\in(0,1)$, if $\delta \geq 1-\gamma$ then
 
 $$\Ea{\mu^\RMD\bowtie\pi}{(1-\delta)^{\tau_{S^\star}}} \geq 1 - C\delta\AP{\bar{\tau}+\frac{\max\AP{\EU_{\upsilon^{\RMD}}^{\pi^* S^\star}(\gamma)-\EU_{\upsilon^{\RMD}}^{\pi}(\gamma),0}}{1-\gamma}}$$
 
@@ -800,7 +762,7 @@ $$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gam
 
 ***
 
-?
+The following definition will be useful in order to apply Proposition A.N5.
 
 \#Definition A.N8
 
