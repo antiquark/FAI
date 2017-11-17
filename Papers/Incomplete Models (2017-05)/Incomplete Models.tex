@@ -140,7 +140,7 @@ The structure of the paper is as follows. Section~\ref{sec:learning} defines the
 
 $\Nats$ will denote the set of natural numbers $\{0, 1, 2 \ldots\}$.
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_n$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO_n\left(x\right)$. Given $y \in \Ob^n$, $y\OO := \left(\PO_n\right)^{-1}\left(y\right)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM\left(X\right)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM\left(X\right)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM\left(X\right)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_m$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO_n\left(x\right)$. Given $y \in \Ob^n$, $y\OO := \left(\PO_n\right)^{-1}\left(y\right)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM\left(X\right)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM\left(X\right)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM\left(X\right)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
 \begin{samepage}
 \begin{definition}
@@ -288,7 +288,7 @@ Fix any $\MC \subseteq 2^{\PMO}$ countable. For every $M \in \MC$ and $n \in \Na
 
 \begin{equation}
 \label{eqn:thm_main}
-\lim_{n \rightarrow 0} \DKR^n\left(F^\MC_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right) = 0
+\lim_{n \rightarrow \infty} \DKR^n\left(F^\MC_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right) = 0
 \end{equation}
 
 \end{theorem}
