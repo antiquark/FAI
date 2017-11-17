@@ -77,10 +77,10 @@
 
 \newcommand{\Abs}[1]{\left\vert #1 \right\vert}
 \newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
-\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
-\newcommand{\Ceil}[1]{\lceil #1 \rceil}
-\newcommand{\Chev}[1]{\langle #1 \rangle}
-\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
 
 \newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
 \newcommand{\M}{\xrightarrow{\textnormal{k}}}
@@ -366,19 +366,17 @@ ii. $\sigma\AP{\pi(s) \mid s} > \epsilon$
 
 \#Lemma A.N1
 
-Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$ and $\epsilon \in (0,1)$. Now, consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r)$ which is an $\Ob$-realization of an MDP $M_k$ with state function $S^k$ and policies $\pi^k,\sigma^k: \St_{M^k} \M \A$. Consider also $\alpha\in(0,1)$, $\bar{\tau}_{1,2} \in (0,\infty)$ and assume that 
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$ and $\epsilon \in (0,1)$. Now, consider for each $k \in [N]$, an $\In$-universe $\upsilon^k=(\mu^k,r)$ which is an $\Ob$-realization of an MDP $M_k$ with state function $S^k$ and policies $\pi^k: \St_{M^k} \rightarrow \A$, $\sigma^k: \St_{M^k} \M \A$. Consider also $\alpha\in(0,1)$, $\bar{\tau} \in (0,\infty)$ and assume that 
 
 i. $\sigma^k$ is $\epsilon$-sane relatively to $\pi^k$.
 
-ii. For any $s \in \St_{M^k}$ and $\gamma\in(0,1)$ $$\Abs{\frac{\D\V_{M^k\pi^k}(s,\gamma)}{\D\gamma}} \leq \bar{\tau}_1$$
-
-iii. For any $s \in \St_{M^k}$ and $\gamma\in(0,1)$ $$\Abs{\frac{\D^2\V_{M^k\pi^k}(s,\gamma)}{\D\gamma^2}} \leq \bar{\tau}_2$$
+ii. For any $s \in \St_{M^k}$ and $\gamma\in(0,1)$ $$\Abs{\frac{\D\V_{M^k\pi^k}(s,\gamma)}{\D\gamma}} \leq \bar{\tau}$$
 
 Then, there exists an $\Adi$-policy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^{\pi^k S^k}(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k S^k}}^{\pi^*}(1-\alpha) \leq O\AP{\bar{\tau}_2 \alpha + (\bar{\tau}_1 \alpha)^{1/4}}$$
+$$\EU_{\upsilon^k}^{\pi^k S^k}(1-\alpha) - \EU_{\bar{\upsilon}^k\AB{\sigma^k S^k}}^{\pi^*}(1-\alpha) \leq O\AP{(\bar{\tau} \alpha)^{1/4}}$$
 
-The $O$-notation refers to the asymptotics where $\epsilon$ is *fixed* (so we don't explicitly examine its effect on regret) whereas $\alpha$, $\bar{\tau}_{1,2}$ and the $M_k$ are variable and $\alpha \rightarrow 0$, $\bar{\tau}_{1,2} \rightarrow \infty$.
+The $O$-notation refers to the asymptotics where $\epsilon$ is *fixed* (so we don't explicitly examine its effect on regret) whereas $\alpha$, $\bar{\tau}$ and the $M_k$ are variable and $\alpha \rightarrow 0$, $\bar{\tau} \rightarrow \infty$.
 
 ***
 
@@ -799,27 +797,43 @@ $$\frac{1}{2}\AP{\EU_{\upsilon}^{\pi^* S}(\gamma)-\EU_{\upsilon}^{\pi\Re^*}(\gam
 
 ***
 
+?
+
+\#Definition A.N8
+
+Consider $M$ a catastrophe MDP s.t. $\A_M = \A$ and a policy $\sigma: \St_M \M \A$. We then define the catastrophe MDP $\bar{M}[\sigma]$ as follows:
+
+* $\SF_{\bar{M}[\sigma]} := \SF_M$, $\SD_{\bar{M}[\sigma]} := \SD_M$, $\SC_{\bar{M}[\sigma]} := \SC_M$.
+
+* $\A_{\bar{M}[\sigma]} := \Ada$
+
+* For any $s \in \St_M$ and $a \in \A$: $\T_{\bar{M}[\sigma]}(s,a) := \T_M(s,a)$.
+
+* For any $s \in \St_M$: $\T_{\bar{M}[\sigma]}(s,\bot) := \T_{M\sigma}(s)$. 
+
+* $\R_{\bar{M}[\sigma]} := \R_M$
+
+TBD
+
+***
+
 Finally, we are read to prove the main theorem.
 
 \#Proof of Theorem 1
 
 For every $k \in [N]$, denote $\tilde{M}^k$ and $\tilde{\sigma}^k$ the $\delta$-perturbations of $M^k$ and $\sigma^k$ respectively and $\pi^k$ the deterministic proper mitigation policy for $\tilde{M}^k$ of Definition N6. Denote $\tilde{\upsilon}^k:=\upsilon^{k\tilde{M}^k}$ and define $\Hy:=\{\tilde{\upsilon}^{k\RMD},\tilde{\upsilon}^{k\RME}\}_{k \in [N]}$. Observe that $\tilde{\sigma}^{k}$ is $\epsilon$-sane relatively to $\pi^k$ in the sense of $\tilde{M}^{k\RMD}$ and $\tilde{M}^{k\RME}$ both: condition i of Definition A.N1 follows by Proposition A.N6 from conditions ii and iii of Definition N6, and condition ii of Definition A.N1 follows from condition iv of Definition N6. Moreover, by Proposition A.N2, we have
 
-$$\Abs{\frac{\D\V_{\tilde{M}^\RMD\pi^k}(s,\gamma)}{\D\gamma}} = O\AP{\bar{\tau}_1}$$
+$$\Abs{\frac{\D\V_{\tilde{M}^\RMD\pi^k}(s,\gamma)}{\D\gamma}} = O\AP{\bar{\tau}}$$
 
-$$\Abs{\frac{\D^2\V_{\tilde{M}^\RMD\pi^k}(s,\gamma)}{\D\gamma^2}} = O\AP{\bar{\tau}_2}$$
+$$\Abs{\frac{\D\V_{\tilde{M}^\RME\pi^k}(s,\gamma)}{\D\gamma}} = O\AP{\bar{\tau}}$$
 
-$$\Abs{\frac{\D\V_{\tilde{M}^\RME\pi^k}(s,\gamma)}{\D\gamma}} = O\AP{\bar{\tau}_1}$$
-
-$$\Abs{\frac{\D^2\V_{\tilde{M}^\RME\pi^k}(s,\gamma)}{\D\gamma^2}} = O\AP{\bar{\tau}_2}$$
-
-Here, we used that $M^\RMF_k$ is fixed (and thus so are $\bar{\tau}_{1,2}^\RMF$, by conditions i-iii) and that $\bar{\tau}_1 = O\AP{\bar{\tau}_2^{1/2}}$.
+Here, we used that $M^\RMF_k$ is fixed (and thus so is $\bar{\tau}^\RMF$, by conditions i-iii).
 
 Condition iv implies that all the universes in $\Hy$ have a common reward function (notice that transition to a corrupted state induces the observation $\bot$ whereas transition to a state in $\SF_M$ in the universe $\tilde{\upsilon}^{k\RMD}$ induces the observation $\Im$). Therefore, we can use Lemma A.N1 to conclude that there exists an $\overline{\In^\star}$-policy $\pi^\sharp$ s.t.
 
-$$\EU_{\tilde{\upsilon}^{k\RMD}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\tilde{\upsilon}^{k\RMD}}\AB{\tilde{\sigma}^k S^{k\star}}}^{\pi^\sharp}(1-\alpha) \leq O\AP{\bar{\tau}_2 \alpha + (\bar{\tau}_1 \alpha)^{1/4}}$$
+$$\EU_{\tilde{\upsilon}^{k\RMD}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\tilde{\upsilon}^{k\RMD}}\AB{\tilde{\sigma}^k S^{k\star}}}^{\pi^\sharp}(1-\alpha) \leq O\AP{(\bar{\tau} \alpha)^{1/4}}$$
 
-$$\EU_{\tilde{\upsilon}^{k\RME}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\tilde{\upsilon}^{k\RME}}\AB{\tilde{\sigma}^k S^{k\star}}}^{\pi^\sharp}(1-\alpha) \leq O\AP{\bar{\tau}_2 \alpha + (\bar{\tau}_1 \alpha)^{1/4}}$$
+$$\EU_{\tilde{\upsilon}^{k\RME}}^{\pi^kS^{k\star}}(1-\alpha) - \EU_{\overline{\tilde{\upsilon}^{k\RME}}\AB{\tilde{\sigma}^k S^{k\star}}}^{\pi^\sharp}(1-\alpha) \leq O\AP{(\bar{\tau} \alpha)^{1/4}}$$
 
 It is easy to see that $\AB{\tilde{\sigma}^k S^{k\star}}\underline{\pi}^\sharp$ is a $\delta$-perturbation of $\AB{\sigma^k S^{k\star}}\underline{\pi}^\sharp$ over $S^{k\star}$??? % Or is it?
 % Given a history that ends in \SF, \tilde{\sigma} may cause a different inner state for \pi^\sharp...
@@ -888,7 +902,7 @@ Assume that
 
 i. For any $h \in \HD{\mu}$ $$\Supp{\pi^0(h)} \subseteq \A_{M\pi^*}^0\AP{S(h)}$$
 
-ii. For any $s \in \St_M$ and $\gamma\in(0,1)$ $$\Abs{\frac{\D\V_{M\pi}\AP{s,\gamma}}{\D\gamma}} \leq \tau$$
+ii. For any $s \in \St_M$ and $\gamma\in(0,1)$ $$\Abs{\frac{\D\V_{M\pi^*}\AP{s,\gamma}}{\D\gamma}} \leq \tau$$
 
 Then, for any $\gamma\in(0,1)$,
 
@@ -1025,7 +1039,7 @@ $$\Supp{\left[\sigma^k\right]\underline{\pi}^{?k}(h)} \subseteq \A^0_{M^k\pi^k}\
 
 This means we can apply Proposition B.N3 and get
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
+$$\EU^{\pi^k S^k}_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
 
 Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition B.N3. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
 
@@ -1033,7 +1047,19 @@ $$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < n
 
 $$\pi^{!!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \pi^{!k}_n(a \mid h) + \pi^{!k}_n(\bot \mid h) \cdot \pi^{*k}_n\left(a \mid \underline{h}\right) \text{ if } \Abs{h} \geq nT \text{ and } a \ne \bot \\ 0 \text{ if } \Abs{h} \geq nT \text{ and } a = \bot \end{cases}$$
 
-Denote $\rho^{*k}_n:=\mu^k\bowtie\pi^{*k}_n$, $\rho^{!!k}_n:=\nu^k\bowtie\pi^{!!k}_n$, $\rho^{!k}_n:=\nu^k\bowtie\pi^{!k}_n$, $\rho^{?k}:=\nu^k\bowtie\pi^{?k}$, $R^{?k}=\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma)$. For each $n \in \Nats$, denote
+Denote 
+
+$$\rho^{*k}_n:=\mu^k\bowtie\pi^{*k}_n$$
+
+$$\rho^{!!k}_n:=\nu^k\bowtie\pi^{!!k}_n$$ 
+
+$$\rho^{!k}_n:=\nu^k\bowtie\pi^{!k}_n$$ 
+
+$$\rho^{?k}:=\nu^k\bowtie\pi^{?k}$$ 
+
+$$R^{?k}:=\EU^{\pi^k S^k}_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma)$$
+
+For each $n \in \Nats$, denote
 
 $$\EU_n^{*k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]$$
 
@@ -1073,9 +1099,6 @@ Using condition i of Proposition C.N2, we conclude
 
 $$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
 
-%We denote
-%$$\xi(\gamma,T,\eta):=\frac{1-\gamma^T}{\eta}+\frac{1-\gamma}{1-\gamma^T}+T\frac{(1-\gamma)^2}{1-\gamma^T}$$
-
 Define the random variables $\Sqn{U^!_n : \Omega \rightarrow [0,1]}$ by 
 
 $$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} r\left(A\Theta^!_{:nT+m}\right)$$
@@ -1103,27 +1126,25 @@ $$\Dtv\left(\frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\
 
 Here, the factor of 2 comes from the difference between the equations for $Z_n$ and $Z^!_n$ (we can construct and intermediate policy between $\pi^*$ and $\pi^{?k}$ and use the triangle inequality for $\Dtv$). We conclude
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left(\eta+\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+$$\EU^{\pi^k S^k}_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma) = O\left(\eta+\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
 
-???
+Now we set 
 
-Now we set $\eta:=\left(1-\gamma\right)^{1/4}$,  $T:=\Floor{\left(1-\gamma\right)^{-1/4}}$. Since $\gamma^T \rightarrow 1$ as $\gamma \rightarrow 1$, we can use the approximation $1-\gamma^T \approx T(1-\gamma) \approx (1-\gamma)^{3/4}$. We get
+$$\eta:=\bar{\tau}^{1/4} (1-\gamma)^{1/4}$$  
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k[\sigma^k]}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
+$$T:=\Ceil{\bar{\tau}^{3/4}(1-\gamma)^{-1/4}}$$
+
+Without loss of generality, we can assume that $\bar{\tau}(1-\gamma) \ll 1$ (because of the form of the bound we are proving), which implies that $T(1-\gamma) \ll 1$ and $1-\gamma^T \approx T(1-\gamma) \approx \bar{\tau}^{3/4}(1-\gamma)^{3/4}$. We get
+
+$$\EU^{\pi^k S^k}_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma) = O\left(\bar{\tau}^{1/4}(1-\gamma)^{1/4}\right)$$
 
 \section{Appendix C}
 
-TBD
-
-\#Proposition C.N1
-
-Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $\J: \Omega \rightarrow [N]$. Assume that $K_*P = J_*P = \zeta \in \Delta[N]$ and $\I{}[K;J] = 0$. Then
-
-$$\I{}\left[K;J,U\right] \geq 2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\E{}\left[U \mid J = K\right]-\E{}\left[U\right]\right)^2$$
+The following is a simple special case of what appeared as "Proposition A.2" in the [previous essay](https://agentfoundations.org/item?id=1656), where we restrict $\pi$ to be single-valued (the more general case isn't needed).
 
 \#Proposition C.N2
 
-Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\eta \in (0,\frac{1}{N})$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\Dl: \Adfh \times 2^\A \rightarrow \Ada$ and $\{\Dl^{!k}: \Adfh \times 2^\A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\eta \in (0,\frac{1}{N})$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\Dl: \Adfh \times \A \rightarrow \Ada$ and $\{\Dl^{!k}: \Adfh \times \A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
 Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M \A$, $\Dl': \Adfh \times \A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\in \Delta\left(\A \times \Adao\right)^\omega$ as follows
  
 $$\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\left(b,a,o \mid x\right):=\pi\left(b \mid \underline{\underline{x}}\right)\Dl'\left(a \mid \underline{x},b\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
@@ -1137,6 +1158,16 @@ ii. $\Dtv\left(\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\Dl,\pi\right]}
 iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \ne \bot$ then $\sigma^k\left(\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
 
 iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \AC{\pi\left(\underline{x}\right), \bot}$ then $\sigma^k\left(\pi\left(\underline{x}\right) \mid \underline{x}\right) \leq \epsilon$
+
+***
+
+The following appeared in the previous essay as "Proposition A.1".
+
+\#Proposition C.N1
+
+Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $\J: \Omega \rightarrow [N]$. Assume that $K_*P = J_*P = \zeta \in \Delta[N]$ and $\I{}[K;J] = 0$. Then
+
+$$\I{}\left[K;J,U\right] \geq 2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\E{}\left[U \mid J = K\right]-\E{}\left[U\right]\right)^2$$
 
 \end{document}
 
