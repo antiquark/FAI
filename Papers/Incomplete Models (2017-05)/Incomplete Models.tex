@@ -243,7 +243,7 @@ Suppose that $M$ is convex, for each $n \in \Nats$, $\Ob_n = [0,1]$ and for each
 \begin{example}
 \label{exm:update_incomplete_kernels}
 
-Consider some $I \subseteq \Nats$ and suppose that for each $n \in I$, we are given $K_n: \Ob^n \M \Ob_n$. Define $M^K$ by
+Consider some $I \subseteq \Nats$ and suppose that for each $n \in I$, we are given $K_n: \Ob^n \M \Ob_n$. Assume that each $K_n$ is \emph{Feller continuous}, that is, that the induced mapping $\Ob^n \rightarrow \PM\left(\Ob_n\right)$ is continuous. Define $M^K$ by
 
 \begin{equation}
 M^K:=\{\mu \in \PMO \mid \forall n \in I: \PO_{n+1*}\mu = \PO_{n*}\mu \ltimes K_n\}
@@ -1467,7 +1467,7 @@ This immediately implies the desired result.
 \end{proof}
 
 \begin{proof}[Proof of Example~\ref{exm:update_incomplete_kernels}]
-Fix $\rho$ a metrization of $\OO$. The condition $\Sp{\mu} \subseteq y\OO$ is closed because it is equivalent to the vanishing of the continuous function $\E_{x\sim\mu}\left[\rho\left(x,y\OO\right)\right]$. The other condition in the definition of $M^K_n$ is closed because pushforward and semidirect product are continuous in the weak topology. This gives us condition~\ref{con:def__update_incomplete__clos}. Condition~\ref{con:def__update_incomplete__conv} holds since the convex combination of measures supported on $y\OO$ is supported on $y\OO$ and since pushforward and semidirect product commute with convex combinations.
+Fix $\rho$ a metrization of $\OO$. The condition $\Sp{\mu} \subseteq y\OO$ is closed because it is equivalent to the vanishing of the continuous function $\E_{x\sim\mu}\left[\rho\left(x,y\OO\right)\right]$. The other condition in the definition of $M^K_n$ is closed because pushforward by a continuous mapping and semidirect product with a Feller continuous kernel are continuous in the weak topology. This gives us condition~\ref{con:def__update_incomplete__clos}. Condition~\ref{con:def__update_incomplete__conv} holds since the convex combination of measures supported on $y\OO$ is supported on $y\OO$ and since pushforward and semidirect product commute with convex combinations.
 
 Consider any $\mu \in M^K$. We know that for any $m \geq n$, $\PO_{m+1*}\mu=\PO_{m*}\mu \ltimes K_m$. Applying Proposition~\ref{prp:four_factors}, this implies that for $\PO_{n*}\mu$-almost any $y\in\Ob^n$
 
