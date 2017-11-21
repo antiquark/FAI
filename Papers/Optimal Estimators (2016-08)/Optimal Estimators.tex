@@ -1,23 +1,33 @@
 %
-\documentclass[review,nohypdvips]{siamart1116}
+\documentclass[11pt]{article}
 
-%\usepackage[letterpaper,margin=1in]{geometry}
-%\usepackage[affil-it]{authblk}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
 \usepackage{cite}
-%\usepackage[unicode]{hyperref}
-%\usepackage[utf8]{inputenc}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{amssymb}%amsmath,amsthm %%% Already loaded by document class
 \usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{commath}
 \usepackage{bm}
-\usepackage{mathtools}
-
-\newsiamthm{example}{Example}
 
 \numberwithin{equation}{section}
-\numberwithin{theorem}{section}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+%\newtheorem{conjecture}{Conjecture}[section]
+
+%\theoremstyle{remark}
+%\newtheorem{note}{Note}[section]
 
 \newcommand{\Bool}{\{0,1\}}
 \newcommand{\Words}{{\Bool^*}}
@@ -103,37 +113,25 @@
 \newcommand{\Scheme}{\xrightarrow{\Gamma}}
 \newcommand{\MScheme}{\xrightarrow{\MGrow}}
 
-\headers{Optimal Polynomial-Time Estimators}{Vadim Kosoy}
-
-\title{Optimal Polynomial-Time Estimators: A Bayesian Notion of Approximation Algorithm}
-\author{Vadim Kosoy\thanks{Independent, Petah Tikva, Israel
-    (\email{vadim.kosoy@intelligence.org}). Partially supported by the Machine Intelligence Research Institute, Berkeley, CA (\url{https://intelligence.org/}).}}
-
-
 \begin{document}
 
+\title{Optimal Polynomial-Time Estimators: A Bayesian Notion of Approximation Algorithm}
+
+\author{Vadim Kosoy \\ \href{mailto:vadim.kosoy@intelligence.org}{vadim.kosoy@intelligence.org}}
+
+\date{}
 
 \maketitle
 
-
-%\pagenumbering{arabic}
-%\setcounter{page}{1}%Leave this line commented out.
-
 \begin{abstract}
-We introduce a new concept of approximation applicable to decision problems and functions, inspired by Bayesian probability. From the perspective of a Bayesian reasoner with limited computational resources, the answer to a problem that cannot be solved exactly is uncertain and therefore should be described by a random variable. It thus should make sense to talk about the expected value of this random variable, an idea we formalize in the language of average-case complexity theory by introducing the concept of \enquote{optimal polynomial-time estimators.} We prove some existence theorems and completeness results, and show that optimal polynomial-time estimators exhibit many parallels with \enquote{classical} probability theory.
+We introduce a new concept of approximation applicable to decision problems and functions, inspired by Bayesian probability. From the perspective of a Bayesian reasoner with limited computational resources, the answer to a problem that cannot be solved exactly is uncertain and therefore should be described by a random variable. It thus should make sense to talk about the expected value of this random variable, an idea we formalize in the language of average-case complexity theory by introducing the concept of \enquote{optimal polynomial-time estimators.} We prove some existence theorems and completeness results, and show that optimal polynomial-time estimators exhibit many parallels with \enquote{classical} probability theory.%
 \end{abstract}%
 
-% REQUIRED
-\begin{keywords}
-  complexity theory, average-case complexity, bounded rationality
-\end{keywords}
+\pagebreak
 
-% REQUIRED
-\begin{AMS}
-  68Q15, 68Q87
-\end{AMS}
+\tableofcontents
 
-\sloppy
+\setcounter{section}{-1}
 
 \section{Introduction}
 
@@ -145,10 +143,15 @@ Imagine you are strolling in the city with a friend when a car passes by with th
 From the perspective of frequentist probability, the question \enquote{what is the probability 7614829 is prime?} seems meaningless. It is either prime or not, so there is no frequency to observe (unless the frequency is 0 or 1). From a Bayesian perspective, probability represents a degree of confidence; however, in classical Bayesian probability theory it is assumed that the only source of uncertainty is lack of information. The number 7614829 already contains all information needed to determine whether it is prime, so the probability again has to be 0 or 1. However, real life uncertainty is not only information-theoretic but also complexity-theoretic. Even when we have all of the information needed to obtain the answer, our computational resources are limited, and so we remain uncertain. The rigorous formalization of this idea is the main goal of the present work.
 
 The idea of assigning probabilities to purely mathematical questions was studied by several authors\cite{Gaifman_2004,Hutter_2013,Demski_2012,Christiano_2014,Garrabrant_2015}, mainly in the setting of formal logic. That is, their approach was looking for functions from the set of sentences in some formal logical language to $[0,1]$. However, although there is a strong intuitive case for assigning probabilities to sentences like
+
 \[\varphi_1:=\text{\enquote{7614829 is prime}}\]
+
 it is much less clear there is a meaningful assignment of probabilities to sentences like 
+
 \[\varphi_2 := \text{\enquote{there are no odd perfect numbers}}\] 
+
 or (even worse) 
+
 \[\varphi_3 := \text{``there is no cardinality } \kappa \text{ s.t. } \aleph_0 < \kappa < 2^{\aleph_0} \text{"}\]
 
 A wager on $\varphi_1$ can be resolved in a predetermined finite amount of time (the amount of time it takes to test it directly). On the other hand, it is unknown how long the resolution of $\varphi_2$ will take. It is possible that there is an odd perfect number but finding it (or otherwise becoming certain of its existence) will take a very long time. It is also possible there is no odd perfect number, a fact that cannot be directly verified because of its infinite nature. It is possible that there is a proof of $\varphi_2$ within some formal theory, but accepting such a proof as resolution requires us to be completely certain of the consistency of the theory (whereas it is arguable that the consistency of formal mathematical theories, especially more abstract theories like ZFC, is itself only known empirically and in particular with less than absolute certainty). Moreover, there is no knowing a priori whether a proof exists or how long it will take to find it. For $\varphi_3$ there is no way to \enquote{directly} verify neither the sentence nor its negation, and it is actually known to be independent of ZFC.
@@ -162,7 +165,7 @@ Optimal polynomial-time estimators turn out to be unique up to a certain equival
 
 Consider a language ${L \subseteq \Words}$ and a family ${\{\Dist^k\}}_{k \in \Nats}$ where each ${\Dist^k}$ is a probability distribution on ${\Words}$. A pair ${(\Dist,L)}$ is called a \emph{distributional decision problem}\cite{Bogdanov_2006}. Our goal is defining and studying the probabilities of \enquote{events} of the form ${x \in L}$\footnote{We will actually consider the more general case of a function ${f: \Words \rightarrow \Reals}$ and the \enquote{expected value} of ${f(x)}$, but for most purposes there is no difference of principle.}  associated with the uncertainty resulting from limited computational resources. (Specifically, we will consider the resources of time, random and advice.)
 
-The distributional complexity class ${\textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ is defined as the set of distributional decision problems which admit a polynomial-time heuristic algorithm with negligible error probability\cite{Bogdanov_2006}. That is, $(\Dist, L) \in \textsc{Heur}_{\textnormal{neg}}\textsc{P}$ iff there is ${A: \Nats \times \Words \Alg \Bool}$ (an algorithm which takes input in ${\Nats \times \Words}$ and produces output in ${\Bool}$) s.t. ${A(k,x)}$ runs in time polynomial in ${k}$ and ${\Prb_{x \sim \Dist^k}[A(k,x) \ne \chi_L(x)]}$ is a negligible function of ${k}$. We have the following equivalent condition. ${(\Dist, L) \in \textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ iff there is ${P: \Nats \times \Words \Alg \Rats}$ s.t. ${P(k,x)}$ runs in time polynomial in ${k}$ and ${\E_{x \sim \Dist^k}[(P(k,x)-\chi_L(x))^2]}$ is a negligible function of ${k}$. In the language of the present work, such a ${P}$ is a called an \enquote{${\Fall_{\text{neg}}(\Gamma_0^1, \Gamma_0^1)}$-perfect polynomial-time estimator for ${(\Dist,\chi_L)}$.}
+The distributional complexity class ${\textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ is defined as the set of distributional decision problems which admit a polynomial-time heuristic algorithm with negligible error probability\cite{Bogdanov_2006}. That is, ${(\Dist, L) \in \textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ iff there is ${A: \Nats \times \Words \Alg \Bool}$ (an algorithm which takes input in ${\Nats \times \Words}$ and produces output in ${\Bool}$) s.t. ${A(k,x)}$ runs in time polynomial in ${k}$ and ${\Prb_{x \sim \Dist^k}[A(k,x) \ne \chi_L(x)]}$ is a negligible function of ${k}$. We have the following equivalent condition. ${(\Dist, L) \in \textsc{Heur}_{\textnormal{neg}}\textsc{P}}$ iff there is ${P: \Nats \times \Words \Alg \Rats}$ s.t. ${P(k,x)}$ runs in time polynomial in ${k}$ and ${\E_{x \sim \Dist^k}[(P(k,x)-\chi_L(x))^2]}$ is a negligible function of ${k}$. In the language of the present work, such a ${P}$ is a called an \enquote{${\Fall_{\text{neg}}(\Gamma_0^1, \Gamma_0^1)}$-perfect polynomial-time estimator for ${(\Dist,\chi_L)}$.}
 
 Our main objects of study are algorithms satisfying a related but weaker condition. Namely, we consider ${P}$ s.t. its error w.r.t. ${\chi_L}$ is not negligible but is \emph{minimal up to a negligible function}. That is, we require that for any ${Q: \Nats \times \Words \Alg \Rats}$ s.t. ${Q(k,x)}$ also runs in time polynomial in ${k}$, there is a negligible function ${\varepsilon(k)}$ s.t. 
 
@@ -368,7 +371,7 @@ Fix ${n \in \Nats}$. A \emph{distributional estimation problem of rank ${n}$} is
 
 \end{definition}
 
-\subsubsection{Growth Spaces and Polynomial-Time \texorpdfstring{$\Gamma$}{Î}-Schemes}
+\subsubsection{Growth Spaces and Polynomial-Time \texorpdfstring{$\Gamma$}{Γ}-Schemes}
 
 In the motivational model, the estimator was restricted to lie in a class of functions that factor through a fixed mapping. Of course we are interested in more realistic notions of efficiency. In the present work we consider restrictions on time complexity, access to random bits and size of advice strings. Spatial complexity is also of interest but treating it is out of our current scope. It is possible to consider weaker or stronger restrictions which we represent using the following abstraction:
 
@@ -521,6 +524,7 @@ The details of this definition are motivated by the following proposition.
 
 \begin{proposition}
 \label{prp:fam_diag}
+
 Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ s.t. $1 \in \GrowA$. Consider $X$, $Y$ encoded sets, $F$ a uniform family of polynomial-time $\Gamma$-schemes of signature $X \rightarrow Y$ and a collection ${\{\mathcal{S}_K \in F\}_{K \in \Nats^n}}$. Then, there is $\Delta_\mathcal{S}: X \xrightarrow{
 \Gamma} Y$ s.t. for any $K \in \Nats^n$, $x \in X$ and $y \in Y$, ${\Pr[\Delta_\mathcal{S}^K(x)=y] = \Pr[\mathcal{S}_K^K(x)=y]}$.
 
@@ -640,10 +644,7 @@ For any fall space $\Fall$ and $\varepsilon_1, \varepsilon_2 \in \Fall$, $\max(\
 
 \end{proposition}
 
-\begin{proof}
-$$\max(\varepsilon_1,\varepsilon_2) \leq \varepsilon_1+\varepsilon_2$$
-\end{proof}
-
+\proof{$$\max(\varepsilon_1,\varepsilon_2) \leq \varepsilon_1+\varepsilon_2$$}
 
 \begin{proposition}
 \label{prp:fall_space_closed_wrt_power}
@@ -888,9 +889,9 @@ ${\FallU}$ is ${\GammaLog^n}$-ample since we can take ${\zeta(K):=(K_{n-1}+2)^{-
 
 Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimation problem, $P$ an $\EG$-optimal estimator for $(\Dist,f)$, $Q: \Words \Scheme \Rats$ and ${W: \Words \Scheme \Rats^{\geq 0}}$ bounded s.t. ${\R_W \geq \max(\R_P, \R_Q)}$. Denote ${\Dist_W^K:=\Dist^K \times \Un_W^K}$. Then
 
-\begin{multline}
+\begin{equation}
 \E_{\Dist_W^{K}}[W^{K}(x,y)(P^{K}(x,y_{<\R_P(K)}) - f(x))^2] \leq \\ \E_{\Dist_W^{K}}[W^{K}(x,y)(Q^{K}(x,y_{<\R_Q(K)}) - f(x))^2] \pmod \Fall
-\end{multline}
+\end{equation}
 
 \end{proposition}
 
@@ -946,10 +947,10 @@ $$\E_{(x,y) \sim \Dist^{K} \times \Un_W^{K}}[(P^{K}(x,y_{< \R_P(K)})-f(x))^2-(Q_
 
 The expression inside the expected values vanishes when $W^{K}(x,y) < \rho^{K}_\zeta(t)$. In other cases, 
 \[Q_t^{K}(x,y) = Q^{K}(x,y_{< \R_Q(K)})\]
+
 We get
-\begin{multline}
-\E_{(x,y) \sim \Dist^{K} \times \Un_W^{K}}[\theta(W^{K}(x,y)-\rho_\zeta^{K}(t)) \cdot ((P^{K}(x,y_{< \R_P(K)})-f(x))^2-\\(Q^{K}(x,y_{< \R_Q(K)})-f(x))^2)] \leq \varepsilon(K)
-\end{multline}
+
+$$\E_{(x,y) \sim \Dist^{K} \times \Un_W^{K}}[\theta(W^{K}(x,y)-\rho_\zeta^{K}(t)) \cdot ((P^{K}(x,y_{< \R_P(K)})-f(x))^2-(Q^{K}(x,y_{< \R_Q(K)})-f(x))^2)] \leq \varepsilon(K)$$
 
 We integrate both sides of the inequality over $t$ from 0 to $M$.
 
@@ -960,9 +961,7 @@ We integrate both sides of the inequality over $t$ from 0 to $M$.
 
 For any $s \in \Reals$
 
-\begin{multline}
-\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t = \int_0^{s-\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t +\\ \int_{s-\zeta(K)}^{s+\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t + \int_{s+\zeta(K)}^M \theta(s-\rho_\zeta^{K}(t)) \dif t
-\end{multline}
+$$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t = \int_0^{s-\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t + \int_{s-\zeta(K)}^{s+\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t + \int_{s+\zeta(K)}^M \theta(s-\rho_\zeta^{K}(t)) \dif t$$
 
 $\Abs{\rho_\zeta^{K}(t)-t} \leq \zeta(K)$ therefore the integrand in the first term is 1 and in the last term 0:
 
@@ -970,11 +969,11 @@ $$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t = \int_0^{s-\zeta(K)} \dif t + \in
 
 $$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t = s-\zeta(K) + \int_{s-\zeta(K)}^{s+\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t$$
 
-$$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t - s = -\zeta(K) + \int_{s-\zeta(K)}^{s+\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t$$
+$$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t - s = \zeta(K) + \int_{s-\zeta(K)}^{s+\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t$$
 
 \begin{equation}
 \label{eqn:prp__weight__prf2}
-\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t - s \in [-\zeta(K),+\zeta(K)]
+\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t - s \in [0,3\zeta(K)]
 \end{equation}
 
 Combining \ref{eqn:prp__weight__prf1} and \ref{eqn:prp__weight__prf2} we conclude that for some $M' \in \Reals^{\geq 0}$
@@ -1081,9 +1080,7 @@ $$\Abs{\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}]} \leq
 
 Let $m(K):=\min(\Floor{\frac{1}{2}\log \max(\frac{1}{\varepsilon(K)},1)},\Floor{\log \frac{1}{\zeta(K)}})$.
 
-\begin{multline}
-\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max(\min(\varepsilon(K)^{\frac{1}{2}},1),\\ \zeta(K)) + \frac{1}{2}\varepsilon(K) \min(\max(\varepsilon(K)^{-\frac{1}{2}},1),\zeta(K)^{-1})
-\end{multline}
+$$\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max(\min(\varepsilon(K)^{\frac{1}{2}},1),\zeta(K)) + \frac{1}{2}\varepsilon(K) \min(\max(\varepsilon(K)^{-\frac{1}{2}},1),\zeta(K)^{-1})$$
 
 $$\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max(\varepsilon(K)^{\frac{1}{2}},\zeta(K)) + \frac{1}{2} \max(\varepsilon(K)^{\frac{1}{2}},\varepsilon(K))$$
 
@@ -1287,12 +1284,7 @@ $$\frac{\E_{\Dist^{K} \times \Un_P^{K}}[W^{K}(P^{K}-f)]^2}{\alpha(K)} = \varepsi
 
 $$\frac{\E_{\Dist^{K} \times \Un_P^{K}}[\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))(P^{K}-f)]^2}{\alpha(K)} = \varepsilon(K)$$
 
-\begin{equation*}
-\frac{
-\splitfrac{(\E_{\Dist^{K} \times \Un_P^{K}}[\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))]}
-{\E[P^{K}-f \mid A^{K} \leq P^{K} \leq B^{K}])^2}}
-{\alpha(K)} = \varepsilon(K)
-\end{equation*}
+$$\frac{(\E_{\Dist^{K} \times \Un_P^{K}}[\theta(P^{K}(x,y)-A^{K})\theta(B^{K}-P^{K}(x,y))]\E[P^{K}-f \mid A^{K} \leq P^{K} \leq B^{K}])^2}{\alpha(K)} = \varepsilon(K)$$
 
 $$\frac{(\alpha(K)\E[P^{K}-f \mid A^{K} \leq P^{K} \leq B^{K}])^2}{\alpha(K)} = \varepsilon(K)$$
 
@@ -1447,25 +1439,19 @@ Consider any $K \in \Nats^n$, $x \in \Supp \Dist^{K}$, $y \in \BoolR{P_L}$ and $
 
 \[P_{\chi f}^K(x,yz) - \chi_L(x) f(x) = P_L^K(x,y) P_{f \mid L}^K(x,z) - \chi_L(x) f(x)\]
 
-\begin{multline*}
-_{\chi f}^K(x,yz) - \chi_L(x) f(x) = P_L^K(x,y) P_{f \mid L}^K(x,z) -\\ \chi_L(x) P_{f \mid L}^K(x,z) + \chi_L(x) P_{f \mid L}^K(x,z) - \chi_L(x) f(x)
-\end{multline*}
+\[P_{\chi f}^K(x,yz) - \chi_L(x) f(x) = P_L^K(x,y) P_{f \mid L}^K(x,z) - \chi_L(x) P_{f \mid L}^K(x,z) + \chi_L(x) P_{f \mid L}^K(x,z) - \chi_L(x) f(x)\]
 
 \[P_{\chi f}^K(x,yz) - \chi_L(x) f(x) = (P_L^K(x,y) - \chi_L(x)) P_{f \mid L}^K(x,z) + \chi_L(x) (P_{f \mid L}^K(x,z) - f(x))\]
 
 Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. We get
 
-\begin{multline*}
-\E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{\chi f}^K - \chi_L f)S^K] = \E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_L^K - \chi_L) P_{f \mid L}^KS^K)] + \\ \E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[\chi_L (P_{f \mid L}^K - f)S^K]
-\end{multline*}
+\[\E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{\chi f}^K - \chi_L f)S^K] = \E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_L^K - \chi_L) P_{f \mid L}^KS^K)] + \E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[\chi_L (P_{f \mid L}^K - f)S^K]\]
 
 Using the fact that $P_L^K$ is $\ESG$-optimal for $(\Dist,\chi_L)$,
 
 \[\E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{\chi f}^K - \chi_L f)S^K] \equiv  \E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[\chi_L (P_{f \mid L}^K - f)S^K] \pmod \Fall\]
 
-\begin{multline*}
-\E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{\chi f}^K - \chi_L f)S^K] \\\equiv \Dist^{K}(L)  \E_{(\Dist^{K} \mid L) \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{f \mid L}^K - f)S^K] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^{K} \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{\chi f}^K - \chi_L f)S^K] \equiv \Dist^{K}(L)  \E_{(\Dist^{K} \mid L) \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{f \mid L}^K - f)S^K] \pmod \Fall\]
  
 Using the fact that $P_{f \mid L}^K$ is $\Fall_L^\sharp(\Gamma)$-optimal for $(\Dist \mid L, f)$, we conclude
  
@@ -1568,9 +1554,7 @@ Subtracting \ref{eqn:thm__cond__lemma__prf3} from \ref{eqn:thm__cond__lemma__prf
 
 Consider any $S: \Words \times \Rats^2 \Scheme \Rats$ bounded.
 
-\begin{multline*}
-\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - \chi_L f) S^K(x,P_L^K,P_{\chi f}^K)]=\\ \E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K + P_{\chi f}^K - \chi_L f) S^K(x,P_L^K,P_{\chi f}^K)]
-\end{multline*}
+\[\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - \chi_L f) S^K(x,P_L^K,P_{\chi f}^K)]=\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K + P_{\chi f}^K - \chi_L f) S^K(x,P_L^K,P_{\chi f}^K)]\]
 
 \[\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - \chi_L f) S^K]=\E_{\Dist_P^K \times \Un_S^K}[(\tilde{P}_{\chi f}^K - P_{\chi f}^K) S^K]+\E_{\Dist_P^K \times \Un_S^K}[( P_{\chi f}^K - \chi_L f) S^K]\]
 
@@ -1599,9 +1583,7 @@ For any ${x \in \Words}$, ${y \in \BoolR{P_L}}$ and $z \in \BoolR{P_{\chi f}}$, 
 
 \[\tilde{P}_{\chi f}^K(x,yz) - \chi_L(x) f(x) = P_L^K(x,y) P_{f \mid L}^K(x,yz) - \chi_L(x) f(x)\]
 
-\begin{multline*}
-\tilde{P}_{\chi f}^K(x,yz) - \chi_L(x) f(x) = \\ P_L^K(x,y) P_{f \mid L}^K(x,z) - \chi_L(x) P_{f \mid L}^K(x,yz) + \chi_L(x) P_{f \mid L}^K(x,yz) - \chi_L(x) f(x)
-\end{multline*}
+\[\tilde{P}_{\chi f}^K(x,yz) - \chi_L(x) f(x) = P_L^K(x,y) P_{f \mid L}^K(x,z) - \chi_L(x) P_{f \mid L}^K(x,yz) + \chi_L(x) P_{f \mid L}^K(x,yz) - \chi_L(x) f(x)\]
 
 \[\tilde{P}_{\chi f}^K(x,yz) - \chi_L(x) f(x) = (P_L^K(x,y) - \chi_L(x)) P_{f \mid L}^K(x,yz) + \chi_L(x) (P_{f \mid L}^K(x,yz) - f(x))\]
 
@@ -1613,9 +1595,7 @@ Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote
 
 We have
 
-\begin{multline*}
-\E_{\Dist_{PS}^K}[\chi_L (P_{f \mid L}^K - f)S^K(x,P_{f \mid L}^K)] = \\ E_{\Dist_{PS}^K}[(\tilde{P}_{\chi f}^K - \chi_L f)S^K(x,P_{f \mid L}^K)] - E_{\Dist_{PS}^K}[(P_L^K - \chi_L) P_{f \mid L}^K S^K(x,P_{f \mid L}^K)]
-\end{multline*}
+\[\E_{\Dist_{PS}^K}[\chi_L (P_{f \mid L}^K - f)S^K(x,P_{f \mid L}^K)] = E_{\Dist_{PS}^K}[(\tilde{P}_{\chi f}^K - \chi_L f)S^K(x,P_{f \mid L}^K)] - E_{\Dist_{PS}^K}[(P_L^K - \chi_L) P_{f \mid L}^K S^K(x,P_{f \mid L}^K)]\]
 
 Applying Proposition~\ref{prp:thm__cond__lemma} to the first term on the right-hand side and the fact $P_L^K$ is an $\ESG$-optimal estimator for $(\Dist,\chi_L)$ to the second term on the right-hand side,
 
@@ -1626,7 +1606,7 @@ Applying Proposition~\ref{prp:thm__cond__lemma} to the first term on the right-h
 \[\E_{(\Dist^{K} \mid L)\times \Un_{P_L}^K \times \Un_{P_{\chi f}}^K \times \Un_S^K}[(P_{f \mid L}^K - f)S^K(x,P_{f \mid L}^K)] \equiv 0 \pmod {\Fall_L}\]
 %
 \end{proof}
-\subsection{Polynomial-Time \texorpdfstring{$\MGrow$}{MÎ}-Schemes and Samplers}
+\subsection{Polynomial-Time \texorpdfstring{$\MGrow$}{MΓ}-Schemes and Samplers}
 
 The next subsection and subsequent sections will require several new concepts. Here, we introduce these concepts and discuss some of their properties.
 
@@ -1736,7 +1716,7 @@ Total variation distance is subadditive w.r.t. direct products therefore
 \[\Dtv(\Dist_1^K \times \Dist_2^K, \mathcal{E}_1^K \times \mathcal{E}_2^K) \leq \Dtv(\Dist_1^K, \mathcal{E}_1^K) + \Dtv(\Dist_2^K, \mathcal{E}_2^K)\]
 \end{proof}
 
-\subsubsection{Polynomial-Time \texorpdfstring{$\MGrow$}{MÎ}-Schemes}
+\subsubsection{Polynomial-Time \texorpdfstring{$\MGrow$}{MΓ}-Schemes}
 
 The concept of a polynomial-time $\Gamma$-scheme can be generalized in a way which allows the advice to become random in itself.
 
@@ -1879,9 +1859,7 @@ $$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\Dist
 
 $$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}}$$
 
-\begin{multline*}
-\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}}+\\ \sum_{x \in \Bool^{>l(K)}} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}})
-\end{multline*}
+$$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}}+\sum_{x \in \Bool^{>l(K)}} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}})$$
 
 $$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \Dist^{K}(x)(\frac{1}{\Dist^{K}(\Bool^{\leq l(K)})}-1)+\sum_{x \in \Bool^{>l(K)}} \Dist^{K}(x))$$
 
@@ -1928,13 +1906,9 @@ Let ${f_\sigma^K}$ be defined as in Definition~\ref{def:smp_prob}. Consider any 
 
 We get
 
-\begin{multline*}
-\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}]=p^K \E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)} \mid \Abs{x} \leq l(K)] +\\ (1 - p^K)\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)} \mid \Abs{x} > l(K)]
-\end{multline*}
+$$\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}]=p^K \E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)} \mid \Abs{x} > l(K)]$$
 
-\begin{multline*}
-\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}]=p^K \E_{\Dist^{K}}[\Abs{\rho^K(f(x))-f(x)} \mid \Abs{x} \leq \\l(K)] + (1 - p^K)\E_{\Dist^{K}}[\Abs{f(x)} \mid \Abs{x} > l(K)]
-\end{multline*}
+$$\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}]=p^K \E_{\Dist^{K}}[\Abs{\rho^K(f(x))-f(x)} \mid \Abs{x} \leq l(K)] + (1 - p^K)\E_{\Dist^{K}}[\Abs{f(x)} \mid \Abs{x} > l(K)]$$
 
 $$\E_{\Dist^{K}}[\Abs{f_\sigma^K(x)-f(x)}] \leq p^K \zeta(K) + (1 - p^K)\sup \Abs{f}$$
 
@@ -2003,21 +1977,13 @@ $$\E_{(x,y) \sim \Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] = \E_{(x,y) \sim \Dis
 \E_{\Dist^{K} \ltimes \pi^K}[\E_{\Dist_y^K}[h_\alpha^K(x',y)]] &- \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]
 \end{align*}
 
-\begin{multline*}
-\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] = \\ \E_{\Dist^{K} \ltimes \pi^K}[\E_{\Dist_y^K}[h_\alpha^K(x',y)]-\E_{\UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]]
-\end{multline*}
+$$\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] = \E_{\Dist^{K} \ltimes \pi^K}[\E_{\Dist_y^K}[h_\alpha^K(x',y)]-\E_{\UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]]$$
 
-\begin{multline*}
-\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] = \\ \E_{\Dist^{K} \ltimes \pi^K}[\E_{\Dist_y^K}[h_\alpha^K(x',y)]-\E_{\sigma_y^K}[h_\alpha^K(x',y)]]
-\end{multline*}
+$$\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)] = \E_{\Dist^{K} \ltimes \pi^K}[\E_{\Dist_y^K}[h_\alpha^K(x',y)]-\E_{\sigma_y^K}[h_\alpha^K(x',y)]]$$
 
-\begin{multline*}
-\Abs{\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]} \leq \\ \E_{\Dist^{K} \ltimes \pi^K}[\Abs{\E_{\Dist_y^K}[h_\alpha^K(x',y)]-\E_{\sigma_y^K}[h_\alpha^K(x',y)]}]
-\end{multline*}
+$$\Abs{\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]} \leq \E_{\Dist^{K} \ltimes \pi^K}[\Abs{\E_{\Dist_y^K}[h_\alpha^K(x',y)]-\E_{\sigma_y^K}[h_\alpha^K(x',y)]}]$$
 
-\begin{multline*}
-\Abs{\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]} \leq \\ (\sup h - \inf h) \E_{\Dist^{K} \ltimes \pi^K}[\Dtv(\Dist_y^K,\sigma_y^K)]
-\end{multline*}
+$$\Abs{\E_{\Dist^{K} \ltimes \pi^K}[h_\alpha^K(x,y)] - \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z),y)]} \leq (\sup h - \inf h) \E_{\Dist^{K} \ltimes \pi^K}[\Dtv(\Dist_y^K,\sigma_y^K)]$$
 
 Using the defining property of $\sigma$, we get the desired result.
 \end{proof}
@@ -2055,9 +2021,9 @@ Using property (i) of Definition~\ref{def:smp_prob_rel} we can apply Proposition
 
 $$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) f_\sigma^K(\sigma^K(y,z)_0,y)] \pmod \Fall$$
 
-\begin{multline*}
-\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv}\\ \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) \E_{z' \sim\UM_\sigma^K}[\sigma^K(y,z')_1 \mid \sigma^K(y,z')_0 = \\ \sigma^K(y,z)_0]] \pmod \Fall
-\end{multline*}
+\begin{align*}
+&\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv}\\ &\E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) \E_{z' \sim\UM_\sigma^K}[\sigma^K(y,z')_1 \mid \sigma^K(y,z')_0 = \sigma^K(y,z)_0]] \pmod \Fall
+\end{align*}
 
 $$\E_{\Dist_\pi^K}[h_\alpha^K(x,y)f(x)] \overset{\alpha}{\equiv} \E_{\pi_*^K\Dist^{K} \times \UM_\sigma^K}[h_\alpha^K(\sigma^K(y,z)_0,y) \sigma^K(y,z)_1] \pmod \Fall$$
 \end{proof}
@@ -2154,9 +2120,7 @@ Consider $K \in \Nats^n$, $x \in \Supp \Dist^{K}$, $z_1 \in \WordsLen{\R_{P_1}(K
 
 Adding and subtracting $P_\pi^{K}(x, z_1 z_3) f_2(x)$ from the right hand side and grouping variables, we get
 
-\begin{multline*}
-P^{K}(x,z_1 z_3 z_2)-f_1(x)f_2(x)= \\ P_\pi^{K}(x, z_1 z_3)(P_2^{K}(x,z_2)-f_2(x))+(P_\pi^{K}(x, z_1 z_3)-f_1(x))f_2(x)
-\end{multline*}
+\[P^{K}(x,z_1 z_3 z_2)-f_1(x)f_2(x)=P_\pi^{K}(x, z_1 z_3)(P_2^{K}(x,z_2)-f_2(x))+(P_\pi^{K}(x, z_1 z_3)-f_1(x))f_2(x)\]
 
 For any bounded $S: \Words \times \Rats \Scheme \Rats$ we get
 
@@ -2166,19 +2130,13 @@ $P_2$ is an $\ESG$-optimal estimator for $(\Dist,f_2)$ therefore the first term 
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-f_1)f_2 S^{K}]} \pmod \Fall$$
 
-\begin{multline*}
-\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-f_1)f_2 S^{K}] - \E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}] + \\ \E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall
-\end{multline*}
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-f_1)f_2 S^{K}] - \E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}] + \E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
-\begin{multline*}
-\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-f_1)f_2 S^{K}] - \E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} + \\ \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall
-\end{multline*}
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-f_1)f_2 S^{K}] - \E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} + \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(\bar{g} \circ \pi^{K}-f_1)f_2 S^{K}]} + \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
-\begin{multline*}
-\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \\ (\sup \Abs{f_2}) (\sup \Abs{S}) \E[\Abs{\bar{g} \circ \pi^{K} - f_1}] + \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall
-\end{multline*}
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq (\sup \Abs{f_2}) (\sup \Abs{S}) \E[\Abs{\bar{g} \circ \pi^{K} - f_1}] + \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f_2 S^{K}]} \pmod \Fall$$
 
 Condition~\ref{con:thm__mult__fun} implies the first term on the right hand side is in $\Fall$.
 
@@ -2186,29 +2144,19 @@ $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E[(P_\pi^{K}-\bar{g} \circ \pi^{K})f
 
 Denote $\Un_{\text{tot}}^{K}:= \Un_{P_1}^{K} \times \Un_{P_2}^{K} \times \Un_S^{K}$. We change variables inside the expected value on the right hand side by $y:=\pi^{K}(x,z_3)$. Observing that $(x,y)$ obeys the distribution $\Dist^{K} \ltimes \pi^{K}$ we get
 
-\begin{multline*}
-\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\Dist^{K} \ltimes \pi^{K} \times \Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-\bar{g}(y)) \\ f_2(x) S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]} \pmod \Fall
-\end{multline*}
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\Dist^{K} \ltimes \pi^{K} \times \Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-\bar{g}(y))f_2(x) S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]} \pmod \Fall$$
 
-\begin{multline*}
-\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\Dist^{K} \ltimes \pi^{K}}[\E_{\Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-\bar{g}(y)) \\ S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]f_2(x)]} \pmod \Fall
-\end{multline*}
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\Dist^{K} \ltimes \pi^{K}}[\E_{\Un_{\text{tot}}^{K}}[(P_1^{K}(y,z_1)-\bar{g}(y))S^{K}(x,P_1^{K}(y,z_1)P_2^{K}(x,z_2), z_4)]f_2(x)]} \pmod \Fall$$
 
 Let $\sigma$ be a polynomial-time $\EMG$-sampler of $(\Dist,f_2)$ relative to $\pi$. Applying Proposition~\ref{prp:gen} to the right hand side we get
 
-\begin{multline*}
-\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K\Dist^{K} \times \UM_\sigma^{K}}[\E[(P_1^{K}(y)-\bar{g}(y))S^{K}(\sigma^{K}(y)_0,\\P_1^{K}(y)P_2^{K}(\sigma^{K}(y)_0))]\sigma^{K}(y)_1]} \pmod \Fall
-\end{multline*}
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\pi_*^K\Dist^{K} \times \UM_\sigma^{K}}[\E[(P_1^{K}(y)-\bar{g}(y))S^{K}(\sigma^{K}(y)_0,P_1^{K}(y)P_2^{K}(\sigma^{K}(y)_0))]\sigma^{K}(y)_1]} \pmod \Fall$$
 
 Using condition~\ref{con:thm__mult__dist} we conclude that
 
-\begin{multline*}
-\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mathcal{E}^k \times \UM_\sigma^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(\sigma^{K}(y)_0,\\P_1^{K}(y)P_2^{K}(\sigma^{K}(y)_0))]\sigma^{K}(y)_1]} \pmod \Fall
-\end{multline*}
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mathcal{E}^k \times \UM_\sigma^{K}}[\E[(P_1^{K}(y)-g(y))S^{K}(\sigma^{K}(y)_0,P_1^{K}(y)P_2^{K}(\sigma^{K}(y)_0))]\sigma^{K}(y)_1]} \pmod \Fall$$
 
-\begin{multline*}
-\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mathcal{E}^k \times \Un_{\text{tot}}^{K} \times \UM_\sigma^{K}}[(P_1^{K}(y)-g(y))S^{K}(\sigma^{K}(y)_0,\\P_1^{K}(y)P_2^{K}(\sigma^{K}(y)_0))\sigma^{K}(y)_1]} \pmod \Fall
-\end{multline*}
+$$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \leq \Abs{\E_{\mathcal{E}^k \times \Un_{\text{tot}}^{K} \times \UM_\sigma^{K}}[(P_1^{K}(y)-g(y))S^{K}(\sigma^{K}(y)_0,P_1^{K}(y)P_2^{K}(\sigma^{K}(y)_0))\sigma^{K}(y)_1]} \pmod \Fall$$
 
 By Proposition~\ref{prp:mixed_ort}, this implies
 
@@ -2337,13 +2285,9 @@ Let ${f_\tau^K}$ and ${f_{\bar{\tau}}^K}$ be defined as in Definition~\ref{def:s
 
 \[\E_{ \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{f_{\bar{\tau}}^K(\Chev{x_1,x_2},x_1)-\bar{f}(\Chev{x_1,x_2})}] \pmod \Fall\]
 
-\begin{multline*}
-\E_{ \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \\ \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_{\bar{\tau}}^K}[\bar{\tau}_1^K(x_1) \mid \bar{\tau}^K(x_1)_0 = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall
-\end{multline*}
+\[\E_{ \Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_{\bar{\tau}}^K}[\bar{\tau}_1^K(x_1) \mid \bar{\tau}^K(x_1)_0 = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
 
-\begin{multline*}
-\E_{\Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \\ \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_\tau^K}[\tau_1^K \mid \Chev{x_1,\tau_0^K} = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_\tau^K}[\tau_1^K \mid \Chev{x_1,\tau_0^K} = \Chev{x_1,x_2}]-f(x_2)}] \pmod \Fall\]
 
 \[\E_{\Dist^{K} \ltimes \pi^K}[\Abs{f_{\bar{\tau}}^K-\bar{f}}] \equiv \E_{(x_1,x_2) \sim \sigma_\bullet^K \times \tau_{0\bullet}^K}[\Abs{\E_{\UM_\tau^K}[\tau_1^K \mid \tau_0^K = x_2]-f(x_2)}] \pmod \Fall\]
 
@@ -2374,31 +2318,21 @@ Suppose $P$ is an $\ESG$-optimal estimator for $(\Dist_2,f)$. Let ${\bar{P}: \Wo
 
 Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote $\Un_{PS}^K:=\Un_P^K \times \Un_S^K$, ${\Dist_{PS}^K:=\Dist^{K} \times \Un_{PS}^K}$.
 
-\begin{multline*}
-\E_{\Dist_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]= \\ \E_{\Dist_1^{K} \times \Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - \bar{f}(\Chev{x_1,x_2}))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]
-\end{multline*}
+\begin{align*}
+&\E_{\Dist_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]=\\&\E_{\Dist_1^{K} \times \Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - \bar{f}(\Chev{x_1,x_2}))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]
+\end{align*}
 
-\begin{multline*}
-\E_{\Dist_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]= \\ \E_{\Dist_1^{K} \times \Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - f(x_2))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]
-\end{multline*}
+\[\E_{\Dist_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]=\E_{\Dist_1^{K} \times \Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - f(x_2))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]\]
 
-\begin{multline*}
-\E_{\Dist_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]= \\ \E_{\Dist_1^{K}}[\E_{\Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - f(x_2))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]]
-\end{multline*}
+\[\E_{\Dist_{PS}^K}[(\bar{P}^{K}(x) - \bar{f}(x))S^{K}(x,\bar{P}^{K}(x))]=\E_{\Dist_1^{K}}[\E_{\Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{x_1,x_2}) - f(x_2))S^K(\Chev{x_1,x_2},\bar{P}^K(\Chev{x_1,x_2}))]]\]
 
 Applying Proposition~\ref{prp:smp} (with $Y = \bm{1}$) to the right hand side, we get
 
-\begin{multline*}
-\E_{\Dist_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \\ \E_{\UM_\sigma^K}[\E_{\Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{\sigma^K,x_2}) - f(x_2))S^K(\Chev{\sigma^K,x_2},\bar{P}^K(\Chev{\sigma^K,x_2}))]] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\UM_\sigma^K}[\E_{\Dist_2^{K} \times \Un_{PS}^K}[(\bar{P}^K(\Chev{\sigma^K,x_2}) - f(x_2))S^K(\Chev{\sigma^K,x_2},\bar{P}^K(\Chev{\sigma^K,x_2}))]] \pmod \Fall\]
 
-\begin{multline*}
-\E_{\Dist_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \\ \E_{\UM_\sigma^K}[\E_{\Dist_2^{K} \times \Un_{PS}^K}[(P^K(x_2) - f(x_2))S^K(\Chev{\sigma^K,x_2},P^K(x_2))]] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\UM_\sigma^K}[\E_{\Dist_2^{K} \times \Un_{PS}^K}[(P^K(x_2) - f(x_2))S^K(\Chev{\sigma^K,x_2},P^K(x_2))]] \pmod \Fall\]
 
-\begin{multline*}
-\E_{\Dist_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \\ \E_{\Dist_2^{K} \times \Un_{PS}^K \times \UM_\sigma^K}[(P^K(x_2) - f(x_2))S^K(\Chev{\sigma^K,x_2},P^K(x_2))] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist_{PS}^K}[(\bar{P}^{K} - \bar{f})S^{K}] \equiv \E_{\Dist_2^{K} \times \Un_{PS}^K \times \UM_\sigma^K}[(P^K(x_2) - f(x_2))S^K(\Chev{\sigma^K,x_2},P^K(x_2))] \pmod \Fall\]
 
 Using the fact that $P$ is an $\ESG$-optimal estimator for $(\Dist_2,f)$, we conclude
 
@@ -2622,13 +2556,11 @@ Consider $\gamma \in \GammaPoly^n$, $\Dist$ a word ensemble and $\bar{g}: \Words
 
 Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$.
 
-\begin{multline*}
-\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \\ \E_{\Dist^{K}}[\E_{\Un_\gamma^K}[(\E_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))^2]^{\frac{1}{2}}]
-\end{multline*}
+\begin{align*}
+&\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq\\ &\E_{\Dist^{K}}[\E_{\Un_\gamma^K}[(\E_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))^2]^{\frac{1}{2}}]
+\end{align*}
 
-\begin{multline*}
-\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \\ \frac{1}{\gamma(K)^{\frac{1}{2}}} \E_{\Dist^{K}}[\Var_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]^{\frac{1}{2}}]
-\end{multline*}
+\[\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \frac{1}{\gamma(K)^{\frac{1}{2}}} \E_{\Dist^{K}}[\Var_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]^{\frac{1}{2}}]\]
 %
 \end{proof}
 
@@ -2636,19 +2568,16 @@ Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$.
 
 Consider any $S: \Words \times \Rats \Scheme \Rats$ bounded. Denote ${\Un_{PS}^K:=\Un_{P_f}^K \times \Un_S^K}$. Using condition~\ref{con:def__sp_reduce__fun} of Definition~\ref{def:sp_reduce}
 
-\begin{multline*}
-\E_{\Dist^{K} \times \Un_{PS}^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] \equiv \\ \E_{\Dist^{K} \times \Un_{PS}^K}[(P_f^K(x) - \E_{\Un_\pi^{K}}[g(\pi^{K}(x))])S(x,P_f^K(x))] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^{K} \times \Un_{PS}^K}[(P_f^K(x) - f(x))S(x,P_f^K(x))] \equiv \E_{\Dist^{K} \times \Un_{PS}^K}[(P_f^K(x) - \E_{\Un_\pi^{K}}[g(\pi^{K}(x))])S(x,P_f^K(x))] \pmod \Fall\]
 
 Using the construction of $P_f$, the assumption on $\gamma$ and Proposition~\ref{prp:ev_equiv_mean}, we get
 
-\begin{multline*}
-\E[(P_f^K - f)S] \equiv \E_{\Dist^{K} \times \Un_{PS}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i) - \\ \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall
-\end{multline*}
+\begin{align*}
+&\E[(P_f^K - f)S] \equiv\\ 
+&\E_{\Dist^{K} \times \Un_{PS}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i) - \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall
+\end{align*}
 
-\begin{multline*}
-\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\Dist^{K} \times \Un_{PS}^K}[(P_g^K(\pi^K(x,z_i),w_i) - \\ \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall
-\end{multline*}
+\[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\Dist^{K} \times \Un_{PS}^K}[(P_g^K(\pi^K(x,z_i),w_i) - \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
 
 All the terms in the sum are equal, therefore
 
@@ -2664,15 +2593,11 @@ Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ relative to ${\pi}$.
 Applying Proposition~\ref{prp:smp} we get
 %Denoting ${y_i:=\pi^K(x,z_i)}$
 
-\begin{multline*}
-\E[(P_f^K - f)S] \equiv\E_{\Dist_\pi^K \times \Un_0^K}[(P_g^K - \bar{g})S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+ \\ \sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall
-\end{multline*}
+\[\E[(P_f^K - f)S] \equiv\E_{\Dist_\pi^K \times \Un_0^K}[(P_g^K - \bar{g})S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
 
 Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}, we get
 
-\begin{multline*}
-\E[(P_f^K - f)S] \equiv \E_{\mathcal{E}^{K} \times \Un_0^K}[(P_g^K - g)S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+ \\ \sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall
-\end{multline*}
+\[\E[(P_f^K - f)S] \equiv \E_{\mathcal{E}^{K} \times \Un_0^K}[(P_g^K - g)S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
 
 $P_g$ is a $\ESG$-optimal estimator for $(\mathcal{E},g)$, therefore
 
@@ -2725,19 +2650,11 @@ Consider ${F}$ a bounded random variable and ${s,t \in \Reals}$. Then
 
 Let ${\sigma}$ be an ${\EMG}$-sampler of ${\Dist}$ relative to ${\pi}$. Consider any\\ $Q_f: \Words \Scheme \Rats$ bounded. Construct ${Q_g: \Words \MScheme \Rats}$ s.t. for any ${z_\sigma \in \UM_\sigma^K}$, ${z_Q \in \BoolR{Q_f}}$, ${z_\pi \in \Bool^{\gamma(K) \R_\pi(K)}}$ and ${z_g \in \BoolR{P_g}}$
 
-\[\M_{Q_g}^K = c_*^4(\M_\sigma^K \times \M_{Q_f}^K \times \M_{\pi}^K \times \M_{P_g}^K)\]
-
-\begin{multline*}
-\R_{Q_g}^K(\Chev{z_{\sigma1}, \A_{Q_f}(K),\A_{\pi}(K),\A_{P_g}(K)}) = \\ 
-\R_\sigma^K(z_{\sigma1}) + \R_{Q_f}(K) + \gamma(K)\R_{\pi}(K) + \R_{P_g}(K)
-\end{multline*}
-
-\begin{multline*}
-Q_g^K(x,z_{\sigma0} z_{Q} z_{\pi} z_{g}, \Chev{z_{\sigma1}, \A_{Q_f}(K),\A_{\pi}(K),\A_{P_g}(K)}) = \\
-Q_f^K(\sigma^K(x,z_\sigma),z_{Q})-P_f^K(\sigma^K(x,z_\sigma),z_g z_\pi)+P_g^K(x,z_g)
-\end{multline*}
-
-
+\begin{align*}
+\M_{Q_g}^K &= c_*^4(\M_\sigma^K \times \M_{Q_f}^K \times \M_{\pi}^K \times \M_{P_g}^K) \\
+\R_{Q_g}^K(\Chev{z_{\sigma1}, \A_{Q_f}(K),\A_{\pi}(K),\A_{P_g}(K)}) &= \R_\sigma^K(z_{\sigma1}) + \R_{Q_f}(K) + \gamma(K)\R_{\pi}(K) + \R_{P_g}(K) \\
+Q_g^K(x,z_{\sigma0} z_{Q} z_{\pi} z_{g}, \Chev{z_{\sigma1}, \A_{Q_f}(K),\A_{\pi}(K),\A_{P_g}(K)}) &= Q_f^K(\sigma^K(x,z_\sigma),z_{Q})-P_f^K(\sigma^K(x,z_\sigma),z_g z_\pi)+P_g^K(x,z_g)
+\end{align*}
 
 Applying Proposition~\ref{prp:mixed_opt} for ${P_g}$ and ${Q_g}$, we get
 
@@ -2751,32 +2668,24 @@ Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}
 
 The right hand side has the form of the right hand side in \ref{eqn:prp__smp} enabling us to apply Proposition~\ref{prp:smp} and get
 
-\begin{multline*}
-\E_{\Dist^{K} \times \Un_\pi^K \times \Un_{P_g}^K}[((P_g \circ \pi)^K-\bar{g} \circ \pi^K)^2] \leq \\ \E_{\Dist^{K} \times \Un_\pi^K \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+(P_g \circ \pi)^K - \bar{g} \circ \pi^K)^2] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^{K} \times \Un_\pi^K \times \Un_{P_g}^K}[((P_g \circ \pi)^K-\bar{g} \circ \pi^K)^2] \leq \E_{\Dist^{K} \times \Un_\pi^K \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+(P_g \circ \pi)^K - \bar{g} \circ \pi^K)^2] \pmod \Fall\]
 
 We can consider the expressions within the expected values on both sides as random variables w.r.t. $\Un_\pi^K$ while fixing the other components of the distribution. This allows us applying Proposition~\ref{prp:ev_diff_sq} to the difference between the right hand side and the left hand side (with the terms that don't depend on $\Un_\pi^K$ playing the role of the constants), which results in moving the expected value over $\Un_\pi^K$ inside the squares:
 
-\begin{multline*}
-\E_{\Dist^{K} \times \Un_{P_g}^K}[\E_{\Un_\pi^K}[(P_g \circ \pi)^K-\bar{g} \circ \pi^K]^2] \leq \\ \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K - \bar{g} \circ \pi^K])^2] \pmod \Fall
-\end{multline*}
-%%% Replaced by multline version ^^^
-%\begin{align*}
-%&\E_{\Dist^{K} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-\E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \leq\\ 
-%&\E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - \E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \pmod \Fall 
-%\end{align*}
+\[\E_{\Dist^{K} \times \Un_{P_g}^K}[\E_{\Un_\pi^K}[(P_g \circ \pi)^K-\bar{g} \circ \pi^K]^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K - \bar{g} \circ \pi^K])^2] \pmod \Fall\]
+
+\begin{align*}
+&\E_{\Dist^{K} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-\E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \leq\\ 
+&\E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - \E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \pmod \Fall 
+\end{align*}
 
 We now apply Proposition~\ref{prp:sq_diff_cong} via condition \ref{con:def__sp_reduce__fun} of Definition~\ref{def:sp_reduce}
 
-\begin{multline*}
-\E_{\Dist^{K} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-f)^2] \leq \\ \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - f)^2] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^{K} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-f)^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - f)^2] \pmod \Fall\]
 
 Denote $y_i:=\pi^K(x,z_i)$ where the ${z_i}$ are sampled independently from ${\Un_\pi^K}$. Applying Proposition~\ref{prp:sq_diff_cong} via Proposition~\ref{prp:ev_equiv_mean} and the assumption on $\gamma$, we get
 
-\begin{multline*}
-\E_{\Dist^{K} \times \Un_{P_f}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i)-f)^2] \leq \\ \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i) - f)^2] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^{K} \times \Un_{P_f}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i)-f)^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i) - f)^2] \pmod \Fall\]
 
 \[\E_{\Dist^{K} \times \Un_{P_f}^K}[(P_f^K-f)^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+P_f^K - f)^2] \pmod \Fall\]
 
@@ -2821,22 +2730,16 @@ Let ${W}$ be a Radon-Nikodym ${\EG}$-derivative of ${\Dist}$ w.r.t. ${\mathcal{E
 
 \[\sum_{x \in \Words} \mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_P^K \times \Un_S^K}[(P^K(x)-f(x))S^K(x,P^K(x))] \equiv 0 \pmod \Fall\]
 
-\begin{multline*}
-\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x) + \\ \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K(x)-f(x))S^K(x,P^K(x))] \equiv 0 \pmod \Fall
-\end{multline*}
+\[\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x) + \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K(x)-f(x))S^K(x,P^K(x))] \equiv 0 \pmod \Fall\]
 
-\begin{multline*}
+\begin{align*}
 \sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] +\\
 \sum_{x \in \Words} \ \Dist^{K}(x) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv 0 \pmod \Fall 
-\end{multline*}
+\end{align*}
 
-\begin{multline*}
-\E_{\Dist^{K} \times \Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv \\ -\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^{K} \times \Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv -\sum_{x \in \Words} (\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)) \E_{\Un_P^K \times \Un_S^K}[(P^K-f)S^K] \pmod \Fall\]
 
-\begin{multline*}
-\Abs{\E_{\Dist^{K} \times \Un_P^K \times \Un_S^K}[(P^K-f)S]} \leq \\ (\sup \Abs{P} + \sup \Abs{f}) \sup \Abs{S} \sum_{x \in \Words} \Abs{\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)} \pmod \Fall
-\end{multline*}
+\[\Abs{\E_{\Dist^{K} \times \Un_P^K \times \Un_S^K}[(P^K-f)S]} \leq (\sup \Abs{P} + \sup \Abs{f}) \sup \Abs{S} \sum_{x \in \Words} \Abs{\mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] - \Dist^{K}(x)} \pmod \Fall\]
 
 \[\E_{\Dist^{K} \times \Un_P^K \times \Un_S^K}[(P^K-f)S] \equiv 0 \pmod \Fall\]
 %
@@ -2857,20 +2760,16 @@ Assume ${\Fall}$ is ${\GrowA}$-ample. Consider ${\Dist}$, ${\mathcal{E}}$ word e
 
 Let ${W}$ be a Radon-Nikodym ${\EG}$-derivative of ${\Dist}$ w.r.t. ${\mathcal{E}}$. Consider any ${Q: \Words \Scheme \Rats}$ bounded. According to Proposition~\ref{prp:weight}
 
-\begin{multline*}
-\E_{\mathcal{E}^{K} \times \Un_W^K \times \Un_P^K}[W^K(x)(P^K(x)-f(x))^2] \leq \\ \E_{\mathcal{E}^{K} \times \Un_W^K \times \Un_Q^K}[W^K(x)(Q^K(x)-f(x))^2] \pmod \Fall
-\end{multline*}
+\[\E_{\mathcal{E}^{K} \times \Un_W^K \times \Un_P^K}[W^K(x)(P^K(x)-f(x))^2] \leq \E_{\mathcal{E}^{K} \times \Un_W^K \times \Un_Q^K}[W^K(x)(Q^K(x)-f(x))^2] \pmod \Fall\]
 
-\begin{multline*}
-\sum_{x \in \Words} \mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_P^K}[(P^K(x)-f(x))^2] \leq \\
-\sum_{x \in \Words} \mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall
-\end{multline*}
+\begin{align*}
+&\sum_{x \in \Words} \mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_P^K}[(P^K(x)-f(x))^2] \leq\\
+&\sum_{x \in \Words} \mathcal{E}^{K}(x) \E_{\Un_W^K}[W^K(x)] \E_{\Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall
+\end{align*}
 
 Using the assumption on ${W}$
 
-\begin{multline*}
-\sum_{x \in \Words} \Dist^{K}(x) \E_{\Un_P^K}[(P^K(x)-f(x))^2] \leq \\ \sum_{x \in \Words} \Dist^{K}(x) \E_{\Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall
-\end{multline*}
+\[\sum_{x \in \Words} \Dist^{K}(x) \E_{\Un_P^K}[(P^K(x)-f(x))^2] \leq \sum_{x \in \Words} \Dist^{K}(x) \E_{\Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall\]
 
 \[\E_{\Dist^{K} \times \Un_P^K}[(P^K(x)-f(x))^2] \leq \E_{\Dist^{K} \times \Un_Q^K}[(Q^K(x)-f(x))^2] \pmod \Fall\]
 %
@@ -3038,9 +2937,7 @@ Substituting ${\alpha(L)}$ for ${K}$, we get
 
 We have ${\alpha(\beta(\alpha(L))=\alpha(L)}$, therefore
 
-\begin{multline*}
-\E_{(\Dist^\alpha)^{L} \times \Un_{P^\alpha}^L}[((P^\alpha)^L(x,y)-f(x))^2] \leq \\ \E_{(\Dist^\alpha)^{L} \times \Un_Q^{\beta(\alpha(L))}}[(Q^{\beta(\alpha(L))}(x,y)-f(x))^2] + \varepsilon(\alpha(L))
-\end{multline*}
+\[\E_{(\Dist^\alpha)^{L} \times \Un_{P^\alpha}^L}[((P^\alpha)^L(x,y)-f(x))^2] \leq \E_{(\Dist^\alpha)^{L} \times \Un_Q^{\beta(\alpha(L))}}[(Q^{\beta(\alpha(L))}(x,y)-f(x))^2] + \varepsilon(\alpha(L))\]
 
 \[\E_{(\Dist^\alpha)^{L} \times \Un_{P^\alpha}^L}[((P^\alpha)^L(x,y)-f(x))^2] \leq \E_{(\Dist^\alpha)^{L} \times \Un_Q^L}[(Q^L(x,y)-f(x))^2] + \varepsilon(\alpha(L))\]
 %
@@ -3255,28 +3152,20 @@ ${\Dist^K \equiv \sigma_\bullet^K \pmod{\Fall}}$ since ${\sigma}$ is an ${\Fall(
 
 It follows that
 
-\begin{multline*}
-\sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(y)W^K(y)-(\pi_*^K\Dist^K)(y)} \equiv \\ \sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(y)W^K(y)-(\pi_*^K\sigma_\bullet^K)(y)} \pmod{\Fall}
-\end{multline*}
+\[\sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(y)W^K(y)-(\pi_*^K\Dist^K)(y)} \equiv \sum_{y \in \Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(y)W^K(y)-(\pi_*^K\sigma_\bullet^K)(y)} \pmod{\Fall}\]
 
 For any ${y \in \Words}$, if ${W^K(y)=0}$ then ${(\pi_*^K\sigma_\bullet^K)(y) = 0}$, so the corresponding terms contribute nothing to the sum on the right hand side. Denote ${\bar{\pi}^K(x,z_b,z_a):=\Chev{bz_b,\En_\Nats(p(K)),az_a,x}}$.
 
-\begin{multline*}
-\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-(\pi_*^K\Dist^K)} \equiv \\ \sum_{\substack{z_b \in \Bool^{\leq h(K)}\\z_a \in \Bool^{\leq h(K)}\\x \in \Bool^{\leq h(K)}}} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(\bar{\pi}^K(x,z_b,z_a))2^{\Abs{a}+\Abs{b}}-(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}
-\end{multline*}
+\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-(\pi_*^K\Dist^K)} \equiv \sum_{\substack{z_b \in \Bool^{\leq h(K)}\\z_a \in \Bool^{\leq h(K)}\\x \in \Bool^{\leq h(K)}}} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}(\bar{\pi}^K(x,z_b,z_a))2^{\Abs{a}+\Abs{b}}-(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
 
-\begin{multline*}
-\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \\ \sum_{\substack{z_b \in \Bool^{r_p(K)-\Abs{b}}\\z_a \in \Bool^{r_p(K)-\Abs{a}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-r_p(K)}2^{-r_p(K)}\sigma_\bullet^K(x) 2^{\Abs{a}+\Abs{b}}-(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}
-\end{multline*}
+\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_b \in \Bool^{r_p(K)-\Abs{b}}\\z_a \in \Bool^{r_p(K)-\Abs{a}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-r_p(K)}2^{-r_p(K)}\sigma_\bullet^K(x) 2^{\Abs{a}+\Abs{b}}-(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
 
-\begin{multline*}
-\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \\ \sum_{\substack{z_1 \in \Bool^{r_p(K)-\Abs{a}}\\z_2 \in \Bool^{r_p(K)-\Abs{b}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-2r_p(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}
-\end{multline*}
+\[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \sum_{\substack{z_1 \in \Bool^{r_p(K)-\Abs{a}}\\z_2 \in \Bool^{r_p(K)-\Abs{b}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-2r_p(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -(\pi_*^K\sigma_\bullet^K)(\bar{\pi}^K(x,z_b,z_a))} \pmod{\Fall}\]
 
-\begin{multline*}
-\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv \\
-\sum_{\substack{z_1 \in \Bool^{r_p(K)-\Abs{a}}\\z_2 \in \Bool^{r_p(K)-\Abs{b}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-2r_p(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -2^{-(r_p(K)-\Abs{a})}2^{-(r_p(K)-\Abs{b})}\sigma_\bullet^K(x)} \pmod{\Fall} 
-\end{multline*}
+\begin{align*}
+&\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{\alpha_p(K)}W^K-\pi_*^K\Dist^K} \equiv\\
+&\sum_{\substack{z_1 \in \Bool^{r_p(K)-\Abs{a}}\\z_2 \in \Bool^{r_p(K)-\Abs{b}}\\x \in \Bool^{\leq h(K)}}} \Abs{2^{-2r_p(K)+\Abs{a}+\Abs{b}}\sigma_\bullet^K(x) -2^{-(r_p(K)-\Abs{a})}2^{-(r_p(K)-\Abs{b})}\sigma_\bullet^K(x)} \pmod{\Fall} 
+\end{align*}
 
 \[\sum_{\Words} \Abs{\Dist_{\mathfrak{F}}^{p(K)}W^K-\pi_*^K\Dist^K} \equiv 0 \pmod{\Fall}\]
 
@@ -3284,9 +3173,7 @@ To verify condition~\ref{con:def__pp_reduce__fun} of Definition~\ref{def:pp_redu
 
 \[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \pmod{\Fall}\]
 
-\begin{multline*}
-\E_{\Dist^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \\ \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\Chev{bz_b,\En_\Nats(p(K)),az_a,x})}] \pmod{\Fall}
-\end{multline*}
+\[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\Chev{bz_b,\En_\Nats(p(K)),az_a,x})}] \pmod{\Fall}\]
 
 \[\E_{\Dist^K \times \Un_\pi^K}[\Abs{f(x)-f_{\mathfrak{F}}(\pi^K(x,z))}] \equiv \E_{\sigma_\bullet^K \times \Un_\pi^K}[\Abs{\mathfrak{F}(\phi,p(K),x)-\mathfrak{F}(\phi,p(K),x)}] \pmod{\Fall}\]
 
@@ -3294,15 +3181,11 @@ To verify condition~\ref{con:def__pp_reduce__fun} of Definition~\ref{def:pp_redu
 
 To verify condition~\ref{con:def__pp_reduce__smp} of Definition~\ref{def:pp_reduce}, construct ${\tau: \Words \xrightarrow{\Gamma_{\textnormal{det}}} \Words}$ s.t. for any\\ $z_1,z_2 \in \Bool^{r_p(K)}$ and ${x \in \Supp \sigma_\bullet^K}$, ${\tau^K(\Chev{z_1,\En_\Nats(p(K)),z_2,x})=x}$. By Proposition~\ref{prp:prob_cong_push} and Proposition~\ref{prp:prob_cong_ev}
 
-\begin{multline*}
-\E_{y \sim \pi_*^K\Dist^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \\ \E_{y \sim \pi_*^K\sigma_\bullet^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \pmod{\Fall}
-\end{multline*}
+\[\E_{y \sim \pi_*^K\Dist^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \E_{y \sim \pi_*^K\sigma_\bullet^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \pmod{\Fall}\]
 
 Denoting ${\Un_{ba}^K:=\Un^{r_p(K)-\Abs{b}} \times \Un^{r_p(K)-\Abs{a}}}$
 
-\begin{multline*}
-\E[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \\ \E_{(z_b,z_a,x) \sim \Un_{ba}^K \times \sigma_\bullet^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(\bar{\pi}^K(x,z_b,z_a)),\tau_{\bar{\pi}^K(x,z_b,z_a)}^K)] \pmod{\Fall}
-\end{multline*}
+\[\E[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^K \times \sigma_\bullet^K}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(\bar{\pi}^K(x,z_b,z_a)),\tau_{\bar{\pi}^K(x,z_b,z_a)}^K)] \pmod{\Fall}\]
 
 \[\E[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\tau_y^K)] \equiv \E_{(z_b,z_a,x) \sim \Un_{ba}^K \times \sigma_\bullet^K}[\Dtv(\delta_x,\delta_x)] \pmod{\Fall}\]
 
@@ -3493,23 +3376,15 @@ In particular
 
 Adding the last two inequalities
 
-\begin{multline*}
-\Abs{\int_{t = 2}^{2^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t)} + \Abs \\ {\int_{t = a}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t)} \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}
-\end{multline*}
+\[\Abs{\int_{t = 2}^{2^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t)} + \Abs{\int_{t = a}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t)} \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-\begin{multline*}
-\int_{t = 2}^{2^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t) - \\ \int_{t = a}^{a^{\Floor{\log q(J)}}}  \zeta(J,\Floor{t}-2) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}
-\end{multline*}
+\[\int_{t = 2}^{2^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t) - \int_{t = a}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-\begin{multline*}
-\int_{t = 2}^{a} \zeta(J,\Floor{t}-2) \dif (\log \log t) - \\ \int_{t=2^{\Floor{\log q(J)}}}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}
-\end{multline*}
+\[\int_{t = 2}^{a} \zeta(J,\Floor{t}-2) \dif (\log \log t) - \int_{t=2^{\Floor{\log q(J)}}}^{a^{\Floor{\log q(J)}}} \zeta(J,\Floor{t}-2) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
 We have ${\dif (\log \log t^{\Floor{\log q(J)}}) = \dif(\log \log t)}$ therefore we can substitute in the second term on the left hand side and get
 
-\begin{multline*}
-\int_{t = 2}^{a} \zeta(J,\Floor{t}-2) \dif (\log \log t) - \\ \int_{t=2}^{a} \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}
-\end{multline*}
+\[\int_{t = 2}^{a} \zeta(J,\Floor{t}-2) \dif (\log \log t) - \int_{t=2}^{a} \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
 \[\int_{t = 2}^{a} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
@@ -3535,9 +3410,7 @@ Define
 
 We get
 
-\begin{multline*}
-\sum_{k=2}^\infty \frac{\zeta(J,k) - \sum_{i=0}^\infty \zeta(J,(k+2)^{\Floor{\log q(J)}}-2+i)\omega_q^{Jk}(i) }{k \log k}  \leq \\ \frac{4}{5}(\ln 2)(\ln 5)(\sup \Abs{\zeta}) \log \Floor{\log q(J)}
-\end{multline*}
+\[\sum_{k=2}^\infty \frac{\zeta(J,k) - \sum_{i=0}^\infty \zeta(J,(k+2)^{\Floor{\log q(J)}}-2+i)\omega_q^{Jk}(i) }{k \log k}  \leq \frac{4}{5}(\ln 2)(\ln 5)(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
 The above obviously implies \ref{eqn:prp__fall_uni_weak__conc}.
 %
@@ -3605,9 +3478,7 @@ Then
 
 Define ${\zeta(K):=\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K}(x,y)-f(x))^2]}$ and observe that \ref{eqn:prp__fall_uni_amp__p} implies \ref{eqn:prp__fall_uni__prem}, allowing us to apply Proposition~\ref{prp:fall_uni} and get
 
-\begin{multline*}
-\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K}(x,y)-f(x))^2] \equiv \\ \E_{\omega_p^K}[\E_{ \Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2]] \pmod \FallU
-\end{multline*}
+\[\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K}(x,y)-f(x))^2] \equiv \E_{\omega_p^K}[\E_{ \Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2]] \pmod \FallU\]
 
 Applying \ref{eqn:prp__fall_uni_amp__q} to the right hand side, we get \ref{eqn:prp__fall_uni_amp}.
 %
@@ -3643,15 +3514,11 @@ Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can 
 
 Take any ${i \in \Nats}$.
 
-\begin{multline*}
-\E_{ \Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2]= \\ \E_{ \Dist^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a^*(\alpha_{q+i}(K));x,y))-f(x))^2]
-\end{multline*}
+\[\E_{ \Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2]=\E_{ \Dist^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a^*(\alpha_{q+i}(K));x,y))-f(x))^2]\]
 
 Using \ref{eqn:thm__exists_all__astar}
 
-\begin{multline*}
-\E_{ \Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \\ \E_{\Dist^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a_Q^K;x,y))-f(x))^2]
-\end{multline*}
+\[\E_{ \Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\Dist^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a_Q^K;x,y))-f(x))^2]\]
 
 \[\E_{ \Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\Dist^{\eta(K)} \times \Un_Q^K}[(Q^K(x,y)-f(x))^2]\]
 
@@ -3758,9 +3625,7 @@ On the other hand
 
 \[\E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-\sigma^K_1)^2]] = \E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-f_\sigma^K+f_\sigma^K-\sigma^K_1)^2]]\]
 
-\begin{multline*}
-\E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-\sigma^K_1)^2]] = \E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-f_\sigma^K)^2]]+ \\ 2\E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)(f_\sigma^K-\sigma^K_1)]]+\E_{\Un_\sigma^K}[\E[(f_\sigma^K-\sigma^K_1)^2]]
-\end{multline*}
+\[\E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-\sigma^K_1)^2]] = \E_{\Un_\sigma^K}[\E[(h_{\sigma\alpha}^K-f_\sigma^K)^2]]+2\E_{\Un_\sigma^K}[(\E[h_{\sigma\alpha}^K]-f_\sigma^K)(f_\sigma^K-\sigma^K_1)]]+\E_{\Un_\sigma^K}[\E[(f_\sigma^K-\sigma^K_1)^2]]\]
 
 Applying Proposition~\ref{prp:smp} to the first term on the right hand side and \ref{eqn:prp__est_err_smp__prf} to the second term on the right hand side, we get \ref{eqn:prp__est_err_smp}.
 %
@@ -3846,9 +3711,7 @@ Similarly, we have
 
 Combining \ref{eqn:thm__exists_smp__prf2} and \ref{eqn:thm__exists_smp__prf3}, we conclude that for any ${b \in \Bool^{\leq l(K)}}$
 
-\begin{multline*}
-\Prb_{\Un_R^K}[\varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1} > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq \\ 2^{-\epsilon l(K)^2} + 2^{-\epsilon l(K)^2+l(K)+1}
-\end{multline*}
+\[\Prb_{\Un_R^K}[\varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1} > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2} + 2^{-\epsilon l(K)^2+l(K)+1}\]
 
 \[\Prb_{\Un_R^K}[\varrho^K(A^K(y)) > \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1})] \leq 2^{-\epsilon l(K)^2+l(K)+2}\]
 
@@ -3866,26 +3729,20 @@ Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can 
 
 \[\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \varrho^{\alpha_{q+i}(K)}(a_Q^K) + \varepsilon_1(\alpha_{q+i}(K))\]
 
-\begin{multline*}
-\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq\\ 
-\E_{\Dist^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a_Q^K;x,z))-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))
-\end{multline*}
+\begin{align*}
+&\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq\\ 
+&\E_{\Dist^{\eta(K)} \times \Un^{r(\alpha_{q+i}(K))}}[(D(\Ev^{q(K)+i}(a_Q^K;x,z))-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))
+\end{align*}
 
-\begin{multline*}
-\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \\ \E_{\Dist^{\eta(K)} \times \Un_Q^K}[(Q^K(x,z)-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))
-\end{multline*}
+\[\E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\Dist^{\eta(K)} \times \Un_Q^K}[(Q^K(x,z)-f(x))^2] + \varepsilon_1(\alpha_{q+i}(K))\]
 
 Define ${\bar{\varepsilon}_1(K):=\sup_{k \geq K_{n-1}}\varepsilon_1(\eta(K),k)}$. We have ${\bar{\varepsilon}_1 \in \FallU}$ and ${\varepsilon_1(\alpha_{q+i}(K)) \leq \bar{\varepsilon}_1(K)}$ therefore
 
-\begin{multline*}
-\sup_{i \in \Nats} \E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \\ \E_{\Dist^{\eta(K)} \times \Un_Q^K}[(Q^K(x,z)-f(x))^2] \pmod \FallU
-\end{multline*}
+\[\sup_{i \in \Nats} \E_{\Dist^{\eta(K)} \times \Un_P^{\alpha_{q+i}(K)}}[(P^{\alpha_{q+i}(K)}(x,y)-f(x))^2] \leq \E_{\Dist^{\eta(K)} \times \Un_Q^K}[(Q^K(x,z)-f(x))^2] \pmod \FallU\]
 
 By the same reasoning we can choose ${p \in \NatPoly}$ s.t. ${p \geq q}$ and
 
-\begin{multline*}
-\sup_{i \in \Nats} \E_{ \Dist^{\eta(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2] \leq \\ \E_{\Dist^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \pmod \FallU
-\end{multline*}
+\[\sup_{i \in \Nats} \E_{ \Dist^{\eta(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}(x,y)-f(x))^2] \leq \E_{\Dist^{\eta(K)} \times \Un_P^K}[(P^K(x,y)-f(x))^2] \pmod \FallU\]
 
 Applying Proposition~\ref{prp:fall_uni_amp}, we conclude that ${P}$ is an ${\FallU(\Gamma)}$-optimal estimator for ${(\Dist^\eta,f)}$.
 %
@@ -4113,7 +3970,7 @@ Since we view optimal polynomial-time estimators as computing \enquote{expected 
 \begin{theorem}
 \label{thm:uniq}
 
-Consider ${(\Dist,f)}$ a distributional estimation problem. Assume there is ${p \in \NatPoly}$ s.t. 
+Consider ${(\Dist,f)}$ a distributional estimation problem. Assume there is\\ ${p \in \NatPoly}$ s.t. 
 
 \begin{equation}
 \label{eqn:thm__uniq__dist}
@@ -4192,25 +4049,15 @@ Consider ${(\Dist,f)}$ a distributional estimation problem and ${L \subseteq \Wo
 
 ${R}$ is an ${\ESG}$-optimal estimator for ${(\Dist, \chi_L)}$, therefore
 
-\begin{multline*}
-\E_{(x,y,z,w) \sim \Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(R^K(x,w)- \\ \chi_L(x))(P^K(x,y)-Q^K(x,z))^2] = 0 \pmod \Fall
-\end{multline*}
+\[\E_{(x,y,z,w) \sim \Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(R^K(x,w)-\chi_L(x))(P^K(x,y)-Q^K(x,z))^2] = 0 \pmod \Fall\]
 
-\begin{multline*}
-\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K \cdot (P^K-Q^K)^2] = \\ \E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\chi_L \cdot (P^K-Q^K)^2] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K \cdot (P^K-Q^K)^2] = \E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\chi_L \cdot (P^K-Q^K)^2] \pmod \Fall\]
 
-\begin{multline*}
-\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K \cdot (P^K-Q^K)^2] = \\ \Dist^K(L) \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[R^K \cdot (P^K-Q^K)^2] = \Dist^K(L) \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \pmod \Fall\]
 
-\begin{multline*}
-\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\epsilon(K)\Dist^K(L)(P^K-Q^K)^2] \leq \\ \Dist^K(L) \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \pmod \Fall
-\end{multline*}
+\[\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[\epsilon(K)\Dist^K(L)(P^K-Q^K)^2] \leq \Dist^K(L) \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \pmod \Fall\]
 
-\begin{multline*}
-\epsilon(K)\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \leq \\ \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \pmod {\Fall_L}
-\end{multline*}
+\[\epsilon(K)\E_{\Dist^K \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \leq \E_{\Dist^K \mid L \times \Un_P^K \times \Un_Q^K \times \Un_R^K}[(P^K-Q^K)^2] \pmod {\Fall_L}\]
 
 Applying Theorem~\ref{thm:uniq} to the right hand side, we conclude
 
@@ -4231,7 +4078,7 @@ Thus, the class of distributional estimation problems admitting ${\EG}$-optimal 
 
 As an example of a natural open problem, consider ${(\Dist_{\textsc{NP}}, f_{\textsc{NP}})}$, the complete problem for ${\textsc{SampNP}}$ resulting from Theorem~\ref{thm:complete} with ${n=1}$, ${r(k)=s(k)=k}$, ${E=E_{\textsc{NP}}}$ and ${\mathfrak{F}=\mathfrak{F}_{\textsc{NP}}}$. Theorem~\ref{thm:exists_all} implies that e.g. there is an ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\GammaLog^2)}$-optimal estimator for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$. On the other hand, Proposition~\ref{prp:tally_fall_uni} implies that it is unlikely that there is an ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\Gamma_0^2)}$-optimal estimator\footnote{More precisely, it cannot exist assuming there is a unary language in ${\textsc{NP}}$ that cannot be decided by a randomized algorithm in quasi-polynomial time with bounded probability of error.}. This, however, doesn't tell us anything about the existence of an ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\Gamma_1^2)}$-optimal estimator. This question fits naturally into the theme of Impagliazzo's \enquote{worlds}\cite{Impagliazzo_1995}: if there is an ${\mathcal{F}_{\text{uni}}^{(2)}(\GammaPoly^2,\Gamma_0^2)}$-\emph{perfect} estimator for ${(\Dist_{\textsc{NP}}^\eta, f_{\textsc{NP}})}$ (a version of Impagliazzo's \enquote{Heuristica} which is considered unlikely), then the answer is tautologically positive. However, if there is no such perfect polynomial-time estimator then the optimal polynomial-time estimator may or may not exist, a possible new partition of \enquote{worlds}\footnote{The relation to the worlds is somewhat disturbed by the role of $O(1)$ advice. We think there is a natural variant of this question that doesn't involve advice but it is out of the present scope.}.
 
-One area where applying these concepts seems natural is Artificial General Intelligence. Indeed, the von Neumann-Morgenstern theorem shows that perfect rational agents are expected utility maximizers but in general the exact evaluation of expected utility is intractable. It is thus natural to substitute an optimal polynomial-time estimator for utility, as the analogue of expected value in the computationally bounded case. Further illuminating the connection, Theorem~\ref{thm:exists_smp} shows how optimal polynomial-time estimators result from agnostic PAC learning.
+One area where applying these concepts seems natural is Artificial General Intelligence. Indeed, the von Neumann–Morgenstern theorem shows that perfect rational agents are expected utility maximizers but in general the exact evaluation of expected utility is intractable. It is thus natural to substitute an optimal polynomial-time estimator for utility, as the analogue of expected value in the computationally bounded case. Further illuminating the connection, Theorem~\ref{thm:exists_smp} shows how optimal polynomial-time estimators result from agnostic PAC learning.
 
 Some results we left out of the present work show the existence of systems of optimal polynomial-time estimators that are \enquote{reflective} i.e. estimate systems of functions which depend on the estimators themselves. We constructed such systems using the Kakutani-Glicksberg-Fan theorem which requires the use of random advice strings, as in the definition of ${\EMG}$-samplers. Such systems can be used to model game theoretic behavior of computationally bounded rational agents, similarly to the use of reflective oracles\cite{Fallenstein_2015} for unbounded agents. 
 
@@ -4245,7 +4092,7 @@ Finally, we wish to express the hope that the present work will lead to incorpor
 
 \appendix
 
-\section{Hard-Core Predicates}
+\section{Appendix}
 
 We review the definitions of hard-core predicate and one-way function and state the Goldreich-Levin theorem.
 
@@ -4342,9 +4189,10 @@ In the setting of Theorem~\ref{thm:goldreich_levin}, assume $f$ is non-uniformly
 
 This work was partially supported by the Machine Intelligence Research Institute in Berkeley, California.
 
-We thank Patrick LaVictoire for many useful discussions and also suggesting some corrections in the paper. We thank Scott Aaronson for reading a draft version of the paper and providing important advice on the form of presentation. We thank an anonymous reviewer, writing by the request of the Open Philanthropy Project, who read a draft version of the paper and provided useful suggestions. We thank Rob Bensinger for helping to polish some of the English. We thank Alex Appel for locating typos and a minor error. We thank Brian Njenga for locating typos. We thank Scott Garrabrant for useful discussions.
+We thank Patrick LaVictoire for many useful discussions and also suggesting some corrections in the paper. We thank Scott Aaronson for reading a draft version of the paper and providing important advice on the form of presentation. We thank an anonymous reviewer, writing by the request of the Open Philanthropy Project, who read a draft version of the paper and provided useful suggestions. We thank Rob Bensinger for helping to polish some of the English. We thank Alex Appel and Brian Njenga for locating typos. We thank Scott Garrabrant for useful discussions.
 
-\bibliographystyle{siamplain}
+\bibliographystyle{unsrt}
 \bibliography{Optimal_Estimators}
 
 \end{document}
+

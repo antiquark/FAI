@@ -1,0 +1,46 @@
+\select@language {english}
+\contentsline {section}{\numberline {0}Introduction}{2}{section.0}
+\contentsline {subsection}{\numberline {0.1}Motivation}{2}{subsection.0.1}
+\contentsline {subsection}{\numberline {0.2}Overview}{3}{subsection.0.2}
+\contentsline {subsection}{\numberline {0.3}Related Work}{7}{subsection.0.3}
+\contentsline {section}{\numberline {1}Notation}{9}{section.1}
+\contentsline {subsection}{\numberline {1.1}Sets, Numbers and Functions}{9}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Probability Distributions}{9}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Algorithms}{10}{subsection.1.3}
+\contentsline {section}{\numberline {2}Fundamentals}{11}{section.2}
+\contentsline {subsection}{\numberline {2.1}Basic Concepts}{11}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Distributional Estimation Problems}{11}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}Growth Spaces and Polynomial-Time $\Gamma $-Schemes}{12}{subsubsection.2.1.2}
+\contentsline {subsubsection}{\numberline {2.1.3}Fall Spaces}{15}{subsubsection.2.1.3}
+\contentsline {subsubsection}{\numberline {2.1.4}Optimal Polynomial-Time Estimators}{17}{subsubsection.2.1.4}
+\contentsline {subsection}{\numberline {2.2}Basic Properties}{17}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Optimality Relatively to Uniform Families}{17}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Random versus Advice}{18}{subsubsection.2.2.2}
+\contentsline {subsubsection}{\numberline {2.2.3}Optimality of Weighted Error}{19}{subsubsection.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.4}Amplification from Zero to $O(1)$ Advice}{21}{subsubsection.2.2.4}
+\contentsline {subsection}{\numberline {2.3}Orthogonality Theorems}{22}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Simple Example}{24}{subsection.2.4}
+\contentsline {section}{\numberline {3}Optimal Estimators and Probability Theory}{26}{section.3}
+\contentsline {subsection}{\numberline {3.1}Calibration}{26}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Algebraic Properties}{29}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Linearity}{29}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}Conditional Expectation}{29}{subsubsection.3.2.2}
+\contentsline {subsection}{\numberline {3.3}Polynomial-Time $\mathrm {M}\Gamma $-Schemes and Samplers}{33}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Congruent Measure Families}{33}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Polynomial-Time $\mathrm {M}\Gamma $-Schemes}{35}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3}Samplers and Samplability}{36}{subsubsection.3.3.3}
+\contentsline {subsection}{\numberline {3.4}Independent Variables}{40}{subsection.3.4}
+\contentsline {section}{\numberline {4}Reductions and Completeness}{47}{section.4}
+\contentsline {subsection}{\numberline {4.1}Strict Pseudo-Invertible Reductions}{47}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Dominance}{53}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Ensemble Pullbacks}{54}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Lax Pseudo-Invertible Reductions}{56}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Completeness}{58}{subsection.4.5}
+\contentsline {section}{\numberline {5}Existence and Uniqueness}{62}{section.5}
+\contentsline {subsection}{\numberline {5.1}Existence}{62}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Positive Results}{62}{subsubsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.2}Negative Results}{72}{subsubsection.5.1.2}
+\contentsline {subsection}{\numberline {5.2}Uniqueness}{75}{subsection.5.2}
+\contentsline {section}{\numberline {6}Discussion}{77}{section.6}
+\contentsline {section}{\numberline {A}Appendix}{78}{appendix.A}
+
