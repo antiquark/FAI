@@ -1,0 +1,155 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Comment}[1]{}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Dom}{dom}
+
+% autosize deliminaters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
+
+% operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
+\newcommand{\Var}{\operatorname{Var}}
+
+% operators that require parentheses
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
+
+\newcommand{\Prj}{\operatorname{pr}}
+
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Sq}[2]{\{#1\}_{#2 \in \Nats}}
+\newcommand{\Sqn}[1]{\Sq{#1}{n}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
+
+\newcommand{\Alg}{\xrightarrow{\text{alg}}}
+\newcommand{\M}{\xrightarrow{\text{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+
+% Paper specific
+
+\newcommand{\Ob}{\mathcal{O}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\In}{\mathcal{I}}
+\newcommand{\FH}{(\A \times \Ob)^*}
+\newcommand{\IH}{(\A \times \Ob)^\omega}
+\newcommand{\Ado}{\bar{\Ob}}
+\newcommand{\Ada}{\bar{\A}}
+\newcommand{\Adi}{{\bar{\In}}}
+\newcommand{\Adao}{\overline{\A \times \Ob}}
+\newcommand{\Adfh}{\Adao^*}
+\newcommand{\Adih}{\Adao^\omega}
+\DeclareMathOperator{\HD}{hdom}
+\newcommand{\Hy}{\mathcal{H}}
+\newcommand{\UC}{\mathcal{U}}
+
+\newcommand{\RMC}{\mathrm{C}}
+\newcommand{\RMD}{\mathrm{D}}
+\newcommand{\RME}{\mathrm{E}}
+\newcommand{\RMF}{\mathrm{F}}
+
+\newcommand{\SF}{\St^{\RMF}}
+\newcommand{\SD}{\St^{\RMD}}
+\newcommand{\SC}{\St^{\RMC}}
+\newcommand{\MF}{M^{\RMF}}
+\newcommand{\MD}{M^{\RMD}}
+\newcommand{\ME}{M^{\RME}}
+\newcommand{\TF}{\bar{\tau}^{\RMF}}
+\newcommand{\PD}{\pi^{\RMD}}
+\newcommand{\UD}{\upsilon^{\RMD}}
+
+\newcommand{\Ut}{\operatorname{U}}
+\newcommand{\V}{\operatorname{V}}
+\newcommand{\Q}{\operatorname{Q}}
+\newcommand{\EU}{\operatorname{EU}}
+
+\newcommand{\Dl}{\mathcal{D}}
+\newcommand{\Do}{\mathfrak{D}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Z}{Z}
+\newcommand{\J}{J}
+
+\begin{document}
+
+Previously, I presented the theory of [DRL](https://agentfoundations.org/item?id=1656) for finite MDPs. Now, although I believe this theory can be generalized much beyond finite MDPs (at least to finite POMDPs and infinite POMDPs that satisfy some geometric and/or dynamical systems theoretic assumptions), it cannot work for arbitrary environments. Constructing a counterexample is easy enough, but it seemed worthwhile to write it down.
+
+Let $\A := \{a,b,c\}$ be the set of actions and $\Ob := \{o_-,o_+\}$ the set of observations. Define $\tau: \FH \rightarrow \Nats \sqcup \{\infty\}$ s.t. for any $n \in \Nats$ and $h \in (\A \times \Ob)^n$
+
+$$\tau(h):=\begin{cases} \infty \text{ if } \forall m \in [n]:h_m \not\in c \times \Ob \\ \min\{m \in [n] \mid h_m \in c \times \Ob\} \text{ otherwise} \end{cases}$$
+
+That is, $\tau(h)$ is the first time action $c$ (stands for "commit") appears in the history $h$. Now, consider the following environments $\mu_a$, $\mu_b$. 
+
+$$\mu_a\AP{o_+ \mid h}:=\begin{cases} 0 \text{ if } \tau(h)=\infty \\ 0 \text{ if } \tau(h) < \frac{n}{2} \\ \frac{1}{\tau(h)}\Abs{\AC{m \in \AB{\tau(h)} \mid h_m \in a \times \Ob}} \text{ otherwise} \end{cases}$$
+
+$$\mu_b\AP{o_+ \mid h}:=\begin{cases} 0 \text{ if } \tau(h)=\infty \\ 0 \text{ if } \tau(h) < \frac{n}{2} \\ \frac{1}{\tau(h)}\Abs{\AC{m \in \AB{\tau(h)} \mid h_m \in b \times \Ob}} \text{ otherwise} \end{cases}$$
+
+That is...
+
+\end{document}
+
+
+
