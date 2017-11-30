@@ -147,9 +147,9 @@ $$\mu_a\AP{o_+ \mid h}:=\begin{cases} 0 \text{ if } \tau(h)=\infty \\ 0 \text{ i
 
 $$\mu_b\AP{o_+ \mid h}:=\begin{cases} 0 \text{ if } \tau(h)=\infty \\ 0 \text{ if } \tau(h) \leq \frac{n}{2} \\ \frac{1}{\tau(h)}\Abs{\AC{m \in \AB{\tau(h)} \mid h_m \in b \times \Ob}} \text{ otherwise} \end{cases}$$
 
-Also, define the reward function $r$ by setting $r(h)=1$ for any history $h$ that ends with $o_+$ and $r(h) = 0$ for any other history. Denote $\upsilon_{a,b} := \AP{\mu_{a,b},r}$. That is, both universes count the number of actions $a$ and $b$ until time $\tau$: the first time action $c$ is taken. At times between $\tau$ and $2\tau$, they produce rewards with frequency that equals the relative fraction of the corresponding action in the count. Before $\tau$ and after $2\tau$, they produce no rewards.
+Also, define the reward function $r$ by setting $r(h)=1$ for any history $h$ that ends with $o_+$ and $r(h) = 0$ for any other history. Denote $\upsilon_{a,b} := \AP{\mu_{a,b},r}$. That is, both universes count the number of actions $a$ and $b$ until time $\tau$ (the first time action $c$ is taken). At times between $\tau$ and $2\tau$, they produce rewards with frequency that equals the relative fraction of the corresponding action in the count. Before $\tau$ and after $2\tau$, they produce no rewards.
 
-Now, we haven't defined sane policies for arbitrary environments, but the spirit of the definition is that a sane policy is unlikely to take actions with irreversible long-term negative consequences and has to have some non-negligible probability of taking an optimal (or at least nearly optimal) action. For example, we might define it as follows
+Now, we haven't defined sane policies for arbitrary environments, but the spirit of the definition is that a sane policy is unlikely to take actions with major irreversible long-term negative consequences and has to have some non-negligible probability of taking an optimal (or at least nearly optimal) action. For example, we might define it as follows
 
 \#Definition
 
@@ -163,13 +163,17 @@ ii. $$\forall a \in \A: \sigma\AP{a \mid h} \leq \exp \AB{\beta\AP{\Q^\upsilon_\
 
 Here, we consider the asymptotics $\gamma \rightarrow 1$, $\beta \rightarrow \infty$ but should include the scenario $\beta = o\AP{\frac{1}{1-\gamma}}$ so that actions with *short-term* negative consequences are allowed (otherwise this would be some sort of "rationality" requirement rather than a mere "sanity" requirement).
 
-Now, the optimal policy for $\upsilon_{a}$ (respectively $\upsilon_b$) is taking action $a$ (resp. $b$) until some time $\tau^*(\gamma) = \Theta\AP{\frac{1}{1-\gamma}}$ and taking action $c$ at this time (obviously, the following actions don't affect anything). Let $\pi^*_{a,b}$ be policies that are optimal *even off-policy* (so that their decision when to take action $c$ depends on the history of actions before). It is easy to see that the following policies $\sigma_{a,b}$ are $\AP{\frac{1}{2},\beta}$-sane for the respective universes and some "legitimate" choice of $\beta$:
+The optimal policy for $\upsilon_{a}$ (respectively $\upsilon_b$) is taking action $a$ (resp. $b$) until some time $\tau^*(\gamma) = \Theta\AP{\frac{1}{1-\gamma}}$ and taking action $c$ at this time (obviously, the following actions don't affect anything). Let $\pi^*_{a,b}$ be policies that are optimal *even off-policy* (so that their decision when to take action $c$ depends on the history of actions before). It is easy to see that the following policies $\sigma_{a,b}$ are $\AP{\frac{1}{2},\beta}$-sane for the respective universes and some "legitimate" choice of $\beta$:
 
 $$\sigma_a(a \mid h) := \sigma_a(b \mid h) := \frac{1}{2}\pi^*_a(a \mid h)$$
 
 $$\sigma_b(a \mid h) := \sigma_b(b \mid h) := \frac{1}{2}\pi^*_b(b \mid h)$$
 
 That is, whenever $\pi^*$ suggests taking action $c$, $\sigma$ complies with it, and whenever $\pi^*$ suggests taking action $a$ or $b$, $\sigma$ flips a coin to decide which one to take. Indeed, in expectation, taking the wrong action out of $\{a,b\}$ loses one time moment of reward and is therefore equivalent to a "short-term" loss.
+
+It is thus impossible for the agent to distinguish between the universes $\upsilon_a$ and $\upsilon_b$ until action $c$ is taken: both the environment and the advisor behave identically until this point. On the other hand, after action $c$ is taken it is too late to do anything. Evidently, the hypothesis class $\Hy:= \{\bar{\upsilon}_a\AB{\sigma_a},\bar{\upsilon}_b\AB{\sigma_b}\}$ is *not* learnable.
+
+In principle, it might be possible to get around this obstacle by formulating a condition on the advisor in which losses that are minor in size but far away in time are also ruled out. However, such a condition might prove too stringent. Mostly, I hope to ultimately extend the formalism to [incomplete models](https://arxiv.org/abs/1705.04630) in which case certain restrictions on the type of incomplete model might be acceptable. For example, the incomplete equivalent of an MDP might be a stochastic game against some arbitrary "opponent."
 
 \end{document}
 
