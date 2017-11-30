@@ -27,6 +27,7 @@
 % autosize deliminaters
 \newcommand{\AP}[1]{\left(#1\right)}
 \newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
 
 % operators that require brackets
 \newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
@@ -51,6 +52,7 @@
 
 \newcommand{\Prj}{\operatorname{pr}}
 
+\newcommand{\D}{\mathrm{d}}
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
 \newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
 \newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
@@ -73,15 +75,15 @@
 \newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
 \newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
 
-\newcommand{\Abs}[1]{\lvert #1 \rvert}
-\newcommand{\Norm}[1]{\lVert #1 \rVert}
-\newcommand{\Floor}[1]{\lfloor #1 \rfloor}
-\newcommand{\Ceil}[1]{\lceil #1 \rceil}
-\newcommand{\Chev}[1]{\langle #1 \rangle}
-\newcommand{\Quote}[1]{\ulcorner #1 \urcorner}
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
 
-\newcommand{\Alg}{\xrightarrow{\textnormal{alg}}}
-\newcommand{\M}{\xrightarrow{\textnormal{k}}}
+\newcommand{\Alg}{\xrightarrow{\text{alg}}}
+\newcommand{\M}{\xrightarrow{\text{k}}}
 \newcommand{\PF}{\xrightarrow{\circ}}
 
 % Paper specific
