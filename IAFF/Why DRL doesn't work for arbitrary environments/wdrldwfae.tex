@@ -135,7 +135,7 @@
 
 \begin{document}
 
-Previously, I presented the theory of [DRL](https://agentfoundations.org/item?id=1656) for finite MDPs. Now, although I believe this theory can be generalized much beyond finite MDPs (at least to finite POMDPs and infinite POMDPs that satisfy some geometric and/or dynamical systems theoretic assumptions), it cannot work for arbitrary environments. Constructing a counterexample is easy enough, but it seemed worthwhile to write it down.
+Previously, I presented the theory of [DRL](https://agentfoundations.org/item?id=1656) for finite MDPs. Now, although I believe this theory can be generalized much beyond finite MDPs (at least to finite POMDPs and infinite POMDPs that satisfy some geometric and/or dynamical systems theoretic assumptions), it cannot work for arbitrary environments (without requiring the advisor to be more than "merely sane"). Constructing a counterexample is not difficult, but it seemed worthwhile to write it down.
 
 Let $\A := \{a,b,c\}$ be the set of actions and $\Ob := \{o_-,o_+\}$ the set of observations. Define $\tau: \FH \rightarrow \Nats \sqcup \{\infty\}$ s.t. for any $n \in \Nats$ and $h \in (\A \times \Ob)^n$
 
@@ -143,11 +143,33 @@ $$\tau(h):=\begin{cases} \infty \text{ if } \forall m \in [n]:h_m \not\in c \tim
 
 That is, $\tau(h)$ is the first time action $c$ (stands for "commit") appears in the history $h$. Now, consider the following environments $\mu_a$, $\mu_b$. 
 
-$$\mu_a\AP{o_+ \mid h}:=\begin{cases} 0 \text{ if } \tau(h)=\infty \\ 0 \text{ if } \tau(h) < \frac{n}{2} \\ \frac{1}{\tau(h)}\Abs{\AC{m \in \AB{\tau(h)} \mid h_m \in a \times \Ob}} \text{ otherwise} \end{cases}$$
+$$\mu_a\AP{o_+ \mid h}:=\begin{cases} 0 \text{ if } \tau(h)=\infty \\ 0 \text{ if } \tau(h) \leq \frac{n}{2} \\ \frac{1}{\tau(h)}\Abs{\AC{m \in \AB{\tau(h)} \mid h_m \in a \times \Ob}} \text{ otherwise} \end{cases}$$
 
-$$\mu_b\AP{o_+ \mid h}:=\begin{cases} 0 \text{ if } \tau(h)=\infty \\ 0 \text{ if } \tau(h) < \frac{n}{2} \\ \frac{1}{\tau(h)}\Abs{\AC{m \in \AB{\tau(h)} \mid h_m \in b \times \Ob}} \text{ otherwise} \end{cases}$$
+$$\mu_b\AP{o_+ \mid h}:=\begin{cases} 0 \text{ if } \tau(h)=\infty \\ 0 \text{ if } \tau(h) \leq \frac{n}{2} \\ \frac{1}{\tau(h)}\Abs{\AC{m \in \AB{\tau(h)} \mid h_m \in b \times \Ob}} \text{ otherwise} \end{cases}$$
 
-That is...
+Also, define the reward function $r$ by setting $r(h)=1$ for any history $h$ that ends with $o_+$ and $r(h) = 0$ for any other history. Denote $\upsilon_{a,b} := \AP{\mu_{a,b},r}$. That is, both universes count the number of actions $a$ and $b$ until time $\tau$: the first time action $c$ is taken. At times between $\tau$ and $2\tau$, they produce rewards with frequency that equals the relative fraction of the corresponding action in the count. Before $\tau$ and after $2\tau$, they produce no rewards.
+
+Now, we haven't defined sane policies for arbitrary environments, but the spirit of the definition is that a sane policy is unlikely to take actions with irreversible long-term negative consequences and has to have some non-negligible probability of taking an optimal (or at least nearly optimal) action. For example, we might define it as follows
+
+\#Definition
+
+Consider $\beta\in(0,\infty)$, $\gamma,\epsilon\in(0,1)$ and a universe $\upsilon=(\mu,r)$. A policy $\sigma$ is called *$(\epsilon,\beta)$-sane* for $(\upsilon,\gamma)$ when for any $h\in\HD{\mu}$
+
+i. $$\exists a^* \in \Argmax{a \in \A}{\Q^\upsilon_\gamma(h,a)} : \sigma\AP{a^* \mid h} \geq \epsilon$$
+
+ii. $$\forall a \in \A: \sigma\AP{a \mid h} \leq \exp \AB{\beta\AP{\Q^\upsilon_\gamma(h,a) - \V^\upsilon_\gamma(h)}}$$
+
+***
+
+Here, we consider the asymptotics $\gamma \rightarrow 1$, $\beta \rightarrow \infty$ but should include the scenario $\beta = o\AP{\frac{1}{1-\gamma}}$ so that actions with *short-term* negative consequences are allowed (otherwise this would be some sort of "rationality" requirement rather than a mere "sanity" requirement).
+
+Now, the optimal policy for $\upsilon_{a}$ (respectively $\upsilon_b$) is taking action $a$ (resp. $b$) until some time $\tau^*(\gamma) = \Theta\AP{\frac{1}{1-\gamma}}$ and taking action $c$ at this time (obviously, the following actions don't affect anything). Let $\pi^*_{a,b}$ be policies that are optimal *even off-policy* (so that their decision when to take action $c$ depends on the history of actions before). It is easy to see that the following policies $\sigma_{a,b}$ are $\AP{\frac{1}{2},\beta}$-sane for the respective universes and some "legitimate" choice of $\beta$:
+
+$$\sigma_a(a \mid h) := \sigma_a(b \mid h) := \frac{1}{2}\pi^*_a(a \mid h)$$
+
+$$\sigma_b(a \mid h) := \sigma_b(b \mid h) := \frac{1}{2}\pi^*_b(b \mid h)$$
+
+That is, whenever $\pi^*$ suggests taking action $c$, $\sigma$ complies with it, and whenever $\pi^*$ suggests taking action $a$ or $b$, $\sigma$ flips a coin to decide which one to take. Indeed, in expectation, taking the wrong action out of $\{a,b\}$ loses one time moment of reward and is therefore equivalent to a "short-term" loss.
 
 \end{document}
 
