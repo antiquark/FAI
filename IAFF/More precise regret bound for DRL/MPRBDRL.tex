@@ -177,7 +177,7 @@ $$\Dtva{\T^n(s),\Ea{k \sim \zeta_s}{\T^n \xi_s(k)}} \leq F_\T \lambda_{\T}^{-n}$
 
 ***
 
-For the purpose of this write-up, we will use a definition of local sanity slightly stronger than what [previously](https://agentfoundations.org/item?id=1656) appeared as "Definition 4." We think this strengthening is not substantial, but also the current analysis can be generalized to the weaker case by adding a term proportional to the 2nd derivative of $\V$ (or the 2nd moment of the mixing time). We leave out the details for the time being.
+For the purpose of this essay, we will use a definition of local sanity slightly stronger than what [previously](https://agentfoundations.org/item?id=1656) appeared as "Definition 4." We think this strengthening is not substantial, but also the current analysis can be generalized to the weaker case by adding a term proportional to the 2nd derivative of $\V$ (or the 2nd moment of the mixing time). We leave out the details for the time being.
 
 We will use the notation $\A_M^\omega(s) := \bigcap_{k \in \Nats} \A_M^k(s)$ (this is always non-empty).
 
@@ -201,13 +201,11 @@ There is some $C \in (0,\infty)$ s.t. the following holds.
 
 Consider $\In$ an interface, $\epsilon \in (0,1)$ and $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $\upsilon^k$. For each $k \in [N]$, let $M^k$ be the corresponding MDP and $\UC^k \subseteq \St_{M^k}$ the corresponding set of uncorrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \UC^k$ and $S^j(h) \in \UC^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ and $\alpha \in (0,1)$, if $\alpha \ll 1$ then
 
-$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C\AP{\frac{\alpha N^5 \ln{N} \sum_{j = 0}^{N-1} \max_{s \in \UC_k} \Abs{\V^1_{M^k}(s)}}{\epsilon}}^{1/4}$$
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C\AP{\frac{\alpha N^5 \ln{N} \sum_{j = 0}^{N-1} \max_{s \in \UC_k} \Abs{\V^1_{M^j}(s)}}{\epsilon}}^{1/4}$$
 
 ***
 
-Here, the assumption $\alpha \ll 1$ is used only to simplify Definition 2. If we replace $\A_M^\omega$ in condition iii by the set of actions optimal for the *particular value of $\alpha$*, then we can drop this assumption. 
-
-The factor $\max_{s \in \UC_k} \Abs{\V^1_{M^k}(s)}$ might seem difficult to understand. However, it can be bounded as follows.
+The factor $\max_{s \in \UC_j} \Abs{\V^1_{M^j}(s)}$ might seem difficult to understand. However, it can be bounded as follows.
 
 \#Proposition 2
 
@@ -229,17 +227,58 @@ $$\T_{M^k \pi^k}\AP{\UC^k \mid \UC^k} = 1$$
 
 Assuming w.l.o.g. all uncorrupt states are reachable from $S^k(\Estr)$, $\pi^k$ is guaranteed to exist thanks to condition iii of Definition 2 (if some uncorrupt state is unreachable, we can consider it to be corrupt.) Let $F^k\in(0,\infty)$, $\lambda^k\in(0,1)$ and $\Pd^k \subseteq \Nats^+$ be as in Proposition 1, for the Markov chain $\T_{M^k\pi^k}: \UC^k \M \UC^k$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ and $\alpha \in (0,1)$, if $\alpha \ll 1$ then
 
-$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C'\AP{\frac{\alpha N^5 \ln{N} \sum_{j = 0}^{N-1} \AP{\frac{F^k}{1-\lambda^k}+\max{\Pd^k}}}{\epsilon}}^{1/4}$$
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C'\AP{\frac{\alpha N^5 \ln{N} \sum_{j = 0}^{N-1} \AP{\frac{F^j}{1-\lambda^j}+\max{\Pd^j}}}{\epsilon}}^{1/4}$$
 
 \section{Appendix A}
 
-\#Proposition A.1
+The following appeared in a [previous essay](https://agentfoundations.org/item?id=1723) as "Proposition C.1".
 
-Hahaha
+\#Proposition A.N1
 
-\#Proof of Proposition A.1
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\eta \in (0,\frac{1}{N})$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\Dl: \Adfh \times \A \rightarrow \Ada$ and $\{\Dl^{!k}: \Adfh \times \A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M \A$, $\Dl': \Adfh \times \A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\in \Delta\left(\A \times \Adao\right)^\omega$ as follows
+ 
+$$\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\left(b,a,o \mid x\right):=\pi\left(b \mid \underline{\underline{x}}\right)\Dl'\left(a \mid \underline{x},b\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
 
-Mwhahaha
+We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
+
+i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\Dl^{!k},\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in \A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\eta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)}=O\left(\frac{\ln N}{\eta \epsilon}\right)$$
+
+ii. $\Dtv\left(\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\Dl,\pi\right]},\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\Dl^{!j},\pi\right]}\right) \leq (N-1)\eta$
+
+iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \ne \bot$ then $\sigma^k\left(\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
+
+iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \AC{\pi\left(\underline{x}\right), \bot}$ then $\sigma^k\left(\pi\left(\underline{x}\right) \mid \underline{x}\right) \leq \epsilon$
+
+***
+
+The following is a simple special case??? of what appeared there as "Proposition B.2".
+
+\#Proposition A.N2
+
+Consider some $\tau\in(0,\infty)$, $T\in\Nats^+$, a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$ and an arbitrary $\In$-policy $\pi^0: \FH \M \A$. Let $\pi^*$ be a Blackwell optimal policy for $M$, and for any $n \in \Nats$, let $\pi^*_n$ be an $\In$-policy s.t. for any $h \in \HD{\mu}$
+
+$$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \pi^*\AP{S(h)} \text{ otherwise} \end{cases}$$
+
+Assume that
+
+i. For any $h \in \HD{\mu}$ $$\Supp{\pi^0(h)} \subseteq \A_{M\pi^*}^0\AP{S(h)}$$
+
+ii. For any $s \in \St_M$ and $\gamma\in(0,1)$??? $$\Abs{\frac{\D\V_{M}\AP{s,\gamma}}{\D\gamma}} \leq \tau$$
+
+Then, for any $\gamma\in(0,1)$ s.t. $1-\gamma \ll 1$,
+
+$$\EU^{*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}$$
+
+***
+
+?
+
+\#Proposition A.N3
+
+\#Proof of Theorem 1
+
+TBD
 
 \end{document}
 
