@@ -183,9 +183,9 @@ We will use the notation $\A_M^\omega(s) := \bigcap_{k \in \Nats} \A_M^k(s)$ (th
 
 \#Definition 2
 
-Let $\upsilon = (\mu,r)$ be a universe and $\epsilon > 0$. A policy $\pi$ is said to be *locally $\epsilon$-sane for $\upsilon$* when there are $M$, $S$ and $\SC_M \subseteq \St_M$ (the set of corrupt states) s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$, $S(\Estr) \not\in \SC_M$ and for any $h \in \HD{\mu}$, if $S(h) \not\in \SC_M$ then
+Let $\upsilon = (\mu,r)$ be a universe and $\epsilon > 0$. A policy $\pi$ is said to be *locally $\epsilon$-sane for $\upsilon$* when there are $M$, $S$ and $\UC_M \subseteq \St_M$ (the set of uncorrupt states) s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$, $S(\Estr) \in \UC_M$ and for any $h \in \HD{\mu}$, if $S(h) \in \UC_M$ then
 
-i. If $a \in \Supp{\pi(h)}$ then $$\T_M\AP{\SC_M \mid S(h),a} = 0$$
+i. $$\forall a \in \Supp{\pi(h)}: \T_M\AP{\UC_M \mid S(h),a} = 1$$
 
 ii. $$\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$$
 
@@ -195,21 +195,27 @@ iii. $$\exists a \in \A_M^\omega\left(S(h)\right): \pi(a \mid h) > \epsilon$$
 
 We obtain the following regret bound.
 
-\#Theorem
+\#Theorem 1
 
 There is some $C \in (0,\infty)$ s.t. the following holds.
 
-Consider $\In$ an interface, $\epsilon \in (0,1)$ and $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $\upsilon^k$. For each $k \in [N]$, let $M^k$ be the corresponding MDP and $\SC_k \subseteq \St_{M^k}$ the corresponding set of corrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \not\in \SC_k$ and $S^j(h) \not\in \SC_j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
+Consider $\In$ an interface, $\epsilon \in (0,1)$ and $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $\upsilon^k$. For each $k \in [N]$, let $M^k$ be the corresponding MDP and $\UC^k \subseteq \St_{M^k}$ the corresponding set of uncorrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \UC^k$ and $S^j(h) \in \UC^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ and $\alpha \in (0,1)$, if $\alpha \ll 1$ then
 
-$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C\AP{\frac{\alpha N^5 \ln{N} \sum_{j = 0}^{N-1} \max_{s \in \UC_k} \Abs{\V^1_{M^k}(s)}}{\epsilon}}^{1/4}$$
 
 ***
 
-?
+Here, the assumption $\alpha \ll 1$ is used only to simplify Definition 2. If we replace $\A_M^\omega$ in condition iii by the set of actions optimal for the *particular value of $\alpha$*, then we can drop this assumption. 
 
-\#Corollary
+The factor $\max_{s \in \UC_k} \Abs{\V^1_{M^k}(s)}$ might seem difficult to understand. However, it can be bounded in terms of the *mixing time* of $M^k$. This leads to the following
 
-...$F^k$ and $\lambda^k$ constants as in Proposition 1...
+\#Corollary 1
+
+Under the conditions of Theorem 1, let $\pi^k$ be a Blackwell optimal policy for $M^k$ s.t. 
+
+$$\T_{M^k \pi^k}\AP{\UC^k \mid \UC^k} = 1$$ 
+
+Assuming w.l.o.g. all uncorrupt states are reachable from $S^k(\Estr)$, $\pi^k$ is guaranteed to exist thanks to Definition 2 (if some uncorrupt state is unreachable, we can consider it to be corrupt.) Let $F^k$ and $\lambda^k$ constants as in Proposition 1, for the Markov chain $\T_{M^k\pi^k}: \UC^k \M \UC^k$...
 
 \section{Appendix A}
 
