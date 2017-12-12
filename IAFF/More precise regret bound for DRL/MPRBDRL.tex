@@ -165,21 +165,51 @@ Consider $\St$ a finite set and $\T: \St \M \St$. We say that $k \in \Nats^+$ is
 
 ***
 
-The following is a relatively easy corollary of the Perron-Frobenius theorem which we give without proof. *[I believe this is completely standard and would be grateful to get a source for this which treats the reducible case; of course I can produce the proof but it seems redundant.]*
+The following is a corollary of the Perron-Frobenius theorem which we give without proof. *[I believe this is completely standard and would be grateful to get a source for this which treats the reducible case; of course I can produce the proof but it seems redundant.]*
 
 \#Proposition 1
 
-Consider $\St$ a finite set and $\T: \St \M \St$. Then, there are $C_\T \in (0,\infty)$ and $\lambda_\T\in(0,1)$ s.t. for any $s \in \St$, there are some $\zeta_s \in \Delta\Pd_\T$ and $\xi_s: \Pd_\T \M \St$ s.t. for any $n \in \Nats$
+Consider $\St$ a finite set and $\T: \St \M \St$. Then, there are $F_\T \in (0,\infty)$ and $\lambda_\T\in(0,1)$ s.t. for any $s \in \St$, there are some $\zeta_s \in \Delta\Pd_\T$ and $\xi_s: \Pd_\T \M \St$ s.t. for any $n \in \Nats$
 
-$$\forall k \in \Pd_T: \T^{n+k} \xi_s(k) = \T^n \xi_s(k)$$
+$$\forall k \in \Pd_T: \T^k \xi_s(k) = \xi_s(k)$$
 
-$$\Dtva{\T^n(s),\Ea{k \sim \zeta_s}{\T^n \xi_s(k)}} \leq C_\T \lambda_{\T}^{-n}$$
+$$\Dtva{\T^n(s),\Ea{k \sim \zeta_s}{\T^n \xi_s(k)}} \leq F_\T \lambda_{\T}^{-n}$$
 
 ***
 
-% Mixing time...
+For the purpose of this write-up, we will use a definition of local sanity slightly stronger than what [previously](https://agentfoundations.org/item?id=1656) appeared as "Definition 4." We think this strengthening is not substantial, but also the current analysis can be generalized to the weaker case by adding a term proportional to the 2nd derivative of $\V$ (or the 2nd moment of the mixing time). We leave out the details for the time being.
 
-Bar
+We will use the notation $\A_M^\omega(s) := \bigcap_{k \in \Nats} \A_M^k(s)$ (this is always non-empty).
+
+\#Definition 2
+
+Let $\upsilon = (\mu,r)$ be a universe and $\epsilon > 0$. A policy $\pi$ is said to be *locally $\epsilon$-sane for $\upsilon$* when there are $M$, $S$ and $\SC_M \subseteq \St_M$ (the set of corrupt states) s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$, $S(\Estr) \not\in \SC_M$ and for any $h \in \HD{\mu}$, if $S(h) \not\in \SC_M$ then
+
+i. If $a \in \Supp{\pi(h)}$ then $$\T_M\AP{\SC_M \mid S(h),a} = 0$$
+
+ii. $$\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$$
+
+iii. $$\exists a \in \A_M^\omega\left(S(h)\right): \pi(a \mid h) > \epsilon$$
+
+***
+
+We obtain the following regret bound.
+
+\#Theorem
+
+There is some $C \in (0,\infty)$ s.t. the following holds.
+
+Consider $\In$ an interface, $\epsilon \in (0,1)$ and $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $\upsilon^k$. For each $k \in [N]$, let $M^k$ be the corresponding MDP and $\SC_k \subseteq \St_{M^k}$ the corresponding set of corrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \not\in \SC_k$ and $S^j(h) \not\in \SC_j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
+
+$$\EU_{\upsilon^k}^*(\gamma) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(\gamma) = O\left((1-\gamma)^{1/4}\right)$$
+
+***
+
+?
+
+\#Corollary
+
+...$F^k$ and $\lambda^k$ constants as in Proposition 1...
 
 \section{Appendix A}
 
