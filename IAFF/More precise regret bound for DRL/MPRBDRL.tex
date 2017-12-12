@@ -207,15 +207,29 @@ $$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\p
 
 Here, the assumption $\alpha \ll 1$ is used only to simplify Definition 2. If we replace $\A_M^\omega$ in condition iii by the set of actions optimal for the *particular value of $\alpha$*, then we can drop this assumption. 
 
-The factor $\max_{s \in \UC_k} \Abs{\V^1_{M^k}(s)}$ might seem difficult to understand. However, it can be bounded in terms of the *mixing time* of $M^k$. This leads to the following
+The factor $\max_{s \in \UC_k} \Abs{\V^1_{M^k}(s)}$ might seem difficult to understand. However, it can be bounded as follows.
+
+\#Proposition 2
+
+Let $M$ be an MDP, $\pi$ a Blackwell optimal policy for $M$ and $F \in (0,\infty)$, $\lambda \in (0,1)$, $\Pd \subseteq \Nats^+$ as in Proposition 1 applied to the Markov chain $\T_{M\pi}$. Then
+
+$$\max_{s \in \St_M} {\Abs{\V_M^1(s)}} = O\AP{\frac{F}{1-\lambda}+\max{\Pd}}$$
+
+***
+
+Theorem 1 and Proposition 2 immediately give the following:
 
 \#Corollary 1
+
+There is some $C' \in (0,\infty)$ s.t. the following holds.
 
 Under the conditions of Theorem 1, let $\pi^k$ be a Blackwell optimal policy for $M^k$ s.t. 
 
 $$\T_{M^k \pi^k}\AP{\UC^k \mid \UC^k} = 1$$ 
 
-Assuming w.l.o.g. all uncorrupt states are reachable from $S^k(\Estr)$, $\pi^k$ is guaranteed to exist thanks to Definition 2 (if some uncorrupt state is unreachable, we can consider it to be corrupt.) Let $F^k$ and $\lambda^k$ constants as in Proposition 1, for the Markov chain $\T_{M^k\pi^k}: \UC^k \M \UC^k$...
+Assuming w.l.o.g. all uncorrupt states are reachable from $S^k(\Estr)$, $\pi^k$ is guaranteed to exist thanks to condition iii of Definition 2 (if some uncorrupt state is unreachable, we can consider it to be corrupt.) Let $F^k\in(0,\infty)$, $\lambda^k\in(0,1)$ and $\Pd^k \subseteq \Nats^+$ be as in Proposition 1, for the Markov chain $\T_{M^k\pi^k}: \UC^k \M \UC^k$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ and $\alpha \in (0,1)$, if $\alpha \ll 1$ then
+
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C'\AP{\frac{\alpha N^5 \ln{N} \sum_{j = 0}^{N-1} \AP{\frac{F^k}{1-\lambda^k}+\max{\Pd^k}}}{\epsilon}}^{1/4}$$
 
 \section{Appendix A}
 
