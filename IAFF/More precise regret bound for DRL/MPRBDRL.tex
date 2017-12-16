@@ -169,29 +169,31 @@ The following is a corollary of the Perron-Frobenius theorem which we give witho
 
 \#Proposition 1
 
-Consider $\St$ a finite set and $\T: \St \M \St$. Then, there are $F_\T \in (0,\infty)$ and $\lambda_\T\in(0,1)$ s.t. for any $s \in \St$, there are some $\zeta_s \in \Delta\Pd_\T$ and $\xi_s: \Pd_\T \M \St$ s.t. for any $n \in \Nats$
+Consider $\St$ a finite set and $\T: \St \M \St$. Then, there are $F_\T \in (0,\infty)$, $\lambda_\T\in(0,1)$, $\zeta: \St \M \Pd_\T$ and $\xi: \St \times \Pd_\T \M \St$ s.t. for any $s \in \St_M$
 
-$$\forall k \in \Pd_T: \T^k \xi_s(k) = \xi_s(k)$$
+$$\forall k \in \Pd_T: \T^k \xi(s,k) = \xi(s,k)$$
 
-$$\Dtva{\T^n(s),\Ea{k \sim \zeta_s}{\T^n \xi_s(k)}} \leq F_\T \lambda_{\T}^{-n}$$
+$$\forall n \in \Nats: \Dtva{\T^n(s),\Ea{k \sim \zeta(s)}{\T^n \xi(s,k)}} \leq F_\T \lambda_{\T}^{-n}$$
 
 ***
 
 For the purpose of this essay, we will use a definition of local sanity slightly stronger than what [previously](https://agentfoundations.org/item?id=1656) appeared as "Definition 4." We think this strengthening is not substantial, but also the current analysis can be generalized to the weaker case by adding a term proportional to the 2nd derivative of $\V$ (or the 2nd moment of the mixing time). We leave out the details for the time being.
 
-We will use the notation $\A_M^\omega(s) := \bigcap_{k \in \Nats} \A_M^k(s)$ (this is always non-empty).
-
 \#Definition 2
 
-Let $\upsilon = (\mu,r)$ be a universe and $\epsilon > 0$. A policy $\pi$ is said to be *locally $\epsilon$-sane for $\upsilon$* when there are $M$, $S$ and $\UC_M \subseteq \St_M$ (the set of uncorrupt states) s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$, $S(\Estr) \in \UC_M$ and for any $h \in \HD{\mu}$, if $S(h) \in \UC_M$ then
+Let $\upsilon = (\mu,r)$ be a universe and $\gamma,\epsilon \in (0,1)$. A policy $\pi$ is said to be *locally $\epsilon$-sane for $(\upsilon,\gamma)$* when there are $M$, $S$ and $\UC_M \subseteq \St_M$ (the set of uncorrupt states) s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$, $S(\Estr) \in \UC_M$ and for any $h \in \HD{\mu}$, if $S(h) \in \UC_M$ then
 
 i. $$\forall a \in \Supp{\pi(h)}: \T_M\AP{\UC_M \mid S(h),a} = 1$$
 
 ii. $$\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$$
 
-iii. $$\exists a \in \A_M^\omega\left(S(h)\right): \pi(a \mid h) > \epsilon$$
+iii. $$\exists a \in \A: \pi(a \mid h) > \epsilon,\ \Q_M\AP{S(h),a,\gamma} = \V_M\AP{S(h),\gamma}$$
+
+%$$\exists a \in \A_M^\omega\left(S(h)\right): \pi(a \mid h) > \epsilon$$
 
 ***
+
+Note that for $1 - \gamma \ll 1$, the condition $\Q_M\AP{S(h),a,\gamma} = \V_M\AP{S(h),\gamma}$ is equivalent to $a \in \bigcap_{k \in \Nats} \A_M^k(s)$.
 
 We obtain the following regret bound.
 
@@ -199,19 +201,19 @@ We obtain the following regret bound.
 
 There is some $C \in (0,\infty)$ s.t. the following holds.
 
-Consider $\In$ an interface, $\epsilon \in (0,1)$ and $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $\upsilon^k$. For each $k \in [N]$, let $M^k$ be the corresponding MDP and $\UC^k \subseteq \St_{M^k}$ the corresponding set of uncorrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \UC^k$ and $S^j(h) \in \UC^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ and $\alpha \in (0,1)$, if $\alpha \ll 1$ then
+Consider $\In$ an interface, $\alpha,\epsilon \in (0,1)$ and $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $(\upsilon^k,1-\alpha)$. For each $k \in [N]$, let $M^k$ be the corresponding MDP and $\UC^k \subseteq \St_{M^k}$ the corresponding set of uncorrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \UC^k$ and $S^j(h) \in \UC^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C\AP{\frac{\alpha N^5 \ln{N} \sum_{j = 0}^{N-1} \max_{s \in \UC_k} \Abs{\V^1_{M^j}(s)}}{\epsilon}}^{1/4}$$
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C\AP{\frac{\alpha N^5 \ln{N} \sum_{j = 0}^{N-1} \max_{s \in \UC_k} \sup_{\gamma \in [1-\alpha,1)} \Abs{\frac{\D\V_{M^j}(s,\gamma)}{\D\gamma}}}{\epsilon}}^{1/4}$$
 
 ***
 
-The factor $\max_{s \in \UC_j} \Abs{\V^1_{M^j}(s)}$ might seem difficult to understand. However, it can be bounded as follows.
+The factor $\max_{s \in \UC_k} \sup_{\gamma \in [1-\alpha,1]} \Abs{\frac{\D\V_{M^j}(s,\gamma)}{\D\gamma}}$ might seem difficult to understand. However, it can be bounded as follows.
 
 \#Proposition 2
 
 Let $M$ be an MDP, $\pi$ a Blackwell optimal policy for $M$ and $F \in (0,\infty)$, $\lambda \in (0,1)$, $\Pd \subseteq \Nats^+$ as in Proposition 1 applied to the Markov chain $\T_{M\pi}$. Then
 
-$$\max_{s \in \St_M} {\Abs{\V_M^1(s)}} = O\AP{\frac{F}{1-\lambda}+\max{\Pd}}$$
+$$\max_{s \in \St_M} \sup_{\gamma \in (0,1)} \Abs{\frac{\D\V_M(s,\gamma)}{\D\gamma}} = O\AP{\frac{F}{1-\lambda}+\max{\Pd}}$$
 
 ***
 
@@ -225,7 +227,7 @@ Under the conditions of Theorem 1, let $\pi^k$ be a Blackwell optimal policy for
 
 $$\T_{M^k \pi^k}\AP{\UC^k \mid \UC^k} = 1$$ 
 
-Assuming w.l.o.g. all uncorrupt states are reachable from $S^k(\Estr)$, $\pi^k$ is guaranteed to exist thanks to condition iii of Definition 2 (if some uncorrupt state is unreachable, we can consider it to be corrupt.) Let $F^k\in(0,\infty)$, $\lambda^k\in(0,1)$ and $\Pd^k \subseteq \Nats^+$ be as in Proposition 1, for the Markov chain $\T_{M^k\pi^k}: \UC^k \M \UC^k$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ and $\alpha \in (0,1)$, if $\alpha \ll 1$ then
+Assuming w.l.o.g. all uncorrupt states are reachable from $S^k(\Estr)$, $\pi^k$ is guaranteed to exist thanks to condition iii of Definition 2 (if some uncorrupt state is unreachable, we can consider it to be corrupt.) Let $F^k\in(0,\infty)$, $\lambda^k\in(0,1)$ and $\Pd^k \subseteq \Nats^+$ be as in Proposition 1, for the Markov chain $\T_{M^k\pi^k}: \UC^k \M \UC^k$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ 
 
 $$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C'\AP{\frac{\alpha N^5 \ln{N} \sum_{j = 0}^{N-1} \AP{\frac{F^j}{1-\lambda^j}+\max{\Pd^j}}}{\epsilon}}^{1/4}$$
 
