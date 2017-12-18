@@ -262,19 +262,17 @@ The following is a simple modification of what appeared there as "Proposition B.
 
 \#Proposition A.N2
 
-Consider some $\gamma\in(0,1)$, $\tau\in(0,\infty)$, $T\in\Nats^+$, a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, a policy $\pi^*: \St_M \rightarrow \A$ and an arbitrary $\In$-policy $\pi^0: \FH \M \A$. Assume that for any $s \in \St_M$
-
-$$\pi^*(s) \in \Argmax{a \in \A}{\Q_M(s,a,\gamma)}$$
-
-For any $n \in \Nats$, let $\pi^*_n$ be an $\In$-policy s.t. for any $h \in \HD{\mu}$
+Consider some $\gamma\in(0,1)$, $\tau\in(0,\infty)$, $T\in\Nats^+$, a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, some $\pi^*: \HD{\mu} \rightarrow \A$ and some $\pi^0: \HD{\mu} \M \A$. For any $n \in \Nats$, let $\pi^*_n$ be an $\In$-policy s.t. for any $h \in \HD{\mu}$
 
 $$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \pi^*(h) \text{ otherwise} \end{cases}$$
 
-Assume that
+Assume that for any $h \in \HD{\mu}$
 
-i. For any $h \in \HD{\mu}$ $$\Supp{\pi^0(h)} \subseteq \A_{M\pi^*}^0\AP{S(h)}$$
+i. $$\pi^*(s) \in \A_{M}^0\AP{S(h)} \cap \Argmax{a \in \A}{\Q_M(s,a,\gamma)}$$
 
-ii. For any $s \in \St_M$ and $\theta\in(\gamma,1)$ $$\Abs{\frac{\D\V_{M\pi^*}\AP{s,\theta}}{\D\theta}} \leq \tau$$
+ii. $$\Supp{\pi^0(h)} \subseteq \A_{M}^0\AP{S(h)}$$
+
+iii. For any $\theta\in(\gamma,1)$ $$\Abs{\frac{\D\V_{M\pi^*}\AP{S(h),\theta}}{\D\theta}} \leq \tau$$
 
 Then
 
@@ -370,13 +368,13 @@ Here, $C_h \in \Reals$ is a constant defined s.t. the probabilities sum to 1. We
 
 $$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$
 
-Condition iii of Proposition C.1??? and condition i of Definition A.1 imply that for any $h \in \HD{\mu^k}$
+Condition iii of Proposition A.N1 and condition ii of Definition 2 imply that for any $h \in \HD{\mu^k}$
 
-$$\Supp{\left[\sigma^k\right]\underline{\pi}^{?k}(h)} \subseteq \A^0_{M^k\pi^k}\left(S^k\left(h\right)\right)$$
+$$\Supp{\AB{\sigma^k}\underline{\pi}^{?k}(h)} \subseteq \A^0_k\AP{S^k(h)}$$
 
-This means we can apply Proposition B.2 and get
+This means we can apply Proposition A.N2 and get
 
-$$\EU^{\pi^k S^k}_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
+$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}???$$
 
 Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition B.2. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
 
