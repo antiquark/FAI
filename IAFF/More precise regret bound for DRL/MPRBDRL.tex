@@ -418,9 +418,9 @@ $$\EU_n^{?k}:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m}\E{x\s
 
 We have
 
-$$R^{?k} \leq (1-(1-\alpha)^T)\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
+$$R^{?k} \leq \AP{1-(1-\alpha)^T}sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
 
-$$R^{?k} \leq  (1-(1-\alpha)^T)\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}_n-\EU^{!!k}_n+\EU^{!!k}_n-\EU^{!k}_n+\EU^{!k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
+$$R^{?k} \leq\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}_n-\EU^{!!k}_n+\EU^{!!k}_n-\EU^{!k}_n+\EU^{!k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
 
 Condition iv of Proposition A.N1 implies that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
 
@@ -430,21 +430,21 @@ $$\pi^{!!k}_n\AP{\pi^k\AP{S^k(h)} \mid h} = 1$$
 
 Therefore, $\pi^{!!k}_n = \pi^{*k}_n$, and we remain with
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}???$$
+$$R^{?k} \leq\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{!!k}_n-\EU^{!k}_n+\EU^{!k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
 
 We have
 
-$$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \Pr_{x\sim\rho^{!k}_n}\left[\exists m \in [T]: x_{nT+m} \in \bot\Ado\right]$$
+$$\Abs{\EU^{!!k}_n-\EU^{!k}_n} \leq \Pr_{x\sim\rho^{!k}_n}\left[\exists m \in [T]: x_{nT+m} \in \bot\Ado\right]$$
 
 Since $\Z_{nT}^{!}(K) \geq \eta$, it follows that
 
-$$\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma) \leq \frac{1}{\eta}\Pr_{x\sim\rho^{?k}}\left[\exists m \in [T]: x_{nT+m} \in \bot\Ado\right] \leq \frac{1}{\eta}\Ea{x\sim\rho^{?k}}{\Abs{\AC{m \in [T] \mid x_{nT+m} \in \bot\Ado}}}$$
+$$\Abs{\EU^{!!k}_n-\EU^{!k}_n} \leq \frac{1}{\eta}\Pr_{x\sim\rho^{?k}}\left[\exists m \in [T]: x_{nT+m} \in \bot\Ado\right] \leq \frac{1}{\eta}\Ea{x\sim\rho^{?k}}{\Abs{\AC{m \in [T] \mid x_{nT+m} \in \bot\Ado}}}$$
 
-$$\sum_{n=0}^\infty \AP{\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)} \leq \frac{1}{\eta}\Ea{x\sim\rho^{?k}}{\Abs{\AC{n \in \Nats \mid x_n \in \bot\Ado}}}$$
+$$\sum_{n=0}^\infty \Abs{\EU^{!!k}_n-\EU^{!k}_n} \leq \frac{1}{\eta}\Ea{x\sim\rho^{?k}}{\Abs{\AC{n \in \Nats \mid x_n \in \bot\Ado}}}$$
 
-Using condition i of Proposition C.1, we conclude
+Using condition i of Proposition A.N1, we conclude
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+$$R^{?k} \leq\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{!k}_n-\EU^{?k}_n\right) + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)???$$
 
 Define the random variables $\Sqn{U^!_n : \Omega \rightarrow [0,1]}$ by 
 
