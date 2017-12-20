@@ -179,35 +179,41 @@ $$\forall n \in \Nats: \Dtva{\T^n(s),\Ea{k \sim \zeta(s)}{\T^n \xi(s,k)}} \leq F
 
 For the purpose of this essay, we will use a definition of local sanity slightly stronger than what [previously](https://agentfoundations.org/item?id=1656) appeared as "Definition 4." We think this strengthening is not substantial, but also the current analysis can be generalized to the weaker case by adding a term proportional to the 2nd derivative of $\V$ (or the 2nd moment of the mixing time). We leave out the details for the time being.
 
+We will use the notation $\A_M^\omega(s):=\bigcap_{k\in\Nats} \A_M^k(s)$.
+
 \#Definition 2
 
-Let $\upsilon = (\mu,r)$ be a universe and $\gamma,\epsilon \in (0,1)$. A policy $\pi$ is said to be *locally $\epsilon$-sane for $(\upsilon,\gamma)$* when there are $M$, $S$ and $\UC_M \subseteq \St_M$ (the set of uncorrupt states) s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$, $S(\Estr) \in \UC_M$ and for any $h \in \HD{\mu}$, if $S(h) \in \UC_M$ then
+Let $\upsilon = (\mu,r)$ be a universe and $\epsilon \in (0,1)$. A policy $\sigma$ is said to be *locally $\epsilon$-sane for $\upsilon$* when there are $M$, $S$ and $\UC_M \subseteq \St_M$ (the set of uncorrupt states) s.t. $\upsilon$ is an $\Ob$-realization of $M$ with state function $S$, $S(\Estr) \in \UC_M$ and for any $h \in \HD{\mu}$, if $S(h) \in \UC_M$ then
 
-i. $$\forall a \in \Supp{\pi(h)}: \T_M\AP{\UC_M \mid S(h),a} = 1$$
+i. $$\forall a \in \Supp{\sigma(h)}: \T_M\AP{\UC_M \mid S(h),a} = 1$$
 
-ii. $$\Supp{\pi(h)} \subseteq \A_M^0\left(S(h)\right)$$
+ii. $$\Supp{\sigma(h)} \subseteq \A_M^0\left(S(h)\right)$$
 
-iii. $$\exists a \in \A: \pi(a \mid h) > \epsilon,\ \Q_M\AP{S(h),a,\gamma} = \V_M\AP{S(h),\gamma}$$
-
-%$$\exists a \in \A_M^\omega\left(S(h)\right): \pi(a \mid h) > \epsilon$$
+iii. $$\exists a \in \A_M^\omega\AP{S(h)}: \sigma(a \mid h) > \epsilon$$
 
 ***
 
-Note that for $1 - \gamma \ll 1$, the condition $\Q_M\AP{S(h),a,\gamma} = \V_M\AP{S(h),\gamma}$ is equivalent to $a \in \bigcap_{k \in \Nats} \A_M^k(s)$.
+Recall that for any MPD $M$, there is $\gamma_M\in(0,1)$ s.t. for any $\gamma\in[\gamma_M,1)$, $a \in \A_M^\omega(s)$ if and only if $\Q_M(s,a,\gamma)=\V_M(s,\gamma)$.
 
-We obtain the following regret bound.
+We are now ready to state the regret bound.
 
 \#Theorem 1
 
 There is some $C \in (0,\infty)$ s.t. the following holds.
 
-Consider $\In$ an interface, $\alpha,\epsilon \in (0,1)$ and $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. Assume that for each $k \in [N]$, $\sigma^k$ is locally $\epsilon$-sane for $(\upsilon^k,1-\alpha)$. For each $k \in [N]$, let $M^k$ be the corresponding MDP and $\UC^k \subseteq \St_{M^k}$ the corresponding set of uncorrupt states. Assume further that for any $k,j \in \Nats$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \UC^k$ and $S^j(h) \in \UC^j$, then $r^k(h)=r^j(h)$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
+Consider $\In$ an interface, $\alpha,\epsilon \in (0,1)$, $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. For each $k \in [N]$, let $\sigma^k$ be a locally $\epsilon$-sane policy for $\upsilon^k$. For each $k \in [N]$, let $M^k$ be the corresponding MDP and $\UC^k \subseteq \St_{M^k}$ the corresponding set of uncorrupt states. Assume that 
 
-$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C\AP{\alpha N^5 \ln{N} \AP{\epsilon^{-1}+\Abs{\A}} \sum_{j = 0}^{N-1} \max_{s \in \UC_j} \sup_{\gamma \in [1-\alpha,1)} \Abs{\frac{\D\V_{M^j}(s,\gamma)}{\D\gamma}}}^{1/4}$$
+i. For each $k \in [N]$, $\alpha \leq 1 - \gamma_{M^k}$.
+
+ii. For any $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in \UC^k$ and $S^j(h) \in \UC^j$, then $r^k(h)=r^j(h)$. 
+
+Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
+
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C\AP{\alpha N^5 \ln{N} \AP{\epsilon^{-1}+\Abs{\A}} \sum_{j = 0}^{N-1} \max_{s \in \UC^j} \sup_{\gamma \in [1-\alpha,1)} \Abs{\frac{\D\V_{M^j}(s,\gamma)}{\D\gamma}}}^{1/4}$$
 
 ***
 
-The factor $\max_{s \in \UC_k} \sup_{\gamma \in [1-\alpha,1]} \Abs{\frac{\D\V_{M^j}(s,\gamma)}{\D\gamma}}$ might seem difficult to understand. However, it can be bounded as follows.
+The factor $\max_{s \in \UC^k} \sup_{\gamma \in [1-\alpha,1]} \Abs{\frac{\D\V_{M^j}(s,\gamma)}{\D\gamma}}$ might seem difficult to understand. However, it can be bounded as follows.
 
 \#Proposition 2
 
@@ -225,9 +231,9 @@ There is some $C' \in (0,\infty)$ s.t. the following holds.
 
 Under the conditions of Theorem 1, let $\pi^k: \St_{M^k} \rightarrow \A$ be s.t. for any $s \in \UC^k$
 
-$$\Q_{M^k}\Big(s,\pi^k(s),1-\alpha\Big) = \V_{M^k}\Big(s,1-\alpha\Big)$$
+i. $$\pi^k(s) \in \A_{M^k}^\omega(s)$$
 
-$$\T_{M^k \pi^k}\AP{\UC^k \mid s} = 1$$ 
+ii. $$\T_{M^k \pi^k}\AP{\UC^k \mid s} = 1$$ 
 
 Assuming w.l.o.g. that all uncorrupt states are reachable from $S^k(\Estr)$, $\pi^k$ is guaranteed to exist thanks to condition iii of Definition 2 (if some uncorrupt state is unreachable, we can consider it to be corrupt.) Let $F^k\in(0,\infty)$, $\lambda^k\in(0,1)$ and $\Pd^k \subseteq \Nats^+$ be as in Proposition 1, for the Markov chain $\T_{M^k\pi^k}: \UC^k \M \UC^k$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ 
 
@@ -262,17 +268,19 @@ The following is a simple modification of what appeared there as "Proposition B.
 
 \#Proposition A.N2
 
-Consider some $\gamma\in(0,1)$, $\tau\in(0,\infty)$, $T\in\Nats^+$, a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, some $\pi^*: \HD{\mu} \rightarrow \A$ and some $\pi^0: \HD{\mu} \M \A$. For any $n \in \Nats$, let $\pi^*_n$ be an $\In$-policy s.t. for any $h \in \HD{\mu}$
+Consider some $\gamma\in(0,1)$, $\tau\in(0,\infty)$, $T\in\Nats^+$, a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, some $\pi^*: \HD{\mu} \rightarrow \A$ and some $\pi^0: \HD{\mu} \M \A$. Assume that $\gamma \geq \gamma_M$. For any $n \in \Nats$, let $\pi^*_n$ be an $\In$-policy s.t. for any $h \in \HD{\mu}$
 
 $$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \pi^*(h) \text{ otherwise} \end{cases}$$
 
 Assume that for any $h \in \HD{\mu}$
 
-i. $$\pi^*(s) \in \A_{M}^0\AP{S(h)} \cap \Argmax{a \in \A}{\Q_M(s,a,\gamma)}$$
+i. $$\pi^*(s) \in \A_{M}^\omega\AP{S(h)}$$
 
 ii. $$\Supp{\pi^0(h)} \subseteq \A_{M}^0\AP{S(h)}$$
 
-iii. For any $\theta\in(\gamma,1)$ $$\Abs{\frac{\D\V_{M\pi^*}\AP{S(h),\theta}}{\D\theta}} \leq \tau$$
+iii. For any $\theta\in(\gamma,1)$ $$\Abs{\frac{\D\V_{M}\AP{S(h),\theta}}{\D\theta}} \leq \tau$$
+
+% Value function is not differentiable
 
 Then
 
@@ -314,7 +322,7 @@ $$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
 
 $$\sigma^k\AP{\pi^k(h) \mid h} > \epsilon$$
 
-$$\Q_k\AP{S^k(h),\pi^k(h),1-\alpha} = \V_k\AP{S^k(h),1-\alpha}$$
+$$\pi^k(h) \in \A_k^\omega\AP{S^k(h)}$$
 
 We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in \Ob$, denoting $n = lT+m$
 
@@ -368,19 +376,23 @@ Here, $C_h \in \Reals$ is a constant defined s.t. the probabilities sum to 1. We
 
 $$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$
 
+Define $\tau^k \in (0,1)$ by
+
+$$\tau^k := \max_{s \in \UC^k} \sup_{\gamma \in [1 - \alpha, 1)} \Abs{\frac{\D\V_k(s,\gamma)}{\D\gamma}}$$
+
 Condition iii of Proposition A.N1 and condition ii of Definition 2 imply that for any $h \in \HD{\mu^k}$
 
 $$\Supp{\AB{\sigma^k}\underline{\pi}^{?k}(h)} \subseteq \A^0_k\AP{S^k(h)}$$
 
 This means we can apply Proposition A.N2 and get
 
-$$\EU^*_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}???$$
+$$\EU^*_{\upsilon^k}(1 - \alpha)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1 - \alpha) \leq \alpha\sum_{n=0}^\infty \sum_{m=0}^{T-1} (1-\alpha)^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
 
-Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition B.2. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
+Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition A.N2, with $\pi^k$ in place of $\pi^*$. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
 
 $$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \Pr\left[A^!_{\Abs{h}} = a \mid A\Theta^!_{:{\Abs{h}}} = h,\ K = k,\ \J^!_n = k\right] \text{ otherwise} \end{cases}$$
 
-$$\pi^{!!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \pi^{!k}_n(a \mid h) + \pi^{!k}_n(\bot \mid h) \cdot \pi^{*k}_n\left(a \mid \underline{h}\right) \text{ if } \Abs{h} \geq nT \text{ and } a \ne \bot \\ 0 \text{ if } \Abs{h} \geq nT \text{ and } a = \bot \end{cases}$$
+$$\pi^{!!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \pi^{!k}_n(a \mid h) + \pi^{!k}_n(\bot \mid h) \cdot \pi^k_n\left(a \mid \underline{h}\right) \text{ if } \Abs{h} \geq nT \text{ and } a \ne \bot \\ 0 \text{ if } \Abs{h} \geq nT \text{ and } a = \bot \end{cases}$$
 
 Denote 
 
@@ -392,25 +404,25 @@ $$\rho^{!k}_n:=\nu^k\bowtie\pi^{!k}_n$$
 
 $$\rho^{?k}:=\nu^k\bowtie\pi^{?k}$$ 
 
-$$R^{?k}:=\EU^{\pi^k S^k}_{\upsilon^k}(\gamma)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma)$$
+$$R^{?k}:=\EU^{*}_{\upsilon^k}(1-\alpha)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha)$$
 
 For each $n \in \Nats$, denote
 
-$$\EU_n^{*k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]$$
+$$\EU_n^{*k}:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m}\E{x\sim\rho^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]$$
 
-$$\EU_n^{!!k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{!!k}_n}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
+$$\EU_n^{!!k}:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m}\E{x\sim\rho^{!!k}_n}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
 
-$$\EU_n^{!k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{!k}_n}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
+$$\EU_n^{!k}:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m}\E{x\sim\rho^{!k}_n}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
 
-$$\EU_n^{?k}(\gamma):=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m}\E{x\sim\rho^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
+$$\EU_n^{?k}:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m}\E{x\sim\rho^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
 
 We have
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
+$$R^{?k} \leq (1-(1-\alpha)^T)\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{*k}_n(\gamma)-\EU^{!!k}_n(\gamma)+\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
+$$R^{?k} \leq  (1-(1-\alpha)^T)\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}_n-\EU^{!!k}_n+\EU^{!!k}_n-\EU^{!k}_n+\EU^{!k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
 
-Condition iv of Proposition C.1 and condition ii of Definition A.1 imply that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
+Condition iv of Proposition A.N1 implies that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
 
 $$\Supp{\pi^{!k}_n(h)} \subseteq \AC{\pi^k\AP{S^k(h)},\bot}$$
 
@@ -418,7 +430,7 @@ $$\pi^{!!k}_n\AP{\pi^k\AP{S^k(h)} \mid h} = 1$$
 
 Therefore, $\pi^{!!k}_n = \pi^{*k}_n$, and we remain with
 
-$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}$$
+$$R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \left(\EU^{!!k}_n(\gamma)-\EU^{!k}_n(\gamma)+\EU^{!k}_n(\gamma)-\EU^{?k}_n(\gamma)\right) + \frac{2\bar{\tau}\gamma^T(1-\gamma)}{1-\gamma^T}???$$
 
 We have
 
