@@ -149,7 +149,7 @@ That is, the regret bound we get is fully explicit up to a multiplicative consta
 
 ***
 
-Appendix A contains the proofs...
+Appendix A contains the proofs, Appendix B recalls a few lemmas we need from previous essays.
 
 \section{Notation}
 
@@ -209,17 +209,17 @@ ii. For any $k,j \in [N]$ and $h \in \HD{\mu^k} \cap \HD{\mu^j}$, if $S^k(h) \in
 
 Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$
 
-$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C\AP{\alpha N^5 \ln{N} \AP{\epsilon^{-1}+\Abs{\A}} \sum_{j = 0}^{N-1} \max_{s \in \UC^j} \sup_{\gamma \in [1-\alpha,1)} \Abs{\frac{\D\V_{M^j}(s,\gamma)}{\D\gamma}}}^{1/4}$$
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C\AP{\alpha N^5 \ln{N} \AP{\epsilon^{-1}+\Abs{\A}} \sum_{j = 0}^{N-1} \max_{s \in \UC^j} \sup_{\gamma \in [1-\alpha,1)} \Abs{\frac{\D{\V_{M^j}(s,\gamma)}}{\D\gamma}}}^{1/4}$$
 
 ***
 
-The factor $\max_{s \in \UC^k} \sup_{\gamma \in [1-\alpha,1]} \Abs{\frac{\D\V_{M^j}(s,\gamma)}{\D\gamma}}$ might seem difficult to understand. However, it can be bounded as follows.
+The factor $\max_{s \in \UC^k} \sup_{\gamma \in [1-\alpha,1]} \Abs{\frac{\D{\V_{M^j}(s,\gamma)}}{\D\gamma}}$ might seem difficult to understand. However, it can be bounded as follows.
 
 \#Proposition 2
 
 Let $M$ be an MDP, $\pi$ a Blackwell optimal policy for $M$ and $F \in (0,\infty)$, $\lambda \in (0,1)$, $\Pd \subseteq \Nats^+$ as in Proposition 1 applied to the Markov chain $\T_{M\pi}$. Then
 
-$$\max_{s \in \St_M} \sup_{\gamma \in (0,1)} \Abs{\frac{\D\V_M(s,\gamma)}{\D\gamma}} = O\AP{\frac{F}{1-\lambda}+\max{\Pd}}$$
+$$\max_{s \in \St_M} \sup_{\gamma \in [\gamma_M,1)} \Abs{\frac{\D{\V_M(s,\gamma)}}{\D\gamma}} = O\AP{\frac{F}{1-\lambda}+\max{\Pd}}$$
 
 ***
 
@@ -241,64 +241,7 @@ $$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\p
 
 \section{Appendix A}
 
-Before proving Theorem 1, we recall a few propositions from previous essays.
-
-The following appeared in a [previous essay](https://agentfoundations.org/item?id=1723) as "Proposition C.1".
-
-\#Proposition A.N1
-
-Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\eta \in (0,\frac{1}{N})$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\Dl: \Adfh \times \A \rightarrow \Ada$ and $\{\Dl^{!k}: \Adfh \times \A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
-Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M \A$, $\Dl': \Adfh \times \A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\in \Delta\left(\A \times \Adao\right)^\omega$ as follows
- 
-$$\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\left(b,a,o \mid x\right):=\pi\left(b \mid \underline{\underline{x}}\right)\Dl'\left(a \mid \underline{x},b\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
-
-We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
-
-i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\Dl^{!k},\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in \A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\eta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)}=O\left(\frac{\ln N}{\eta \epsilon}\right)$$
-
-ii. $\Dtv\left(\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\Dl,\pi\right]},\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\Dl^{!j},\pi\right]}\right) \leq (N-1)\eta$
-
-iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \ne \bot$ then $\sigma^k\left(\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
-
-iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \AC{\pi\left(\underline{x}\right), \bot}$ then $\sigma^k\left(\pi\left(\underline{x}\right) \mid \underline{x}\right) \leq \epsilon$
-
-***
-
-The following is a simple modification of what appeared there as "Proposition B.2" (the corresponding modification of the proof is trivial and we leave it out.)
-
-\#Proposition A.N2
-
-Consider some $\gamma\in(0,1)$, $\tau\in(0,\infty)$, $T\in\Nats^+$, a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, some $\pi^*: \HD{\mu} \rightarrow \A$ and some $\pi^0: \HD{\mu} \M \A$. Assume that $\gamma \geq \gamma_M$. For any $n \in \Nats$, let $\pi^*_n$ be an $\In$-policy s.t. for any $h \in \HD{\mu}$
-
-$$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \pi^*(h) \text{ otherwise} \end{cases}$$
-
-Assume that for any $h \in \HD{\mu}$
-
-i. $$\pi^*(s) \in \A_{M}^\omega\AP{S(h)}$$
-
-ii. $$\Supp{\pi^0(h)} \subseteq \A_{M}^0\AP{S(h)}$$
-
-iii. For any $\theta\in(\gamma,1)$ $$\Abs{\frac{\D\V_{M}\AP{S(h),\theta}}{\D\theta}} \leq \tau$$
-
-% Value function is not differentiable
-
-Then
-
-$$\EU^{*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}$$
-
-***
-
-The following appeared [previously](https://agentfoundations.org/item?id=1656) as "Proposition A.1".
-
-\#Proposition A.N3
-
-Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $\J: \Omega \rightarrow [N]$. Assume that $K_*P = J_*P = \zeta \in \Delta[N]$ and $\I{}[K;J] = 0$. Then
-
-$$\I{}\left[K;J,U\right] \geq 2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\E{}\left[U \mid J = K\right]-\E{}\left[U\right]\right)^2$$
-
-***
-
-The proof of Theorem 1 mostly repeats the proof of the previous "Theorem 1", except that we keep track of the bounds more carefully.
+The proof of Theorem 1 mostly repeats the proof of the [previous](https://agentfoundations.org/item?id=1656) "Theorem 1", except that we keep track of the bounds more carefully.
 
 \#Proof of Theorem 1
 
@@ -318,7 +261,7 @@ We also define $A\Theta_{:n}: \Omega \rightarrow \Adfh$ by
 
 $$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
 
-(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\Dl$ and $\Dl^{!k}$ be as in Proposition A.N1 (the form of the bound we are proving allows assuming w.l.o.g. that $\epsilon < \frac{1}{\Abs{\A}}$). By condition iii of Definition 2, there is $\pi^k : \HD{\mu^k} \rightarrow \A$ s.t. for any $h \in \HD{\mu^k}$, if $S^k(h) \in \UC^k$ then
+(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $\Adfh$.) Let $\Dl$ and $\Dl^{!k}$ be as in Proposition B.N1 (the form of the bound we are proving allows assuming w.l.o.g. that $\epsilon < \frac{1}{\Abs{\A}}$). By condition iii of Definition 2, there is $\pi^k : \HD{\mu^k} \rightarrow \A$ s.t. for any $h \in \HD{\mu^k}$, if $S^k(h) \in \UC^k$ then
 
 $$\sigma^k\AP{\pi^k(h) \mid h} > \epsilon$$
 
@@ -380,15 +323,15 @@ Define $\tau^k \in (0,1)$ by
 
 $$\tau^k := \max_{s \in \UC^k} \sup_{\gamma \in [1 - \alpha, 1)} \Abs{\frac{\D\V_k(s,\gamma)}{\D\gamma}}$$
 
-Condition iii of Proposition A.N1 and condition ii of Definition 2 imply that for any $h \in \HD{\mu^k}$
+Condition iii of Proposition B.N1 and condition ii of Definition 2 imply that for any $h \in \HD{\mu^k}$
 
 $$\Supp{\AB{\sigma^k}\underline{\pi}^{?k}(h)} \subseteq \A^0_k\AP{S^k(h)}$$
 
-This means we can apply Proposition A.N2 and get
+This means we can apply Proposition B.N2 and get
 
 $$\EU^*_{\upsilon^k}(1 - \alpha)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1 - \alpha) \leq \alpha\sum_{n=0}^\infty \sum_{m=0}^{T-1} (1-\alpha)^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
 
-Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition A.N2, with $\pi^k$ in place of $\pi^*$. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
+Here, the $\In$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition B.N2, with $\pi^k$ in place of $\pi^*$. We also define the $\Adi$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
 
 $$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \Pr\left[A^!_{\Abs{h}} = a \mid A\Theta^!_{:{\Abs{h}}} = h,\ K = k,\ \J^!_n = k\right] \text{ otherwise} \end{cases}$$
 
@@ -422,7 +365,7 @@ $$R^{?k} \leq \AP{1-(1-\alpha)^T}sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}
 
 $$R^{?k} \leq\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}_n-\EU^{!!k}_n+\EU^{!!k}_n-\EU^{!k}_n+\EU^{!k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
 
-Condition iv of Proposition A.N1 implies that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
+Condition iv of Proposition B.N1 implies that, given $h \in \HD{\nu^k}$ s.t. $\Abs{h} \geq nT$
 
 $$\Supp{\pi^{!k}_n(h)} \subseteq \AC{\pi^k\AP{S^k(h)},\bot}$$
 
@@ -442,49 +385,164 @@ $$\Abs{\EU^{!!k}_n-\EU^{!k}_n} \leq \frac{1}{\eta}\Pr_{x\sim\rho^{?k}}\left[\exi
 
 $$\sum_{n=0}^\infty \Abs{\EU^{!!k}_n-\EU^{!k}_n} \leq \frac{1}{\eta}\Ea{x\sim\rho^{?k}}{\Abs{\AC{n \in \Nats \mid x_n \in \bot\Ado}}}$$
 
-Using condition i of Proposition A.N1, we conclude
+Using condition i of Proposition B.N1, we conclude
 
-$$R^{?k} \leq\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{!k}_n-\EU^{?k}_n\right) + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)???$$
+$$R^{?k} \leq\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{!k}_n-\EU^{?k}_n\right) + O\AP{\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\tau^k\alpha}{1-(1-\alpha)^T}}$$
 
 Define the random variables $\Sqn{U^!_n : \Omega \rightarrow [0,1]}$ by 
 
-$$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} r\left(A\Theta^!_{:nT+m}\right)$$
+$$U^!_n:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m} r\left(A\Theta^!_{:nT+m}\right)$$
 
-Averaging the previous inequality over $k$, we get
+Denote 
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq (1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+$$\bar{\tau} := \frac{1}{N}\sum_{k=0}^{N-1} {\tau^k}$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+$$\beta:=\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}$$
 
-We apply Proposition C.2 to each term in the sum over $n$.
+Averaging the previous inequality over $k$, we *get
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{(1-\gamma^T)\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\frac{1}{2\eta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq \AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\AP{\beta}$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\eta}\sum_{n=0}^\infty \gamma^{nT} \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} +  O\AP{\beta}$$
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-\gamma^T}{2\eta}\ln N} + O\left(\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+We apply Proposition B.N3 to each term in the sum over $n$.
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \E{}\left[\frac{1}{2\eta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} +  O\AP{\beta}$$
 
-Condition ii of Proposition C.1 implies that
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-(1-\alpha)^T}{2\eta}\sum_{n=0}^\infty \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\AP{\beta}$$
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-(1-\alpha)^T}{\eta}\ln N}  +\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}\right)$$
+
+Condition ii of Proposition B.N1 implies that
 
 $$\Dtv\left(\frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^*},\ \frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^{?k}}\right) \leq 2(N-1)\eta$$
 
 Here, the factor of 2 comes from the difference between the equations for $Z_n$ and $Z^!_n$ (we can construct and intermediate policy between $\pi^*$ and $\pi^{?k}$ and use the triangle inequality for $\Dtv$). We conclude
 
-$$\EU^{\pi^k S^k}_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma) = O\left(\eta+\sqrt{\frac{1-\gamma^T}{\eta}} +\frac{1-\gamma^T}{\eta^2}+\frac{\bar{\tau}(1-\gamma)}{1-\gamma^T}\right)$$
+$$\frac{1}{N}\sum_{k=0}^{N-1}\AP{\EU^{*}_{\upsilon^k}(1-\alpha)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha)} = O\left(N\eta +\sqrt{\frac{1-(1-\alpha)^T}{\eta}\ln N}  +\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}\right)$$
+
+For each $k \in [N]$, we get
+
+$$\EU^{*}_{\upsilon^k}(1-\alpha)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha) = N \cdot O\left(N\eta +\sqrt{\frac{1-(1-\alpha)^T}{\eta}\ln N}  +\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}\right)$$
 
 Now we set 
 
-$$\eta:=\bar{\tau}^{1/4} (1-\gamma)^{1/4}$$  
+$$\eta:=\alpha^{1/4} N^{-1/2} \AP{\ln N}^{1/4} \epsilon^{-1/4} \bar{\tau}^{1/4}$$  
 
-$$T:=\Ceil{\bar{\tau}^{3/4}(1-\gamma)^{-1/4}}$$
+$$T:=\Ceil{\alpha^{-1/4}N^{-1/2} \AP{\ln N}^{-1/4} \epsilon^{1/4} \bar{\tau}^{3/4}}$$
 
-Without loss of generality, we can assume that $\bar{\tau}(1-\gamma) \ll 1$ (because of the form of the bound we are proving), which implies that $T(1-\gamma) \ll 1$ and $1-\gamma^T \approx T(1-\gamma) \approx \bar{\tau}^{3/4}(1-\gamma)^{3/4}$. We get
+Without loss of generality, we can assume this to be consistent with the assumption $\eta < \frac{1}{N}$ since the bound contains a term of $N^2\eta$ anyway. Similarly, the second term in the bound implies we can assume that $1 - (1-\alpha)^T \ll 1$ and therefore $1 - (1-\alpha)^T = O(T\alpha)$. We get
 
-$$\EU^{\pi^k S^k}_{\upsilon^k}(\gamma)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k S^k}}(\gamma) = O\left(\bar{\tau}^{1/4}(1-\gamma)^{1/4}\right)$$
+$$\EU^{*}_{\upsilon^k}(1-\alpha)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha) = O\AP{\AP{\alpha N^6 \ln{N} \epsilon^{-1} \bar{\tau}}^{1/4}}$$
+
+\#Proposition A.N1
+
+Fix $n \in \Nats$, $m \in [n]$. Then, for $x \in (0,1)$ we have
+
+$$\Abs{\frac{\D}{\D x}\AP{x^m\frac{1-x}{1-x^n}}} \leq 1$$
+
+\#Proof of Proposition A.N1
+
+$$\frac{\D}{\D x}\AP{x^m\frac{1-x}{1-x^n}} = mx^{m-1}\frac{1-x}{1-x^n}+x^m\frac{\D}{\D x}\AP{\frac{1-x}{1-x^n}}$$
+
+We will establish the claim by showing that the first term is in $[0,1]$ and the second term is in $[-1,0]$.
+
+For the first term, we have
+
+$$0 \leq mx^{m-1}\frac{1-x}{1-x^n} = \frac{mx^{m-1}}{\sum_{k=0}^{n-1} x^k} \leq \frac{mx^{m-1}}{\sum_{k=0}^{m-1} x^k} \leq \frac{mx^{m-1}}{\sum_{k=0}^{m-1} x^{m-1}}=1$$
+
+For the second term, we have
+
+$$\frac{\D}{\D x}\AP{\frac{1-x}{1-x^n}} = \frac{(-1)\cdot\AP{1-x^n}-(1-x)\cdot\AP{-nx^{n-1}}}{\AP{1-x^n}^2}=\frac{-(n-1)x^n+nx^{n-1}-1}{\AP{1-x^n}^2}$$
+
+First, we show that the numerator is negative...
 
 TBD
+
+\#Proof of Proposition 2
+
+$$\V_M(s,\gamma) = (1-\gamma) \sum_{n=0}^\infty \gamma^n \sum_{t \in \St_M} \T_{M\pi}^n (t \mid s) \R_M(t)$$
+
+By Proposition 1, we have
+
+$$\sum_{t \in \St_M} \T_{M\pi}^n(t \mid s) \R_M(t) = \Ea{k \sim \zeta(s)}{\sum_{t \in \St_M} \T_{M\pi}^n \xi(t \mid s,k) \R_M(t)} + \delta_n$$
+
+where, $\Abs{\delta_n} \leq F \lambda^{-n}$. Denote
+
+$$\V_M^{\text{per}}(s,\gamma) := (1-\gamma) \sum_{n=0}^\infty \gamma^n \delta_n$$
+
+$$\V_{Mk}^{\text{cyc}}(s,\gamma) := (1-\gamma) \sum_{n=0}^\infty \gamma^n \sum_{t \in \St_M} \T_{M\pi}^n \xi(t \mid s,k) \R_M(t)$$
+
+We get
+
+$$\V_M(s,\gamma) = \Ea{k \sim \zeta(s)}{\V_{Mk}^{\text{cyc}}(s,\gamma)} + \V_M^{\text{per}}(s,\gamma) $$
+
+$$\frac{\D{\V_M(s,\gamma)}}{\D\gamma} = \Ea{k \sim \zeta(s)}{\frac{\D{\V_{Mk}^{\text{cyc}}(s,\gamma)}}{\D\gamma}} + \frac{\D{\V_M^{\text{per}}(s,\gamma)}}{\D\gamma}$$
+
+We now analyze each term separately.
+
+Denote
+
+$$r_{kn}:=\sum_{t \in \St_M} \T_{M\pi}^n \xi(t \mid s,k) \R_M(t)$$
+
+Note that, due to the property of $\xi$, $r_{kn}$ is periodic in $n$ with period $k$. We have
+
+$$\V_{Mk}^{\text{cyc}}(s,\gamma) := (1-\gamma) \sum_{n=0}^{\infty} \gamma^{n} r_{kn} = (1-\gamma) \sum_{i=0}^{k-1}\sum_{n=0}^\infty \gamma^{nk+i} r_{ki} = \sum_{i=0}^{k-1} \frac{(1-\gamma)\gamma^i}{1-\gamma^k}r_{ki}$$
+
+TBD
+
+\section{Appendix B}
+
+The following appeared in a [previous essay](https://agentfoundations.org/item?id=1723) as "Proposition C.1".
+
+\#Proposition B.N1
+
+Fix an interface $\In=(\A,\Ob)$, $N \in \Nats$, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\eta \in (0,\frac{1}{N})$. Consider some $\{\sigma^k: \FH \M \A\}_{k \in [N]}$. Then, there exist $\Dl: \Adfh \times \A \rightarrow \Ada$ and $\{\Dl^{!k}: \Adfh \times \A \rightarrow \Ada\}_{k \in [N]}$ with the following properties. Given $x \in \left(2^\A \times \Adao\right)^*$, we denote $\underline{x}$ its projection to $\Adfh$. Thus, $\underline{\underline{x}}\in\FH$.
+Given  $\mu$ an $\In$-environment, $\pi: \HD{\mu} \M \A$, $\Dl': \Adfh \times \A \rightarrow \Ada$ and $k \in [N]$, we can define $\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\in \Delta\left(\A \times \Adao\right)^\omega$ as follows
+ 
+$$\Xi\left[\mu,\sigma^k,\Dl',\pi\right]\left(b,a,o \mid x\right):=\pi\left(b \mid \underline{\underline{x}}\right)\Dl'\left(a \mid \underline{x},b\right) \bar{\mu}[\sigma^k]\left(o \mid \underline{x}a\right)$$
+
+We require that for every $\pi$, $\mu$ and $k$ as above, the following conditions hold
+
+i. $$\E{x \sim\Xi\left[\mu,\sigma^k,\Dl^{!k},\pi\right]}\left[\Abs{\{n \in \Nats \mid x_n \in \A \times \bot \times \bar{\Ob}\}}\right] \leq \frac{\ln N}{\eta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)}=O\left(\frac{\ln N}{\eta \epsilon}\right)$$
+
+ii. $\Dtv\left(\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\Dl,\pi\right]},\frac{1}{N}\sum_{j=0}^{N-1}{\Xi\left[\mu,\sigma^j,\Dl^{!j},\pi\right]}\right) \leq (N-1)\eta$
+
+iii. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \ne \bot$ then $\sigma^k\left(\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \mid \underline{x}\right) > 0$
+
+iv. For all $x \in \HD{\bar{\mu}[\sigma^k]}$, if $\Dl^{!k}\left(x,\pi\left(\underline{x}\right)\right) \not\in \AC{\pi\left(\underline{x}\right), \bot}$ then $\sigma^k\left(\pi\left(\underline{x}\right) \mid \underline{x}\right) \leq \epsilon$
+
+***
+
+The following is a simple modification of what appeared there as "Proposition B.2" (the corresponding modification of the proof is trivial and we leave it out.)
+
+\#Proposition B.N2
+
+Consider some $\gamma\in(0,1)$, $\tau\in(0,\infty)$, $T\in\Nats^+$, a universe $\upsilon=(\mu,r)$ that is an $\Ob$-realization of $M$ with state function $S$, some $\pi^*: \HD{\mu} \rightarrow \A$ and some $\pi^0: \HD{\mu} \M \A$. Assume that $\gamma \geq \gamma_M$. For any $n \in \Nats$, let $\pi^*_n$ be an $\In$-policy s.t. for any $h \in \HD{\mu}$
+
+$$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \pi^*(h) \text{ otherwise} \end{cases}$$
+
+Assume that for any $h \in \HD{\mu}$
+
+i. $$\pi^*(s) \in \A_{M}^\omega\AP{S(h)}$$
+
+ii. $$\Supp{\pi^0(h)} \subseteq \A_{M}^0\AP{S(h)}$$
+
+iii. For any $\theta\in(\gamma,1)$ $$\Abs{\frac{\D\V_{M}\AP{S(h),\theta}}{\D\theta}} \leq \tau$$
+
+Then
+
+$$\EU^{*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}$$
+
+***
+
+The following appeared [previously](https://agentfoundations.org/item?id=1656) as "Proposition A.1".
+
+\#Proposition B.N3
+
+Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $\J: \Omega \rightarrow [N]$. Assume that $K_*P = J_*P = \zeta \in \Delta[N]$ and $\I{}[K;J] = 0$. Then
+
+$$\I{}\left[K;J,U\right] \geq 2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\E{}\left[U \mid J = K\right]-\E{}\left[U\right]\right)^2$$
 
 \end{document}
 
