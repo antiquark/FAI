@@ -447,17 +447,29 @@ $$\frac{\D}{\D x}\AP{x^m\frac{1-x}{1-x^n}} = mx^{m-1}\frac{1-x}{1-x^n}+x^m\frac{
 
 We will establish the claim by showing that the first term is in $[0,1]$ and the second term is in $[-1,0]$.
 
-For the first term, we have
+For the first term, we have (assuming w.l.o.g. that $m \geq 1$)
 
-$$0 \leq mx^{m-1}\frac{1-x}{1-x^n} = \frac{mx^{m-1}}{\sum_{k=0}^{n-1} x^k} \leq \frac{mx^{m-1}}{\sum_{k=0}^{m-1} x^k} \leq \frac{mx^{m-1}}{\sum_{k=0}^{m-1} x^{m-1}}=1$$
+$$0 < mx^{m-1}\frac{1-x}{1-x^n} = \frac{mx^{m-1}}{\sum_{k=0}^{n-1} x^k} \leq \frac{mx^{m-1}}{\sum_{k=0}^{m-1} x^k} \leq \frac{mx^{m-1}}{\sum_{k=0}^{m-1} x^{m-1}}=1$$
 
 For the second term, we have
 
 $$\frac{\D}{\D x}\AP{\frac{1-x}{1-x^n}} = \frac{(-1)\cdot\AP{1-x^n}-(1-x)\cdot\AP{-nx^{n-1}}}{\AP{1-x^n}^2}=\frac{-(n-1)x^n+nx^{n-1}-1}{\AP{1-x^n}^2}$$
 
-First, we show that the numerator (and hence the entire fraction) is negative.
+Assume w.l.o.g. that $n \geq 2$. First, we show that the numerator (and hence the entire fraction) is negative. Denote $p(x):=-(n-1)x^n+nx^{n-1}-1$. We have
 
-TBD
+$$\frac{\D{p(x)}}{\D x}=n(n-1)\AP{x^{n-2}-x^{n-1}}$$
+
+Therefore, $p(x)$ is increasing in $[0,1]$. Observing that $p(1)=0$, we conclude that $p$ is negative in $(0,1)$.
+
+Now we show that the fraction is $\geq -1$. Equivalently, we need to show that $p(x) + \AP{1-x^n}^2 \geq 0$. We have
+
+$$p(x) + \AP{1-x^n}^2 = -(n-1)x^n+nx^{n-1}-1 + 1 - 2x^n + x^{2n} = x^{2n} - (n+1)x^n + nx^{n-1} = x^{n-1}\AP{x^{n+1}-(n+1)x+n}$$
+
+Denote $q(x):=x^{n+1}-(n+1)x+n$. We have
+
+$$\frac{\D{q(x)}}{\D x} = (n+1)\AP{x^n - 1}$$
+
+Therefore, $q(x)$ is decreasing in $[0,1]$. Observing that $q(1) = 0$ we conclude that $q$ is positive in $(0,1)$, establishing the desired result.
 
 \#Proof of Proposition 2
 
@@ -488,6 +500,12 @@ $$r_{kn}:=\sum_{t \in \St_M} \T_{M\pi}^n \xi(t \mid s,k) \R_M(t)$$
 Note that, due to the property of $\xi$, $r_{kn}$ is periodic in $n$ with period $k$. We have
 
 $$\V_{Mk}^{\text{cyc}}(s,\gamma) := (1-\gamma) \sum_{n=0}^{\infty} \gamma^{n} r_{kn} = (1-\gamma) \sum_{i=0}^{k-1}\sum_{n=0}^\infty \gamma^{nk+i} r_{ki} = \sum_{i=0}^{k-1} \frac{(1-\gamma)\gamma^i}{1-\gamma^k}r_{ki}$$
+
+$$\Abs{\frac{\D{\V_{Mk}^{\text{cyc}}(s,\gamma)}}{\D\gamma}} \leq \sum_{i=0}^{k-1} \Abs{\frac{\D}{\D\gamma}\AP{\frac{(1-\gamma)\gamma^i}{1-\gamma^k}}}r_{ki}$$
+
+By Proposition A.N1, we get
+
+$$\Abs{\frac{\D{\V_{Mk}^{\text{cyc}}(s,\gamma)}}{\D\gamma}} \leq \sum_{i=0}^{k-1} r_{ki} \leq k$$
 
 TBD
 
