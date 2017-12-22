@@ -173,7 +173,7 @@ Consider $\St$ a finite set and $\T: \St \M \St$. Then, there are $F \in (0,\inf
 
 $$\forall k \in \Pd_\T: \T^k \xi(s,k) = \xi(s,k)$$
 
-$$\forall n \in \Nats: \Dtva{\T^n(s),\Ea{k \sim \zeta(s)}{\T^n \xi(s,k)}} \leq F \lambda^{-n}$$
+$$\forall n \in \Nats: \Dtva{\T^n(s),\Ea{k \sim \zeta(s)}{\T^n \xi(s,k)}} \leq F \lambda^n$$
 
 ***
 
@@ -219,7 +219,7 @@ The factor $\max_{s \in \UC^k} \sup_{\gamma \in [1-\alpha,1]} \Abs{\frac{\D{\V_{
 
 Let $M$ be an MDP, $\pi$ a Blackwell optimal policy for $M$ and $F \in (0,\infty)$, $\lambda \in (0,1)$, $\Pd \subseteq \Nats^+$ as in Proposition 1 applied to the Markov chain $\T_{M\pi}$. Then
 
-$$\max_{s \in \St_M} \sup_{\gamma \in [\gamma_M,1)} \Abs{\frac{\D{\V_M(s,\gamma)}}{\D\gamma}} = O\AP{\frac{F}{1-\lambda}+\max{\Pd}}$$
+$$\max_{s \in \St_M} \sup_{\gamma \in [\gamma_M,1)} \Abs{\frac{\D{\V_M(s,\gamma)}}{\D\gamma}} \leq F\frac{1+\lambda}{1-\lambda}+\max{\Pd}$$
 
 ***
 
@@ -235,9 +235,9 @@ i. $$\pi^k(s) \in \A_{M^k}^\omega(s)$$
 
 ii. $$\T_{M^k \pi^k}\AP{\UC^k \mid s} = 1$$ 
 
-Assuming w.l.o.g. that all uncorrupt states are reachable from $S^k(\Estr)$, $\pi^k$ is guaranteed to exist thanks to condition iii of Definition 2 (if some uncorrupt state is unreachable, we can consider it to be corrupt.) Let $F^k\in(0,\infty)$, $\lambda^k\in(0,1)$ and $\Pd^k \subseteq \Nats^+$ be as in Proposition 1, for the Markov chain $\T_{M^k\pi^k}: \UC^k \M \UC^k$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ 
+Assuming w.l.o.g. that all uncorrupt states are reachable from $S^k(\Estr)$, $\pi^k$ is guaranteed to exist thanks to condition iii of Definition 2 (if some uncorrupt state is unreachable, we can consider it to be corrupt.) Let $F_k\in(0,\infty)$, $\lambda_k\in(0,1)$ and $\Pd_k \subseteq \Nats^+$ be as in Proposition 1, for the Markov chain $\T_{M^k\pi^k}: \UC^k \M \UC^k$. Then, there is an $\bar{\In}$-policy $\pi^*$ s.t. for any $k \in [N]$ 
 
-$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C'\AP{\alpha N^5 \ln{N} \AP{\epsilon^{-1}+\Abs{\A}} \sum_{j = 0}^{N-1} \AP{\frac{F^j}{1-\lambda^j}+\max{\Pd^j}}}^{1/4}$$
+$$\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha) \leq C'\AP{\alpha N^5 \ln{N} \AP{\epsilon^{-1}+\Abs{\A}} \sum_{j = 0}^{N-1} \AP{\frac{F_j}{1-\lambda_j}+\max{\Pd_j}}}^{1/4}$$
 
 \section{Appendix A}
 
@@ -471,6 +471,38 @@ $$\frac{\D{q(x)}}{\D x} = (n+1)\AP{x^n - 1}$$
 
 Therefore, $q(x)$ is decreasing in $[0,1]$. Observing that $q(1) = 0$ we conclude that $q$ is positive in $(0,1)$, establishing the desired result.
 
+\#Proposition A.N2
+
+For any $x,y\in(0,1)$:
+
+$$\frac{1-x}{\AP{1-xy}^2} \leq \frac{1}{1-y}$$
+
+\#Proof of Proposition A.N2
+
+Consider $p(z):=z^3-3z+2$. We have
+
+$$\frac{\D{p(z)}}{\D z} = 3z^2 - 3$$
+
+$p(z)$ has a local minimum at $z=1$ and a local maximum at $z = -1$. Therefore, for $z \geq -1$, $p(z) \geq p(1) = 0$. For $z \geq 0$, we get
+
+$$z^2 \AP{z^2 - 3} + 2z = z^4-3z^2+2z = zp(z) \geq 0$$
+
+Taking $z := \frac{1}{2}(x+y)$, we get
+
+$$\AP{\frac{x+y}{2}}^2 \AP{\AP{\frac{x+y}{2}}^2 - 3} + x + y \geq 0$$
+
+Now, $\frac{1}{2}(x+y) \geq \sqrt{xy}$ and $t(t-3)$ is a decreasing function of $t$ for $t\in\AB{0,\frac{3}{2}}$. We conclude
+
+$$xy \AP{xy - 3} + x + y \geq 0$$
+
+$$x^2y^2 - 3xy + x + y \geq 0$$
+
+$$x^2 y^2 - 2xy + 1 \geq xy - x - y + 1$$
+
+$$\AP{1-xy}^2 \geq (1-x)(1-y)$$
+
+$$\frac{1}{1-y} \geq \frac{1-x}{\AP{1-xy}^2}$$
+
 \#Proof of Proposition 2
 
 $$\V_M(s,\gamma) = (1-\gamma) \sum_{n=0}^\infty \gamma^n \sum_{t \in \St_M} \T_{M\pi}^n (t \mid s) \R_M(t)$$
@@ -479,7 +511,7 @@ By Proposition 1, we have
 
 $$\sum_{t \in \St_M} \T_{M\pi}^n(t \mid s) \R_M(t) = \Ea{k \sim \zeta(s)}{\sum_{t \in \St_M} \T_{M\pi}^n \xi(t \mid s,k) \R_M(t)} + \delta_n$$
 
-where, $\Abs{\delta_n} \leq F \lambda^{-n}$. Denote
+where, $\Abs{\delta_n} \leq F \lambda^n$. Denote
 
 $$\V_M^{\text{per}}(s,\gamma) := (1-\gamma) \sum_{n=0}^\infty \gamma^n \delta_n$$
 
@@ -506,6 +538,22 @@ $$\Abs{\frac{\D{\V_{Mk}^{\text{cyc}}(s,\gamma)}}{\D\gamma}} \leq \sum_{i=0}^{k-1
 By Proposition A.N1, we get
 
 $$\Abs{\frac{\D{\V_{Mk}^{\text{cyc}}(s,\gamma)}}{\D\gamma}} \leq \sum_{i=0}^{k-1} r_{ki} \leq k$$
+
+Now we analyze the second term.
+
+$$\V_M^{\text{per}}(s,\gamma) = \delta_0 + \sum_{n=0}^\infty \gamma^{n+1} \AP{\delta_{n+1} - \delta_n}$$
+
+$$\frac{\D{\V_M^{\text{per}}(s,\gamma)}}{\D\gamma} = \sum_{n=0}^\infty (n+1)\gamma^n \AP{\delta_{n+1} - \delta_n}=\sum_{n=0}^\infty \AP{n\gamma^{n-1}-(n+1)\gamma^n} \delta_n = \sum_{n=0}^\infty \AP{\AP{1-\gamma}n\gamma^{n-1}-\gamma^n} \delta_n$$
+
+$$\Abs{\frac{\D{\V_M^{\text{per}}(s,\gamma)}}{\D\gamma}} \leq F \sum_{n=0}^\infty \AP{\AP{1-\gamma}n\gamma^{n-1}+\gamma^n} \lambda^n=F\AP{(1-\gamma)\sum_{n=0}^\infty n \gamma^{n-1}\lambda^n+\frac{1}{1-\gamma\lambda}}$$
+
+$$\Abs{\frac{\D{\V_M^{\text{per}}(s,\gamma)}}{\D\gamma}} \leq F\AP{(1-\gamma)\frac{\D}{\D\gamma}\sum_{n=0}^\infty \gamma^n\lambda^n+\frac{1}{1-\gamma\lambda}}=F\AP{(1-\gamma)\frac{\D}{\D\gamma}\AP{\frac{1}{1-\gamma\lambda}}+\frac{1}{1-\gamma\lambda}}$$
+
+$$\Abs{\frac{\D{\V_M^{\text{per}}(s,\gamma)}}{\D\gamma}} \leq F\AP{\lambda\cdot\frac{1-\gamma}{\AP{1-\gamma\lambda}^2}+\frac{1}{1-\gamma\lambda}}$$
+
+Applying Proposition A.N2 to the first term, we get
+
+$$\Abs{\frac{\D{\V_M^{\text{per}}(s,\gamma)}}{\D\gamma}} \leq F\AP{\lambda\cdot\frac{1}{1-\lambda}+\frac{1}{1-\gamma\lambda}} \leq F\frac{1+\lambda}{1-\lambda}$$
 
 TBD
 
