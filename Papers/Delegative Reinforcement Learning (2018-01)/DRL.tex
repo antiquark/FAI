@@ -4,6 +4,119 @@
 \usepackage[letterpaper,margin=1in]{geometry}
 \usepackage{hyperref}
 \usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{xfrac}
+
+\newcommand{\Comment}[1]{}
+
+\newcommand{\Bool}{\{0,1\}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Dom}{dom}
+
+% autosize deliminaters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
+
+% operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
+\newcommand{\Var}{\operatorname{Var}}
+
+% operators that require parentheses
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
+
+\newcommand{\M}{\xrightarrow{\text{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+
+% Paper specific
+
+\newcommand{\Ob}{\mathcal{O}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\In}{\mathcal{I}}
+\newcommand{\FH}{(\A \times \Ob)^*}
+\newcommand{\IH}{(\A \times \Ob)^\omega}
+\newcommand{\Ado}{\bar{\Ob}}
+\newcommand{\Ada}{\bar{\A}}
+\newcommand{\Adi}{{\bar{\In}}}
+\newcommand{\Adao}{\overline{\A \times \Ob}}
+\newcommand{\Adfh}{\Adao^*}
+\newcommand{\Adih}{\Adao^\omega}
+\DeclareMathOperator{\HD}{hdom}
+\newcommand{\Hy}{\mathcal{H}}
+\newcommand{\UC}{\mathcal{U}}
+
+\newcommand{\RMC}{\mathrm{C}}
+\newcommand{\RMD}{\mathrm{D}}
+\newcommand{\RME}{\mathrm{E}}
+\newcommand{\RMF}{\mathrm{F}}
+
+\newcommand{\SF}{\St^{\RMF}}
+\newcommand{\SD}{\St^{\RMD}}
+\newcommand{\SC}{\St^{\RMC}}
+\newcommand{\MF}{M^{\RMF}}
+\newcommand{\MD}{M^{\RMD}}
+\newcommand{\ME}{M^{\RME}}
+\newcommand{\TF}{\bar{\tau}^{\RMF}}
+\newcommand{\PD}{\pi^{\RMD}}
+\newcommand{\UD}{\upsilon^{\RMD}}
+
+\newcommand{\Ut}{\operatorname{U}}
+\newcommand{\V}{\operatorname{V}}
+\newcommand{\Q}{\operatorname{Q}}
+\newcommand{\EU}{\operatorname{EU}}
+
+\newcommand{\Dl}{\mathcal{D}}
+\newcommand{\Do}{\mathfrak{D}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Z}{Z}
+\newcommand{\J}{J}
+
+\newcommand{\Pd}{P}
 
 \begin{document}
 
@@ -36,6 +149,12 @@ In terms of practical applications, it means that most known approaches to reinf
 
 This problem clearly cannot be overcome without using prior knowledge about the environment. In itself, prior knowledge is not such a strong assumption, since at least for any task that can be accomplished by a person, this prior knowledge is already available to us. The challenge is then transferring this knowledge to algorithm. This transfer can be accomplished either by manually transforming the knowledge into a formal mathematical specification, or by establishing a learning protocol that involves a human in the loop. Since human knowledge is often complex, difficult to formalise and partly intuitive, the latter option seems especially attractive.
 
+These idea of using prior knowledge or human intervention to avoid traps has been explored by several authors (see Garcia and Fernandez \cite{Garcia2015} for a survey.) However, to the best of our knowledge, no previous author has established a regret bound in such a setting. In the present work, we derive such a regret bound, specifically for the setting that Clouse \cite{Clouse1997} called \enquote{ask for help} and we call \enquote{delegative reinforcement learning} (DRL), and specifically for a class of environments which consists of some finite number of Markov decision processes with a finite number of states.
+
+In DRL, an agent interacts with an environment during an infinite sequence of \enquote{rounds}. On each round, the agent selects an action and the environment transits to a new state which is observed by the agent. The agent then receives a reward which depends on the state. There are two kinds of actions the agent can take: a \enquote{direct} action $a \in \A$ and the special delegation action $\bot$. If the agent takes action $\bot$, the \emph{advisor} takes some action $b \in \A$ which affects the environment in the same way as if it was taken directly. The agent then observes both $b$ and the new state of the environment. The utility function and regret are defined via geometric time discount with a constant $\gamma$.
+
+The algorithm we construct in order to show the regret bound is a variant of Thompson sampling. The timeline is divided into intervals of length $O\AP{(1-\gamma)^{-1/4}}$. At the start of each interval, the algorithm samples a hypothesis out of its current belief state, and starts carrying out an optimal policy for this hypothesis. On each round, it checks whether...
+
 TBD
 
 \section{Document Class Options}
@@ -50,12 +169,8 @@ Select `Insert', `Document Properties ...', the `Generic' tab
 and then modify desired class options in appeared dialog.
 Changes will be applied after pressing the 'OK' button.
 
-%+Bibliography
-\begin{thebibliography}{99}
-\bibitem{Label1} ...
-\bibitem{Label2} ...
-\end{thebibliography}
-%-Bibliography
+\bibliographystyle{unsrt}
+\bibliography{DRL}
 
 \end{document}
 
