@@ -28,6 +28,9 @@
 \newcommand{\AP}[1]{\left(#1\right)}
 \newcommand{\AB}[1]{\left[#1\right]}
 \newcommand{\AC}[1]{\left\{#1\right\}}
+\newcommand{\APM}[2]{\left(#1\;\middle\vert\;#2\right)}
+\newcommand{\ABM}[2]{\left[#1\;\middle\vert\;#2\right]}
+\newcommand{\ACM}[2]{\left\{#1\;\middle\vert\;#2\right\}}
 
 % operators that require brackets
 \newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
@@ -137,7 +140,9 @@ The structure of the paper is as follows... TBD
 
 \section{Results}
 
-We start by reviewing some basic definitions and properties of Markov decision processes. Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is a Markov kernel from $X$ to $Y$.
+We start by reviewing some basic definitions and properties of Markov decision processes. 
+
+First, some notation. Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is a Markov kernel from $X$ to $Y$. Given $x \in X$, $K(x)$ is the corresponding probability measure on $Y$. Given $A \subseteq Y$ measurable, $K(A \mid x) := K(x)(A)$. Given $y \in Y$, $K(y \mid x):=K\APM{\{y\}}{x}$. Given $J: Y \K Z$, $JK: X \K Z$ is the composition of $J$ and $K$, and when $Y = X$, $K^n$ is the $n$-th composition power.
 
 \begin{samepage}
 \begin{definition}
@@ -147,6 +152,24 @@ A (finite) \emph{Markov decision process} (MDP) is a tuple
 $$M:=\AP{\St_M,\ \A_M,\ \T_M: \St_M \times \A_M \K \St_M,\ \R_M: \St_M \rightarrow [0,1]}$$
 
 Here, $\St_M$ is a finite set (the set of states,) $\A_M$ is a finite set (the section of actions,) $\T_M$ is the transition kernel and $\R_M$ is the reward function\footnote{Sometimes the reward is assumed to depend on the action as well, or on the action and the next state, but these formalisms are easily seen to be equivalent via redefinitions of the state set.}.
+
+Given $\pi: \St_M \rightarrow \A_M$, we define $\T_{M\pi}: \St_M \K \St_M$ by
+
+\begin{equation}
+\T_{M\pi}(t \mid s) := \T_M\APM{t}{s,\pi(s)}
+\end{equation}
+
+We define $\V_M : \St_M \times [0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times \A_M \times [0,1) \rightarrow [0,1]$ by
+
+\begin{equation}
+\V_M(s,\gamma):=(1-\gamma) \max_{\pi: \St_M \rightarrow \A_M} \sum_{n=0}^\infty \gamma^n \Ea{\T_{M\pi}^n(s)}{\R_M}
+\end{equation}
+
+\begin{equation}
+\Q_M(s,a,\gamma):=(1-\gamma)\R_M(s)+\gamma\Ea{t \sim \T_{M\pi}(s)}{\V_M(t,\gamma)}
+\end{equation}
+
+...
 
 \end{definition}
 \end{samepage}
