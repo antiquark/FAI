@@ -155,21 +155,31 @@ In DRL, an agent interacts with an environment during an infinite sequence of \e
 
 The algorithm we construct in order to show the regret bound is a variant of Thompson sampling. Denoting $\alpha:=1-\gamma$, the timeline is divided into intervals of length $O\AP{\alpha^{-1/4}}$. At the start of each interval, the algorithm samples a hypothesis out of its current belief state, and starts carrying out an optimal policy for this hypothesis. On each round, it checks whether the desired action is known to be \enquote{safe} with high probability is a particular formal sense. If it is safe, the action is taken. If it isn't safe, delegation is performed. Moreover, the belief state evolves using all observations, but hypotheses whose probability falls below $O\AP{\alpha^{1/4}}$ are discarded altogether. We then show that (i) given relatively mild assumptions about the advisor (namely, that it only takes safe actions and it takes the optimal action with at least some small probability,) the regret is bounded by $O\AP{\alpha^{-3/4}}$ (in particular it is sublinear in $\alpha^{-1}$) and (ii) the expected number of delegations is bounded by $O\AP{\alpha^{-1/4}}$. Here, we only gave the dependence on $\alpha$, but the expressions we obtain are more detailed and reflect the dependence on the number of hypothesis, the \emph{mixing time} of the hypotheses and the minimal probability with which the advisor takes an optimal action.
 
-The proof is based on the conjunction of four observations. The first is that, with high probability, our algorithm only takes safe actions (since it delegates whenever it is uncertain.) The second is that the number of delegations cannot be large for the \emph{information theoretic} reason that, delegation is only done under conditions in which it is expected to yield a certain minimal \emph{information gain}, whereas, since the number of hypotheses is some finite $N$, the total amount of information is also finite and equal to $\ln N$. The third is that, assuming all actions are safe, regret can be approximated by \enquote{episodic regret} (to show this we use the Laurent expansion of the \emph{value} of states in the parameter $\alpha$.) The fourth is...
+The proof is based on the conjunction of four observations. The first is that, with high probability, our algorithm only takes safe actions (since it delegates whenever it is uncertain.) The second is that the number of delegations cannot be large for the \emph{information theoretic} reason that, delegation is only done under conditions in which it is expected to yield a certain minimal \emph{information gain}, whereas, since the number of hypotheses is some finite $N$, the total amount of information is also finite and equal to $\ln N$. The third is that, assuming all actions are safe, regret can be approximated by \enquote{episodic regret} (to show this we use the Taylor expansion of the \emph{value} of states in the parameter $\alpha$.) The fourth is that Thompson sampling (without delegation) satisfies an upper bound on episode regret in terms of the information gain due to observing the reward during this episode (the intuition is, if observing the reward yields no information, then the optimal policy for any hypothesis is optimal for all other hypotheses, so there is no regret,) and the sum of information gains over episodes is again bounded by $\ln N$. Here, both information theoretic steps require the assumption that no hypothesis is assigned a very small but positive probability, which necessitates discarding such hypothesis. This \enquote{distortion} of the belief state has little effect because, obviously, hypotheses with very small probability are likely to be false.
+
+We also consider situations in which there are states of the environment (that we call \enquote{corrupted}) for which the reward signal and/or the advisor become unreliable (i.e. the observed reward in these states might be different from the \enquote{true} reward w.r.t. which regret is defined, and the advisor in these states might fail to satisfy the assumptions we otherwise require from it.) For example, we might imagine a robot that, through its own actions, damages its own input channels or even provides \enquote{deliberately} misleading information to the human operator. Indeed, it has been argued~\cite{TBD} that reinforcement learning agents are incentivized to sabotage themselves in this way (for example \enquote{wirehead} i.e. tamper with itself in order to artificially set the reward to maximum) and therefore sufficiently powerful algorithms (beyond the current state of the art) are almost guaranteed to do so. We show that, assuming corrupted states can be avoided without sacrificing utility, and that the advisor in uncorrupted states never acts so as to enter a corrupted state, DRL can be used to achieve essentially the same regret bound as before (and in particular learn to avoid corruption.) Thus DRL not only combats traps in the external environment but also adversarial incentives inside the agent itself.
+
+The structure of the paper is as follows... TBD
+
+\section{Results}
 
 TBD
 
-\section{Document Class Options}
-The typesetting specification selected by this document template
-uses the default class options. There are a number of class options
-supported by this document class. The available options include 
-setting the paper size, the point size of the font used in the 
-document body and others.
+\section{Proof Outline}
 
-\subsection{Customizing Class Options}
-Select `Insert', `Document Properties ...', the `Generic' tab
-and then modify desired class options in appeared dialog.
-Changes will be applied after pressing the 'OK' button.
+TBD
+
+\section{Proof Details}
+
+TBD
+
+\section{Discussion}
+
+TBD
+
+\section*{Acknowledgements}
+
+TBD
 
 \bibliographystyle{unsrt}
 \bibliography{DRL}
