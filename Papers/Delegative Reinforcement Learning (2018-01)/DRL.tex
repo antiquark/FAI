@@ -4,7 +4,7 @@
 \usepackage[letterpaper,margin=1in]{geometry}
 \usepackage{hyperref}
 \usepackage{csquotes}
-\usepackage{amsmath,amsthm}
+\usepackage{amsmath,amsthm,amssymb}
 \usepackage{xfrac}
 
 \theoremstyle{definition}
@@ -140,9 +140,11 @@ The structure of the paper is as follows... TBD
 
 \section{Results}
 
-We start by reviewing some basic definitions and properties of Markov decision processes. 
+We start by reviewing some basic definitions and properties of Markov decision processes. First, some notation. 
 
-First, some notation. Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is a Markov kernel from $X$ to $Y$. Given $x \in X$, $K(x)$ is the corresponding probability measure on $Y$. Given $A \subseteq Y$ measurable, $K(A \mid x) := K(x)(A)$. Given $y \in Y$, $K(y \mid x):=K\APM{\{y\}}{x}$. Given $J: Y \K Z$, $JK: X \K Z$ is the composition of $J$ and $K$, and when $Y = X$, $K^n$ is the $n$-th composition power.
+Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is a Markov kernel from $X$ to $Y$. Given $x \in X$, $K(x)$ is the corresponding probability measure on $Y$. Given $A \subseteq Y$ measurable, $K(A \mid x) := K(x)(A)$. Given $y \in Y$, $K(y \mid x):=K\APM{\{y\}}{x}$. Given $J: Y \K Z$, $JK: X \K Z$ is the composition of $J$ and $K$, and when $Y = X$, $K^n$ is the $n$-th composition power.
+
+Given sets $A$ and $B$, the notation $f: A \rightrightarrows B$ means $f$ is a mapping from $A$ to $2^B$ (the power set of $B$.)
 
 \begin{samepage}
 \begin{definition}
@@ -168,6 +170,22 @@ We define $\V_M : \St_M \times [0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times 
 \begin{equation}
 \Q_M(s,a,\gamma):=(1-\gamma)\R_M(s)+\gamma\Ea{t \sim \T_{M\pi}(s)}{\V_M(t,\gamma)}
 \end{equation}
+
+We define $\V^0_M : \St_M \rightarrow [0,1]$ and $\Q^0_M: \St_M \times \A_M \rightarrow [0,1]$ by
+
+\begin{equation}
+\V_M^0(s) := \lim_{\gamma \rightarrow 1} \V_M(s,\gamma)
+\end{equation}
+
+\begin{equation}
+\Q_M^0(s,a) := \lim_{\gamma \rightarrow 1} \Q_M(s,a,\gamma)
+\end{equation}
+
+Indeed, the limits above are guaranteed to exist. We define $\A_M^0: \St_M \rightrightarrows \A_M$ by
+
+$$\A_M^0(s) := \Argmax{a \in \A_M} \Q_M^0(s,a)$$
+
+Finally, it is well known that there is some $\gamma_M\in[0,1)$ s.t. for any $\gamma\in(0,1)$, if $\gamma > \gamma_M$ then...
 
 ...
 
