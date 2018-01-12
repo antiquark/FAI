@@ -140,7 +140,7 @@ The structure of the paper is as follows... TBD
 
 \section{Results}
 
-We start by reviewing some basic definitions and properties of Markov decision processes. First, some notation. 
+We start by reviewing some basic definitions and properties of Markov decision processes. See e.g. \cite{Feinberg2002} for a detailed overview with proofs. First, some notation. 
 
 Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is a Markov kernel from $X$ to $Y$. Given $x \in X$, $K(x)$ is the corresponding probability measure on $Y$. Given $A \subseteq Y$ measurable, $K(A \mid x) := K(x)(A)$. Given $y \in Y$, $K(y \mid x):=K\APM{\{y\}}{x}$. Given $J: Y \K Z$, $JK: X \K Z$ is the composition of $J$ and $K$, and when $Y = X$, $K^n$ is the $n$-th composition power.
 
@@ -183,11 +183,25 @@ We define $\V^0_M : \St_M \rightarrow [0,1]$ and $\Q^0_M: \St_M \times \A_M \rig
 
 Indeed, the limits above are guaranteed to exist. We define $\A_M^0: \St_M \rightrightarrows \A_M$ by
 
-$$\A_M^0(s) := \Argmax{a \in \A_M} \Q_M^0(s,a)$$
+\begin{equation}
+\A_M^0(s) := \Argmax{a \in \A_M} \Q_M^0(s,a)
+\end{equation}
 
-Finally, it is well known that there is some $\gamma_M\in[0,1)$ s.t. for any $\gamma\in(0,1)$, if $\gamma > \gamma_M$ then...
+Finally, it is well known that there are some $\A_M^*: \St_M \rightrightarrows \A_M$ (the set of Blackwell optimal actions) and $\gamma_M\in[0,1)$ s.t. for any $\gamma\in\AP{\gamma_M,1}$
 
-...
+\begin{equation}
+\A_M^*(s) = \Argmax{a \in \A_M} \Q_M\AP{s,a,\gamma}
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+We can now define the properties of a policy that make it a \enquote{satisfactory} advisor.
+
+\begin{samepage}
+\begin{definition}
+
+?
 
 \end{definition}
 \end{samepage}
