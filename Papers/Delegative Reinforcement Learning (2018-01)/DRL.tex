@@ -6,6 +6,7 @@
 \usepackage{csquotes}
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{xfrac}
+\usepackage{enumerate}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}%[section]
@@ -198,10 +199,23 @@ Finally, it is well known that there are some $\A_M^*: \St_M \rightrightarrows \
 
 We can now define the properties of a policy that make it a \enquote{satisfactory} advisor.
 
+Given a set $A$, the notation $A^*$ will denote the set of finite strings over alphabet $A$, i.e.
+
+\[A^* := \bigsqcup_{n = 0}^\infty A^n\]
+
+Given $X$ a topological space and $\mu$ a Borel measure on $X$, $\Supp{\mu} \subseteq X$ denotes the \emph{support} of $\mu$.
+
 \begin{samepage}
 \begin{definition}
+\label{def:sane}
 
-?
+Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\sigma: \St_M^* \times \St_M \K \A_M$. We think of $\sigma$ as a policy, where the first argument is the past history of states and the second argument is the current state. $\sigma$ is called \emph{$\epsilon$-sane for $M$} when for any $h \in \St_M^*$ and $s \in \St_M$,
+
+\begin{enumerate}[i.]
+\item\label{con:def__sane__safe} $\Supp{\sigma(h,s)} \subseteq \A_M^0\AP{s}$
+\item\label{con:def__sane__bold} There is $a \in \A_M^*(s)$ s.t. $\sigma(a \mid h,s) > \epsilon$?
+% Alternatively we can bound the probability of \A^* as a whole?
+\end{enumerate}
 
 \end{definition}
 \end{samepage}
