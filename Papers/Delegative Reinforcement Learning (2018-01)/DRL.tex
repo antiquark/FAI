@@ -35,10 +35,12 @@
 
 % operators that require brackets
 \newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
 \newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
 \newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
 \newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
 \newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
 \newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
 \newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
 \newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
@@ -150,9 +152,9 @@ Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is 
 
 A (finite) \emph{Markov decision process} (MDP) is a tuple
 
-$$M:=\AP{\St_M,\ \A_M,\ \T_M: \St_M \times \A_M \K \St_M,\ \R_M: \St_M \rightarrow [0,1]}$$
+$$M:=\AP{\St_M,\ \A_M,\ s_M\in \St_M,\ \T_M: \St_M \times \A_M \K \St_M,\ \R_M: \St_M \rightarrow [0,1]}$$
 
-Here, $\St_M$ is a finite set (the set of states,) $\A_M$ is a finite set (the section of actions,) $\T_M$ is the transition kernel and $\R_M$ is the reward function\footnote{Sometimes the reward is assumed to depend on the action as well, or on the action and the next state, but these formalisms are easily seen to be equivalent via redefinitions of the state set.}.
+Here, $\St_M$ is a finite set (the set of states,) $\A_M$ is a finite set (the section of actions,) $s_M$ is the initial state, $\T_M$ is the transition kernel and $\R_M$ is the reward function\footnote{Sometimes the reward is assumed to depend on the action as well, or on the action and the next state, but these formalisms are easily seen to be equivalent via redefinitions of the state set.}.
 
 \end{definition}
 \end{samepage}
@@ -229,10 +231,21 @@ Given $M$ an MDP, it is well known that there are some $\A_M^*: \St_M \rightrigh
 \end{definition}
 \end{samepage}
 
+Given a measurable space $X$, we denote $\Delta X$ the space of probability measures on $X$. Given a set $A$, we denote $A^\omega$ the space of infinite sequences with values in $A$, equipped with the product topology and the corresponding Borel sigma-algebra. Given $x\in A^\omega$ and $n \in \Nats$, $x_n \in A$ is the $n$-th member of the sequence $x$ (in our conventions, $0 \in \Nats$ so the sequence begins from the 0th member.) Given $h \in A^*$ and $x \in A^\omega$, the notation $h \sqsubset x$ means that $h$ is a prefix of $x$.
+
 \begin{samepage}
 \begin{definition}
 
-Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\pi$ as a policy, where the first argument is the past history of states and the second argument is the current state... ?
+Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\pi$ as a policy, where the first argument is the past history of states and the second argument is the current state. We define $\pi^M \in \Delta\St_M^\omega$ by requiring that for any $h \in \St_M^*$ and $s,t \in \St_M$
+
+\begin{equation}
+\Pa{x\sim\pi^M }{s_M \sqsubset x} := 1
+\end{equation}
+
+
+\begin{equation}
+\CP{x\sim\pi^M }{hst \sqsubset x}{hs \sqsubset x} := \sum_{a \in \A_M} {\T_M\APM{t}{s,a} \pi\APM{a}{h,s}}
+\end{equation}
 
 \end{definition}
 \end{samepage}
@@ -240,10 +253,14 @@ Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\
 \begin{samepage}
 \begin{definition}
 
-? ...We define $\EU_M^\pi: [0,1) \rightarrow [0,1]$ by
+Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M: \St_M^\omega \times [0,1) \rightarrow [0,1]$ and $\EU_M^\pi: [0,1) \rightarrow [0,1]$ by
 
 \begin{equation}
-\EU_M^\pi(\gamma) := (1-\gamma)\sum_{n=0}^\infty \gamma^n \Ea{?}{\R_M}
+\Ut_M(x,\gamma) := (1-\gamma)\sum_{n=0}^\infty {\gamma^n \R_M\AP{x_n}}
+\end{equation}
+
+\begin{equation}
+\EU_M^\pi(\gamma) := \Ea{x\sim\pi^M}{\Ut_M(x,\gamma)}
 \end{equation}
 
 \end{definition}
