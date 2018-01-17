@@ -141,11 +141,9 @@ The structure of the paper is as follows... TBD
 
 \section{Results}
 
-We start by reviewing some basic definitions and properties of Markov decision processes. See e.g. \cite{Feinberg2002} for a detailed overview with proofs. First, some notation. 
+We start by recalling some basic definitions and properties of Markov decision processes. See e.g. \cite{Feinberg2002} for a detailed overview with proofs. First, some notation. 
 
 Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is a Markov kernel from $X$ to $Y$. Given $x \in X$, $K(x)$ is the corresponding probability measure on $Y$. Given $A \subseteq Y$ measurable, $K(A \mid x) := K(x)(A)$. Given $y \in Y$, $K(y \mid x):=K\APM{\{y\}}{x}$. Given $J: Y \K Z$, $JK: X \K Z$ is the composition of $J$ and $K$, and when $Y = X$, $K^n$ is the $n$-th composition power.
-
-Given sets $A$ and $B$, the notation $f: A \rightrightarrows B$ means $f$ is a mapping from $A$ to $2^B$ (the power set of $B$.)
 
 \begin{samepage}
 \begin{definition}
@@ -156,13 +154,25 @@ $$M:=\AP{\St_M,\ \A_M,\ \T_M: \St_M \times \A_M \K \St_M,\ \R_M: \St_M \rightarr
 
 Here, $\St_M$ is a finite set (the set of states,) $\A_M$ is a finite set (the section of actions,) $\T_M$ is the transition kernel and $\R_M$ is the reward function\footnote{Sometimes the reward is assumed to depend on the action as well, or on the action and the next state, but these formalisms are easily seen to be equivalent via redefinitions of the state set.}.
 
-Given $\pi: \St_M \rightarrow \A_M$, we define $\T_{M\pi}: \St_M \K \St_M$ by
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP and some $\pi: \St_M \rightarrow \A_M$, we define $\T_{M\pi}: \St_M \K \St_M$ by
 
 \begin{equation}
 \T_{M\pi}(t \mid s) := \T_M\APM{t}{s,\pi(s)}
 \end{equation}
 
-We define $\V_M : \St_M \times [0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times \A_M \times [0,1) \rightarrow [0,1]$ by
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP, we define $\V_M : \St_M \times [0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times \A_M \times [0,1) \rightarrow [0,1]$ by
 
 \begin{equation}
 \V_M(s,\gamma):=(1-\gamma) \max_{\pi: \St_M \rightarrow \A_M} \sum_{n=0}^\infty \gamma^n \Ea{\T_{M\pi}^n(s)}{\R_M}
@@ -172,7 +182,13 @@ We define $\V_M : \St_M \times [0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times 
 \Q_M(s,a,\gamma):=(1-\gamma)\R_M(s)+\gamma\Ea{t \sim \T_{M\pi}(s)}{\V_M(t,\gamma)}
 \end{equation}
 
-We define $\V^0_M : \St_M \rightarrow [0,1]$ and $\Q^0_M: \St_M \times \A_M \rightarrow [0,1]$ by
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP, we define $\V^0_M : \St_M \rightarrow [0,1]$ and $\Q^0_M: \St_M \times \A_M \rightarrow [0,1]$ by
 
 \begin{equation}
 \V_M^0(s) := \lim_{\gamma \rightarrow 1} \V_M(s,\gamma)
@@ -182,13 +198,29 @@ We define $\V^0_M : \St_M \rightarrow [0,1]$ and $\Q^0_M: \St_M \times \A_M \rig
 \Q_M^0(s,a) := \lim_{\gamma \rightarrow 1} \Q_M(s,a,\gamma)
 \end{equation}
 
-Indeed, the limits above are guaranteed to exist. We define $\A_M^0: \St_M \rightrightarrows \A_M$ by
+Indeed, the limits above are guaranteed to exist.
+
+\end{definition}
+\end{samepage}
+
+Given sets $A$ and $B$, the notation $f: A \rightrightarrows B$ means $f$ is a mapping from $A$ to $2^B$ (the power set of $B$.)
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP, we define $\A_M^0: \St_M \rightrightarrows \A_M$ by
 
 \begin{equation}
 \A_M^0(s) := \Argmax{a \in \A_M} \Q_M^0(s,a)
 \end{equation}
 
-Finally, it is well known that there are some $\A_M^*: \St_M \rightrightarrows \A_M$ (the set of Blackwell optimal actions) and $\gamma_M\in[0,1)$ s.t. for any $\gamma\in\AP{\gamma_M,1}$
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP, it is well known that there are some $\A_M^*: \St_M \rightrightarrows \A_M$ (the set of Blackwell optimal actions) and $\gamma_M\in[0,1)$ s.t. for any $\gamma\in\AP{\gamma_M,1}$
 
 \begin{equation}
 \A_M^*(s) = \Argmax{a \in \A_M} \Q_M\AP{s,a,\gamma}
@@ -197,7 +229,27 @@ Finally, it is well known that there are some $\A_M^*: \St_M \rightrightarrows \
 \end{definition}
 \end{samepage}
 
-We can now define the properties of a policy that make it a \enquote{satisfactory} advisor.
+\begin{samepage}
+\begin{definition}
+
+Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\pi$ as a policy, where the first argument is the past history of states and the second argument is the current state... ?
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+? ...We define $\EU_M^\pi: [0,1) \rightarrow [0,1]$ by
+
+\begin{equation}
+\EU_M^\pi(\gamma) := (1-\gamma)\sum_{n=0}^\infty \gamma^n \Ea{?}{\R_M}
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+Next, we define the properties of a policy that make it a \enquote{satisfactory} advisor.
 
 Given a set $A$, the notation $A^*$ will denote the set of finite strings over alphabet $A$, i.e.
 
@@ -209,15 +261,27 @@ Given $X$ a topological space and $\mu$ a Borel measure on $X$, $\Supp{\mu} \sub
 \begin{definition}
 \label{def:sane}
 
-Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\sigma: \St_M^* \times \St_M \K \A_M$. We think of $\sigma$ as a policy, where the first argument is the past history of states and the second argument is the current state. $\sigma$ is called \emph{$\epsilon$-sane for $M$} when for any $h \in \St_M^*$ and $s \in \St_M$,
+Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\sigma: \St_M^* \times \St_M \K \A_M$. $\sigma$ is called \emph{$\epsilon$-sane for $M$} when for any $h \in \St_M^*$ and $s \in \St_M$,
 
 \begin{enumerate}[i.]
 \item\label{con:def__sane__safe} $\Supp{\sigma(h,s)} \subseteq \A_M^0\AP{s}$
-\item\label{con:def__sane__bold} There is $a \in \A_M^*(s)$ s.t. $\sigma(a \mid h,s) > \epsilon$?
-% Alternatively we can bound the probability of \A^* as a whole?
+\item\label{con:def__sane__bold} There is $a \in \A_M^*(s)$ s.t. $\sigma(a \mid h,s) > \epsilon$
 \end{enumerate}
 
 \end{definition}
+\end{samepage}
+
+We can now formulate the main theorem.
+
+\begin{samepage}
+\begin{theorem}
+\label{thm:main}
+
+There is some constant $C \in (0,\infty)$ s.t. the following holds... ?
+
+TBD
+
+\end{theorem}
 \end{samepage}
 
 TBD
