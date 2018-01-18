@@ -152,7 +152,7 @@ Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is 
 \begin{samepage}
 \begin{definition}
 
-A (finite) \emph{Markov decision process} (MDP) is a tuple
+\emph{A (finite) Markov decision process} (MDP) is a tuple
 
 $$M:=\AP{\St_M,\ \A_M,\ s_M\in \St_M,\ \T_M: \St_M \times \A_M \K \St_M,\ \R_M: \St_M \rightarrow [0,1]}$$
 
@@ -337,25 +337,83 @@ Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\foo
 \end{theorem}
 \end{samepage}
 
-The meaning of the factor $\sum_{j=0}^{N-1} \Tn_{M^j}(\gamma)$ might seem somewhat unclear, however, we can bound this factor as follows.
+The meaning of the factor $\sum_{j=0}^{N-1} \Tn_{M^j}(\gamma)$ might seem somewhat unclear, however, we can bound this factor in terms of parameters related to \emph{mixing time}. 
 
-Given a finite set $A$ and some $K: A \K A$, $\sigma(K)$ denotes the spectrum of the operator $K^*: \Reals^A \rightarrow \Reals^A$ defined by
+First, we recall a few concepts and properties of Markov chains.
 
-\[\AP{K^*f}(x):=\Ea{y\sim K(x)}{f(y)}\]
+\begin{samepage}
+\begin{definition}
+
+Given $\St$ a finite set and $\T: \St \K \St$ (that we regard as the transition kernel of a Markov chain,) $s \in \St$ is called \emph{an essential state of $\T$} when
+
+\begin{equation}
+\limsup_{n \rightarrow \infty} {\T^n\APM{s}{s}} > 0
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $\St$ a finite set, $\T: \St \K \St$, $s \in \St$ and $k \in \Nats$, $k$ is called \emph{the period of $s$ relatively to $\T$} when 
+
+\begin{equation}
+k = \gcd \ACM{n \in \Nats}{n > 0,\ \T^n(s \mid s) > 0}
+\end{equation}
+
+$k$ is called \emph{a period of $\T$} when there is \emph{some} $s \in \St$ an essential state of $\T$ s.t. $k$ is the period of $s$ relatively to $\T$. We denote $\Pi_\T$ the set of periods of $\T$.
+
+\end{definition}
+\end{samepage}
+
+Given a finite set $\St$ and some $\T: \St \K \St$, $\sigma(\T)$ denotes the spectrum of the operator $\T^*: \Reals^\St \rightarrow \Reals^\St$ defined by
+
+\[\AP{\T^*f}(x):=\Ea{y\sim \T(x)}{f(y)}\]
+
+\begin{samepage}
+\begin{definition}
+
+Given a finite set $\St$ and some $\T: \St \K \St$, we define $\lambda_\T\in[0,1)$ by
+
+\begin{equation}
+\lambda_\T := \max\ACM{\Abs{\lambda}}{\lambda \in \sigma\AP{\T},\ \Abs{\lambda} < 1}
+\end{equation}
+
+Here, the maximum is understood to be 0 when the set is empty.
+
+\end{definition}
+\end{samepage}
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:mixing_time}
 
-Let $M$ be an MDP and $\pi^\star: \St_M \rightarrow \A_M$ be s.t. for any $s \in \St_M$, $\pi^\star(s)\in\A_M^\star(s)$ (i.e. $\pi^\star$ is a Blackwell optimal policy.) Define $\lambda_M\in[0,1)$ by
-
-\begin{equation}
-\lambda_M := \max\ACM{\Abs{\lambda}}{\lambda \in \sigma\AP{\T_{M\pi^\star}},\ \Abs{\lambda} < 1}
-\end{equation}
-
-Here, the maximum is understood to be 0 when the set is empty.
+Consider a finite set $\St$ and some $\T: \St \K \St$. Then, there are $\rho\in[0,\infty)$, $\zeta: \St \K \Pi_\T$ and $\xi: \St \times \Pi_\T \K \St$ ... s.t.
 
 ?
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+TBD
+\end{proof}
+
+??
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:transient}
+
+Let $M$ be an MDP and $\pi^\star: \St_M \rightarrow \A_M$ be s.t. for any $s \in \St_M$, $\pi^\star(s)\in\A_M^\star(s)$ (i.e. $\pi^\star$ is a Blackwell optimal policy.) Denote $\lambda_M:=\lambda_{\T_{M\pi^\star}}$. Define $\rho_M \in [0,\infty)$ by
+
+\begin{equation}
+?
+\end{equation}
+
+??
 
 \end{proposition}
 \end{samepage}
