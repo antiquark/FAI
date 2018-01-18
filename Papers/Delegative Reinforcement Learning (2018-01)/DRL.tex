@@ -55,8 +55,8 @@
 
 \newcommand{\D}{\mathrm{d}}
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
-\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
-\newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\textnormal{tv}}\AP{#1}}
 
 \newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
 \newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
@@ -99,6 +99,7 @@
 \newcommand{\Ad}{\alpha}
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\UC}{\mathcal{U}}
+\usepackage{color}
 
 \begin{document}
 
@@ -294,6 +295,8 @@ Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\Ad: \St_M \K \A_M$. $\Ad
 \end{definition}
 \end{samepage}
 
+\textbf{\textcolor{red}{\begin{Huge}TODO: Examples!!!\end{Huge}}}
+
 Next, we introduce a formalism describing a system of two agents where one (the \enquote{robot}) can delegate actions to another (the \enquote{advisor}.)
 
 \begin{samepage}
@@ -385,21 +388,30 @@ Here, the maximum is understood to be 0 when the set is empty.
 \end{definition}
 \end{samepage}
 
+Given a finite set $\St$ and $\mu,\nu \in \Delta\St$, $\Dtva{\mu,\nu}$ will denote the \emph{total variation distance} between $\mu$ and $\nu$.
+
 \begin{samepage}
 \begin{proposition}
 \label{prp:mixing_time}
 
-Consider a finite set $\St$ and some $\T: \St \K \St$. Then, there are $\rho\in[0,\infty)$, $\zeta: \St \K \Pi_\T$ and $\xi: \St \times \Pi_\T \K \St$ ... s.t.
+Consider a finite set $\St$ and some $\T: \St \K \St$. Then, there are $\rho\in[0,\infty)$, $\zeta: \St \K \Pi_\T$ and $\xi: \St \times \Pi_\T \K \St$ s.t. for any $s\in\St$
 
-?
+\begin{equation}
+\forall k \in \Pi_\T: \AP{\T^k\xi}(s,k) = \xi(s,k)
+\end{equation}
+
+\begin{equation}
+\forall n \in \Nats: \Dtva{\T^n(s),\Ea{k\sim\zeta(s)}{\AP{\T^n\xi}(s,k)}} \leq \rho\lambda_\T^{-n}
+\end{equation}
 
 \end{proposition}
 \end{samepage}
 
-\begin{proof}
+In other words, when we consider the time evolution of a Markov chain, the probability distribution over states converges to a convex linear combination of distributions that are periodic in time, with exponential convergence rate. $\zeta$ assigns to each initial state the asymptotic distribution over periods and $\xi$ assigns to each initial state and period the corresponding periodic distribution over states.
 
-TBD
-\end{proof}
+Proposition~\ref{prp:mixing_time} is a rather standard application of Perron-Frobenius theory. For the sake of completeness, we spell out the proof in Appendix~\ref{sec:appendix}.
+
+Relation to mixing time ??
 
 ??
 
@@ -434,6 +446,13 @@ TBD
 TBD
 
 \section{Discussion}
+
+TBD
+
+\appendix
+
+\section{Appendix}
+\label{sec:appendix}
 
 TBD
 
