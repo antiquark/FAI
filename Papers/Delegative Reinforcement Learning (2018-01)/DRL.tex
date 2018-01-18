@@ -89,16 +89,16 @@
 \newcommand{\St}{\mathcal{S}}
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\R}{\mathcal{R}}
-\newcommand{\Ada}{\bar{\A}}
-\newcommand{\Hy}{\mathcal{H}}
-\newcommand{\UC}{\mathcal{U}}
 
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\V}{\operatorname{V}}
 \newcommand{\Q}{\operatorname{Q}}
 \newcommand{\EU}{\operatorname{EU}}
 
-\newcommand{\Tn}{\mathfrak{T}}
+\newcommand{\Tn}{\mathfrak{t}}
+\newcommand{\Ad}{\alpha}
+\newcommand{\Hy}{\mathcal{H}}
+\newcommand{\UC}{\mathcal{U}}
 
 \begin{document}
 
@@ -284,11 +284,11 @@ Given $X$ a topological space and $\mu$ a Borel measure on $X$, $\Supp{\mu} \sub
 \begin{definition}
 \label{def:sane}
 
-Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\sigma: \St_M \K \A_M$. $\sigma$ is called \emph{$\epsilon$-sane for $M$} when for any $h \in \St_M^*$ and $s \in \St_M$,
+Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\Ad: \St_M \K \A_M$. $\Ad$ is called \emph{$\epsilon$-sane for $M$} when for any $h \in \St_M^*$ and $s \in \St_M$,
 
 \begin{enumerate}[i.]
-\item\label{con:def__sane__safe} $\Supp{\sigma(h,s)} \subseteq \A_M^0\AP{s}$
-\item\label{con:def__sane__bold} There is $a \in \A_M^\star(s)$ s.t. $\sigma(a \mid h,s) > \epsilon$
+\item\label{con:def__sane__safe} $\Supp{\Ad(h,s)} \subseteq \A_M^0\AP{s}$
+\item\label{con:def__sane__bold} There is $a \in \A_M^\star(s)$ s.t. $\Ad(a \mid h,s) > \epsilon$
 \end{enumerate}
 
 \end{definition}
@@ -299,17 +299,17 @@ Next, we introduce a formalism describing a system of two agents where one (the 
 \begin{samepage}
 \begin{definition}
 
-Given an MDP $M$ and some $\sigma: \St_M \K \A_M$ (the advisor policy), we define the MDP $M[\sigma]$ (the environment as perceived by the robot) by
+Given an MDP $M$ and some $\Ad: \St_M \K \A_M$ (the advisor policy), we define the MDP $M[\Ad]$ (the environment as perceived by the robot) by
 
 \begin{align}
-\A_{M[\sigma]}&:=\A_M \sqcup \{\bot\} \\
-\St_{M[\sigma]}&:=\St_M \times \A_{M[\sigma]} \\ 
-s_{M[\sigma]}&:=\AP{s_M,\bot} \\
-\T_{M[\sigma]}\APM{\AP{t,c}}{\AP{s,b},a}&:=\begin{cases} \T_M\APM{t}{s,a} \text{ if } a\ne\bot \text{ and } c=\bot \\ \T_M\APM{t}{s,c}\sigma\APM{c}{s} \text{ if } a = \bot \text{ and } c\ne\bot \\ 0 \text{ otherwise} \end{cases} \\
-\R_{M[\sigma]}(s,b)&:= \R_M(s)
+\A_{M[\Ad]}&:=\A_M \sqcup \{\bot\} \\
+\St_{M[\Ad]}&:=\St_M \times \A_{M[\Ad]} \\ 
+s_{M[\Ad]}&:=\AP{s_M,\bot} \\
+\T_{M[\Ad]}\APM{\AP{t,c}}{\AP{s,b},a}&:=\begin{cases} \T_M\APM{t}{s,a} \text{ if } a\ne\bot \text{ and } c=\bot \\ \T_M\APM{t}{s,c}\Ad\APM{c}{s} \text{ if } a = \bot \text{ and } c\ne\bot \\ 0 \text{ otherwise} \end{cases} \\
+\R_{M[\Ad]}(s,b)&:= \R_M(s)
 \end{align}
 
-Here, the action $\bot$ represents delegation and the $\A_{M[\sigma]}$ factor in $\St_{M[\sigma]}$ represents the action taken by the advisor in the last round (or $\bot$ if there was no delegation.)
+Here, the action $\bot$ represents delegation and the $\A_{M[\Ad]}$ factor in $\St_{M[\Ad]}$ represents the action taken by the advisor in the last round (or $\bot$ if there was no delegation.)
 
 \end{definition}
 \end{samepage}
@@ -322,7 +322,7 @@ For any $n \in \Nats$, we use the notation $[n]:=\ACM{m\in\Nats}{m < n}.$
 \begin{theorem}
 \label{thm:main}
 
-There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon \in (0,1)$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\sigma^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\sigma^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\sigma^k$ the advisor policy. Assume that for each $k\in[N]$, $\sigma_k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, denote
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon \in (0,1)$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote
 
 \begin{equation}
 \Tn_{M^k}(\gamma):=\max_{s \in \St} \sup_{\theta\in(\gamma,1)} \Abs{\frac{\D{\V_{M^k}(s,\theta)}}{\D{\theta}}}
@@ -331,11 +331,39 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\g
 Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm.} s.t. for any $k \in [N]$
 
 \begin{equation}
-\EU_{M^k\AB{\sigma^k}}^\star(\gamma) - \EU_{M^k\AB{\sigma^k}}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \Tn_{M^k}(\gamma)}^{\sfrac{1}{4}}
+\EU_{M^k\AB{\Ad^k}}^\star(\gamma) - \EU_{M^k\AB{\Ad^k}}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \Tn_{M^j}(\gamma)}^{\sfrac{1}{4}}
 \end{equation}
 
 \end{theorem}
 \end{samepage}
+
+The meaning of the factor $\sum_{j=0}^{N-1} \Tn_{M^j}(\gamma)$ might seem somewhat unclear, however, we can bound this factor as follows.
+
+Given a finite set $A$ and some $K: A \K A$, $\sigma(K)$ denotes the spectrum of the operator $K^*: \Reals^A \rightarrow \Reals^A$ defined by
+
+\[\AP{K^*f}(x):=\Ea{y\sim K(x)}{f(y)}\]
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:mixing_time}
+
+Let $M$ be an MDP and $\pi^\star: \St_M \rightarrow \A_M$ be s.t. for any $s \in \St_M$, $\pi^\star(s)\in\A_M^\star(s)$ (i.e. $\pi^\star$ is a Blackwell optimal policy.) Define $\lambda_M\in[0,1)$ by
+
+\begin{equation}
+\lambda_M := \max\ACM{\Abs{\lambda}}{\lambda \in \sigma\AP{\T_{M\pi^\star}},\ \Abs{\lambda} < 1}
+\end{equation}
+
+Here, the maximum is understood to be 0 when the set is empty.
+
+?
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+TBD
+\end{proof}
 
 TBD
 
