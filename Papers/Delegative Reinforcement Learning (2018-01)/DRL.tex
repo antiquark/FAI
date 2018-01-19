@@ -317,6 +317,20 @@ Here, the action $\bot$ represents delegation and the $\A_{M[\Ad]}$ factor in $\
 \end{definition}
 \end{samepage}
 
+Another useful shorthand notation is the following.
+
+\begin{samepage}
+\begin{definition}
+
+Given any MDP $M$ and $\gamma\in(0,1)$, we define
+
+\begin{equation}
+\Tn_{M}(\gamma):=\max_{s \in \St_M} \sup_{\theta\in(\gamma,1)} \Abs{\frac{\D{\V_{M}(s,\theta)}}{\D{\theta}}}
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
 We can now formulate the main theorem.
 
 For any $n \in \Nats$, we use the notation $[n]:=\ACM{m\in\Nats}{m < n}.$
@@ -325,13 +339,7 @@ For any $n \in \Nats$, we use the notation $[n]:=\ACM{m\in\Nats}{m < n}.$
 \begin{theorem}
 \label{thm:main}
 
-There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon \in (0,1)$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote
-
-\begin{equation}
-\Tn_{M^k}(\gamma):=\max_{s \in \St} \sup_{\theta\in(\gamma,1)} \Abs{\frac{\D{\V_{M^k}(s,\theta)}}{\D{\theta}}}
-\end{equation}
-
-Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm.} s.t. for any $k \in [N]$
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon \in (0,1)$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$. Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm.} s.t. for any $k \in [N]$
 
 \begin{equation}
 \EU_{M^k\AB{\Ad^k}}^\star(\gamma) - \EU_{M^k\AB{\Ad^k}}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \Tn_{M^j}(\gamma)}^{\sfrac{1}{4}}
@@ -397,10 +405,12 @@ Given a finite set $\St$ and $\mu,\nu \in \Delta\St$, $\Dtva{\mu,\nu}$ will deno
 Consider a finite set $\St$ and some $\T: \St \K \St$. Then, there are $\rho\in[0,\infty)$, $\zeta: \St \K \Pi_\T$ and $\xi: \St \times \Pi_\T \K \St$ s.t. for any $s\in\St$
 
 \begin{equation}
+\label{eqn:prp__mixing_time_periodic}
 \forall k \in \Pi_\T: \AP{\T^k\xi}(s,k) = \xi(s,k)
 \end{equation}
 
 \begin{equation}
+\label{eqn:prp__mixing_time_decaying}
 \forall n \in \Nats: \Dtva{\T^n(s),\Ea{k\sim\zeta(s)}{\AP{\T^n\xi}(s,k)}} \leq \rho\lambda_\T^{-n}
 \end{equation}
 
@@ -411,29 +421,35 @@ In other words, when we consider the time evolution of a Markov chain, the proba
 
 Proposition~\ref{prp:mixing_time} is a rather standard application of Perron-Frobenius theory. For the sake of completeness, we spell out the proof in Appendix~\ref{sec:appendix}.
 
-Relation to mixing time ??
-
-??
+Denote $\rho_\T$ the minimal value of $\rho$ for which equations \ref{eqn:prp__mixing_time_periodic} and \ref{eqn:prp__mixing_time_decaying} can hold. We can now state the bound on $\Tn_M(\gamma)$.
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:transient}
 
-Let $M$ be an MDP and $\pi^\star: \St_M \rightarrow \A_M$ be s.t. for any $s \in \St_M$, $\pi^\star(s)\in\A_M^\star(s)$ (i.e. $\pi^\star$ is a Blackwell optimal policy.) Denote $\lambda_M:=\lambda_{\T_{M\pi^\star}}$. Define $\rho_M \in [0,\infty)$ by
+Let $M$ be an MDP and $\pi^\star: \St_M \rightarrow \A_M$ be s.t. for any $s \in \St_M$, $\pi^\star(s)\in\A_M^\star(s)$ (i.e. $\pi^\star$ is a Blackwell optimal policy.) Denote $\Pi_M:=\Pi_{\T_{M\pi^\star}}$, $\lambda_M:=\lambda_{\T_{M\pi^\star}}$ and $\rho_M:=\rho_{\T_{M\pi^\star}}$. Then,
 
 \begin{equation}
-?
+\Tn_M\AP{\gamma_M} \leq \rho_M \frac{1+\lambda_M}{1-\lambda_M} + \max{\Pi_M}
 \end{equation}
-
-??
 
 \end{proposition}
 \end{samepage}
 
-\begin{proof}
+Theorem~\ref{thm:main} combined with Proposition~\ref{prp:transient} immediately give us the following
 
-TBD
-\end{proof}
+\begin{samepage}
+\begin{corollary}
+\label{crl:main}
+
+There is some constant $C' \in (0,\infty)$ s.t. the following holds. Assume the setting of Theorem~\ref{thm:main}. For each $k \in [N]$, denote $\Pi_k:=\Pi_{M^k}$, $\rho_k:=\rho_{M^k}$ and $\lambda_k:=\lambda_{M^k}$. Then,
+
+\begin{equation}
+\EU_{M^k\AB{\Ad^k}}^\star(\gamma) - \EU_{M^k\AB{\Ad^k}}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \AP{\frac{\rho_j}{1-\lambda_j}+\max{\Pi_j}}}^{\sfrac{1}{4}}
+\end{equation}
+
+\end{corollary}
+\end{samepage}
 
 TBD
 
