@@ -298,7 +298,7 @@ Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\Ad: \St_M \K \A_M$. $\Ad
 \begin{samepage}
 \begin{example}
 
-When $\Abs{\St_M}=1$, we get a \emph{multi-armed bandit.} ??
+When $\St_M=\A_M$ and $\forall a,b \in \A_M: \T_M\APM{a}{b,a}=1$ (i.e. the state equals the last action taken,) we get a \emph{multi-armed bandit\footnote{Usually a multi-armed bandit is considered to correspond to a 1 state MDP, but that wouldn't work for us since we allow $\R_M$ to be a function of the state only.}.} In this case, for any $a\in\A_M$, $\A_M^0(a) = \A_M$ and $\A_M^\star(a)=\Argmax{}{\R_M}$. In particular, condition~\ref{con:def__sane__safe} of Definition~\ref{def:sane} is always true. Condition~~\ref{con:def__sane__bold} holds even for $\alpha(a)$ the uniform distribution, as long as $\epsilon < \Abs{\A_M}^{-1}$.
 
 \end{example}
 \end{samepage}
@@ -306,7 +306,7 @@ When $\Abs{\St_M}=1$, we get a \emph{multi-armed bandit.} ??
 \begin{samepage}
 \begin{example}
 
-Deterministic... ?
+Assume $M$ is \emph{deterministic}, i.e. $\T_M\APM{t}{s,a}\in\{0,1\}$. Then $M$ can be described as a directed graph whose vertices are $\St_M$ and where there is an edge from $s$ to $t$ iff there exists $a\in\A_M$ s.t. $\T_M\APM{t}{s,a}=1$. In this case, $\V_M^0(s)$ depends only on the strongly connected component of $s$. It can be determined as follows. For each cycle $Y=\AP{s_1, s_2 \ldots s_n}$ we define $\V(Y):=\frac{1}{n}\sum_{m=1}^n \R_M\AP{s_m}$. For each strongly connected component $C \subseteq \St_M$, we define $\V(C)$ as the maximum of $\V(Y)$ over $Y$ simple cycles inside $C$. For each $s\in\St_M$, $\V_M^0(s)$ equals the maximum of $\V(C)$ over $C$ components reachable from $s$. $\Q_M^0(s,a)$ equals $\V_M^0(t)$ where $t$ is s.t. $\T_M\APM{t}{s,a}=1$. So, an action $a$ is in $\A_M^0(s)$ iff taking the action doesn't lead to a strongly connected component with lower $\V_M^0$. In particular, if the graph is strongly connected, then $\A_M^0(s)=\A_M$.
 
 \end{example}
 \end{samepage}
@@ -314,7 +314,7 @@ Deterministic... ?
 \begin{samepage}
 \begin{example}
 
-Figure... ?
+TODO: Figure...
 
 \end{example}
 \end{samepage}
