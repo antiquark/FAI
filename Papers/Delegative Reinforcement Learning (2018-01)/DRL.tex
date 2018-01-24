@@ -52,6 +52,7 @@
 % operators that require parentheses
 \newcommand{\En}{\operatorname{H}}
 \newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+\newcommand{\PS}[1]{\mathcal{P}\AP{#1}}
 
 \newcommand{\D}{\mathrm{d}}
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
@@ -104,7 +105,7 @@
 \begin{document}
 
 %+Title
-\title{Learning to avoid traps with a little help}
+\title{Delegative Reinforcement Learning: learning to avoid traps\\ with a little help}
 \author{Vadim Kosoy \\ \href{mailto:vadim.kosoy@intelligence.org}{vadim.kosoy@intelligence.org}}
 \date{}
 \maketitle
@@ -122,11 +123,11 @@
 
 \section{Introduction}
 
-A \emph{reinforcement learning agent} is a system that interacts with an unknown environment in a manner that is designed to maximize the expectation of a utility function that can be written as a sum rewards over time (sometimes weighted by a time-discount function.) A standard metric for evaluating the performance of such an agent is the \emph{regret}: the difference between the expected utility of the agent in a given environment, and the expected utility of an optimal policy for the same environment. This metric allows formalizing the notion of \enquote{the agent \emph{learns} the environment} by requiring that the regret has sublinear growth in the planning horizon (usually assuming the utility function is a finite, undiscounted, sum of rewards.) For example, if we consider stateless environments, reinforcement learning reduces to a multi-armed bandit for which algorithms with guaranteed sublinear regret bounds are well-known \cite{TBD}.
+A \emph{reinforcement learning agent} is a system that interacts with an unknown environment in a manner that is designed to maximize the expectation of a utility function that can be written as a sum of rewards over time (sometimes weighted by a time-discount function.) A standard metric for evaluating the performance of such an agent is the \emph{regret}: the difference between the expected utility of the agent in a given environment, and the expected utility of an optimal policy for the same environment. This metric allows formalizing the notion of \enquote{the agent \emph{learns} the environment} by requiring that the regret has sublinear growth in the planning horizon (usually assuming the utility function is a finite, undiscounted, sum of rewards.) For example, if we consider stateless environments, reinforcement learning reduces to a multi-armed bandit for which algorithms with guaranteed sublinear regret bounds are well-known \cite{TBD}.
 
 However, the desideratum of sublinear regret is impossible to achieve even for a finite class of environments without making further assumptions, and this is because of the possible presence of \enquote{traps}. A trap is a state which, once reached, forces a linear lower bound on regret. For example, see figure~\ref{TBD}. The agent starts at state $s_1$, and as long as it takes action $a$, it receives a reward of $1$. However, if it ever takes action $b$, it will reach state $s_2$ and remain there, receiving a reward of $0$ forever, whatever it does. Thus, $s_2$ is a trap. On the other hand, it is impossible to design an algorithm which guarantees never entering traps for an arbitrary environment. For example, the environment on figure~\ref{TBD} has the same structure except that taking action $a$ leads into the trap. Thus, if the transition matrix is not known a priori, no algorithm can learn the correct behavior, and every algorithm will have linear regret in at least one of the two environments.
 
-There are two widespread approaches to deriving regret bounds which circumvent this problem. One is simply assuming that the environment contains no traps in some formal sense \cite{TBD}. The other is \enquote{episodic learning \cite{TBD}.} In episodic learning, the timeline is divided into intervals (\enquote{episodes}) and, regret is defined s.t. the contribution of each episode is the difference between following the given policy and following the given policy \emph{during previous episodes} but the optimal policy in the current episode. Such a metric consider entering a trap as a fatal event since in following episodes this even will be considered as \enquote{given.} That is, a policy that enters trap can still achieve sublinear regret in this sense. In fact, algorithms designed to achieve sublinear regret for sufficiently general classes of environments have the property that they eventually enter \emph{every trap they encounter} (such algorithms have a random exploration phase, like e.g. $\epsilon$-exploration in Q-learning.)
+There are two widespread approaches to deriving regret bounds which circumvent this problem. One is simply assuming that the environment contains no traps in some formal sense \cite{TBD}. The other is \enquote{episodic learning \cite{TBD}.} In episodic learning, the timeline is divided into intervals (\enquote{episodes}) and, regret is defined s.t. the contribution of each episode is the difference between following the given policy and following the given policy \emph{during previous episodes} but the optimal policy in the current episode. Such a metric doesn't consider entering a trap to be a fatal event, since in the following episodes this event will be considered as \enquote{given.} That is, a policy that enters trap can still achieve sublinear regret in this sense. In fact, algorithms designed to achieve sublinear regret for sufficiently general classes of environments have the property that they eventually enter \emph{every trap they encounter} (such algorithms have a random exploration phase, like e.g. $\epsilon$-exploration in Q-learning.)
 
 In terms of practical applications, it means that most known approaches to reinforcement learning that have theoretical performance guarantees either assume that no mistake is \enquote{fatal}, or that numerous \enquote{fatal} mistakes in the training process are acceptable. These assumptions are unacceptable in applications such as controlling a very expensive, breakable piece of machinery (e.g. spaceship) or performing a task that involves significant risk to human lives (e.g. surgery or rescue,) assuming that the algorithm \emph{cannot} be reliably trained in a simulation since the simulation doesn't reflect all the intricacies of the physical world.
 
@@ -138,7 +139,7 @@ In DRL, an agent interacts with an environment during an infinite sequence of \e
 
 The algorithm we construct in order to show the regret bound is a variant of Thompson sampling. Denoting $\alpha:=1-\gamma$, the timeline is divided into intervals of length $O\AP{\alpha^{-1/4}}$. At the start of each interval, the algorithm samples a hypothesis out of its current belief state, and starts carrying out an optimal policy for this hypothesis. On each round, it checks whether the desired action is known to be \enquote{safe} with high probability is a particular formal sense. If it is safe, the action is taken. If it isn't safe, delegation is performed. Moreover, the belief state evolves using all observations, but hypotheses whose probability falls below $O\AP{\alpha^{1/4}}$ are discarded altogether. We then show that (i) given relatively mild assumptions about the advisor (namely, that it only takes safe actions and it takes the optimal action with at least some small probability,) the regret is bounded by $O\AP{\alpha^{-3/4}}$ (in particular it is sublinear in $\alpha^{-1}$) and (ii) the expected number of delegations is bounded by $O\AP{\alpha^{-1/4}}$. Here, we only gave the dependence on $\alpha$, but the expressions we obtain are more detailed and reflect the dependence on the number of hypothesis, the \emph{mixing time} of the hypotheses and the minimal probability with which the advisor takes an optimal action.
 
-The proof is based on the conjunction of four observations. The first is that, with high probability, our algorithm only takes safe actions (since it delegates whenever it is uncertain.) The second is that the number of delegations cannot be large for the \emph{information theoretic} reason that, delegation is only done under conditions in which it is expected to yield a certain minimal \emph{information gain}, whereas, since the number of hypotheses is some finite $N$, the total amount of information is also finite and equal to $\ln N$. The third is that, assuming all actions are safe, regret can be approximated by \enquote{episodic regret} (to show this we use the Taylor expansion of the \emph{value} of states in the parameter $\alpha$.) The fourth is that Thompson sampling (without delegation) satisfies an upper bound on episode regret in terms of the information gain due to observing the reward during this episode (the intuition is, if observing the reward yields no information, then the optimal policy for any hypothesis is optimal for all other hypotheses, so there is no regret,) and the sum of information gains over episodes is again bounded by $\ln N$. Here, both information theoretic steps require the assumption that no hypothesis is assigned a very small but positive probability, which necessitates discarding such hypothesis. This \enquote{distortion} of the belief state has little effect because, obviously, hypotheses with very small probability are likely to be false.
+The proof is based on the conjunction of four observations. The first is that, with high probability, our algorithm only takes safe actions (since it delegates whenever it is uncertain.) The second is that the number of delegations cannot be large for the \emph{information theoretic} reason that, delegation is only done under conditions in which it is expected to yield a certain minimal \emph{information gain}, whereas, since the number of hypotheses is some finite $N$, the total amount of information is also finite and equal to $\ln N$. The third is that, assuming all actions are safe, regret can be approximated by \enquote{episodic regret} (to show this we use the Taylor expansion of the value of states in the parameter $\alpha$.) The fourth is that Thompson sampling (without delegation) satisfies an upper bound on episode regret in terms of the information gain due to observing the reward during this episode (the intuition is, if observing the reward yields no information, then the optimal policy for any hypothesis is optimal for all other hypotheses, so there is no regret,) and the sum of information gains over episodes is again bounded by $\ln N$. Here, both information theoretic steps require the assumption that no hypothesis is assigned a very small but positive probability, which necessitates discarding such hypothesis. This \enquote{distortion} of the belief state has little effect because, obviously, hypotheses with very small probability are likely to be false.
 
 We also consider situations in which there are states of the environment (that we call \enquote{corrupted}) for which the reward signal and/or the advisor become unreliable (i.e. the observed reward in these states might be different from the \enquote{true} reward w.r.t. which regret is defined, and the advisor in these states might fail to satisfy the assumptions we otherwise require from it.) For example, we might imagine a robot that, through its own actions, damages its own input channels or even provides \enquote{deliberately} misleading information to the human operator. Indeed, it has been argued~\cite{TBD} that reinforcement learning agents are incentivized to sabotage themselves in this way (for example \enquote{wirehead} i.e. tamper with itself in order to artificially set the reward to maximum) and therefore sufficiently powerful algorithms (beyond the current state of the art) are almost guaranteed to do so. We show that, assuming corrupted states can be avoided without sacrificing utility, and that the advisor in uncorrupted states never acts so as to enter a corrupted state, DRL can be used to achieve essentially the same regret bound as before (and in particular learn to avoid corruption.) Thus DRL not only combats traps in the external environment but also perverse incentives inside the agent itself.
 
@@ -171,6 +172,8 @@ Given $M$ an MDP and some $\pi: \St_M \rightarrow \A_M$, we define $\T_{M\pi}: \
 \T_{M\pi}(t \mid s) := \T_M\APM{t}{s,\pi(s)}
 \end{equation}
 
+That is, $\T_{M\pi}$ is the transition kernel of the Markov chain resulting from policy $\pi$ interacting with environment $M$.
+
 \end{definition}
 \end{samepage}
 
@@ -186,6 +189,8 @@ Given $M$ an MDP, we define $\V_M : \St_M \times [0,1) \rightarrow [0,1]$ and $\
 \begin{equation}
 \Q_M(s,a,\gamma):=(1-\gamma)\R_M(s)+\gamma\Ea{t \sim \T_{M\pi}(s)}{\V_M(t,\gamma)}
 \end{equation}
+
+Thus, $\V_M(s,\gamma)$ is the maximal value that can be extracted from state $s$ and $\Q_M(s,a,\gamma)$ is the maximal value that can be extracted from state $s$ after performing action $a$.
 
 \end{definition}
 \end{samepage}
@@ -203,38 +208,47 @@ Given $M$ an MDP, we define $\V^0_M : \St_M \rightarrow [0,1]$ and $\Q^0_M: \St_
 \Q_M^0(s,a) := \lim_{\gamma \rightarrow 1} \Q_M(s,a,\gamma)
 \end{equation}
 
-Indeed, the limits above are guaranteed to exist.
+Indeed, the limits above are guaranteed to exist. We can think of them as describing the \enquote{long term planning} regime.
 
 \end{definition}
 \end{samepage}
 
-Given sets $A$ and $B$, the notation $f: A \rightrightarrows B$ means $f$ is a mapping from $A$ to $2^B$ (the power set of $B$.)
+Given a sets $A$, the notation $\PS{A}$ denotes the power set of $\A$.
 
 \begin{samepage}
 \begin{definition}
 
-Given $M$ an MDP, we define $\A_M^0: \St_M \rightrightarrows \A_M$ by
+Given $M$ an MDP, we define $\A_M^0: \St_M \rightarrow \PS{\A_M}$ by
 
 \begin{equation}
 \A_M^0(s) := \Argmax{a \in \A_M} \Q_M^0(s,a)
 \end{equation}
 
+That is, $\A_M^0(s)$ is the set of actions at state $s$ that don't destroy value in the long run.
+
 \end{definition}
 \end{samepage}
 
 \begin{samepage}
 \begin{definition}
 
-Given $M$ an MDP, it is well known that there are some $\A_M^\star: \St_M \rightrightarrows \A_M$ (the set of Blackwell optimal actions) and $\gamma_M\in[0,1)$ s.t. for any $\gamma\in\AP{\gamma_M,1}$
+Given $M$ an MDP, it is well known that there are $\A_M^\star: \St_M \rightarrow \PS{\A_M}$ (the set of Blackwell optimal actions) and $\gamma_M\in[0,1)$ s.t. for any $\gamma\in\AP{\gamma_M,1}$
 
 \begin{equation}
 \A_M^\star(s) = \Argmax{a \in \A_M} \Q_M\AP{s,a,\gamma}
 \end{equation}
 
+Thus, $\A_M^\star(s)$ is the set of actions that are optimal at state $s$, assuming that we plan for sufficiently long term.
+
 \end{definition}
 \end{samepage}
 
-Given a measurable space $X$, we denote $\Delta X$ the space of probability measures on $X$. Given a set $A$, we denote $A^\omega$ the space of infinite sequences with values in $A$, equipped with the product topology and the corresponding Borel sigma-algebra. Given $x\in A^\omega$ and $n \in \Nats$, $x_n \in A$ is the $n$-th member of the sequence $x$ (in our conventions, $0 \in \Nats$ so the sequence begins from the 0th member.) Given $h \in A^*$ and $x \in A^\omega$, the notation $h \sqsubset x$ means that $h$ is a prefix of $x$.
+Given a measurable space $X$, we denote $\Delta X$ the space of probability measures on $X$. 
+Given a set $A$, the notation $A^*$ will denote the set of finite strings over alphabet $A$, i.e.
+
+\[A^* := \bigsqcup_{n = 0}^\infty A^n\]
+
+$A^\omega$ denotes the space of infinite strings over alphabet $A$, equipped with the product topology and the corresponding Borel sigma-algebra. Given $x\in A^\omega$ and $n \in \Nats$, $x_n \in A$ is the $n$-th symbol of the string $x$ (in our conventions, $0 \in \Nats$ so the string begins from the 0th symbol.) Given $h \in A^*$ and $x \in A^\omega$, the notation $h \sqsubset x$ means that $h$ is a prefix of $x$.
 
 \begin{samepage}
 \begin{definition}
@@ -250,13 +264,15 @@ Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\
 \CP{x\sim\pi^M }{hst \sqsubset x}{hs \sqsubset x} := \sum_{a \in \A_M} {\T_M\APM{t}{s,a} \pi\APM{a}{h,s}}
 \end{equation}
 
+In other words, $\pi^M$ is the probability measure over histories resulting from policy $\pi$ interacting with environment $M$.
+
 \end{definition}
 \end{samepage}
 
 \begin{samepage}
 \begin{definition}
 
-Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M: \St_M^\omega \times [0,1) \rightarrow [0,1]$, $\EU_M^\pi: [0,1) \rightarrow [0,1]$ and $\EU_M^\star: [0,1) \rightarrow [0,1]$ by
+Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M: \St_M^\omega \times [0,1) \rightarrow [0,1]$ (the utility function,) $\EU_M^\pi: [0,1) \rightarrow [0,1]$ (expected utility of policy $\pi$) and $\EU_M^\star: [0,1) \rightarrow [0,1]$ (maximal expected utility) by
 
 \begin{equation}
 \Ut_M(x,\gamma) := (1-\gamma)\sum_{n=0}^\infty {\gamma^n \R_M\AP{x_n}}
@@ -274,10 +290,6 @@ Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M:
 \end{samepage}
 
 Next, we define the properties of a policy that make it a \enquote{satisfactory} advisor.
-
-Given a set $A$, the notation $A^*$ will denote the set of finite strings over alphabet $A$, i.e.
-
-\[A^* := \bigsqcup_{n = 0}^\infty A^n\]
 
 Given $X$ a topological space and $\mu$ a Borel measure on $X$, $\Supp{\mu} \subseteq X$ denotes the \emph{support} of $\mu$.
 
