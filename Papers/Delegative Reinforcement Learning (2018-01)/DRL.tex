@@ -381,18 +381,14 @@ We also denote
 \begin{theorem}
 \label{thm:regret_bound}
 
-There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=M^k\AB{\Ad^k}$. Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
-
-%\begin{equation}
-%\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} %\Tn_{M^j}(\gamma)}^{\sfrac{1}{4}}
-%\end{equation}
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=M^k\AB{\Ad^k}$. Also, denote $\bar{\Tn}(\gamma):=\frac{1}{N}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)$. Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
 
 \begin{equation}
-\frac{1}{N}\sum_{k=0}^{N-1}\AP{\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma)} \leq C\AP{\eta N+\frac{1}{TN}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)+\sqrt{\frac{\alpha T \ln{N}}{\eta}}+\frac{\alpha T \ln{N}}{\eta^2\epsilon}}
+\frac{1}{N}\sum_{k=0}^{N-1}\AP{\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma)} \leq C\AP{\eta N+\frac{\bar{\Tn}(\gamma)}{T}+\sqrt{\frac{\alpha T \ln{N}}{\eta}}+\frac{\alpha T \ln{N}}{\eta^2}\AP{\frac{1}{\epsilon}+\Abs{\A}}}
 \end{equation}
 
 \begin{equation}
-\Ea{x\sim\pi^{\dagger L^k}}{\Abs{\ACM{n\in\Nats}{x_n\in\St\times\A}}} \leq C\cdot\frac{\ln{N}}{\eta\epsilon}
+\Ea{x\sim\pi^{\dagger L^k}}{\Abs{\ACM{n\in\Nats}{x_n\in\St\times\A}}} \leq C\cdot\frac{\ln{N}}{\eta}\AP{\frac{1}{\epsilon}+\Abs{\A}}
 \end{equation}
 
 \end{theorem}
@@ -407,10 +403,18 @@ Note that $\eta$ and $T$ are external parameters of the policy that we can choos
 There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the setting of Theorem~\ref{thm:regret_bound}. Assume further that 
 
 \begin{equation}
-\gamma \geq 1 - ? 
+\gamma \geq 1 - \frac{\epsilon\AP{\bar{\Tn}(\gamma)+1}^3}{N^2 \ln{N}} 
 \end{equation}
 
-TBD
+Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$ s.t. for any $k\in[N]$
+
+\begin{equation}
+\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^6 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\AP{\bar{\Tn}(\gamma)+1}}^{\sfrac{1}{4}}
+\end{equation}
+
+\begin{equation}
+?
+\end{equation}
 
 \end{corollary}
 \end{samepage}
