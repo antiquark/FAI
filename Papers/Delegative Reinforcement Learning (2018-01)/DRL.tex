@@ -224,7 +224,7 @@ Given $M$ an MDP, we define $\A_M^0: \St_M \rightarrow \PS{\A_M}$ by
 \A_M^0(s) := \Argmax{a \in \A_M} \Q_M^0(s,a)
 \end{equation}
 
-That is, $\A_M^0(s)$ is the set of actions at state $s$ that don't destroy value in the long run.
+That is, $\A_M^0(s)$ is the set of actions at state $s$ that don't enter traps (i.e. destroy value in the long run.)
 
 \end{definition}
 \end{samepage}
@@ -303,6 +303,8 @@ Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\Ad: \St_M \K \A_M$. $\Ad
 \item\label{con:def__sane__safe} $\Supp{\Ad(h,s)} \subseteq \A_M^0\AP{s}$
 \item\label{con:def__sane__bold} There is $a \in \A_M^\star(s)$ s.t. $\Ad(a \mid h,s) > \epsilon$
 \end{enumerate}
+
+So, a policy is $\epsilon$-sane when it doesn't enter traps (destroys long-term value) and when it has a probability of more than $\epsilon$ to take a long-term optimal action.
 
 \end{definition}
 \end{samepage}
