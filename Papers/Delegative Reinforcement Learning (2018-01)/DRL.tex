@@ -358,7 +358,7 @@ Another useful shorthand notation is the following.
 \begin{samepage}
 \begin{definition}
 
-Given any MDP $M$ and $\gamma\in(0,1)$, we define
+Given any MDP $M$ and $\gamma\in\AP{\gamma_M,1}$, we define
 
 \begin{equation}
 \Tn_{M}(\gamma):=\max_{s \in \St_M} \sup_{\theta\in(\gamma,1)} \Abs{\frac{\D{\V_{M}(s,\theta)}}{\D{\theta}}}
@@ -369,23 +369,50 @@ Given any MDP $M$ and $\gamma\in(0,1)$, we define
 
 We can now formulate the main theorem.
 
-For any $n \in \Nats$, we use the notation $[n]:=\ACM{m\in\Nats}{m < n}.$
+For any $n \in \Nats$, we use the notation 
+
+\[[n]:=\ACM{m\in\Nats}{m < n}\] 
+
+We also denote 
+
+\[\Nats^+:=\AC{n \in \Nats \mid n > 0}\]
 
 \begin{samepage}
 \begin{theorem}
-\label{thm:main}
+\label{thm:regret_bound}
 
-There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon \in (0,1)$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=M^k\AB{\Ad^k}$. Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm.} s.t. for any $k \in [N]$
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=M^k\AB{\Ad^k}$. Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
+
+%\begin{equation}
+%\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} %\Tn_{M^j}(\gamma)}^{\sfrac{1}{4}}
+%\end{equation}
 
 \begin{equation}
-\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \Tn_{M^j}(\gamma)}^{\sfrac{1}{4}}
+\frac{1}{N}\sum_{k=0}^{N-1}\AP{\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma)} \leq C\AP{\eta N+\frac{1}{TN}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)+\sqrt{\frac{\alpha T \ln{N}}{\eta}}+\frac{\alpha T \ln{N}}{\eta^2\epsilon}}
 \end{equation}
 
 \begin{equation}
-\Ea{x\sim\pi^{\dagger L^k}}{\Abs{\ACM{n\in\Nats}{x_n\in\St\times\A}}} \leq ??
+\Ea{x\sim\pi^{\dagger L^k}}{\Abs{\ACM{n\in\Nats}{x_n\in\St\times\A}}} \leq C\cdot\frac{\ln{N}}{\eta\epsilon}
 \end{equation}
 
 \end{theorem}
+\end{samepage}
+
+Note that $\eta$ and $T$ are external parameters of the policy that we can choose however we like. Taking appropriate values yields the following
+
+\begin{samepage}
+\begin{corollary}
+\label{crl:balanced_regret_bound}
+
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the setting of Theorem~\ref{thm:regret_bound}. Assume further that 
+
+\begin{equation}
+\gamma \geq 1 - ? 
+\end{equation}
+
+TBD
+
+\end{corollary}
 \end{samepage}
 
 The meaning of the factor $\sum_{j=0}^{N-1} \Tn_{M^j}(\gamma)$ might seem somewhat unclear, however, we can bound this factor in terms of parameters related to \emph{mixing time}. 
@@ -476,13 +503,13 @@ Let $M$ be an MDP and $\pi^\star: \St_M \rightarrow \A_M$ be s.t. for any $s \in
 \end{proposition}
 \end{samepage}
 
-Theorem~\ref{thm:main} combined with Proposition~\ref{prp:transient} immediately give us the following
+Theorem~\ref{thm:regret_bound} combined with Proposition~\ref{prp:transient} immediately give us the following
 
 \begin{samepage}
 \begin{corollary}
-\label{crl:main}
+\label{crl:regret_bound_mixing}
 
-There is some constant $C' \in (0,\infty)$ s.t. the following holds. Assume the setting of Theorem~\ref{thm:main}. For each $k \in [N]$, denote $\Pi_k:=\Pi_{M^k}$, $\rho_k:=\rho_{M^k}$ and $\lambda_k:=\lambda_{M^k}$. Then,
+There is some constant $C' \in (0,\infty)$ s.t. the following holds. Assume the setting of Theorem~\ref{thm:regret_bound}. For each $k \in [N]$, denote $\Pi_k:=\Pi_{M^k}$, $\rho_k:=\rho_{M^k}$ and $\lambda_k:=\lambda_{M^k}$. Then,
 
 \begin{equation}
 \EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C'\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \AP{\frac{\rho_j}{1-\lambda_j}+\max{\Pi_j}}}^{\sfrac{1}{4}}
