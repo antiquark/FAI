@@ -137,7 +137,7 @@ These idea of using prior knowledge or human intervention to avoid traps has bee
 
 In DRL, an agent interacts with an environment during an infinite sequence of \enquote{rounds}. On each round, the agent selects an action and the environment transits to a new state which is observed by the agent. The agent then receives a reward which depends on the state. There are two kinds of actions the agent can take: a \enquote{direct} action $a \in \A$ and the special delegation action $\bot$. If the agent takes action $\bot$, the \emph{advisor} takes some action $b \in \A$ which affects the environment in the same way as if it was taken directly. The agent then observes both $b$ and the new state of the environment. The utility function and regret are defined via geometric time discount with a constant $\gamma$.
 
-The algorithm we construct in order to show the regret bound is a variant of Thompson sampling. Denoting $\alpha:=1-\gamma$, the timeline is divided into intervals of length $O\AP{\alpha^{-1/4}}$. At the start of each interval, the algorithm samples a hypothesis out of its current belief state, and starts carrying out an optimal policy for this hypothesis. On each round, it checks whether the desired action is known to be \enquote{safe} with high probability is a particular formal sense. If it is safe, the action is taken. If it isn't safe, delegation is performed. Moreover, the belief state evolves using all observations, but hypotheses whose probability falls below $O\AP{\alpha^{1/4}}$ are discarded altogether. We then show that (i) given relatively mild assumptions about the advisor (namely, that it only takes safe actions and it takes the optimal action with at least some small probability,) the regret is bounded by $O\AP{\alpha^{-3/4}}$ (in particular it is sublinear in $\alpha^{-1}$) and (ii) the expected number of delegations is bounded by $O\AP{\alpha^{-1/4}}$. Here, we only gave the dependence on $\alpha$, but the expressions we obtain are more detailed and reflect the dependence on the number of hypothesis, the \emph{mixing time} of the hypotheses and the minimal probability with which the advisor takes an optimal action.
+The algorithm we construct in order to show the regret bound is a variant of Thompson sampling. Denoting $\alpha:=1-\gamma$, the timeline is divided into intervals of length $O\AP{\alpha^{-\sfrac{1}{4}}}$. At the start of each interval, the algorithm samples a hypothesis out of its current belief state, and starts carrying out an optimal policy for this hypothesis. On each round, it checks whether the desired action is known to be \enquote{safe} with high probability is a particular formal sense. If it is safe, the action is taken. If it isn't safe, delegation is performed. Moreover, the belief state evolves using all observations, but hypotheses whose probability falls below $O\AP{\alpha^{\sfrac{1}{4}}}$ are discarded altogether. We then show that (i) given relatively mild assumptions about the advisor (namely, that it only takes safe actions and it takes the optimal action with at least some small probability,) the regret is bounded by $O\AP{\alpha^{-\sfrac{3}{4}}}$\footnote{See equation \ref{eqn:crl__balanced_regret_bound__regret}. In our notation, regret is normalized by a factor of $\alpha$ to lie within $[0,1]$ (see Definition~\ref{def:utility}) so the bound is $O(\alpha^{\sfrac{1}{4}})$.} (in particular it is sublinear in $\alpha^{-1}$) and (ii) the expected number of delegations is bounded by $O\AP{\alpha^{-\sfrac{1}{4}}}$\footnote{See equation~\ref{eqn:crl__balanced_regret_bound__delegations}.}. Here, we only gave the dependence on $\alpha$, but the expressions we obtain are more detailed and reflect the dependence on the number of hypothesis, the \emph{mixing time} of the hypotheses and the minimal probability with which the advisor takes an optimal action.
 
 The proof is based on the conjunction of four observations. The first is that, with high probability, our algorithm only takes safe actions (since it delegates whenever it is uncertain.) The second is that the number of delegations cannot be large for the \emph{information theoretic} reason that, delegation is only done under conditions in which it is expected to yield a certain minimal \emph{information gain}, whereas, since the number of hypotheses is some finite $N$, the total amount of information is also finite and equal to $\ln N$. The third is that, assuming all actions are safe, regret can be approximated by \enquote{episodic regret} (to show this we use the Taylor expansion of the value of states in the parameter $\alpha$.) The fourth is that Thompson sampling (without delegation) satisfies an upper bound on episode regret in terms of the information gain due to observing the reward during this episode (the intuition is, if observing the reward yields no information, then the optimal policy for any hypothesis is optimal for all other hypotheses, so there is no regret,) and the sum of information gains over episodes is again bounded by $\ln N$. Here, both information theoretic steps require the assumption that no hypothesis is assigned a very small but positive probability, which necessitates discarding such hypothesis. This \enquote{distortion} of the belief state has little effect because, obviously, hypotheses with very small probability are likely to be false.
 
@@ -271,6 +271,7 @@ In other words, $\pi^M$ is the probability measure over histories resulting from
 
 \begin{samepage}
 \begin{definition}
+\label{def:utility}
 
 Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M: \St_M^\omega \times [0,1) \rightarrow [0,1]$ (the utility function,) $\EU_M^\pi: [0,1) \rightarrow [0,1]$ (expected utility of policy $\pi$) and $\EU_M^\star: [0,1) \rightarrow [0,1]$ (maximal expected utility) by
 
@@ -403,23 +404,25 @@ Note that $\eta$ and $T$ are external parameters of the policy that we can choos
 There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the setting of Theorem~\ref{thm:regret_bound}. Assume further that 
 
 \begin{equation}
-\gamma \geq 1 - \frac{\epsilon\AP{\bar{\Tn}(\gamma)+1}^3}{N^2 \ln{N}} 
+\gamma \geq 1 - \frac{\AP{\bar{\Tn}(\gamma)+1}^3}{N^2 \ln{N}}\cdot\min\AP{\epsilon,\frac{1}{\Abs{\A}}}
 \end{equation}
 
 Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$ s.t. for any $k\in[N]$
 
 \begin{equation}
+\label{eqn:crl__balanced_regret_bound__regret}
 \EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^6 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\AP{\bar{\Tn}(\gamma)+1}}^{\sfrac{1}{4}}
 \end{equation}
 
 \begin{equation}
-?
+\label{eqn:crl__balanced_regret_bound__delegations}
+\Ea{x\sim\pi^{\dagger L^k}}{\Abs{\ACM{n\in\Nats}{x_n\in\St\times\A}}} \leq C\AP{\frac{N^2\AP{\ln{N}}^3}{(1-\gamma)\AP{\bar{\Tn}(\gamma)+1}}\AP{\frac{1}{\epsilon}+\Abs{\A}}^3}^{\sfrac{1}{4}}
 \end{equation}
 
 \end{corollary}
 \end{samepage}
 
-The meaning of the factor $\sum_{j=0}^{N-1} \Tn_{M^j}(\gamma)$ might seem somewhat unclear, however, we can bound this factor in terms of parameters related to \emph{mixing time}. 
+The meaning of the factor $\bar{\Tn}(\gamma)+1$ might seem somewhat unclear, however, we can upper bound this factor in terms of parameters related to \emph{mixing time}. 
 
 First, we recall a few concepts and properties of Markov chains.
 
@@ -449,7 +452,7 @@ $k$ is called \emph{a period of $\T$} when there is \emph{some} $s \in \St$ an e
 \end{definition}
 \end{samepage}
 
-Given a finite set $\St$ and some $\T: \St \K \St$, $\sigma(\T)$ denotes the spectrum of the operator $\T^*: \Reals^\St \rightarrow \Reals^\St$ defined by
+Given a finite set $\St$ and some $\T: \St \K \St$, we denote by $\sigma(\T)$ the spectrum of the operator $\T^*: \Reals^\St \rightarrow \Reals^\St$ defined by
 
 \[\AP{\T^*f}(x):=\Ea{y\sim \T(x)}{f(y)}\]
 
@@ -513,10 +516,10 @@ Theorem~\ref{thm:regret_bound} combined with Proposition~\ref{prp:transient} imm
 \begin{corollary}
 \label{crl:regret_bound_mixing}
 
-There is some constant $C' \in (0,\infty)$ s.t. the following holds. Assume the setting of Theorem~\ref{thm:regret_bound}. For each $k \in [N]$, denote $\Pi_k:=\Pi_{M^k}$, $\rho_k:=\rho_{M^k}$ and $\lambda_k:=\lambda_{M^k}$. Then,
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the setting of Corollary~\ref{crl:balanced_regret_bound}. For each $k \in [N]$, denote $\Pi_k:=\Pi_{M^k}$, $\rho_k:=\rho_{M^k}$ and $\lambda_k:=\lambda_{M^k}$. Then,
 
 \begin{equation}
-\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C'\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \AP{\frac{\rho_j}{1-\lambda_j}+\max{\Pi_j}}}^{\sfrac{1}{4}}
+\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \AP{\frac{\rho_j}{1-\lambda_j}+\max{\Pi_j}}}^{\sfrac{1}{4}}
 \end{equation}
 
 \end{corollary}
