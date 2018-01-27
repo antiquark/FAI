@@ -1,0 +1,568 @@
+%
+\documentclass[anon,12pt]{colt2018} % Anonymized submission
+% \documentclass{colt2017} % Include author names
+
+% The following packages will be automatically loaded:
+% amsmath, amssymb, natbib, graphicx, url, algorithm2e
+
+\usepackage{hyperref}
+\usepackage{csquotes}
+%\usepackage{amsthm}
+\usepackage{xfrac}
+\usepackage{enumerate}
+
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}%[section]
+%\newtheorem{example}{Example}%[section]
+
+%\theoremstyle{plain}
+%\newtheorem{theorem}{Theorem}%[section]
+%\newtheorem{lemma}{Lemma}%[section]
+%\newtheorem{proposition}{Proposition}%[section]
+%\newtheorem{corollary}{Corollary}%[section]
+
+\newcommand{\Comment}[1]{}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Dom}{dom}
+
+% autosize delimiters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
+\newcommand{\APM}[2]{\left(#1\;\middle\vert\;#2\right)}
+\newcommand{\ABM}[2]{\left[#1\;\middle\vert\;#2\right]}
+\newcommand{\ACM}[2]{\left\{#1\;\middle\vert\;#2\right\}}
+
+% operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
+\newcommand{\Var}{\operatorname{Var}}
+
+% operators that require parentheses
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+\newcommand{\PS}[1]{\mathcal{P}\AP{#1}}
+
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\textnormal{tv}}\AP{#1}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
+
+\newcommand{\K}{\xrightarrow{\textnormal{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+
+% Paper specific
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\R}{\mathcal{R}}
+
+\newcommand{\Ut}{\operatorname{U}}
+\newcommand{\V}{\operatorname{V}}
+\newcommand{\Q}{\operatorname{Q}}
+\newcommand{\EU}{\operatorname{EU}}
+
+\newcommand{\Tn}{\mathfrak{t}}
+\newcommand{\Ad}{\alpha}
+\newcommand{\Hy}{\mathcal{H}}
+\newcommand{\UC}{\mathcal{U}}
+
+\title[Delegative Reinforcement Learning]{Delegative Reinforcement Learning: learning to avoid traps\\ with a little help}
+\usepackage{times}
+ % Use \Name{Author Name} to specify the name.
+ % If the surname contains spaces, enclose the surname
+ % in braces, e.g. \Name{John {Smith Jones}} similarly
+ % if the name has a "von" part, e.g \Name{Jane {de Winter}}.
+ % If the first letter in the forenames is a diacritic
+ % enclose the diacritic in braces, e.g. \Name{{\'E}louise Smith}
+
+ % Two authors with the same address
+  % \coltauthor{\Name{Author Name1} \Email{abc@sample.com}\and
+  %  \Name{Author Name2} \Email{xyz@sample.com}\\
+  %  \addr Address}
+
+ % Three or more authors with the same address:
+ % \coltauthor{\Name{Author Name1} \Email{an1@sample.com}\\
+ %  \Name{Author Name2} \Email{an2@sample.com}\\
+ %  \Name{Author Name3} \Email{an3@sample.com}\\
+ %  \addr Address}
+
+
+ % Authors with different addresses:
+ \coltauthor{\Name{Author Name1} \Email{abc@sample.com}\\
+ \addr Address 1
+ \AND
+ \Name{Author Name2} \Email{xyz@sample.com}\\
+ \addr Address 2
+ }
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Most known regret bounds for reinforcement learning are either episodic or assume an environment without traps. We derive a regret bound without making either assumption by allowing the algorithm to occasionally delegate an action to an external advisor. We thus arrive at a setting of active one-shot model-based reinforcement learning that we call DRL (delegative reinforcement learning.) The algorithm we construct in order to demonstrate the regret bound is a variant of Thompson sampling supplemented by a subroutine that decides which actions should be delegated. Importantly, the algorithm is not anytime, since the confidence threshold for acting without delegating must be adjusted according to the target time discount. We also demonstrate that this setting can handle situations in which the reward signal and the advisor become unreliable in particular environment states (assuming these states can be avoided.) Currently, our analysis is limited to Markov decision processes with a finite number of states.
+\end{abstract}
+
+\begin{keywords}
+List of keywords
+\end{keywords}
+
+\section{Introduction}
+
+A \emph{reinforcement learning agent} is a system that interacts with an unknown environment in a manner that is designed to maximize the expectation of a utility function that can be written as a sum of rewards over time (sometimes weighted by a time-discount function.) A standard metric for evaluating the performance of such an agent is the \emph{regret}: the difference between the expected utility of the agent in a given environment, and the expected utility of an optimal policy for the same environment. This metric allows formalizing the notion of \enquote{the agent \emph{learns} the environment} by requiring that the regret has sublinear growth in the planning horizon (usually assuming the utility function is a finite, undiscounted, sum of rewards.) For example, if we consider stateless environments, reinforcement learning reduces to a multi-armed bandit for which algorithms with guaranteed sublinear regret bounds are well-known \cite{TBD}.
+
+However, the desideratum of sublinear regret is impossible to achieve even for a finite class of environments without making further assumptions, and this is because of the possible presence of \enquote{traps}. A trap is a state which, once reached, forces a linear lower bound on regret. For example, see figure~\ref{TBD}. The agent starts at state $s_1$, and as long as it takes action $a$, it receives a reward of $1$. However, if it ever takes action $b$, it will reach state $s_2$ and remain there, receiving a reward of $0$ forever, whatever it does. Thus, $s_2$ is a trap. On the other hand, it is impossible to design an algorithm which guarantees never entering traps for an arbitrary environment. For example, the environment on figure~\ref{TBD} has the same structure except that taking action $a$ leads into the trap. Thus, if the transition matrix is not known a priori, no algorithm can learn the correct behavior, and every algorithm will have linear regret in at least one of the two environments.
+
+There are two widespread approaches to deriving regret bounds which circumvent this problem. One is simply assuming that the environment contains no traps in some formal sense \cite{TBD}. The other is \enquote{episodic learning \cite{TBD}.} In episodic learning, the timeline is divided into intervals (\enquote{episodes}) and, regret is defined s.t. the contribution of each episode is the difference between following the given policy and following the given policy \emph{during previous episodes} but the optimal policy in the current episode. Such a metric doesn't consider entering a trap to be a fatal event, since in the following episodes this event will be considered as \enquote{given.} That is, a policy that enters trap can still achieve sublinear regret in this sense. In fact, algorithms designed to achieve sublinear regret for sufficiently general classes of environments have the property that they eventually enter \emph{every trap they encounter} (such algorithms have a random exploration phase, like e.g. $\epsilon$-exploration in Q-learning.)
+
+In terms of practical applications, it means that most known approaches to reinforcement learning that have theoretical performance guarantees either assume that no mistake is \enquote{fatal}, or that numerous \enquote{fatal} mistakes in the training process are acceptable. These assumptions are unacceptable in applications such as controlling a very expensive, breakable piece of machinery (e.g. spaceship) or performing a task that involves significant risk to human lives (e.g. surgery or rescue,) assuming that the algorithm \emph{cannot} be reliably trained in a simulation since the simulation doesn't reflect all the intricacies of the physical world.
+
+This problem clearly cannot be overcome without using prior knowledge about the environment. In itself, prior knowledge is not such a strong assumption, since at least for any task that can be accomplished by a person, this prior knowledge is already available to us. The challenge is then transferring this knowledge to algorithm. This transfer can be accomplished either by manually transforming the knowledge into a formal mathematical specification, or by establishing a learning protocol that involves a human in the loop. Since human knowledge is often complex, difficult to formalise and partly intuitive, the latter option seems especially attractive.
+
+These idea of using prior knowledge or human intervention to avoid traps has been explored by several authors (see \cite{Garcia2015} for a survey.) However, to the best of our knowledge, no previous author has established a regret bound in such a setting. In the present work, we derive such a regret bound, specifically for the setting that \cite{Clouse1997} called \enquote{ask for help} and we call \enquote{delegative reinforcement learning} (DRL), and specifically for a class of environments which consists of some finite number of Markov decision processes with a finite number of states.
+
+In DRL, an agent interacts with an environment during an infinite sequence of \enquote{rounds}. On each round, the agent selects an action and the environment transits to a new state which is observed by the agent. The agent then receives a reward which depends on the state. There are two kinds of actions the agent can take: a \enquote{direct} action $a \in \A$ and the special delegation action $\bot$. If the agent takes action $\bot$, the \emph{advisor} takes some action $b \in \A$ which affects the environment in the same way as if it was taken directly. The agent then observes both $b$ and the new state of the environment. The utility function and regret are defined via geometric time discount with a constant $\gamma$.
+
+The algorithm we construct in order to show the regret bound is a variant of Thompson sampling. Denoting $\alpha:=1-\gamma$, the timeline is divided into intervals of length $O\AP{\alpha^{-\sfrac{1}{4}}}$. At the start of each interval, the algorithm samples a hypothesis out of its current belief state, and starts carrying out an optimal policy for this hypothesis. On each round, it checks whether the desired action is known to be \enquote{safe} with high probability is a particular formal sense. If it is safe, the action is taken. If it isn't safe, delegation is performed. Moreover, the belief state evolves using all observations, but hypotheses whose probability falls below $O\AP{\alpha^{\sfrac{1}{4}}}$ are discarded altogether. We then show that (i) given relatively mild assumptions about the advisor (namely, that it only takes safe actions and it takes the optimal action with at least some small probability,) the regret is bounded by $O\AP{\alpha^{-\sfrac{3}{4}}}$\footnote{See equation~(\ref{eqn:crl__balanced_regret_bound__regret}). In our notation, regret is normalized by a factor of $\alpha$ to lie within $[0,1]$ (see Definition~\ref{def:utility}) so the bound is $O(\alpha^{\sfrac{1}{4}})$.} (in particular it is sublinear in $\alpha^{-1}$) and (ii) the expected number of delegations is bounded by $O\AP{\alpha^{-\sfrac{1}{4}}}$\footnote{See equation~(\ref{eqn:crl__balanced_regret_bound__delegations}).}. Here, we only gave the dependence on $\alpha$, but the expressions we obtain are more detailed and reflect the dependence on the number of hypothesis, the \emph{mixing time} of the hypotheses and the minimal probability with which the advisor takes an optimal action.
+
+The proof is based on the conjunction of four observations. The first is that, with high probability, our algorithm only takes safe actions (since it delegates whenever it is uncertain.) The second is that the number of delegations cannot be large for the \emph{information theoretic} reason that, delegation is only done under conditions in which it is expected to yield a certain minimal \emph{information gain}, whereas, since the number of hypotheses is some finite $N$, the total amount of information is also finite and equal to $\ln N$. The third is that, assuming all actions are safe, regret can be approximated by \enquote{episodic regret} (to show this we use the Taylor expansion of the value of states in the parameter $\alpha$.) The fourth is that Thompson sampling (without delegation) satisfies an upper bound on episode regret in terms of the information gain due to observing the reward during this episode (the intuition is, if observing the reward yields no information, then the optimal policy for any hypothesis is optimal for all other hypotheses, so there is no regret,) and the sum of information gains over episodes is again bounded by $\ln N$. Here, both information theoretic steps require the assumption that no hypothesis is assigned a very small but positive probability, which necessitates discarding such hypothesis. This \enquote{distortion} of the belief state has little effect because, obviously, hypotheses with very small probability are likely to be false.
+
+\Comment{We also consider situations in which there are states of the environment (that we call \enquote{corrupted}) for which the reward signal and/or the advisor become unreliable (i.e. the observed reward in these states might be different from the \enquote{true} reward w.r.t. which regret is defined, and the advisor in these states might fail to satisfy the assumptions we otherwise require from it.) For example, we might imagine a robot that, through its own actions, damages its own input channels or even provides \enquote{deliberately} misleading information to the human operator. Indeed, it has been argued~\cite{TBD} that reinforcement learning agents are incentivized to sabotage themselves in this way (for example \enquote{wirehead} i.e. tamper with itself in order to artificially set the reward to maximum) and therefore sufficiently powerful algorithms (beyond the current state of the art) are almost guaranteed to do so. We show that, assuming corrupted states can be avoided without sacrificing utility, and that the advisor in uncorrupted states never acts so as to enter a corrupted state, DRL can be used to achieve essentially the same regret bound as before (and in particular learn to avoid corruption.) Thus DRL not only combats traps in the external environment but also perverse incentives inside the agent itself.}
+
+The structure of the paper is as follows... TBD
+
+\section{Results}
+
+We start by recalling some basic definitions and properties of Markov decision processes. See e.g. \cite{Feinberg2002} for a detailed overview with proofs. First, some notation. 
+
+Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is a Markov kernel from $X$ to $Y$. Given $x \in X$, $K(x)$ is the corresponding probability measure on $Y$. Given $A \subseteq Y$ measurable, $K(A \mid x) := K(x)(A)$. Given $y \in Y$, $K(y \mid x):=K\APM{\{y\}}{x}$. Given $J: Y \K Z$, $JK: X \K Z$ is the composition of $J$ and $K$, and when $Y = X$, $K^n$ is the $n$-th composition power.
+
+\begin{samepage}
+\begin{definition}
+
+\emph{A (finite) Markov decision process} (MDP) is a tuple
+
+$$M:=\AP{\St_M,\ \A_M,\ s_M\in \St_M,\ \T_M: \St_M \times \A_M \K \St_M,\ \R_M: \St_M \rightarrow [0,1]}$$
+
+Here, $\St_M$ is a finite set (the set of states,) $\A_M$ is a finite set (the section of actions,) $s_M$ is the initial state, $\T_M$ is the transition kernel and $\R_M$ is the reward function\footnote{Sometimes the reward is assumed to depend on the action as well, or on the action and the next state, but these formalisms are easily seen to be equivalent via redefinitions of the state set.}.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP and some $\pi: \St_M \rightarrow \A_M$, we define $\T_{M\pi}: \St_M \K \St_M$ by
+
+\begin{equation}
+\T_{M\pi}(t \mid s) := \T_M\APM{t}{s,\pi(s)}
+\end{equation}
+
+That is, $\T_{M\pi}$ is the transition kernel of the Markov chain resulting from policy $\pi$ interacting with environment $M$.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP, we define $\V_M : \St_M \times [0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times \A_M \times [0,1) \rightarrow [0,1]$ by
+
+\begin{equation}
+\V_M(s,\gamma):=(1-\gamma) \max_{\pi: \St_M \rightarrow \A_M} \sum_{n=0}^\infty \gamma^n \Ea{\T_{M\pi}^n(s)}{\R_M}
+\end{equation}
+
+\begin{equation}
+\Q_M(s,a,\gamma):=(1-\gamma)\R_M(s)+\gamma\Ea{t \sim \T_{M\pi}(s)}{\V_M(t,\gamma)}
+\end{equation}
+
+Thus, $\V_M(s,\gamma)$ is the maximal value that can be extracted from state $s$ and $\Q_M(s,a,\gamma)$ is the maximal value that can be extracted from state $s$ after performing action $a$.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP, we define $\V^0_M : \St_M \rightarrow [0,1]$ and $\Q^0_M: \St_M \times \A_M \rightarrow [0,1]$ by
+
+\begin{equation}
+\V_M^0(s) := \lim_{\gamma \rightarrow 1} \V_M(s,\gamma)
+\end{equation}
+
+\begin{equation}
+\Q_M^0(s,a) := \lim_{\gamma \rightarrow 1} \Q_M(s,a,\gamma)
+\end{equation}
+
+Indeed, the limits above are guaranteed to exist. We can think of them as describing the \enquote{long term planning} regime.
+
+\end{definition}
+\end{samepage}
+
+Given a sets $A$, the notation $\PS{A}$ denotes the power set of $\A$.
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP, we define $\A_M^0: \St_M \rightarrow \PS{\A_M}$ by
+
+\begin{equation}
+\A_M^0(s) := \Argmax{a \in \A_M} \Q_M^0(s,a)
+\end{equation}
+
+That is, $\A_M^0(s)$ is the set of actions at state $s$ that don't enter traps (i.e. destroy value in the long run.)
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $M$ an MDP, it is well known that there are $\A_M^\star: \St_M \rightarrow \PS{\A_M}$ (the set of Blackwell optimal actions) and $\gamma_M\in[0,1)$ s.t. for any $\gamma\in\AP{\gamma_M,1}$
+
+\begin{equation}
+\A_M^\star(s) = \Argmax{a \in \A_M} \Q_M\AP{s,a,\gamma}
+\end{equation}
+
+Thus, $\A_M^\star(s)$ is the set of actions that are optimal at state $s$, assuming that we plan for sufficiently long term.
+
+\end{definition}
+\end{samepage}
+
+Given a measurable space $X$, we denote $\Delta X$ the space of probability measures on $X$. 
+Given a set $A$, the notation $A^*$ will denote the set of finite strings over alphabet $A$, i.e.
+
+\[A^* := \bigsqcup_{n = 0}^\infty A^n\]
+
+$A^\omega$ denotes the space of infinite strings over alphabet $A$, equipped with the product topology and the corresponding Borel sigma-algebra. Given $x\in A^\omega$ and $n \in \Nats$, $x_n \in A$ is the $n$-th symbol of the string $x$ (in our conventions, $0 \in \Nats$ so the string begins from the 0th symbol.) Given $h \in A^*$ and $x \in A^\omega$, the notation $h \sqsubset x$ means that $h$ is a prefix of $x$.
+
+\begin{samepage}
+\begin{definition}
+
+Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\pi$ as a policy, where the first argument is the past history of states and the second argument is the current state. We define $\pi^M \in \Delta\St_M^\omega$ by requiring that for any $h \in \St_M^*$ and $s,t \in \St_M$
+
+\begin{equation}
+\Pa{x\sim\pi^M }{s_M \sqsubset x} := 1
+\end{equation}
+
+
+\begin{equation}
+\CP{x\sim\pi^M }{hst \sqsubset x}{hs \sqsubset x} := \sum_{a \in \A_M} {\T_M\APM{t}{s,a} \pi\APM{a}{h,s}}
+\end{equation}
+
+In other words, $\pi^M$ is the probability measure over histories resulting from policy $\pi$ interacting with environment $M$.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+\label{def:utility}
+
+Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M: \St_M^\omega \times [0,1) \rightarrow [0,1]$ (the utility function,) $\EU_M^\pi: [0,1) \rightarrow [0,1]$ (expected utility of policy $\pi$) and $\EU_M^\star: [0,1) \rightarrow [0,1]$ (maximal expected utility) by
+
+\begin{equation}
+\Ut_M(x,\gamma) := (1-\gamma)\sum_{n=0}^\infty {\gamma^n \R_M\AP{x_n}}
+\end{equation}
+
+\begin{equation}
+\EU_M^\pi(\gamma) := \Ea{x\sim\pi^M}{\Ut_M(x,\gamma)}
+\end{equation}
+
+\begin{equation}
+\EU_M^\star(\gamma):=\max_{\pi: \St_M^* \times \St_M \K \A_M} {\EU_M^\pi(\gamma)} = \V_M\AP{s_M,\gamma}
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+Next, we define the properties of a policy that make it a \enquote{satisfactory} advisor.
+
+Given $X$ a topological space and $\mu$ a Borel measure on $X$, $\Supp{\mu} \subseteq X$ denotes the \emph{support} of $\mu$.
+
+\begin{samepage}
+\begin{definition}
+\label{def:sane}
+
+Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\Ad: \St_M \K \A_M$. $\Ad$ is called \emph{$\epsilon$-sane for $M$} when for any $h \in \St_M^*$ and $s \in \St_M$,
+
+\begin{enumerate}[i.]
+\item\label{con:def__sane__safe} $\Supp{\Ad(h,s)} \subseteq \A_M^0\AP{s}$
+\item\label{con:def__sane__bold} There is $a \in \A_M^\star(s)$ s.t. $\Ad(a \mid h,s) > \epsilon$
+\end{enumerate}
+
+So, a policy is $\epsilon$-sane when it doesn't enter traps (destroys long-term value) and when it has a probability of more than $\epsilon$ to take a long-term optimal action.
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{example}
+
+When $\St_M=\A_M$ and $\forall a,b \in \A_M: \T_M\APM{a}{b,a}=1$ (i.e. the state equals the last action taken,) we get a \emph{multi-armed bandit\footnote{Usually a multi-armed bandit is considered to correspond to a 1 state MDP, but that wouldn't work for us since we allow $\R_M$ to be a function of the state only.}.} In this case, for any $a\in\A_M$, $\A_M^0(a) = \A_M$ and $\A_M^\star(a)=\Argmax{}{\R_M}$. In particular, condition~\ref{con:def__sane__safe} of Definition~\ref{def:sane} is always true. Condition~~\ref{con:def__sane__bold} holds even for $\alpha(a)$ the uniform distribution, as long as $\epsilon < \Abs{\A_M}^{-1}$.
+
+\end{example}
+\end{samepage}
+
+\begin{samepage}
+\begin{example}
+
+Assume $M$ is \emph{deterministic}, i.e. $\T_M\APM{t}{s,a}\in\{0,1\}$. Then $M$ can be described as a directed graph whose vertices are $\St_M$ and where there is an edge from $s$ to $t$ iff there exists $a\in\A_M$ s.t. $\T_M\APM{t}{s,a}=1$. In this case, $\V_M^0(s)$ depends only on the strongly connected component of $s$. It can be determined as follows. For each cycle $Y=\AP{s_1, s_2 \ldots s_n}$ we define $\V(Y):=\frac{1}{n}\sum_{m=1}^n \R_M\AP{s_m}$. For each strongly connected component $C \subseteq \St_M$, we define $\V(C)$ as the maximum of $\V(Y)$ over $Y$ simple cycles inside $C$. For each $s\in\St_M$, $\V_M^0(s)$ equals the maximum of $\V(C)$ over $C$ components reachable from $s$. $\Q_M^0(s,a)$ equals $\V_M^0(t)$ where $t$ is s.t. $\T_M\APM{t}{s,a}=1$. So, an action $a$ is in $\A_M^0(s)$ iff taking the action doesn't lead to a strongly connected component with lower $\V_M^0$. In particular, if the graph is strongly connected, then $\A_M^0(s)=\A_M$.
+
+\end{example}
+\end{samepage}
+
+\begin{samepage}
+\begin{example}
+
+TODO: Figure...
+
+\end{example}
+\end{samepage}
+
+Next, we introduce a formalism describing a system of two agents where one (the \enquote{robot}) can delegate actions to another (the \enquote{advisor}.)
+
+\begin{samepage}
+\begin{definition}
+
+Given an MDP $M$ and some $\Ad: \St_M \K \A_M$ (the advisor policy), we define the MDP $M[\Ad]$ (the environment as perceived by the robot) by
+
+\begin{align}
+\A_{M[\Ad]}&:=\A_M \sqcup \{\bot\} \\
+\St_{M[\Ad]}&:=\St_M \times \A_{M[\Ad]} \\ 
+s_{M[\Ad]}&:=\AP{s_M,\bot} \\
+\T_{M[\Ad]}\APM{\AP{t,c}}{\AP{s,b},a}&:=\begin{cases} \T_M\APM{t}{s,a} \text{ if } a\ne\bot \text{ and } c=\bot \\ \T_M\APM{t}{s,c}\Ad\APM{c}{s} \text{ if } a = \bot \text{ and } c\ne\bot \\ 0 \text{ otherwise} \end{cases} \\
+\R_{M[\Ad]}(s,b)&:= \R_M(s)
+\end{align}
+
+Here, the action $\bot$ represents delegation and the $\A_{M[\Ad]}$ factor in $\St_{M[\Ad]}$ represents the action taken by the advisor in the last round (or $\bot$ if there was no delegation.)
+
+\end{definition}
+\end{samepage}
+
+Another useful shorthand notation is the following.
+
+\begin{samepage}
+\begin{definition}
+
+Given any MDP $M$ and $\gamma\in\AP{\gamma_M,1}$, we define
+
+\begin{equation}
+\Tn_{M}(\gamma):=\max_{s \in \St_M} \sup_{\theta\in(\gamma,1)} \Abs{\frac{\D{\V_{M}(s,\theta)}}{\D{\theta}}}
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+We can now formulate the main theorem.
+
+For any $n \in \Nats$, we use the notation 
+
+\[[n]:=\ACM{m\in\Nats}{m < n}\] 
+
+We also denote 
+
+\[\Nats^+:=\AC{n \in \Nats \mid n > 0}\]
+
+\begin{samepage}
+\begin{theorem}
+\label{thm:regret_bound}
+
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=M^k\AB{\Ad^k}$. Also, denote $\bar{\Tn}:=\frac{1}{N}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)$. Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
+
+\begin{equation}
+\frac{1}{N}\sum_{k=0}^{N-1}\AP{\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma)} \leq C\AP{\eta N+\frac{\bar{\Tn}}{T}+\sqrt{\frac{\alpha T \ln{N}}{\eta}}+\frac{\alpha T \ln{N}}{\eta^2}\AP{\frac{1}{\epsilon}+\Abs{\A}}}
+\end{equation}
+
+\begin{equation}
+\Ea{x\sim\pi^{\dagger L^k}}{\Abs{\ACM{n\in\Nats}{x_n\in\St\times\A}}} \leq C\cdot\frac{\ln{N}}{\eta}\AP{\frac{1}{\epsilon}+\Abs{\A}}
+\end{equation}
+
+\end{theorem}
+\end{samepage}
+
+Note that $\eta$ and $T$ are external parameters of the policy that we can choose however we like. Taking appropriate values yields the following
+
+\begin{samepage}
+\begin{corollary}
+\label{crl:balanced_regret_bound}
+
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the setting of Theorem~\ref{thm:regret_bound}. Assume further that 
+
+\begin{equation}
+\gamma \geq 1 - \frac{\AP{\bar{\Tn}+1}^3}{N^2 \ln{N}}\cdot\min\AP{\epsilon,\frac{1}{\Abs{\A}}}
+\end{equation}
+
+Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$ s.t. for any $k\in[N]$
+
+\begin{equation}
+\label{eqn:crl__balanced_regret_bound__regret}
+\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^6 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\AP{\bar{\Tn}+1}}^{\sfrac{1}{4}}
+\end{equation}
+
+\begin{equation}
+\label{eqn:crl__balanced_regret_bound__delegations}
+\Ea{x\sim\pi^{\dagger L^k}}{\Abs{\ACM{n\in\Nats}{x_n\in\St\times\A}}} \leq C\AP{\frac{N^2\AP{\ln{N}}^3}{(1-\gamma)\AP{\bar{\Tn}+1}}\AP{\frac{1}{\epsilon}+\Abs{\A}}^3}^{\sfrac{1}{4}}
+\end{equation}
+
+\end{corollary}
+\end{samepage}
+
+The meaning of the factor $\bar{\Tn}+1$ might seem somewhat unclear, however, we can upper bound this factor in terms of parameters related to \emph{mixing time}. 
+
+First, we recall a few concepts and properties of Markov chains.
+
+\begin{samepage}
+\begin{definition}
+
+Given $\St$ a finite set and $\T: \St \K \St$ (that we regard as the transition kernel of a Markov chain,) $s \in \St$ is called \emph{an essential state of $\T$} when
+
+\begin{equation}
+\limsup_{n \rightarrow \infty} {\T^n\APM{s}{s}} > 0
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $\St$ a finite set, $\T: \St \K \St$, $s \in \St$ and $k \in \Nats$, $k$ is called \emph{the period of $s$ relatively to $\T$} when 
+
+\begin{equation}
+k = \gcd \ACM{n \in \Nats}{n > 0,\ \T^n(s \mid s) > 0}
+\end{equation}
+
+$k$ is called \emph{a period of $\T$} when there is \emph{some} $s \in \St$ an essential state of $\T$ s.t. $k$ is the period of $s$ relatively to $\T$. We denote $\Pi_\T$ the set of periods of $\T$.
+
+\end{definition}
+\end{samepage}
+
+Given a finite set $\St$ and some $\T: \St \K \St$, we denote by $\sigma(\T)$ the spectrum of the operator $\T^*: \Reals^\St \rightarrow \Reals^\St$ defined by
+
+\[\AP{\T^*f}(x):=\Ea{y\sim \T(x)}{f(y)}\]
+
+\begin{samepage}
+\begin{definition}
+
+Given a finite set $\St$ and some $\T: \St \K \St$, we define $\lambda_\T\in[0,1)$ by
+
+\begin{equation}
+\lambda_\T := \max\ACM{\Abs{\lambda}}{\lambda \in \sigma\AP{\T},\ \Abs{\lambda} < 1}
+\end{equation}
+
+Here, the maximum is understood to be 0 when the set is empty.
+
+\end{definition}
+\end{samepage}
+
+Given a finite set $\St$ and $\mu,\nu \in \Delta\St$, $\Dtva{\mu,\nu}$ will denote the \emph{total variation distance} between $\mu$ and $\nu$.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:mixing_time}
+
+Consider a finite set $\St$ and some $\T: \St \K \St$. Then, there are $\rho\in[0,\infty)$, $\zeta: \St \K \Pi_\T$ and $\xi: \St \times \Pi_\T \K \St$ s.t. for any $s\in\St$
+
+\begin{equation}
+\label{eqn:prp__mixing_time_periodic}
+\forall k \in \Pi_\T: \AP{\T^k\xi}(s,k) = \xi(s,k)
+\end{equation}
+
+\begin{equation}
+\label{eqn:prp__mixing_time_decaying}
+\forall n \in \Nats: \Dtva{\T^n(s),\Ea{k\sim\zeta(s)}{\AP{\T^n\xi}(s,k)}} \leq \rho\lambda_\T^{-n}
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+In other words, when we consider the time evolution of a Markov chain, the probability distribution over states converges to a convex linear combination of distributions that are periodic in time, with exponential convergence rate. $\zeta$ assigns to each initial state the asymptotic distribution over periods and $\xi$ assigns to each initial state and period the corresponding periodic distribution over states.
+
+Proposition~\ref{prp:mixing_time} is a rather standard application of Perron-Frobenius theory. For the sake of completeness, we spell out the proof in Appendix~\ref{sec:proof__prp__mixing_time}.
+
+Denote $\rho_\T$ the minimal value of $\rho$ for which equations (\ref{eqn:prp__mixing_time_periodic}) and (\ref{eqn:prp__mixing_time_decaying}) can hold. We can now state the bound on $\Tn_M(\gamma)$.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:transient}
+
+Let $M$ be an MDP and $\pi^\star: \St_M \rightarrow \A_M$ be s.t. for any $s \in \St_M$, $\pi^\star(s)\in\A_M^\star(s)$ (i.e. $\pi^\star$ is a Blackwell optimal policy.) Denote $\Pi_M:=\Pi_{\T_{M\pi^\star}}$, $\lambda_M:=\lambda_{\T_{M\pi^\star}}$ and $\rho_M:=\rho_{\T_{M\pi^\star}}$. Then,
+
+\begin{equation}
+\Tn_M\AP{\gamma_M} \leq \rho_M \frac{1+\lambda_M}{1-\lambda_M} + \max{\Pi_M}
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+Theorem~\ref{thm:regret_bound} combined with Proposition~\ref{prp:transient} immediately give us the following
+
+\begin{samepage}
+\begin{corollary}
+\label{crl:regret_bound_mixing}
+
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the setting of Corollary~\ref{crl:balanced_regret_bound}. For each $k \in [N]$, denote $\Pi_k:=\Pi_{M^k}$, $\rho_k:=\rho_{M^k}$ and $\lambda_k:=\lambda_{M^k}$. Then,
+
+\begin{equation}
+\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \AP{\frac{\rho_j}{1-\lambda_j}+\max{\Pi_j}}}^{\sfrac{1}{4}}
+\end{equation}
+
+\end{corollary}
+\end{samepage}
+
+TBD
+
+% Acknowledgments---Will not appear in anonymized version
+\acks{We thank a bunch of people.}
+
+
+\bibliography{DRL}
+
+
+\appendix
+
+\section{Proof of Proposition \ref{prp:mixing_time}}
+\label{sec:proof__prp__mixing_time}
+
+TBD
+
+\end{document}
