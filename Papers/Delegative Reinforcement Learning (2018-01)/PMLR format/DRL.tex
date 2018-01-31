@@ -8,6 +8,8 @@
 \usepackage{hyperref}
 \usepackage{csquotes}
 %\usepackage{amsthm}
+\usepackage[boxruled]{algorithm2e}
+%\usepackage{algorithm2e}
 \usepackage{xfrac}
 \usepackage{enumerate}
 
@@ -323,11 +325,11 @@ Given $X$ a topological space and $\mu$ a Borel measure on $X$, $\Supp{\mu} \sub
 \begin{definition}
 \label{def:sane}
 
-Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\Ad: \St_M \K \A_M$. $\Ad$ is called \emph{$\epsilon$-sane for $M$} when for any $h \in \St_M^*$ and $s \in \St_M$,
+Consider $M$ an MDP, some $\epsilon\in(0,1)$ and some $\Ad: \St_M \K \A_M$. $\Ad$ is called \emph{$\epsilon$-sane for $M$} when for any $s \in \St_M$,
 
 \begin{enumerate}[i.]
-\item\label{con:def__sane__safe} $\Supp{\Ad(h,s)} \subseteq \A_M^0\AP{s}$
-\item\label{con:def__sane__bold} There is $a \in \A_M^\star(s)$ s.t. $\Ad(a \mid h,s) > \epsilon$
+\item\label{con:def__sane__safe} $\Supp{\Ad(s)} \subseteq \A_M^0\AP{s}$
+\item\label{con:def__sane__bold} There is $a \in \A_M^\star(s)$ s.t. $\Ad(a \mid s) > \epsilon$
 \end{enumerate}
 
 So, a policy is $\epsilon$-sane when it doesn't enter traps (destroys long-term value) and when it has a probability of more than $\epsilon$ to take a long-term optimal action.
@@ -572,20 +574,64 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the s
 
 We start by giving an explicit description of an algorithm that computes the policy $\pi^\dagger$.
 
+By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^k: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^k(s) \in \A_{M^k}^\star(s)$ and $\alpha^k\APM{\pi^k(s)}{s} > \epsilon$.
+
+\RestyleAlgo{boxed}
 \begin{algorithm}
 
-\SetAlgoLined
-\SetKwFor{Loop}{InfiniteLoopBegin}{}{InfiniteLoopEnd}
+\DontPrintSemicolon
 
+\SetKwData{J}{hypothesis}
+\SetKwData{Z}{belief}
+\SetKwData{S}{state}
+\SetKwData{NS}{newState}
+\SetKwData{RA}{robotAction}
+\SetKwData{AA}{advisorAction}
+\SetKwData{SD}{shouldDelegate}
+\SetKwData{NFa}{normalizationFactorA}
+\SetKwData{NFb}{normalizationFactorB}
+\SetKwFor{Loop}{InfiniteLoopBegin}{}{InfiniteLoopEnd}
+\S$\leftarrow s_0$\;
+\Z$\leftarrow$ uniform distribution over $[N]$\;
 \Loop{}{
-        Foo\;
-        Bar\;
-        Moo
+        \J$\leftarrow$ sample the distribution \Z\;
+        \For{$m=0$ \KwTo $T-1$}{                
+                \SD$\leftarrow$FALSE\;
+                \For{$k=0$ \KwTo $N-1$}{
+                        \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{\pi^{\J}\AP{\S}}{\S}=0$}{
+                                \SD$\leftarrow$TRUE
+                        }
+                }
+                \eIf{\SD}{
+                        \RA$\leftarrow\bot$
+                }{
+                        \RA$\leftarrow\pi^{\J}\AP{\S}$
+                }
+                take action \RA\;
+                $\AP{\NS,\AA}\leftarrow$ make observation\;
+                \NFa$\leftarrow 0$\;
+                \For{$k=0$ \KwTo $N-1$}{
+                   $\Z(k) \leftarrow \Z(k)\T_{L^k}\APM{\NS,\AA}{\S,\RA}$\;
+                   \NFa$\leftarrow\NFa+\Z(k)$
+                }
+                \NFb$\leftarrow 0$\;
+                \For{$k=0$ \KwTo $N-1$}{
+                   $\Z(k) \leftarrow \NFa^{-1}\Z(k)$\;
+                   \If{$\Z(k) < \eta$}{
+                        $\Z(k) \leftarrow 0$
+                   }
+                   \NFb$\leftarrow\NFb+\Z(k)$
+                }
+                \Z$\leftarrow \NFb^{-1}\Z$\;
+                \S$\leftarrow$\NS
+        }
 }
 
 \end{algorithm}
  
 TBD
+
+% Division by 0
 
 % Acknowledgments---Will not appear in anonymized version
 \acks{We thank a bunch of people.}

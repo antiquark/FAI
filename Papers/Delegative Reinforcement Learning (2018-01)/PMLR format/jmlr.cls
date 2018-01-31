@@ -147,9 +147,7 @@
 \RequirePackage{url}
 \PassOptionsToPackage{x11names}{xcolor}
 \RequirePackage{xcolor}
-\PassOptionsToPackage{algo2e,ruled}{algorithm2e}
-\RequirePackage{algorithm2e}
-\setlength\algomargin{0pt}
+%\setlength\algomargin{0pt}
 \RequirePackage{jmlrutils}
 \jmlrprehyperref
 \@ifundefined{@pre@hyperref}{}{\@pre@hyperref}

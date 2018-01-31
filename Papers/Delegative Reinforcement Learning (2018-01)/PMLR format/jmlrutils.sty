@@ -72,8 +72,8 @@
 \newcommand*{\tablesrefname}{Tables}
 \newcommand*{\figurerefname}{Figure}
 \newcommand*{\figuresrefname}{Figures}
-\newcommand*{\algorithmrefname}{Algorithm}
-\newcommand*{\algorithmsrefname}{Algorithms}
+%\newcommand*{\algorithmrefname}{Algorithm}
+%\newcommand*{\algorithmsrefname}{Algorithms}
 \newcommand*{\theoremrefname}{Theorem}
 \newcommand*{\theoremsrefname}{Theorems}
 \newcommand*{\lemmarefname}{Lemma}
@@ -122,8 +122,8 @@
   \objectref{#1}{\tablerefname}{\tablesrefname}{}{}}
 \newcommand*{\figureref}[1]{%
   \objectref{#1}{\figurerefname}{\figuresrefname}{}{}}
-\newcommand*{\algorithmref}[1]{%
-  \objectref{#1}{\algorithmrefname}{\algorithmsrefname}{}{}}
+%\newcommand*{\algorithmref}[1]{%
+%  \objectref{#1}{\algorithmrefname}{\algorithmsrefname}{}{}}
 \newcommand*{\theoremref}[1]{%
   \objectref{#1}{\theoremrefname}{\theoremsrefname}{}{}}
 \newcommand*{\lemmaref}[1]{%
@@ -157,26 +157,26 @@
   \vskip\baselineskip
   #2\label{#1}%
 }
-\newcommand{\algocfconts}[3]{%
-  \@algocf@pre@ruled
-  #2\label{#1}\kern2pt\hrule height.8pt depth0pt\kern2pt%
-  #3\@algocf@pre@ruled
-}
-\newenvironment{algorithm}[1][htbp]%
-{%
-  \ifundef{\algocf}%
-  {`algorithm2e' package is required if you want to
-   use the algorithm environment}%
-  {}%
-  \begin{algocf}[#1]%
-  \renewcommand\@makecaption[2]{%
-    \hskip\AlCapHSkip
-    \parbox[t]{\hsize}{\algocf@captiontext{##1}{##2}}%
-  }%
-}%
-{%
-  \end{algocf}%
-}
+%\newcommand{\algocfconts}[3]{%
+%  \@algocf@pre@ruled
+%  #2\label{#1}\kern2pt\hrule height.8pt depth0pt\kern2pt%
+%  #3\@algocf@pre@ruled
+%}
+%\newenvironment{algorithm}[1][htbp]%
+%{%
+%  \ifundef{\algocf}%
+%  {`algorithm2e' package is required if you want to
+%   use the algorithm environment}%
+%  {}%
+%  \begin{algocf}[#1]%
+%  \renewcommand\@makecaption[2]{%
+%    \hskip\AlCapHSkip
+%    \parbox[t]{\hsize}{\algocf@captiontext{##1}{##2}}%
+%  }%
+%}%
+%{%
+%  \end{algocf}%
+%}
 \AtBeginDocument{%
  \@ifpackageloaded{graphicx}%
  {\let\@jmlr@ifgraphicxloaded\@firstoftwo}%
