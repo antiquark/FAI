@@ -106,6 +106,7 @@
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\UC}{\mathcal{U}}
 \newcommand{\ND}{\operatorname{D}}
+\newcommand{\Rev}{\beta}
 
 \title[Delegative Reinforcement Learning]{Delegative Reinforcement Learning: learning to avoid traps\\ with a little help}
 \usepackage{times}
@@ -570,16 +571,15 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the s
 
 \section{Proof Outline for Theorem~\ref{thm:regret_bound}}
 
-%The form of inequality~(\ref{eqn:thm__regret_bound__regret}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$.
-
 We start by giving an explicit description of an algorithm that computes the policy $\pi^\dagger$.
 
-By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^k: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^k(s) \in \A_{M^k}^\star(s)$ and $\alpha^k\APM{\pi^k(s)}{s} > \epsilon$.
+By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^k: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^k(s) \in \A_{M^k}^\star(s)$ and $\alpha^k\APM{\pi^k(s)}{s} > \epsilon$. The algorithm is then a variant of Thompson sampling in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^k$ but delegating when we are uncertain the action is safe.\ Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution.
 
 \RestyleAlgo{boxed}
-\begin{algorithm}
-
+\LinesNumbered
 \DontPrintSemicolon
+
+\begin{algorithm}
 
 \SetKwData{J}{hypothesis}
 \SetKwData{Z}{belief}
@@ -611,27 +611,57 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
                 $\AP{\NS,\AA}\leftarrow$ make observation\;
                 \NFa$\leftarrow 0$\;
                 \For{$k=0$ \KwTo $N-1$}{
-                   $\Z(k) \leftarrow \Z(k)\T_{L^k}\APM{\NS,\AA}{\S,\RA}$\;
+                   $\Z(k) \leftarrow \Z(k)\cdot\T_{L^k}\APM{\NS,\AA}{\S,\RA}$\;
                    \NFa$\leftarrow\NFa+\Z(k)$
                 }
                 \NFb$\leftarrow 0$\;
                 \For{$k=0$ \KwTo $N-1$}{
-                   $\Z(k) \leftarrow \NFa^{-1}\Z(k)$\;
+                   $\Z(k) \leftarrow \NFa^{-1}\cdot\Z(k)$\;
                    \If{$\Z(k) < \eta$}{
                         $\Z(k) \leftarrow 0$
                    }
                    \NFb$\leftarrow\NFb+\Z(k)$
                 }
-                \Z$\leftarrow \NFb^{-1}\Z$\;
+                \Z$\leftarrow \NFb^{-1}\cdot\Z$\;
                 \S$\leftarrow$\NS
         }
 }
 
 \end{algorithm}
- 
-TBD
 
-% Division by 0
+The form of inequality~(\ref{eqn:thm__regret_bound__regret}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line 32 of the algorithm. Line 26 might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \DataSty{belief} becomes the uniform distribution again (but it doesn't matter.)
+
+Lines 27-29 might seem strange, but they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \DataSty{belief} to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines 27-29 then correspond to conditioning \DataSty{belief} on the observation $\beta=\bot$. That is, in the imaginary setting Lines 24-32 are replaced by the following
+
+\begin{algorithm}
+
+\setcounter{AlgoLine}{23}
+\SetKwData{Z}{belief}
+\SetKwData{NFa}{normalizationFactorA}
+\SetKwData{NFb}{normalizationFactorB}
+
+$\beta\leftarrow$ observe
+
+\eIf{$\beta = \bot$}{
+        \NFb$\leftarrow 0$\;
+        \For{$k=0$ \KwTo $N-1$}{
+                $\Z(k) \leftarrow \NFa^{-1}\cdot\Z(k)$\;
+                \If{$\Z(k) < \eta$}{
+                        $\Z(k) \leftarrow 0$
+                }
+                \NFb$\leftarrow\NFb+\Z(k)$
+        }
+        \Z$\leftarrow \NFb^{-1}\cdot\Z$\;
+}{
+        \Z$ \leftarrow \boldsymbol{0}$\;
+        $\Z(\beta) \leftarrow 1$\;
+}
+
+\end{algorithm}
+
+We will thereby derive the regret bound by (i) deriving a regret bound in the imaginary setting and (ii) bounding the difference between the imaginary setting and the real setting.
+
+TBD
 
 % Acknowledgments---Will not appear in anonymized version
 \acks{We thank a bunch of people.}
