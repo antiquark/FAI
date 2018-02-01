@@ -108,6 +108,8 @@
 \newcommand{\ND}{\operatorname{D}}
 \newcommand{\Rev}{\beta}
 
+\newcommand{\IP}{\pi^{!k}}
+
 \title[Delegative Reinforcement Learning]{Delegative Reinforcement Learning: learning to avoid traps\\ with a little help}
 \usepackage{times}
  % Use \Name{Author Name} to specify the name.
@@ -660,6 +662,27 @@ $\beta\leftarrow$ observe
 \end{algorithm}
 
 We will thereby derive the regret bound by (i) deriving a regret bound in the imaginary setting and (ii) bounding the difference between the imaginary setting and the real setting.
+
+Observe that, in the imaginary setting, the policy $\IP: \St_\square^* \times \St_\square \K \A_\square$ computed by our algorithm (which depends explicitly on $k$ because $k$ determines $\beta$) has the property
+
+\begin{equation}
+\forall h\in\St_\square^*,s\in\St_\square: \Supp{\IP(h,s)} \subseteq \A_{M^k}^0(s)\cup\{\bot\}
+\end{equation}
+
+This is thanks to the condition at line 8 and property~\ref{con:def__sane__safe} of Definition~\ref{def:sane}.
+
+Combining $\pi^{?k}$ with the advisor $\alpha^k$ we get the policy $\IP\AB{\alpha^k}: \St^*\times\St\K\A$ which has satisfies (using property~\ref{con:def__sane__safe} of Definition~\ref{def:sane} again)
+
+\begin{equation}
+\label{eqn:imaginary_safety}
+\forall h\in\St^*,s\in\St: \Supp{\IP\AB{\alpha^k}(h,s)} \subseteq \A_{M^k}^0(s)
+\end{equation}
+
+The loss incurred during each \enquote{episode} of length $T$ can be divided into short-term (associated with the rewards during the episode) and long-term (associated with the rewards after the episode, or, equivalently, with the value of the state reached at the end of the episode.) Due to equation~(\ref{eqn:imaginary_safety}), the long-term loss is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term loss is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
+
+\begin{equation}
+\EU_{L^k}^\star(\gamma)-\EU_{L^k}^{\IP}(\gamma) = (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\AP{-}
+\end{equation}
 
 TBD
 
