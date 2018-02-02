@@ -580,7 +580,7 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the s
 
 We start by giving an explicit description of an algorithm that computes the policy $\pi^\dagger$.
 
-By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^k: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^k(s) \in \A_{M^k}^\star(s)$ and $\alpha^k\APM{\pi^k(s)}{s} > \epsilon$. The algorithm is then a variant of Thompson sampling in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^k$ but delegating when we are uncertain the action is safe.\ Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution.
+By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\alpha^k\APM{\pi^k(s)}{s} > \epsilon$. The algorithm is then a variant of Thompson sampling in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^{\star k}$ but delegating when we are uncertain the action is safe.\ Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution.
 
 \RestyleAlgo{boxed}
 \LinesNumbered
@@ -605,14 +605,14 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
         \For{$m=0$ \KwTo $T-1$}{                
                 \SD$\leftarrow$FALSE\;
                 \For{$k=0$ \KwTo $N-1$}{
-                        \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{\pi^{\J}\AP{\S}}{\S}=0$}{\label{ln:delegate_cond}
+                        \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{\pi^{\star\J}\AP{\S}}{\S}=0$}{\label{ln:delegate_cond}
                                 \SD$\leftarrow$TRUE
                         }
                 }
                 \eIf{\SD}{
                         \RA$\leftarrow\bot$
                 }{
-                        \RA$\leftarrow\pi^{\J}\AP{\S}$
+                        \RA$\leftarrow\pi^{\star\J}\AP{\S}$
                 }
                 take action \RA\;
                 $\AP{\NS,\AA}\leftarrow$ make observation\;
@@ -686,18 +686,18 @@ Combining $\pi^{?k}$ with the advisor $\alpha^k$ we get the policy $\IP\AB{\alph
 The loss incurred during each \enquote{episode} of length $T$ can be divided into short-term (associated with the rewards during the episode) and long-term (associated with the rewards after the episode, or, equivalently, with the value of the state reached at the end of the episode.) To describe the short-term loss, we introduce the policies $\AC{\pi_n^k: \St^* \times \St \K \A}_{n \in \Nats}$ defined by
 
 \begin{equation}
-\pi_n^k(h,s):=\begin{cases} \IP\AB{\alpha^k}(h,s) \text{ if } \Abs{h} < nT \\ \pi^k(h,s) \text{ otherwise} \end{cases}
+\pi_n^k(h,s):=\begin{cases} \IP\AB{\alpha^k}(h,s) \text{ if } \Abs{h} < nT \\ \pi^{\star k}(h,s) \text{ otherwise} \end{cases}
 \end{equation}
 
 Here, $\Abs{h}$ denotes the length of $h$. That is, for $h \in \St^m$, $\Abs{h}:=m$.
-
-Given $X$ a measurable space, $f: X \rightarrow \Reals$ measurable and $\mu,\nu\in\Delta X$, the notation $\Ea{\mu-\nu}{f}$ means $\Ea{\mu}{f}-\Ea{\nu}{f}$.
 
 Due to equation~(\ref{eqn:imaginary_safety}), the long-term loss is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term loss is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
 
 \begin{equation}
 \Rg_{L^k}^{\IP}(\gamma) = (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\Ea{x\sim{\pi_n^k}^{M^k}-\pi^{!k}\AB{\alpha^k}^{M^k}}{\R\AP{x_{nT+m}}}+O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}
 \end{equation}
+
+Here, the notation $\Ea{\mu-\nu}{f}$ means $\Ea{\mu}{f}-\Ea{\nu}{f}$.
 
 TBD
 
