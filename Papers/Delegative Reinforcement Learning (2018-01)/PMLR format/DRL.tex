@@ -100,6 +100,7 @@
 \newcommand{\V}{\operatorname{V}}
 \newcommand{\Q}{\operatorname{Q}}
 \newcommand{\EU}{\operatorname{EU}}
+\newcommand{\Rg}{\operatorname{R}}
 
 \newcommand{\Tn}{\mathfrak{t}}
 \newcommand{\Ad}{\alpha}
@@ -303,7 +304,7 @@ In other words, $\pi^M$ is the probability measure over histories resulting from
 \begin{definition}
 \label{def:utility}
 
-Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M: \St_M^\omega \times [0,1) \rightarrow [0,1]$ (the utility function,) $\EU_M^\pi: [0,1) \rightarrow [0,1]$ (expected utility of policy $\pi$) and $\EU_M^\star: [0,1) \rightarrow [0,1]$ (maximal expected utility) by
+Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M: \St_M^\omega \times [0,1) \rightarrow [0,1]$ (the utility function,) $\EU_M^\pi: [0,1) \rightarrow [0,1]$ (expected utility of policy $\pi$), $\EU_M^\star: [0,1) \rightarrow [0,1]$ (maximal expected utility) and $\Rg_M^\pi:[0,1)\rightarrow[0,1]$ (regret of policy $\pi$) by
 
 \begin{equation}
 \Ut_M(x,\gamma) := (1-\gamma)\sum_{n=0}^\infty {\gamma^n \R_M\AP{x_n}}
@@ -315,6 +316,10 @@ Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M:
 
 \begin{equation}
 \EU_M^\star(\gamma):=\max_{\pi: \St_M^* \times \St_M \K \A_M} {\EU_M^\pi(\gamma)} = \V_M\AP{s_M,\gamma}
+\end{equation}
+
+\begin{equation}
+\Rg_M^\pi(\gamma):=\EU_M^\star(\gamma)-\EU_M^\pi(\gamma)
 \end{equation}
 
 \end{definition}
@@ -430,7 +435,7 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\g
 
 \begin{equation}
 \label{eqn:thm__regret_bound__regret}
-\frac{1}{N}\sum_{k=0}^{N-1}\AP{\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma)} \leq C\AP{\eta N+\frac{\bar{\Tn}}{T}+\sqrt{\frac{\alpha T \ln{N}}{\eta}}+\frac{\alpha T \ln{N}}{\eta^2}\AP{\frac{1}{\epsilon}+\Abs{\A}}}
+\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{\eta N+\frac{\bar{\Tn}}{T}+\sqrt{\frac{\alpha T \ln{N}}{\eta}}+\frac{\alpha T \ln{N}}{\eta^2}\AP{\frac{1}{\epsilon}+\Abs{\A}}}
 \end{equation}
 
 \begin{equation}
@@ -457,7 +462,7 @@ Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$ s.t
 
 \begin{equation}
 \label{eqn:crl__balanced_regret_bound__regret}
-\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^6 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\AP{\bar{\Tn}+1}}^{\sfrac{1}{4}}
+\Rg_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^6 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\AP{\bar{\Tn}+1}}^{\sfrac{1}{4}}
 \end{equation}
 
 \begin{equation}
@@ -565,7 +570,7 @@ Theorem~\ref{thm:regret_bound} combined with Proposition~\ref{prp:transient} imm
 There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the setting of Corollary~\ref{crl:balanced_regret_bound}. For each $k \in [N]$, denote $\Pi_k:=\Pi_{M^k}$, $\rho_k:=\rho_{M^k}$ and $\lambda_k:=\lambda_{M^k}$. Then,
 
 \begin{equation}
-\EU_{L^k}^\star(\gamma) - \EU_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \AP{\frac{\rho_j}{1-\lambda_j}+\max{\Pi_j}}}^{\sfrac{1}{4}}
+\Rg_{L^k}^{\pi^\dagger}(\gamma)\leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \AP{\frac{\rho_j}{1-\lambda_j}+\max{\Pi_j}}}^{\sfrac{1}{4}}
 \end{equation}
 
 \end{corollary}
@@ -600,7 +605,7 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
         \For{$m=0$ \KwTo $T-1$}{                
                 \SD$\leftarrow$FALSE\;
                 \For{$k=0$ \KwTo $N-1$}{
-                        \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{\pi^{\J}\AP{\S}}{\S}=0$}{
+                        \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{\pi^{\J}\AP{\S}}{\S}=0$}{\label{ln:delegate_cond}
                                 \SD$\leftarrow$TRUE
                         }
                 }
@@ -616,24 +621,24 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
                    $\Z(k) \leftarrow \Z(k)\cdot\T_{L^k}\APM{\NS,\AA}{\S,\RA}$\;
                    \NFa$\leftarrow\NFa+\Z(k)$
                 }
-                \NFb$\leftarrow 0$\;
+                \NFb$\leftarrow 0$\;\label{ln:init_normalizationFactorB}
                 \For{$k=0$ \KwTo $N-1$}{
-                   $\Z(k) \leftarrow \NFa^{-1}\cdot\Z(k)$\;
-                   \If{$\Z(k) < \eta$}{
+                   $\Z(k) \leftarrow \NFa^{-1}\cdot\Z(k)$\;\label{ln:first_normalization}
+                   \If{$\Z(k) < \eta$}{\label{ln:discard_low_probability_begin}
                         $\Z(k) \leftarrow 0$
-                   }
+                   }\label{ln:discard_low_probability_end}
                    \NFb$\leftarrow\NFb+\Z(k)$
                 }
-                \Z$\leftarrow \NFb^{-1}\cdot\Z$\;
+                \Z$\leftarrow \NFb^{-1}\cdot\Z$\;\label{ln:second_normalization}
                 \S$\leftarrow$\NS
         }
 }
 
 \end{algorithm}
 
-The form of inequality~(\ref{eqn:thm__regret_bound__regret}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line 32 of the algorithm. Line 26 might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \DataSty{belief} becomes the uniform distribution again (but it doesn't matter.)
+The form of inequality~(\ref{eqn:thm__regret_bound__regret}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line~\ref{ln:second_normalization} of the algorithm. Line~\ref{ln:first_normalization} might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \DataSty{belief} becomes the uniform distribution again (but it doesn't matter.)
 
-Lines 27-29 might seem strange, but they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \DataSty{belief} to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines 27-29 then correspond to conditioning \DataSty{belief} on the observation $\beta=\bot$. That is, in the imaginary setting Lines 24-32 are replaced by the following
+Lines~\ref{ln:discard_low_probability_begin}-\ref{ln:discard_low_probability_end} might seem strange, but they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \DataSty{belief} to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines \ref{ln:discard_low_probability_begin}-\ref{ln:discard_low_probability_end} then correspond to conditioning \DataSty{belief} on the observation $\beta=\bot$. That is, in the imaginary setting Lines~\ref{ln:init_normalizationFactorB}-\ref{ln:second_normalization} are replaced by the following
 
 \begin{algorithm}
 
@@ -669,7 +674,7 @@ Observe that, in the imaginary setting, the policy $\IP: \St_\square^* \times \S
 \forall h\in\St_\square^*,s\in\St_\square: \Supp{\IP(h,s)} \subseteq \A_{M^k}^0(s)\cup\{\bot\}
 \end{equation}
 
-This is thanks to the condition at line 8 and property~\ref{con:def__sane__safe} of Definition~\ref{def:sane}.
+This is thanks to the condition at line~\ref{ln:delegate_cond} and property~\ref{con:def__sane__safe} of Definition~\ref{def:sane}.
 
 Combining $\pi^{?k}$ with the advisor $\alpha^k$ we get the policy $\IP\AB{\alpha^k}: \St^*\times\St\K\A$ which has satisfies (using property~\ref{con:def__sane__safe} of Definition~\ref{def:sane} again)
 
@@ -678,10 +683,20 @@ Combining $\pi^{?k}$ with the advisor $\alpha^k$ we get the policy $\IP\AB{\alph
 \forall h\in\St^*,s\in\St: \Supp{\IP\AB{\alpha^k}(h,s)} \subseteq \A_{M^k}^0(s)
 \end{equation}
 
-The loss incurred during each \enquote{episode} of length $T$ can be divided into short-term (associated with the rewards during the episode) and long-term (associated with the rewards after the episode, or, equivalently, with the value of the state reached at the end of the episode.) Due to equation~(\ref{eqn:imaginary_safety}), the long-term loss is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term loss is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
+The loss incurred during each \enquote{episode} of length $T$ can be divided into short-term (associated with the rewards during the episode) and long-term (associated with the rewards after the episode, or, equivalently, with the value of the state reached at the end of the episode.) To describe the short-term loss, we introduce the policies $\AC{\pi_n^k: \St^* \times \St \K \A}_{n \in \Nats}$ defined by
 
 \begin{equation}
-\EU_{L^k}^\star(\gamma)-\EU_{L^k}^{\IP}(\gamma) = (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\AP{-}
+\pi_n^k(h,s):=\begin{cases} \IP\AB{\alpha^k}(h,s) \text{ if } \Abs{h} < nT \\ \pi^k(h,s) \text{ otherwise} \end{cases}
+\end{equation}
+
+Here, $\Abs{h}$ denotes the length of $h$. That is, for $h \in \St^m$, $\Abs{h}:=m$.
+
+Given $X$ a measurable space, $f: X \rightarrow \Reals$ measurable and $\mu,\nu\in\Delta X$, the notation $\Ea{\mu-\nu}{f}$ means $\Ea{\mu}{f}-\Ea{\nu}{f}$.
+
+Due to equation~(\ref{eqn:imaginary_safety}), the long-term loss is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term loss is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
+
+\begin{equation}
+\Rg_{L^k}^{\IP}(\gamma) = (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\Ea{x\sim{\pi_n^k}^{M^k}-\pi^{!k}\AB{\alpha^k}^{M^k}}{\R\AP{x_{nT+m}}}+O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}
 \end{equation}
 
 TBD
