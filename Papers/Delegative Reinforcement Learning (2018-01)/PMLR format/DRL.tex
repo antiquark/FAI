@@ -585,23 +585,24 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
 \RestyleAlgo{boxed}
 \LinesNumbered
 \DontPrintSemicolon
+\SetKwFor{Loop}{InfiniteLoopBegin}{}{InfiniteLoopEnd}
+\SetKwData{NFa}{normalizationFactorA}
+\SetKwData{NFb}{normalizationFactorB}
+\SetKwData{Z}{belief}
 
 \begin{algorithm}
 
 \SetKwData{J}{hypothesis}
-\SetKwData{Z}{belief}
 \SetKwData{S}{state}
 \SetKwData{NS}{newState}
 \SetKwData{RA}{robotAction}
 \SetKwData{AA}{advisorAction}
 \SetKwData{SD}{shouldDelegate}
-\SetKwData{NFa}{normalizationFactorA}
-\SetKwData{NFb}{normalizationFactorB}
-\SetKwFor{Loop}{InfiniteLoopBegin}{}{InfiniteLoopEnd}
+
 \S$\leftarrow s_0$\;
 \Z$\leftarrow$ uniform distribution over $[N]$\;
-\Loop{}{
-        \J$\leftarrow$ sample the distribution \Z\;
+\Loop{}{\label{ln:loop_begin}
+        \J$\leftarrow$ sample the distribution \Z\;\label{ln:sample_hypothesis}
         \For{$m=0$ \KwTo $T-1$}{                
                 \SD$\leftarrow$FALSE\;
                 \For{$k=0$ \KwTo $N-1$}{
@@ -636,16 +637,13 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
 
 \end{algorithm}
 
-The form of inequality~(\ref{eqn:thm__regret_bound__regret}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line~\ref{ln:second_normalization} of the algorithm. Line~\ref{ln:first_normalization} might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \DataSty{belief} becomes the uniform distribution again (but it doesn't matter.)
+The form of inequality~(\ref{eqn:thm__regret_bound__regret}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line~\ref{ln:second_normalization} of the algorithm. Line~\ref{ln:first_normalization} might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \Z becomes the uniform distribution again (but it doesn't matter.)
 
-Lines~\ref{ln:discard_low_probability_begin}-\ref{ln:discard_low_probability_end} might seem strange, but they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \DataSty{belief} to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines \ref{ln:discard_low_probability_begin}-\ref{ln:discard_low_probability_end} then correspond to conditioning \DataSty{belief} on the observation $\beta=\bot$. That is, in the imaginary setting Lines~\ref{ln:init_normalizationFactorB}-\ref{ln:second_normalization} are replaced by the following
+Lines~\ref{ln:discard_low_probability_begin}-\ref{ln:discard_low_probability_end} might seem strange, but they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \Z to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines \ref{ln:discard_low_probability_begin}-\ref{ln:discard_low_probability_end} then correspond to conditioning \Z on the observation $\beta=\bot$. That is, in the imaginary setting Lines~\ref{ln:init_normalizationFactorB}-\ref{ln:second_normalization} are replaced by the following
 
 \begin{algorithm}
 
 \setcounter{AlgoLine}{23}
-\SetKwData{Z}{belief}
-\SetKwData{NFa}{normalizationFactorA}
-\SetKwData{NFb}{normalizationFactorB}
 
 $\beta\leftarrow$ observe
 
@@ -683,10 +681,10 @@ Combining $\pi^{?k}$ with the advisor $\alpha^k$ we get the policy $\IP\AB{\alph
 \forall h\in\St^*,s\in\St: \Supp{\IP\AB{\alpha^k}(h,s)} \subseteq \A_{M^k}^0(s)
 \end{equation}
 
-The loss incurred during each \enquote{episode} of length $T$ can be divided into short-term (associated with the rewards during the episode) and long-term (associated with the rewards after the episode, or, equivalently, with the value of the state reached at the end of the episode.) To describe the short-term loss, we introduce the policies $\AC{\pi_n^k: \St^* \times \St \K \A}_{n \in \Nats}$ defined by
+The loss incurred during each \enquote{episode} of length $T$ can be divided into short-term (associated with the rewards during the episode) and long-term (associated with the rewards after the episode, or, equivalently, with the value of the state reached at the end of the episode.) To describe the short-term loss, we introduce the policies $\AC{\pi_n^{\star k}: \St^* \times \St \K \A}_{n \in \Nats}$ defined by
 
 \begin{equation}
-\pi_n^k(h,s):=\begin{cases} \IP\AB{\alpha^k}(h,s) \text{ if } \Abs{h} < nT \\ \pi^{\star k}(h,s) \text{ otherwise} \end{cases}
+\pi_n^{\star k}(h,s):=\begin{cases} \IP\AB{\alpha^k}(h,s) \text{ if } \Abs{h} < nT \\ \pi^{\star k}(h,s) \text{ otherwise} \end{cases}
 \end{equation}
 
 Here, $\Abs{h}$ denotes the length of $h$. That is, for $h \in \St^m$, $\Abs{h}:=m$.
@@ -694,10 +692,27 @@ Here, $\Abs{h}$ denotes the length of $h$. That is, for $h \in \St^m$, $\Abs{h}:
 Due to equation~(\ref{eqn:imaginary_safety}), the long-term loss is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term loss is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
 
 \begin{equation}
-\Rg_{L^k}^{\IP}(\gamma) = (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\Ea{x\sim{\pi_n^k}^{M^k}-\pi^{!k}\AB{\alpha^k}^{M^k}}{\R\AP{x_{nT+m}}}+O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}
+\Rg_{L^k}^{\IP}(\gamma) = (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\Ea{x\sim{\pi_n^{\star  k}}^{M^k}-\pi^{!k}\AB{\alpha^k}^{M^k}}{\R\AP{x_{nT+m}}}+O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}
 \end{equation}
 
 Here, the notation $\Ea{\mu-\nu}{f}$ means $\Ea{\mu}{f}-\Ea{\nu}{f}$.
+
+In order to further analyze the short-term loss, we introduce the policies $\AC{\pi_n^{\sharp k}: \St^* \times \St \K \A}_{n \in \Nats}$. These policies result from modifying the algorithm as follows (starting from line~\ref{ln:loop_begin}.)
+
+\begin{algorithm}
+
+\setcounter{AlgoLine}{2}
+
+\SetKwData{Counter}{counter}
+
+\Counter$\leftarrow$ 0
+
+\Loop{}{
+        \ldots
+        \setcounter{AlgoLine}{0}
+}
+
+\end{algorithm}
 
 TBD
 
