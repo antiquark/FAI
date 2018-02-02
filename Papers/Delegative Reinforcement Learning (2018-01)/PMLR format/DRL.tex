@@ -589,10 +589,10 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
 \SetKwData{NFa}{normalizationFactorA}
 \SetKwData{NFb}{normalizationFactorB}
 \SetKwData{Z}{belief}
+\SetKwData{J}{hypothesis}
 
 \begin{algorithm}
 
-\SetKwData{J}{hypothesis}
 \SetKwData{S}{state}
 \SetKwData{NS}{newState}
 \SetKwData{RA}{robotAction}
@@ -689,6 +689,16 @@ The loss incurred during each \enquote{episode} of length $T$ can be divided int
 
 Here, $\Abs{h}$ denotes the length of $h$. That is, for $h \in \St^m$, $\Abs{h}:=m$.
 
+For each $k\in[N]$ and $n\in\Nats$, we define $\EU_n^{\star k},\EU_n^{!k}\in[0,1]$ by
+
+\begin{equation}
+\EU_n^{\star k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\pi_n^{\star  k}}^{M^k}}{\R\AP{x_{nT+m}}}
+\end{equation}
+
+\begin{equation}
+?
+\end{equation}
+
 Due to equation~(\ref{eqn:imaginary_safety}), the long-term loss is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term loss is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
 
 \begin{equation}
@@ -703,13 +713,19 @@ In order to further analyze the short-term loss, we introduce the policies $\AC{
 
 \setcounter{AlgoLine}{2}
 
-\SetKwData{Counter}{counter}
+\SetKwData{Counter}{episodeNumber}
 
-\Counter$\leftarrow$ 0
+\Counter$\leftarrow$ 0\;
 
 \Loop{}{
-        \ldots
-        \setcounter{AlgoLine}{0}
+        \eIf{$\Counter < n$}{
+                \J$\leftarrow$ sample the distribution \Z
+        }{
+                \J$\leftarrow k$
+        }
+        \ldots\;
+        \setcounter{AlgoLine}{39}
+        \Counter$\leftarrow \Counter + 1$
 }
 
 \end{algorithm}
