@@ -477,108 +477,7 @@ Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$ s.t
 \end{corollary}
 \end{samepage}
 
-The meaning of the factor $\bar{\Tn}+1$ might seem somewhat unclear, however, we can upper bound this factor in terms of parameters related to \emph{mixing time}. 
-
-First, we recall a few concepts and properties of Markov chains.
-
-\begin{samepage}
-\begin{definition}
-
-Given $\St$ a finite set and $\T: \St \K \St$ (that we regard as the transition kernel of a Markov chain,) $s \in \St$ is called \emph{an essential state of $\T$} when
-
-\begin{equation}
-\limsup_{n \rightarrow \infty} {\T^n\APM{s}{s}} > 0
-\end{equation}
-
-\end{definition}
-\end{samepage}
-
-\begin{samepage}
-\begin{definition}
-
-Given $\St$ a finite set, $\T: \St \K \St$, $s \in \St$ and $k \in \Nats$, $k$ is called \emph{the period of $s$ relatively to $\T$} when 
-
-\begin{equation}
-k = \gcd \ACM{n \in \Nats}{n > 0,\ \T^n(s \mid s) > 0}
-\end{equation}
-
-$k$ is called \emph{a period of $\T$} when there is \emph{some} $s \in \St$ an essential state of $\T$ s.t. $k$ is the period of $s$ relatively to $\T$. We denote $\Pi_\T$ the set of periods of $\T$.
-
-\end{definition}
-\end{samepage}
-
-Given a finite set $\St$ and some $\T: \St \K \St$, we denote by $\sigma(\T)$ the spectrum of the operator $\T^*: \Reals^\St \rightarrow \Reals^\St$ defined by
-
-\[\AP{\T^*f}(x):=\Ea{y\sim \T(x)}{f(y)}\]
-
-\begin{samepage}
-\begin{definition}
-
-Given a finite set $\St$ and some $\T: \St \K \St$, we define $\lambda_\T\in[0,1)$ by
-
-\begin{equation}
-\lambda_\T := \max\ACM{\Abs{\lambda}}{\lambda \in \sigma\AP{\T},\ \Abs{\lambda} < 1}
-\end{equation}
-
-Here, the maximum is understood to be 0 when the set is empty.
-
-\end{definition}
-\end{samepage}
-
-Given a finite set $\St$ and $\mu,\nu \in \Delta\St$, $\Dtva{\mu,\nu}$ will denote the \emph{total variation distance} between $\mu$ and $\nu$.
-
-\begin{samepage}
-\begin{proposition}
-\label{prp:mixing_time}
-
-Consider a finite set $\St$ and some $\T: \St \K \St$. Then, there are $\rho\in[0,\infty)$, $\zeta: \St \K \Pi_\T$ and $\xi: \St \times \Pi_\T \K \St$ s.t. for any $s\in\St$
-
-\begin{equation}
-\label{eqn:prp__mixing_time_periodic}
-\forall k \in \Pi_\T: \AP{\T^k\xi}(s,k) = \xi(s,k)
-\end{equation}
-
-\begin{equation}
-\label{eqn:prp__mixing_time_decaying}
-\forall n \in \Nats: \Dtva{\T^n(s),\Ea{k\sim\zeta(s)}{\AP{\T^n\xi}(s,k)}} \leq \rho\lambda_\T^{-n}
-\end{equation}
-
-\end{proposition}
-\end{samepage}
-
-In other words, when we consider the time evolution of a Markov chain, the probability distribution over states converges to a convex linear combination of distributions that are periodic in time, with exponential convergence rate. $\zeta$ assigns to each initial state the asymptotic distribution over periods and $\xi$ assigns to each initial state and period the corresponding periodic distribution over states.
-
-Proposition~\ref{prp:mixing_time} is a rather standard application of Perron-Frobenius theory. For the sake of completeness, we spell out the proof in Appendix~\ref{sec:proof__prp__mixing_time}.
-
-Denote $\rho_\T$ the minimal value of $\rho$ for which (\ref{eqn:prp__mixing_time_periodic}) and (\ref{eqn:prp__mixing_time_decaying}) can hold. We can now state the bound on $\Tn_M(\gamma)$.
-
-\begin{samepage}
-\begin{proposition}
-\label{prp:transient}
-
-Let $M$ be an MDP and $\pi^\star: \St_M \rightarrow \A_M$ be s.t. for any $s \in \St_M$, $\pi^\star(s)\in\A_M^\star(s)$ (i.e. $\pi^\star$ is a Blackwell optimal policy.) Denote $\Pi_M:=\Pi_{\T_{M\pi^\star}}$, $\lambda_M:=\lambda_{\T_{M\pi^\star}}$ and $\rho_M:=\rho_{\T_{M\pi^\star}}$. Then,
-
-\begin{equation}
-\Tn_M\AP{\gamma_M} \leq \rho_M \frac{1+\lambda_M}{1-\lambda_M} + \max{\Pi_M}
-\end{equation}
-
-\end{proposition}
-\end{samepage}
-
-Theorem~\ref{thm:regret_bound} combined with Proposition~\ref{prp:transient} immediately give us the following
-
-\begin{samepage}
-\begin{corollary}
-\label{crl:regret_bound_mixing}
-
-There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the setting of Corollary~\ref{crl:balanced_regret_bound}. For each $k \in [N]$, denote $\Pi_k:=\Pi_{M^k}$, $\rho_k:=\rho_{M^k}$ and $\lambda_k:=\lambda_{M^k}$. Then,
-
-\begin{equation}
-\Rg_{L^k}^{\pi^\dagger}(\gamma)\leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \AP{\frac{\rho_j}{1-\lambda_j}+\max{\Pi_j}}}^{\sfrac{1}{4}}
-\end{equation}
-
-\end{corollary}
-\end{samepage}
+The meaning of the factor $\bar{\Tn}+1$ might seem somewhat unclear, however, we can upper bound this factor in terms of parameters related to \emph{mixing time}: see Appendix~\ref{sec:mixing_time}. 
 
 \section{Proof Outline for Theorem~\ref{thm:regret_bound}}
 
@@ -740,6 +639,10 @@ We also $\EU^{\sharp k}_n\in[0,1]$ by
 
 We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
 
+The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes.
+
+% Proposition A.2 (condition i) in 1656: is it really for all k or only on average over k?
+
 TBD
 
 % Acknowledgments---Will not appear in anonymized version
@@ -750,6 +653,112 @@ TBD
 
 
 \appendix
+
+\section{Regret Bound in Terms of Mixing Time}
+\label{sec:mixing_time}
+
+First, we recall a few concepts and properties of Markov chains.
+
+\begin{samepage}
+\begin{definition}
+
+Given $\St$ a finite set and $\T: \St \K \St$ (that we regard as the transition kernel of a Markov chain,) $s \in \St$ is called \emph{an essential state of $\T$} when
+
+\begin{equation}
+\limsup_{n \rightarrow \infty} {\T^n\APM{s}{s}} > 0
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
+\begin{samepage}
+\begin{definition}
+
+Given $\St$ a finite set, $\T: \St \K \St$, $s \in \St$ and $k \in \Nats$, $k$ is called \emph{the period of $s$ relatively to $\T$} when 
+
+\begin{equation}
+k = \gcd \ACM{n \in \Nats}{n > 0,\ \T^n(s \mid s) > 0}
+\end{equation}
+
+$k$ is called \emph{a period of $\T$} when there is \emph{some} $s \in \St$ an essential state of $\T$ s.t. $k$ is the period of $s$ relatively to $\T$. We denote $\Pi_\T$ the set of periods of $\T$.
+
+\end{definition}
+\end{samepage}
+
+Given a finite set $\St$ and some $\T: \St \K \St$, we denote by $\sigma(\T)$ the spectrum of the operator $\T^*: \Reals^\St \rightarrow \Reals^\St$ defined by
+
+\[\AP{\T^*f}(x):=\Ea{y\sim \T(x)}{f(y)}\]
+
+\begin{samepage}
+\begin{definition}
+
+Given a finite set $\St$ and some $\T: \St \K \St$, we define $\lambda_\T\in[0,1)$ by
+
+\begin{equation}
+\lambda_\T := \max\ACM{\Abs{\lambda}}{\lambda \in \sigma\AP{\T},\ \Abs{\lambda} < 1}
+\end{equation}
+
+Here, the maximum is understood to be 0 when the set is empty.
+
+\end{definition}
+\end{samepage}
+
+Given a finite set $\St$ and $\mu,\nu \in \Delta\St$, $\Dtva{\mu,\nu}$ will denote the \emph{total variation distance} between $\mu$ and $\nu$.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:mixing_time}
+
+Consider a finite set $\St$ and some $\T: \St \K \St$. Then, there are $\rho\in[0,\infty)$, $\zeta: \St \K \Pi_\T$ and $\xi: \St \times \Pi_\T \K \St$ s.t. for any $s\in\St$
+
+\begin{equation}
+\label{eqn:prp__mixing_time_periodic}
+\forall k \in \Pi_\T: \AP{\T^k\xi}(s,k) = \xi(s,k)
+\end{equation}
+
+\begin{equation}
+\label{eqn:prp__mixing_time_decaying}
+\forall n \in \Nats: \Dtva{\T^n(s),\Ea{k\sim\zeta(s)}{\AP{\T^n\xi}(s,k)}} \leq \rho\lambda_\T^{-n}
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+In other words, when we consider the time evolution of a Markov chain, the probability distribution over states converges to a convex linear combination of distributions that are periodic in time, with exponential convergence rate. $\zeta$ assigns to each initial state the asymptotic distribution over periods and $\xi$ assigns to each initial state and period the corresponding periodic distribution over states.
+
+Proposition~\ref{prp:mixing_time} is a rather standard application of Perron-Frobenius theory. For the sake of completeness, we spell out the proof in Appendix~\ref{sec:proof__prp__mixing_time}.
+
+Denote $\rho_\T$ the minimal value of $\rho$ for which (\ref{eqn:prp__mixing_time_periodic}) and (\ref{eqn:prp__mixing_time_decaying}) can hold. We can now state the bound on $\Tn_M(\gamma)$.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:transient}
+
+Let $M$ be an MDP and $\pi^\star: \St_M \rightarrow \A_M$ be s.t. for any $s \in \St_M$, $\pi^\star(s)\in\A_M^\star(s)$ (i.e. $\pi^\star$ is a Blackwell optimal policy.) Denote $\Pi_M:=\Pi_{\T_{M\pi^\star}}$, $\lambda_M:=\lambda_{\T_{M\pi^\star}}$ and $\rho_M:=\rho_{\T_{M\pi^\star}}$. Then,
+
+\begin{equation}
+\Tn_M\AP{\gamma_M} \leq \rho_M \frac{1+\lambda_M}{1-\lambda_M} + \max{\Pi_M}
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+Theorem~\ref{thm:regret_bound} combined with Proposition~\ref{prp:transient} immediately give us the following
+
+\begin{samepage}
+\begin{corollary}
+\label{crl:regret_bound_mixing}
+
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the setting of Corollary~\ref{crl:balanced_regret_bound}. For each $k \in [N]$, denote $\Pi_k:=\Pi_{M^k}$, $\rho_k:=\rho_{M^k}$ and $\lambda_k:=\lambda_{M^k}$. Then,
+
+\begin{equation}
+\Rg_{L^k}^{\pi^\dagger}(\gamma)\leq C\AP{(1-\gamma)N^5 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\sum_{j=0}^{N-1} \AP{\frac{\rho_j}{1-\lambda_j}+\max{\Pi_j}}}^{\sfrac{1}{4}}
+\end{equation}
+
+\end{corollary}
+\end{samepage}
+
+TBD
 
 \section{TBD}
 
