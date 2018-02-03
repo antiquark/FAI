@@ -102,6 +102,9 @@
 \newcommand{\EU}{\operatorname{EU}}
 \newcommand{\Rg}{\operatorname{R}}
 
+\newcommand{\MP}[2]{#1\AB{#2}}
+\newcommand{\MA}[2]{#1\Chev{#2}}
+
 \newcommand{\Tn}{\mathfrak{t}}
 \newcommand{\Ad}{\alpha}
 \newcommand{\Hy}{\mathcal{H}}
@@ -284,18 +287,18 @@ $A^\omega$ denotes the space of infinite strings over alphabet $A$, equipped wit
 \begin{samepage}
 \begin{definition}
 
-Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\pi$ as a policy, where the first argument is the past history of states and the second argument is the current state. We define $\pi^M \in \Delta\St_M^\omega$ by requiring that for any $h \in \St_M^*$ and $s,t \in \St_M$
+Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\pi$ as a policy, where the first argument is the past history of states and the second argument is the current state. We define $\MP{M}{\pi} \in \Delta\St_M^\omega$ by requiring that for any $h \in \St_M^*$ and $s,t \in \St_M$
 
 \begin{equation}
-\Pa{x\sim\pi^M }{s_M \sqsubset x} := 1
+\Pa{x\sim\MP{M}{\pi}}{s_M \sqsubset x} := 1
 \end{equation}
 
 
 \begin{equation}
-\CP{x\sim\pi^M }{hst \sqsubset x}{hs \sqsubset x} := \sum_{a \in \A_M} {\T_M\APM{t}{s,a} \pi\APM{a}{h,s}}
+\CP{x\sim\MP{M}{\pi}}{hst \sqsubset x}{hs \sqsubset x} := \sum_{a \in \A_M} {\T_M\APM{t}{s,a} \pi\APM{a}{h,s}}
 \end{equation}
 
-In other words, $\pi^M$ is the probability measure over histories resulting from policy $\pi$ interacting with environment $M$.
+In other words, $\MP{M}{\pi}$ is the probability measure over histories resulting from policy $\pi$ interacting with environment $M$.
 
 \end{definition}
 \end{samepage}
@@ -311,7 +314,7 @@ Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M:
 \end{equation}
 
 \begin{equation}
-\EU_M^\pi(\gamma) := \Ea{x\sim\pi^M}{\Ut_M(x,\gamma)}
+\EU_M^\pi(\gamma) := \Ea{x\sim\MP{M}{\pi}}{\Ut_M(x,\gamma)}
 \end{equation}
 
 \begin{equation}
@@ -374,17 +377,17 @@ Next, we introduce a formalism describing a system of two agents where one (the 
 \begin{samepage}
 \begin{definition}
 
-Given an MDP $M$ and some $\Ad: \St_M \K \A_M$ (the advisor policy), we define the MDP $M[\Ad]$ (the environment as perceived by the robot) by
+Given an MDP $M$ and some $\Ad: \St_M \K \A_M$ (the advisor policy), we define the MDP $\MA{M}{\Ad}$ (the environment as perceived by the robot) by
 
 \begin{align}
-\A_{M[\Ad]}&:=\A_M \sqcup \{\bot\} \\
-\St_{M[\Ad]}&:=\St_M \times \A_{M[\Ad]} \\ 
-s_{M[\Ad]}&:=\AP{s_M,\bot} \\
-\T_{M[\Ad]}\APM{\AP{t,c}}{\AP{s,b},a}&:=\begin{cases} \T_M\APM{t}{s,a} \text{ if } a\ne\bot \text{ and } c=\bot \\ \T_M\APM{t}{s,c}\Ad\APM{c}{s} \text{ if } a = \bot \text{ and } c\ne\bot \\ 0 \text{ otherwise} \end{cases} \\
-\R_{M[\Ad]}(s,b)&:= \R_M(s)
+\A_{\MA{M}{\Ad}}&:=\A_M \sqcup \{\bot\} \\
+\St_{\MA{M}{\Ad}}&:=\St_M \times \A_{\MA{M}{\Ad}} \\ 
+s_{\MA{M}{\Ad}}&:=\AP{s_M,\bot} \\
+\T_{\MA{M}{\Ad}}\APM{\AP{t,c}}{\AP{s,b},a}&:=\begin{cases} \T_M\APM{t}{s,a} \text{ if } a\ne\bot \text{ and } c=\bot \\ \T_M\APM{t}{s,c}\Ad\APM{c}{s} \text{ if } a = \bot \text{ and } c\ne\bot \\ 0 \text{ otherwise} \end{cases} \\
+\R_{\MA{M}{\Ad}}(s,b)&:= \R_M(s)
 \end{align}
 
-Here, the action $\bot$ represents delegation and the $\A_{M[\Ad]}$ factor in $\St_{M[\Ad]}$ represents the action taken by the advisor in the last round (or $\bot$ if there was no delegation.)
+Here, the action $\bot$ represents delegation and the $\A_{\MA{M}{\Ad}}$ factor in $\St_{\MA{M}{\Ad}}$ represents the action taken by the advisor in the last round (or $\bot$ if there was no delegation.)
 
 \end{definition}
 \end{samepage}
@@ -412,7 +415,7 @@ Given any MDP $M$, we define $\ND_M: \AP{\St_M \times \AP{\A_M \sqcup \{\bot\}}}
 \ND_M(x) := \Abs{\ACM{n\in\Nats}{x_n\in\St_M\times\A_M}} 
 \end{equation}
 
-We think of $\ND_M(x)$ as the number of delegations in an infinite history $x$ of the MDP $M[\alpha]$ for some $\alpha$.
+We think of $\ND_M(x)$ as the number of delegations in an infinite history $x$ of the MDP $\MA{M}{\Ad}$ for some $\alpha$.
 
 \end{definition}
 \end{samepage}
@@ -431,7 +434,7 @@ We also denote
 \begin{theorem}
 \label{thm:regret_bound}
 
-There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=M^k\AB{\Ad^k}$. Also, denote $\bar{\Tn}:=\frac{1}{N}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)$. Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=\MA{M^k}{\Ad^k}$. Also, denote $\bar{\Tn}:=\frac{1}{N}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)$. Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: it is \emph{not} an anytime algorithm. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
 
 \begin{equation}
 \label{eqn:thm__regret_bound__regret}
@@ -440,7 +443,7 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\g
 
 \begin{equation}
 \label{eqn:thm__regret_bound__delegations}
-\forall k\in[N]:\Ea{\pi^{\dagger L^k}}{\ND_{M^k}} \leq C\ln{N}\AP{\frac{1}{\eta}+N}\AP{\frac{1}{\epsilon}+\Abs{\A}}
+\forall k\in[N]:\Ea{\MP{L^k}{\pi^\dagger}}{\ND_{M^k}} \leq C\ln{N}\AP{\frac{1}{\eta}+N}\AP{\frac{1}{\epsilon}+\Abs{\A}}
 \end{equation}
 
 \end{theorem}
@@ -467,7 +470,7 @@ Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$ s.t
 
 \begin{equation}
 \label{eqn:crl__balanced_regret_bound__delegations}
-\Ea{\pi^{\dagger L^k}}{\ND_{M^k}} \leq C\AP{\frac{N^2\AP{\ln{N}}^3}{1-\gamma}\AP{\frac{1}{\epsilon}+\Abs{\A}}^3}^{\sfrac{1}{4}}
+\Ea{\MP{L^k}{\pi^\dagger}}{\ND_{M^k}} \leq C\AP{\frac{N^2\AP{\ln{N}}^3}{1-\gamma}\AP{\frac{1}{\epsilon}+\Abs{\A}}^3}^{\sfrac{1}{4}}
 \end{equation}
 
 \end{corollary}
@@ -692,7 +695,7 @@ Here, $\Abs{h}$ denotes the length of $h$. That is, for $h \in \St^m$, $\Abs{h}:
 For each $k\in[N]$ and $n\in\Nats$, we define $\EU_n^{\star k},\EU_n^{!k}\in[0,1]$ by
 
 \begin{equation}
-\EU_n^{\star k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\pi_n^{\star  k}}^{M^k}}{\R\AP{x_{nT+m}}}
+\EU_n^{\star k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{M^k}{\pi_n^{\star  k}}}}{\R\AP{x_{nT+m}}}
 \end{equation}
 
 \begin{equation}
@@ -702,7 +705,7 @@ For each $k\in[N]$ and $n\in\Nats$, we define $\EU_n^{\star k},\EU_n^{!k}\in[0,1
 Due to equation~(\ref{eqn:imaginary_safety}), the long-term loss is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term loss is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
 
 \begin{equation}
-\Rg_{L^k}^{\IP}(\gamma) = (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\Ea{x\sim{\pi_n^{\star  k}}^{M^k}-\pi^{!k}\AB{\alpha^k}^{M^k}}{\R\AP{x_{nT+m}}}+O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}
+\Rg_{L^k}^{\IP}(\gamma) = (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\Ea{x\sim{\pi_n^{\star  k}}^{M^k}-\pi^{!k}\AB{\alpha^k}^{M^k}??}{\R\AP{x_{nT+m}}}+O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}
 \end{equation}
 
 Here, the notation $\Ea{\mu-\nu}{f}$ means $\Ea{\mu}{f}-\Ea{\nu}{f}$.
