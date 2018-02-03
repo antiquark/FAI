@@ -102,8 +102,9 @@
 \newcommand{\EU}{\operatorname{EU}}
 \newcommand{\Rg}{\operatorname{R}}
 
-\newcommand{\MP}[2]{#1\AB{#2}}
-\newcommand{\MA}[2]{#1\Chev{#2}}
+\newcommand{\MP}[2]{#1#2}
+\newcommand{\MA}[2]{#1\AB{#2}}
+\newcommand{\AdP}[2]{\AB{#1}#2}
 
 \newcommand{\Tn}{\mathfrak{t}}
 \newcommand{\Ad}{\alpha}
@@ -677,17 +678,17 @@ Observe that, in the imaginary setting, the policy $\IP: \St_\square^* \times \S
 
 This is thanks to the condition at line~\ref{ln:delegate_cond} and property~\ref{con:def__sane__safe} of Definition~\ref{def:sane}.
 
-Combining $\pi^{?k}$ with the advisor $\alpha^k$ we get the policy $\IP\AB{\alpha^k}: \St^*\times\St\K\A$ which has satisfies (using property~\ref{con:def__sane__safe} of Definition~\ref{def:sane} again)
+Combining $\pi^{?k}$ with the advisor $\alpha^k$ we get the policy $\AdP{\Ad^k}{\IP}: \St^*\times\St\K\A$ which has satisfies (using property~\ref{con:def__sane__safe} of Definition~\ref{def:sane} again)
 
 \begin{equation}
 \label{eqn:imaginary_safety}
-\forall h\in\St^*,s\in\St: \Supp{\IP\AB{\alpha^k}(h,s)} \subseteq \A_{M^k}^0(s)
+\forall h\in\St^*,s\in\St: \Supp{\AdP{\Ad^k}{\IP}(h,s)} \subseteq \A_{M^k}^0(s)
 \end{equation}
 
-The loss incurred during each \enquote{episode} of length $T$ can be divided into short-term (associated with the rewards during the episode) and long-term (associated with the rewards after the episode, or, equivalently, with the value of the state reached at the end of the episode.) To describe the short-term loss, we introduce the policies $\AC{\pi_n^{\star k}: \St^* \times \St \K \A}_{n \in \Nats}$ defined by
+The regret incurred during each \enquote{episode} of length $T$ can be divided into short-term (associated with the rewards during the episode) and long-term (associated with the rewards after the episode, or, equivalently, with the value of the state reached at the end of the episode.) To describe the short-term regret, we introduce the policies $\AC{\pi_n^{\star k}: \St^* \times \St \K \A}_{n \in \Nats}$ defined by
 
 \begin{equation}
-\pi_n^{\star k}(h,s):=\begin{cases} \IP\AB{\alpha^k}(h,s) \text{ if } \Abs{h} < nT \\ \pi^{\star k}(h,s) \text{ otherwise} \end{cases}
+\pi_n^{\star k}(h,s):=\begin{cases} \AdP{\Ad^k}{\IP}(h,s) \text{ if } \Abs{h} < nT \\ \pi^{\star k}(h,s) \text{ otherwise} \end{cases}
 \end{equation}
 
 Here, $\Abs{h}$ denotes the length of $h$. That is, for $h \in \St^m$, $\Abs{h}:=m$.
@@ -699,18 +700,16 @@ For each $k\in[N]$ and $n\in\Nats$, we define $\EU_n^{\star k},\EU_n^{!k}\in[0,1
 \end{equation}
 
 \begin{equation}
-?
+\EU_n^{!k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{M^k}{\AdP{\Ad^k}{\IP}}}}{\R\AP{x_{nT+m}}}
 \end{equation}
 
-Due to equation~(\ref{eqn:imaginary_safety}), the long-term loss is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term loss is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
+Due to equation~(\ref{eqn:imaginary_safety}), the long-term regret per episode is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term regret is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
 
 \begin{equation}
-\Rg_{L^k}^{\IP}(\gamma) = (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\Ea{x\sim{\pi_n^{\star  k}}^{M^k}-\pi^{!k}\AB{\alpha^k}^{M^k}??}{\R\AP{x_{nT+m}}}+O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}
+\Rg_{L^k}^{\IP}(\gamma) = \AP{1-\gamma^T}\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT}\AP{\EU^{\star k}_n-\EU^{!k}_n}+O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}
 \end{equation}
 
-Here, the notation $\Ea{\mu-\nu}{f}$ means $\Ea{\mu}{f}-\Ea{\nu}{f}$.
-
-In order to further analyze the short-term loss, we introduce the policies $\AC{\pi_n^{\sharp k}: \St^* \times \St \K \A}_{n \in \Nats}$. These policies result from modifying the algorithm as follows (starting from line~\ref{ln:loop_begin}.)
+In order to further analyze the short-term regret, we introduce the policies $\AC{\pi_n^{\sharp k}: \St^* \times \St \K \A}_{n \in \Nats}$. These policies result from modifying the algorithm as follows (starting from line~\ref{ln:loop_begin}.)
 
 \begin{algorithm}
 
@@ -732,6 +731,14 @@ In order to further analyze the short-term loss, we introduce the policies $\AC{
 }
 
 \end{algorithm}
+
+We also $\EU^{\sharp k}_n\in[0,1]$ by
+
+\begin{equation}
+\EU_n^{\star k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{M^k}{\AdP{\Ad^k}{\pi_n^{\sharp  k}}}}}{\R\AP{x_{nT+m}}}
+\end{equation}
+
+We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
 
 TBD
 
