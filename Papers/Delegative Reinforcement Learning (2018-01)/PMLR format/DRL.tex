@@ -349,7 +349,7 @@ So, a policy is $\epsilon$-sane when it doesn't enter traps (destroys long-term 
 \end{definition}
 \end{samepage}
 
-\begin{samepage}
+\Comment{\begin{samepage}
 \begin{example}
 
 When $\St_M=\A_M$ and $\forall a,b \in \A_M: \T_M\APM{a}{b,a}=1$ (i.e. the state equals the last action taken,) we get a \emph{multi-armed bandit\footnote{Usually a multi-armed bandit is considered to correspond to a 1 state MDP, but that wouldn't work for us since we allow $\R_M$ to be a function of the state only.}.} In this case, for any $a\in\A_M$, $\A_M^0(a) = \A_M$ and $\A_M^\star(a)=\Argmax{}{\R_M}$. In particular, condition~\ref{con:def__sane__safe} of Definition~\ref{def:sane} is always true. Condition~~\ref{con:def__sane__bold} holds even for $\alpha(a)$ the uniform distribution, as long as $\epsilon < \Abs{\A_M}^{-1}$.
@@ -371,7 +371,7 @@ Assume $M$ is \emph{deterministic}, i.e. $\T_M\APM{t}{s,a}\in\{0,1\}$. Then $M$ 
 TODO: Figure...
 
 \end{example}
-\end{samepage}
+\end{samepage}}
 
 Next, we introduce a formalism describing a system of two agents where one (the \enquote{robot}) can delegate actions to another (the \enquote{advisor}.)
 
@@ -483,18 +483,18 @@ The meaning of the factor $\bar{\Tn}+1$ might seem somewhat unclear, however, we
 
 We start by giving an explicit description of an algorithm that computes the policy $\pi^\dagger$.
 
-By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\alpha^k\APM{\pi^k(s)}{s} > \epsilon$. The algorithm is then a variant of Thompson sampling in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^{\star k}$ but delegating when we are uncertain the action is safe.\ Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution.
-\\
+By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\alpha^k\APM{\pi^k(s)}{s} > \epsilon$. The algorithm is then a variant of Thompson sampling in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^{\star k}$ but delegating when we are uncertain the action is safe. Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution. If the currently sampled hypothesis is discarded, the algorithm continues to select safe actions until the end of the time interval, delegating whenever no action is certainly safe.\pagebreak
+
 \RestyleAlgo{boxed}
 \LinesNumbered
 \DontPrintSemicolon
 \SetKwFor{Loop}{InfiniteLoopBegin}{}{InfiniteLoopEnd}
 \SetKwData{Z}{belief}
 \SetKwData{J}{hypothesis}
+\SetKwData{S}{state}
 
 \begin{algorithm}[H]
 
-\SetKwData{S}{state}
 \SetKwData{NS}{newState}
 \SetKwData{RA}{agentAction}
 \SetKwData{AA}{advisorAction}
@@ -508,16 +508,16 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
                 \eIf{$\Z(\J) > 0$}{
                         \RA$\leftarrow\pi^{\star\J}\AP{\S}$\;
                         \For{$k=0$ \KwTo $N-1$}{
-                                \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{\RA}{\S}=0$}{\label{ln:delegate_cond}
-                                        \RA$\leftarrow\bot$
+                                \If{$\Z(k) > 0$ \bf{and} $\Ad^k\APM{\RA}{\S}=0$}{\label{ln:delegate_cond}
+                                        \RA$\leftarrow\bot$\label{ln:delegate_primary}
                                 }
                         }                        
                 }{
-                        \RA$\leftarrow\bot$\;
+                        \RA$\leftarrow\bot$\;\label{ln:delegate_secondary}
                         \For{$a\in\A$}{
                                 \GA$\leftarrow$ TRUE\;
                                 \For{$k=0$ \KwTo $N-1$}{
-                                        \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{a}{\S}=0$}{
+                                        \If{$\Z(k) > 0$ \bf{and} $\Ad^k\APM{a}{\S}=0$}{
                                                 \GA$\leftarrow$ FALSE
                                         }
                                 }
@@ -543,8 +543,6 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
 }
 
 \end{algorithm}
-
-\leavevmode\\
 
 The form of inequality~(\ref{eqn:thm__regret_bound__regret}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line~\ref{ln:second_normalization} of the algorithm. Line~\ref{ln:first_normalization} might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \Z becomes the uniform distribution again (but it doesn't matter.)
 
@@ -628,7 +626,7 @@ In order to further analyze the short-term regret, we introduce the policies $\A
                 \J$\leftarrow k$
         }
         \ldots\;
-        \setcounter{AlgoLine}{41}
+        \setcounter{AlgoLine}{51}
         \Counter$\leftarrow \Counter + 1$
 }
 
@@ -642,11 +640,12 @@ We also $\EU^{\sharp k}_n\in[0,1]$ by
 
 We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
 
-The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed when...
+The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over environments is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over environments, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over environments to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$...
 
-% What if the sampled hypothesis is falsified in the process of the episode?
-% Doesn't this invalidate the reduction from the original delegation routine to lines 6-16?
-% Seems that we should complicate the algorithm or weaken the # of delegations bound
+% In the first case, we have an action s.t. with prob. \eta advisor takes it with prob. \epsilon,
+% but it is also possible that advisor never takes it.
+% Therefore, observing whether it takes it is new information.
+% In the second case the advisor gives me an example of a safe action, which I didn't know before.
 
 TBD
 
