@@ -484,82 +484,85 @@ The meaning of the factor $\bar{\Tn}+1$ might seem somewhat unclear, however, we
 We start by giving an explicit description of an algorithm that computes the policy $\pi^\dagger$.
 
 By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\alpha^k\APM{\pi^k(s)}{s} > \epsilon$. The algorithm is then a variant of Thompson sampling in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^{\star k}$ but delegating when we are uncertain the action is safe.\ Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution.
-
+\\
 \RestyleAlgo{boxed}
 \LinesNumbered
 \DontPrintSemicolon
 \SetKwFor{Loop}{InfiniteLoopBegin}{}{InfiniteLoopEnd}
-\SetKwData{NFa}{normalizationFactorA}
-\SetKwData{NFb}{normalizationFactorB}
 \SetKwData{Z}{belief}
 \SetKwData{J}{hypothesis}
 
-\begin{algorithm}
+\begin{algorithm}[H]
 
 \SetKwData{S}{state}
 \SetKwData{NS}{newState}
-\SetKwData{RA}{robotAction}
+\SetKwData{RA}{agentAction}
 \SetKwData{AA}{advisorAction}
-\SetKwData{SD}{shouldDelegate}
+\SetKwData{GA}{isSafeAction}
 
 \S$\leftarrow s_0$\;
 \Z$\leftarrow$ uniform distribution over $[N]$\;
 \Loop{}{\label{ln:loop_begin}
         \J$\leftarrow$ sample the distribution \Z\;\label{ln:sample_hypothesis}
-        \For{$m=0$ \KwTo $T-1$}{                
-                \SD$\leftarrow$FALSE\;
-                \For{$k=0$ \KwTo $N-1$}{
-                        \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{\pi^{\star\J}\AP{\S}}{\S}=0$}{\label{ln:delegate_cond}
-                                \SD$\leftarrow$TRUE
-                        }
-                }
-                \eIf{\SD}{
-                        \RA$\leftarrow\bot$
+        \For{$m=0$ \KwTo $T-1$}{
+                \eIf{$\Z(\J) > 0$}{
+                        \RA$\leftarrow\pi^{\star\J}\AP{\S}$\;
+                        \For{$k=0$ \KwTo $N-1$}{
+                                \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{\RA}{\S}=0$}{\label{ln:delegate_cond}
+                                        \RA$\leftarrow\bot$
+                                }
+                        }                        
                 }{
-                        \RA$\leftarrow\pi^{\star\J}\AP{\S}$
+                        \RA$\leftarrow\bot$\;
+                        \For{$a\in\A$}{
+                                \GA$\leftarrow$ TRUE\;
+                                \For{$k=0$ \KwTo $N-1$}{
+                                        \If{$\Z(k) > 0$ \bf{and} $\alpha^k\APM{a}{\S}=0$}{
+                                                \GA$\leftarrow$ FALSE
+                                        }
+                                }
+                                \If{\GA}{
+                                        \RA$\leftarrow a$
+                                }
+                        }
                 }
                 take action \RA\;
                 $\AP{\NS,\AA}\leftarrow$ make observation\;
-                \NFa$\leftarrow 0$\;
                 \For{$k=0$ \KwTo $N-1$}{
                    $\Z(k) \leftarrow \Z(k)\cdot\T_{L^k}\APM{\NS,\AA}{\S,\RA}$\;
-                   \NFa$\leftarrow\NFa+\Z(k)$
                 }
-                \NFb$\leftarrow 0$\;\label{ln:init_normalizationFactorB}
-                \For{$k=0$ \KwTo $N-1$}{
-                   $\Z(k) \leftarrow \NFa^{-1}\cdot\Z(k)$\;\label{ln:first_normalization}
-                   \If{$\Z(k) < \eta$}{\label{ln:discard_low_probability_begin}
+                \Z$\leftarrow\AP{\sum_{k=0}^{N-1}\Z(k)}^{-1}\cdot\Z$\;\label{ln:first_normalization}
+                \For{$k=0$ \KwTo $N-1$}{\label{ln:discard_low_probability_begin}
+                   \If{$\Z(k) < \eta$}{
                         $\Z(k) \leftarrow 0$
-                   }\label{ln:discard_low_probability_end}
-                   \NFb$\leftarrow\NFb+\Z(k)$
+                   }
                 }
-                \Z$\leftarrow \NFb^{-1}\cdot\Z$\;\label{ln:second_normalization}
+                \Z$\leftarrow\AP{\sum_{k=0}^{N-1}\Z(k)}^{-1}\cdot\Z$\;\label{ln:second_normalization}
                 \S$\leftarrow$\NS
         }
 }
 
 \end{algorithm}
 
+\leavevmode\\
+
 The form of inequality~(\ref{eqn:thm__regret_bound__regret}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line~\ref{ln:second_normalization} of the algorithm. Line~\ref{ln:first_normalization} might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \Z becomes the uniform distribution again (but it doesn't matter.)
 
-Lines~\ref{ln:discard_low_probability_begin}-\ref{ln:discard_low_probability_end} might seem strange, but they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \Z to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines \ref{ln:discard_low_probability_begin}-\ref{ln:discard_low_probability_end} then correspond to conditioning \Z on the observation $\beta=\bot$. That is, in the imaginary setting Lines~\ref{ln:init_normalizationFactorB}-\ref{ln:second_normalization} are replaced by the following
+Lines~\ref{ln:discard_low_probability_begin}-\ref{ln:second_normalization} might seem strange, but they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \Z to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines \ref{ln:discard_low_probability_begin}-\ref{ln:second_normalization} then correspond to conditioning \Z on the observation $\beta=\bot$. That is, in the imaginary setting these lines are replaced by the following:
 
-\begin{algorithm}
+\begin{algorithm}[h]
 
-\setcounter{AlgoLine}{23}
+\setcounter{AlgoLine}{22}
 
 $\beta\leftarrow$ observe
 
 \eIf{$\beta = \bot$}{
-        \NFb$\leftarrow 0$\;
         \For{$k=0$ \KwTo $N-1$}{
-                $\Z(k) \leftarrow \NFa^{-1}\cdot\Z(k)$\;
                 \If{$\Z(k) < \eta$}{
                         $\Z(k) \leftarrow 0$
                 }
-                \NFb$\leftarrow\NFb+\Z(k)$
         }
-        \Z$\leftarrow \NFb^{-1}\cdot\Z$\;
+        \Z$\leftarrow\AP{\sum_{k=0}^{N-1}\Z(k)}^{-1}\cdot\Z$\;
 }{
         \Z$ \leftarrow \boldsymbol{0}$\;
         $\Z(\beta) \leftarrow 1$\;
@@ -610,7 +613,7 @@ Due to equation~(\ref{eqn:imaginary_safety}), the long-term regret per episode i
 
 In order to further analyze the short-term regret, we introduce the policies $\AC{\pi_n^{\sharp k}: \St^* \times \St \K \A}_{n \in \Nats}$. These policies result from modifying the algorithm as follows (starting from line~\ref{ln:loop_begin}.)
 
-\begin{algorithm}
+\begin{algorithm}[h]
 
 \setcounter{AlgoLine}{2}
 
@@ -625,7 +628,7 @@ In order to further analyze the short-term regret, we introduce the policies $\A
                 \J$\leftarrow k$
         }
         \ldots\;
-        \setcounter{AlgoLine}{39}
+        \setcounter{AlgoLine}{41}
         \Counter$\leftarrow \Counter + 1$
 }
 
@@ -640,6 +643,10 @@ We also $\EU^{\sharp k}_n\in[0,1]$ by
 We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
 
 The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed when...
+
+% What if the sampled hypothesis is falsified in the process of the episode?
+% Doesn't this invalidate the reduction from the original delegation routine to lines 6-16?
+% Seems that we should complicate the algorithm or weaken the # of delegations bound
 
 TBD
 
