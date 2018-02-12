@@ -440,7 +440,7 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\g
 
 \begin{equation}
 \label{eqn:thm__regret_bound__regret}
-\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{\eta N+\frac{\bar{\Tn}}{T}+\sqrt{\frac{\alpha T \ln{N}}{\eta}}+\frac{\alpha T \ln{N}}{\eta^2}\AP{\frac{1}{\epsilon}+\Abs{\A}}}
+\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{\eta N+\frac{\bar{\Tn}}{T}+\sqrt{\frac{(1-\gamma) T \ln{N}}{\eta}}+\frac{(1-\gamma)T \ln{N}}{\eta^2}\AP{\frac{1}{\epsilon}+\Abs{\A}}}
 \end{equation}
 
 \begin{equation}
@@ -614,6 +614,7 @@ Define $\R_\square: \St_\square \rightarrow [0,1]$ by $\R_\square(s,a):=\R(s)$. 
 Due to equation~(\ref{eqn:imaginary_safety}), the long-term regret per episode is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term regret is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
 
 \begin{equation}
+\label{eqn:short_long_decomposition}
 \Rg_{L^k}^{\IP}(\gamma) = \AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\star k}_n-\EU^{!k}_n}+O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}
 \end{equation}
 
@@ -668,6 +669,7 @@ We bounded the expected number of delegations for $\pi^{!k}$ but not $\pi^{\shar
 \[\sum_{n=0}^\infty {\Abs{\EU^{\star k}_n-\EU^{\sharp k}_n}} \leq \frac{1}{\eta}\Ea{x\sim L^k\pi^{!k}}{\Abs{\AC{n \in \Nats: x_n\in\St \times \A}}}\]
 
 \begin{equation}
+\label{eqn:sharp_vs_star}
 \frac{1}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty {\Abs{\EU^{\star k}_n-\EU^{\sharp k}_n}} = O\AP{\frac{\ln{N}}{\eta^2\epsilon}}
 \end{equation}
 
@@ -675,6 +677,19 @@ Observing the rewards received during an episode yields information about the en
 
 \begin{equation}
 \frac{1-\gamma^T}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\sharp k}_n-\EU^{!k}_n} \leq \sqrt{\frac{1-\gamma^T}{2\eta}\sum_{n=0}^\infty \gamma^{nT}I_n}
+\end{equation}
+
+Using once again the fact that the initial entropy is $\ln{N}$, this implies
+
+\begin{equation}
+\label{eqn:shriek_vs_sharp}
+\frac{1-\gamma^T}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\sharp k}_n-\EU^{!k}_n} \leq \sqrt{\frac{\AP{1-\gamma^T}\ln{N}}{2\eta}}
+\end{equation}
+
+Combining inequalities (\ref{eqn:short_long_decomposition}), (\ref{eqn:sharp_vs_star}) and (\ref{eqn:shriek_vs_sharp}), we get
+
+\begin{equation}
+\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\IP}(\gamma) = O\AP{\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}+...}
 \end{equation}
 
 TBD
