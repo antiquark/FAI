@@ -108,7 +108,7 @@
 
 \newcommand{\Tn}{\mathfrak{t}}
 \newcommand{\Ad}{\alpha}
-\newcommand{\Hy}{\mathcal{H}}
+\newcommand{\FH}{\mathcal{H}}
 \newcommand{\UC}{\mathcal{U}}
 \newcommand{\ND}{\operatorname{D}}
 \newcommand{\Rev}{\beta}
@@ -150,7 +150,7 @@
 \maketitle
 
 \begin{abstract}
-Most known regret bounds for reinforcement learning are either episodic or assume an environment without traps. We derive a regret bound without making either assumption by allowing the algorithm to occasionally delegate an action to an external advisor. We thus arrive at a setting of active one-shot model-based reinforcement learning that we call DRL (delegative reinforcement learning.) The algorithm we construct in order to demonstrate the regret bound is a variant of Thompson sampling supplemented by a subroutine that decides which actions should be delegated. Importantly, the algorithm is not anytime, since the confidence threshold for acting without delegating must be adjusted according to the target time discount. We also demonstrate that this setting can handle situations in which the reward signal and the advisor become unreliable in particular environment states (assuming these states can be avoided.) Currently, our analysis is limited to Markov decision processes with a finite number of states.
+Most known regret bounds for reinforcement learning are either episodic or assume an environment without traps. We derive a regret bound without making either assumption by allowing the algorithm to occasionally delegate an action to an external advisor. We thus arrive at a setting of active one-shot model-based reinforcement learning that we call DRL (delegative reinforcement learning.) The algorithm we construct in order to demonstrate the regret bound is a variant of Thompson sampling supplemented by a subroutine that decides which actions should be delegated. Importantly, the algorithm is not anytime, since the parameters must be adjusted according to the target time discount. \Comment{We also demonstrate that this setting can handle situations in which the reward signal and the advisor become unreliable in particular environment states (assuming these states can be avoided.) }Currently, our analysis is limited to Markov decision processes with a finite number of states.
 \end{abstract}
 
 \begin{keywords}
@@ -309,7 +309,7 @@ Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\
 \begin{definition}
 \label{def:utility}
 
-Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M: \St_M^\omega \times [0,1) \rightarrow [0,1]$ (the utility function,) $\EU_M^\pi: [0,1) \rightarrow [0,1]$ (expected utility of policy $\pi$), $\EU_M^\star: [0,1) \rightarrow [0,1]$ (maximal expected utility) and $\Rg_M^\pi:[0,1)\rightarrow[0,1]$ (regret of policy $\pi$) by
+Given an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Ut_M: \St_M^\omega \times [0,1) \rightarrow [0,1]$ (the utility function,) $\EU_M^\pi: [0,1) \rightarrow [0,1]$ (expected utility of policy $\pi$,) $\EU_M^\star: [0,1) \rightarrow [0,1]$ (maximal expected utility) and $\Rg_M^\pi:[0,1)\rightarrow[0,1]$ (regret of policy $\pi$) by
 
 \begin{equation}
 \Ut_M(x,\gamma) := (1-\gamma)\sum_{n=0}^\infty {\gamma^n \R_M\AP{x_n}}
@@ -492,7 +492,7 @@ Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$ s.t
 
 The meaning of the factor $\bar{\Tn}+1$ in equation~(\ref{eqn:crl__balanced_regret_bound__RC}) might seem somewhat unclear, however, we can upper bound this factor in terms of parameters related to \emph{mixing time}: see Appendix~\ref{sec:mixing_time}. 
 
-\section{Proof Outline for Theorem~\ref{thm:regret_bound}}
+\section{Proof Outline}
 
 We start by giving an explicit description of an algorithm that computes the policy $\pi^\dagger$.
 
@@ -583,11 +583,19 @@ $\beta\leftarrow$ observe
 
 We will thereby derive the regret bound by (i) deriving a regret bound in the imaginary setting and (ii) bounding the difference between the imaginary setting and the real setting.
 
+Given an MDP $M$ and any $\pi: \St_M^* \times \St_M \K \A$, we define $\FH_{M\pi} \subseteq \St_M^*$ by
+
+\begin{equation}
+\FH_{M\pi} := \ACM{h \in \St_M^*}{\Pa{x\sim M\pi}{h \sqsubset x} > 0}
+\end{equation}
+
 Observe that, in the imaginary setting, the policy $\IP: \St_\square^* \times \St_\square \K \A_\square$ computed by our algorithm (which depends explicitly on $k$ because $k$ determines $\beta$) has the property
 
 \begin{equation}
-\forall h\in\St_\square^*,s\in\St_\square: \Supp{\IP(h,s)} \subseteq \A_{M^k}^0(s)\cup\{\bot\}
+\forall h\in\FH_{L^k\pi^{!k}},s\in\St_\square: \Supp{\IP(h,s)} \subseteq \A_{M^k}^0(s)\cup\{\bot\}
 \end{equation}
+
+% For "impossible" histories the correct hypothesis might be discarded leading to unsafe actions
 
 This is thanks to the condition at line~\ref{ln:delegate_cond} and property~\ref{con:def__sane__safe} of Definition~\ref{def:sane}.
 
@@ -595,13 +603,13 @@ Combining $\pi^{?k}$ with the advisor $\alpha^k$ we get the policy $\AdP{\Ad^k}{
 
 \begin{equation}
 \label{eqn:imaginary_safety}
-\forall h\in\St^*,s\in\St: \Supp{\AdP{\Ad^k}{\IP}(h,s)} \subseteq \A_{M^k}^0(s)
+\forall h\in\FH_{M^k,\AdP{\Ad^k}{\IP}},s\in\St: \Supp{\AdP{\Ad^k}{\IP}(h,s)} \subseteq \A_{M^k}^0(s)
 \end{equation}
 
 The regret incurred during each \enquote{episode} of length $T$ can be divided into short-term (associated with the rewards during the episode) and long-term (associated with the rewards after the episode, or, equivalently, with the value of the state reached at the end of the episode.) To describe the short-term regret, we introduce the policies $\AC{\pi_n^{\star k}: \St^* \times \St \K \A}_{n \in \Nats}$ defined by
 
 \begin{equation}
-\pi_n^{\star k}(h,s):=\begin{cases} \AdP{\Ad^k}{\IP}(h,s) \text{ if } \Abs{h} < nT \\ \pi^{\star k}(h,s) \text{ otherwise} \end{cases}
+\pi_n^{\star k}(h,s):=\begin{cases} \AdP{\Ad^k}{\IP}(h,s) \text{ if } \Abs{h} < nT \\ \pi^{\star k}(s) \text{ otherwise} \end{cases}
 \end{equation}
 
 Here, $\Abs{h}$ denotes the length of $h$. That is, for $h \in \St^m$, $\Abs{h}:=m$.
@@ -616,7 +624,7 @@ Define $\R_\square: \St_\square \rightarrow [0,1]$ by $\R_\square(s,a):=\R(s)$. 
 \EU_n^{!k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{L^k}{\IP}}}{\R_\square\AP{x_{nT+m}}}
 \end{equation}
 
-Due to equation~(\ref{eqn:imaginary_safety}), the long-term regret per episode is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term regret is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us
+Due to equation~(\ref{eqn:imaginary_safety}), the long-term regret per episode is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term regret is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us\footnote{See Proposition~\ref{prp:short_long} for the detailed derivation.}
 
 \begin{equation}
 \label{eqn:short_long_decomposition}
@@ -646,7 +654,7 @@ In order to further analyze the short-term regret, we introduce the policies\\$\
 
 \end{algorithm}
 
-We also $\EU^{\sharp k}_n\in[0,1]$ by
+We also define $\EU^{\sharp k}_n\in[0,1]$ by
 
 \begin{equation}
 \EU_n^{\star k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{L^k}{\pi_n^{\sharp  k}}}}{\R_\square\AP{x_{nT+m}}}
@@ -654,7 +662,7 @@ We also $\EU^{\sharp k}_n\in[0,1]$ by
 
 We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
 
-The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over environments is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over environments, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over environments to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:?}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$.
+The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over hypotheses is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over hypotheses, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over hypotheses to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:?}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$.
 
 Now we use this to bound $\Abs{\EU^\star_n-\EU^\sharp_n}$. We have
 
@@ -676,7 +684,7 @@ We bounded the expected number of delegations for $\pi^{!k}$ but not $\pi^{\shar
 \frac{1}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty {\Abs{\EU^{\star k}_n-\EU^{\sharp k}_n}} = O\AP{\frac{\ln{N}}{\eta^2\epsilon}}
 \end{equation}
 
-Observing the rewards received during an episode yields information about the environment. This information gain can only vanish when you expect to receive the same rewards regardless of the environment, in which case the policy $\pi^{\star\J}$ is optimal regardless of $\J$. This allows us to derive a lower bound for the information gain in terms of the difference between the rewards received by $\pi^{!k}$ and $\pi^{\sharp k}_n$. Denoting $I_n$ the expected information gain in episode $n$, we have (see Proposition~\ref{prp:?})
+Observing the rewards received during an episode yields information about the environment. The expected information gain can only vanish when you expect to receive the same rewards regardless of which hypothesis is correct, in which case the policy $\pi^{\star\J}$ is optimal regardless of $\J$. This allows us to derive a lower bound for the information gain in terms of the difference between the rewards received by $\pi^{!k}$ and $\pi^{\sharp k}_n$. Denoting $I_n$ the expected information gain in episode $n$, we have (see Proposition~\ref{prp:?})
 
 \begin{equation}
 \frac{1-\gamma^T}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\sharp k}_n-\EU^{!k}_n} \leq \sqrt{\frac{1-\gamma^T}{2\eta}\sum_{n=0}^\infty \gamma^{nT}I_n}
@@ -695,9 +703,9 @@ Combining inequalities (\ref{eqn:short_long_decomposition}), (\ref{eqn:sharp_vs_
 \frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\IP}(\gamma) = O\AP{\frac{\bar{\Tn}}{T}+\sqrt{\frac{\AP{1-\gamma^T}\ln{N}}{\eta}}+\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}}
 \end{equation}
 
-Finally, we observe that, in the real setting (without the $\beta$ signal,) line~\ref{ln:discard} can be reached at most $N-1$ times before the first division by zero at line~\ref{ln:first_normalization}. Moreover, such division by zero will never happen unless the correct hypothesis is discarded. Each time line~\ref{ln:discard} is reached, the probability that $\Z$ assigns probability below $\eta$ to the correct hypothesis is at most $\eta$. Therefore, the probability that the correct hypothesis is discarded is at most $\eta(N-1)$. This allows us to bound the total variation distance between the real setting and imaginary setting by $O(\eta N)$, producing equation~(\ref{eqn:thm__regret_bound__regret})\footnote{The reason inequality~(\ref{eqn:thm__regret_bound__regret}) has $\frac{1}{\epsilon}+\Abs{\A}$ instead of $\epsilon$ is because we needed to assume w.l.o.g. that $\epsilon < \frac{1}{\Abs{A}}$. On the other hand, the assumption $\frac{1}{\eta}<N$ is justified by the appearance of the $\eta N$ term in the bound. Also, we can use $(1-\gamma)T$ instead of $1-\gamma^T$ because the form of the bound allows assuming w.l.o.g. that $(1-\gamma)T \ll 1$.}.
+Finally, we observe that, in the real setting (without the $\beta$ signal,) line~\ref{ln:discard} can be reached at most $N-1$ times before the first division by zero at line~\ref{ln:first_normalization}. Moreover, such division by zero will never happen unless the correct hypothesis is discarded. Each time line~\ref{ln:discard} is reached, the probability that $\Z$ assigns probability below $\eta$ to the correct hypothesis is at most $\eta$. Therefore, the probability that the correct hypothesis is discarded is at most $\eta(N-1)$. This allows us to bound the total variation distance between the real setting and imaginary setting by $O(\eta N)$, producing inequality~(\ref{eqn:thm__regret_bound__regret})\footnote{The reason inequality~(\ref{eqn:thm__regret_bound__regret}) has $\frac{1}{\epsilon}+\Abs{\A}$ instead of $\epsilon$ is because we needed to assume w.l.o.g. that $\epsilon < \frac{1}{\Abs{A}}$. On the other hand, the assumption $\frac{1}{\eta}<N$ is justified by the appearance of the $\eta N$ term in the bound. Also, we can use $(1-\gamma)T$ instead of $1-\gamma^T$ because the form of the bound allows assuming w.l.o.g. that $(1-\gamma)T \ll 1$.}.
 
-For reason we already outlined, we have
+For reasons we already outlined, we have
 
 \begin{equation}
 \frac{1}{N}\sum_{k=0}^{N-1} \Ea{L^k\pi^{!k}}{\ND_{M^k}} = O\AP{\frac{\ln{N}}{\eta\epsilon}}
@@ -719,6 +727,48 @@ Using again the relationship we established between the real and imaginary setti
 
 
 \appendix
+
+\section{Proof Details}
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:short_long}
+
+Consider some $T\in\Nats^+$, an MDP $M$, some $\pi^\star: \St_M \K \A_M$ and $\pi^0: \St_M^* \times \St_M \K \A_M$. For any $n \in \Nats$, define $\pi^\star_n: \St_M^* \times \St_M \K \A_M$ by
+
+$$\pi^\star_n(h,s):=\begin{cases} \pi^0(h,s) \text{ if } \Abs{h} < nT \\ \pi^\star\AP{s} \text{ otherwise} \end{cases}$$
+
+Assume that for any $h \in \FH_{M\pi^0}$ and $s \in \St_M$ 
+
+\begin{equation}
+\Supp{\pi^0(h,s)} \subseteq \A_{M}^0\AP{s}
+\end{equation}
+
+For any $n \in \Nats$, define $\EU_n^\star,\EU_n^0\in[0,1]$ by
+
+\begin{equation}
+\EU_n^{\star}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{M}{\pi_n^{\star}}}}{\R\AP{x_{nT+m}}}
+\end{equation}
+
+\begin{equation}
+\EU_n^{0}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{M}{\pi^{0}}}}{\R\AP{x_{nT+m}}}
+\end{equation}
+
+Then, for any $\gamma\in(0,1)$,
+
+\begin{equation}
+\EU^{\pi^\star}_M(\gamma)-\EU^{\pi^0}_M(\gamma) \leq \AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^\star_n-\EU^0_n} + \frac{2\Tn_M(\gamma)\gamma^T(1-\gamma)}{1-\gamma^T}
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+TBD
+\end{proof}
+
+TBD
 
 \section{Regret Bound in Terms of Mixing Time}
 \label{sec:mixing_time}
@@ -792,7 +842,12 @@ Consider a finite set $\St$ and some $\T: \St \K \St$. Then, there are $\rho\in[
 
 In other words, when we consider the time evolution of a Markov chain, the probability distribution over states converges to a convex linear combination of distributions that are periodic in time, with exponential convergence rate. $\zeta$ assigns to each initial state the asymptotic distribution over periods and $\xi$ assigns to each initial state and period the corresponding periodic distribution over states.
 
-Proposition~\ref{prp:mixing_time} is a rather standard application of Perron-Frobenius theory. For the sake of completeness, we spell out the proof in Appendix~\ref{sec:proof__prp__mixing_time}.
+Proposition~\ref{prp:mixing_time} is a rather standard application of Perron-Frobenius theory. For the sake of completeness, we spell out the proof.
+
+\begin{proof}[Proof of Proposition~\ref{prp:mixing_time}]
+
+TBD
+\end{proof}
 
 Denote $\rho_\T$ the minimal value of $\rho$ for which (\ref{eqn:prp__mixing_time_periodic}) and (\ref{eqn:prp__mixing_time_decaying}) can hold. We can now state the bound on $\Tn_M(\gamma)$.
 
@@ -829,15 +884,6 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Assume the s
 
 \end{corollary}
 \end{samepage}
-
-TBD
-
-\section{TBD}
-
-TBD
-
-\section{Proof of Proposition \ref{prp:mixing_time}}
-\label{sec:proof__prp__mixing_time}
 
 TBD
 
