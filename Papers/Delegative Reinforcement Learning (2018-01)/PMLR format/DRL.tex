@@ -542,7 +542,7 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
                 \Z$\leftarrow\AP{\sum_{k=0}^{N-1}\Z(k)}^{-1}\cdot\Z$\;\label{ln:first_normalization}
                 \For{$k=0$ \KwTo $N-1$}{\label{ln:discard_low_probability_begin}
                    \If{$\Z(k) < \eta$}{
-                        $\Z(k) \leftarrow 0$
+                        $\Z(k) \leftarrow 0$\label{ln:discard}
                    }
                 }
                 \Z$\leftarrow\AP{\sum_{k=0}^{N-1}\Z(k)}^{-1}\cdot\Z$\;\label{ln:second_normalization}
@@ -558,14 +558,14 @@ Lines~\ref{ln:discard_low_probability_begin}-\ref{ln:second_normalization} might
 
 \begin{algorithm}[h]
 
-\setcounter{AlgoLine}{22}
+\setcounter{AlgoLine}{32}
 
 $\beta\leftarrow$ observe
 
 \eIf{$\beta = \bot$}{
         \For{$k=0$ \KwTo $N-1$}{
                 \If{$\Z(k) < \eta$}{
-                        $\Z(k) \leftarrow 0$
+                        $\Z(k) \leftarrow 0$\label{ln:beta__discard}
                 }
         }
         \Z$\leftarrow\AP{\sum_{k=0}^{N-1}\Z(k)}^{-1}\cdot\Z$\;
@@ -689,8 +689,14 @@ Using once again the fact that the initial entropy is $\ln{N}$, this implies
 Combining inequalities (\ref{eqn:short_long_decomposition}), (\ref{eqn:sharp_vs_star}) and (\ref{eqn:shriek_vs_sharp}), we get
 
 \begin{equation}
-\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\IP}(\gamma) = O\AP{\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}+...}
+\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\IP}(\gamma) = O\AP{\frac{\bar{\Tn}}{T}+\sqrt{\frac{\AP{1-\gamma^T}\ln{N}}{\eta}}+\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}}
 \end{equation}
+
+Finally, we observe that, in the real setting (without the $\beta$ signal,) line~\ref{ln:discard} can be reached at most $N-1$ times before the first division by zero at line~\ref{ln:first_normalization}. Moreover, such division by zero will never happen unless the correct hypothesis is discarded. Each time line~\ref{ln:discard} is reached, the probability that $\Z$ assigns probability below $\eta$ to the correct hypothesis is at most $\eta$. Therefore, the probability that the correct hypothesis is discarded is at most $\eta(N-1)$. This allows us to bound the total variation distance between the real setting and imaginary setting by $O(\eta N)$, producing equation~(\ref{eqn:thm__regret_bound__regret}).
+
+% Explain appearance of \epsilon + 1/|A|...
+% Explain replacing 1-\gamma^T by (1-\gamma)T...
+% Explain equation (22) (the # of delegations bound)
 
 TBD
 
