@@ -443,13 +443,18 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\g
 \frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\pi^\dagger}(\gamma) \leq C\AP{\eta N+\frac{\bar{\Tn}}{T}+\sqrt{\frac{(1-\gamma) T \ln{N}}{\eta}}+\frac{(1-\gamma)T \ln{N}}{\eta^2}\AP{\frac{1}{\epsilon}+\Abs{\A}}}
 \end{equation}
 
+% Why 1/\eta instead of 1\eta+N ?
+% Add explanation that the claim is non-trivial even without (22)
+
 \begin{equation}
 \label{eqn:thm__regret_bound__delegations}
-\forall K \in \Nats: \frac{1}{N}\sum_{k=0}^{N-1}\Pa{\MP{L^k}{\pi^\dagger}}{\ND_{M^k} > K} \leq C\AP{\eta N +\frac{\ln{N}}{K}\AP{\frac{1}{\eta}+N}\AP{\frac{1}{\epsilon}+\Abs{\A}}}
+\forall K \in \Nats: \frac{1}{N}\sum_{k=0}^{N-1}\Pa{\MP{L^k}{\pi^\dagger}}{\ND_{M^k} > K} \leq C\AP{\eta N +\frac{\ln{N}}{K\eta}\AP{\frac{1}{\epsilon}+\Abs{\A}}}
 \end{equation}
 
 \end{theorem}
 \end{samepage}
+
+Observe that Theorem~\ref{thm:regret_bound} is non-trivial even without equation~\ref{eqn:thm__regret_bound__delegations}, since, Definition~\ref{def:sane} is s.t. a policy that always delegates might fail to achieve any meaningful regret bound.
 
 Note that $\eta$ and $T$ are external parameters of the policy that we can choose however we like. Taking appropriate values yields the following
 
@@ -552,7 +557,7 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
 
 \end{algorithm}
 
-The form of inequality~(\ref{eqn:thm__regret_bound__regret}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line~\ref{ln:second_normalization} of the algorithm. Line~\ref{ln:first_normalization} might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \Z becomes the uniform distribution again (but it doesn't matter.)
+The form of inequalities (\ref{eqn:thm__regret_bound__regret}) and (\ref{eqn:thm__regret_bound__delegations}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line~\ref{ln:second_normalization} of the algorithm. Line~\ref{ln:first_normalization} might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \Z becomes the uniform distribution again (but it doesn't matter.)
 
 Lines~\ref{ln:discard_low_probability_begin}-\ref{ln:second_normalization} might seem strange, but they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \Z to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines \ref{ln:discard_low_probability_begin}-\ref{ln:second_normalization} then correspond to conditioning \Z on the observation $\beta=\bot$. That is, in the imaginary setting these lines are replaced by the following:
 
@@ -651,8 +656,6 @@ We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sh
 
 The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over environments is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over environments, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over environments to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:?}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$.
 
-\Comment{This establishes inequality~(\ref{eqn:thm__regret_bound__delegations})\footnote{The reason inequality~(\ref{eqn:thm__regret_bound__delegations}) has $\frac{1}{\eta}+N$ instead of $\eta$ and $\frac{1}{\epsilon}+\Abs{\A}$ instead of $\epsilon$ is because we needed to assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{A}}$.}}
-
 Now we use this to bound $\Abs{\EU^\star_n-\EU^\sharp_n}$. We have
 
 \begin{equation}
@@ -692,13 +695,21 @@ Combining inequalities (\ref{eqn:short_long_decomposition}), (\ref{eqn:sharp_vs_
 \frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\IP}(\gamma) = O\AP{\frac{\bar{\Tn}}{T}+\sqrt{\frac{\AP{1-\gamma^T}\ln{N}}{\eta}}+\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}}
 \end{equation}
 
-Finally, we observe that, in the real setting (without the $\beta$ signal,) line~\ref{ln:discard} can be reached at most $N-1$ times before the first division by zero at line~\ref{ln:first_normalization}. Moreover, such division by zero will never happen unless the correct hypothesis is discarded. Each time line~\ref{ln:discard} is reached, the probability that $\Z$ assigns probability below $\eta$ to the correct hypothesis is at most $\eta$. Therefore, the probability that the correct hypothesis is discarded is at most $\eta(N-1)$. This allows us to bound the total variation distance between the real setting and imaginary setting by $O(\eta N)$, producing equation~(\ref{eqn:thm__regret_bound__regret}).
+Finally, we observe that, in the real setting (without the $\beta$ signal,) line~\ref{ln:discard} can be reached at most $N-1$ times before the first division by zero at line~\ref{ln:first_normalization}. Moreover, such division by zero will never happen unless the correct hypothesis is discarded. Each time line~\ref{ln:discard} is reached, the probability that $\Z$ assigns probability below $\eta$ to the correct hypothesis is at most $\eta$. Therefore, the probability that the correct hypothesis is discarded is at most $\eta(N-1)$. This allows us to bound the total variation distance between the real setting and imaginary setting by $O(\eta N)$, producing equation~(\ref{eqn:thm__regret_bound__regret})\footnote{The reason inequality~(\ref{eqn:thm__regret_bound__regret}) has $\frac{1}{\epsilon}+\Abs{\A}$ instead of $\epsilon$ is because we needed to assume w.l.o.g. that $\epsilon < \frac{1}{\Abs{A}}$. On the other hand, the assumption $\frac{1}{\eta}<N$ is justified by the appearance of the $\eta N$ term in the bound. Also, we can use $(1-\gamma)T$ instead of $1-\gamma^T$ because the form of the bound allows assuming w.l.o.g. that $(1-\gamma)T \ll 1$.}.
 
-% Explain appearance of \epsilon + 1/|A|...
-% Explain replacing 1-\gamma^T by (1-\gamma)T...
-% Explain equation (22) (the # of delegations bound)
+For reason we already outlined, we have
 
-TBD
+\begin{equation}
+\frac{1}{N}\sum_{k=0}^{N-1} \Ea{L^k\pi^{!k}}{\ND_{M^k}} = O\AP{\frac{\ln{N}}{\eta\epsilon}}
+\end{equation}
+
+Using Markov's inequality, we get
+
+\begin{equation}
+\forall K\in\Nats: \frac{1}{N}\sum_{k=0}^{N-1} \Pa{L^k\pi^{!k}}{\ND_{M^k}> K} = O\AP{\frac{\ln{N}}{K\eta\epsilon}}
+\end{equation}
+
+Using again the relationship we established between the real and imaginary settings, we get inequality~(\ref{eqn:thm__regret_bound__delegations})\footnote{The reason that the second term of the right hand side of inequality~(\ref{eqn:thm__regret_bound__delegations}) has $\frac{1}{\eta}+N$ instead of $\eta$ and $\frac{1}{\epsilon}+\Abs{\A}$ instead of $\epsilon$ is because we needed to assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{A}}$.}.
 
 % Acknowledgments---Will not appear in anonymized version
 \acks{We thank a bunch of people.}
