@@ -750,7 +750,7 @@ Consider an MDP $M$, $\gamma\in(0,1)$ and $\pi: \St_M^* \times \St_M \K \A_{M}$.
 
 \begin{proof}
 
-For the sake of encumbering the notation less, we will omit the argument $\gamma$ in functions that depend on it. We will also omit the the subscript $M$ and denote $s_0:=s_M$.
+For the sake of encumbering the notation less, we will omit the argument $\gamma$ in functions that depend on it. We will also omit the subscript $M$ and denote $s_0:=s_M$.
 
 For any $x \in \St^\omega$ s.t. $s_0 \sqsubset x$, it is easy to see that
 
@@ -759,15 +759,15 @@ $$\EU^{\star}=\V\AP{s_0}=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{n}}-\gamma\V\AP
 $$\Ut(x)=(1-\gamma)\sum_{n=0}^\infty \gamma^n \R\AP{x_{n}}$$
 
 \begin{align*}
-\EU^{\star} - \Ut(x)=\sum_{n=0}^\infty \gamma^n &\AP{\V\AP{x_{n}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}} \\ =\sum_{n=0}^\infty \gamma^n &\Big(\V\AP{x_{n}}-\Ea{\pi\AP{x_{:n},x_n}}{\Q\AP{x_{n},a}}
-\\ &+\Ea{\pi\AP{x_{:n},x_n}}{\Q\AP{x_{n},a}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}\Big)
+\EU^{\star} - \Ut(x)=\sum_{n=0}^\infty \gamma^n &\AP{\V\AP{x_{n}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}} \\ =\sum_{n=0}^\infty \gamma^n &\Big(\V\AP{x_{n}}-\Ea{\pi\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}
+\\ &+\Ea{\pi\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}\Big)
 \end{align*}
 
 Taking expected value over $x$ w.r.t. $M\pi$, we get
 
 \begin{align*}
-\Rg^{\pi}=\sum_{n=0}^\infty \gamma^n \Bigg(&\Ea{M\pi}{\V\AP{x_{n}}-\Ea{\pi\AP{x_{:n},x_n}}{\Q\AP{x_{n},a}}} \\ 
-+&\Ea{M\pi}{\Ea{\pi\AP{x_{:n},x_n}}{\Q\AP{x_{n},a}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}}\Bigg)
+\Rg^{\pi}=\sum_{n=0}^\infty \gamma^n \Bigg(&\Ea{M\pi}{\V\AP{x_{n}}-\Ea{\pi\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}} \\ 
++&\Ea{M\pi}{\Ea{\pi\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}}\Bigg)
 \end{align*}
 
 Equation~(\ref{eqn:def__vq__q}) implies that the second term vanishes, yielding the desired result.
@@ -811,9 +811,62 @@ Then,
 \end{proposition}
 \end{samepage}
 
+% Use the notation Q_{M\pi} to denote E[Q_M]...
+
 \begin{proof}
 
-TBD
+For the sake of encumbering the notation less, we will omit the argument $\gamma$ in functions that depend on it. We will also omit the subscript $M$ and denote $s_0:=s_M$.
+
+By Proposition~\ref{prp:regret_vq}, for any $l \in \Nats$
+
+$$\Rg^{\pi_l^\star} = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim M\pi_l^\star}{\V\AP{x_{n}}-\Ea{a\sim\pi^\star_l\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}}}$$
+
+$\pi^\star_l$ coincides with $\pi^\star$ after $lT$, therefore the corresponding terms on the right hand side vanish.
+
+$$\Rg^{\pi_l^\star} = \sum_{n=0}^{lT-1}{\gamma^n \Ea{x\sim M\pi^0}{\V\AP{x_{n}}-\Ea{a\sim\pi^0\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}}}$$
+
+Subtracting the equalities for $l+1$ and $l$, we get
+
+$$\EU^{\pi_{l}^\star} - \EU^{\pi_{l+1}^\star} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim M\pi^0}{\V\AP{x_{n}}-\Ea{a\sim\pi^0\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}}}$$
+
+$$(1-\gamma)\sum_{n=0}^\infty {\gamma^n\AP{\Ea{M\pi^\star_l}{\R\AP{x_{n}}}-\Ea{M\pi^\star_{l+1}}{\R\AP{x_{n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V\AP{x_{n}}-\Ea{\pi^0\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}}}$$
+
+$\pi^*_l$ and $\pi^*_{l+1}$ coincide until $lT$, therefore
+
+$$(1-\gamma)\sum_{n=lT}^\infty {\gamma^n\AP{\Ea{x \sim \mu\bowtie\pi^*_l}{r\AP{x_{:n}}}-\Ea{x \sim \mu\bowtie\pi^*_{l+1}}{r\AP{x_{:n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V\Big(x_{:n},\gamma\Big)-\Q\AP{x_{:n},x_n^\A,\gamma}}}$$
+
+Denote $\rho^*_l:=\mu\bowtie\pi^*_l$, $\rho^0:=\mu\bowtie\pi^0$. We also use the shorthand notations $r_n:=r\AP{x_{:n}}$, $\V_n(\gamma):=\V\AP{x_{:n},\gamma}$, $\Q_n(\gamma):=\Q\AP{x_{:n},x_n^\A,\gamma}$. Both $\pi^*_l$ and $\pi^*_{l+1}$ coincide with $\pi^*$ after $(l+1)T$, therefore
+
+$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + \gamma^{(l+1)T}\AP{\Ea{\rho^*_l}{\V_{(l+1)T}(\gamma)}-\Ea{\rho^0}{\V_{(l+1)T}(\gamma)}}= \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
+
+Denote $\V'(s,\gamma):=\frac{\D\V(s,\gamma)}{\D\gamma}$. By the mean value theorem, for each $s\in\St_M$ there is $\gamma^*\in(\gamma,1)$ s.t.
+
+$$\V(s,\gamma) = \V^0(s) - \V'(s,\gamma^*)\cdot(1-\gamma)$$
+
+$$\V^0(s) - \tau(1-\gamma) \leq \V(s,\gamma) \leq \V^0(s) + \tau(1-\gamma)$$
+
+It follows that
+
+$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + \gamma^{(l+1)T}\AP{\Ea{\rho^*_l-\rho^0}{\V^0_{(l+1)T}}+ 2\tau(1-\gamma)}\geq \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
+
+Here, an expected value w.r.t. the difference of two probability measures is understood to mean the corresponding difference of expected values.
+
+It is easy to see that assumption i implies that $\V_n^0$ is a submartingale for $\rho^0$ (whereas it is a martingale for $\mu\bowtie\pi^*$) and therefore
+
+$$\Ea{\rho^*_l-\rho^0}{\V^0_{(l+1)T}} \leq 0$$
+
+
+We get
+
+$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + 2\tau\gamma^{(l+1)T}(1-\gamma)\geq \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
+
+Summing over $l$, we get
+
+$$(1-\gamma) \sum_{l=0}^\infty \sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}\geq \sum_{n=0}^{\infty}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
+
+Applying Proposition B.1 to the right hand side
+
+$$(1-\gamma) \sum_{l=0}^\infty \sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T} \geq \EU_{\upsilon}^{\pi^*}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma)$$
 \end{proof}
 
 TBD
