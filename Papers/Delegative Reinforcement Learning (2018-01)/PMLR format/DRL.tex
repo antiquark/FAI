@@ -733,6 +733,18 @@ Using again the relationship we established between the real and imaginary setti
 
 \section{Proof Details}
 
+\begin{samepage}
+\begin{definition}
+
+Given an MDP $M$ and $\pi: \St_M^* \times \St_M \K \A_M$, we define $\Q_{M\pi}: \St_M^* \times \St_M \times [0,1) \rightarrow [0,1]$ by
+
+\begin{equation}
+\Q_{M\pi}(h,s,\gamma):=\Ea{a\sim\pi(h,s)}{\Q M(s,a,\gamma)}
+\end{equation}
+
+\end{definition}
+\end{samepage}
+
 Given a set $A$, $x\in A^\omega$ and $n\in\Nats$, the notation $x_{:n}$ will indicate the prefix of $x$ of length $n$. That is, $x_{:n} \in A^n$ and $x_{:n} \sqsubset x$.
 
 \begin{samepage}
@@ -742,7 +754,7 @@ Given a set $A$, $x\in A^\omega$ and $n\in\Nats$, the notation $x_{:n}$ will ind
 Consider an MDP $M$, $\gamma\in(0,1)$ and $\pi: \St_M^* \times \St_M \K \A_{M}$. Then,
 
 \begin{equation}
-\Rg_{M}^{\pi}(\gamma)=\sum_{n=0}^\infty {\gamma^n \Ea{x\sim M\pi}{\V_{M}\AP{x_n,\gamma}-\Ea{a\sim\pi\AP{x_{:n},x_n}}{\Q_{M}\AP{x_n,a,\gamma}}}}
+\Rg_{M}^{\pi}(\gamma)=\sum_{n=0}^\infty {\gamma^n \Ea{x\sim M\pi}{\V_{M}\AP{x_n,\gamma}-\Q_{M\pi}\AP{x_{:n+1},\gamma}}}
 \end{equation}
 
 \end{proposition}
@@ -759,15 +771,15 @@ $$\EU^{\star}=\V\AP{s_0}=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{n}}-\gamma\V\AP
 $$\Ut(x)=(1-\gamma)\sum_{n=0}^\infty \gamma^n \R\AP{x_{n}}$$
 
 \begin{align*}
-\EU^{\star} - \Ut(x)=\sum_{n=0}^\infty \gamma^n &\AP{\V\AP{x_{n}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}} \\ =\sum_{n=0}^\infty \gamma^n &\Big(\V\AP{x_{n}}-\Ea{\pi\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}
-\\ &+\Ea{\pi\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}\Big)
+\EU^{\star} - \Ut(x)=\sum_{n=0}^\infty \gamma^n &\AP{\V\AP{x_{n}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}} \\ =\sum_{n=0}^\infty \gamma^n &\Big(\V\AP{x_{n}}-\Q_\pi\AP{x_{:n+1}}
+\\ &+\Q_\pi\AP{x_{:n+1}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}\Big)
 \end{align*}
 
 Taking expected value over $x$ w.r.t. $M\pi$, we get
 
 \begin{align*}
-\Rg^{\pi}=\sum_{n=0}^\infty \gamma^n \Bigg(&\Ea{M\pi}{\V\AP{x_{n}}-\Ea{\pi\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}} \\ 
-+&\Ea{M\pi}{\Ea{\pi\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}}\Bigg)
+\Rg^{\pi}=\sum_{n=0}^\infty \gamma^n \Bigg(&\Ea{M\pi}{\V\AP{x_{n}}-\Q_\pi\AP{x_{:n+1}}} \\ 
++&\Ea{M\pi}{\Q_\pi\AP{x_{:n+1}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}}\Bigg)
 \end{align*}
 
 Equation~(\ref{eqn:def__vq__q}) implies that the second term vanishes, yielding the desired result.
@@ -811,33 +823,34 @@ Then,
 \end{proposition}
 \end{samepage}
 
-% Use the notation Q_{M\pi} to denote E[Q_M]...
-
 \begin{proof}
 
 For the sake of encumbering the notation less, we will omit the argument $\gamma$ in functions that depend on it. We will also omit the subscript $M$ and denote $s_0:=s_M$.
 
 By Proposition~\ref{prp:regret_vq}, for any $l \in \Nats$
 
-$$\Rg^{\pi_l^\star} = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim M\pi_l^\star}{\V\AP{x_{n}}-\Ea{a\sim\pi^\star_l\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}}}$$
+$$\Rg^{\pi_l^\star} = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim M\pi_l^\star}{\V\AP{x_{n}}-\Q_{\pi^\star_l}\AP{x_{:n+1}}}}$$
 
 $\pi^\star_l$ coincides with $\pi^\star$ after $lT$, therefore the corresponding terms on the right hand side vanish.
 
-$$\Rg^{\pi_l^\star} = \sum_{n=0}^{lT-1}{\gamma^n \Ea{x\sim M\pi^0}{\V\AP{x_{n}}-\Ea{a\sim\pi^0\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}}}$$
+$$\Rg^{\pi_l^\star} = \sum_{n=0}^{lT-1}{\gamma^n \Ea{x\sim M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}$$
 
 Subtracting the equalities for $l+1$ and $l$, we get
 
-$$\EU^{\pi_{l}^\star} - \EU^{\pi_{l+1}^\star} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim M\pi^0}{\V\AP{x_{n}}-\Ea{a\sim\pi^0\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}}}$$
+$$\EU^{\pi_{l}^\star} - \EU^{\pi_{l+1}^\star} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}$$
 
-$$(1-\gamma)\sum_{n=0}^\infty {\gamma^n\AP{\Ea{M\pi^\star_l}{\R\AP{x_{n}}}-\Ea{M\pi^\star_{l+1}}{\R\AP{x_{n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V\AP{x_{n}}-\Ea{\pi^0\AP{x_{:n+1}}}{\Q\AP{x_{n},a}}}}$$
+$$(1-\gamma)\sum_{n=0}^\infty {\gamma^n\AP{\Ea{M\pi^\star_l}{\R\AP{x_{n}}}-\Ea{M\pi^\star_{l+1}}{\R\AP{x_{n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}$$
 
-$\pi^*_l$ and $\pi^*_{l+1}$ coincide until $lT$, therefore
+$\pi^\star_l$ and $\pi^\star_{l+1}$ coincide until $lT$, therefore
 
-$$(1-\gamma)\sum_{n=lT}^\infty {\gamma^n\AP{\Ea{x \sim \mu\bowtie\pi^*_l}{r\AP{x_{:n}}}-\Ea{x \sim \mu\bowtie\pi^*_{l+1}}{r\AP{x_{:n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim\mu\bowtie\pi^0}{\V\Big(x_{:n},\gamma\Big)-\Q\AP{x_{:n},x_n^\A,\gamma}}}$$
+$$(1-\gamma)\sum_{n=lT}^\infty {\gamma^n\AP{\Ea{M\pi^\star_l}{\R\AP{x_{n}}}-\Ea{M\pi^\star_{l+1}}{\R\AP{x_{n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}$$
 
-Denote $\rho^*_l:=\mu\bowtie\pi^*_l$, $\rho^0:=\mu\bowtie\pi^0$. We also use the shorthand notations $r_n:=r\AP{x_{:n}}$, $\V_n(\gamma):=\V\AP{x_{:n},\gamma}$, $\Q_n(\gamma):=\Q\AP{x_{:n},x_n^\A,\gamma}$. Both $\pi^*_l$ and $\pi^*_{l+1}$ coincide with $\pi^*$ after $(l+1)T$, therefore
+\Comment{Denote $\rho^*_l:=\mu\bowtie\pi^*_l$, $\rho^0:=\mu\bowtie\pi^0$. We also use the shorthand notations $r_n:=r\AP{x_{:n}}$, $\V_n(\gamma):=\V\AP{x_{:n},\gamma}$, $\Q_n(\gamma):=\Q\AP{x_{:n},x_n^\A,\gamma}$.} Both $\pi^\star_l$ and $\pi^\star_{l+1}$ coincide with $\pi^\star$ after $(l+1)T$, therefore
 
-$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{\rho^*_l}{r_n}-\Ea{\rho^0}{r_n}}} + \gamma^{(l+1)T}\AP{\Ea{\rho^*_l}{\V_{(l+1)T}(\gamma)}-\Ea{\rho^0}{\V_{(l+1)T}(\gamma)}}= \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
+\begin{align*}
+(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{M\pi^\star_l}{\R\AP{x_{n}}}-\Ea{M\pi^\star_{l+1}}{\R\AP{x_{n}}}}} + \gamma^{(l+1)T}\AP{\Ea{M\pi^\star_l}{\V\AP{x_{(l+1)T}}}-\Ea{M\pi^0}{\V\AP{x_{(l+1)T}}}}\\ 
+= \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}
+\end{align*}
 
 Denote $\V'(s,\gamma):=\frac{\D\V(s,\gamma)}{\D\gamma}$. By the mean value theorem, for each $s\in\St_M$ there is $\gamma^*\in(\gamma,1)$ s.t.
 
