@@ -215,14 +215,17 @@ Given $M$ an MDP and some $\pi: \St_M \rightarrow \A_M$, we define $\T_{M\pi}: \
 
 \begin{samepage}
 \begin{definition}
+\label{def:vq}
 
 Given $M$ an MDP, we define $\V_M : \St_M \times [0,1) \rightarrow [0,1]$ and $\Q_M: \St_M \times \A_M \times [0,1) \rightarrow [0,1]$ by
 
 \begin{equation}
+\label{eqn:def__vq__v}
 \V_M(s,\gamma):=(1-\gamma) \max_{\pi: \St_M \rightarrow \A_M} \sum_{n=0}^\infty \gamma^n \Ea{\T_{M\pi}^n(s)}{\R_M}
 \end{equation}
 
 \begin{equation}
+\label{eqn:def__vq__q}
 \Q_M(s,a,\gamma):=(1-\gamma)\R_M(s)+\gamma\Ea{t \sim \T_{M\pi}(s)}{\V_M(t,\gamma)}
 \end{equation}
 
@@ -756,15 +759,18 @@ $$\EU^{\star}=\V\AP{s_0}=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{n}}-\gamma\V\AP
 $$\Ut(x)=(1-\gamma)\sum_{n=0}^\infty \gamma^n \R\AP{x_{n}}$$
 
 \begin{align*}
-\EU^{\star} - \Ut(x)&=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{n}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}} \\ 
-&=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{:n}}-\Q\AP{x_{:n},x_n^\A}+\Q\AP{x_{:n},x_n^\A}-(1-\gamma)r\AP{x_{:n}}-\gamma\V\AP{x_{:n+1}}}
+\EU^{\star} - \Ut(x)=\sum_{n=0}^\infty \gamma^n &\AP{\V\AP{x_{n}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}} \\ =\sum_{n=0}^\infty \gamma^n &\Big(\V\AP{x_{n}}-\Ea{\pi\AP{x_{:n},x_n}}{\Q\AP{x_{n},a}}
+\\ &+\Ea{\pi\AP{x_{:n},x_n}}{\Q\AP{x_{n},a}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}\Big)
 \end{align*}
 
-Taking expected value over $x$, we get
+Taking expected value over $x$ w.r.t. $M\pi$, we get
 
-$$\EU_{\upsilon}^{\pi^* S} - \EU_{\upsilon}^{\pi^0}=\sum_{n=0}^\infty \gamma^n \AP{\Ea{\mu\bowtie\pi^0}{\V\AP{x_{:n}}-\Q\AP{x_{:n},x_n^\A}}+\Ea{\mu\bowtie\pi^0}{\Q\AP{x_{:n},x_n^\A}-(1-\gamma)r\AP{x_{:n}}-\gamma\V\AP{x_{:n+1}}}}$$
+\begin{align*}
+\Rg^{\pi}=\sum_{n=0}^\infty \gamma^n \Bigg(&\Ea{M\pi}{\V\AP{x_{n}}-\Ea{\pi\AP{x_{:n},x_n}}{\Q\AP{x_{n},a}}} \\ 
++&\Ea{M\pi}{\Ea{\pi\AP{x_{:n},x_n}}{\Q\AP{x_{n},a}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}}\Bigg)
+\end{align*}
 
-It is easy to see that the second term vanishes, yielding the desired result.
+Equation~(\ref{eqn:def__vq__q}) implies that the second term vanishes, yielding the desired result.
 \end{proof}
 
 \begin{samepage}
