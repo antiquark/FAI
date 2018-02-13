@@ -730,6 +730,8 @@ Using again the relationship we established between the real and imaginary setti
 
 \section{Proof Details}
 
+Given a set $A$, $x\in A^\omega$ and $n\in\Nats$, the notation $x_{:n}$ will indicate the prefix of $x$ of length $n$. That is, $x_{:n} \in A^n$ and $x_{:n} \sqsubset x$.
+
 \begin{samepage}
 \begin{proposition}
 \label{prp:regret_vq}
@@ -737,7 +739,7 @@ Using again the relationship we established between the real and imaginary setti
 Consider an MDP $M$, $\gamma\in(0,1)$ and $\pi: \St_M^* \times \St_M \K \A_{M}$. Then,
 
 \begin{equation}
-\Rg_{M}^{\pi}(\gamma)=\sum_{n=0}^\infty {\gamma^n \Ea{x\sim M\pi}{\V_{M}\AP{x_{:n},\gamma}-\Q_{M}\AP{x_{:n},x_n^\A??,\gamma}}}
+\Rg_{M}^{\pi}(\gamma)=\sum_{n=0}^\infty {\gamma^n \Ea{x\sim M\pi}{\V_{M}\AP{x_n,\gamma}-\Ea{a\sim\pi\AP{x_{:n},x_n}}{\Q_{M}\AP{x_n,a,\gamma}}}}
 \end{equation}
 
 \end{proposition}
@@ -745,7 +747,24 @@ Consider an MDP $M$, $\gamma\in(0,1)$ and $\pi: \St_M^* \times \St_M \K \A_{M}$.
 
 \begin{proof}
 
-TBD
+For the sake of encumbering the notation less, we will omit the argument $\gamma$ in functions that depend on it. We will also omit the the subscript $M$ and denote $s_0:=s_M$.
+
+For any $x \in \St^\omega$ s.t. $s_0 \sqsubset x$, it is easy to see that
+
+$$\EU^{\star}=\V\AP{s_0}=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{n}}-\gamma\V\AP{x_{n+1}}}$$
+
+$$\Ut(x)=(1-\gamma)\sum_{n=0}^\infty \gamma^n \R\AP{x_{n}}$$
+
+\begin{align*}
+\EU^{\star} - \Ut(x)&=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{n}}-(1-\gamma)\R\AP{x_{n}}-\gamma\V\AP{x_{n+1}}} \\ 
+&=\sum_{n=0}^\infty \gamma^n \AP{\V\AP{x_{:n}}-\Q\AP{x_{:n},x_n^\A}+\Q\AP{x_{:n},x_n^\A}-(1-\gamma)r\AP{x_{:n}}-\gamma\V\AP{x_{:n+1}}}
+\end{align*}
+
+Taking expected value over $x$, we get
+
+$$\EU_{\upsilon}^{\pi^* S} - \EU_{\upsilon}^{\pi^0}=\sum_{n=0}^\infty \gamma^n \AP{\Ea{\mu\bowtie\pi^0}{\V\AP{x_{:n}}-\Q\AP{x_{:n},x_n^\A}}+\Ea{\mu\bowtie\pi^0}{\Q\AP{x_{:n},x_n^\A}-(1-\gamma)r\AP{x_{:n}}-\gamma\V\AP{x_{:n+1}}}}$$
+
+It is easy to see that the second term vanishes, yielding the desired result.
 \end{proof}
 
 \begin{samepage}
