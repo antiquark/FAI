@@ -665,7 +665,7 @@ We also define $\EU^{\sharp k}_n\in[0,1]$ by
 
 We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
 
-The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over hypotheses is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over hypotheses, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over hypotheses to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:?}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$.
+The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over hypotheses is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over hypotheses, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over hypotheses to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:delegation_information}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$.
 
 Now we use this to bound $\Abs{\EU^\star_n-\EU^\sharp_n}$. We have
 
@@ -797,8 +797,8 @@ Assume that
 
 \begin{enumerate}[i.]
 
-\item For any $s \in \St_M$, $\Supp{\pi^\star(s)} \subseteq \A_M^\star(s)$.
-\item For any $h \in \FH_{M\pi^0}$ and $s \in \St_M$, $\Supp{\pi^0(h,s)} \subseteq \A_{M}^0\AP{s}$.
+\item\label{con:prp__short_long__star} For any $s \in \St_M$, $\Supp{\pi^\star(s)} \subseteq \A_M^\star(s)$.
+\item\label{con:prp__short_long__zero} For any $h \in \FH_{M\pi^0}$ and $s \in \St_M$, $\Supp{\pi^0(h,s)} \subseteq \A_{M}^0\AP{s}$.
 
 \end{enumerate}
 
@@ -807,10 +807,12 @@ Assume that
 For any $n \in \Nats$, define $\EU_n^\star,\EU_n^0\in[0,1]$ by
 
 \begin{equation}
+\label{eqn:prp__short_long__eu_star}
 \EU_n^{\star}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{M}{\pi_n^{\star}}}}{\R\AP{x_{nT+m}}}
 \end{equation}
 
 \begin{equation}
+\label{eqn:prp__short_long__eu_zero}
 \EU_n^{0}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{M}{\pi^{0}}}}{\R\AP{x_{nT+m}}}
 \end{equation}
 
@@ -825,61 +827,81 @@ Then,
 
 \begin{proof}
 
-For the sake of encumbering the notation less, we will omit the argument $\gamma$ in functions that depend on it. We will also omit the subscript $M$ and denote $s_0:=s_M$.
+For the sake of encumbering the notation less, we will use the shorthands $\R_n:=\R_M\AP{x_n}$, $\V_n:=\V_M\AP{x_n,\gamma}$, $\V^0_n:=\V^0_M\AP{x_n}$, $\Q_{\pi n}:=\Q_{M\pi}\AP{x_{:n+1},\gamma}$ and $\Tn:=\Tn_M(\gamma)$.
 
 By Proposition~\ref{prp:regret_vq}, for any $l \in \Nats$
 
-$$\Rg^{\pi_l^\star} = \sum_{n=0}^\infty{\gamma^n \Ea{x\sim M\pi_l^\star}{\V\AP{x_{n}}-\Q_{\pi^\star_l}\AP{x_{:n+1}}}}$$
+$$\Rg_M^{\pi_l^\star} = \sum_{n=0}^\infty{\gamma^n \Ea{M\pi_l^\star}{\V_n-\Q_{\pi^\star_l n}}}$$
 
 $\pi^\star_l$ coincides with $\pi^\star$ after $lT$, therefore the corresponding terms on the right hand side vanish.
 
-$$\Rg^{\pi_l^\star} = \sum_{n=0}^{lT-1}{\gamma^n \Ea{x\sim M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}$$
+$$\Rg_M^{\pi_l^\star} = \sum_{n=0}^{lT-1}{\gamma^n \Ea{M\pi^0}{\V_n-\Q_{\pi^0 n}}}$$
 
 Subtracting the equalities for $l+1$ and $l$, we get
 
-$$\EU^{\pi_{l}^\star} - \EU^{\pi_{l+1}^\star} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{x\sim M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}$$
+$$\EU_M^{\pi_{l}^\star} - \EU_M^{\pi_{l+1}^\star} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V_n-\Q_{\pi^0n}}}$$
 
-$$(1-\gamma)\sum_{n=0}^\infty {\gamma^n\AP{\Ea{M\pi^\star_l}{\R\AP{x_{n}}}-\Ea{M\pi^\star_{l+1}}{\R\AP{x_{n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}$$
+$$(1-\gamma)\sum_{n=0}^\infty {\gamma^n\AP{\Ea{M\pi^\star_l}{\R_n}-\Ea{M\pi^\star_{l+1}}{\R_n}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V_n-\Q_{\pi^0n}}}$$
 
 $\pi^\star_l$ and $\pi^\star_{l+1}$ coincide until $lT$, therefore
 
-$$(1-\gamma)\sum_{n=lT}^\infty {\gamma^n\AP{\Ea{M\pi^\star_l}{\R\AP{x_{n}}}-\Ea{M\pi^\star_{l+1}}{\R\AP{x_{n}}}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}$$
+$$(1-\gamma)\sum_{n=lT}^\infty {\gamma^n\AP{\Ea{M\pi^\star_l}{\R_n}-\Ea{M\pi^\star_{l+1}}{\R_n}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V_n-\Q_{\pi^0n}}}$$
 
 \Comment{Denote $\rho^*_l:=\mu\bowtie\pi^*_l$, $\rho^0:=\mu\bowtie\pi^0$. We also use the shorthand notations $r_n:=r\AP{x_{:n}}$, $\V_n(\gamma):=\V\AP{x_{:n},\gamma}$, $\Q_n(\gamma):=\Q\AP{x_{:n},x_n^\A,\gamma}$.} Both $\pi^\star_l$ and $\pi^\star_{l+1}$ coincide with $\pi^\star$ after $(l+1)T$, therefore
 
 \begin{align*}
-(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{M\pi^\star_l}{\R\AP{x_{n}}}-\Ea{M\pi^\star_{l+1}}{\R\AP{x_{n}}}}} + \gamma^{(l+1)T}\AP{\Ea{M\pi^\star_l}{\V\AP{x_{(l+1)T}}}-\Ea{M\pi^0}{\V\AP{x_{(l+1)T}}}}\\ 
-= \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V\AP{x_{n}}-\Q_{\pi^0}\AP{x_{:n+1}}}}
+&(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{M\pi^\star_l}{\R_n}-\Ea{M\pi^0}{\R_n}}}\\ 
+&+ \gamma^{(l+1)T}\AP{\Ea{M\pi^\star_l}{\V_{(l+1)T}}-\Ea{M\pi^0}{\V_{(l+1)T}}} = \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V_n-\Q_{\pi^0n}}}
 \end{align*}
 
-Denote $\V'(s,\gamma):=\frac{\D\V(s,\gamma)}{\D\gamma}$. By the mean value theorem, for each $s\in\St_M$ there is $\gamma^*\in(\gamma,1)$ s.t.
+By the mean value theorem, for each $s\in\St_M$ we have
 
-$$\V(s,\gamma) = \V^0(s) - \V'(s,\gamma^*)\cdot(1-\gamma)$$
-
-$$\V^0(s) - \tau(1-\gamma) \leq \V(s,\gamma) \leq \V^0(s) + \tau(1-\gamma)$$
+$$\V_M^0(s) - \Tn \cdot (1-\gamma) \leq \V_M(s,\gamma) \leq \V_M^0(s) + \Tn \cdot (1-\gamma)$$
 
 It follows that
 
-$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + \gamma^{(l+1)T}\AP{\Ea{\rho^*_l-\rho^0}{\V^0_{(l+1)T}}+ 2\tau(1-\gamma)}\geq \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
+\begin{align*}
+&(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{M\pi^\star_l}{\R_n}-\Ea{M\pi^0}{\R_n}}}\\ 
+&+ \gamma^{(l+1)T}\AP{\Ea{M\pi^\star_l}{\V^0_{(l+1)T}}-\Ea{M\pi^0}{\V^0_{(l+1)T}}+2\Tn\cdot(1-\gamma)} \geq \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V_n-\Q_{\pi^0n}}}
+\end{align*}
 
-Here, an expected value w.r.t. the difference of two probability measures is understood to mean the corresponding difference of expected values.
+\Comment{Here, an expected value w.r.t. the difference of two probability measures is understood to mean the corresponding difference of expected values.}
 
-It is easy to see that assumption i implies that $\V_n^0$ is a submartingale for $\rho^0$ (whereas it is a martingale for $\mu\bowtie\pi^*$) and therefore
+It is easy to see that assumptions \ref{con:prp__short_long__star} and \ref{con:prp__short_long__zero} imply that $\V_n^0$ is a martingale for $M\pi^\star$ and $M\pi^0$ and therefore
 
-$$\Ea{\rho^*_l-\rho^0}{\V^0_{(l+1)T}} \leq 0$$
-
+$$\Ea{M\pi^\star_l}{\V^0_{(l+1)T}}=\Ea{M\pi^0}{\V^0_{(l+1)T}}=\V^0\AP{s_M}$$
 
 We get
 
-$$(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + 2\tau\gamma^{(l+1)T}(1-\gamma)\geq \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
+\begin{equation*}
+(1-\gamma)\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{M\pi^\star_l}{\R_n}-\Ea{M\pi^0}{\R_n}}}+ 2\Tn\gamma^{(l+1)T}(1-\gamma) \geq \sum_{n=lT}^{(l+1)T-1}{\gamma^n \Ea{M\pi^0}{\V_n-\Q_{\pi^0n}}} 
+\end{equation*}
 
 Summing over $l$, we get
 
-$$(1-\gamma) \sum_{l=0}^\infty \sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}\geq \sum_{n=0}^{\infty}{\gamma^n \Ea{\rho^0}{\V_n(\gamma)-\Q_n(\gamma)}}$$
+\[(1-\gamma)\sum_{l=0}^\infty\sum_{n=lT}^{(l+1)T-1} {\gamma^n\AP{\Ea{M\pi^\star_l}{\R_n}-\Ea{M\pi^0}{\R_n}}}+ 2\Tn\cdot\frac{\gamma^T(1-\gamma)}{1-\gamma^T} \geq \sum_{n=0}^{\infty}{\gamma^n \Ea{M\pi^0}{\V_n-\Q_{\pi^0n}}} \]
 
-Applying Proposition B.1 to the right hand side
+Applying Proposition~\ref{prp:regret_vq} to the right hand side and using equations (\ref{eqn:prp__short_long__eu_star}) and (\ref{eqn:prp__short_long__eu_zero}) we get the desired result.
+\end{proof}
 
-$$(1-\gamma) \sum_{l=0}^\infty \sum_{n=lT}^{(l+1)T-1} {\gamma^n\Ea{\rho^*_l - \rho^0}{r_n}} + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T} \geq \EU_{\upsilon}^{\pi^*}(\gamma) - \EU_{\upsilon}^{\pi^0}(\gamma)$$
+\begin{samepage}
+\begin{proposition}
+\label{prp:delegation_information}
+
+Consider $N \in \Nats$, $\A$ a finite set, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\eta \in (0,1)$, $B \subseteq \A$, $\zeta \in \Delta[N]$ and $\sigma: [N] \K \A$. Suppose that for every $a \in \A$
+
+$$\Pa{k \sim \zeta}{\sigma(a \mid k) > 0 \land \AP{a \in B \lor \forall b \in B: \sigma(b \mid k) \leq \epsilon}} \leq 1 - \eta$$
+
+Then
+
+$$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \eta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)$$
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+TBD
 \end{proof}
 
 TBD
