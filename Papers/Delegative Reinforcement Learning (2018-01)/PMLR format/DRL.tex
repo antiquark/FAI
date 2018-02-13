@@ -732,17 +732,40 @@ Using again the relationship we established between the real and imaginary setti
 
 \begin{samepage}
 \begin{proposition}
+\label{prp:regret_vq}
+
+Consider an MDP $M$, $\gamma\in(0,1)$ and $\pi: \St_M^* \times \St_M \K \A_{M}$. Then,
+
+\begin{equation}
+\Rg_{M}^{\pi}(\gamma)=\sum_{n=0}^\infty {\gamma^n \Ea{x\sim M\pi}{\V_{M}\AP{x_{:n},\gamma}-\Q_{M}\AP{x_{:n},x_n^\A??,\gamma}}}
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+TBD
+\end{proof}
+
+\begin{samepage}
+\begin{proposition}
 \label{prp:short_long}
 
-Consider some $T\in\Nats^+$, an MDP $M$, some $\pi^\star: \St_M \K \A_M$ and $\pi^0: \St_M^* \times \St_M \K \A_M$. For any $n \in \Nats$, define $\pi^\star_n: \St_M^* \times \St_M \K \A_M$ by
+Consider an MDP $M$, $\gamma\in\AP{\gamma_M,1}$, $T\in\Nats^+$, $\pi^\star: \St_M \K \A_M$ and $\pi^0: \St_M^* \times \St_M \K \A_M$. For any $n \in \Nats$, define $\pi^\star_n: \St_M^* \times \St_M \K \A_M$ by
 
 $$\pi^\star_n(h,s):=\begin{cases} \pi^0(h,s) \text{ if } \Abs{h} < nT \\ \pi^\star\AP{s} \text{ otherwise} \end{cases}$$
 
-Assume that for any $h \in \FH_{M\pi^0}$ and $s \in \St_M$ 
+Assume that 
 
-\begin{equation}
-\Supp{\pi^0(h,s)} \subseteq \A_{M}^0\AP{s}
-\end{equation}
+\begin{enumerate}[i.]
+
+\item For any $s \in \St_M$, $\Supp{\pi^\star(s)} \subseteq \A_M^\star(s)$.
+\item For any $h \in \FH_{M\pi^0}$ and $s \in \St_M$, $\Supp{\pi^0(h,s)} \subseteq \A_{M}^0\AP{s}$.
+
+\end{enumerate}
+
+
 
 For any $n \in \Nats$, define $\EU_n^\star,\EU_n^0\in[0,1]$ by
 
@@ -754,10 +777,10 @@ For any $n \in \Nats$, define $\EU_n^\star,\EU_n^0\in[0,1]$ by
 \EU_n^{0}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{M}{\pi^{0}}}}{\R\AP{x_{nT+m}}}
 \end{equation}
 
-Then, for any $\gamma\in(0,1)$,
+Then,
 
 \begin{equation}
-\EU^{\pi^\star}_M(\gamma)-\EU^{\pi^0}_M(\gamma) \leq \AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^\star_n-\EU^0_n} + \frac{2\Tn_M(\gamma)\gamma^T(1-\gamma)}{1-\gamma^T}
+\Rg^{\pi^0}_M(\gamma) \leq \AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^\star_n-\EU^0_n} + 2\Tn_M(\gamma)\cdot\frac{\gamma^T(1-\gamma)}{1-\gamma^T}
 \end{equation}
 
 \end{proposition}
