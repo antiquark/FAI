@@ -907,10 +907,6 @@ Then
 
 \begin{proof}
 
-We have
-
-$$\Ia{}{K;X} = \Ea{}{\KL{X_*(P \mid K)}{X_* P}}$$
-
 Define $q \in (0,1)$ by
 
 $$q:=\frac{1}{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}}$$
@@ -926,22 +922,59 @@ $$\KL{X_*(P \mid K = k)}{X_* P} \geq \min\AP{\KL{0}{q\epsilon},\KL{\epsilon}{q\e
 We have
 
 \begin{align*}
-\KL{0}{q\epsilon} = \ln{\frac{1}{1-q\epsilon}}=\ln{\frac{1}{1-\frac{\epsilon}{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}}}}&=\ln{\frac{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}}{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}-\epsilon}}\\ &=\ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}} 
+\KL{0}{q\epsilon} &= \ln{\frac{1}{1-q\epsilon}}\\
+&=\ln{\frac{1}{1-\frac{\epsilon}{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}}}}\\
+&=\ln{\frac{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}}{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}-\epsilon}}\\ &=\ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}} 
 \end{align*}
 
-$$$$
-
-$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{\frac{\epsilon}{q\epsilon }}+(1-\epsilon)\ln{\frac{1-\epsilon}{1-q\epsilon}}= \epsilon \ln{\frac{1}{q}}+(1-\epsilon)\ln{(1-\epsilon)} - \epsilon \ln{\frac{1}{1-q\epsilon}}+\ln{\frac{1}{1-q\epsilon}}$$
-
-$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{\frac{1-q\epsilon}{q}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}=\epsilon \ln{\AP{\frac{1}{q}-\epsilon}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}$$
-
-$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{(1-\epsilon)^{-(1-\epsilon)/\epsilon}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}} = \ln{(1-\epsilon)^{-(1-\epsilon)}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}=\ln{\frac{1}{1-q\epsilon}}$$
-
-$$\KL{\epsilon}{q\epsilon} = \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$
+\begin{align*}
+\KL{\epsilon}{q\epsilon} &= \epsilon \ln{\frac{\epsilon}{q\epsilon }}+(1-\epsilon)\ln{\frac{1-\epsilon}{1-q\epsilon}}\\
+&= \epsilon \ln{\frac{1}{q}}+(1-\epsilon)\ln{(1-\epsilon)} +\ln{\frac{1}{1-q\epsilon}}- \epsilon \ln{\frac{1}{1-q\epsilon}}\\
+&= \epsilon \ln{\frac{1-q\epsilon}{q}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}\\
+&= \epsilon \ln{\AP{\frac{1}{q}-\epsilon}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}\\
+&= \epsilon \ln{(1-\epsilon)^{1-\frac{1}{\epsilon}}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}\\
+&= \ln{(1-\epsilon)^{\epsilon-1}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}\\
+&=\ln{\frac{1}{1-q\epsilon}}\\
+&=\ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}}
+\end{align*}
 
 It follows that
 
-$$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \Pa{k \sim \zeta}{a^* \not \in \A_k} \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}} \geq \delta  \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$
+\begin{align*}
+\Ia{}{K;X} &= \Ea{}{\KL{X_*(P \mid K)}{X_* P}} \\ 
+&\geq \Pa{}{a_q \not \in \A_K} \ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}} \\
+&\geq \eta \ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}}
+\end{align*}
+\end{proof}
+
+In our notation, equalities between random variables are understood to hold almost surely.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:delegation}
+
+Consider  a non-empty finite set $\A$, $N \in \Nats$, $\epsilon\in\AP{0,\Abs{\A}^{-1}}$ and $\eta\in(0,1)$. Consider also  a probability space $(\Omega,P)$ and random variables $K: \Omega \rightarrow [N]$, $\AC{X_n,\Psi_n: \Omega \rightarrow \A}_{n \in \Nats}$ and $\AC{Z_n: \Omega \rightarrow \Delta[N]}_{n \in \Nats}$. Assume that for any $n\in\Nats$ and $k\in[N]$
+
+\begin{equation}
+\CP{}{K = k}{Z_n,X_0,X_1 \dots X_{n-1}}=Z_n(k)
+\end{equation}
+
+% Random variable: K (env)
+% Stochastic processes: advisor actions, experimental actions, knowledge state
+% Assumption: knowledge calibrated given advisor actions
+% Definition: agent action as a function of knowledge state and experimental action
+% Claim: expected number of delegating agent actions...
+% Claim: all agent actions are safe... (tautology?)
+% Claim: if agent does non-experimental action then experimental is unsafe... (tautology?)
+
+TBD
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+TBD
 \end{proof}
 
 TBD
