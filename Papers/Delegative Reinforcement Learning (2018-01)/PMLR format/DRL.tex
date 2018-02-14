@@ -665,7 +665,7 @@ We also define $\EU^{\sharp k}_n\in[0,1]$ by
 
 We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
 
-The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over hypotheses is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over hypotheses, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over hypotheses to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:delegation_information}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$.
+The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over hypotheses is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over hypotheses, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over hypotheses to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:delegation_information}\footnote{We think of $K$ as the (unknown) correct hypothesis, $X$ as the advisor action and $a^*$ as $\pi^{\star\J}(\S)$.}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$.
 
 Now we use this to bound $\Abs{\EU^\star_n-\EU^\sharp_n}$. We have
 
@@ -884,24 +884,64 @@ Summing over $l$, we get
 Applying Proposition~\ref{prp:regret_vq} to the right hand side and using equations (\ref{eqn:prp__short_long__eu_star}) and (\ref{eqn:prp__short_long__eu_zero}) we get the desired result.
 \end{proof}
 
+Given $(\Omega,P\in\Delta\Omega)$ a probability space, $A$ a finite set and $X,Y: \Omega \rightarrow A$ random variables, $\Ia{}{X;Y}$ denotes the mutual information between $X$ and $Y$. $X_*P\in\Delta A$ denotes the pushforward of $P$ by $X$, i.e. the probability distribution of $X$. $P \mid X: \Omega \rightarrow \Delta\Omega$ denotes the conditional probability measure ($P$ conditioned on the value of $X$.) Given $\mu,\nu \in \Delta A$, $\KL{\mu}{\nu}$ denotes the Kullback-Leibler divergence of $\mu$ from $\nu$.
+
 \begin{samepage}
 \begin{proposition}
 \label{prp:delegation_information}
 
-Consider $N \in \Nats$, $\A$ a finite set, $\epsilon \in (0,\frac{1}{\Abs{\A}})$, $\eta \in (0,1)$, $B \subseteq \A$, $\zeta \in \Delta[N]$ and $\sigma: [N] \K \A$. Suppose that for every $a \in \A$
+Consider $\A$ a finite set, $a^*\in\A$, $N \in \Nats$, $\epsilon \in \AP{0,{\Abs{\A}}^{-1}}$, and $\eta \in (0,1)$. Consider also $(\Omega,P)$ a probability space and random variables $K: \Omega \rightarrow [N]$ and $X: \Omega \rightarrow \A$. Suppose that for every $a \in \A$
 
-$$\Pa{k \sim \zeta}{\sigma(a \mid k) > 0 \land \AP{a \in B \lor \forall b \in B: \sigma(b \mid k) \leq \epsilon}} \leq 1 - \eta$$
+\begin{equation}
+\Pa{}{\CP{}{X=a}{K} > 0 \land \AP{a = a^* \lor \CP{}{X = a^*}{K} \leq \epsilon}} \leq 1 - \eta
+\end{equation}
 
 Then
 
-$$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \eta \ln\left(1 + \epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}\right)$$
+\begin{equation}
+\Ia{}{K;X} \geq \eta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}\right)
+\end{equation}
 
 \end{proposition}
 \end{samepage}
 
 \begin{proof}
 
-TBD
+We have
+
+$$\Ia{}{K;X} = \Ea{}{\KL{X_*(P \mid K)}{X_* P}}$$
+
+Define $q \in (0,1)$ by
+
+$$q:=\frac{1}{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}}$$
+
+Let $a_q \in \A$ be s.t. $\Pa{}{X=a_q} > q\epsilon$ and either $a_q = a^*$ or $\Pa{}{X=a^*} \leq q\epsilon$. For every $k \in \Supp{K_*P}$, denote
+
+$$\A_k := \ACM{a \in \A}{\CP{}{X=a}{K=k} > 0 \land \AP{a = a^* \lor \CP{}{X=a^*}{K=k} \leq \epsilon}}$$
+
+If $a_q \not\in \A_k$ then either $\CP{}{X=a_q}{K=k}=0$ or both $\Pa{}{X=a^*}\leq q\epsilon$ and\\ $\CP{}{X=a^*}{K=k} > \epsilon$. In this case, conditioning by $K = k$ causes either the probability of $X = a_q$ to go down from at least $q\epsilon$ to $0$ or the probability of $X = a^*$ to go up from at most $q\epsilon$ to at least $\epsilon$. We get
+
+$$\KL{X_*(P \mid K = k)}{X_* P} \geq \min\AP{\KL{0}{q\epsilon},\KL{\epsilon}{q\epsilon}}$$
+
+We have
+
+\begin{align*}
+\KL{0}{q\epsilon} = \ln{\frac{1}{1-q\epsilon}}=\ln{\frac{1}{1-\frac{\epsilon}{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}}}}&=\ln{\frac{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}}{\epsilon+(1-\epsilon)^{1-\frac{1}{\epsilon}}-\epsilon}}\\ &=\ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}} 
+\end{align*}
+
+$$$$
+
+$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{\frac{\epsilon}{q\epsilon }}+(1-\epsilon)\ln{\frac{1-\epsilon}{1-q\epsilon}}= \epsilon \ln{\frac{1}{q}}+(1-\epsilon)\ln{(1-\epsilon)} - \epsilon \ln{\frac{1}{1-q\epsilon}}+\ln{\frac{1}{1-q\epsilon}}$$
+
+$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{\frac{1-q\epsilon}{q}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}=\epsilon \ln{\AP{\frac{1}{q}-\epsilon}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}$$
+
+$$\KL{\epsilon}{q\epsilon} = \epsilon \ln{(1-\epsilon)^{-(1-\epsilon)/\epsilon}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}} = \ln{(1-\epsilon)^{-(1-\epsilon)}}+\ln{(1-\epsilon)^{1-\epsilon}} +\ln{\frac{1}{1-q\epsilon}}=\ln{\frac{1}{1-q\epsilon}}$$
+
+$$\KL{\epsilon}{q\epsilon} = \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$
+
+It follows that
+
+$$\Ia{(k,a)\sim\zeta\ltimes\sigma}{k;a} \geq \Pa{k \sim \zeta}{a^* \not \in \A_k} \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}} \geq \delta  \ln{\AP{1+\epsilon(1-\epsilon)^{(1-\epsilon)/\epsilon}}}$$
 \end{proof}
 
 TBD
