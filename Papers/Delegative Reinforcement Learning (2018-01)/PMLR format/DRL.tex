@@ -48,11 +48,12 @@
 \newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
 \newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
 \newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\Var}{\operatorname{Var}}
 \newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\CI}[3]{\underset{#1}{\operatorname{I}}\ABM{#2}{#3}}
 \newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
 \newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
 \newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
-\newcommand{\Var}{\operatorname{Var}}
 
 % operators that require parentheses
 \newcommand{\En}{\operatorname{H}}
@@ -509,11 +510,11 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
 \SetKwData{Z}{belief}
 \SetKwData{J}{hypothesis}
 \SetKwData{S}{state}
+\SetKwData{RA}{agentAction}
 
 \begin{algorithm}[H]
 
 \SetKwData{NS}{newState}
-\SetKwData{RA}{agentAction}
 \SetKwData{AA}{advisorAction}
 \SetKwData{GA}{isSafeAction}
 
@@ -666,7 +667,7 @@ We also define $\EU^{\sharp k}_n\in[0,1]$ by
 
 We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
 
-The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over hypotheses is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over hypotheses, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over hypotheses to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:delegation_information}\footnote{We think of $K$ as the (unknown) correct hypothesis, $X$ as the advisor action and $a^*$ as $\pi^{\star\J}(\S)$.}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$.
+The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over hypotheses is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over hypotheses, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over hypotheses to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:delegation_information}\footnote{We think of $K$ as the (unknown) correct hypothesis, $X$ as the advisor action and $a^*$ as $\pi^{\star\J}(\S)$.}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$ (see Proposition~\ref{prp:delegation}\footnote{We think of $\Theta_n$ as the information used to compute \Z, (including \S,) $\Psi_n$ as $\pi^{\star\J}(\S)$ when $\Z(\J)>0$ and $\bot$ otherwise, $Y_n$ as $\bot$ when $\RA=\bot$ and $\top$ otherwise, and $Z_n$ as \Z.}.)
 
 Now we use this to bound $\Abs{\EU^\star_n-\EU^\sharp_n}$. We have
 
@@ -885,7 +886,7 @@ Summing over $l$, we get
 Applying Proposition~\ref{prp:regret_vq} to the right hand side and using equations (\ref{eqn:prp__short_long__eu_star}) and (\ref{eqn:prp__short_long__eu_zero}) we get the desired result.
 \end{proof}
 
-Given $(\Omega,P\in\Delta\Omega)$ a probability space, $A$ a finite set and $X,Y: \Omega \rightarrow A$ random variables, $\Ia{}{X;Y}$ denotes the mutual information between $X$ and $Y$. $X_*P\in\Delta A$ denotes the pushforward of $P$ by $X$, i.e. the probability distribution of $X$. $P \mid X: \Omega \rightarrow \Delta\Omega$ denotes the conditional probability measure ($P$ conditioned on the value of $X$.) Given $\mu,\nu \in \Delta A$, $\KL{\mu}{\nu}$ denotes the Kullback-Leibler divergence of $\mu$ from $\nu$.
+Given $(\Omega,P\in\Delta\Omega)$ a probability space, $A,B$ finite sets and $X: \Omega \rightarrow A$, $Y: \Omega \rightarrow B$ random variables, $\Ia{}{X;Y}$ denotes the mutual information between $X$ and $Y$. Given $C$ another finite set and $Z: \Omega \rightarrow C$ another random variable, $\CI{}{X;Y}{Z}: \Omega \rightarrow \Reals$ will denote the random variable obtained by first conditioning on $Z$ and then taking the mutual information between $X$ and $Y$, \emph{not} the expected value of this quantity, as sometimes used. $X_*P\in\Delta A$ denotes the pushforward of $P$ by $X$, i.e. the probability distribution of $X$. $P \mid X: \Omega \rightarrow \Delta\Omega$ denotes the conditional probability measure ($P$ conditioned on the value of $X$.) Given $\mu,\nu \in \Delta A$, $\KL{\mu}{\nu}$ denotes the Kullback-Leibler divergence of $\mu$ from $\nu$.
 
 \begin{samepage}
 \begin{proposition}
@@ -918,7 +919,7 @@ $$\A_k := \ACM{a \in \A}{\CP{}{X=a}{K=k} > 0 \land \AP{a = a^* \lor \CP{}{X=a^*}
 
 If $a_q \not\in \A_k$ then either $\CP{}{X=a_q}{K=k}=0$ or both $\Pa{}{X=a^*}\leq q\epsilon$ and\\ $\CP{}{X=a^*}{K=k} > \epsilon$. In this case, conditioning by $K = k$ causes either the probability of $X = a_q$ to go down from at least $q\epsilon$ to $0$ or the probability of $X = a^*$ to go up from at most $q\epsilon$ to at least $\epsilon$. We get
 
-$$\KL{X_*(P \mid K = k)}{X_* P} \geq \min\AP{\KL{0}{q\epsilon},\KL{\epsilon}{q\epsilon}}$$
+$$\KL{X_*(P \mid K = k)}{X_*P} \geq \min\AP{\KL{0}{q\epsilon},\KL{\epsilon}{q\epsilon}}$$
 
 We have
 
@@ -942,7 +943,7 @@ We have
 It follows that
 
 \begin{align*}
-\Ia{}{K;X} &= \Ea{}{\KL{X_*(P \mid K)}{X_* P}} \\ 
+\Ia{}{K;X} &= \Ea{}{\KL{X_*(P \mid K)}{X_*P}} \\ 
 &\geq \Pa{}{a_q \not \in \A_K} \ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}} \\
 &\geq \eta \ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}}
 \end{align*}
@@ -956,21 +957,14 @@ In our notation, propositions about random variables are understood to hold almo
 
 Consider non-empty finite sets $\A$ and $\St$, $N \in \Nats^+$, $\epsilon\in\AP{0,\Abs{\A}^{-1}}$, $\eta\in(0,1)$ and\\ $\AC{\Ad^k: \St \K \A}_{k\in[N]}$. Consider also  a probability space $(\Omega,P)$ and random variables $K: \Omega \rightarrow [N]$, $\AC{\Theta_n: \Omega \rightarrow \St}_{n\in\Nats}$, $\AC{X_n,\Psi_n: \Omega \rightarrow \A \sqcup \{\bot\}}_{n \in \Nats}$, $\AC{Y_n: \Omega \rightarrow \{\top,\bot\}}_{n\in\Nats}$ and\\ $\AC{Z_n: \Omega \rightarrow \Delta[N]}_{n \in \Nats}$. Assume that for any $n\in\Nats$, $k\in[N]$ and $a\in\A$
 
-\begin{equation}
-\CP{}{X_n = a}{K,\Theta_n}=\CP{}{X_n\ne\bot}{K,\Theta_n} \Ad^K\APM{a}{\Theta_n}
-\end{equation}
+\begin{enumerate}[i.]
 
-\begin{equation}
-Y_n = \top \iff \exists a \in \A \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\Theta_n} > 0 \land \AP{a=\Psi_n \lor \Ad^k\APM{\Psi_n}{\Theta_n} \leq \epsilon}
-\end{equation}
+\item\label{con:prp__delegation__x} $\CP{}{X_n = a}{K,\Theta_n}=\CP{}{X_n\ne\bot}{K,\Theta_n} \Ad^K\APM{a}{\Theta_n}$
+\item\label{con:prp__delegation__y} $Y_n = \top \iff \exists a \in \A \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\Theta_n} > 0 \land \AP{a=\Psi_n \lor \Ad^k\APM{\Psi_n}{\Theta_n} \leq \epsilon}$
+\item\label{con:prp__delegation__z} $Z_n(k)=\CP{}{K = k}{\Theta_0,\Theta_1\dots\Theta_{n},X_0,X_1 \dots X_{n-1}}$
+\item\label{con:prp__delegation__eta} $Z_n(k) \geq \eta$
 
-\begin{equation}
-\CP{}{K = k}{Z_n,X_0,X_1 \dots X_{n-1}}=Z_n(k)
-\end{equation}
-
-\begin{equation}
-Z_n(k) \geq \eta
-\end{equation}
+\end{enumerate}
 
 Then,
 
@@ -983,7 +977,27 @@ Then,
 
 \begin{proof}
 
-TBD
+\begin{align*}
+\ln{N} &\geq \Ea{}{\Ena{Z_0}} \\ 
+&\geq \sum_{n=0}^\infty{\Ea{}{\Ena{Z_n}-\Ena{Z_{n+1}}}}\\
+&= \sum_{n=0}^\infty{\Ea{}{\CE{}{\Ena{Z_n}-\Ena{Z_{n+1}}}{\Theta_n,\Psi_n,Z_n}}}\\
+\end{align*}
+
+Using assumption~\ref{con:prp__delegation__z}, we get
+
+\begin{align*}
+\ln{N} &\geq \sum_{n=0}^\infty\Ea{}{\CI{}{K;\Theta_{n+1},X_n}{\Theta_n,\Psi_n,Z_n}} \\ 
+&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n}} \\
+&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n};Y_n=\bot}
+\end{align*}
+
+Using assumption... for every $n\in\Nats$... $a\in\A$
+
+\[\CP{}{\CP{}{X_n=a}{K} > 0 \land \AP{a = \Psi_n \lor \CP{}{X_n = \Psi_n}{K} \leq \epsilon}}{Y_n=\bot,\Theta_n,\Psi_n,Z_n}??\]
+
+...Applying Proposition~\ref{prp:delegation_information} we conclude
+
+Lorem ipsum
 \end{proof}
 
 TBD
