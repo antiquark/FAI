@@ -113,6 +113,7 @@
 \newcommand{\ND}{\operatorname{D}}
 \newcommand{\Rev}{\beta}
 \newcommand{\RC}{\Xi}
+\newcommand{\F}{\mathcal{F}}
 
 \newcommand{\IP}{\pi^{!k}}
 
@@ -890,7 +891,7 @@ Given $(\Omega,P\in\Delta\Omega)$ a probability space, $A$ a finite set and $X,Y
 \begin{proposition}
 \label{prp:delegation_information}
 
-Consider $\A$ a finite set, $a^*\in\A$, $N \in \Nats$, $\epsilon \in \AP{0,{\Abs{\A}}^{-1}}$, and $\eta \in (0,1)$. Consider also $(\Omega,P)$ a probability space and random variables $K: \Omega \rightarrow [N]$ and $X: \Omega \rightarrow \A$. Suppose that for every $a \in \A$
+Consider $\A$ a finite set, $a^*\in\A$, $N \in \Nats^+$, $\epsilon \in \AP{0,{\Abs{\A}}^{-1}}$, and $\eta \in (0,1)$. Consider also $(\Omega,P)$ a probability space and random variables $K: \Omega \rightarrow [N]$ and $X: \Omega \rightarrow \A$. Suppose that for every $a \in \A$
 
 \begin{equation}
 \Pa{}{\CP{}{X=a}{K} > 0 \land \AP{a = a^* \lor \CP{}{X = a^*}{K} \leq \epsilon}} \leq 1 - \eta
@@ -953,10 +954,20 @@ In our notation, equalities between random variables are understood to hold almo
 \begin{proposition}
 \label{prp:delegation}
 
-Consider  a non-empty finite set $\A$, $N \in \Nats$, $\epsilon\in\AP{0,\Abs{\A}^{-1}}$ and $\eta\in(0,1)$. Consider also  a probability space $(\Omega,P)$ and random variables $K: \Omega \rightarrow [N]$, $\AC{X_n,\Psi_n: \Omega \rightarrow \A}_{n \in \Nats}$ and $\AC{Z_n: \Omega \rightarrow \Delta[N]}_{n \in \Nats}$. Assume that for any $n\in\Nats$ and $k\in[N]$
+Consider  a non-empty finite set $\A$, $N \in \Nats^+$, $\epsilon\in\AP{0,\Abs{\A}^{-1}}$ and $\eta\in(0,1)$. Consider also  a probability space $(\Omega,P)$, a filtration $\AC{\F_n \subseteq \PS{\Omega}}_{n\in\Nats}$ of $\Omega$, an $\F_0$-measurable mapping $K: \Omega \rightarrow [N]$ and stochastic processes $\AC{X_n,\Psi_n: \Omega \rightarrow \A \sqcup \{\bot\}}_{n \in \Nats}$ and $\AC{Z_n: \Omega \rightarrow \Delta[N]}_{n \in \Nats}$ adapted to $\F$. Assume that for any $n\in\Nats$ and $k\in[N]$
 
 \begin{equation}
 \CP{}{K = k}{Z_n,X_0,X_1 \dots X_{n-1}}=Z_n(k)
+\end{equation}
+
+\begin{equation}
+Z_n(k) \geq \eta
+\end{equation}
+
+Then,
+
+\begin{equation}
+\Ea{}{\Abs{\ACM{n\in\Nats}{\forall a \in \A \exists k \in \Supp{Z_n}: \CP{}{X_n=a}{K=k...}=0 \lor ... \land ...}}} \leq \frac{\ln{N}}{\eta\ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}}}
 \end{equation}
 
 % Random variable: K (env)
