@@ -107,7 +107,7 @@
 \newcommand{\AdP}[2]{\AB{#1}#2}
 
 \newcommand{\Tn}{\mathfrak{t}}
-\newcommand{\Ad}{\alpha}
+\newcommand{\Ad}{\upsilon}
 \newcommand{\FH}{\mathcal{H}}
 \newcommand{\UC}{\mathcal{U}}
 \newcommand{\ND}{\operatorname{D}}
@@ -357,7 +357,7 @@ So, a policy is $\epsilon$-sane when it doesn't enter traps (destroys long-term 
 \Comment{\begin{samepage}
 \begin{example}
 
-When $\St_M=\A_M$ and $\forall a,b \in \A_M: \T_M\APM{a}{b,a}=1$ (i.e. the state equals the last action taken,) we get a \emph{multi-armed bandit\footnote{Usually a multi-armed bandit is considered to correspond to a 1 state MDP, but that wouldn't work for us since we allow $\R_M$ to be a function of the state only.}.} In this case, for any $a\in\A_M$, $\A_M^0(a) = \A_M$ and $\A_M^\star(a)=\Argmax{}{\R_M}$. In particular, condition~\ref{con:def__sane__safe} of Definition~\ref{def:sane} is always true. Condition~~\ref{con:def__sane__bold} holds even for $\alpha(a)$ the uniform distribution, as long as $\epsilon < \Abs{\A_M}^{-1}$.
+When $\St_M=\A_M$ and $\forall a,b \in \A_M: \T_M\APM{a}{b,a}=1$ (i.e. the state equals the last action taken,) we get a \emph{multi-armed bandit\footnote{Usually a multi-armed bandit is considered to correspond to a 1 state MDP, but that wouldn't work for us since we allow $\R_M$ to be a function of the state only.}.} In this case, for any $a\in\A_M$, $\A_M^0(a) = \A_M$ and $\A_M^\star(a)=\Argmax{}{\R_M}$. In particular, condition~\ref{con:def__sane__safe} of Definition~\ref{def:sane} is always true. Condition~~\ref{con:def__sane__bold} holds even for $\Ad(a)$ the uniform distribution, as long as $\epsilon < \Abs{\A_M}^{-1}$.
 
 \end{example}
 \end{samepage}
@@ -421,7 +421,7 @@ Given any MDP $M$, we define $\ND_M: \AP{\St_M \times \AP{\A_M \sqcup \{\bot\}}}
 \ND_M(x) := \Abs{\ACM{n\in\Nats}{x_n\in\St_M\times\A_M}} 
 \end{equation}
 
-We think of $\ND_M(x)$ as the number of delegations in an infinite history $x$ of the MDP $\MA{M}{\Ad}$ for some $\alpha$.
+We think of $\ND_M(x)$ as the number of delegations in an infinite history $x$ of the MDP $\MA{M}{\Ad}$ for some $\Ad$.
 
 \end{definition}
 \end{samepage}
@@ -500,7 +500,7 @@ The meaning of the factor $\bar{\Tn}+1$ in equation~(\ref{eqn:crl__balanced_regr
 
 We start by giving an explicit description of an algorithm that computes the policy $\pi^\dagger$.
 
-By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\alpha^k\APM{\pi^k(s)}{s} > \epsilon$. The algorithm is then a variant of Thompson sampling in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^{\star k}$ but delegating when we are uncertain the action is safe. Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution. If the currently sampled hypothesis is discarded, the algorithm continues to select safe actions until the end of the time interval, delegating whenever no action is certainly safe.\pagebreak
+By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\Ad^k\APM{\pi^k(s)}{s} > \epsilon$. The algorithm is then a variant of Thompson sampling in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^{\star k}$ but delegating when we are uncertain the action is safe. Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution. If the currently sampled hypothesis is discarded, the algorithm continues to select safe actions until the end of the time interval, delegating whenever no action is certainly safe.\pagebreak
 
 \RestyleAlgo{boxed}
 \LinesNumbered
@@ -603,7 +603,7 @@ Observe that, in the imaginary setting, the policy $\IP: \St_\square^* \times \S
 
 This is thanks to the condition at line~\ref{ln:delegate_cond} and property~\ref{con:def__sane__safe} of Definition~\ref{def:sane}.
 
-Combining $\pi^{?k}$ with the advisor $\alpha^k$ we get the policy $\AdP{\Ad^k}{\IP}: \St^*\times\St\K\A$ which has satisfies (using property~\ref{con:def__sane__safe} of Definition~\ref{def:sane} again)
+Combining $\pi^{?k}$ with the advisor $\Ad^k$ we get the policy $\AdP{\Ad^k}{\IP}: \St^*\times\St\K\A$ which has satisfies (using property~\ref{con:def__sane__safe} of Definition~\ref{def:sane} again)
 
 \begin{equation}
 \label{eqn:imaginary_safety}
@@ -948,13 +948,21 @@ It follows that
 \end{align*}
 \end{proof}
 
-In our notation, equalities between random variables are understood to hold almost surely.
+In our notation, propositions about random variables are understood to hold almost surely.
 
 \begin{samepage}
 \begin{proposition}
 \label{prp:delegation}
 
-Consider  a non-empty finite set $\A$, $N \in \Nats^+$, $\epsilon\in\AP{0,\Abs{\A}^{-1}}$ and $\eta\in(0,1)$. Consider also  a probability space $(\Omega,P)$, a filtration $\AC{\F_n \subseteq \PS{\Omega}}_{n\in\Nats}$ of $\Omega$, an $\F_0$-measurable mapping $K: \Omega \rightarrow [N]$ and stochastic processes $\AC{X_n,\Psi_n: \Omega \rightarrow \A \sqcup \{\bot\}}_{n \in \Nats}$ and $\AC{Z_n: \Omega \rightarrow \Delta[N]}_{n \in \Nats}$ adapted to $\F$. Assume that for any $n\in\Nats$ and $k\in[N]$
+Consider non-empty finite sets $\A$ and $\St$, $N \in \Nats^+$, $\epsilon\in\AP{0,\Abs{\A}^{-1}}$, $\eta\in(0,1)$ and\\ $\AC{\Ad^k: \St \K \A}_{k\in[N]}$. Consider also  a probability space $(\Omega,P)$ and random variables $K: \Omega \rightarrow [N]$, $\AC{\Theta_n: \Omega \rightarrow \St}_{n\in\Nats}$, $\AC{X_n,\Psi_n: \Omega \rightarrow \A \sqcup \{\bot\}}_{n \in \Nats}$, $\AC{Y_n: \Omega \rightarrow \{\top,\bot\}}_{n\in\Nats}$ and\\ $\AC{Z_n: \Omega \rightarrow \Delta[N]}_{n \in \Nats}$. Assume that for any $n\in\Nats$, $k\in[N]$ and $a\in\A$
+
+\begin{equation}
+\CP{}{X_n = a}{K,\Theta_n}=\CP{}{X_n\ne\bot}{K,\Theta_n} \Ad^K\APM{a}{\Theta_n}
+\end{equation}
+
+\begin{equation}
+Y_n = \top \iff \exists a \in \A \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\Theta_n} > 0 \land \AP{a=\Psi_n \lor \Ad^k\APM{\Psi_n}{\Theta_n} \leq \epsilon}
+\end{equation}
 
 \begin{equation}
 \CP{}{K = k}{Z_n,X_0,X_1 \dots X_{n-1}}=Z_n(k)
@@ -967,18 +975,8 @@ Z_n(k) \geq \eta
 Then,
 
 \begin{equation}
-\Ea{}{\Abs{\ACM{n\in\Nats}{\forall a \in \A \exists k \in \Supp{Z_n}: \CP{}{X_n=a}{K=k...}=0 \lor ... \land ...}}} \leq \frac{\ln{N}}{\eta\ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}}}
+\Ea{}{\Abs{\ACM{n\in\Nats}{Y_n=\bot}}} \leq \frac{\ln{N}}{\eta\ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}}}
 \end{equation}
-
-% Random variable: K (env)
-% Stochastic processes: advisor actions, experimental actions, knowledge state
-% Assumption: knowledge calibrated given advisor actions
-% Definition: agent action as a function of knowledge state and experimental action
-% Claim: expected number of delegating agent actions...
-% Claim: all agent actions are safe... (tautology?)
-% Claim: if agent does non-experimental action then experimental is unsafe... (tautology?)
-
-TBD
 
 \end{proposition}
 \end{samepage}
