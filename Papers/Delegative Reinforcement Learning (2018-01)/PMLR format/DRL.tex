@@ -1091,49 +1091,52 @@ Using assumption~\ref{con:prp__thompson__eta}
 Using assumptions \ref{con:prp__thompson__distribution} and \ref{con:prp__thompson__independent} again, we get the desired result
 \end{proof}
 
+Given a proposition $\boldsymbol{\pi}$, the notation $[[\boldsymbol{\pi}]] \in \{0,1\}$ will mean 0 when the $\boldsymbol{\pi}$ is false and 1 when $\boldsymbol{\pi}$ is true.
+
 \begin{proof}[Proof of Theorem~\ref{thm:regret_bound}]
 
-Fix $\eta\in\left(0,N^{-1}\right)$ and $T \in \Nats^+$. Denote $\nu^k:=\bar{\mu}^k\left[\sigma^k S^k\right]$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space\Comment{ and $\{\F_n \subseteq 2^\Omega\}_{n \in \Nats \sqcup \{-1\}}$ a filtration of $\Omega$}. Let $K: \Omega \rightarrow [N]$ be \Comment{measurable w.r.t. $\F_{-1}$}a random variable and the following be stochastic processes\Comment{ adapted to $\F$}
+The form of inequalities (\ref{eqn:thm__regret_bound__regret}) and (\ref{eqn:thm__regret_bound__delegations}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$.
 
-$$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \Delta[N]$$
+\Comment{To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. }We are going to construct a probability space $(\Omega,P)$ and the random variables $K: \Omega \rightarrow [N]$ and for each $n\in\Nats$
 
-$$\J_n: \Omega \rightarrow [N]$$
+\begin{align*}
+Z_n,\tilde{Z}_n: \Omega &\rightarrow \Delta[N]\\ 
+J_n: \Omega &\rightarrow [N]\\
+\Psi_n: \Omega &\rightarrow \A_\square\\
+A_n: \Omega &\rightarrow \A_\square\\
+X_n: \Omega &\rightarrow \A_\square\\
+\Theta_n: \Omega &\rightarrow \St
+\end{align*}
 
-$$\Psi_n: \Omega \rightarrow \A$$
+\Comment{We also define $H_n: \Omega \rightarrow \St^n$ by
 
-$$A_n: \Omega \rightarrow ?$$
+$$H_n:= \AP{\Theta_0,\Theta_1 \dots \Theta_{n-1}}$$}
 
-$$\Theta_n: \Omega \rightarrow ?$$
+By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\Ad^k\APM{\pi^k(s)}{s} > \epsilon$.
 
-We also define $A\Theta_{:n}: \Omega \rightarrow ?$ by
+We postulate that $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$, $s\in\St$ and $a\in\A_\square$, denoting $n = lT+m$
 
-$$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
+$$\tilde{Z}_0(k)=\frac{1}{N}$$
 
-(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $?$.) Let $?$ and $?^{!k}$ be as in Proposition B.1 (the form of the bound we are proving allows assuming w.l.o.g. that $\epsilon < \frac{1}{\Abs{\A}}$). By condition iii of Definition 2, there is $\pi^k : ? \rightarrow \A$ s.t. for any $h \in ?$, if $S^k(h) \in \UC^k$ then
+$$Z_{n}(k) = \frac{\tilde{Z}_{n}(k)[[\tilde{Z}_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{Z}_{n}(j)[[\tilde{Z}_{n}(j) \geq \eta]]}$$
 
-$$\sigma^k\AP{\pi^k(h) \mid h} > \epsilon$$
+$$\CP{}{J_{l} = k}{Z_{lT}} = Z_{lT}\left(k\right)$$
 
-$$\pi^k(h) \in \A_k^\omega\AP{S^k(h)}$$
+$$\Psi_{n} = \pi^{\star J_l}\AP{\Theta_n}$$
 
-We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in ?$, denoting $n = lT+m$
+$$\Theta_0 = s_0$$
 
-$$\tilde{\Z}_0(k)\equiv\frac{1}{N}$$
+$$\CP{}{\Theta_{n+1} = s,X_{n}=a}{\Theta_{n},A_n} = \T_{L^K}\APM{s,a}{\Theta_n,A_n}$$
 
-$$\Z_{n}(k) = \frac{\tilde{\Z}_{n}(k)[[\tilde{\Z}_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}_{n}(j)[[\tilde{\Z}_{n}(j) \geq \eta]]}$$
+$$A_n = \begin{cases} \Psi_n \text{ if } \forall k \in \Supp{Z_n}: \Ad^k\APM{\Psi_n}{\Theta_n} > 0 \text{ and } Z_n\AP{J_n} > 0 \\ \text{some } a\in\A \text{ s.t. } \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\Theta_n} > 0 \text{ if such exists and } Z_n\AP{J_n}=0\\\bot \text{ otherwise} \end{cases}$$
 
-$$\Pr\left[\J_{l} = k \mid Z_{lT}\right] = \Z_{lT}\left(k\right)$$
-
-$$\Psi_{n} = \pi^{J_l}\AP{A\Theta_{:n}}$$
-
-$$\Pr\left[\Theta_{n} = o \mid A\Theta_{:n}\right] = \nu^K\left(o \mid A\Theta_{:n}\right)$$
-
-$$A_n = ?\left(A\Theta_{:n}, \Psi_n\right)$$
-
-$$\tilde{\Z}_{n+1}(k)\sum_{j = 0}^{N-1} \Z_n(j) [[A_n = ?^{!j}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^j(\Theta_n \mid A\Theta_{:n}A_n)=\Z_{n}(k) [[A_n = ?^{!k}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)$$
+$$\tilde{Z}_{n+1}(k)\sum_{j = 0}^{N-1} Z_n(j) \T_{L^j}\APM{\Theta_{n+1},X_n}{\Theta_n,A_n}=Z_{n}(k) \T_{L^k}\APM{\Theta_{n+1},X_n}{\Theta_n,A_n}$$
 
 Note that the last equation has the form of a Bayesian update which is allowed to be arbitrary when update is on "impossible" information.
 
-We now construct the $?$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in ?$ s.t. $\Pr\left[A\Theta_{:n}=h\right] > 0$ and $a \in ?$
+This probability space can be constructed using standard arguments from the Kolmogorov extension theorem.
+
+We now define $\pi^\dagger$ s.t. for any $n \in \Nats$, $h \in ?$ s.t. $\Pr\left[A\Theta_{:n}=h\right] > 0$ and $a \in ?$
 
 $$\pi^*(a \mid h):=\Pr\left[A_n = a \mid A\Theta_{:n} = h\right]$$
 
