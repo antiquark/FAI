@@ -1034,6 +1034,44 @@ Combining inequality~(\ref{eqn:prp__delegation__proof__entropy}) with inequality
 Noticing that $\Ea{}{\Abs{\ACM{n\in\Nats}{X_n\ne\bot}}}=\sum_{n=0}^{\infty}\Pa{}{X_n\ne\bot}$, we get the desired result.
 \end{proof}
 
+Given a measurable space $X$ and $\mu,\nu\in\Delta X$, $\Dtva{\mu,\nu}$ will denote the total variation distance between $\mu$ and $\nu$.
+
+\begin{samepage}
+\begin{proposition}
+\label{prp:thompson}
+
+Consider a probability space $(\Omega, P)$, $N \in \Nats$, a finite set $R \subseteq [0,1]$ and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $J: \Omega \rightarrow [N]$. Assume that $K_*P = J_*P = \zeta \in \Delta[N]$ and $\Ia{}{K;J} = 0$. Then
+
+\begin{equation}
+\Ia{}{K;J,U} \geq 2 \AP{\min_{i \in [N]} {\zeta(i)}} \AP{\CE{}{U}{J = K}-\Ea{}{U}}^2
+\end{equation}
+
+\end{proposition}
+\end{samepage}
+
+\begin{proof}
+
+Using the chain rule for mutual information, we have
+
+\begin{align*}
+\Ia{}{K;J,U} &= \Ia{}{K;J} + \Ea{}{\CI{}{K;U}{J}} \\ 
+&= \Ea{}{\CI{}{K;U}{J}} \\
+&= \Ea{}{\KL{U_*\left(P \mid K,J\right)}{\ U_*\left(P \mid J\right)}}
+\end{align*}
+
+Using Pinsker's inequality
+
+$$\Ia{}{K;J,U} \geq 2\Ea{}{\Dtva{U_*\left(P \mid K,J\right),U_*\left(P \mid J\right)}^2} \geq 2\Ea{}{\AP{\Ea{}{U \mid K,J}-\Ea{}{U \mid J}}^2}$$
+
+Denote $U_{kj} := \Ea{}{U \mid K = k, J = j}$. We get
+
+$$\Ia{}{K;J,U} \geq 2\Ea{(k,j)\sim\zeta\times\zeta}{\AP{U_{kj}-\Ea{k'\sim\zeta}{U_{k'j}}}^2} \geq 2\Ea{(k,j)\sim\zeta\times\zeta}{[[k=j]]\AP{U_{kj}-\Ea{k'\sim\zeta}{U_{k'j}}}^2}$$
+
+$$\Ia{}{K;J,U} \geq 2\Ea{j \sim \zeta}{\zeta(j)\AP{U_{jj}-\Ea{k\sim\zeta}{U_{kj}}}^2} \geq 2 \AP{\min_{j \in [N]} \zeta(j)}\Ea{j \sim \zeta}{\AP{U_{jj}-\Ea{k\sim\zeta}{U_{kj}}}^2}$$
+
+$$\Ia{}{K;J,U}\geq 2 \AP{\min_{j \in [N]} \zeta(j)} \AP{\Ea{j \sim \zeta}{U_{jj}}-\Ea{(k,j)\sim\zeta\times\zeta}{U_{kj}}}^2=2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\E{}\left[U \mid J = K\right]-\E{}\left[U\right]\right)^2$$
+\end{proof}
+
 TBD
 
 \end{document}
