@@ -1040,10 +1040,20 @@ Given a measurable space $X$ and $\mu,\nu\in\Delta X$, $\Dtva{\mu,\nu}$ will den
 \begin{proposition}
 \label{prp:thompson}
 
-Consider a probability space $(\Omega, P)$, $N \in \Nats$, a finite set $R \subseteq [0,1]$ and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $J: \Omega \rightarrow [N]$. Assume that $K_*P = J_*P = \zeta \in \Delta[N]$ and $\Ia{}{K;J} = 0$. Then
+Consider a probability space $(\Omega, P)$, $N \in \Nats$, $\eta\in(0,1)$, $\zeta\in\Delta[N]$, a finite set $R \subseteq [0,1]$ and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $J: \Omega \rightarrow [N]$. Assume that
+
+\begin{enumerate}[i.]
+
+\item\label{con:prp__thompson__distribution}$K_*P = J_*P = \zeta$
+\item\label{con:prp__thompson__independent}$\Ia{}{K;J} = 0$
+\item\label{con:prp__thompson__eta}$\forall k \in \Supp{\zeta}: \zeta(k) \geq \eta$
+
+\end{enumerate}
+
+Then,
 
 \begin{equation}
-\Ia{}{K;J,U} \geq 2 \AP{\min_{i \in [N]} {\zeta(i)}} \AP{\CE{}{U}{J = K}-\Ea{}{U}}^2
+\Ia{}{K;J,U} \geq 2 \eta \AP{\CE{}{U}{J = K}-\Ea{}{U}}^2???
 \end{equation}
 
 \end{proposition}
@@ -1051,25 +1061,34 @@ Consider a probability space $(\Omega, P)$, $N \in \Nats$, a finite set $R \subs
 
 \begin{proof}
 
-Using the chain rule for mutual information, we have
+Using the chain rule for mutual information
 
-\begin{align*}
-\Ia{}{K;J,U} &= \Ia{}{K;J} + \Ea{}{\CI{}{K;U}{J}} \\ 
-&= \Ea{}{\CI{}{K;U}{J}} \\
-&= \Ea{}{\KL{U_*\left(P \mid K,J\right)}{\ U_*\left(P \mid J\right)}}
-\end{align*}
+\[\Ia{}{K;J,U} = \Ia{}{K;J} + \Ea{}{\CI{}{K;U}{J}}\]
+
+Using assumption~\ref{con:prp__thompson__independent}
+
+\[\Ia{}{K;J,U} = \Ea{}{\CI{}{K;U}{J}}
+= \Ea{}{\KL{U_*\left(P \mid K,J\right)}{\ U_*\left(P \mid J\right)}}\]
 
 Using Pinsker's inequality
 
 $$\Ia{}{K;J,U} \geq 2\Ea{}{\Dtva{U_*\left(P \mid K,J\right),U_*\left(P \mid J\right)}^2} \geq 2\Ea{}{\AP{\Ea{}{U \mid K,J}-\Ea{}{U \mid J}}^2}$$
 
-Denote $U_{kj} := \Ea{}{U \mid K = k, J = j}$. We get
+Denote $U_{kj} := \Ea{}{U \mid K = k, J = j}$. Using assumptions \ref{con:prp__thompson__distribution} and \ref{con:prp__thompson__independent}, we have
 
-$$\Ia{}{K;J,U} \geq 2\Ea{(k,j)\sim\zeta\times\zeta}{\AP{U_{kj}-\Ea{k'\sim\zeta}{U_{k'j}}}^2} \geq 2\Ea{(k,j)\sim\zeta\times\zeta}{[[k=j]]\AP{U_{kj}-\Ea{k'\sim\zeta}{U_{k'j}}}^2}$$
+\begin{align*}
+\Ia{}{K;J,U} &\geq 2\Ea{\substack{k\sim\zeta\\j\sim\zeta}}{\AP{U_{kj}-\Ea{k'\sim\zeta}{U_{k'j}}}^2}\\
+&\geq 2\Ea{\substack{k\sim\zeta\\j\sim\zeta}}{\AP{U_{kj}-\Ea{k'\sim\zeta}{U_{k'j}}}^2;k=j}\\
+&\geq 2\Ea{j \sim \zeta}{\zeta(j)\AP{U_{jj}-\Ea{k\sim\zeta}{U_{kj}}}^2}
+&\end{align*}
 
-$$\Ia{}{K;J,U} \geq 2\Ea{j \sim \zeta}{\zeta(j)\AP{U_{jj}-\Ea{k\sim\zeta}{U_{kj}}}^2} \geq 2 \AP{\min_{j \in [N]} \zeta(j)}\Ea{j \sim \zeta}{\AP{U_{jj}-\Ea{k\sim\zeta}{U_{kj}}}^2}$$
+Using assumption~\ref{con:prp__thompson__eta}
 
-$$\Ia{}{K;J,U}\geq 2 \AP{\min_{j \in [N]} \zeta(j)} \AP{\Ea{j \sim \zeta}{U_{jj}}-\Ea{(k,j)\sim\zeta\times\zeta}{U_{kj}}}^2=2 \left(\min_{i \in [N]} {\zeta(i)}\right) \left(\E{}\left[U \mid J = K\right]-\E{}\left[U\right]\right)^2$$
+\begin{align*}
+\Ia{}{K;J,U} \geq 2\eta\Ea{j \sim \zeta}{\AP{U_{jj}-\Ea{k\sim\zeta}{U_{kj}}}^2}\geq 2\eta \AP{\Ea{j \sim \zeta}{U_{jj}}-\Ea{\substack{k\sim\zeta\\j\sim\zeta}}{U_{kj}}}^2
+\end{align*}
+
+Using assumptions \ref{con:prp__thompson__distribution} and \ref{con:prp__thompson__independent} again, we get the desired result??
 \end{proof}
 
 TBD
