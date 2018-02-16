@@ -673,7 +673,7 @@ We also define $\EU^{\sharp k}_n\in[0,1]$ by
 
 We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
 
-The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over hypotheses is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over hypotheses, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over hypotheses to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:delegation_information}\footnote{We think of $K$ as the (unknown) correct hypothesis, $X$ as the advisor action and $a^*$ as $\pi^{\star\J}(\S)$.}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$ (see Proposition~\ref{prp:delegation}\footnote{We think of $\Theta_n$ as the information used to compute \Z (including \S,) $\Psi_n$ as $\pi^{\star\J}(\S)$ when $\Z(\J)>0$ and $\bot$ otherwise, and $Z_n$ as \Z.}.)
+The difference between $\pi^{\star k}_n$ and $\pi^{\sharp k}_n$ is that the latter sometimes delegates even in the $n$-th (and later) episodes\footnote{Technically, $\pi^{\star k}_n$ is a policy for $M^k$ so it's not strictly meaningful to say it \enquote{delegates} at all, but we think of it as delegating when the $\pi^{!k}$ \enquote{subroutine} inside it is called and it delegates.}. Therefore, we can bound the difference in expected utilities by bounding the expected number of delegations. Now, delegation is only performed in one of two scenarios, corresponding to line~\ref{ln:delegate_primary} and line~\ref{ln:delegate_secondary}. In the scenario of line~\ref{ln:delegate_primary}, we have the action $\pi^{\star\J}(\S)$ which, with probability at least $\eta$ over hypotheses is taken with probability at least $\epsilon$ by the advisor (at least $\eta$ since this is the minimal value $\Z(\J)$ can have.) On the other hand, with probability at least $\eta$ over hypotheses, the same action is never taken by the advisor (otherwise we wouldn't delegate.) Therefore, observing whether this action is taken by the advisor provides an amount of information about the environment that can be bounded below in terms of $\eta$ and $\epsilon$. In the scenario of line~\ref{ln:delegate_secondary}, there is no action which is known with probability at least $1-\eta$ over hypotheses to be taken by the advisor with positive probability. Since observing the action actually taken by the advisor provides an example of an action which had positive probability, we gain an amount of information that can be bounded from below in terms of $\eta$. In both cases, we can show information gain is $\Omega(\eta\epsilon)$ (see Proposition~\ref{prp:delegation_information}\footnote{We think of $K$ as the (unknown) correct hypothesis, $X$ as the advisor action and $a^*$ as $\pi^{\star\J}(\S)$.}.) Since the initial entropy is $\ln{N}$, this means that the number of delegations is $O\AP{\frac{\ln{N}}{\eta\epsilon}}$ (see Proposition~\ref{prp:delegation}\footnote{We think of $\bar{\Theta}_n$ as the information used to compute \Z (including \S,) $\Psi_n$ as $\pi^{\star\J}(\S)$ when $\Z(\J)>0$ and $\bot$ otherwise, and $Z_n$ as \Z.}.)
 
 Now we use this to bound $\Abs{\EU^\star_n-\EU^\sharp_n}$. We have
 
@@ -964,13 +964,13 @@ In our notation, propositions about random variables are understood to hold almo
 \begin{proposition}
 \label{prp:delegation}
 
-Consider non-empty finite sets $\A$ and $\B$, $N \in \Nats^+$, $\epsilon\in\AP{0,\Abs{\A}^{-1}}$, $\eta\in(0,1)$ and\\ $\AC{\Ad^k: \B \K \A}_{k\in[N]}$. Consider also  a probability space $(\Omega,P)$ and random variables $K: \Omega \rightarrow [N]$, $\AC{\Theta_n: \Omega \rightarrow \B}_{n\in\Nats}$, $\AC{X_n,\Psi_n: \Omega \rightarrow \A \sqcup \{\bot\}}_{n \in \Nats}$, and $\AC{Z_n: \Omega \rightarrow \Delta[N]}_{n \in \Nats}$. Assume that for any $n\in\Nats$, $k\in[N]$ and $a\in\A$
+Consider non-empty finite sets $\A$ and $\B$, $N \in \Nats^+$, $\epsilon\in\AP{0,\Abs{\A}^{-1}}$, $\eta\in(0,1)$ and\\ $\AC{\Ad^k: \B \K \A}_{k\in[N]}$. Consider also  a probability space $(\Omega,P)$ and random variables $K: \Omega \rightarrow [N]$, $\AC{\bar{\Theta}_n: \Omega \rightarrow \B}_{n\in\Nats}$, $\AC{X_n,\Psi_n: \Omega \rightarrow \A \sqcup \{\bot\}}_{n \in \Nats}$, and $\AC{Z_n: \Omega \rightarrow \Delta[N]}_{n \in \Nats}$. Assume that for any $n\in\Nats$, $k\in[N]$ and $a\in\A$
 
 \begin{enumerate}[i.]
 
-\item\label{con:prp__delegation__xa} $\CP{}{X_n = a}{K,\Theta_n,\Psi_n,Z_n}=\CP{}{X_n\ne\bot}{K,\Theta_n,\Psi_n,Z_n} \Ad^K\APM{a}{\Theta_n}$
-\item\label{con:prp__delegation__xbot} $X_n = \bot \iff \exists a \in \A \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\Theta_n} > 0 \lor \AP{a=\Psi_n \land \Ad^k\APM{\Psi_n}{\Theta_n} \leq \epsilon}$
-\item\label{con:prp__delegation__z} $Z_n(k)=\CP{}{K = k}{\Theta_0,\Theta_1\dots\Theta_{n},\Psi_0,\Psi_1\dots\Psi_n,X_0,X_1 \dots X_{n-1}}$
+\item\label{con:prp__delegation__xa} $\CP{}{X_{n+1} = a}{K,\bar{\Theta}_n,\Psi_n,Z_n}=\CP{}{X_{n+1}\ne\bot}{K,\bar{\Theta}_n,\Psi_n,Z_n} \Ad^K\APM{a}{\bar{\Theta}_n}$
+\item\label{con:prp__delegation__xbot} $X_{n+1} = \bot \iff \exists a \in \A \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\bar{\Theta}_n} > 0 \lor \AP{a=\Psi_n \land \Ad^k\APM{\Psi_n}{\bar{\Theta}_n} \leq \epsilon}$
+\item\label{con:prp__delegation__z} $Z_n(k)=\CP{}{K = k}{\bar{\Theta}_0,\bar{\Theta}_1\dots\bar{\Theta}_{n},\Psi_0,\Psi_1\dots\Psi_n,X_0,X_1 \dots X_{n}}$
 \item\label{con:prp__delegation__eta} $Z_n(k) \geq \eta$
 
 \end{enumerate}
@@ -978,7 +978,7 @@ Consider non-empty finite sets $\A$ and $\B$, $N \in \Nats^+$, $\epsilon\in\AP{0
 Then,
 
 \begin{equation}
-\Ea{}{\Abs{\ACM{n\in\Nats}{X_n\ne\bot}}} \leq \frac{\ln{N}}{\eta\ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}}}
+\Ea{}{\Abs{\ACM{n\in\Nats^+}{X_n\ne\bot}}} \leq \frac{\ln{N}}{\eta\ln{\AP{1+\epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}}}}
 \end{equation}
 
 \end{proposition}
@@ -995,14 +995,14 @@ Then,
 Using assumption~\ref{con:prp__delegation__z}, we get
 
 \begin{align}
-\ln{N} &\geq \sum_{n=0}^\infty\Ea{}{\CI{}{K;\Theta_{n+1},\Psi_{n+1},X_n}{\Theta_n,\Psi_n,Z_n}}\nonumber\\ 
-&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n}}\nonumber\\
-\label{eqn:prp__delegation__proof__entropy}&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n};X_n\ne\bot}
+\ln{N} &\geq \sum_{n=0}^\infty\Ea{}{\CI{}{K;\Theta_{n+1},\Psi_{n+1},X_{n+1}}{\Theta_n,\Psi_n,Z_n}}\nonumber\\ 
+&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_{n+1}}{\Theta_n,\Psi_n,Z_n}}\nonumber\\
+\label{eqn:prp__delegation__proof__entropy}&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_{n+1}}{\Theta_n,\Psi_n,Z_n};X_{n+1}\ne\bot}
 \end{align}
 
 Define the random variables $\AC{Q_{nak}: \Omega \rightarrow [0,1]}_{n \in \Nats, a \in \A, k\in[N]}$ by
 
-\[Q_{nak}:=\CP{}{X_n=a}{K=k,\Theta_n,\Psi_n,Z_n}\]
+\[Q_{nak}:=\CP{}{X_{n+1}=a}{K=k,\Theta_n,\Psi_n,Z_n}\]
 
 Define the events $\{D_{nak} \subseteq \Omega\}_{n \in \Nats, a \in \A, k\in[N]}$ by
 
@@ -1010,21 +1010,21 @@ Define the events $\{D_{nak} \subseteq \Omega\}_{n \in \Nats, a \in \A, k\in[N]}
 
 By assumption~\ref{con:prp__delegation__xbot}, the event $X_n=\bot$ is determined by $\Theta_n$, $\Psi_n$ and $Z_n$. Using assumption~\ref{con:prp__delegation__xa}, it follows that for any $n \in \Nats$, $a \in \A$ and $k \in [K]$
 
-\[X_n \ne \bot \implies Q_{nak} = \Ad^k\APM{a}{\Theta_n}\]
+\[X_{n+1} \ne \bot \implies Q_{nak} = \Ad^k\APM{a}{\Theta_n}\]
 
-\[X_n \ne \bot \implies \AP{D_{nak} \iff \Ad^k\APM{a}{\Theta_n} > 0 \land \AP{a = \Psi_n \lor \Ad^k\APM{\Psi_n}{\Theta_n} \leq \epsilon}}\]
+\[X_{n+1} \ne \bot \implies \AP{D_{nak} \iff \Ad^k\APM{a}{\Theta_n} > 0 \land \AP{a = \Psi_n \lor \Ad^k\APM{\Psi_n}{\Theta_n} \leq \epsilon}}\]
 
 Using assumption~\ref{con:prp__delegation__xbot}, we get
 
-\[X_n \ne \bot \implies \exists k \in \Supp{Z_n}: \neg D_{nak}\]
+\[X_{n+1} \ne \bot \implies \exists k \in \Supp{Z_n}: \neg D_{nak}\]
 
 Using assumption~\ref{con:prp__delegation__eta}
 
-\[X_n \ne \bot \implies \Pa{k\sim Z_n}{D_{nak}} \leq 1 - \eta\]
+\[X_{n+1} \ne \bot \implies \Pa{k\sim Z_n}{D_{nak}} \leq 1 - \eta\]
 
 Using assumption~\ref{con:prp__delegation__z}
 
-\[X_n \ne \bot \implies \CP{}{D_{naK}}{\Theta_n,\Psi_n,Z_n} \leq 1 - \eta\]
+\[X_{n+1} \ne \bot \implies \CP{}{D_{naK}}{\Theta_n,\Psi_n,Z_n} \leq 1 - \eta\]
 
 % Why \Psi doesn't add more information beyond Z?
 
@@ -1032,14 +1032,14 @@ Applying Proposition~\ref{prp:delegation_information} we conclude
 
 \begin{equation}
 \label{eqn:prp__delegation__proof__information}
-X_n \ne \bot \implies \CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n} \geq \eta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}\right)
+X_{n+1} \ne \bot \implies \CI{}{K;X_{n+1}}{\Theta_n,\Psi_n,Z_n} \geq \eta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}\right)
 \end{equation}
 
 Combining inequality~(\ref{eqn:prp__delegation__proof__entropy}) with inequality~(\ref{eqn:prp__delegation__proof__information}), we get
 
-\[\ln{N} \geq \sum_{n=0}^\infty \Pa{}{X_n\ne\bot}\eta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}\right)\]
+\[\ln{N} \geq \sum_{n=0}^\infty \Pa{}{X_{n+1}\ne\bot}\eta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}\right)\]
 
-Noticing that $\Ea{}{\Abs{\ACM{n\in\Nats}{X_n\ne\bot}}}=\sum_{n=0}^{\infty}\Pa{}{X_n\ne\bot}$, we get the desired result.
+Noticing that $\Ea{}{\Abs{\ACM{n\in\Nats^+}{X_n\ne\bot}}}=\sum_{n=0}^{\infty}\Pa{}{X_{n+1}\ne\bot}$, we get the desired result.
 \end{proof}
 
 Given a measurable space $X$ and $\mu,\nu\in\Delta X$, $\Dtva{\mu,\nu}$ will denote the total variation distance between $\mu$ and $\nu$.
@@ -1124,13 +1124,13 @@ By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k
 
 We postulate that $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$, $s\in\St$ and $a\in\A_\square$, denoting $n = lT+m$
 
-\[A^\dagger_n = \begin{cases} \Psi^\dagger_n \text{ if } \forall k \in \Supp{Z^\dagger_n}: \Ad^k\APM{\Psi^\dagger_n}{\Theta^\dagger_n} > 0 \text{ and } Z^\dagger_n\AP{J^\dagger_n} > 0 \\ \text{some } a\in\A \text{ s.t. } \forall k \in \Supp{Z^\dagger_n}: \Ad^k\APM{a}{\Theta^\dagger_n} > 0 \text{ if such exists and } Z^\dagger_n\AP{J^\dagger_n}=0\\\bot \text{ otherwise} \end{cases}\\\]
+\[A^\dagger_n = \begin{cases} \Psi^\dagger_n \text{ if } \forall k \in \Supp{Z^\dagger_n}: \Ad^k\APM{\Psi^\dagger_n}{\Theta^\dagger_n} > 0 \\ \text{some } a\in\A \text{ s.t. } \forall k \in \Supp{Z^\dagger_n}: \Ad^k\APM{a}{\Theta^\dagger_n} > 0 \text{ if such exists and } \Psi^\dagger_n=\bot\\\bot \text{ otherwise} \end{cases}\\\]
 %
 \begin{align*}
 \tilde{Z}^\dagger_0(k)&=\frac{1}{N} \\ 
 Z^\dagger_{n}(k) &= \frac{\tilde{Z}^\dagger_{n}(k)[[\tilde{Z}^\dagger_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{Z}^\dagger_{n}(j)[[\tilde{Z}^\dagger_{n}(j) \geq \eta]]}\\
 \CP{}{J^\dagger_{l} = k}{Z^\dagger_{lT}} &= Z^\dagger_{lT}\left(k\right)\\
-\Psi^\dagger_{n} &= \pi^{\star J^\dagger_l}\AP{\Theta^\dagger_n}\\
+\Psi^\dagger_{n} &= \begin{cases} \pi^{\star J^\dagger_l}\AP{\Theta^\dagger_n} \text{ if } Z^\dagger_n\AP{J^\dagger_l} > 0 \\ \bot \text{ otherwise} \end{cases}\\
 \Theta^\dagger_0 &= s_0\\
 X^\dagger_0 &= s_0\\
 \CP{}{\Theta^\dagger_{n+1} = s,X^\dagger_{n+1}=a}{\Theta^\dagger_{n},A^\dagger_n} &= \T_{L^K}\APM{s,a}{\Theta^\dagger_n,A^\dagger_n}\\
@@ -1147,13 +1147,13 @@ $$\Pr\left[H^\dagger_n=h,\AP{\Theta^\dagger_n,X^\dagger_n}=s\right] > 0 \implies
 
 In order to prove $\pi^\dagger$ has the desired properties, we will define the stochastic processes $Z$, $\tilde{Z}$, $J$, $\Psi$, $A$, $X$ and $\Theta$, each process of the same type as its dagger counterpart (thus $\Omega$ is constructed to accommodate them.) These processes are required to satisfy the following:
 
-\[A_n = \begin{cases} \Psi_n \text{ if } \forall k \in \Supp{Z_n}: \Ad^k\APM{\Psi_n}{\Theta_n} > 0 \text{ and } Z_n\AP{J_n} > 0 \\ \text{some } a\in\A \text{ s.t. } \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\Theta_n} > 0 \text{ if such exists and } Z_n\AP{J_n}=0\\\bot \text{ otherwise} \end{cases}\\\]
+\[A_n = \begin{cases} \Psi_n \text{ if } \forall k \in \Supp{Z_n}: \Ad^k\APM{\Psi_n}{\Theta_n} > 0\\ \text{some } a\in\A \text{ s.t. } \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\Theta_n} > 0 \text{ if such exists and } \Psi_n=\bot\\\bot \text{ otherwise} \end{cases}\\\]
 %
 \begin{align*}
 \tilde{Z}_0(k)&=\frac{1}{N} \\ 
 Z_{n}(k) &= \frac{\tilde{Z}_{n}(k)[[\tilde{Z}_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{Z}_{n}(j)[[\tilde{Z}_{n}(j) \geq \eta]]}[[\tilde{Z}_{n}(K) \geq \eta]] \\&\ \ \ \ \ + [[K = k]]\cdot [[\tilde{Z}_{n}(K) < \eta]]\\
 \CP{}{J_{l} = k}{Z_{lT}} &= Z_{lT}\left(k\right)\\
-\Psi_{n} &= \pi^{\star J_l}\AP{\Theta_n}\\
+\Psi_{n} &= \begin{cases} \pi^{\star J_l}\AP{\Theta_n} \text{ if } Z_n\AP{J_l} > 0 \\ \bot \text{ otherwise} \end{cases}\\
 \Theta_0 &= s_0\\
 X_0 &= s_0\\
 \CP{}{\Theta_{n+1} = s,X_{n+1}=a}{\Theta_{n},A_n} &= \T_{L^K}\APM{s,a}{\Theta_n,A_n}\\
@@ -1189,7 +1189,7 @@ Defining $\EU^{\sharp k}_n$ according to equation~(\ref{eqn:eusharp}), we have
 
 \[\Rg_{L^k}^{\IP}(\gamma) \leq \AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\star k}_n-\EU^{\sharp k}_n+\EU^{\sharp k}_n-\EU^{!k}_n}+2\Tn_{M^k}(\gamma)\cdot\frac{1-\gamma}{1-\gamma^T}\]
 
-Using equation~(\ref{eqn:sharp_vs_star_via_delegations}), we can apply Proposition~\ref{prp:delegation}. Indeed...
+Using equation~(\ref{eqn:sharp_vs_star_via_delegations}), we can apply Proposition~\ref{prp:delegation}. Indeed, conditions \ref{con:prp__delegation__xa}, \ref{con:prp__delegation__z} and \ref{con:prp__delegation__eta} are straightforward (for an appropriate definition of $\bar{\Theta}$.) To verify condition~\ref{con:prp__delegation__xbot}, consider two cases. In the case $Z_n\AP{J_l} > 0$ (where $l:=\Floor{\sfrac{n}{T}}$,)...
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq\frac{1-(1-\alpha)^T}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{!k}_n-\EU^{?k}_n\right) + O\AP{\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\tau^k\alpha}{1-(1-\alpha)^T}}$$
 
