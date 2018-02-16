@@ -690,7 +690,7 @@ We bounded the expected number of delegations for $\pi^{!k}$ but not $\pi^{\shar
 \frac{1}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty {\Abs{\EU^{\star k}_n-\EU^{\sharp k}_n}} = O\AP{\frac{\ln{N}}{\eta^2\epsilon}}
 \end{equation}
 
-Observing the rewards received during an episode yields information about the environment. The expected information gain can only vanish when you expect to receive the same rewards regardless of which hypothesis is correct, in which case the policy $\pi^{\star\J}$ is optimal regardless of $\J$. This allows us to derive a lower bound for the information gain in terms of the difference between the rewards received by $\pi^{!k}$ and $\pi^{\sharp k}_n$. Denoting $I_n$ the expected information gain in episode $n$, we have (see Proposition~\ref{prp:?})
+Observing the rewards received during an episode yields information about the environment. The expected information gain can only vanish when you expect to receive the same rewards regardless of which hypothesis is correct, in which case the policy $\pi^{\star\J}$ is optimal regardless of $\J$. This allows us to derive a lower bound for the information gain in terms of the difference between the rewards received by $\pi^{!k}$ and $\pi^{\sharp k}_n$. Denoting $I_n$ the expected information gain in episode $n$, we have (see Proposition~\ref{prp:thompson})
 
 \begin{equation}
 \frac{1-\gamma^T}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\sharp k}_n-\EU^{!k}_n} \leq \sqrt{\frac{1-\gamma^T}{2\eta}\sum_{n=0}^\infty \gamma^{nT}I_n}
@@ -1089,6 +1089,199 @@ Using assumption~\ref{con:prp__thompson__eta}
 \end{align*}
 
 Using assumptions \ref{con:prp__thompson__distribution} and \ref{con:prp__thompson__independent} again, we get the desired result
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:regret_bound}]
+
+Fix $\eta\in\left(0,N^{-1}\right)$ and $T \in \Nats^+$. Denote $\nu^k:=\bar{\mu}^k\left[\sigma^k S^k\right]$. To avoid cumbersome notation, whenever $M^k$ should appear a subscript, we will replace it by $k$. Let $(\Omega,P \in \Delta\Omega)$ be a probability space\Comment{ and $\{\F_n \subseteq 2^\Omega\}_{n \in \Nats \sqcup \{-1\}}$ a filtration of $\Omega$}. Let $K: \Omega \rightarrow [N]$ be \Comment{measurable w.r.t. $\F_{-1}$}a random variable and the following be stochastic processes\Comment{ adapted to $\F$}
+
+$$\Z_n,\tilde{\Z}_n: \Omega \rightarrow \Delta[N]$$
+
+$$\J_n: \Omega \rightarrow [N]$$
+
+$$\Psi_n: \Omega \rightarrow \A$$
+
+$$A_n: \Omega \rightarrow ?$$
+
+$$\Theta_n: \Omega \rightarrow ?$$
+
+We also define $A\Theta_{:n}: \Omega \rightarrow ?$ by
+
+$$A\Theta_{:n}:= A_0\Theta_0A_1\Theta_1 \ldots A_{n-1}\Theta_{n-1}$$
+
+(The following conditions on $A$ and $\Theta$ imply that the range of the above is indeed in $?$.) Let $?$ and $?^{!k}$ be as in Proposition B.1 (the form of the bound we are proving allows assuming w.l.o.g. that $\epsilon < \frac{1}{\Abs{\A}}$). By condition iii of Definition 2, there is $\pi^k : ? \rightarrow \A$ s.t. for any $h \in ?$, if $S^k(h) \in \UC^k$ then
+
+$$\sigma^k\AP{\pi^k(h) \mid h} > \epsilon$$
+
+$$\pi^k(h) \in \A_k^\omega\AP{S^k(h)}$$
+
+We construct $\Omega$\Comment{, $\F$}, $K$, $\Z$, $\tilde{\Z}$, $\J$, $\Psi$, $A$ and $\Theta$ s.t $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$ and $o \in ?$, denoting $n = lT+m$
+
+$$\tilde{\Z}_0(k)\equiv\frac{1}{N}$$
+
+$$\Z_{n}(k) = \frac{\tilde{\Z}_{n}(k)[[\tilde{\Z}_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}_{n}(j)[[\tilde{\Z}_{n}(j) \geq \eta]]}$$
+
+$$\Pr\left[\J_{l} = k \mid Z_{lT}\right] = \Z_{lT}\left(k\right)$$
+
+$$\Psi_{n} = \pi^{J_l}\AP{A\Theta_{:n}}$$
+
+$$\Pr\left[\Theta_{n} = o \mid A\Theta_{:n}\right] = \nu^K\left(o \mid A\Theta_{:n}\right)$$
+
+$$A_n = ?\left(A\Theta_{:n}, \Psi_n\right)$$
+
+$$\tilde{\Z}_{n+1}(k)\sum_{j = 0}^{N-1} \Z_n(j) [[A_n = ?^{!j}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^j(\Theta_n \mid A\Theta_{:n}A_n)=\Z_{n}(k) [[A_n = ?^{!k}\left(A\Theta_{:n}, \Psi_n\right)]] \nu^k\left(\Theta_{n} \mid A\Theta_{:n}A_{n}\right)$$
+
+Note that the last equation has the form of a Bayesian update which is allowed to be arbitrary when update is on "impossible" information.
+
+We now construct the $?$-policy $\pi^*$ s.t. for any $n \in \Nats$, $h \in ?$ s.t. $\Pr\left[A\Theta_{:n}=h\right] > 0$ and $a \in ?$
+
+$$\pi^*(a \mid h):=\Pr\left[A_n = a \mid A\Theta_{:n} = h\right]$$
+
+That is, we perform Thompson sampling at time intervals of size $T$, moderated by the delegation routine $?$, and discard from our belief state hypotheses whose probability is below $\eta$ and hypotheses sampling which resulted in recommending "unsafe" actions i.e. actions that $?$ refused to perform.
+
+In order to prove $\pi^*$ has the desired property, we will define the stochastic processes $\Z^!$, $\tilde{\Z}^!$, $\J^!$, $\Psi^!$, $A^!$ and $\Theta^!$, each process of the same type as its shriekless counterpart (thus $\Omega$ is constructed to accommodate them). These processes are required to satisfy the following:
+
+$$\tilde{\Z}^!_0(k)\equiv\frac{1}{N}$$
+
+$$\Z_{n}^!(k) = \frac{\tilde{\Z}^!_{n}(k)[[\tilde{\Z}^!_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{\Z}^!_{n}(j)[[\tilde{\Z}^!_{n}(j) \geq \eta]]}[[\tilde{\Z}^!_{n}(K) \geq \eta]] + [[K = k]]\cdot [[\tilde{\Z}^!_{n}(K) < \eta]]$$
+
+$$\Pr\left[\J^!_{l} = k \mid Z^!_{lT}\right] = \Z^!_{lT}\left(k\right)$$
+
+$$\Psi^!_{n} = \pi^{\J^!_l}\AP{A\Theta^!_{:n}}$$
+
+$$\Pr\left[\Theta^!_{n} = o \mid A\Theta^!_{:n}\right] = \nu^K\left(o \mid A\Theta^!_{:n}\right)$$
+
+$$A^!_n = ?^{!K}\left(A\Theta^!_{:n}, \Psi^!_n\right)$$
+
+$$\tilde{Z}^!_{n+1}(k)=\frac{Z^!_{n}(k) [[A^!_n = ?^{!k}\left(A\Theta^!_{:n}, \Psi^!_n\right)]] \nu^k\left(\Theta^!_{n} \mid A\Theta^!_{:n}A^!_{n}\right)}{\sum_{j = 0}^{N-1} Z^!_n(j) [[A^!_n = ?^{!j}\left(A\Theta^!_{:n}, \Psi^!_n\right)]] \nu^j(\Theta^!_n \mid A\Theta^!_{:n}A^!_n)}$$
+
+For any $k \in [N]$, we construct the $?$-policy $\pi^{?k}$ s.t. for any $n \in \Nats$, $h \in ?$ s.t. $\Pr\left[A\Theta^!_{:n}=h,\ K = k\right] > 0$ and $a \in ?$
+
+$$\pi^{?k}(a \mid h):=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
+
+Given any $?$-policy $\pi$ and $?$-policy $\sigma$ we define $\alpha_{\sigma\pi}: ? \K ?$ by
+
+$$\alpha_{\sigma\pi} (g \mid h) := [[h = \underline{g}]]C_h\prod_{n = 0}^{\Abs{h}-1} \sum_{a \in \A}\left([[g_n \in \bot a?]] \pi\left(\bot \mid g_{:n}\right)\sigma\left(a \mid h_{:n}\right)+[[g_n \in a\bot?]]\pi\left(a \mid g_{:n}\right)\right)$$
+
+Here, $C_h \in \Reals$ is a constant defined s.t. the probabilities sum to 1. We define the $?$-policy $\left[\sigma\right]\underline{\pi}$ by
+
+$$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$
+
+Define $\tau^k \in (0,1)$ by
+
+$$\tau^k := \max_{s \in \UC^k} \sup_{\gamma \in [1 - \alpha, 1)} \Abs{\frac{\D\V_k(s,\gamma)}{\D\gamma}}+1$$
+
+Condition iii of Proposition B.1 and condition ii of Definition 2 imply that for any $h \in ?$
+
+$$\Supp{\AB{\sigma^k}\underline{\pi}^{?k}(h)} \subseteq \A^0_k\AP{S^k(h)}$$
+
+This means we can apply Proposition B.2 and get
+
+$$\EU^*_{\upsilon^k}(1 - \alpha)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1 - \alpha) \leq \alpha\sum_{n=0}^\infty \sum_{m=0}^{T-1} (1-\alpha)^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
+
+Here, the $?$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition B.2, with $\pi^k$ in place of $\pi^*$. We also define the $?$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
+
+$$\pi^{!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \Pr\left[A^!_{\Abs{h}} = a \mid A\Theta^!_{:{\Abs{h}}} = h,\ K = k,\ \J^!_n = k\right] \text{ otherwise} \end{cases}$$
+
+$$\pi^{!!k}_n(a \mid h):=\begin{cases} \pi^{?k}(a \mid h) \text{ if } \Abs{h} < nT \\ \pi^{!k}_n(a \mid h) + \pi^{!k}_n(\bot \mid h) \cdot \pi^k_n\left(a \mid \underline{h}\right) \text{ if } \Abs{h} \geq nT \text{ and } a \ne \bot \\ 0 \text{ if } \Abs{h} \geq nT \text{ and } a = \bot \end{cases}$$
+
+Denote 
+
+$$\rho^{*k}_n:=\mu^k\bowtie\pi^{*k}_n$$
+
+$$\rho^{!!k}_n:=\nu^k\bowtie\pi^{!!k}_n$$ 
+
+$$\rho^{!k}_n:=\nu^k\bowtie\pi^{!k}_n$$ 
+
+$$\rho^{?k}:=\nu^k\bowtie\pi^{?k}$$ 
+
+$$R^{?k}:=\EU^{*}_{\upsilon^k}(1-\alpha)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha)$$
+
+For each $n \in \Nats$, denote
+
+$$\EU_n^{*k}:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m}\E{x\sim\rho^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]$$
+
+$$\EU_n^{!!k}:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m}\E{x\sim\rho^{!!k}_n}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
+
+$$\EU_n^{!k}:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m}\E{x\sim\rho^{!k}_n}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
+
+$$\EU_n^{?k}:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m}\E{x\sim\rho^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]$$
+
+We have
+
+$$R^{?k} \leq \AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
+
+$$R^{?k} \leq\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{*k}_n-\EU^{!!k}_n+\EU^{!!k}_n-\EU^{!k}_n+\EU^{!k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
+
+Condition iv of Proposition B.1 implies that, given $h \in ?$ s.t. $\Abs{h} \geq nT$
+
+$$\Supp{\pi^{!k}_n(h)} \subseteq \AC{\pi^k\AP{S^k(h)},\bot}$$
+
+$$\pi^{!!k}_n\AP{\pi^k\AP{S^k(h)} \mid h} = 1$$
+
+Therefore, $\pi^{!!k}_n = \pi^{*k}_n$, and we remain with
+
+$$R^{?k} \leq\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{!!k}_n-\EU^{!k}_n+\EU^{!k}_n-\EU^{?k}_n\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
+
+We have
+
+$$\Abs{\EU^{!!k}_n-\EU^{!k}_n} \leq \Pr_{x\sim\rho^{!k}_n}\left[\exists m \in [T]: x_{nT+m} \in \bot?\right]$$
+
+Since $\Z_{nT}^{!}(K) \geq \eta$, it follows that
+
+$$\Abs{\EU^{!!k}_n-\EU^{!k}_n} \leq \frac{1}{\eta}\Pr_{x\sim\rho^{?k}}\left[\exists m \in [T]: x_{nT+m} \in \bot?\right] \leq \frac{1}{\eta}\Ea{x\sim\rho^{?k}}{\Abs{\AC{m \in [T] \mid x_{nT+m} \in \bot?}}}$$
+
+$$\sum_{n=0}^\infty \Abs{\EU^{!!k}_n-\EU^{!k}_n} \leq \frac{1}{\eta}\Ea{x\sim\rho^{?k}}{\Abs{\AC{n \in \Nats \mid x_n \in \bot?}}}$$
+
+Using condition i of Proposition B.1, we conclude
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq\frac{1-(1-\alpha)^T}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{!k}_n-\EU^{?k}_n\right) + O\AP{\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\tau^k\alpha}{1-(1-\alpha)^T}}$$
+
+Define the random variables $?{U^!_n : \Omega \rightarrow [0,1]}$ by 
+
+$$U^!_n:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m} r\left(A\Theta^!_{:nT+m}\right)$$
+
+Denote 
+
+$$\bar{\tau} := \frac{1}{N}\sum_{k=0}^{N-1} {\tau^k}$$
+
+$$\beta:=\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}$$
+
+We get
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq \AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\AP{\beta}$$
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} +  O\AP{\beta}$$
+
+We apply Proposition B.3 to each term in the sum over $n$.
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \E{}\left[\frac{1}{2\eta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} +  O\AP{\beta}$$
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-(1-\alpha)^T}{2\eta}\sum_{n=0}^\infty \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\AP{\beta}$$
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = O\left(\sqrt{\frac{1-(1-\alpha)^T}{\eta}\ln N}  +\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}\right)$$
+
+Condition ii of Proposition B.1 implies that
+
+$$\Dtv\left(\frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^*},\ \frac{1}{N}\sum_{k=0}^{N-1}{\bar{\nu}^k\left[\sigma^k\right]\bowtie\pi^{?k}}\right) \leq 2(N-1)\eta$$
+
+Here, the factor of 2 comes from the difference between the equations for $Z_n$ and $Z^!_n$ (we can construct and intermediate policy between $\pi^*$ and $\pi^{?k}$ and use the triangle inequality for $\Dtv$). We conclude
+
+$$\frac{1}{N}\sum_{k=0}^{N-1}\AP{\EU^{*}_{\upsilon^k}(1-\alpha)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha)} = O\left(N\eta +\sqrt{\frac{1-(1-\alpha)^T}{\eta}\ln N}  +\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}\right)$$
+
+For each $k \in [N]$, we get
+
+$$\EU^{*}_{\upsilon^k}(1-\alpha)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha) = N \cdot O\left(N\eta +\sqrt{\frac{1-(1-\alpha)^T}{\eta}\ln N}  +\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}\right)$$
+
+Now we set 
+
+$$\eta:=\alpha^{1/4} N^{-1/2} \AP{\ln N}^{1/4} \epsilon^{-1/4} \bar{\tau}^{1/4}$$  
+
+$$T:=\Ceil{\alpha^{-1/4}N^{-1/2} \AP{\ln N}^{-1/4} \epsilon^{1/4} \bar{\tau}^{3/4}}$$
+
+Without loss of generality, we can assume this to be consistent with the assumption $\eta < \frac{1}{N}$ since the bound contains a term of $N^2\eta$ anyway. Similarly, the second term in the bound implies we can assume that $1 - (1-\alpha)^T \ll 1$ and therefore $1 - (1-\alpha)^T = O(T\alpha)$. Finally, note that assumption ii implies that the expression we round to get $T$ is $\geq 1$. We get
+
+$$\EU^{*}_{\upsilon^k}(1-\alpha)-\EU^{\pi^{*}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1-\alpha) = O\AP{\AP{\alpha N^6 \ln{N} \epsilon^{-1} \bar{\tau}}^{1/4}}$$
 \end{proof}
 
 TBD
