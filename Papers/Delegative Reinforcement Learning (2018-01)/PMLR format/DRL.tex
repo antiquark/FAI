@@ -969,7 +969,7 @@ Consider non-empty finite sets $\A$ and $\B$, $N \in \Nats^+$, $\epsilon\in\AP{0
 \begin{enumerate}[i.]
 
 \item\label{con:prp__delegation__xa} $\CP{}{X_{n+1} = a}{K,\bar{\Theta}_n,\Psi_n,Z_n}=\CP{}{X_{n+1}\ne\bot}{K,\bar{\Theta}_n,\Psi_n,Z_n} \Ad^K\APM{a}{\bar{\Theta}_n}$
-\item\label{con:prp__delegation__xbot} $X_{n+1} = \bot \iff \exists a \in \A \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\bar{\Theta}_n} > 0 \lor \AP{a=\Psi_n \land \Ad^k\APM{\Psi_n}{\bar{\Theta}_n} \leq \epsilon}$
+\item\label{con:prp__delegation__xbot} $X_{n+1} = \bot \iff \exists a \in \A \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\bar{\Theta}_n} > 0 \land \AP{a=\Psi_n \lor \Ad^k\APM{\Psi_n}{\bar{\Theta}_n} \leq \epsilon}$
 \item\label{con:prp__delegation__z} $Z_n(k)=\CP{}{K = k}{\bar{\Theta}_0,\bar{\Theta}_1\dots\bar{\Theta}_{n},\Psi_0,\Psi_1\dots\Psi_n,X_0,X_1 \dots X_{n}}$
 \item\label{con:prp__delegation__eta} $Z_n(k) \geq \eta$
 
@@ -1189,19 +1189,17 @@ Defining $\EU^{\sharp k}_n$ according to equation~(\ref{eqn:eusharp}), we have
 
 \[\Rg_{L^k}^{\IP}(\gamma) \leq \AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\star k}_n-\EU^{\sharp k}_n+\EU^{\sharp k}_n-\EU^{!k}_n}+2\Tn_{M^k}(\gamma)\cdot\frac{1-\gamma}{1-\gamma^T}\]
 
-Using equation~(\ref{eqn:sharp_vs_star_via_delegations}), we can apply Proposition~\ref{prp:delegation}. Indeed, conditions \ref{con:prp__delegation__xa}, \ref{con:prp__delegation__z} and \ref{con:prp__delegation__eta} are straightforward (for an appropriate definition of $\bar{\Theta}$.) To verify condition~\ref{con:prp__delegation__xbot}, consider two cases. In the case $Z_n\AP{J_l} > 0$ (where $l:=\Floor{\sfrac{n}{T}}$,)...
+Using equation~(\ref{eqn:sharp_vs_star_via_delegations}), we can apply Proposition~\ref{prp:delegation}. Indeed, conditions \ref{con:prp__delegation__xa}, \ref{con:prp__delegation__z} and \ref{con:prp__delegation__eta} are straightforward (for an appropriate definition of $\bar{\Theta}$.) To verify condition~\ref{con:prp__delegation__xbot}, consider two cases. In the case $Z_n\AP{J_l} > 0$ (where $l:=\Floor{\sfrac{n}{T}}$,) we have $\Psi_n\ne\bot$ and hence $A_n=\bot$ (equivalently $X_{n+1}\ne\bot)$ if and only if $\exists k \in \Supp{Z_n}: \Ad^k\APM{\Psi_n}{\Theta_n}=0$. This is equivalent to condition~\ref{con:prp__delegation__xbot} since, for any $a\ne\Psi_n$, taking $k=J_l$ makes the proposition false due to the fact that $\Ad^{J_l}\APM{\pi^{\star J_l}\AP{\Theta_n}}{\Theta_n} > \epsilon$ by construction of $\pi^{\star k}$. In the case $Z_n\AP{J_l} = 0$, we have $\Psi_n=\bot$ and hence $A_n=\bot$ (equivalently $X_{n+1}\ne\bot$) if and only if $\forall a\in\A\exists k \in \Supp{Z_n}:\Ad^k\APM{a}{\Theta_n}=0$. This is equivalent to condition~\ref{con:prp__delegation__xbot} since, in this case, $a\ne\Psi_n$ always. We get
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq\frac{1-(1-\alpha)^T}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty (1-\alpha)^{nT} \left(\EU^{!k}_n-\EU^{?k}_n\right) + O\AP{\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\tau^k\alpha}{1-(1-\alpha)^T}}$$
+\[\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\IP}(\gamma) \leq \frac{1-\gamma^T}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\sharp k}_n-\EU^{!k}_n}+O\AP{\bar{\Tn}\cdot\frac{1-\gamma}{1-\gamma^T}+\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}}\]
 
-Define the random variables $?{U^!_n : \Omega \rightarrow [0,1]}$ by 
+Define the random variables $\AC{U^!_n : \Omega \rightarrow [0,1]}_{n\in\Nats}$ by 
 
-$$U^!_n:=\frac{\alpha}{1-(1-\alpha)^T}\sum_{m=0}^{T-1} (1-\alpha)^{m} r\left(A\Theta^!_{:nT+m}\right)$$
+$$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} \R\AP{\Theta_{nT+m}}$$
 
-Denote 
+\Comment{Denote 
 
-$$\bar{\tau} := \frac{1}{N}\sum_{k=0}^{N-1} {\tau^k}$$
-
-$$\beta:=\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}$$
+$$\beta:=\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}{1-(1-\alpha)^T}$$}
 
 We get
 
