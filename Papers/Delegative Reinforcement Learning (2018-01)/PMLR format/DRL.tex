@@ -960,9 +960,9 @@ Consider non-empty finite sets $\A$ and $\B$, $N \in \Nats^+$, $\epsilon\in\AP{0
 
 \begin{enumerate}[i.]
 
-\item\label{con:prp__delegation__xa} $\CP{}{X_n = a}{K,\Theta_n}=\CP{}{X_n\ne\bot}{K,\Theta_n} \Ad^K\APM{a}{\Theta_n}$
+\item\label{con:prp__delegation__xa} $\CP{}{X_n = a}{K,\Theta_n,\Psi_n,Z_n}=\CP{}{X_n\ne\bot}{K,\Theta_n,\Psi_n,Z_n} \Ad^K\APM{a}{\Theta_n}$
 \item\label{con:prp__delegation__xbot} $X_n = \bot \iff \exists a \in \A \forall k \in \Supp{Z_n}: \Ad^k\APM{a}{\Theta_n} > 0 \lor \AP{a=\Psi_n \land \Ad^k\APM{\Psi_n}{\Theta_n} \leq \epsilon}$
-\item\label{con:prp__delegation__z} $Z_n(k)=\CP{}{K = k}{\Theta_0,\Theta_1\dots\Theta_{n},X_0,X_1 \dots X_{n-1}}$
+\item\label{con:prp__delegation__z} $Z_n(k)=\CP{}{K = k}{\Theta_0,\Theta_1\dots\Theta_{n},\Psi_0,\Psi_1\dots\Psi_n,X_0,X_1 \dots X_{n-1}}$
 \item\label{con:prp__delegation__eta} $Z_n(k) \geq \eta$
 
 \end{enumerate}
@@ -986,33 +986,52 @@ Then,
 
 Using assumption~\ref{con:prp__delegation__z}, we get
 
-\begin{align*}
-\ln{N} &\geq \sum_{n=0}^\infty\Ea{}{\CI{}{K;\Theta_{n+1},X_n}{\Theta_n,\Psi_n,Z_n}} \\ 
-&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n}} \\
-&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n};Y_n=\bot}
-\end{align*}
+\begin{align}
+\ln{N} &\geq \sum_{n=0}^\infty\Ea{}{\CI{}{K;\Theta_{n+1},\Psi_{n+1},X_n}{\Theta_n,\Psi_n,Z_n}}\nonumber\\ 
+&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n}}\nonumber\\
+\label{eqn:prp__delegation__proof__entropy}&\geq\sum_{n=0}^\infty\Ea{}{\CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n};X_n\ne\bot}
+\end{align}
 
-For brevity, we denote $\Phi_n:=\AP{\Theta_n,\Psi_n,Z_n}$. Define the events $\{D_{nak} \subseteq \Omega\}_{n \in \Nats, a \in \A, k\in[N]}$ by
+Define the random variables $\AC{Q_{nak}: \Omega \rightarrow [0,1]}_{n \in \Nats, a \in \A, k\in[N]}$ by
 
-\[D_{nak}:=\AC{\CP{}{X_n=a}{K=k,\Phi_n} > 0 \land \AP{a = \Psi_n \lor \CP{}{X_n = \Psi_n}{K=k,\Phi_n} \leq \epsilon}}\]
+\[Q_{nak}:=\CP{}{X_n=a}{K=k,\Theta_n,\Psi_n,Z_n}\]
 
-Using assumption~\ref{con:prp__delegation__z}, for every $n\in\Nats$ and $a\in\A$
+Define the events $\{D_{nak} \subseteq \Omega\}_{n \in \Nats, a \in \A, k\in[N]}$ by
 
-\begin{align*}
-\CP{}{D_{naK}}{\Phi_n} = \CP{k\sim Z_n}{D_{nak}}{\Phi_n}
-\end{align*}
+\[D_{nak}:=\AC{Q_{nak} > 0 \land \AP{a = \Psi_n \lor Q_{n\Psi_n k} \leq \epsilon}}\]
 
-Using assumption~\ref{con:prp__delegation__eta}, it follows that
+By assumption~\ref{con:prp__delegation__xbot}, the event $X_n=\bot$ is determined by $\Theta_n$, $\Psi_n$ and $Z_n$. Using assumption~\ref{con:prp__delegation__xa}, it follows that for any $n \in \Nats$, $a \in \A$ and $k \in [K]$
 
-\[\AP{\exists k \in \Supp{Z_n}: \neg D_{nak}} \implies \CP{}{D_{naK}}{\Phi_n} \leq 1 - \eta\]
+\[X_n \ne \bot \implies Q_{nak} = \Ad^k\APM{a}{\Theta_n}\]
 
-Using assumption~\ref{con:prp__delegation__xa}, we have
+\[X_n \ne \bot \implies \AP{D_{nak} \iff \Ad^k\APM{a}{\Theta_n} > 0 \land \AP{a = \Psi_n \lor \Ad^k\APM{\Psi_n}{\Theta_n} \leq \epsilon}}\]
 
-\[D_{nak} = \AC{\Ad^k\APM{a}{\Theta_n} > 0 \land \AP{a = \Psi_n \lor \Ad^k\APM{\Psi_n}{\Theta_n} \leq \epsilon}}??\]
+Using assumption~\ref{con:prp__delegation__xbot}, we get
 
-...Applying Proposition~\ref{prp:delegation_information} we conclude
+\[X_n \ne \bot \implies \exists k \in \Supp{Z_n}: \neg D_{nak}\]
 
-Lorem ipsum
+Using assumption~\ref{con:prp__delegation__eta}
+
+\[X_n \ne \bot \implies \Pa{k\sim Z_n}{D_{nak}} \leq 1 - \eta\]
+
+Using assumption~\ref{con:prp__delegation__z}
+
+\[X_n \ne \bot \implies \CP{}{D_{naK}}{\Theta_n,\Psi_n,Z_n} \leq 1 - \eta\]
+
+% Why \Psi doesn't add more information beyond Z?
+
+Applying Proposition~\ref{prp:delegation_information} we conclude
+
+\begin{equation}
+\label{eqn:prp__delegation__proof__information}
+X_n \ne \bot \implies \CI{}{K;X_n}{\Theta_n,\Psi_n,Z_n} \geq \eta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}\right)
+\end{equation}
+
+Combining inequality~(\ref{eqn:prp__delegation__proof__entropy}) with inequality~(\ref{eqn:prp__delegation__proof__information}), we get
+
+\[\ln{N} \geq \sum_{n=0}^\infty \Pa{}{X_n\ne\bot}\eta \ln\left(1 + \epsilon(1-\epsilon)^{\frac{1}{\epsilon}-1}\right)\]
+
+Noticing that $\Ea{}{\Abs{\ACM{n\in\Nats}{X_n\ne\bot}}}=\sum_{n=0}^{\infty}\Pa{}{X_n\ne\bot}$, we get the desired result.
 \end{proof}
 
 TBD
