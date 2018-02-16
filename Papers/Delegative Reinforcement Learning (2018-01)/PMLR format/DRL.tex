@@ -117,6 +117,8 @@
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\B}{\mathcal{B}}
 
+\newcommand{\Po}{:\St^* \times \St \K \A}
+\newcommand{\PoS}{:\St_\square^* \times \St_\square \K \A_\square}
 \newcommand{\IP}{\pi^{!k}}
 
 \title[Delegative Reinforcement Learning]{Delegative Reinforcement Learning: learning to avoid traps\\ with a little help}
@@ -1143,7 +1145,7 @@ In order to prove $\pi^\dagger$ has the desired properties, we will define the s
 %
 \begin{align*}
 \tilde{Z}_0(k)&=\frac{1}{N} \\ 
-Z_{n}(k) &= \frac{\tilde{Z}_{n}(k)[[\tilde{Z}_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{Z}_{n}(j)[[\tilde{Z}^!_{n}(j) \geq \eta]]}[[\tilde{Z}_{n}(K) \geq \eta]] + [[K = k]]\cdot [[\tilde{Z}_{n}(K) < \eta]]\\
+Z_{n}(k) &= \frac{\tilde{Z}_{n}(k)[[\tilde{Z}_{n}(k) \geq \eta]] }{\sum_{j = 0}^{N-1}\tilde{Z}_{n}(j)[[\tilde{Z}_{n}(j) \geq \eta]]}[[\tilde{Z}_{n}(K) \geq \eta]] \\&\ \ \ \ \ + [[K = k]]\cdot [[\tilde{Z}_{n}(K) < \eta]]\\
 \CP{}{J_{l} = k}{Z_{lT}} &= Z_{lT}\left(k\right)\\
 \Psi_{n} &= \pi^{\star J_l}\AP{\Theta_n}\\
 \Theta_0 &= s_0\\
@@ -1152,29 +1154,24 @@ X_0 &= s_0\\
 \tilde{Z}_{n+1}(k)&=\frac{Z_{n}(k) \T_{L^k}\APM{\Theta_{n+1},X_{n+1}}{\Theta_n,A_n}}{\sum_{j = 0}^{N-1} Z_n(j) \T_{L^j}\APM{\Theta_{n+1},X_{n+1}}{\Theta_n,A_n}}
 \end{align*}
 
-For any $k \in [N]$, we construct the $?$-policy $\pi^{?k}$ s.t. for any $n \in \Nats$, $h \in ?$ s.t. $\Pr\left[A\Theta^!_{:n}=h,\ K = k\right] > 0$ and $a \in ?$
+We now construct $\AC{\IP\PoS}_{k\in[N]}$ s.t. for any $n \in \Nats$, $a \in \A_\square$, $h \in \St_\square^n$ and $s\in\St_\square$
 
-$$\pi^{?k}(a \mid h):=\Pr\left[A^!_n = a \mid A\Theta^!_{:n} = h,\ K = k\right]$$
+\begin{align*}
+&\Pr\left[H_n=h,\AP{\Theta_n,X_n}=s,K=k\right] > 0 \implies\\
+&\pi^{!k}\APM{a}{h,s}:=\CP{}{A_n=a}{H_n=h,\AP{\Theta_n,X_n}=s,K=k}
+\end{align*}
 
-Given any $?$-policy $\pi$ and $?$-policy $\sigma$ we define $\alpha_{\sigma\pi}: ? \K ?$ by
+\Comment{...we define $\alpha_{\Ad\pi}: \St_\square^* \K \St^*$ by
 
 $$\alpha_{\sigma\pi} (g \mid h) := [[h = \underline{g}]]C_h\prod_{n = 0}^{\Abs{h}-1} \sum_{a \in \A}\left([[g_n \in \bot a?]] \pi\left(\bot \mid g_{:n}\right)\sigma\left(a \mid h_{:n}\right)+[[g_n \in a\bot?]]\pi\left(a \mid g_{:n}\right)\right)$$
 
 Here, $C_h \in \Reals$ is a constant defined s.t. the probabilities sum to 1. We define the $?$-policy $\left[\sigma\right]\underline{\pi}$ by
 
-$$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$
+$$\left[\sigma\right]\underline{\pi}(a \mid h):=\Pr_{g \sim \alpha_{\sigma\pi}(h)}\left[\pi\left(g\right)=a \lor \left(\pi\left(g\right)=\bot \land \sigma(h)=a\right)\right]$$}
 
-Define $\tau^k \in (0,1)$ by
+It is easy to see equation~(\ref{eqn:imaginary_safety}) holds, allowing us to apply Proposition~\ref{prp:short_long} and get
 
-$$\tau^k := \max_{s \in \UC^k} \sup_{\gamma \in [1 - \alpha, 1)} \Abs{\frac{\D\V_k(s,\gamma)}{\D\gamma}}+1$$
-
-Condition iii of Proposition B.1 and condition ii of Definition 2 imply that for any $h \in ?$
-
-$$\Supp{\AB{\sigma^k}\underline{\pi}^{?k}(h)} \subseteq \A^0_k\AP{S^k(h)}$$
-
-This means we can apply Proposition B.2 and get
-
-$$\EU^*_{\upsilon^k}(1 - \alpha)-\EU^{\pi^{?k}}_{\bar{\upsilon}^k\AB{\sigma^k}}(1 - \alpha) \leq \alpha\sum_{n=0}^\infty \sum_{m=0}^{T-1} (1-\alpha)^{nT+m}\left(\E{x\sim\mu^k\bowtie\pi^{*k}_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\nu^k\bowtie\pi^{?k}}\left[r\left(\underline{x}_{:nT+m}\right)\right]\right) + \frac{2\tau^k\alpha}{1-(1-\alpha)^T}$$
+\[\Rg_{L^k}^{\IP}(\gamma) \leq \AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\star k}_n-\EU^{!k}_n}+2\Tn_{M^k}(\gamma)\cdot\frac{1-\gamma}{1-\gamma^T}\]
 
 Here, the $?$-policy $\pi^{*k}_n$ is defined as $\pi^*_n$ in Proposition B.2, with $\pi^k$ in place of $\pi^*$. We also define the $?$-policies $\pi^{!k}_n$ and $\pi^{!!k}_n$ by
 
