@@ -1193,9 +1193,9 @@ Using equation~(\ref{eqn:sharp_vs_star_via_delegations}), we can apply Propositi
 
 \[\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\IP}(\gamma) \leq \frac{1-\gamma^T}{N}\sum_{k=0}^{N-1}\sum_{n=0}^\infty \gamma^{nT}\AP{\EU^{\sharp k}_n-\EU^{!k}_n}+O\AP{\bar{\Tn}\cdot\frac{1-\gamma}{1-\gamma^T}+\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}}\]
 
-Define the random variables $\AC{U^!_n : \Omega \rightarrow [0,1]}_{n\in\Nats}$ by 
+Define the random variables $\AC{U_n : \Omega \rightarrow [0,1]}_{n\in\Nats}$ by 
 
-$$U^!_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} \R\AP{\Theta_{nT+m}}$$
+$$U_n:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^{m} \R\AP{\Theta_{nT+m}}$$
 
 \Comment{Denote 
 
@@ -1203,13 +1203,21 @@ $$\beta:=\frac{\AP{1-(1-\alpha)^T}\ln N}{\eta^2\epsilon}+\frac{\bar{\tau}\alpha}
 
 We get
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} \leq \AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \E{}\left[\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right] + O\AP{\beta}$$
+\begin{align*}
+\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\IP}(\gamma) \leq &\AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT} \Ea{}{\CE{}{U_n}{K, J_n = K, Z_{nT}}-\CE{}{U_n}{Z_{nT}}} \\ 
+&+ O\AP{\bar{\Tn}\cdot\frac{1-\gamma}{1-\gamma^T}+\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}}\\
+\leq &\sqrt{\AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT} \Ea{}{\AP{\CE{}{U_n}{K, J_n = K, Z_{nT}}-\CE{}{U_n}{Z_{nT}}}^2}} \\ 
+&+ O\AP{\bar{\Tn}\cdot\frac{1-\gamma}{1-\gamma^T}+\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}}
+\end{align*}
 
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \E{}\left[\left(\E{}\left[U^!_n \mid \J^!_n = K,\ Z^!_{nT}\right]-\E{}\left[U^!_n \mid Z^!_{nT}\right]\right)^2\right]} +  O\AP{\beta}$$
+We apply Proposition~\ref{prp:thompson} to each term in the sum over $n$.
 
-We apply Proposition B.3 to each term in the sum over $n$.
-
-$$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\AP{1-(1-\alpha)^T}\sum_{n=0}^\infty (1-\alpha)^{nT} \E{}\left[\frac{1}{2\eta}\I{}\left[K;\J^!_n,U^!_n \mid Z^!_{nT}\right]\right]} +  O\AP{\beta}$$
+\begin{align*}
+\frac{1}{N}\sum_{k=0}^{N-1}\Rg_{L^k}^{\IP}(\gamma) \leq &\sqrt{\AP{1-\gamma^T}\sum_{n=0}^\infty \gamma^{nT} \Ea{}{\frac{1}{2\eta}\CI{}{K;J_n,U_n}{Z_{nT}}}} \\
+&+ O\AP{\bar{\Tn}\cdot\frac{1-\gamma}{1-\gamma^T}+\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}}\\
+\leq &\sqrt{\frac{1-\gamma^T}{2\eta}\sum_{n=0}^\infty \gamma^{nT} \Ea{}{?-?}} \\
+&+ O\AP{\bar{\Tn}\cdot\frac{1-\gamma}{1-\gamma^T}+\frac{\AP{1-\gamma^T}\ln{N}}{\eta^2\epsilon}}
+\end{align*}
 
 $$\frac{1}{N}\sum_{k=0}^{N-1}R^{?k} = \sqrt{\frac{1-(1-\alpha)^T}{2\eta}\sum_{n=0}^\infty \E{}\left[\En\Big(Z^!_{nT}\Big)-\En\left(Z^!_{(n+1)T}\right)\right]} + O\AP{\beta}$$
 
