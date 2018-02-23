@@ -466,7 +466,7 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\g
 
 Observe that Theorem~\ref{thm:regret_bound} is non-trivial even without equation~\ref{eqn:thm__regret_bound__delegations}, since, Definition~\ref{def:sane} is s.t. a policy that always delegates might fail to achieve any meaningful regret bound.
 
-Note that $\eta$ and $T$ are external parameters of the policy that we can choose however we like. Taking appropriate values yields the following
+Note that $\eta$ and $T$ are external parameters of the policy that we can choose however we like ($\eta$ is a probability threshold below which we stop considering hypotheses, and $T$ is the length of episodes for the purpose of Thompson sampling; see section~\ref{sec:outline}.) Taking appropriate values yields the following
 
 \begin{samepage}
 \begin{corollary}
@@ -506,7 +506,7 @@ Then, there is $\pi^\dagger: \St_\X^* \times \St_\X \K \A_\X$ s.t. for any $k\in
 \section{Proof Outline}
 \label{sec:outline}
 
-We start by giving an explicit description of an algorithm that computes the policy $\pi^\dagger$.
+We start by giving an explicit description of an algorithm that implements the policy $\pi^\dagger$.
 
 By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\Ad^k\APM{\pi^{\star k}(s)}{s} > \epsilon$. The algorithm is then a variant of Thompson sampling in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^{\star k}$ but delegating when we are uncertain the action is safe. Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution. If the currently sampled hypothesis is discarded, the algorithm continues to select safe actions until the end of the time interval, delegating whenever no action is certainly safe.\pagebreak
 
@@ -601,7 +601,7 @@ Given an MDP $M$ and any $\pi: \St_M^* \times \St_M \K \A$, we define $\FH_{M\pi
 \FH_{M\pi} := \ACM{h \in \St_M^*}{\Pa{x\sim M\pi}{h \sqsubset x} > 0}
 \end{equation}
 
-Observe that, in the imaginary setting, the policy $\IP: \St_\X^* \times \St_\X \K \A_\X$ computed by our algorithm (which depends explicitly on $k$ because $k$ determines $\beta$) has the property
+Observe that, in the imaginary setting, the policy $\IP: \St_\X^* \times \St_\X \K \A_\X$ implemented by our algorithm (which depends explicitly on $k$ because $k$ determines $\beta$) has the property
 
 \begin{equation}
 \forall h\in\FH_{L^k\pi^{!k}},s\in\St_\X: \Supp{\IP(h,s)} \subseteq \A_{M^k}^0(s)\cup\{\bot\}
@@ -609,7 +609,7 @@ Observe that, in the imaginary setting, the policy $\IP: \St_\X^* \times \St_\X 
 
 This is thanks to the condition at line~\ref{ln:delegate_cond} and property~\ref{con:def__sane__safe} of Definition~\ref{def:sane}.
 
-Combining $\pi^{!k}$ with the advisor $\Ad^k$ we get the policy $\AdP{\Ad^k}{\IP}: \St^*\times\St\K\A$ which has satisfies (using property~\ref{con:def__sane__safe} of Definition~\ref{def:sane} again)
+Combining $\pi^{!k}$ with the advisor $\Ad^k$ we get the policy $\AdP{\Ad^k}{\IP}: \St^*\times\St\K\A$ which satisfies (using property~\ref{con:def__sane__safe} of Definition~\ref{def:sane} again)
 
 \begin{equation}
 \label{eqn:imaginary_safety}
