@@ -116,9 +116,10 @@
 \newcommand{\RC}{\Xi}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\B}{\mathcal{B}}
+\newcommand{\X}{\bullet}
 
 \newcommand{\Po}{:\St^* \times \St \K \A}
-\newcommand{\PoS}{:\St_\square^* \times \St_\square \K \A_\square}
+\newcommand{\PoS}{:\St_\X^* \times \St_\X \K \A_\X}
 \newcommand{\IP}{\pi^{!k}}
 
 \title[Delegative Reinforcement Learning]{Delegative Reinforcement Learning: learning to avoid traps\\ with a little help}
@@ -445,7 +446,7 @@ We also denote
 \begin{theorem}
 \label{thm:regret_bound}
 
-There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, non-empty finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$ which is $\geq 2$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\square:=\A\sqcup\{\bot\}$ and $\St_\square:=\St \times \A_\square$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=\MA{M^k}{\Ad^k}$. Also, denote $\bar{\Tn}:=\frac{1}{N}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)$. Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: in this sense, it is \emph{not} anytime. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, non-empty finite sets $\St,\A$, some $s_0 \in \St$ and some $\R: \St \rightarrow [0,1]$. Consider some $N \in \Nats$ which is $\geq 2$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\R}$. Denote $\A_\X:=\A\sqcup\{\bot\}$ and $\St_\X:=\St \times \A_\X$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=\MA{M^k}{\Ad^k}$. Also, denote $\bar{\Tn}:=\frac{1}{N}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)$. Then, there is $\pi^\dagger: \St_\X^* \times \St_\X \K \A_\X$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: in this sense, it is \emph{not} anytime. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
 
 \begin{equation}
 \label{eqn:thm__regret_bound__regret}
@@ -485,7 +486,7 @@ Denote
 \RC:=\AP{N^6 \AP{\ln N} \AP{\frac{1}{\epsilon}+\Abs{\A}}\AP{\bar{\Tn}+1}}^{\sfrac{1}{4}}
 \end{equation}
 
-Then, there is $\pi^\dagger: \St_\square^* \times \St_\square \K \A_\square$ s.t. for any $k\in[N]$
+Then, there is $\pi^\dagger: \St_\X^* \times \St_\X \K \A_\X$ s.t. for any $k\in[N]$
 
 \begin{equation}
 \label{eqn:crl__balanced_regret_bound__regret}
@@ -600,10 +601,10 @@ Given an MDP $M$ and any $\pi: \St_M^* \times \St_M \K \A$, we define $\FH_{M\pi
 \FH_{M\pi} := \ACM{h \in \St_M^*}{\Pa{x\sim M\pi}{h \sqsubset x} > 0}
 \end{equation}
 
-Observe that, in the imaginary setting, the policy $\IP: \St_\square^* \times \St_\square \K \A_\square$ computed by our algorithm (which depends explicitly on $k$ because $k$ determines $\beta$) has the property
+Observe that, in the imaginary setting, the policy $\IP: \St_\X^* \times \St_\X \K \A_\X$ computed by our algorithm (which depends explicitly on $k$ because $k$ determines $\beta$) has the property
 
 \begin{equation}
-\forall h\in\FH_{L^k\pi^{!k}},s\in\St_\square: \Supp{\IP(h,s)} \subseteq \A_{M^k}^0(s)\cup\{\bot\}
+\forall h\in\FH_{L^k\pi^{!k}},s\in\St_\X: \Supp{\IP(h,s)} \subseteq \A_{M^k}^0(s)\cup\{\bot\}
 \end{equation}
 
 This is thanks to the condition at line~\ref{ln:delegate_cond} and property~\ref{con:def__sane__safe} of Definition~\ref{def:sane}.
@@ -623,7 +624,7 @@ The regret incurred during each \enquote{episode} of length $T$ can be divided i
 
 Here, $\Abs{h}$ denotes the length of $h$. That is, for $h \in \St^m$, $\Abs{h}:=m$.
 
-Define $\R_\square: \St_\square \rightarrow [0,1]$ by $\R_\square(s,a):=\R(s)$. For each $k\in[N]$ and $n\in\Nats$, define $\EU_n^{\star k},\EU_n^{!k}\in[0,1]$ by
+Define $\R_\X: \St_\X \rightarrow [0,1]$ by $\R_\X(s,a):=\R(s)$. For each $k\in[N]$ and $n\in\Nats$, define $\EU_n^{\star k},\EU_n^{!k}\in[0,1]$ by
 
 \begin{equation}
 \label{eqn:eustar}
@@ -632,7 +633,7 @@ Define $\R_\square: \St_\square \rightarrow [0,1]$ by $\R_\square(s,a):=\R(s)$. 
 
 \begin{equation}
 \label{eqn:eushriek}
-\EU_n^{!k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{L^k}{\IP}}}{\R_\square\AP{x_{nT+m}}}
+\EU_n^{!k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{L^k}{\IP}}}{\R_\X\AP{x_{nT+m}}}
 \end{equation}
 
 Due to equation~(\ref{eqn:imaginary_safety}), the long-term regret per episode is $O\AP{\Tn_{M^k}(\gamma)\cdot(1-\gamma)}$. The number of episodes that are significant in terms of time discount is $\frac{1}{(1-\gamma)T}$. Therefore, the total contribution of the long-term regret is $O\AP{\frac{\Tn_{M^k}(\gamma)}{T}}$. This gives us\footnote{See Proposition~\ref{prp:short_long} for the detailed derivation.}
@@ -669,7 +670,7 @@ We also define $\EU^{\sharp k}_n\in[0,1]$ by
 
 \begin{equation}
 \label{eqn:eusharp}
-\EU_n^{\sharp k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{L^k}{\pi_n^{\sharp  k}}}}{\R_\square\AP{x_{nT+m}}}
+\EU_n^{\sharp k}:=\frac{1-\gamma}{1-\gamma^T}\sum_{m=0}^{T-1} \gamma^m \Ea{x\sim{\MP{L^k}{\pi_n^{\sharp  k}}}}{\R_\X\AP{x_{nT+m}}}
 \end{equation}
 
 We can now rewrite $\EU^{\star k}_n-\EU^{!k}_n$ as $\AP{\EU^{\star k}_n-\EU^{\sharp k}_n}+\AP{\EU^{\sharp k}_n-\EU^{!k}_n}$ and bound the contribution of each term separately.
@@ -1113,9 +1114,9 @@ The form of inequalities (\ref{eqn:thm__regret_bound__regret}) and (\ref{eqn:thm
 \begin{align*}
 Z^\dagger_n,\tilde{Z}^\dagger_n: \Omega &\rightarrow \Delta[N]\\ 
 J^\dagger_n: \Omega &\rightarrow [N]\\
-\Psi^\dagger_n: \Omega &\rightarrow \A_\square\\
-A^\dagger_n: \Omega &\rightarrow \A_\square\\
-X^\dagger_n: \Omega &\rightarrow \A_\square\\
+\Psi^\dagger_n: \Omega &\rightarrow \A_\X\\
+A^\dagger_n: \Omega &\rightarrow \A_\X\\
+X^\dagger_n: \Omega &\rightarrow \A_\X\\
 \Theta^\dagger_n: \Omega &\rightarrow \St
 \end{align*}
 
@@ -1125,7 +1126,7 @@ $$H^\dagger_n:= \AP{\Theta^\dagger_0,\Theta^\dagger_1 \dots \Theta^\dagger_{n-1}
 
 By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\Ad^k\APM{\pi^k(s)}{s} > \epsilon$.
 
-We postulate that $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$, $s\in\St$ and $a\in\A_\square$, denoting $n = lT+m$
+We postulate that $K$ is uniformly distributed and for any $k \in [N]$, $l \in \Nats$, $m \in [T]$, $s\in\St$ and $a\in\A_\X$, denoting $n = lT+m$
 
 \[A^\dagger_n = \begin{cases} \Psi^\dagger_n \text{ if } \forall k \in \Supp{Z^\dagger_n}: \Ad^k\APM{\Psi^\dagger_n}{\Theta^\dagger_n} > 0 \\ \text{some } a\in\A \text{ s.t. } \forall k \in \Supp{Z^\dagger_n}: \Ad^k\APM{a}{\Theta^\dagger_n} > 0 \text{ if such exists and } \Psi^\dagger_n=\bot\\\bot \text{ otherwise} \end{cases}\\\]
 %
@@ -1144,7 +1145,7 @@ Note that the last equation has the form of a Bayesian update which is allowed t
 
 This probability space can be constructed using standard arguments from the Kolmogorov extension theorem.
 
-We now define $\pi^\dagger$ s.t. for any $n \in \Nats$, $a \in \A_\square$, $h \in \St_\square^n$ and $s\in\St_\square$
+We now define $\pi^\dagger$ s.t. for any $n \in \Nats$, $a \in \A_\X$, $h \in \St_\X^n$ and $s\in\St_\X$
 
 $$\Pr\left[H^\dagger_n=h,\AP{\Theta^\dagger_n,X^\dagger_n}=s\right] > 0 \implies \pi^\dagger\APM{a}{h,s}:=\CP{}{A^\dagger_n=a}{H^\dagger_n=h,\AP{\Theta^\dagger_n,X^\dagger_n}=s}$$
 
@@ -1165,14 +1166,14 @@ X_0 &= s_0\\
 
 As before, we also define $H_n:=\AP{\Theta_0,\Theta_1\dots\Theta_{n-1}}$.
 
-We now construct $\AC{\IP\PoS}_{k\in[N]}$ s.t. for any $n \in \Nats$, $a \in \A_\square$, $h \in \St_\square^n$ and $s\in\St_\square$
+We now construct $\AC{\IP\PoS}_{k\in[N]}$ s.t. for any $n \in \Nats$, $a \in \A_\X$, $h \in \St_\X^n$ and $s\in\St_\X$
 
 \begin{align*}
 &\Pr\left[H_n=h,\AP{\Theta_n,X_n}=s,K=k\right] > 0 \implies\\
 &\pi^{!k}\APM{a}{h,s}:=\CP{}{A_n=a}{H_n=h,\AP{\Theta_n,X_n}=s,K=k}
 \end{align*}
 
-\Comment{...we define $\alpha_{\Ad\pi}: \St_\square^* \K \St^*$ by
+\Comment{...we define $\alpha_{\Ad\pi}: \St_\X^* \K \St^*$ by
 
 $$\alpha_{\sigma\pi} (g \mid h) := [[h = \underline{g}]]C_h\prod_{n = 0}^{\Abs{h}-1} \sum_{a \in \A}\left([[g_n \in \bot a?]] \pi\left(\bot \mid g_{:n}\right)\sigma\left(a \mid h_{:n}\right)+[[g_n \in a\bot?]]\pi\left(a \mid g_{:n}\right)\right)$$
 
