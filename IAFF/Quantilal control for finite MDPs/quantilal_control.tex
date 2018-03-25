@@ -1,0 +1,139 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Comment}[1]{}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Dom}{dom}
+
+% autosize delimiters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
+\newcommand{\APM}[2]{\left(#1\;\middle\vert\;#2\right)}
+\newcommand{\ABM}[2]{\left[#1\;\middle\vert\;#2\right]}
+\newcommand{\ACM}[2]{\left\{#1\;\middle\vert\;#2\right\}}
+
+% operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\CI}[3]{\underset{#1}{\operatorname{I}}\ABM{#2}{#3}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
+
+% operators that require parentheses
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+\newcommand{\PS}[1]{\mathcal{P}\AP{#1}}
+
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\textnormal{tv}}\AP{#1}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
+
+\newcommand{\K}{\xrightarrow{\textnormal{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+
+% Paper specific
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\R}{\mathcal{R}}
+
+\newcommand{\Ut}{\operatorname{U}}
+\newcommand{\V}{\operatorname{V}}
+
+\begin{document}
+
+We introduce a variant of the concept of a "[quantilizer](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)" for the setting of choosing a policy for a finite Markov decision process (MDP), where the generic unknown cost is replaced by an unknown penalty term in the reward function. This is essentially a generalization of quantilization in repeated games with a cost independence assumption. We show that the "quantilal" policy shares some properties with the ordinary optimal policy, namely that (i) it can always be chosen to be Markov (ii) it can be chosen to be stationary (but not deterministic of course) when time discount is geometric (iii) the "quantilum" value of an MDP with geometric time discount is a semialgebraic function of the parameters, and in particular it converges when the discount parameter $\lambda$ approaches 1. Finally, we demonstrate a polynomial-time algorithm for computing the quantilal policy, showing that quantilization is not qualitatively harder than ordinary optimization.
+
+***
+
+\section{Results}
+
+Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". That is, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost $C: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{C}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ has a known bound $C_{\text{worst}}$. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We then can seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{C}$ by a fixed bound $C_{\max}$:
+
+$$\xi^* := \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\Ea{\xi}{C} \leq C_{\max}}???$$
+
+% In the above we should maximize E_\xi[C] over all C s.t. E_\zeta[C] \leq C_worst
+
+Alternatively, we can maximize the minimal guaranteed expectation of $\Ut-C$
+
+$$\xi...$$
+
+These two...
+
+Foo
+
+\#Definition 1
+
+Bar
+
+\#Lemma 1
+
+Foo
+
+***
+
+Bar
+
+\section{Proofs}
+
+\#Proposition A.1
+
+Hahaha
+
+\#Proof of Proposition A.1
+
+Mwhahaha
+
+\end{document}
+
+
+
