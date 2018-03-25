@@ -1,0 +1,182 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Comment}[1]{}
+
+\newcommand{\Bool}{\{0,1\}}
+\newcommand{\Words}{{\Bool^*}}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Stab}{stab}
+\DeclareMathOperator{\Img}{Im}
+\DeclareMathOperator{\Dom}{dom}
+
+% autosize deliminaters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
+
+% operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
+\newcommand{\Var}{\operatorname{Var}}
+
+% operators that require parentheses
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
+
+\newcommand{\Prj}{\operatorname{pr}}
+
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Sq}[2]{\{#1\}_{#2 \in \Nats}}
+\newcommand{\Sqn}[1]{\Sq{#1}{n}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
+
+\newcommand{\Alg}{\xrightarrow{\text{alg}}}
+\newcommand{\M}{\xrightarrow{\text{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+
+% Paper specific
+
+\newcommand{\Ob}{\mathcal{O}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\In}{\mathcal{I}}
+\newcommand{\FH}{(\A \times \Ob)^*}
+\newcommand{\IH}{(\A \times \Ob)^\omega}
+\newcommand{\Ado}{\bar{\Ob}}
+\newcommand{\Ada}{\bar{\A}}
+\newcommand{\Adi}{{\bar{\In}}}
+\newcommand{\Adao}{\overline{\A \times \Ob}}
+\newcommand{\Adfh}{\Adao^*}
+\newcommand{\Adih}{\Adao^\omega}
+\DeclareMathOperator{\HD}{hdom}
+\newcommand{\Hy}{\mathcal{H}}
+\newcommand{\UC}{\mathcal{U}}
+
+\newcommand{\RMC}{\mathrm{C}}
+\newcommand{\RMD}{\mathrm{D}}
+\newcommand{\RME}{\mathrm{E}}
+\newcommand{\RMF}{\mathrm{F}}
+
+\newcommand{\SF}{\St^{\RMF}}
+\newcommand{\SD}{\St^{\RMD}}
+\newcommand{\SC}{\St^{\RMC}}
+\newcommand{\MF}{M^{\RMF}}
+\newcommand{\MD}{M^{\RMD}}
+\newcommand{\ME}{M^{\RME}}
+\newcommand{\TF}{\bar{\tau}^{\RMF}}
+\newcommand{\PD}{\pi^{\RMD}}
+\newcommand{\UD}{\upsilon^{\RMD}}
+
+\newcommand{\Ut}{\operatorname{U}}
+\newcommand{\V}{\operatorname{V}}
+\newcommand{\Q}{\operatorname{Q}}
+\newcommand{\EU}{\operatorname{EU}}
+
+\newcommand{\Dl}{\mathcal{D}}
+\newcommand{\Do}{\mathfrak{D}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Z}{Z}
+\newcommand{\J}{J}
+
+\newcommand{\Pd}{P}
+
+\begin{document}
+
+There is a simple way to somewhat improve the regret bound for DRL we derived [before](https://agentfoundations.org/item?id=1739). Specifically, we have the following
+
+\#Theorem 1
+
+There is some $C \in (0,\infty)$ s.t. the following holds.
+
+Consider $\In$ an interface, $\alpha,\epsilon \in (0,1)$, $\Hy = \{\upsilon^k = (\mu^k,r^k) \in \Upsilon_{\In}\}_{k \in [N]}$ for some $N \in \Nats$. For each $k \in [N]$, let $\sigma^k$ be an $\epsilon$-sane policy for $\upsilon^k$. For each $k \in [N]$, let $M^k$ be the corresponding MDP. Denote
+
+$$\tau:=\frac{1}{N}\sum_{k = 0}^{N-1} \max_{s \in \St^k} \sup_{\gamma \in [1-\alpha,1)} \Abs{\frac{\D{\V_{M^k}(s,\gamma)}}{\D\gamma}}+1$$
+
+Assume that 
+
+i. For each $k \in [N]$, $\alpha \leq 1 - \gamma_{M^k}$.
+
+ii. $$\alpha \leq \frac{1}{N^2 \AP{\ln{N}}^{4/3}}\AP{\frac{1}{\epsilon}+\Abs{\A}}^{-1} \tau^{8/3}$$
+
+Then, there is an $\bar{\In}$-policy $\pi^*$ s.t.
+
+$$\frac{1}{N}\sum_{k=0}^N\AP{\EU_{\upsilon^k}^*(1-\alpha) - \EU_{\bar{\upsilon}^k\left[\sigma^k\right]}^{\pi^*}(1-\alpha)} \leq C\alpha^{1/4} N^{1/2} \AP{\ln{N}}^{1/3} \AP{\frac{1}{\epsilon}+\Abs{\A}}^{1/4} \tau^{1/3}$$
+
+***
+
+This gives gives us a better dependence on $N$ but a worse dependence on $\tau$ compared to what we had before. However, we can also get the best of both bounds with a single algorithm, since the only difference between the algorithms is in the choice of the parameters $\eta$ and $T$ (which thus can be chosen to give the better of the two bounds for the given parameters).
+
+To show Theorem 1, we use the following proposition which appears in [Russo and Van Roy](http://www.jmlr.org/papers/volume17/14-087/14-087.pdf) as Proposition 3 (see page 16):
+
+\#Proposition 1
+
+Consider a probability space $(\Omega, P \in \Delta\Omega)$, $N \in \Nats$, $R \subseteq [0,1]$ a finite set and random variables $U: \Omega \rightarrow R$, $K: \Omega \rightarrow [N]$ and $\J: \Omega \rightarrow [N]$. Assume that $K_*P = J_*P$ and $\I{}[K;J] = 0$. Then
+
+$$\I{}\left[K;J,U\right] \geq \frac{2}{N} \left(\E{}\left[U \mid J = K,\ K\right]-\E{}\left[U\right]\right)^2$$ 
+***
+
+Theorem 1 is now proved exactly as before, with Proposition 1 replacing what was previously called Proposition B.3 and setting $\eta$ and $T$ to
+
+$$\eta = \alpha^{1/4} N^{-1/2} \AP{\ln N}^{1/3} \AP{\frac{1}{\epsilon}+\Abs{\A}}^{1/4} \tau^{1/3}$$
+
+$$T = \alpha^{-1/4} N^{-1/2} \AP{\ln N}^{-1/3} \AP{\frac{1}{\epsilon}+\Abs{\A}}^{-1/4} \tau^{2/3}$$
+
+\end{document}
+
+
+
