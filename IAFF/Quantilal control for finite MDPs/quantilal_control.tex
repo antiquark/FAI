@@ -50,7 +50,8 @@
 \newcommand{\PS}[1]{\mathcal{P}\AP{#1}}
 
 \newcommand{\D}{\mathrm{d}}
-\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}(#1 \| #2)}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}\AP{#1\middle\vert\middle\vert#2}}
+\newcommand{\RD}[3]{\operatorname{D}_{#1}\AP{#2\middle\vert\middle\vert#3}}
 \newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
 \newcommand{\Dtva}[1]{\operatorname{d}_{\textnormal{tv}}\AP{#1}}
 
@@ -90,6 +91,8 @@
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\Co}{C}
 \newcommand{\V}{\operatorname{V}}
+\newcommand{\Hi}{\operatorname{H}}
+\newcommand{\Z}{Z}
 
 \begin{document}
 
@@ -101,11 +104,11 @@ We introduce a variant of the concept of a "[quantilizer](https://intelligence.o
 
 Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". That is, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost function $\Co: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{\Co}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ is bounded by 1. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We can then seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{\Co}$ by a fixed bound $C_{\max}$:
 
-$$\tilde{\xi}^* := \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\forall \Co: \A \rightarrow [0,\infty): \Ea{\zeta}{\Co} \leq 1 \implies \Ea{\xi}{\Co} \leq C_{\max}}$$
+$$\tilde{\xi}^* :\in \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\forall \Co: \A \rightarrow [0,\infty): \Ea{\zeta}{\Co} \leq 1 \implies \Ea{\xi}{\Co} \leq C_{\max}}$$
 
 Alternatively, we can choose some parameter $\eta\in(0,\infty)$ and maximize the minimal guaranteed expectation of $\Ut-\eta \Co$:
 
-$$\xi^* := \Argmax{\xi \in \Delta\A}\min_{\Co:\A\rightarrow[0,\infty)}\ACM{\Ea{\xi}{\Ut-\eta \Co}}{\Ea{\zeta}{\Co} \leq 1}$$
+$$\xi^* :\in \Argmax{\xi \in \Delta\A}\min_{\Co:\A\rightarrow[0,\infty)}\ACM{\Ea{\xi}{\Ut-\eta \Co}}{\Ea{\zeta}{\Co} \leq 1}$$
 
 These two formulations are almost equivalent since both amount to finding a strategy that is Pareto efficient w.r.t. to the two objectives $\Ea{}{\Ut}$ and $-\Ea{}{\Co}$. For $\tilde{\xi}^*$ the tradeoff is governed by the parameter $C_{\max}$ and for $\xi^*$ the tradeoff is governed by the parameter $\eta$. Indeed it is easy to see that any $\xi^*$ is also optimal for the first criterion if we take $C_{\max}=\Ea{\xi^*}{\Co}$, and any $\tilde{\xi}^*$ is also optimal for the latter criterion for an appropriate choice of $\eta$ (it needs to be a subderivative of the Pareto frontier).
 
@@ -125,13 +128,31 @@ We now assume that the cost function $\Co: \St^\omega \rightarrow \Reals$ (or, t
 
 $$\Co(x) = \Ea{n\sim\gamma}{\Pe\AP{x_n}}$$
 
+Denote $\St^*:=\bigsqcup_{n\in\Nats}\St^n$. Given a policy $\pi: \St^*\times\St \K \A$ (where the $\St^*$ factor represents the past history the factor $\St$ represents the current state), we define $\Hi(\pi) \in \Delta\St^\omega$ in the usual way (the distribution over histories resulting from $\pi$). Finally, we fix $\eta \in (0,\infty)$. We are now ready to define quantilization in this setting
+
 \#Definition 1
 
-Bar
+$\pi^* : \St^*\times\St \K \A$ is said to be *quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$* when
 
-\#Lemma 1
+$$\pi^* :\in \Argmax{\pi: \St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi(\pi)\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi(\sigma)\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
 
-Foo
+***
+
+In the original quantilization formalism, the quantilal strategy can be described more explicitly, as sampling according to the reference measure $\zeta$ from some top fraction of actions ranked by expected utility. Here, we don't have an analogous description, but we can in some sense evaluate the minimum over $\Pe$.
+
+For any $\pi: \St^*\times\St \K \A$, define $\Z(\pi)\in\Delta\St$ by
+
+$$\Z(\pi)(s):=\Pa{\substack{x\sim\Hi(\pi)\\n\sim\gamma}}{x_n=s}$$
+
+For any $\mu,\nu\in\Delta\St$, the notation $\RD{\infty}{\mu}{\nu}$ signifies the Renyi divergence of order $\infty$:
+
+$$\RD{\infty}{\mu}{\nu} := \ln \max_{s\in\St}\frac{\mu(s)}{\nu(s)}$$
+
+\#Proposition 1
+
+$\pi^* : \St^*\times\St \K \A$ is quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$ if and only if
+
+$$\pi^* :\in \Argmax{\pi: \St \K \A}\AP{\Ea{s\sim\Z(\pi)}{\R(s)}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
 
 ***
 
