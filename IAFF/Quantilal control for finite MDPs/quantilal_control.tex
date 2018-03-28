@@ -97,17 +97,19 @@ We introduce a variant of the concept of a "[quantilizer](https://intelligence.o
 
 \section{Results}
 
-Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". That is, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost $C: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{C}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ has a known bound $C_{\text{worst}}$. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We then can seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{C}$ by a fixed bound $C_{\max}$:
+Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". That is, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost function $C: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{C}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ is bounded by 1. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We can then seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{C}$ by a fixed bound $C_{\max}$:
 
-$$\xi^* := \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\Ea{\xi}{C} \leq C_{\max}}???$$
+$$\tilde{\xi}^* := \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\forall C: \A \rightarrow [0,\infty): \Ea{\zeta}{C} \leq 1 \implies \Ea{\xi}{C} \leq C_{\max}}$$
 
-% In the above we should maximize E_\xi[C] over all C s.t. E_\zeta[C] \leq C_worst
+Alternatively, we can choose some parameter $\eta\in(0,\infty)$ and maximize the minimal guaranteed expectation of $\Ut-\eta C$:
 
-Alternatively, we can maximize the minimal guaranteed expectation of $\Ut-C$
+$$\xi^* := \Argmax{\xi \in \Delta\A}\min_{C:\A\rightarrow[0,\infty)}\ACM{\Ea{\xi}{\Ut-\eta C}}{\Ea{\zeta}{C} \leq 1}$$
 
-$$\xi...$$
+These two formulations are almost equivalent since both amount to finding a strategy that is Pareto efficient w.r.t. to the two objectives $\Ea{}{\Ut}$ and $-\Ea{}{C}$. For $\tilde{\xi}^*$ the tradeoff is governed by the parameter $C_{\max}$ and for $\xi^*$ the tradeoff is governed by the parameter $\eta$. Indeed it is easy to see that any $\xi^*$ is also optimal for the first criterion if we take $C_{\max}=\Ea{\xi^*}{C}$, and any $\tilde{\xi}^*$ is also optimal for the latter criterion for an appropriate choice of $\eta$ (it needs to be a subderivative of the Pareto frontier).
 
-These two...
+In the following, we will stick to the second formulation, which can be thought of as a zero-sum game in which $\Ut-\eta C$ is the utility function of the agent whose strategy set is $\A$, and $C$ is chosen by the adversary. The quantilal strategy $\xi^*$ is the Nash equilibrium of the game.
+
+This formulation seems natural if we take $\eta:=\Ea{\zeta}{\max\AP{\Ut-\Ut^*,0}}$ and $C:=\eta^{-1}\max\AP{\Ut-\Ut^*,0}$. In particular, the quantilum value (the value of the game) is a lower bound on the expectation of $\Ut^*$. Note that all the Propositions we prove except TBD work for the first formulation as well, and modifying the proofs is straightforward.
 
 Foo
 
