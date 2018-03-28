@@ -85,8 +85,10 @@
 \newcommand{\St}{\mathcal{S}}
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\R}{\mathcal{R}}
+\newcommand{\Pe}{P}
 
 \newcommand{\Ut}{\operatorname{U}}
+\newcommand{\Co}{C}
 \newcommand{\V}{\operatorname{V}}
 
 \begin{document}
@@ -97,21 +99,31 @@ We introduce a variant of the concept of a "[quantilizer](https://intelligence.o
 
 \section{Results}
 
-Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". That is, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost function $C: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{C}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ is bounded by 1. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We can then seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{C}$ by a fixed bound $C_{\max}$:
+Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". That is, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost function $\Co: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{\Co}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ is bounded by 1. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We can then seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{\Co}$ by a fixed bound $C_{\max}$:
 
-$$\tilde{\xi}^* := \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\forall C: \A \rightarrow [0,\infty): \Ea{\zeta}{C} \leq 1 \implies \Ea{\xi}{C} \leq C_{\max}}$$
+$$\tilde{\xi}^* := \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\forall \Co: \A \rightarrow [0,\infty): \Ea{\zeta}{\Co} \leq 1 \implies \Ea{\xi}{\Co} \leq C_{\max}}$$
 
-Alternatively, we can choose some parameter $\eta\in(0,\infty)$ and maximize the minimal guaranteed expectation of $\Ut-\eta C$:
+Alternatively, we can choose some parameter $\eta\in(0,\infty)$ and maximize the minimal guaranteed expectation of $\Ut-\eta \Co$:
 
-$$\xi^* := \Argmax{\xi \in \Delta\A}\min_{C:\A\rightarrow[0,\infty)}\ACM{\Ea{\xi}{\Ut-\eta C}}{\Ea{\zeta}{C} \leq 1}$$
+$$\xi^* := \Argmax{\xi \in \Delta\A}\min_{\Co:\A\rightarrow[0,\infty)}\ACM{\Ea{\xi}{\Ut-\eta \Co}}{\Ea{\zeta}{\Co} \leq 1}$$
 
-These two formulations are almost equivalent since both amount to finding a strategy that is Pareto efficient w.r.t. to the two objectives $\Ea{}{\Ut}$ and $-\Ea{}{C}$. For $\tilde{\xi}^*$ the tradeoff is governed by the parameter $C_{\max}$ and for $\xi^*$ the tradeoff is governed by the parameter $\eta$. Indeed it is easy to see that any $\xi^*$ is also optimal for the first criterion if we take $C_{\max}=\Ea{\xi^*}{C}$, and any $\tilde{\xi}^*$ is also optimal for the latter criterion for an appropriate choice of $\eta$ (it needs to be a subderivative of the Pareto frontier).
+These two formulations are almost equivalent since both amount to finding a strategy that is Pareto efficient w.r.t. to the two objectives $\Ea{}{\Ut}$ and $-\Ea{}{\Co}$. For $\tilde{\xi}^*$ the tradeoff is governed by the parameter $C_{\max}$ and for $\xi^*$ the tradeoff is governed by the parameter $\eta$. Indeed it is easy to see that any $\xi^*$ is also optimal for the first criterion if we take $C_{\max}=\Ea{\xi^*}{\Co}$, and any $\tilde{\xi}^*$ is also optimal for the latter criterion for an appropriate choice of $\eta$ (it needs to be a subderivative of the Pareto frontier).
 
-In the following, we will stick to the second formulation, which can be thought of as a zero-sum game in which $\Ut-\eta C$ is the utility function of the agent whose strategy set is $\A$, and $C$ is chosen by the adversary. The quantilal strategy $\xi^*$ is the Nash equilibrium of the game.
+In the following, we will stick to the second formulation, which can be thought of as a zero-sum game in which $\Ut-\eta \Co$ is the utility function of the agent whose strategy set is $\A$, and $\Co$ is chosen by the adversary. The quantilal strategy $\xi^*$ is the Nash equilibrium of the game.
 
-This formulation seems natural if we take $\eta:=\Ea{\zeta}{\max\AP{\Ut-\Ut^*,0}}$ and $C:=\eta^{-1}\max\AP{\Ut-\Ut^*,0}$. In particular, the quantilum value (the value of the game) is a lower bound on the expectation of $\Ut^*$. Note that all the Propositions we prove except TBD work for the first formulation as well, and modifying the proofs is straightforward.
+This formulation seems natural if we take $\eta:=\Ea{\zeta}{\max\AP{\Ut-\Ut^*,0}}$ and $\Co:=\eta^{-1}\max\AP{\Ut-\Ut^*,0}$. In particular, the quantilum value (the value of the game) is a lower bound on the expectation of $\Ut^*$. Note that all the Propositions we prove except TBD work for the first formulation as well, and modifying the proofs is straightforward.
 
-Foo
+In principle, this formalism can be applied to sequential interaction between an agent and an environment, if we replace $\A$ by the set of *policies*. However, if it is possible to make structural assumptions about $\Ut$ and $C$, we can do better. Taylor explores one such structural assumption, namely a sequence of independent games in which both $\Ut$ and $\Co$ are additive across the games. We consider a more general setting, namely that of a finite Markov decision process (MDP).
+
+A finite MDP is defined by a finite set of states $\St$, a finite set of actions $\A$, a transition kernel $\T: \St \times \A \K \St$ and a reward function $\R: \St \rightarrow \Reals$. To specify the utility function, we also need to fix a time discount function $\gamma \in \Delta\Nats$. This allows defining $\Ut: \St^\omega \rightarrow \Reals$ by
+
+$$\Ut(x):=\Ea{n\sim\gamma}{\R\AP{x_n}}$$
+
+We also fix an initial distribution over states $\zeta_0 \in \Delta \St$. In "classical" control theory, it is sufficient to consider a deterministic initial state $s_0 \in \St$, since the optimal policy doesn't depend on the initial state anyway. However, quantilization is different since the worst-case cost function depends on the initial conditions.
+
+We now assume that the cost function $\Co: \St^\omega \rightarrow \Reals$ (or, the true utility function $\Ut^*$) has the same form. That is, there is some penalty function $\Pe: \St \rightarrow [0,\infty)$ s.t.
+
+$$\Co(x) = \Ea{n\sim\gamma}{\Pe\AP{x_n}}$$
 
 \#Definition 1
 
