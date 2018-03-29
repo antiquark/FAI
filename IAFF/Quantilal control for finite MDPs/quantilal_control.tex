@@ -122,7 +122,7 @@ A finite MDP is defined by a finite set of states $\St$, a finite set of actions
 
 $$\Ut(x):=\Ea{n\sim\gamma}{\R\AP{x_n}}$$
 
-We also fix an initial distribution over states $\zeta_0 \in \Delta \St$. In "classical" control theory, it is sufficient to consider a deterministic initial state $s_0 \in \St$, since the optimal policy doesn't depend on the initial state anyway. However, quantilization is different since the worst-case cost function depends on the initial conditions.
+We also fix an initial distribution over states $\zeta_0 \in \Delta \St$. In "classical" MDP theory, it is sufficient to consider a deterministic initial state $s_0 \in \St$, since the optimal policy doesn't depend on the initial state anyway. However, quantilization is different since the worst-case cost function depends on the initial conditions.
 
 We now assume that the cost function $\Co: \St^\omega \rightarrow \Reals$ (or, the true utility function $\Ut^*$) has the same form. That is, there is some penalty function $\Pe: \St \rightarrow [0,\infty)$ s.t.
 
@@ -134,7 +134,7 @@ Denote $\St^*:=\bigsqcup_{n\in\Nats}\St^n$. Given a policy $\pi: \St^*\times\St 
 
 $\pi^* : \St^*\times\St \K \A$ is said to be *quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$* when
 
-$$\pi^* :\in \Argmax{\pi: \St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi(\pi)\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi(\sigma)\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
+$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi(\pi)\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi(\sigma)\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
 
 ***
 
@@ -152,9 +152,45 @@ $$\RD{\infty}{\mu}{\nu} := \ln \max_{s\in\St}\frac{\mu(s)}{\nu(s)}$$
 
 $\pi^* : \St^*\times\St \K \A$ is quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$ if and only if
 
-$$\pi^* :\in \Argmax{\pi: \St \K \A}\AP{\Ea{s\sim\Z(\pi)}{\R(s)}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
+$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\AP{\Ea{s\sim\Z(\pi)}{\R(s)}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
 
 ***
+
+If the maximization in Proposition 1 was over arbitrary $\xi \in \Delta\St$ rather than $\xi$ of the form $\Z(\pi)$, we would get ordinary quantilization and sampling $\xi$ would be equivalent to sampling some top fraction of $\zeta:=\Z(\sigma)$. In general, the image of the $\Z$ operator is some closed convex set which is *not* the entire $\Delta\St$.  Also, Proposition 1 shows that quantilality only depends on $\sigma$ via $\zeta$. In the following, we will say that $\pi$ is quantilal relatively to $\zeta\in\Delta\St$ when it satisfies the property given in Proposition 1 with $\Z(\sigma)$ replaced by $\zeta$.
+
+So far we considered arbitrary (non-stationary) policies. From classical MDP theory, we know that an *optimal* policy can always be chosen to be Markov:
+
+\#Definition 2
+
+$\pi: \St^* \times \St \K \A$ is said to be a *Markov* policy, when there is some $\pi_\text{M}: \Nats \times S \K \A$ s.t. $\pi(h,s)=\pi_\text{M}\AP{\Abs{h},s}$.
+
+***
+
+Note that a priori it might be unclear whether a quantilal policy even exists. However, we have
+
+\#Proposition 2
+
+For any $\zeta\in\Delta\St$, there exists a Markov policy which is quantilal relatively to $\zeta$.
+
+***
+
+Now assume that our time discount function is geometric, i.e. there exists $\lambda\in[0,1)$ s.t. $\gamma(n)=(1-\lambda)\lambda^n$. Then it is known than an *optimal* can be chosen to be stationary:
+
+\#Defintion 3
+
+$\pi: \St^* \times \St \K \A$ is said to be a *stationary* policy, when there is some $\pi_\text{T}: S \K \A$ s.t. $\pi(h,s)=\pi_\text{T}\AP{s}$.
+
+***
+
+Once again, the situation for quantilal policies is analogous:
+
+\#Proposition 3
+
+If $\gamma$ is geometric, then for any $\zeta\in\Delta\St$, there exists a stationary policy which is quantilal relatively to $\zeta$.
+
+***
+
+What is *not* analogous is that an optimal policy can be chosen to be *deterministic* whereas, of course, this is not the case for quantilal policies.
 
 Bar
 
