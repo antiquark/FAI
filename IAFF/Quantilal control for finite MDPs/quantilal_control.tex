@@ -201,17 +201,19 @@ If $\gamma$ is geometric, then for any $\zeta\in\Delta\St$, there exists a stati
 
 What is *not* analogous is that an optimal policy can be chosen to be *deterministic* whereas, of course, this is not the case for quantilal policies.
 
-It is known that the value of an optimal policy depends on $\lambda$ as a piecewise rational function, and in particular it converges as $\lambda \rightarrow 1$ and has a Taylor expansion at $\lambda=1$. For quantilal policies, we derive the following, somewhat weaker result. Recall that a function is called *semialgebraic* when its graph is a finite union of sets defined by systems of polynomial inequalities.
+It is known that the value of an optimal policy depends on the parameters as a piecewise rational function, and in particular it converges as $\lambda \rightarrow 1$ and has a Taylor expansion at $\lambda=1$. The quantilum value has the same property.
 
 \#Proposition 4
 
-$\QV$ is a semialgebraic function of $\lambda$, $\eta$, the matrix elements of $\T$, the values of $\R$ and the values of $\zeta_0$.
+$\QV$ is a piecewise rational continuous function of $\lambda$, $\eta$, the matrix elements of $\T$, the values of $\R$ and the values of $\zeta_0$, with a final number of "pieces".
 
 \#Corollary 1
 
-$\QV$ converges as $\lambda \rightarrow 1$, holding all other parameters fixed. It has a *Puiseux series* expansion in $\lambda$ at $\lambda=1$.
+$\QV$ converges as $\lambda \rightarrow 1$, holding all other parameters fixed. It is analytic in $\lambda$ for some interval $\AB{\lambda_0,1}$ and therefore can be described by a Taylor expansion around $\lambda=1$ inside this interval.
 
 ***
+
+Note that for optimal policies, Proposition 4 holds for a simpler reason. Specifically, the optimal policy is piecewise constant (since it's deterministic) and there is a Blackwell policy i.e. a fixed policy which is optimal for any $\lambda$ sufficiently close to 1. And, it is easy to see that for a constant policy, the value is a rational function of $\lambda$. On the other hand, the quantilal policy is not guaranteed to be locally constant anywhere. Nevertheless the quantilum value is still piecewise rational.
 
 Finally, we address the question of the computational complexity of quantilization. We prove the following
 
@@ -225,7 +227,7 @@ In the above, we get an $\epsilon$-equilibrium rather than a Nash equilibrium (=
 
 \section{Future Directions}
 
-Just to tease a little, here are some developments of this work that I'm planning:
+To tease a little, here are some developments of this work that I'm planning:
 
 * Apply quantilization to *reinforcement learning*, i.e. when we don't know the MDP in advance. In particular, I believe that the principles of quantilization can be used not only to deal with misspecified rewards, but also to deal with traps to some extent (assuming it a priori known that the reference policy has at most a small probability of falling into a trap). This has some philosophical implications on how *humans* avoid traps.
 
