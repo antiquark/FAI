@@ -92,8 +92,8 @@
 \newcommand{\Co}{C}
 \newcommand{\V}{\operatorname{V}}
 \newcommand{\QV}{\operatorname{QV}}
-\newcommand{\Hi}{\operatorname{H}}
-\newcommand{\Z}{Z}
+\DeclareMathOperator{\Hi}{H}
+\DeclareMathOperator{\Z}{Z}
 
 \begin{document}
 
@@ -129,25 +129,25 @@ We now assume that the cost function $\Co: \St^\omega \rightarrow \Reals$ (or, t
 
 $$\Co(x) = \Ea{n\sim\gamma}{\Pe\AP{x_n}}$$
 
-Denote $\St^*:=\bigsqcup_{n\in\Nats}\St^n$. Given a policy $\pi: \St^*\times\St \K \A$ (where the $\St^*$ factor represents the past history the factor $\St$ represents the current state), we define $\Hi(\pi) \in \Delta\St^\omega$ in the usual way (the distribution over histories resulting from $\pi$). Finally, we fix $\eta \in (0,\infty)$. We are now ready to define quantilization in this setting
+Denote $\St^*:=\bigsqcup_{n\in\Nats}\St^n$. Given a policy $\pi: \St^*\times\St \K \A$ (where the $\St^*$ factor represents the past history the factor $\St$ represents the current state), we define $\Hi{\pi} \in \Delta\St^\omega$ in the usual way (the distribution over histories resulting from $\pi$). Finally, we fix $\eta \in (0,\infty)$. We are now ready to define quantilization in this setting
 
 \#Definition 1
 
 $\pi^* : \St^*\times\St \K \A$ is said to be *quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$* when
 
-$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi(\pi)\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi(\sigma)\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
+$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
 
 We also define the *quantilum value* $\QV \in \Reals$ by
 
-$$\QV := \sup_{\pi: \St^*\times\St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi(\pi)\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi(\sigma)\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
+$$\QV := \sup_{\pi: \St^*\times\St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
 
 ***
 
 In the original quantilization formalism, the quantilal strategy can be described more explicitly, as sampling according to the reference measure $\zeta$ from some top fraction of actions ranked by expected utility. Here, we don't have an analogous description, but we can in some sense evaluate the minimum over $\Pe$.
 
-For any $\pi: \St^*\times\St \K \A$, define $\Z(\pi)\in\Delta\St$ by
+For any $\pi: \St^*\times\St \K \A$, define $\Z{\pi}\in\Delta\St$ by
 
-$$\Z(\pi)(s):=\Pa{\substack{x\sim\Hi(\pi)\\n\sim\gamma}}{x_n=s}$$
+$$\Z{\pi}(s):=\Pa{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{x_n=s}$$
 
 For any $\mu,\nu\in\Delta\St$, the notation $\RD{\infty}{\mu}{\nu}$ signifies the Renyi divergence of order $\infty$:
 
@@ -157,15 +157,15 @@ $$\RD{\infty}{\mu}{\nu} := \ln \max_{s\in\St}\frac{\mu(s)}{\nu(s)}$$
 
 $\pi^* : \St^*\times\St \K \A$ is quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$ if and only if
 
-$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z(\pi)}{\R}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
+$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z{\pi}}{\R}-\eta \exp{\RD{\infty}{\Z{\pi}}{\Z{\sigma}}}}$$
 
 Also, we have
 
-$$\QV = \sup_{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z(\pi)}{\R}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
+$$\QV = \sup_{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z{\pi}}{\R}-\eta \exp{\RD{\infty}{\Z{\pi}}{\Z{\sigma}}}}$$
 
 ***
 
-If the maximization in Proposition 1 was over arbitrary $\xi \in \Delta\St$ rather than $\xi$ of the form $\Z(\pi)$, we would get ordinary quantilization and sampling $\xi$ would be equivalent to sampling some top fraction of $\zeta:=\Z(\sigma)$. In general, the image of the $\Z$ operator is some closed convex set which is *not* the entire $\Delta\St$.  Also, Proposition 1 shows that quantilality only depends on $\sigma$ via $\zeta$. In the following, we will say that $\pi$ is quantilal relatively to $\zeta\in\Delta\St$ when it satisfies the property given in Proposition 1 with $\Z(\sigma)$ replaced by $\zeta$.
+If the maximization in Proposition 1 was over arbitrary $\xi \in \Delta\St$ rather than $\xi$ of the form $\Z{\pi}$, we would get ordinary quantilization and sampling $\xi$ would be equivalent to sampling some top fraction of $\zeta:=\Z{\sigma}$. In general, the image of the $\Z$ operator is some closed convex set which is *not* the entire $\Delta\St$.  Also, Proposition 1 shows that quantilality only depends on $\sigma$ via $\zeta$. In the following, we will say that $\pi$ is quantilal relatively to $\zeta\in\Delta\St$ when it satisfies the property given in Proposition 1 with $\Z{\sigma}$ replaced by $\zeta$.
 
 So far we considered arbitrary (non-stationary) policies. From classical MDP theory, we know that an *optimal* policy can always be chosen to be Markov:
 
@@ -221,10 +221,6 @@ Finally, we address the question of the computational complexity of quantilizati
 
 Assume geometric time discount. Assume further that $\R(s)$, $\T\APM{s}{t,a}$, $\zeta_0(s)$, $\lambda$ and $\eta$ are rational numbers. Consider also a rational number $\epsilon\in(0,1)$. Then, there is an algorithm for computing a stationary policy which is an $\epsilon$-equilibrium in the zero-sum game associated with quantilization, which runs in time polynomial in the size of the input and $\ln\frac{1}{\epsilon}$.
 
-***
-
-In the above, we get an $\epsilon$-equilibrium rather than a Nash equilibrium (= quantilal policy), since the latter might be irrational??? so we inevitably need to approximate.
-
 \section{Future Directions}
 
 To tease a little, here are some developments of this work that I'm planning:
@@ -237,11 +233,27 @@ To tease a little, here are some developments of this work that I'm planning:
 
 \section{Proofs}
 
-\#Proposition A.1
+\#Proof of Proposition 1
 
-Hahaha
+The definition of $\Z$ implies that
 
-\#Proof of Proposition A.1
+$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}=\Ea{\Z{\pi}}{\R-\eta P}$$
+
+Also
+
+$$\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}=\Ea{\Z{\sigma}}{P}$$
+
+Observe that
+
+$$\Ea{\Z{\pi}}{P} = \sum_{s\in\St}\Z{\pi}(s)P(s) \leq \max_{s \in \St}\frac{\Z{\pi}(s)}{\Z{\sigma}(s)}\cdot\sum_{s\in\St}\Z{\sigma}(s)P(s) = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}} \cdot \Ea{\Z{\sigma}}{P}$$
+
+It follows that for any $P$ that satisfies the constraint $\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}} \leq 1$, we have $\Ea{\Z{\sigma}}{\Pe} \leq 1$ and therefore
+
+$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}} = \Ea{\Z{\pi}}{\R} - \eta \Ea{\Z{\pi}}{P} \geq \Ea{\Z{\pi}}{\R} - \eta\exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$$
+
+On the other hand, we can always choose $s^* \in \St$ s.t. $\frac{\Z{\pi}\AP{s^*}}{\Z{\sigma}\AP{s^*}} = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$ and define $P^*$ by???
+
+$$P^*(s):=\begin{cases} \Z{\sigma}(s^*)^{-1} \text{ if } s=s^* \\ 0 \text{ otherwise} \end{cases}$$
 
 Mwhahaha
 
