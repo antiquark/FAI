@@ -109,7 +109,7 @@ $$\tilde{\xi}^* :\in \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\forall \Co: \
 
 Alternatively, we can choose some parameter $\eta\in(0,\infty)$ and maximize the minimal guaranteed expectation of $\Ut-\eta \Co$:
 
-$$\xi^* :\in \Argmax{\xi \in \Delta\A}\min_{\Co:\A\rightarrow[0,\infty)}\ACM{\Ea{\xi}{\Ut-\eta \Co}}{\Ea{\zeta}{\Co} \leq 1}$$
+$$\xi^* :\in \Argmax{\xi \in \Delta\A}\inf_{\Co:\A\rightarrow[0,\infty)}\ACM{\Ea{\xi}{\Ut-\eta \Co}}{\Ea{\zeta}{\Co} \leq 1}$$
 
 These two formulations are almost equivalent since both amount to finding a strategy that is Pareto efficient w.r.t. to the two objectives $\Ea{}{\Ut}$ and $-\Ea{}{\Co}$. For $\tilde{\xi}^*$ the tradeoff is governed by the parameter $C_{\max}$ and for $\xi^*$ the tradeoff is governed by the parameter $\eta$. Indeed, it is easy to see that any $\xi^*$ is also optimal for the first criterion if we take $C_{\max}=\Ea{\xi^*}{\Co}$, and any $\tilde{\xi}^*$ is also optimal for the latter criterion for an appropriate choice of $\eta$ (it needs to be a subderivative of the Pareto frontier).
 
@@ -135,15 +135,15 @@ Denote $\St^*:=\bigsqcup_{n\in\Nats}\St^n$. Given a policy $\pi: \St^*\times\St 
 
 $\pi^* : \St^*\times\St \K \A$ is said to be *quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$* when
 
-$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
+$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\inf_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
 
 We also define the *quantilum value* $\QV \in \Reals$ by
 
-$$\QV := \sup_{\pi: \St^*\times\St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
+$$\QV := \sup_{\pi: \St^*\times\St \K \A}\inf_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
 
 ***
 
-In the original quantilization formalism, the quantilal strategy can be described more explicitly, as sampling according to the reference measure $\zeta$ from some top fraction of actions ranked by expected utility. Here, we don't have an analogous description, but we can in some sense evaluate the minimum over $\Pe$.
+In the original quantilization formalism, the quantilal strategy can be described more explicitly, as sampling according to the reference measure $\zeta$ from some top fraction of actions ranked by expected utility. Here, we don't have an analogous description, but we can in some sense evaluate the infimum over $\Pe$.
 
 For any $\pi: \St^*\times\St \K \A$, define $\Z{\pi}\in\Delta\St$ by
 
@@ -151,7 +151,9 @@ $$\Z{\pi}(s):=\Pa{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{x_n=s}$$
 
 For any $\mu,\nu\in\Delta\St$, the notation $\RD{\infty}{\mu}{\nu}$ signifies the Renyi divergence of order $\infty$:
 
-$$\RD{\infty}{\mu}{\nu} := \ln \max_{s\in\St}\frac{\mu(s)}{\nu(s)}$$
+$$\RD{\infty}{\mu}{\nu} := \ln \max_{\substack{s\in\St \\ \mu(s)> 0}}\frac{\mu(s)}{\nu(s)}$$
+
+In general, $\RD{\infty}{\mu}{\nu} \in [0,\infty]$. 
 
 \#Proposition 1
 
@@ -245,15 +247,31 @@ $$\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}=\Ea{\Z{\sigma}}{P}$
 
 Observe that
 
-$$\Ea{\Z{\pi}}{P} = \sum_{s\in\St}\Z{\pi}(s)P(s) \leq \max_{s \in \St}\frac{\Z{\pi}(s)}{\Z{\sigma}(s)}\cdot\sum_{s\in\St}\Z{\sigma}(s)P(s) = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}} \cdot \Ea{\Z{\sigma}}{P}$$
+$$\Ea{\Z{\pi}}{P} = \sum_{s\in\St}\Z{\pi}(s)P(s) \leq \max_{\substack{s \in \St \\ \Z{\pi}(s) > 0}}\frac{\Z{\pi}(s)}{\Z{\sigma}(s)}\cdot\sum_{s\in\St}\Z{\sigma}(s)P(s) = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}} \cdot \Ea{\Z{\sigma}}{P}$$
 
 It follows that for any $P$ that satisfies the constraint $\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}} \leq 1$, we have $\Ea{\Z{\sigma}}{\Pe} \leq 1$ and therefore
 
-$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}} = \Ea{\Z{\pi}}{\R} - \eta \Ea{\Z{\pi}}{P} \geq \Ea{\Z{\pi}}{\R} - \eta\exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$$
+$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}} = \Ea{\Z{\pi}}{\R} - \eta \Ea{\Z{\pi}}{\Pe} \geq \Ea{\Z{\pi}}{\R} - \eta\exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$$
 
-On the other hand, we can always choose $s^* \in \St$ s.t. $\frac{\Z{\pi}\AP{s^*}}{\Z{\sigma}\AP{s^*}} = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$ and define $P^*$ by???
+To show that the inequality can be arbitrarily close to equality, choose $s^* \in \St$ s.t. $\Z{\pi}(s^*) > 0$ and $\frac{\Z{\pi}\AP{s^*}}{\Z{\sigma}\AP{s^*}} = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$. If $\Z{\sigma}\AP{s^*} > 0$, we can define $\Pe^*$ by
 
-$$P^*(s):=\begin{cases} \Z{\sigma}(s^*)^{-1} \text{ if } s=s^* \\ 0 \text{ otherwise} \end{cases}$$
+$$\Pe^*(s):=\begin{cases} \Z{\sigma}(s^*)^{-1} \text{ if } s=s^* \\ 0 \text{ otherwise} \end{cases}$$
+
+Clearly $\Ea{\Z{\sigma}}{\Pe^*} = 1$ and $\Ea{\Z{\pi}}{P^*} = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$. We get
+
+$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe^*\AP{x_n}} = \Ea{\Z{\pi}}{\R} - \eta \Ea{\Z{\pi}}{\Pe^*} = \Ea{\Z{\pi}}{\R} - \eta\exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$$
+
+In the case $\Z{\sigma}\AP{s^*} > 0$, we can take any $M > 0$ and define $\Pe^M$ by
+
+$$\Pe^M(s):=\begin{cases} M \text{ if } s=s^* \\ 0 \text{ otherwise} \end{cases}$$
+
+Clearly $\Ea{\Z{\sigma}}{\Pe^M} = 0 \leq 1$ and $\Ea{\Z{\pi}}{P^M} = M \cdot \Z{\pi}\AP{s^*}$. We get
+
+$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe^M\AP{x_n}} = \Ea{\Z{\pi}}{\R} - \eta \Ea{\Z{\pi}}{\Pe^M} = \Ea{\Z{\pi}}{\R} - M \cdot \Z{\pi}\AP{s^*}$$
+
+Since $\Z{\pi}\AP{s^*} > 0$, we can make this expression arbitrarily low and therefore the infimum is $-\infty$ which is what we need since in this case $\RD{\infty}{\Z{\pi}}{\Z{\sigma}} = \infty$.
+
+***
 
 Mwhahaha
 
