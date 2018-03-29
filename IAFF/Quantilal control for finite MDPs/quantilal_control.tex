@@ -91,6 +91,7 @@
 \newcommand{\Ut}{\operatorname{U}}
 \newcommand{\Co}{C}
 \newcommand{\V}{\operatorname{V}}
+\newcommand{\QV}{\operatorname{QV}}
 \newcommand{\Hi}{\operatorname{H}}
 \newcommand{\Z}{Z}
 
@@ -136,6 +137,10 @@ $\pi^* : \St^*\times\St \K \A$ is said to be *quantilal relatively to reference 
 
 $$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi(\pi)\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi(\sigma)\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
 
+We also define the *quantilum value* $\QV \in \Reals$ by
+
+$$\QV := \sup_{\pi: \St^*\times\St \K \A}\min_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi(\pi)\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi(\sigma)\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
+
 ***
 
 In the original quantilization formalism, the quantilal strategy can be described more explicitly, as sampling according to the reference measure $\zeta$ from some top fraction of actions ranked by expected utility. Here, we don't have an analogous description, but we can in some sense evaluate the minimum over $\Pe$.
@@ -153,6 +158,10 @@ $$\RD{\infty}{\mu}{\nu} := \ln \max_{s\in\St}\frac{\mu(s)}{\nu(s)}$$
 $\pi^* : \St^*\times\St \K \A$ is quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$ if and only if
 
 $$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\AP{\Ea{s\sim\Z(\pi)}{\R(s)}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
+
+Also, we have
+
+$$\QV = \sup_{\pi: \St^*\times\St \K \A}\AP{\Ea{s\sim\Z(\pi)}{\R(s)}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
 
 ***
 
@@ -176,7 +185,7 @@ For any $\zeta\in\Delta\St$, there exists a Markov policy which is quantilal rel
 
 Now assume that our time discount function is geometric, i.e. there exists $\lambda\in[0,1)$ s.t. $\gamma(n)=(1-\lambda)\lambda^n$. Then it is known than an *optimal* can be chosen to be stationary:
 
-\#Defintion 3
+\#Definition 3
 
 $\pi: \St^* \times \St \K \A$ is said to be a *stationary* policy, when there is some $\pi_\text{T}: S \K \A$ s.t. $\pi(h,s)=\pi_\text{T}\AP{s}$.
 
@@ -192,7 +201,27 @@ If $\gamma$ is geometric, then for any $\zeta\in\Delta\St$, there exists a stati
 
 What is *not* analogous is that an optimal policy can be chosen to be *deterministic* whereas, of course, this is not the case for quantilal policies.
 
-Bar
+It is known that the value of an optimal policy depends on $\lambda$ as a piecewise rational function, and in particular it converges as $\lambda \rightarrow 1$ and has a Taylor expansion at $\lambda=1$. For quantilal policies, we derive the following, somewhat weaker result. Recall that a function is called *semialgebraic* when its graph is a finite union of sets defined by systems of polynomial inequalities.
+
+\#Proposition 4
+
+$\QV$ is a semialgebraic function of $\lambda$, $\eta$, the matrix elements of $\T$, the values of $\R$ and the values of $\zeta_0$.
+
+\#Corollary 1
+
+$\QV$ converges as $\lambda \rightarrow 1$.
+
+***
+
+Finally, we address the question of the computational complexity of quantilization. We prove the following
+
+\#Proposition 5
+
+Assume geometric time discount. Assume further that $\R(s)$, $\T\APM{s}{t,a}$, $\zeta_0(s)$, $\lambda$ and $\eta$ are rational numbers. Consider also a rational number $\epsilon\in(0,1)$. Then, there is an algorithm for computing a stationary policy which is an $\epsilon$-equilibrium in the zero-sum game associated with quantilization, which runs in time polynomial in the size of the input and $\ln\frac{1}{\epsilon}$.
+
+\section{Future Directions}
+
+TBD
 
 \section{Proofs}
 
