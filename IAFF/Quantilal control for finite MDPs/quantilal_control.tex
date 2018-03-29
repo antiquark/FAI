@@ -103,7 +103,7 @@ We introduce a variant of the concept of a "[quantilizer](https://intelligence.o
 
 \section{Results}
 
-Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". That is, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost function $\Co: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{\Co}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ is bounded by 1. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We can then seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{\Co}$ by a fixed bound $C_{\max}$:
+Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". According to Extremal Goodhart, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost function $\Co: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{\Co}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ is bounded by 1. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We can then seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{\Co}$ by a fixed bound $C_{\max}$:
 
 $$\tilde{\xi}^* :\in \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\forall \Co: \A \rightarrow [0,\infty): \Ea{\zeta}{\Co} \leq 1 \implies \Ea{\xi}{\Co} \leq C_{\max}}$$
 
@@ -111,11 +111,11 @@ Alternatively, we can choose some parameter $\eta\in(0,\infty)$ and maximize the
 
 $$\xi^* :\in \Argmax{\xi \in \Delta\A}\min_{\Co:\A\rightarrow[0,\infty)}\ACM{\Ea{\xi}{\Ut-\eta \Co}}{\Ea{\zeta}{\Co} \leq 1}$$
 
-These two formulations are almost equivalent since both amount to finding a strategy that is Pareto efficient w.r.t. to the two objectives $\Ea{}{\Ut}$ and $-\Ea{}{\Co}$. For $\tilde{\xi}^*$ the tradeoff is governed by the parameter $C_{\max}$ and for $\xi^*$ the tradeoff is governed by the parameter $\eta$. Indeed it is easy to see that any $\xi^*$ is also optimal for the first criterion if we take $C_{\max}=\Ea{\xi^*}{\Co}$, and any $\tilde{\xi}^*$ is also optimal for the latter criterion for an appropriate choice of $\eta$ (it needs to be a subderivative of the Pareto frontier).
+These two formulations are almost equivalent since both amount to finding a strategy that is Pareto efficient w.r.t. to the two objectives $\Ea{}{\Ut}$ and $-\Ea{}{\Co}$. For $\tilde{\xi}^*$ the tradeoff is governed by the parameter $C_{\max}$ and for $\xi^*$ the tradeoff is governed by the parameter $\eta$. Indeed, it is easy to see that any $\xi^*$ is also optimal for the first criterion if we take $C_{\max}=\Ea{\xi^*}{\Co}$, and any $\tilde{\xi}^*$ is also optimal for the latter criterion for an appropriate choice of $\eta$ (it needs to be a subderivative of the Pareto frontier).
 
-In the following, we will stick to the second formulation, which can be thought of as a zero-sum game in which $\Ut-\eta \Co$ is the utility function of the agent whose strategy set is $\A$, and $\Co$ is chosen by the adversary. The quantilal strategy $\xi^*$ is the Nash equilibrium of the game.
+In the following, we will use as our starting point the *second* formulation, which can be thought of as a zero-sum game in which $\Ut-\eta \Co$ is the utility function of the agent whose strategy set is $\A$, and $\Co$ is chosen by the adversary. The quantilal strategy $\xi^*$ is the Nash equilibrium of the game.
 
-This formulation seems natural if we take $\eta:=\Ea{\zeta}{\max\AP{\Ut-\Ut^*,0}}$ and $\Co:=\eta^{-1}\max\AP{\Ut-\Ut^*,0}$. In particular, the quantilum value (the value of the game) is a lower bound on the expectation of $\Ut^*$. Note that all the Propositions we prove except TBD work for the first formulation as well, and modifying the proofs is straightforward.
+This formulation seems natural if we take $\eta:=\Ea{\zeta}{\max\AP{\Ut-\Ut^*,0}}$ (a measure of how "optimistic" is $\Ut$ in the "domain" $\zeta$) and $\Co:=\eta^{-1}\max\AP{\Ut-\Ut^*,0}$. In particular, the quantilum value (the value of the game) is a lower bound on the expectation of $\Ut^*$. Note that all the Propositions we prove except Proposition 5 work for the first formulation as well, and modifying the proofs is straightforward.
 
 In principle, this formalism can be applied to sequential interaction between an agent and an environment, if we replace $\A$ by the set of *policies*. However, if it is possible to make structural assumptions about $\Ut$ and $C$, we can do better. Taylor explores one such structural assumption, namely a sequence of independent games in which both $\Ut$ and $\Co$ are additive across the games. We consider a more general setting, namely that of a finite Markov decision process (MDP).
 
@@ -157,11 +157,11 @@ $$\RD{\infty}{\mu}{\nu} := \ln \max_{s\in\St}\frac{\mu(s)}{\nu(s)}$$
 
 $\pi^* : \St^*\times\St \K \A$ is quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$ if and only if
 
-$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\AP{\Ea{s\sim\Z(\pi)}{\R(s)}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
+$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z(\pi)}{\R}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
 
 Also, we have
 
-$$\QV = \sup_{\pi: \St^*\times\St \K \A}\AP{\Ea{s\sim\Z(\pi)}{\R(s)}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
+$$\QV = \sup_{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z(\pi)}{\R}-\eta \exp{\RD{\infty}{\Z(\pi)}{\Z(\sigma)}}}$$
 
 ***
 
@@ -175,7 +175,7 @@ $\pi: \St^* \times \St \K \A$ is said to be a *Markov* policy, when there is som
 
 ***
 
-Note that a priori it might be unclear whether a quantilal policy even exists. However, we have
+Note that a priori it might be unclear whether even a non-stationary quantilal policy. However, we have
 
 \#Proposition 2
 
@@ -183,7 +183,7 @@ For any $\zeta\in\Delta\St$, there exists a Markov policy which is quantilal rel
 
 ***
 
-Now assume that our time discount function is geometric, i.e. there exists $\lambda\in[0,1)$ s.t. $\gamma(n)=(1-\lambda)\lambda^n$. Then it is known than an *optimal* can be chosen to be stationary:
+Now assume that our time discount function is geometric, i.e. there exists $\lambda\in[0,1)$ s.t. $\gamma(n)=(1-\lambda)\lambda^n$. Then it is known than an *optimal* policy can be chosen to be stationary:
 
 \#Definition 3
 
@@ -209,7 +209,7 @@ $\QV$ is a semialgebraic function of $\lambda$, $\eta$, the matrix elements of $
 
 \#Corollary 1
 
-$\QV$ converges as $\lambda \rightarrow 1$.
+$\QV$ converges as $\lambda \rightarrow 1$, holding all other parameters fixed. It has a *Puiseux series* expansion in $\lambda$ at $\lambda=1$.
 
 ***
 
@@ -219,9 +219,19 @@ Finally, we address the question of the computational complexity of quantilizati
 
 Assume geometric time discount. Assume further that $\R(s)$, $\T\APM{s}{t,a}$, $\zeta_0(s)$, $\lambda$ and $\eta$ are rational numbers. Consider also a rational number $\epsilon\in(0,1)$. Then, there is an algorithm for computing a stationary policy which is an $\epsilon$-equilibrium in the zero-sum game associated with quantilization, which runs in time polynomial in the size of the input and $\ln\frac{1}{\epsilon}$.
 
+***
+
+In the above, we get an $\epsilon$-equilibrium rather than a Nash equilibrium (= quantilal policy), since the latter might be irrational??? so we inevitably need to approximate.
+
 \section{Future Directions}
 
-TBD
+Just to tease a little, here are some developments of this work that I'm planning:
+
+* Apply quantilization to *reinforcement learning*, i.e. when we don't know the MDP in advance. In particular, I believe that the principles of quantilization can be used not only to deal with misspecified rewards, but also to deal with traps to some extent (assuming it a priori known that the reference policy has at most a small probability of falling into a trap). This has some philosophical implications on how *humans* avoid traps.
+
+* Unify that formalism with [DRL](https://agentfoundations.org/item?id=1656). The role of the reference policy will be played by the advisor (thus the reference policy is not known in advance but is learned online). This means we can drop the sanity condition for the advisor, at the price of (i) having a regret bound defined w.r.t. some kind of *quantilum* value rather than optimal value (ii) having a term in the regret bound proportional to the (presumably small) rate of falling into traps when following the reference (advisor) policy. It should be possible to further develop that by unifying it with the ideas of [catastrophe DRL](https://agentfoundations.org/item?id=1715).
+
+* Deal with more general environments, e.g. POMDPs and continuous state spaces.
 
 \section{Proofs}
 
