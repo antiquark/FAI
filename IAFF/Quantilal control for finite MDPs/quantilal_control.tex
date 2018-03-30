@@ -161,7 +161,7 @@ In general, $\RD{\infty}{\mu}{\nu} \in [0,\infty]$.
 
 $\pi^* : \St^*\times\St \K \A$ is quantilal relatively to reference policy $\sigma: \St^*\times\St \K A$ if and only if
 
-$$\pi^* :\in \Argmax{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z{\pi}}{\R}-\eta \exp{\RD{\infty}{\Z{\pi}}{\Z{\sigma}}}}$$
+$$\pi^* \in \Argmax{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z{\pi}}{\R}-\eta \exp{\RD{\infty}{\Z{\pi}}{\Z{\sigma}}}}$$
 
 Also, we have
 
@@ -295,11 +295,32 @@ For any $\zeta\in\Delta\St$, there exists *some* policy which is quantilal relat
 
 \#Proof of Proposition A.N2
 
-Consider $\Pi:=\AC{\St^* \times \St \K \A}$, the space of all policies. $\Pi$ is the product of a countable number of copies of $\Delta\A$ (indexed by $\St^* \times \St$). $\Delta\A$ is naturally a topological space (a simplex), and we can thereby equip $\Pi$ by the product topology. By Tychonoff's theorem, $\Pi$ is compact...
-
-?
+Consider $\Pi:=\AC{\St^* \times \St \K \A}$, the space of all policies. $\Pi$ is the product of a countable number of copies of $\Delta\A$ (indexed by $\St^* \times \St$). $\Delta\A$ is naturally a topological space (a simplex), and we can thereby equip $\Pi$ by the product topology. By Tychonoff's theorem, $\Pi$ is compact. Moreover, it is easy to see that $\Z: \Pi \rightarrow \Delta\St$ is a continuous mapping. Finally, observe that $\RD{\infty}{\xi}{\zeta}$ is lower semicontinuous in $\xi$ (since it is the maximum of a number of continuous functions) and therefore $\Ea{\xi}{\R} - \eta\exp{\RD{\infty}{\xi}{\zeta}}$ is upper semicontinuous in $\xi$. By the extreme value theorem, it follows that a quantilal policy exists.
 
 \#Proof of Proposition 2
+
+By Proposition A.N2, there is a quantilal policy $\pi^*: \St^* \times \St \K \A$. We now define $\pi^\dagger: \Nats \times \St \K \A$ by
+
+$$\pi^\dagger(n,s):=\CE{x\sim\Hi{\pi^*}}{\pi^*(x_{:n},s)}{x_n=s}$$
+
+For any $\pi: \St^* \times \St \K \A$, we define $\Z_n{\pi} \in \Delta\St$ by
+
+$$\Z_n{\pi}(s) := \Pa{x\sim\Hi{\pi}}{x_n=s}$$
+
+We now prove by induction that $\Z_n{\pi^*} = \Z_n{\pi^\dagger}$ (where $\Z_n{\pi^\dagger}$ is defined by the obvious abuse of notation).
+
+For $n=0$, we have $\Z_0{\pi^*} = \Z_0{\pi^\dagger} = \zeta_0$.
+
+For any $n \in \Nats$ and any $\pi: \St^* \times \St \K \A$, we have
+
+$$\Z_{n+1}{\pi}(t) = \Pa{x\sim\Hi{\pi}}{x_{n+1}=t} = \Ea{s\sim\Z_n{\pi}}{\CP{x\sim\Hi{\pi}}{x_{n+1} = t}{x_n=s}} = \Ea{s\sim\Z_n{\pi}}{\CE{\substack{x\sim\Hi{\pi} \\ a\sim\pi\AP{x_{:n},s}}}{\T\APM{t}{s,a}}{x_n=s}}$$
+
+To complete the induction step, observe that, by definition of $\pi^\dagger$
+
+
+$$\CE{\substack{x\sim\Hi{\pi} \\ a\sim\pi^*\AP{x_{:n},s}}}{\T\APM{t}{s,a}}{x_n=s} = \Ea{a\sim\pi^\dagger\AP{n,s}}{\T\APM{t}{s,a}}=\CE{\substack{x\sim\Hi{\pi} \\ a\sim\pi^\dagger\AP{n,s}}}{\T\APM{t}{s,a}}{x_n=s}$$
+
+Now, for any $\pi$, $\Z{\pi}=\Ea{n\sim\gamma}{\Z_n{\pi}}$ and therefore $\Z{\pi^\dagger} = \Z{\pi^*}$. We conclude that $\pi^\dagger$ is also quantilal.
 
 Mwhahaha
 
