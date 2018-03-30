@@ -101,7 +101,7 @@ We introduce a variant of the concept of a "[quantilizer](https://intelligence.o
 
 ***
 
-\section{Results}
+\section{Background}
 
 Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". According to Extremal Goodhart, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost function $\Co: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{\Co}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ is bounded by 1. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We can then seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{\Co}$ by a fixed bound $C_{\max}$:
 
@@ -118,6 +118,8 @@ In the following, we will use as our starting point the *second* formulation, wh
 This formulation seems natural if we take $\eta:=\Ea{\zeta}{\max\AP{\Ut-\Ut^*,0}}$ (a measure of how "optimistic" is $\Ut$ in the "domain" $\zeta$) and $\Co:=\eta^{-1}\max\AP{\Ut-\Ut^*,0}$. In particular, the quantilum value (the value of the game) is a lower bound on the expectation of $\Ut^*$. Note that all the Propositions we prove except Proposition 5 work for the first formulation as well, and modifying the proofs is straightforward.
 
 In principle, this formalism can be applied to sequential interaction between an agent and an environment, if we replace $\A$ by the set of *policies*. However, if it is possible to make structural assumptions about $\Ut$ and $C$, we can do better. Taylor explores one such structural assumption, namely a sequence of independent games in which both $\Ut$ and $\Co$ are additive across the games. We consider a more general setting, namely that of a finite Markov decision process (MDP).
+
+\section{Results}
 
 A finite MDP is defined by a finite set of states $\St$, a finite set of actions $\A$, a transition kernel $\T: \St \times \A \K \St$ and a reward function $\R: \St \rightarrow \Reals$. To specify the utility function, we also need to fix a time discount function $\gamma \in \Delta\Nats$. This allows defining $\Ut: \St^\omega \rightarrow \Reals$ by
 
@@ -221,7 +223,15 @@ Finally, we address the question of the computational complexity of quantilizati
 
 \#Proposition 5
 
-Assume geometric time discount. Assume further that $\R(s)$, $\T\APM{s}{t,a}$, $\zeta_0(s)$, $\lambda$ and $\eta$ are rational numbers. Consider also a rational number $\epsilon\in(0,1)$. Then, there is an algorithm for computing a stationary policy which is an $\epsilon$-equilibrium in the zero-sum game associated with quantilization, which runs in time polynomial in the size of the input and $\ln\frac{1}{\epsilon}$.
+Assume geometric time discount. Assume further that $\R(s)$, $\T\APM{s}{t,a}$, $\zeta_0(s)$, $\lambda$ and $\eta$ are rational numbers. Then:
+
+a. There is an algorithm for computing $\QV$ which runs in time polynomial in the size of the input.
+
+b. Given an additional rational input parameter $\epsilon\in(0,1)$, there is an algorithm for computing a stationary policy which is an $\epsilon$-equilibrium in the zero-sum game associated with quantilization, which runs in time polynomial in the size of the input and $\ln\frac{1}{\epsilon}$.
+
+***
+
+The algorithm of Proposition 5b computes an $\epsilon$-equilibrium rather than an exact Nash equilibrium (= quantilal policy), which is (probably) inevitable since the exact quantilal policy is (probably) irrational.
 
 \section{Future Directions}
 
@@ -235,7 +245,11 @@ To tease a little, here are some developments of this work that I'm planning:
 
 \section{Proofs}
 
-\#Proof of Proposition 1
+\#Proposition A.N1
+
+$$\inf_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}=\Ea{\Z{\pi}}{\R}-\eta \exp{\RD{\infty}{\Z{\pi}}{\Z{\sigma}}}$$
+
+\#Proof of Proposition A.N1
 
 The definition of $\Z$ implies that
 
@@ -272,6 +286,20 @@ $$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe^M\AP{x_n}} = \Ea
 Since $\Z{\pi}\AP{s^*} > 0$, we can make this expression arbitrarily low and therefore the infimum is $-\infty$ which is what we need since in this case $\RD{\infty}{\Z{\pi}}{\Z{\sigma}} = \infty$.
 
 ***
+
+Proposition 1 now follows immediately from Proposition A.N1.
+
+\#Proposition A.N2
+
+For any $\zeta\in\Delta\St$, there exists *some* policy which is quantilal relatively to $\zeta$.
+
+\#Proof of Proposition A.N2
+
+Consider $\Pi:=\AC{\St^* \times \St \K \A}$, the space of all policies. $\Pi$ is the product of a countable number of copies of $\Delta\A$ (indexed by $\St^* \times \St$). $\Delta\A$ is naturally a topological space (a simplex), and we can thereby equip $\Pi$ by the product topology. By Tychonoff's theorem, $\Pi$ is compact...
+
+?
+
+\#Proof of Proposition 2
 
 Mwhahaha
 
