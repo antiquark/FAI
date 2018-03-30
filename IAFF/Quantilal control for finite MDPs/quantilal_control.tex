@@ -291,25 +291,29 @@ Since $\Z{\pi}\AP{s^*} > 0$, we can make this expression arbitrarily low and the
 
 Proposition 1 now follows immediately from Proposition A.N1.
 
+We will use the notation $\Pi:=\AC{\St^* \times \St \K \A}$ (the space of all policies). We also have $\Pi_{\text{M}}:=\AC{\Nats \times \St \K \A}$ (the space of Markov policies) and $\Pi_{\text{T}}:=\AC{ \St \K \A}$ (the space of stationary policies). Mildly abusing notation, we will view $\Pi_{\text{M}}$ as a subspace of $\Pi$ and $\Pi_{\text{T}}$ as a subspace of $\Pi_{\text{M}}$.
+
 \#Proposition A.N2
 
 For any $\sigma: \St^* \times \St \K \A$, there exists *some* policy which is quantilal relatively to $\sigma$.
 
 \#Proof of Proposition A.N2
 
-Consider $\Pi:=\AC{\St^* \times \St \K \A}$, the space of all policies. $\Pi$ is the product of a countable number of copies of $\Delta\A$ (indexed by $\St^* \times \St$). $\Delta\A$ is naturally a topological space (a simplex), and we can thereby equip $\Pi$ by the product topology. By Tychonoff's theorem, $\Pi$ is compact. Moreover, it is easy to see that $\Z: \Pi \rightarrow \Delta\St$ is a continuous mapping. Finally, observe that $\RD{\infty}{\xi}{\Z{\sigma}}$ is lower semicontinuous in $\xi$ (since it is the maximum of a number of continuous functions) and therefore $\Ea{\xi}{\R} - \eta\exp{\RD{\infty}{\xi}{\Z{\sigma}}}$ is upper semicontinuous in $\xi$. By the extreme value theorem, it follows that a quantilal policy exists.
+$\Pi$ is the product of a countable number of copies of $\Delta\A$ (indexed by $\St^* \times \St$). $\Delta\A$ is naturally a topological space (a simplex), and we can thereby equip $\Pi$ by the product topology. By Tychonoff's theorem, $\Pi$ is compact. Moreover, it is easy to see that $\Z: \Pi \rightarrow \Delta\St$ is a continuous mapping. Finally, observe that $\RD{\infty}{\xi}{\Z{\sigma}}$ is lower semicontinuous in $\xi$ (since it is the maximum of a number of continuous functions) and therefore $\Ea{\xi}{\R} - \eta\exp{\RD{\infty}{\xi}{\Z{\sigma}}}$ is upper semicontinuous in $\xi$. By the extreme value theorem, it follows that a quantilal policy exists.
 
-\#Proof of Proposition 2
+***
 
-By Proposition A.N2, there is a quantilal policy $\pi^*: \St^* \times \St \K \A$. We now define $\pi^\dagger: \Nats \times \St \K \A$ by
-
-$$\pi^\dagger(n,s):=\CE{x\sim\Hi{\pi^*}}{\pi^*(x_{:n},s)}{x_n=s}$$
-
-For any $\pi: \St^* \times \St \K \A$, we define $\Z_n{\pi} \in \Delta\St$ by
+For any $n\in\Nats$, we define $\Z_n: \Pi \K \St$ by 
 
 $$\Z_n{\pi}(s) := \Pa{x\sim\Hi{\pi}}{x_n=s}$$
 
-We now prove by induction that $\Z_n{\pi^*} = \Z_n{\pi^\dagger}$ (where $\Z_n{\pi^\dagger}$ is defined by the obvious abuse of notation).
+\#Proof of Proposition 2
+
+By Proposition A.N2, there is a quantilal policy $\pi^*: \St^* \times \St \K \A$. We define $\pi^\dagger: \Nats \times \St \K \A$ by
+
+$$\pi^\dagger(n,s):=\CE{x\sim\Hi{\pi^*}}{\pi^*(x_{:n},s)}{x_n=s}$$
+
+We now prove by induction that for any $n\in\Nats$, $\Z_n{\pi^*} = \Z_n{\pi^\dagger}$.
 
 For $n=0$, we have $\Z_0{\pi^*} = \Z_0{\pi^\dagger} = \zeta_0$.
 
@@ -325,6 +329,48 @@ $$\CE{\substack{x\sim\Hi{\pi} \\ a\sim\pi^*\AP{x_{:n},s}}}{\T\APM{t}{s,a}}{x_n=s
 Now, for any $\pi$, $\Z{\pi}=\Ea{n\sim\gamma}{\Z_n{\pi}}$ and therefore $\Z{\pi^\dagger} = \Z{\pi^*}$. We conclude that $\pi^\dagger$ is also quantilal.
 
 \#Proof of Proposition 3
+
+By Proposition 2, there is $\pi^*: \Nats \times \St \K \A$ which is a Markov quantilal policy. We have
+
+$$\Z_{n+1}{\pi^*}(t) = \Pa{x\sim\Hi{\pi^*}}{x_{n+1}=t} = \Ea{s\sim\Z_n{\pi^*}}{\CP{x\sim\Hi{\pi^*}}{x_{n+1} = t}{x_n=s}} = \Ea{\substack{s\sim\Z_n{\pi^*}\\a\sim\pi^*\AP{n,s}}}{\T\APM{t}{s,a}}$$
+
+Taking the expected value of this equation w.r.t. $n\sim\gamma$ we get
+
+$$\Ea{n\sim\gamma}{\Z_{n+1}{\pi^*}} = \Ea{\substack{n\sim\gamma\\s\sim\Z_n{\pi^*}\\a\sim\pi^*\AP{n,s}}}{\T(s,a)}$$
+
+Also, we have
+
+$$\Z\pi^* = \Ea{n\sim\gamma}{\Z_n \pi^*} = (1-\lambda)\sum_{n=0}^\infty \lambda^n \Z_n \pi^* = (1-\lambda)\AP{\zeta_0 + \lambda \sum_{n=0}^\infty \lambda^n \Z_{n+1}\pi^*}=(1-\lambda)\zeta_0 + \lambda \Ea{n\sim\gamma}{\Z_{n+1}{\pi^*}}$$
+
+It follows that
+
+$$\Z\pi^* = (1-\lambda)\zeta_0 + \lambda \Ea{\substack{n\sim\gamma\\s\sim\Z_n{\pi^*}\\a\sim\pi^*\AP{n,s}}}{\T(s,a)}$$
+
+$$\Z\pi^* = (1-\lambda)\zeta_0 + \lambda \Ea{s\sim\Z\pi^*}{\CE{\substack{n\sim\gamma\\t\sim\Z_n\pi^*\\a\sim\pi^*(n,s)}}{\T(s,a)}{t=s}}$$
+
+Define $\pi^\dagger: \St \K \A$ by
+
+$$\pi^\dagger(s) := \CE{\substack{n\sim\gamma\\t\sim\Z_n\pi^*}}{\pi^*(n,s)}{t=s}$$
+
+We get
+
+$$\Z\pi^* = (1-\lambda)\zeta_0 + \lambda \Ea{s\sim\Z\pi^*}{\Ea{a\sim\pi^\dagger(s)}{\T(s,a)}}$$
+
+Define the linear operator $T: \Reals^\St \rightarrow \Reals^\St$ by the matrix 
+
+$$T_{ts} := \Ea{a\sim\pi^\dagger(s)}{\T\APM{t}{s,a}}$$
+
+Viewing $\Delta\St$ as a subset of $\Reals^\St$, we get
+
+$$\Z\pi^* = (1-\lambda)\zeta_0 + \lambda T\Z\pi^*$$
+
+$$\Z\pi^* = (1-\lambda)\AP{\boldsymbol{1}-\lambda T}^{-1}\zeta_0$$
+
+On the other hand, we have
+
+$$\Z\pi^\dagger = (1-\lambda)\sum_{n=0}^\infty \lambda^n T^n \zeta_0 = (1-\lambda)\AP{\boldsymbol{1}-\lambda T}^{-1}\zeta_0$$
+
+Therefore, $\Z\pi^\dagger = \Z\pi^*$ and $\pi^\dagger$ is also quantilal.
 
 Mwhahaha
 
