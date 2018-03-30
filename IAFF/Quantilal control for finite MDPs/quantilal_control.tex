@@ -225,7 +225,7 @@ Finally, we address the question of the computational complexity of quantilizati
 
 \#Proposition 5
 
-Assume geometric time discount. Assume further that $\R(s)$, $\T\APM{s}{t,a}$, $\zeta_0(s)$, $\lambda$, $\Z{\sigma}(s)$ and $\eta$ are rational numbers. Then:
+Assume geometric time discount. Assume further that $\R(s)$, $\T\APM{t}{s,a}$, $\zeta_0(s)$, $\lambda$, $\Z{\sigma}(s)$ and $\eta$ are rational numbers. Then:
 
 a. There is an algorithm for computing $\QV$ which runs in time polynomial in the size of the input $\R$, $\T$, $\zeta_0$, $\lambda$, $\Z\sigma$ and $\eta$. Also, if $\sigma$ is stationary and $\sigma\APM{t}{s,a}$ are rational, then $\Z{\sigma}(s)$ are also rational and can be computed from $\sigma$, $\T$, $\zeta_0$ and $\lambda$ in polynomial time.
 
@@ -356,21 +356,49 @@ We get
 
 $$\Z\pi^* = (1-\lambda)\zeta_0 + \lambda \Ea{s\sim\Z\pi^*}{\Ea{a\sim\pi^\dagger(s)}{\T(s,a)}}$$
 
-Define the linear operator $T: \Reals^\St \rightarrow \Reals^\St$ by the matrix 
+Define the linear operator $T^\dagger: \Reals^\St \rightarrow \Reals^\St$ by the matrix 
 
-$$T_{ts} := \Ea{a\sim\pi^\dagger(s)}{\T\APM{t}{s,a}}$$
+$$T^\dagger_{ts} := \Ea{a\sim\pi^\dagger(s)}{\T\APM{t}{s,a}}$$
 
 Viewing $\Delta\St$ as a subset of $\Reals^\St$, we get
 
-$$\Z\pi^* = (1-\lambda)\zeta_0 + \lambda T\Z\pi^*$$
+$$\Z\pi^* = (1-\lambda)\zeta_0 + \lambda T^\dagger\Z\pi^*$$
 
-$$\Z\pi^* = (1-\lambda)\AP{\boldsymbol{1}-\lambda T}^{-1}\zeta_0$$
+$$\Z\pi^* = (1-\lambda)\AP{\boldsymbol{1}-\lambda T^\dagger}^{-1}\zeta_0$$
 
 On the other hand, we have
 
-$$\Z\pi^\dagger = (1-\lambda)\sum_{n=0}^\infty \lambda^n T^n \zeta_0 = (1-\lambda)\AP{\boldsymbol{1}-\lambda T}^{-1}\zeta_0$$
+$$\Z\pi^\dagger = (1-\lambda)\sum_{n=0}^\infty \lambda^n T^{\dagger n} \zeta_0 = (1-\lambda)\AP{\boldsymbol{1}-\lambda T^\dagger}^{-1}\zeta_0$$
 
 Therefore, $\Z\pi^\dagger = \Z\pi^*$ and $\pi^\dagger$ is also quantilal.
+
+\#Proposition A.N3
+
+Assume geometric time discount. Define the linear operators $I: \Reals^\St \rightarrow \Reals^{\St\times\A}$ and $T: \Reals^\St \rightarrow \Reals^{\St\times\A}$ by the matrices
+
+$$I_{t,sa}:=[[t=s]]$$
+
+$$T_{t,sa}:=\T\APM{t}{s,a}$$
+
+Define the linear operator $A: \Reals^\St \oplus \Reals^\St \rightarrow \Reals^{\St\times\A}\oplus\Reals^{\St}\oplus\Reals$ by
+
+$$A(V,P):=\AP{\AP{I-\lambda T}V + (1-\lambda)IP,\ P,\ -\Ea{\Z\sigma}{P}}$$
+
+Define $B\in \Reals^{\St\times\A}\oplus\Reals^{\St}\oplus\Reals$ by
+
+$$B:=\AP{(1-\lambda)I\R,\ \boldsymbol{0},\ -1}$$
+
+Define $D \subseteq \Reals^\St \oplus \Reals^\St$ as follows
+
+$$D:=\ACM{X \in \Reals^\St \oplus \Reals^\St}{AX \geq B}$$
+
+Here, vector inequalities are understood to be componentwise.
+
+Then,
+
+$$\QV = \min_{(V,P)\in D}{\Ea{\zeta_0}{V}}$$
+
+\#Proof of Proposition A.N3
 
 Mwhahaha
 
