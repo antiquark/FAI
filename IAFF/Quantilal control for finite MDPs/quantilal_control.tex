@@ -143,6 +143,8 @@ We also define the *quantilum value* $\QV \in \Reals$ by
 
 $$\QV := \sup_{\pi: \St^*\times\St \K \A}\inf_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}$$
 
+($\QV$ cannot be $-\infty$ since taking $\pi=\sigma$ yields a lower bound of $\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\R\AP{x_n}}-\eta$.)
+
 ***
 
 In the original quantilization formalism, the quantilal strategy can be described more explicitly, as sampling according to the reference measure $\zeta$ from some top fraction of actions ranked by expected utility. Here, we don't have an analogous description, but we can in some sense evaluate the infimum over $\Pe$.
@@ -169,7 +171,7 @@ $$\QV = \sup_{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z{\pi}}{\R}-\eta \exp{\RD{\inft
 
 ***
 
-If the maximization in Proposition 1 was over arbitrary $\xi \in \Delta\St$ rather than $\xi$ of the form $\Z{\pi}$, we would get ordinary quantilization and sampling $\xi$ would be equivalent to sampling some top fraction of $\zeta:=\Z{\sigma}$. In general, the image of the $\Z$ operator is some closed convex set which is *not* the entire $\Delta\St$.  Also, Proposition 1 shows that quantilality only depends on $\sigma$ via $\zeta$. In the following, we will say that $\pi$ is quantilal relatively to $\zeta\in\Delta\St$ when it satisfies the property given in Proposition 1 with $\Z{\sigma}$ replaced by $\zeta$.
+If the maximization in Proposition 1 was over arbitrary $\xi \in \Delta\St$ rather than $\xi$ of the form $\Z{\pi}$, we would get ordinary quantilization and sampling $\xi$ would be equivalent to sampling some top fraction of $\zeta:=\Z{\sigma}$. In general, the image of the $\Z$ operator is some closed convex set which is *not* the entire $\Delta\St$.  \Comment{Also, Proposition 1 shows that quantilality only depends on $\sigma$ via $\zeta$. In the following, we will say that $\pi$ is quantilal relatively to $\zeta\in\Delta\St$ when it satisfies the property given in Proposition 1 with $\Z{\sigma}$ replaced by $\zeta$.}
 
 So far we considered arbitrary (non-stationary) policies. From classical MDP theory, we know that an *optimal* policy can always be chosen to be Markov:
 
@@ -183,7 +185,7 @@ Note that a priori it might be unclear whether even a non-stationary quantilal p
 
 \#Proposition 2
 
-For any $\zeta\in\Delta\St$, there exists a Markov policy which is quantilal relatively to $\zeta$.
+For any $\sigma: \St^* \times \St \K \A$, there exists a Markov policy which is quantilal relatively to $\sigma$.
 
 ***
 
@@ -199,7 +201,7 @@ Once again, the situation for quantilal policies is analogous:
 
 \#Proposition 3
 
-If $\gamma$ is geometric, then for any $\zeta\in\Delta\St$, there exists a stationary policy which is quantilal relatively to $\zeta$.
+If $\gamma$ is geometric, then for any $\sigma: \St^* \times \St \K \A$, , there exists a stationary policy which is quantilal relatively to $\sigma$.
 
 ***
 
@@ -223,9 +225,9 @@ Finally, we address the question of the computational complexity of quantilizati
 
 \#Proposition 5
 
-Assume geometric time discount. Assume further that $\R(s)$, $\T\APM{s}{t,a}$, $\zeta_0(s)$, $\lambda$ and $\eta$ are rational numbers. Then:
+Assume geometric time discount. Assume further that $\R(s)$, $\T\APM{s}{t,a}$, $\zeta_0(s)$, $\lambda$, $\Z{\sigma}(s)$ and $\eta$ are rational numbers. Then:
 
-a. There is an algorithm for computing $\QV$ which runs in time polynomial in the size of the input.
+a. There is an algorithm for computing $\QV$ which runs in time polynomial in the size of the input $\R$, $\T$, $\zeta_0$, $\lambda$, $\Z\sigma$ and $\eta$. Also, if $\sigma$ is stationary and $\sigma\APM{t}{s,a}$ are rational, then $\Z{\sigma}(s)$ are also rational and can be computed from $\sigma$, $\T$, $\zeta_0$ and $\lambda$ in polynomial time.
 
 b. Given an additional rational input parameter $\epsilon\in(0,1)$, there is an algorithm for computing a stationary policy which is an $\epsilon$-equilibrium in the zero-sum game associated with quantilization, which runs in time polynomial in the size of the input and $\ln\frac{1}{\epsilon}$.
 
@@ -291,11 +293,11 @@ Proposition 1 now follows immediately from Proposition A.N1.
 
 \#Proposition A.N2
 
-For any $\zeta\in\Delta\St$, there exists *some* policy which is quantilal relatively to $\zeta$.
+For any $\sigma: \St^* \times \St \K \A$, there exists *some* policy which is quantilal relatively to $\sigma$.
 
 \#Proof of Proposition A.N2
 
-Consider $\Pi:=\AC{\St^* \times \St \K \A}$, the space of all policies. $\Pi$ is the product of a countable number of copies of $\Delta\A$ (indexed by $\St^* \times \St$). $\Delta\A$ is naturally a topological space (a simplex), and we can thereby equip $\Pi$ by the product topology. By Tychonoff's theorem, $\Pi$ is compact. Moreover, it is easy to see that $\Z: \Pi \rightarrow \Delta\St$ is a continuous mapping. Finally, observe that $\RD{\infty}{\xi}{\zeta}$ is lower semicontinuous in $\xi$ (since it is the maximum of a number of continuous functions) and therefore $\Ea{\xi}{\R} - \eta\exp{\RD{\infty}{\xi}{\zeta}}$ is upper semicontinuous in $\xi$. By the extreme value theorem, it follows that a quantilal policy exists.
+Consider $\Pi:=\AC{\St^* \times \St \K \A}$, the space of all policies. $\Pi$ is the product of a countable number of copies of $\Delta\A$ (indexed by $\St^* \times \St$). $\Delta\A$ is naturally a topological space (a simplex), and we can thereby equip $\Pi$ by the product topology. By Tychonoff's theorem, $\Pi$ is compact. Moreover, it is easy to see that $\Z: \Pi \rightarrow \Delta\St$ is a continuous mapping. Finally, observe that $\RD{\infty}{\xi}{\Z{\sigma}}$ is lower semicontinuous in $\xi$ (since it is the maximum of a number of continuous functions) and therefore $\Ea{\xi}{\R} - \eta\exp{\RD{\infty}{\xi}{\Z{\sigma}}}$ is upper semicontinuous in $\xi$. By the extreme value theorem, it follows that a quantilal policy exists.
 
 \#Proof of Proposition 2
 
@@ -321,6 +323,8 @@ To complete the induction step, observe that, by definition of $\pi^\dagger$
 $$\CE{\substack{x\sim\Hi{\pi} \\ a\sim\pi^*\AP{x_{:n},s}}}{\T\APM{t}{s,a}}{x_n=s} = \Ea{a\sim\pi^\dagger\AP{n,s}}{\T\APM{t}{s,a}}=\CE{\substack{x\sim\Hi{\pi} \\ a\sim\pi^\dagger\AP{n,s}}}{\T\APM{t}{s,a}}{x_n=s}$$
 
 Now, for any $\pi$, $\Z{\pi}=\Ea{n\sim\gamma}{\Z_n{\pi}}$ and therefore $\Z{\pi^\dagger} = \Z{\pi^*}$. We conclude that $\pi^\dagger$ is also quantilal.
+
+\#Proof of Proposition 3
 
 Mwhahaha
 
