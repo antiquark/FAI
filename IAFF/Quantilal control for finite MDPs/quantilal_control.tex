@@ -211,7 +211,7 @@ It is known that the value of an optimal policy depends on the parameters as a p
 
 \#Proposition 4
 
-$\QV$ is a piecewise rational continuous function of $\lambda$, $\eta$, the matrix elements of $\T$, the values of $\R$ and the values of $\zeta_0$, with a final number of "pieces".
+$\QV$ is a piecewise rational continuous function of $\lambda$, $\eta$, the matrix elements of $\T$, the values of $\R$, the values of $\zeta_0$ and the values of $\Z\sigma$, with a final number of "pieces".
 
 \#Corollary 1
 
@@ -444,7 +444,19 @@ $$\QV = \min_{\Pe:\St\rightarrow[0,\infty)}\max_{\pi \in \Pi_{\det}}\ACM{\Ea{\Z\
 
 \#Proof of Proposition 4
 
-Using elementary linear algebra, it is easy to see that the minimum of a linear function inside a domain defined by a finite system of linear inequalities is a piecewise rational function of the coefficients of the linear function and the linear inequalities, with a finite number of pieces (using the fact that the minimum is always attained on a linear submanifold defined by taking a subset of the inequalities and replacing them by corresponding equalities). By Proposition A.N3, $\QV$ is exactly of this form, with the coefficients...
+Using elementary linear algebra, it is easy to see that the minimum of a linear function inside a domain defined by a finite system of linear inequalities is a continuous piecewise rational function of the coefficients of the linear function and the linear inequalities, with a finite number of pieces (within the domain in which the minimum exists; using the fact that the minimum is always attained on a linear submanifold defined by taking a subset of the inequalities and making them into equalities). By Proposition A.N3, $\QV$ is exactly of this form, with coefficients that are polynomials in the parameters we consider.
+
+\#Proof of Proposition 5
+
+The algorithm for $\QV$ is obtained from Proposition A.N3 using linear programming. 
+
+To see the claim regarding $\Z\sigma$ for stationary $\sigma$, define the linear operator $T^\sigma: \Reals^\St \rightarrow \Reals^\St$ by the matrix
+
+$$T^\sigma_{ts} = \Ea{a\sim\sigma(s)}{\T\APM{t}{s,a}}$$
+
+We then have
+
+$$\Z\sigma = (1-\lambda)\sum_{n=0}^\infty \lambda^n T^{\sigma n} \zeta_0 = (1-\lambda)\AP{\boldsymbol{1}-\lambda T^\sigma}^{-1}\zeta_0$$
 
 Mwhahaha
 
