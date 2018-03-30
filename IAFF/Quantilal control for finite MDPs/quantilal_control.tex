@@ -382,7 +382,7 @@ $$T_{t,sa}:=\T\APM{t}{s,a}$$
 
 Define the linear operator $A: \Reals^\St \oplus \Reals^\St \rightarrow \Reals^{\St\times\A}\oplus\Reals^{\St}\oplus\Reals$ by
 
-$$A(V,P):=\AP{\AP{I-\lambda T}V + (1-\lambda)IP,\ P,\ -\Ea{\Z\sigma}{P}}$$
+$$A(V,P):=\AP{\AP{I-\lambda T}V + \eta(1-\lambda)IP,\ P,\ -\Ea{\Z\sigma}{P}}$$
 
 Define $B\in \Reals^{\St\times\A}\oplus\Reals^{\St}\oplus\Reals$ by
 
@@ -399,6 +399,52 @@ Then,
 $$\QV = \min_{(V,P)\in D}{\Ea{\zeta_0}{V}}$$
 
 \#Proof of Proposition A.N3
+
+Denote $\Pi_{\det}:=\AC{\St^* \times \St \rightarrow \A}$. As usual in extensive-form games, behavioral strategies are equivalent to mixed strategies and therefore the image of the pushforward operator $\Z_*: \Delta\Pi_{\det} \rightarrow \Delta\St$ is the same as the image of $\Z: \Pi \rightarrow \Delta\St$. It follows that
+
+$$\QV = \sup_{\mu \in \Delta\Pi_{\det}}\inf_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\Z_*\mu}{\R-\eta\Pe}}{\Ea{\Z\sigma}{\Pe}\leq1}$$
+
+$\Pi_{\det}$ is a compact Polish space (in the sense of the product topology) and therefore $\Delta\Pi_{\det}$ is compact in the weak topology. By Sion's minimax theorem
+
+$$\QV = \inf_{\Pe:\St\rightarrow[0,\infty)}\max_{\pi \in \Pi_{\det}}\ACM{\Ea{\Z\pi}{\R-\eta\Pe}}{\Ea{\Z\sigma}{\Pe}\leq1}$$
+
+Now consider any $X=(V,P) \in D$. $AX \geq B$ implies (looking at the $\Reals^{\St\times\A}$ component) that
+
+$$\AP{I-\lambda T}V + \eta(1-\lambda)IP \geq (1-\lambda)I\R$$
+
+$$\AP{I-\lambda T}V\geq (1-\lambda)I(\R-\eta P)$$
+
+$$V(t) - \lambda \sum_{s \in \St} \T\APM{t}{s,a} V(s) \geq (1-\lambda)\AP{\R(t)-\eta P(t)}$$
+
+$$V(t) \geq (1-\lambda)\AP{\R(t)-\eta P(t)} + \lambda \max_{a \in \A } \sum_{s \in \St} \T\APM{t}{s,a} V(s)$$
+
+Therefore, there is some $\R' \geq \R$ s.t.
+
+$$V(t) = (1-\lambda)\AP{\R'(t)-\eta P(t)} + \lambda \max_{a \in \A } \sum_{s \in \St} \T\APM{t}{s,a} V(s)$$
+
+The above is the Bellman equation for a modified MDP with reward function $\R'-\eta P$. Denote $\Z_t$ the version of the $\Z$ operator for the initial state $t$ (instead of $\zeta_0$). We get
+
+$$V(t) = \max_{\pi\in\Pi_{\det}}{\Ea{\Z_t\pi}{\R'-\eta P}} \geq \max_{\pi\in\Pi_{\det}}{\Ea{\Z_t\pi}{\R-\eta P}}$$
+
+Observing that $\Ea{t\sim\zeta_0}{\Z_t\pi} = \Z\pi$, we get
+
+$$\Ea{\zeta_0}{V} \geq \Ea{t\sim\zeta_0}{\max_{\pi\in\Pi_{\det}}{\Ea{\Z_t\pi}{\R-\eta P}}} \geq \max_{\pi\in\Pi_{\det}} \Ea{\Z\pi}{\R - \eta P}$$
+
+On the other hand, for any $P\in\Reals^\St$ s.t. $P\geq\boldsymbol{0}$ and $\Ea{\Z\sigma}{P} \leq 1$ (these inequalities correspond to the $\Reals^\St\oplus\Reals$ component of $AX \geq B$), there is $(V,P)\in D$ s.t.
+
+$$\Ea{\zeta_0}{V} = \max_{\pi\in\Pi_{\det}} \Ea{\Z\pi}{\R - \eta P}$$
+
+Namely, this $V$ is the solution of the Bellman equation for the reward function $\R-\eta P$. Therefore, we have
+
+$$\max_{\pi\in\Pi_{\det}} \Ea{\Z\pi}{\R - \eta P} = \min_{V\in\Reals^\St}\ACM{\Ea{\zeta_0}{V}}{(V,P)\in D}$$
+
+Minimizing both sides over $P$ inside the domain $\AC{P\geq\boldsymbol{0},\ \Ea{\Z\sigma}{P} \leq 1}$ we get
+
+$$\QV = \min_{\Pe:\St\rightarrow[0,\infty)}\max_{\pi \in \Pi_{\det}}\ACM{\Ea{\Z\pi}{\R-\eta\Pe}}{\Ea{\Z\sigma}{\Pe}\leq1} = \min_{(V,P) \in D}{\Ea{\zeta_0}{V}}$$
+
+\#Proof of Proposition 4
+
+Using elementary linear algebra, it is easy to see that the minimum of a linear function inside a domain defined by a finite system of linear inequalities is a piecewise rational function of the coefficients of the linear function and the linear inequalities, with a finite number of pieces (using the fact that the minimum is always attained on a linear submanifold defined by taking a subset of the inequalities and replacing them by corresponding equalities). By Proposition A.N3, $\QV$ is exactly of this form, with the coefficients...
 
 Mwhahaha
 
