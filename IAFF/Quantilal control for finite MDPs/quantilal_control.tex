@@ -229,7 +229,7 @@ $\QV$ is a piecewise rational continuous function of $\lambda$, $\eta$, the matr
 
 \#Corollary 1
 
-$\QV$ converges as $\lambda \rightarrow 1$, holding all other parameters fixed. It is analytic in $\lambda$ for some interval $\AB{\lambda_0,1}$ and therefore can be described by a Taylor expansion around $\lambda=1$ inside this interval.
+Assume that $\sigma$ is a stationary policy. Then, $\QV$ converges as $\lambda \rightarrow 1$, holding all other parameters fixed (in the sense that, $\sigma$ is fixed whereas $\Z\sigma$ changes as a function of $\lambda$). It is analytic in $\lambda$ for some interval $\AB{\lambda_0,1}$ and therefore can be described by a Taylor expansion around $\lambda=1$ inside this interval.
 
 ***
 
@@ -474,19 +474,39 @@ $$X_J = A_J^{-1} B_J$$
 
 $$\QV = \Ea{\zeta_0}{QA_J^{-1} B_J}$$
 
-For each $J$, the expression on the right hand side is a rational function of the matrix elements of $A$ and $B$ which, in turn, are polynomials in the parameters the dependence on which we are trying to establish.  Therefore, this expression is a rational function in those parameters (unless $\det A_J$ vanishes identically, in which case this $J$ can ignored). So, $\QV$ always equals one of a finite set of rational functions (corresponding to difference choices of $J$). The continuity of $\QV$ also easily follows from its characterization as $\min_{(V,P) \in D}{\Ea{\zeta_0}{V}}$.
+For each $J$, the expression on the right hand side is a rational function of $\zeta_0$ and the matrix elements of $A$ and $B$ which, in turn, are polynomials in the parameters the dependence on which we are trying to establish.  Therefore, this expression is a rational function in those parameters (unless $\det A_J$ vanishes identically, in which case this $J$ can ignored). So, $\QV$ always equals one of a finite set of rational functions (corresponding to difference choices of $J$). The continuity of $\QV$ also easily follows from its characterization as $\min_{(V,P) \in D}{\Ea{\zeta_0}{V}}$.
+
+\#Proposition A.N4
+
+Assume geometric time discount and stationary $\sigma$. Then, $\Z\sigma$ is a rational function of $\sigma$, $\T$, $\zeta_0$ and $\lambda$ with rational coefficients.
+
+\#Proof of Proposition A.N4
+
+Define the linear operator $T^\sigma: \Reals^\St \rightarrow \Reals^\St$ by the matrix
+
+$$T^\sigma_{ts} = \Ea{a\sim\sigma(s)}{\T\APM{t}{s,a}}$$
+
+We have
+
+$$\Z\sigma = (1-\lambda)\sum_{n=0}^\infty \lambda^n T^{\sigma n} \zeta_0 = (1-\lambda)\AP{\boldsymbol{1}-\lambda T^\sigma}^{-1}\zeta_0$$
+
+\#Proof of Corollary 1
+
+By Propositions 4 and A.N4, $\QV$ is a continuous piecewise rational function of $\lambda$ with a finite number of pieces. Two rational functions can only coincide at a finite number of points (since a polynomial can only have a finite number of roots), therefore there is only a finite number of values of $\lambda$ in which $\QV$ "switches" from one rational function to another. It follows that there is some $\lambda_0\in[0,1)$ s.t. $\QV$ is a fixed rational function of $\lambda$ in the interval $[\lambda_0,1)$.
+
+Moreover, it always holds that
+
+$$\min_{s\in\St} \R(s) - \eta \leq \QV \leq \max_{s\in\St} \R(s)$$
+
+The first inequality holds since, the guaranteed performance of the quantilal policy is at least as good as the guaranteed performance of $\sigma$. The second inequality is a consequence of the requirement that $P$ is non-negative.
+
+It follows that $\QV$ cannot have a pole at $\lambda = 1$ and therefore must converge to a finite value there.
 
 \#Proof of Proposition 5
 
 The algorithm for $\QV$ is obtained from Proposition A.N3 using linear programming. 
 
-To see the claim regarding $\Z\sigma$ for stationary $\sigma$, define the linear operator $T^\sigma: \Reals^\St \rightarrow \Reals^\St$ by the matrix
-
-$$T^\sigma_{ts} = \Ea{a\sim\sigma(s)}{\T\APM{t}{s,a}}$$
-
-We then have
-
-$$\Z\sigma = (1-\lambda)\sum_{n=0}^\infty \lambda^n T^{\sigma n} \zeta_0 = (1-\lambda)\AP{\boldsymbol{1}-\lambda T^\sigma}^{-1}\zeta_0$$
+The claim regarding $\Z\sigma$ for stationary $\sigma$ follows from Proposition A.N4.
 
 Mwhahaha
 
