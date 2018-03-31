@@ -97,13 +97,13 @@
 
 \begin{document}
 
-We introduce a variant of the concept of a "[quantilizer](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)" for the setting of choosing a policy for a finite Markov decision process (MDP), where the generic unknown cost is replaced by an unknown penalty term in the reward function. This is essentially a generalization of quantilization in repeated games with a cost independence assumption. We show that the "quantilal" policy shares some properties with the ordinary optimal policy, namely that (i) it can always be chosen to be Markov (ii) it can be chosen to be stationary (but not deterministic of course) when time discount is geometric (iii) the "quantilum" value of an MDP with geometric time discount is a semialgebraic function of the parameters, and in particular it converges when the discount parameter $\lambda$ approaches 1. Finally, we demonstrate a polynomial-time algorithm for computing the quantilal policy, showing that quantilization is not qualitatively harder than ordinary optimization.
+We introduce a variant of the concept of a "[quantilizer](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)" for the setting of choosing a policy for a finite Markov decision process (MDP), where the generic unknown cost is replaced by an unknown penalty term in the reward function. This is essentially a generalization of quantilization in repeated games with a cost independence assumption. We show that the "quantilal" policy shares some properties with the ordinary optimal policy, namely that (i) it can always be chosen to be Markov (ii) it can be chosen to be stationary when time discount is geometric (iii) the "quantilum" value of an MDP with geometric time discount is a continuous piecewise rational function of the parameters, and it converges when the discount parameter $\lambda$ approaches 1. Finally, we demonstrate a polynomial-time algorithm for computing the quantilal policy, showing that quantilization is not qualitatively harder than ordinary optimization.
 
 ***
 
 \section{Background}
 
-Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". According to Extremal Goodhart, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost function $\Co: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{\Co}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ is bounded by 1. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by *humans*). We can then seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{\Co}$ by a fixed bound $C_{\max}$:
+Quantilization (introduced in [Taylor 2015](https://intelligence.org/files/QuantilizersSaferAlternative.pdf)) is a method of dealing with "[Extremal Goodhart's Law](https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy)". According to Extremal Goodhart, when we attempt to optimize a utility function $\Ut^*: \A \rightarrow \Reals$ by aggressively optimizing a *proxy* $\Ut: \A \rightarrow \Reals$, we are likely to land outside of the domain where the proxy is useful. Quantilization addresses this by assuming an unknown cost function $\Co: \A \rightarrow [0,\infty)$ whose expectation $\Ea{\zeta}{\Co}$ w.r.t. some reference probability measure $\zeta \in \Delta\A$ is bounded by 1. $\zeta$ can be thought of as defining the "domain" within which $\Ut$ is well-behaved (for example it can be the probability measure of choices made by humans). We can then seek to maximize $\Ea{}{\Ut}$ while constraining $\Ea{}{\Co}$ by a fixed bound $C_{\max}$:
 
 $$\tilde{\xi}^* :\in \Argmax{\xi \in \Delta\A}\ACM{\Ea{\xi}{\Ut}}{\forall \Co: \A \rightarrow [0,\infty): \Ea{\zeta}{\Co} \leq 1 \implies \Ea{\xi}{\Co} \leq C_{\max}}$$
 
@@ -113,9 +113,9 @@ $$\xi^* :\in \Argmax{\xi \in \Delta\A}\inf_{\Co:\A\rightarrow[0,\infty)}\ACM{\Ea
 
 These two formulations are almost equivalent since both amount to finding a strategy that is Pareto efficient w.r.t. to the two objectives $\Ea{}{\Ut}$ and $-\Ea{}{\Co}$. For $\tilde{\xi}^*$ the tradeoff is governed by the parameter $C_{\max}$ and for $\xi^*$ the tradeoff is governed by the parameter $\eta$. Indeed, it is easy to see that any $\xi^*$ is also optimal for the first criterion if we take $C_{\max}=\Ea{\xi^*}{\Co}$, and any $\tilde{\xi}^*$ is also optimal for the latter criterion for an appropriate choice of $\eta$ (it needs to be a subderivative of the Pareto frontier).
 
-In the following, we will use as our starting point the *second* formulation, which can be thought of as a zero-sum game in which $\Ut-\eta \Co$ is the utility function of the agent whose strategy set is $\A$, and $\Co$ is chosen by the adversary. The quantilal strategy $\xi^*$ is the Nash equilibrium of the game.
+In the following, we will use as our starting point the *second* formulation, which can be thought of as a zero-sum game in which $\Ut-\eta \Co$ is the utility function of an agent whose strategy set is $\A$, and $\Co$ is chosen by the adversary. The quantilal strategy $\xi^*$ is the Nash equilibrium of the game.
 
-This formulation seems natural if we take $\eta:=\Ea{\zeta}{\max\AP{\Ut-\Ut^*,0}}$ (a measure of how "optimistic" is $\Ut$ in the "domain" $\zeta$) and $\Co:=\eta^{-1}\max\AP{\Ut-\Ut^*,0}$. In particular, the quantilum value (the value of the game) is a lower bound on the expectation of $\Ut^*$. Note that all the Propositions we prove except Proposition 5 work for the first formulation as well, and modifying the proofs is straightforward.
+This formulation seems natural if we take $\eta:=\Ea{\zeta}{\max\AP{\Ut-\Ut^*,0}}$ (a measure of how "optimistic" is $\Ut$ in the domain $\zeta$) and $\Co:=\eta^{-1}\max\AP{\Ut-\Ut^*,0}$. In particular, the quantilum value (the value of the game) is a lower bound on the expectation of $\Ut^*$.
 
 In principle, this formalism can be applied to sequential interaction between an agent and an environment, if we replace $\A$ by the set of *policies*. However, if it is possible to make structural assumptions about $\Ut$ and $C$, we can do better. Taylor explores one such structural assumption, namely a sequence of independent games in which both $\Ut$ and $\Co$ are additive across the games. We consider a more general setting, namely that of a finite Markov decision process (MDP).
 
@@ -185,7 +185,7 @@ $$\QV = \sup_{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z{\pi}}{\R}-\eta \exp{\RD{\inft
 
 ***
 
-If the maximization in Proposition 1 was over arbitrary $\xi \in \Delta\St$ rather than $\xi$ of the form $\Z{\pi}$, we would get ordinary quantilization and sampling $\xi$ would be equivalent to sampling some top fraction of $\zeta:=\Z{\sigma}$. In general, the image of the $\Z$ operator is some closed convex set which is *not* the entire $\Delta\St$.  \Comment{Also, Proposition 1 shows that quantilality only depends on $\sigma$ via $\zeta$. In the following, we will say that $\pi$ is quantilal relatively to $\zeta\in\Delta\St$ when it satisfies the property given in Proposition 1 with $\Z{\sigma}$ replaced by $\zeta$.}
+If the maximization in Proposition 1 was over arbitrary $\xi \in \Delta\St$ rather than $\xi$ of the form $\Z{\pi}$, we would get ordinary quantilization and sampling $\xi$ would be equivalent to sampling some top fraction of $\zeta:=\Z{\sigma}$. However, in general, the image of the $\Z$ operator is some closed convex set which is *not* the entire $\Delta\St$.  \Comment{Also, Proposition 1 shows that quantilality only depends on $\sigma$ via $\zeta$. In the following, we will say that $\pi$ is quantilal relatively to $\zeta\in\Delta\St$ when it satisfies the property given in Proposition 1 with $\Z{\sigma}$ replaced by $\zeta$.}
 
 So far we considered arbitrary (non-stationary) policies. From classical MDP theory, we know that an *optimal* policy can always be chosen to be Markov:
 
@@ -203,7 +203,7 @@ For any $\sigma: \St^* \times \St \K \A$, there exists a Markov policy which is 
 
 ***
 
-Now assume that our time discount function is geometric, i.e. there exists $\lambda\in[0,1)$ s.t. $\gamma(n)=(1-\lambda)\lambda^n$. Then it is known than an *optimal* policy can be chosen to be stationary:
+Now assume that our time discount function is geometric, i.e. there exists $\lambda\in[0,1)$ s.t. $\gamma(n)=(1-\lambda)\lambda^n$. Then it is known than an optimal policy can be chosen to be stationary:
 
 \#Definition 3
 
@@ -261,15 +261,15 @@ To tease a little, here are some developments of this work that I'm planning:
 
 \section{Proofs}
 
-\#Proposition A.N1
+\#Proposition A.1
 
 $$\inf_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}}{\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}\leq1}=\Ea{\Z{\pi}}{\R}-\eta \exp{\RD{\infty}{\Z{\pi}}{\Z{\sigma}}}$$
 
-\#Proof of Proposition A.N1
+\#Proof of Proposition A.1
 
 The definition of $\Z$ implies that
 
-$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}=\Ea{\Z{\pi}}{\R-\eta P}$$
+$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}}=\Ea{\Z\pi}{\R-\eta P}$$
 
 Also
 
@@ -277,19 +277,19 @@ $$\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}}=\Ea{\Z{\sigma}}{P}$
 
 Observe that
 
-$$\Ea{\Z{\pi}}{P} = \sum_{s\in\St}\Z{\pi}(s)P(s) \leq \max_{\substack{s \in \St \\ \Z{\pi}(s) > 0}}\frac{\Z{\pi}(s)}{\Z{\sigma}(s)}\cdot\sum_{s\in\St}\Z{\sigma}(s)P(s) = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}} \cdot \Ea{\Z{\sigma}}{P}$$
+$$\Ea{\Z{\pi}}{P} = \sum_{s\in\St}\Z{\pi}(s)P(s) \leq \max_{\substack{s \in \St \\ \Z{\pi}(s) > 0}}\frac{\Z{\pi}(s)}{\Z{\sigma}(s)}\cdot\sum_{s\in\St}\Z{\sigma}(s)P(s) = \exp{\RD{\infty}{\Z\pi}{\Z\sigma}} \cdot \Ea{\Z{\sigma}}{P}$$
 
 It follows that for any $P$ that satisfies the constraint $\Ea{\substack{x\sim\Hi{\sigma}\\n\sim\gamma}}{\Pe\AP{x_n}} \leq 1$, we have $\Ea{\Z{\sigma}}{\Pe} \leq 1$ and therefore
 
-$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}} = \Ea{\Z{\pi}}{\R} - \eta \Ea{\Z{\pi}}{\Pe} \geq \Ea{\Z{\pi}}{\R} - \eta\exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$$
+$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe\AP{x_n}} = \Ea{\Z{\pi}}{\R} - \eta \Ea{\Z{\pi}}{\Pe} \geq \Ea{\Z{\pi}}{\R} - \eta\exp{\RD{\infty}{\Z\pi}{\Z\sigma}}$$
 
-To show that the inequality can be arbitrarily close to equality, choose $s^* \in \St$ s.t. $\Z{\pi}(s^*) > 0$ and $\frac{\Z{\pi}\AP{s^*}}{\Z{\sigma}\AP{s^*}} = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$. If $\Z{\sigma}\AP{s^*} > 0$, we can define $\Pe^*$ by
+To show that the inequality can be arbitrarily close to equality, choose $s^* \in \St$ s.t. $\Z{\pi}(s^*) > 0$ and $\frac{\Z{\pi}\AP{s^*}}{\Z{\sigma}\AP{s^*}} = \exp{\RD{\infty}{\Z\pi}{\Z\sigma}}$. If $\Z{\sigma}\AP{s^*} > 0$, we can define $\Pe^*$ by
 
 $$\Pe^*(s):=\begin{cases} \Z{\sigma}(s^*)^{-1} \text{ if } s=s^* \\ 0 \text{ otherwise} \end{cases}$$
 
-Clearly $\Ea{\Z{\sigma}}{\Pe^*} = 1$ and $\Ea{\Z{\pi}}{P^*} = \exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$. We get
+Clearly $\Ea{\Z{\sigma}}{\Pe^*} = 1$ and $\Ea{\Z{\pi}}{P^*} = \exp{\RD{\infty}{\Z\pi}{\Z\sigma}}$. We get
 
-$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe^*\AP{x_n}} = \Ea{\Z{\pi}}{\R} - \eta \Ea{\Z{\pi}}{\Pe^*} = \Ea{\Z{\pi}}{\R} - \eta\exp{\RD{\infty}{Z(\pi)}{Z(\sigma)}}$$
+$$\Ea{\substack{x\sim\Hi{\pi}\\n\sim\gamma}}{\R\AP{x_n}-\eta\Pe^*\AP{x_n}} = \Ea{\Z{\pi}}{\R} - \eta \Ea{\Z{\pi}}{\Pe^*} = \Ea{\Z{\pi}}{\R} - \eta\exp{\RD{\infty}{\Z\pi}{\Z\sigma}}$$
 
 In the case $\Z{\sigma}\AP{s^*} > 0$, we can take any $M > 0$ and define $\Pe^M$ by
 
@@ -303,15 +303,15 @@ Since $\Z{\pi}\AP{s^*} > 0$, we can make this expression arbitrarily low and the
 
 ***
 
-Proposition 1 now follows immediately from Proposition A.N1.
+Proposition 1 now follows immediately from Proposition A.1.
 
 We will use the notation $\Pi:=\AC{\St^* \times \St \K \A}$ (the space of all policies). We also have $\Pi_{\text{M}}:=\AC{\Nats \times \St \K \A}$ (the space of Markov policies) and $\Pi_{\text{T}}:=\AC{ \St \K \A}$ (the space of stationary policies). Mildly abusing notation, we will view $\Pi_{\text{M}}$ as a subspace of $\Pi$ and $\Pi_{\text{T}}$ as a subspace of $\Pi_{\text{M}}$.
 
-\#Proposition A.N2
+\#Proposition A.2
 
 For any $\sigma: \St^* \times \St \K \A$, there exists *some* policy which is quantilal relatively to $\sigma$.
 
-\#Proof of Proposition A.N2
+\#Proof of Proposition A.2
 
 $\Pi$ is the product of a countable number of copies of $\Delta\A$ (indexed by $\St^* \times \St$). $\Delta\A$ is naturally a topological space (a simplex), and we can thereby equip $\Pi$ by the product topology. By Tychonoff's theorem, $\Pi$ is compact. Moreover, it is easy to see that $\Z: \Pi \rightarrow \Delta\St$ is a continuous mapping. Finally, observe that $\RD{\infty}{\xi}{\Z{\sigma}}$ is lower semicontinuous in $\xi$ (since it is the maximum of a number of continuous functions) and therefore $\Ea{\xi}{\R} - \eta\exp{\RD{\infty}{\xi}{\Z{\sigma}}}$ is upper semicontinuous in $\xi$. By the extreme value theorem, it follows that a quantilal policy exists.
 
@@ -323,7 +323,7 @@ $$\Z_n{\pi}(s) := \Pa{x\sim\Hi{\pi}}{x_n=s}$$
 
 \#Proof of Proposition 2
 
-By Proposition A.N2, there is a quantilal policy $\pi^*: \St^* \times \St \K \A$. We define $\pi^\dagger: \Nats \times \St \K \A$ by
+By Proposition A.2, there is a quantilal policy $\pi^*: \St^* \times \St \K \A$. We define $\pi^\dagger: \Nats \times \St \K \A$ by
 
 $$\pi^\dagger(n,s):=\CE{x\sim\Hi{\pi^*}}{\pi^*(x_{:n},s)}{x_n=s}$$
 
@@ -386,9 +386,9 @@ $$\Z\pi^\dagger = (1-\lambda)\sum_{n=0}^\infty \lambda^n T^{\dagger n} \zeta_0 =
 
 Therefore, $\Z\pi^\dagger = \Z\pi^*$ and $\pi^\dagger$ is also quantilal.
 
-\#Proposition A.N3
+\#Proposition A.3
 
-Assume geometric time discount. Define the linear operators $I: \Reals^\St \rightarrow \Reals^{\St\times\A}$ and $T: \Reals^\St \rightarrow \Reals^{\St\times\A}$ by the matrices
+Assume geometric time discount. Consider any $\zeta\in\Delta\St$. Define the linear operators $I: \Reals^\St \rightarrow \Reals^{\St\times\A}$ and $T: \Reals^\St \rightarrow \Reals^{\St\times\A}$ by the matrices
 
 $$I_{t,sa}:=[[t=s]]$$
 
@@ -396,7 +396,7 @@ $$T_{t,sa}:=\T\APM{t}{s,a}$$
 
 Define the linear operator $A: \Reals^\St \oplus \Reals^\St \rightarrow \Reals^{\St\times\A}\oplus\Reals^{\St}\oplus\Reals$ by
 
-$$A(V,P):=\AP{\AP{I-\lambda T}V + \eta(1-\lambda)IP,\ P,\ -\Ea{\Z\sigma}{P}}$$
+$$A(V,P):=\AP{\AP{I-\lambda T}V + \eta(1-\lambda)IP,\ P,\ -\Ea{\zeta}{P}}$$
 
 Define $B\in \Reals^{\St\times\A}\oplus\Reals^{\St}\oplus\Reals$ by
 
@@ -410,17 +410,19 @@ Here, vector inequalities are understood to be componentwise.
 
 Then,
 
-$$\QV = \min_{(V,P)\in D}{\Ea{\zeta_0}{V}}$$
+$$\QV^\zeta := \sup_{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z{\pi}}{\R}-\eta \exp{\RD{\infty}{\Z{\pi}}{\zeta}}} = \inf_{(V,P)\in D}{\Ea{\zeta_0}{V}}$$
 
-\#Proof of Proposition A.N3
+In particular, if $\zeta=\Z\sigma$, the above expression describes $\QV$
+
+\#Proof of Proposition A.3
 
 Denote $\Pi_{\det}:=\AC{\St^* \times \St \rightarrow \A}$. As usual in extensive-form games, behavioral strategies are equivalent to mixed strategies and therefore the image of the pushforward operator $\Z_*: \Delta\Pi_{\det} \rightarrow \Delta\St$ is the same as the image of $\Z: \Pi \rightarrow \Delta\St$. It follows that
 
-$$\QV = \sup_{\mu \in \Delta\Pi_{\det}}\inf_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\Z_*\mu}{\R-\eta\Pe}}{\Ea{\Z\sigma}{\Pe}\leq1}$$
+$$\QV = \sup_{\mu \in \Delta\Pi_{\det}}\inf_{\Pe:\St\rightarrow[0,\infty)}\ACM{\Ea{\Z_*\mu}{\R-\eta\Pe}}{\Ea{\zeta}{\Pe}\leq1}$$
 
 $\Pi_{\det}$ is a compact Polish space (in the sense of the product topology) and therefore $\Delta\Pi_{\det}$ is compact in the weak topology. By Sion's minimax theorem
 
-$$\QV = \inf_{\Pe:\St\rightarrow[0,\infty)}\max_{\pi \in \Pi_{\det}}\ACM{\Ea{\Z\pi}{\R-\eta\Pe}}{\Ea{\Z\sigma}{\Pe}\leq1}$$
+$$\QV = \inf_{\Pe:\St\rightarrow[0,\infty)}\max_{\pi \in \Pi_{\det}}\ACM{\Ea{\Z\pi}{\R-\eta\Pe}}{\Ea{\zeta}{\Pe}\leq1}$$
 
 Now consider any $X=(V,P) \in D$. $AX \geq B$ implies (looking at the $\Reals^{\St\times\A}$ component) that
 
@@ -452,13 +454,13 @@ Namely, this $V$ is the solution of the Bellman equation for the reward function
 
 $$\max_{\pi\in\Pi_{\det}} \Ea{\Z\pi}{\R - \eta P} = \min_{V\in\Reals^\St}\ACM{\Ea{\zeta_0}{V}}{(V,P)\in D}$$
 
-Minimizing both sides over $P$ inside the domain $\AC{P\geq\boldsymbol{0},\ \Ea{\Z\sigma}{P} \leq 1}$ we get
+Taking the infimum of both sides over $P$ inside the domain $\AC{P\geq\boldsymbol{0},\ \Ea{\zeta}{P} \leq 1}$ we get
 
-$$\QV = \min_{\Pe:\St\rightarrow[0,\infty)}\max_{\pi \in \Pi_{\det}}\ACM{\Ea{\Z\pi}{\R-\eta\Pe}}{\Ea{\Z\sigma}{\Pe}\leq1} = \min_{(V,P) \in D}{\Ea{\zeta_0}{V}}$$
+$$\QV^\zeta = \inf_{\Pe:\St\rightarrow[0,\infty)}\max_{\pi \in \Pi_{\det}}\ACM{\Ea{\Z\pi}{\R-\eta\Pe}}{\Ea{\zeta}{\Pe}\leq1} = \inf_{(V,P) \in D}{\Ea{\zeta_0}{V}}$$
 
 \#Proof of Proposition 4
 
-Consider the characterization of $\QV$ in Proposition A.N3. By general properties of systems of linear inequalities, there is some $J \subseteq (\St \times \A) \sqcup \St \sqcup \{\bullet\}$ s.t.
+Consider the characterization of $\QV$ in Proposition A.3. By general properties of systems of linear inequalities, there is some $J \subseteq (\St \times \A) \sqcup \St \sqcup \{\bullet\}$ s.t.
 
 $$D^\sharp_J := \ACM{X \in \Reals^\St \oplus \Reals^\St}{A_J X = B_J} \subseteq \Argmin{(V,P) \in D}{\Ea{\zeta_0}{V}}$$
 
@@ -466,7 +468,7 @@ Here, the notation $A_J$ means taking the submatrix of $A$ consisting of the row
 
 (To see this, use the fact that the minimum of a linear function on a convex set is always attained on the boundary, and apply induction by dimension.)
 
-Moreover, $D_J^\sharp$ has to be a single point $X_J \in \Reals^\St \oplus \Reals^\St$. Indeed, if it has more than one point then it contains a straight line $L$. The projection of $L$ on the second $\Reals^\St$ has to be a single point $P_0$, otherwise some point in $L$ violates the inequality $P \geq \boldsymbol{0}$ which would contradict $L \subseteq D$. Therefore, the projection of $L$ on the first $\Reals^\St$ is also a straight line $L'$. As in the proof of Proposition A.N3, for any $(V,P) \in D$, $V(s)$ is an upper bound on the value of state $s$ in the MDP with reward function $\R-\eta P$. In particular, if $\AP{V,P_0} \in D$ then $V(s) \geq \min_{t\in\St} \AP{R(t)-\eta P_0(t)}$. However, since $L'$ is a line, there must be some $s^*\in\St$ s.t. $V\AP{s^*}$ can be *any* real number for some $\AP{V,P_0} \in L$. This is a contradiction.
+Moreover, $D_J^\sharp$ has to be a single point $X_J \in \Reals^\St \oplus \Reals^\St$. Indeed, if it has more than one point then it contains a straight line $L$. The projection of $L$ on the second $\Reals^\St$ has to be a single point $P_0$, otherwise some point in $L$ violates the inequality $P \geq \boldsymbol{0}$ which would contradict $L \subseteq D$. Therefore, the projection of $L$ on the first $\Reals^\St$ is also a straight line $L'$. As in the proof of Proposition A.3, for any $(V,P) \in D$, $V(s)$ is an upper bound on the value of state $s$ in the MDP with reward function $\R-\eta P$. In particular, if $\AP{V,P_0} \in D$ then $V(s) \geq \min_{t\in\St} \AP{R(t)-\eta P_0(t)}$. However, since $L'$ is a line, there must be some $s^*\in\St$ s.t. $V\AP{s^*}$ can be *any* real number for some $\AP{V,P_0} \in L$. This is a contradiction.
 
 Denote $Q: \Reals^\St \oplus \Reals^\St \rightarrow \Reals^\St$ the projection operator on the first direct summand. It follows that we can always choose $J$ s.t. $\Abs{J} = 2\Abs{\St}$ and we have
 
@@ -476,11 +478,11 @@ $$\QV = \Ea{\zeta_0}{QA_J^{-1} B_J}$$
 
 For each $J$, the expression on the right hand side is a rational function of $\zeta_0$ and the matrix elements of $A$ and $B$ which, in turn, are polynomials in the parameters the dependence on which we are trying to establish.  Therefore, this expression is a rational function in those parameters (unless $\det A_J$ vanishes identically, in which case this $J$ can ignored). So, $\QV$ always equals one of a finite set of rational functions (corresponding to difference choices of $J$). The continuity of $\QV$ also easily follows from its characterization as $\min_{(V,P) \in D}{\Ea{\zeta_0}{V}}$.
 
-\#Proposition A.N4
+\#Proposition A.4
 
 Assume geometric time discount and stationary $\sigma$. Then, $\Z\sigma$ is a rational function of $\sigma$, $\T$, $\zeta_0$ and $\lambda$ with rational coefficients.
 
-\#Proof of Proposition A.N4
+\#Proof of Proposition A.4
 
 Define the linear operator $T^\sigma: \Reals^\St \rightarrow \Reals^\St$ by the matrix
 
@@ -492,7 +494,7 @@ $$\Z\sigma = (1-\lambda)\sum_{n=0}^\infty \lambda^n T^{\sigma n} \zeta_0 = (1-\l
 
 \#Proof of Corollary 1
 
-By Propositions 4 and A.N4, $\QV$ is a continuous piecewise rational function of $\lambda$ with a finite number of pieces. Two rational functions can only coincide at a finite number of points (since a polynomial can only have a finite number of roots), therefore there is only a finite number of values of $\lambda$ in which $\QV$ "switches" from one rational function to another. It follows that there is some $\lambda_0\in[0,1)$ s.t. $\QV$ is a fixed rational function of $\lambda$ in the interval $[\lambda_0,1)$.
+By Propositions 4 and A.4, $\QV$ is a continuous piecewise rational function of $\lambda$ with a finite number of pieces. Two rational functions can only coincide at a finite number of points (since a polynomial can only have a finite number of roots), therefore there is only a finite number of values of $\lambda$ in which $\QV$ "switches" from one rational function to another. It follows that there is some $\lambda_0\in[0,1)$ s.t. $\QV$ is a fixed rational function of $\lambda$ in the interval $[\lambda_0,1)$.
 
 Moreover, it always holds that
 
@@ -504,11 +506,27 @@ It follows that $\QV$ cannot have a pole at $\lambda = 1$ and therefore must con
 
 \#Proof of Proposition 5
 
-The algorithm for $\QV$ is obtained from Proposition A.N3 using linear programming. 
+The algorithm for $\QV$ is obtained from Proposition A.3 using linear programming. 
 
-The claim regarding $\Z\sigma$ for stationary $\sigma$ follows from Proposition A.N4.
+The claim regarding $\Z\sigma$ for stationary $\sigma$ follows from Proposition A.4.
 
-Mwhahaha
+We now describe the algorithm for computing an $\epsilon$-equilibrium.
+
+For any $a \in \A$, define $d_a: \A \sqcup \{\bot\} \rightarrow \A$ by
+
+$$d_a(b) :=  \begin{cases} a \text{ if } b=\bot \\ b \text{ otherwise} \end{cases}$$
+
+Consider any $\beta: \St \K \A \sqcup \{\bot\}$. We define $\T_\beta: \St \times \A \K \St$ by
+
+$$\T_\beta(s,a) := \Ea{b \sim \beta(s)}{\T\AP{s,d_a(b)}}$$
+
+Let $\Z_\beta: \Pi \K \St$ be the $\Z$-operator for the MDP with transition kernel $\T_\beta$, and define
+
+$$\QV_\beta := \sup_{\pi: \St^*\times\St \K \A}\AP{\Ea{\Z_\beta{\pi}}{\R}-\eta \exp{\RD{\infty}{\Z_\beta{\pi}}{\Z{\sigma}}}}$$
+
+It is easy to see that $\QV_\beta = \QV$ if an only if there is $\pi: \St \K \A$ quantilal s.t. $\pi\APM{a}{s} \geq \beta\APM{a}{s}$. Indeed, the MDP with kernel $\T_\beta$ is equivalent to the original MDP under the constraint that, when in state $s$, any action $a$ has to be taken with the minimal probability $\beta\APM{a}{s}$. In particular $\QV_\beta \leq \QV$ (since we constrained the possible policies but not the possible penalties). So, if $\pi$ as above exists, then we can use it to construct a stationary policy for the new MDP with guaranteed value $\QV$. Conversely, if the new MDP has a stationary policy with guaranteed value $\QV$ then it can be used to construct the necessary $\pi$.
+
+Using Proposition A.3, we can compute $\QV_\beta$ for any rational $\beta$ by linear programming. This allows us to find the desired policy by binary search on $\beta$, one state at a time.
 
 \end{document}
 
