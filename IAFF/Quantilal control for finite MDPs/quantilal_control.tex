@@ -119,9 +119,23 @@ This formulation seems natural if we take $\eta:=\Ea{\zeta}{\max\AP{\Ut-\Ut^*,0}
 
 In principle, this formalism can be applied to sequential interaction between an agent and an environment, if we replace $\A$ by the set of *policies*. However, if it is possible to make structural assumptions about $\Ut$ and $C$, we can do better. Taylor explores one such structural assumption, namely a sequence of independent games in which both $\Ut$ and $\Co$ are additive across the games. We consider a more general setting, namely that of a finite Markov decision process (MDP).
 
+\section{Notation}
+
+Given a set $A$, the notation $A^*$ will denote the set of finite strings over alphabet $A$, i.e.
+
+\[A^* := \bigsqcup_{n = 0}^\infty A^n\]
+
+$A^\omega$ denotes the space of infinite strings over alphabet $A$, equipped with the product topology and the corresponding Borel sigma-algebra. Given $x\in A^\omega$ and $n \in \Nats$, $x_n \in A$ is the $n$-th symbol of the string $x$ (in our conventions, $0 \in \Nats$ so the string begins from the 0th symbol.) Given $h \in A^*$ and $x \in A^\omega$, the notation $h \sqsubset x$ means that $h$ is a prefix of $x$.
+
+Given a set $A$, $x\in A^\omega$ and $n\in\Nats$, the notation $x_{:n}$ will indicate the prefix of $x$ of length $n$. That is, $x_{:n} \in A^n$ and $x_{:n} \sqsubset x$.
+
+Given a measurable space $X$, we denote $\Delta X$ the space of probability measures on $X$.
+
+Given measurable spaces $X$ and $Y$, the notation $K: X \K Y$ means that $K$ is a Markov kernel from $X$ to $Y$. Given $x \in X$, $K(x)$ is the corresponding probability measure on $Y$. Given $A \subseteq Y$ measurable, $K(A \mid x) := K(x)(A)$. Given $y \in Y$, $K(y \mid x):=K\APM{\{y\}}{x}$. Given $J: Y \K Z$, $JK: X \K Z$ is the composition of $J$ and $K$, and when $Y = X$, $K^n$ is the $n$-th composition power.
+
 \section{Results}
 
-A finite MDP is defined by a finite set of states $\St$, a finite set of actions $\A$, a transition kernel $\T: \St \times \A \K \St$ and a reward function $\R: \St \rightarrow \Reals$. To specify the utility function, we also need to fix a time discount function $\gamma \in \Delta\Nats$. This allows defining $\Ut: \St^\omega \rightarrow \Reals$ by
+A finite MDP is defined by a non-empty finite set of states $\St$, a non-empty finite set of actions $\A$, a transition kernel $\T: \St \times \A \K \St$ and a reward function $\R: \St \rightarrow \Reals$. To specify the utility function, we also need to fix a time discount function $\gamma \in \Delta\Nats$. This allows defining $\Ut: \St^\omega \rightarrow \Reals$ by
 
 $$\Ut(x):=\Ea{n\sim\gamma}{\R\AP{x_n}}$$
 
@@ -131,7 +145,7 @@ We now assume that the cost function $\Co: \St^\omega \rightarrow \Reals$ (or, t
 
 $$\Co(x) = \Ea{n\sim\gamma}{\Pe\AP{x_n}}$$
 
-Denote $\St^*:=\bigsqcup_{n\in\Nats}\St^n$. Given a policy $\pi: \St^*\times\St \K \A$ (where the $\St^*$ factor represents the past history the factor $\St$ represents the current state), we define $\Hi{\pi} \in \Delta\St^\omega$ in the usual way (the distribution over histories resulting from $\pi$). Finally, we fix $\eta \in (0,\infty)$. We are now ready to define quantilization in this setting
+Given a policy $\pi: \St^*\times\St \K \A$ (where the $\St^*$ factor represents the past history the factor $\St$ represents the current state), we define $\Hi{\pi} \in \Delta\St^\omega$ in the usual way (the distribution over histories resulting from $\pi$). Finally, we fix $\eta \in (0,\infty)$. We are now ready to define quantilization in this setting
 
 \#Definition 1
 
@@ -444,7 +458,23 @@ $$\QV = \min_{\Pe:\St\rightarrow[0,\infty)}\max_{\pi \in \Pi_{\det}}\ACM{\Ea{\Z\
 
 \#Proof of Proposition 4
 
-Using elementary linear algebra, it is easy to see that the minimum of a linear function inside a domain defined by a finite system of linear inequalities is a continuous piecewise rational function of the coefficients of the linear function and the linear inequalities, with a finite number of pieces (within the domain in which the minimum exists; using the fact that the minimum is always attained on a linear submanifold defined by taking a subset of the inequalities and making them into equalities). By Proposition A.N3, $\QV$ is exactly of this form, with coefficients that are polynomials in the parameters we consider.
+Consider the characterization of $\QV$ in Proposition A.N3. By general properties of systems of linear inequalities, there is some $J \subseteq (\St \times \A) \sqcup \St \sqcup \{\bullet\}$ s.t.
+
+$$D^\sharp_J := \ACM{X \in \Reals^\St \oplus \Reals^\St}{A_J X = B_J} \subseteq \Argmin{(V,P) \in D}{\Ea{\zeta_0}{V}}$$
+
+Here, the notation $A_J$ means taking the submatrix of $A$ consisting of the rows corresponding to $J$. Similarly, $B_J$ is the subvector of $B$ consisting of the components corresponding to $J$.
+
+(To see this, use the fact that the minimum of a linear function on a convex set is always attained on the boundary, and apply induction by dimension.)
+
+Moreover, $D_J^\sharp$ has to be a single point $X_J \in \Reals^\St \oplus \Reals^\St$. Indeed, if it has more than one point then it contains a straight line $L$. The projection of $L$ on the second $\Reals^\St$ has to be a single point $P_0$, otherwise some point in $L$ violates the inequality $P \geq \boldsymbol{0}$ which would contradict $L \subseteq D$. Therefore, the projection of $L$ on the first $\Reals^\St$ is also a straight line $L'$. As in the proof of Proposition A.N3, for any $(V,P) \in D$, $V(s)$ is an upper bound on the value of state $s$ in the MDP with reward function $\R-\eta P$. In particular, if $\AP{V,P_0} \in D$ then $V(s) \geq \min_{t\in\St} \AP{R(t)-\eta P_0(t)}$. However, since $L'$ is a line, there must be some $s^*\in\St$ s.t. $V\AP{s^*}$ can be *any* real number for some $\AP{V,P_0} \in L$. This is a contradiction.
+
+Denote $Q: \Reals^\St \oplus \Reals^\St \rightarrow \Reals^\St$ the projection operator on the first direct summand. It follows that we can always choose $J$ s.t. $\Abs{J} = 2\Abs{\St}$ and we have
+
+$$X_J = A_J^{-1} B_J$$
+
+$$\QV = \Ea{\zeta_0}{QA_J^{-1} B_J}$$
+
+For each $J$, the expression on the right hand side is a rational function of the matrix elements of $A$ and $B$ which, in turn, are polynomials in the parameters the dependence on which we are trying to establish.  Therefore, this expression is a rational function in those parameters (unless $\det A_J$ vanishes identically, in which case this $J$ can ignored). So, $\QV$ always equals one of a finite set of rational functions (corresponding to difference choices of $J$). The continuity of $\QV$ also easily follows from its characterization as $\min_{(V,P) \in D}{\Ea{\zeta_0}{V}}$.
 
 \#Proof of Proposition 5
 
