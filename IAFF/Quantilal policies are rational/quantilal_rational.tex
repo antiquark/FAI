@@ -100,53 +100,33 @@
 
 [Earlier](https://agentfoundations.org/item?id=1785) we established that the quantilal policy can be computed in polynomial time to any given approximation (see "Proposition 5"). Now we show that an *exact* quantilal policy can be computed in polynomial time (in particular there is always a rational quantilal policy).
 
+We assume geometric time discount throughout.
+
 \#Lemma 1
 
 Consider $\xi \in \Delta\St$. Define the linear operators $E: \Reals^{\St \times \A} \rightarrow \Reals^\St$ and $T: \Reals^{\St \times \A} \rightarrow \Reals^\St$ by
 
-...
+$$E_{t,sa} := [[t = s]]$$
+
+$$T_{t,sa} := \T\APM{t}{s,a}$$
 
 (Note that this $T$ is the *transpose* of the $T$ defined in "Proposition A.3" of the previous essay.)
 
-...Then, $\xi \in \Img{\Z}$ if and only if...
+Then, $\xi \in \Img{\Z}$ if and only if there is $\phi \in \Delta(\St\times\A)$ s.t.
 
-*Blah blah blah*
+$$E\phi = \xi$$
 
-Un deux trois.
+$$(E-\lambda T) \phi = \zeta_0$$
 
-***
+\#Proof of Lemma 1
 
-Appendix A contains the proofs...
+(This is actually well known, but we spell out the proof to be self-contained.)
 
-\section{Notation}
+Suppose that $\xi \in \Img{\Z}$. We already know that this implies that there is a *stationary* policy $\pi:\St\K\A$ s.t. $\Z\pi = \xi$ (we abuse notation in the obvious way): see the proofs of "Proposition 2" and "Proposition 3". It follows that 
 
-Whatever...
+$$\xi = (1-\lambda)\sum_{n=0}^\infty \lambda^n T_\pi^n \zeta_0 ...$$ 
 
-\section{Results}
-
-Foo
-
-\#Definition 1
-
-Bar
-
-\#Lemma 1
-
-Foo
-
-***
-
-Bar
-
-\section{Appendix A}
-
-\#Proposition A.1
-
-Hahaha
-
-\#Proof of Proposition A.1
-
-Mwhahaha
+TBD
 
 \end{document}
 
