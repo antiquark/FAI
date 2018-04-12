@@ -1,0 +1,154 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Comment}[1]{}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Dom}{dom}
+\DeclareMathOperator{\Img}{Im}
+
+% autosize delimiters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
+\newcommand{\APM}[2]{\left(#1\;\middle\vert\;#2\right)}
+\newcommand{\ABM}[2]{\left[#1\;\middle\vert\;#2\right]}
+\newcommand{\ACM}[2]{\left\{#1\;\middle\vert\;#2\right\}}
+
+% operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\CI}[3]{\underset{#1}{\operatorname{I}}\ABM{#2}{#3}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
+
+% operators that require parentheses
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+\newcommand{\PS}[1]{\mathcal{P}\AP{#1}}
+
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}\AP{#1\middle\vert\middle\vert#2}}
+\newcommand{\RD}[3]{\operatorname{D}_{#1}\AP{#2\middle\vert\middle\vert#3}}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\textnormal{tv}}\AP{#1}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
+
+\newcommand{\K}{\xrightarrow{\textnormal{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+
+% Paper specific
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\Pe}{P}
+
+\newcommand{\Ut}{\operatorname{U}}
+\newcommand{\Co}{C}
+\newcommand{\V}{\operatorname{V}}
+\newcommand{\QV}{\operatorname{QV}}
+\DeclareMathOperator{\Hi}{H}
+\DeclareMathOperator{\Z}{Z}
+
+\begin{document}
+
+[Earlier](https://agentfoundations.org/item?id=1785) we established that the quantilal policy can be computed in polynomial time to any given approximation (see "Proposition 5"). Now we show that an *exact* quantilal policy can be computed in polynomial time (in particular there is always a rational quantilal policy).
+
+\#Lemma 1
+
+Consider $\xi \in \Delta\St$. Define the linear operators $E: \Reals^{\St \times \A} \rightarrow \Reals^\St$ and $T: \Reals^{\St \times \A} \rightarrow \Reals^\St$ by
+
+...
+
+(Note that this $T$ is the *transpose* of the $T$ defined in "Proposition A.3" of the previous essay.)
+
+...Then, $\xi \in \Img{\Z}$ if and only if...
+
+*Blah blah blah*
+
+Un deux trois.
+
+***
+
+Appendix A contains the proofs...
+
+\section{Notation}
+
+Whatever...
+
+\section{Results}
+
+Foo
+
+\#Definition 1
+
+Bar
+
+\#Lemma 1
+
+Foo
+
+***
+
+Bar
+
+\section{Appendix A}
+
+\#Proposition A.1
+
+Hahaha
+
+\#Proof of Proposition A.1
+
+Mwhahaha
+
+\end{document}
+
+
+
