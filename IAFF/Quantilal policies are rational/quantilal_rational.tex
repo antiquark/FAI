@@ -102,7 +102,7 @@
 
 We assume geometric time discount throughout.
 
-\#Lemma 1
+\#Lemma
 
 Consider $\xi \in \Delta\St$. Define the linear operators $E: \Reals^{\St \times \A} \rightarrow \Reals^\St$ and $T: \Reals^{\St \times \A} \rightarrow \Reals^\St$ by
 
@@ -116,17 +116,85 @@ Then, $\xi \in \Img{\Z}$ if and only if there is $\phi \in \Delta(\St\times\A)$ 
 
 $$E\phi = \xi$$
 
-$$(E-\lambda T) \phi = \zeta_0$$
+$$(E-\lambda T) \phi = (1-\lambda)\zeta_0$$
 
-\#Proof of Lemma 1
+\#Proof of Lemma
 
 (This is actually well known, but we spell out the proof to be self-contained.)
 
-Suppose that $\xi \in \Img{\Z}$. We already know that this implies that there is a *stationary* policy $\pi:\St\K\A$ s.t. $\Z\pi = \xi$ (we abuse notation in the obvious way): see the proofs of "Proposition 2" and "Proposition 3". It follows that 
+Suppose that $\xi \in \Img{\Z}$. We already know that this implies that there is a *stationary* policy $\pi:\St\K\A$ s.t. $\Z\pi = \xi$ (we abuse notation in the obvious way): see the proofs of "Proposition 2" and "Proposition 3". Define the linear operator $T^\pi: \Reals^\St \rightarrow \Reals^\St$ by
 
-$$\xi = (1-\lambda)\sum_{n=0}^\infty \lambda^n T_\pi^n \zeta_0 ...$$ 
+$$T_{ts}^\pi := \Ea{a\sim\pi(s)}{\T\APM{t}{s,a}}$$
 
-TBD
+It follows that 
+
+$$\xi = (1-\lambda)\sum_{n=0}^\infty \lambda^n T^{\pi n} \zeta_0  = (1-\lambda)\AP{\boldsymbol{1}-\lambda T^\pi}^{-1} \zeta_0$$
+
+$$\AP{\boldsymbol{1}-\lambda T^\pi}\xi = (1-\lambda)\zeta_0$$
+
+Define $\phi$ by
+
+$$\phi(s,a) := \xi(s) \pi(a \mid s)$$
+
+We have
+
+$$T^\pi\xi = \sum_{s\in\St} \Ea{a\sim\pi(s)}{\T(s,a)} \xi(s) = \sum_{\substack{s\in\St\\a\in\A}}\pi(a \mid s)\T(s,a)\xi(s) = \sum_{\substack{s\in\St\\a\in\A}} \T(s,a) \phi(s,a) = T\phi$$
+
+Also, obviously $E\phi = \xi$. We get
+
+$$(E-\lambda T)\phi = \xi - \lambda T^\pi\xi = \AP{\boldsymbol{1}-\lambda T^\pi}\xi = (1-\lambda) \zeta_0$$
+
+Conversely, suppose that $\phi$ is as above. Since $E\phi=\xi$, there is $\pi: \St \K \A$ s.t. for any $s\in\St$, if $\xi(s) \ne 0$ then
+
+$$\pi(a \mid s) = \frac{\phi(s,a)}{\xi(s)}$$
+
+Again, we have
+
+$$\Z\pi = (1-\lambda)\AP{\boldsymbol{1} - \lambda T^\pi}^{-1} \zeta_0$$
+
+Also, for the same reason as before
+
+$$(E - \lambda T)\phi = \AP{\boldsymbol{1}-\lambda T^\pi}\xi$$
+
+By the assumption, the left hand side equals $(1-\lambda) \zeta_0$. We conclude
+
+$$\xi = (1-\lambda) \AP{\boldsymbol{1} - \lambda T^\pi}^{-1} \zeta_0 = \Z \pi$$
+
+\#Theorem
+
+Assuming all parameters are rational like before, there is a polynomial time algorithm that computes a quantilal policy.
+
+\#Proof
+
+The algorithm starts by solving the following linear program. The indeterminates are $\phi \in \Reals^{\St\times\A}$ and $\QV\in\Reals$. The goal is maximizing $\QV$. The constraints are
+
+$$\forall s\in\St,a\in\A: \phi(s,a) \geq 0$$
+
+$$\sum_{\substack{s\in\St \\ a\in\A}} \phi(s,a) = 1$$
+
+$$(E - \lambda T) \phi = (1-\lambda) \zeta_0$$
+
+$$\forall s \in \St\setminus\Supp{\Z\sigma},a\in\A: \phi(s,a) = 0$$
+
+$$\forall s \in \Supp{\Z\sigma}: \QV \leq \sum_{t\in\St} \R(t)\sum_{a\in\A}\phi(t,a) - \frac{\eta}{\Z\sigma(s)} \sum_{a\in\A}\phi(s,a)$$
+
+Then, the algorithm computes $\pi: \St \K \A$ s.t. for any $s\in\St$, if $\sum_{b\in\A}\phi(s,b) > 0$ then
+
+$$\pi(a \mid s) := \frac{\phi(s,a)}{\sum_{b\in\A}\phi(s,b)}$$
+
+For $s\in\St$ s.t. $\sum_{b\in\A}\phi(s,b) = 0$, $\pi(s)$ is arbitrary.
+
+Now we need to explain why this algorithm is correct.
+
+Observe that, the first 3 constraints mean that $\xi\in\Reals^\St$ defined by $\xi(s) := \sum_{b\in\A} \phi(s,b)$ lies in $\Img{\Z}$ (by Lemma 1) and, moreover, $\phi(s,a) = \xi(s)\pi(a \mid s)$ for $\pi:\St\K\A$ s.t. $\xi = \Z\pi$. It remains to show that the linear program amounts to maximizing $\Ea{}{\R} - \eta\exp\RD{\infty}{\xi}{\Z\sigma}$ inside $\Img\Z$. Indeed, the 4th constraint just means that $\RD{\infty}{\xi}{\Z\sigma} < \infty$. The last constraint implies that we are actually maximizing
+
+$$\min_{s\in\Supp\Z\sigma} \AP{\sum_{t\in\St} \R(t)\xi(t) - \frac{\eta}{\Z\sigma(s)} \xi(t)}$$
+
+The latter is indeed $\Ea{}{\R} - \eta\exp\RD{\infty}{\xi}{\Z\sigma}$, since every $s\in\Supp{\Z\sigma}$ corresponds to a pure strategy of the adversary in the corresponding zero-sum game: namely, this strategy is setting the penalty function $P: \St \rightarrow [0,\infty)$ to
+
+$$P(t) = \frac{[[t=s]]}{\Z\sigma(s)}$$
+
+(Strategies that place non-vanishing penalty on states outside of $\Supp{\Z\sigma}$ become irrelevant after imposing the 4th constraint. The remaining penalty functions form a simplex with vertices as above.)
 
 \end{document}
 
