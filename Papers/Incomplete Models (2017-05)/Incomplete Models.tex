@@ -159,7 +159,7 @@ Given a forecaster $F$ and $y \in \Ob^n$, $F_n\left(y\right)$ represents the for
 \begin{samepage}
 \begin{example}
 
-Consider any $\mu\in\PMO$. Then we take $F_n(y)$ to be a regular conditional probability of $\mu$ (where the condition is $x \in y\OO$). This corresponds to Bayesian forecasting with prior $\mu$.
+Consider any $\mu\in\PMO$. Then we can take $F_n(y)$ to be a regular conditional probability of $\mu$ (where the condition is $x \in y\OO$). This corresponds to Bayesian forecasting with prior $\mu$.
 
 \end{example}
 \end{samepage}
@@ -425,14 +425,16 @@ That is, $\overline{\V G}^F_n\left(y\right)(x)$ is the payoff of the $n$-th gamb
 We define the measurable mappings $\SVM G^F_n, \SVX G^F_n: \Ob^{n-1} \rightarrow \Reals$ by
 
 \begin{equation}
+\label{eqn:svmf}
 \SVM G^F_n\left(y\right):=\min_{y\OO} \SV G^F_n(y)
 \end{equation}
 
 \begin{equation}
+\label{eqn:svxf}
 \SVX G^F_n\left(y\right):=\max_{y\OO} \SV G^F_n(y)
 \end{equation}
 
-Thus, $\SVM G^F_n\left(y\right)$ is the minimal possible payoff of the first $n$ gambles and $\SVX G^F_n\left(y\right)$ is the maximal possible payoff. $y$ appears twice on the right hand side because, first, it defines the space of histories over which we minimize/maximize and, second, it defined the input to the gambler and forecaster.
+Thus, $\SVM G^F_n\left(y\right)$ is the minimal possible payoff of the first $n$ gambles and $\SVX G^F_n\left(y\right)$ is the maximal possible payoff. $y$ appears twice on the right hand side of equations (\ref{eqn:svmf},\ref{eqn:svxf}) because, first, it defines the space of histories over which we minimize/maximize and, second, it defined the input to the gambler and forecaster.
 
 We are now ready to state the formally state the definition of \enquote{dominance} alluded to in the beginning of the section.
 
@@ -542,6 +544,8 @@ We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
 \bar{G}^F_n\left(y\right) := G^F_n\left(y;F_n\left(y\right)\right)
 \end{equation}
 
+Here, the notation $G^F_n\left(y;F_n\left(y\right)\right)$ means $G^F_n(y)\left(F_n\left(y\right)\right)$ ($G^F_n(y)$ is a function from $\PMO$ to $\CO$ which we apply to $F_n\left(y\right)\in\PMO$). We will use the semicolon in a similar way in the rest of paper as well: to indicate applying a function which is the result of another function.
+
 The following is our analogue of \enquote{Theorem 1} from \cite{Vovk_2005}.
 
 \begin{corollary}
@@ -573,12 +577,16 @@ We will now introduce a way to transform a gambler in a way that enforces a \enq
 Here, $\BM_{:m}$ denotes the projection of $\BM \in \PMO^n$ to $\PMO^m$ that takes components $l < m$ and $\BM_m$ denotes the $m$-th component of $\BM$. Define the measurable functions $\SVM G_n, \SVX G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \Reals$ by
 
 \begin{equation}
+\label{eqn:svm}
 \SVM G_n\left(y,\BM\right) := \min_{y\OO}{\SV G_n\left(y,\BM\right)}
 \end{equation}
 
 \begin{equation}
+\label{eqn:svx}
 \SVX G_n\left(y,\BM\right) := \max_{y\OO}{\SV G_n\left(y,\BM\right)}
 \end{equation}
+
+Equations~(\ref{eqn:svm},\ref{eqn:svx}) are completely analogical to equations~(\ref{eqn:svmf},\ref{eqn:svxf}) except that we define functions of forecast histories instead of considering a particular forecaster.
 
 Define the measurable sets
 
@@ -822,8 +830,6 @@ A \emph{gambling strategy} is a uniformly bounded family of measurable mappings
 \end{definition}
 
 As opposed to a gambler, a gambling strategy doesn't depend on the forecast history.
-
-In the following, we will use the notation $S_n(y;\mu)$ to mean $S_n(y)(\mu)$.
 
 \begin{definition}
 \label{def:prudent}
