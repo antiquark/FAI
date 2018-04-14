@@ -156,6 +156,14 @@ s.t. $\Sp {F_n\left(y\right)} \subseteq y\OO$.
 
 Given a forecaster $F$ and $y \in \Ob^n$, $F_n\left(y\right)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n\left(y\right)} \subseteq y\OO$ reflects the obvious requirement of consistency with past observations.
 
+\begin{samepage}
+\begin{example}
+
+Consider any $\mu\in\PMO$. Then we take $F_n(y)$ to be a regular conditional probability of $\mu$ (where the condition is $x \in y\OO$). This corresponds to Bayesian forecasting with prior $\mu$.
+
+\end{example}
+\end{samepage}
+
 In order to formulate a claim about forecast convergence, we will need a metric on $\PMO$. Consider $\rho: \OO \times \OO \rightarrow \Reals$ a metrization of $\OO$. Let $\Lp\left(\OO,\rho\right)$ be the Banach space of $\rho$-Lipschitz functions on $\OO$, equipped with the norm
 
 \begin{equation}
@@ -291,6 +299,8 @@ Fix any $\MC \subseteq 2^{\PMO}$ countable. For every $M \in \MC$ and $n \in \Na
 
 \end{theorem}
 
+That is, the forecaster $F^\MC$ ensures that, for any incomplete model $M$ satisfied by the true environment $\mu$, the forecast will (almost surely) converge to the model (as opposed to complete models, there may be several incomplete models satisfied by the same environment).
+
 Note that $F^\MC$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice. Informally, we can think of this choice as determining the duration of the future time period over which we need our forecast to be reliable. It also might depend on the choice of regular upper bounds (of course, if there are \emph{minimal} regular upper bounds, these yield a forecaster than works for any other regular upper bounds).
 
 The example from the Introduction section can now be realized as follows. Take $\Ob_n=\Ob=\{0,1\}$ and let $M^K \subseteq \PMO$ be as in Example~\ref{exm:update_incomplete_kernels}, where $I = 2\Nats+1$ and $\Pr_{o\sim K_{2n+1}(y)}\left[o=y_{2n}\right]=1$. Define $\rho_n$  by
@@ -336,13 +346,30 @@ The idea is to consider a collection of gamblers making bets against the forecas
 
 Given a compact Polish space $X$, $C\left(X\right)$ will denote the Banach space of continuous functions with uniform norm. We will also use the shorthand notation $\Gm\left(X\right):=C\left(\PM\left(X\right) \times X\right)$. Equivalently, $\Gm\left(X\right)$ can be regarded to be the space of continuous functions from $\PM\left(X\right)$ to $C\left(X\right)$, and we will curry implicitly in our notation.
 
-We regard $\GMO$ as the space of \emph{bets} that can be made against a forecaster. Given $\beta \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \OO$, the value of the bet $\beta$ is
+We regard $\GMO$ as the space of \emph{bets} that can be made against a forecaster. Given $\beta \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \OO$, the payoff of the bet $\beta$ is
 
 \begin{equation}
 \V{\beta}\left(\mu,x\right):=\beta\left(\mu,x\right) - \E_{x' \sim \mu}\left[\beta\left(\mu,x'\right)\right]
 \end{equation}
 
+This definition ensures that $\E_{x\sim\mu}\left[\V{\beta}(\mu,x)\right] = 0$, so that the bet is fair from the perspective of the forecaster.
+
 Note that this defines a bounded linear operator $\V: \Gm\left(X\right) \rightarrow \Gm\left(X\right)$.
+
+\begin{samepage}
+\begin{example}
+
+Suppose that the $\Ob_n$ are finite sets with discrete topology. Fix some $n\in\Nats$ and $A \subseteq \Ob^n$. Define $\beta^A \in \GMO$ by
+
+\begin{equation}
+\beta^{A}(\mu,x):=\begin{cases} 1 \text{ if } x_{:n} \in A \\ 0 \text{ if } x_{:n} \not\in A \end{cases}
+\end{equation}
+
+
+$\beta^y$ represents betting that the sequence of observations will begin with an element of $A$. The payoff $\V{\beta^A}(\mu,x)$ is $1 - \mu\left(\left(\PO_n\right)^{-1}(A)\right)$ when $x_{:n} \in A$ and $-\mu\left(\left(\PO_n\right)^{-1}(A)\right)$ when $x_{:n} \not\in A$.
+
+\end{example}
+\end{samepage}
 
 $C\left(X\right)$ and $\Gm\left(X\right)$ will also be regarded as a measurable spaces, using the $\sigma$-algebra of Borel sets. We remind that the $\sigma$-algebra on $\Ob^n$ is the algebra of \emph{universally measurable} sets.
 
@@ -355,6 +382,14 @@ A \emph{gambler} is a family of measurable mappings
 \end{definition}
 
 A gambler is considered to observe a forecaster and bet against it. Given $y \in \Ob^n$ and $\BM \in \PMO^n$, $G_n\left(y,\BM\right)=\beta$ means that, if $y$ are the first $n$ observations and $\BM$ are the first $n$ forecasts (made after observing $n-1$ out of the $n$ observations), the gambler will make bet $\beta$ (which is in itself a function of the forecast the forecaster makes after the $n$-th observation).
+
+\begin{samepage}
+\begin{example}
+
+Consider some measurable mapping $f: \Ob^n \rightarrow \Ob_n$...
+
+\end{example}
+\end{samepage}
 
 We now introduce some notation regarding the interaction of gamblers and forecasters. 
 
