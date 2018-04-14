@@ -420,6 +420,8 @@ We define the measurable mappings $\overline{\V G}^F_n: \Ob^n \rightarrow \CO$ a
 
 In the definition of $\SV G^F_0$, $\Ob^{-1}$ is considered to be equal to $\Ob^0$ (i.e. the one point space).
 
+That is, $\overline{\V G}^F_n\left(y\right)(x)$ is the payoff of the $n$-th gamble of gambler $G$ playing against forecaster $F$, assuming initial history $y$ and full history $x$. $\SV G^F_n\left(y\right)$ is the total payoff of the first $n$ gambles.
+
 We define the measurable mappings $\SVM G^F_n, \SVX G^F_n: \Ob^{n-1} \rightarrow \Reals$ by
 
 \begin{equation}
@@ -429,6 +431,8 @@ We define the measurable mappings $\SVM G^F_n, \SVX G^F_n: \Ob^{n-1} \rightarrow
 \begin{equation}
 \SVX G^F_n\left(y\right):=\max_{y\OO} \SV G^F_n(y)
 \end{equation}
+
+Thus, $\SVM G^F_n\left(y\right)$ is the minimal possible payoff of the first $n$ gambles and $\SVX G^F_n\left(y\right)$ is the maximal possible payoff.
 
 We are now ready to state the formally state the definition of \enquote{dominance} alluded to in the beginning of the section.
 
@@ -448,6 +452,8 @@ Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ 
 \end{equation}
 
 \end{definition}
+
+That is, as long as the gambler doesn't go into infinite debt, it cannot make an infinite profit.
 
 \begin{samepage}
 \begin{example}
@@ -489,6 +495,8 @@ Define ${K: \PM\left(X\right) \rightarrow 2^{\PM\left(X\right)}}$ as follows:
 
 For any ${\mu}$, ${K}\left(\mu\right)$ is obviously convex and non-empty. It is also easy to see that the graph of $K$ in $\PM\left(X\right) \times \PM\left(X\right)$ is closed. Applying the Kakutani-Glicksberg-Fan theorem, we conclude that $K$ has a fixed point, i.e. $\mu \in \PM\left(X\right)$ s.t. $\mu \in K\left(\mu\right)$.
 \end{proof}
+
+Note that for $\beta$ and $\mu$ as in Lemma~\ref{lmm:unwinnable}, we have $\V{\beta}(\mu) \leq 0$.
 
 Next, we show that the probability measure of Lemma~\ref{lmm:unwinnable} can be made to depend measurably on past observations and the bet.
 
@@ -814,6 +822,8 @@ A \emph{gambling strategy} is a uniformly bounded family of measurable mappings
 \end{definition}
 
 As opposed to a gambler, a gambling strategy doesn't depend on the forecast history.
+
+In the following, we will use the notation $S_n(y;\mu)$ to mean $S_n(y)(\mu)$.
 
 \begin{definition}
 \label{def:prudent}
@@ -1391,7 +1401,7 @@ It follows that
 $$\lim_{n \rightarrow \infty} {\DKR^n\left(F^\MC_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right)} = 0$$
 \end{proof}
 
-\section{Discussion}
+\Comment{\section{Discussion}
 
 We see several natural directions for extending this work.
 
@@ -1399,7 +1409,7 @@ Theorem~\ref{thm:main} is formulated using the Kantorovich-Rubinstein metric, bu
 
 The present work doesn't analyze any considerations of computational complexity or even computability. It would be very valuable, especially for practical applications, to understand the complexity of forecasters satisfying equation~\ref{eqn:thm_main} given various complexity-theoretic assumptions on $\MC$. In particular, that would entail designing concrete forecasting algorithms of this type, whereas the existence proof in the present work is non-constructive. Also, it would be valuable to analyze the speed of convergence in \ref{eqn:thm_main} and the possibly also the trade-offs between forecaster complexity and speed of convergence.
 
-Finally, we think that the current work may have some bearing on the so-called \enquote{grain of truth} problem (problem 5j in \cite{Hutter_2009}). The problem is, given a system of interacting rational agents, proving their convergence to some reasonable game-theoretic solution concept, e.g. a Nash equilibrium. For a pair of Bayesian agents, this normally requires each agent to lie in the model class $\MC$ of the other agent. However, this requirement is difficult to satisfy in settings that are fairly general, since usually the computational complexity of a Bayesian agent is higher than the complexities of all models in its prior. On the other hand, using our approach, each agent may learn incomplete models satisfied by the other agent that are computationally simpler than a full simulation. This might be sufficient to produce meaningful game-theoretic guarantees.
+Finally, we think that the current work may have some bearing on the so-called \enquote{grain of truth} problem (problem 5j in \cite{Hutter_2009}). The problem is, given a system of interacting rational agents, proving their convergence to some reasonable game-theoretic solution concept, e.g. a Nash equilibrium. For a pair of Bayesian agents, this normally requires each agent to lie in the model class $\MC$ of the other agent. However, this requirement is difficult to satisfy in settings that are fairly general, since usually the computational complexity of a Bayesian agent is higher than the complexities of all models in its prior. On the other hand, using our approach, each agent may learn incomplete models satisfied by the other agent that are computationally simpler than a full simulation. This might be sufficient to produce meaningful game-theoretic guarantees.}
 
 \appendix
 
