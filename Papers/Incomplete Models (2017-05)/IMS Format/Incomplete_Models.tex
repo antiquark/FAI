@@ -318,9 +318,9 @@ M^K:=\{\mu \in \PMO \mid \forall n \in I: \PO_{n+1*}\mu = \PO_{n*}\mu \ltimes K_
 
 For each $n \in \Nats$, define $M^K_n: \Ob^n \rightarrow 2^{\PMO}$ by
 
-\begin{equation}
-M^K_n(y) = \{\mu \in \PMO \mid \Sp{\mu} \subseteq y\OO,\, \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
-\end{equation}
+\begin{multline}
+M^K_n(y) = \{\mu \in \PMO \mid \Sp{\mu} \subseteq y\OO,\\ \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
+\end{multline}
 
 Then, $M^K_n$ is a regular upper bound for $M^K \mid \PO_n$.
 
@@ -726,30 +726,35 @@ $$\SVM \Bd_b G_m\left(y_{:m-1},\BM_{:m}\right)=\SVM G_m\left(y_{:m-1},\BM_{:m}\r
 
 For ${m=m_0+1}$ and any $x \in y_{:m_0}\OO$, we have
 
-$$\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) = \SV \Bd_b G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) + \left(\V \Bd_b G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)$$
+\begin{multline*}
+\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) = \SV \Bd_b G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) + \\ \left(\V \Bd_b G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
+\end{multline*}
 
 The first term only involves ${\Bd_b G_l}$ for ${l < m_0}$, allowing us to apply Proposition~\ref{prp:b_no_effect}. The second term is in the second case of the definition of $\Bd_b$.
 
-\begin{align*}
-\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) = &\SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) +\\ &\Nr_b G_{m_0}\left(y_{:m_0},\BM_{:m_0};\BM_{m_0}\right) \cdot \left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
-\end{align*}
+\begin{multline*}
+\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) = \SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) +\\ \Nr_b G_{m_0}\left(y_{:m_0},\BM_{:m_0};\BM_{m_0}\right) \cdot \left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
+\end{multline*}
 
 If ${x}$ is s.t. ${\left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right) \geq 0}$, then
 
-\[\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq \SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right)\geq \SVM G_{m_0}\left(y_{:m_0-1},\BM_{:m_0}\right) > -b\]
+\[\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq \SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right)\]
+\[\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq \SVM G_{m_0}\left(y_{:m_0-1},\BM_{:m_0}\right) > -b\]
 
 If ${x}$ is s.t. ${\left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right) < 0}$, then, by the definition of $\Nr_b$
 
-\begin{align*}
-\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq &\SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right)+ \\
-&\frac{\SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) + b}{-\left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)} \cdot \left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
-\end{align*}
+\begin{multline*}
+\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq \SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right)+ \\
+\frac{\SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) + b}{-\left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)} \cdot \left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
+\end{multline*}
 
 $$\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq -b$$
 
 Finally, consider ${m > m_0 + 1}$.
 
-$$\SV \Bd_b G_{m}\left(y_{:m-1},\BM_{:m};x\right) = \SV \Bd_b G_{m-1}\left(y_{:m-2},\BM_{:m-1};x\right) + \left(\V \Bd_b G_{m-1}\left(y_{:m-1},\BM_{:m-1}\right)\right)\left(\BM_{m-1},x\right)$$
+\begin{multline*}
+\SV \Bd_b G_{m}\left(y_{:m-1},\BM_{:m};x\right) = \SV \Bd_b G_{m-1}\left(y_{:m-2},\BM_{:m-1};x\right) + \\ \left(\V \Bd_b G_{m-1}\left(y_{:m-1},\BM_{:m-1}\right)\right)\left(\BM_{m-1},x\right)
+\end{multline*}
 
 The second term is in the first case of the definition of $\Bd_b$ and therefore vanishes.
 
@@ -800,7 +805,9 @@ Consider $x \in \OO$ s.t. condition~\ref{eqn:def_dominance__loss} holds. Denote
 
 By Proposition~\ref{prp:b_no_effect}, for any $b > b_0$ we have $\Bd_b G^F = G^F$. We get
 
-\[\sup_{n \in \Nats} \max_{x' \in x_{:n-1}\OO} \left(\sum_{b \leq b_0} \zeta\left(b\right) {\SV \Bd_b G^F_{n}\left(x_{:n-1},x'\right)} + \sum_{b > b_0} \zeta\left(b\right) \SV G^F_{n}\left(x_{:n-1},x'\right)\right) < +\infty\]
+\begin{multline*}
+\sup_{n \in \Nats} \max_{x' \in x_{:n-1}\OO} \left(\sum_{b \leq b_0} \zeta\left(b\right) {\SV \Bd_b G^F_{n}\left(x_{:n-1},x'\right)} + \right. \\ \left. \sum_{b > b_0} \zeta\left(b\right) \SV G^F_{n}\left(x_{:n-1},x'\right)\right) < +\infty
+\end{multline*}
 
 Applying Proposition~\ref{prp:b_stays_in_budget} to the first term
 
@@ -841,7 +848,9 @@ Therefore we have
 
 \[\sup_{n \in \Nats} \SVX G^{\xi F}_{n}\left(x_{:n-1}\right) < +\infty\]
 
-\[\sup_{n \geq k} \max_{x' \in x_{:n-1}\OO} \left(\xi\left(k\right) \SV G^{k F}_{n}\left(x_{:n-1},x'\right) + \sum_{\substack{j \ne k\\ j \leq n}} \xi\left(j\right) \SV G^{j F}_{n}\left(x_{:n-1},x'\right)\right) < +\infty\]
+\begin{multline*}
+\sup_{n \geq k} \max_{x' \in x_{:n-1}\OO} \left(\xi\left(k\right) \SV G^{k F}_{n}\left(x_{:n-1},x'\right) \vphantom{\sum_{\substack{j \ne k\\ j \leq n}}} \right. + \\ \left. \sum_{\substack{j \ne k\\ j \leq n}} \xi\left(j\right) \SV G^{j F}_{n}\left(x_{:n-1},x'\right)\right) < +\infty
+\end{multline*}
 
 \[\sup_{n \geq k} \max_{x' \in x_{:n-1}\OO} \left(\xi\left(k\right) \SV G^{k F}_{n}\left(x_{:n-1},x'\right) - b_\xi\right) < +\infty\]
 
@@ -976,7 +985,7 @@ For each $k \in \Nats$, $N_k$ is a stopping time w.r.t. ${\F}$. As easy to see, 
 
 $$\E\left[X^0_{N_{k+1}} \mid \F_{N_k}\right] \geq X^0_{N_{k}}$$
 
-Clearly, ${\Sq{X^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E\left[\A{X^0_{N_k}}\right] < \infty}$ (${X^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{X^0_{\min\left(n,N_k\right)}}}$). We conclude that ${\Sq{X^0_{N_k}}{k}}$ is a submartingale.
+Clearly, ${\Sq{X^0_{N_k}}{k}}$ is adapted to ${\Sq{\F_{N_k}}{k}}$. Doob's second martingale convergence theorem implies that ${\E\left[\A{X^0_{N_k}}\right] < \infty}$ (${X^0_{N_k}}$ is the limit of the uniformly integrable submartingale ${\Sqn{X^0_{\min\left(n,N_k\right)}}}$). We conclude that\\$\Sq{X^0_{N_k}}{k}$ is a submartingale.
 
 It is easy to see that ${\A{X^0_{N_{k+1}}-X^0_{N_k}}} \leq 3$. Applying the Azuma-Hoeffding inequality, we conclude that for any positive integer ${k}$:
 
@@ -990,9 +999,7 @@ $$\Pr\left[\exists k \in \Nats \forall l > k: X^0_{N_l} - X_0 \geq -l^{\frac{3}{
 
 $$\Pr\left[\exists k \in \Nats \forall l > k: X_{N_l} - X_0 \geq \alpha \sum_{n=0}^{N_l - 1} Y_n - l^{\frac{3}{4}}\right] = 1$$
 
-%$$\Pr\left[\exists m \in \Nats \forall k \in \Nats: X^0_{N_k} \leq m - \alpha k\right] = 0$$
-
-It is easy to see that if $\omega \in \Omega$ is s.t. $\sum_{n=0}^\infty Y_n\left(\omega\right) = \infty$ then $\sum_{n=0}^{N_l\left(\omega\right) - 1} Y_n\left(\omega\right) \geq l$. We get
+It is easy to see that if $\omega \in \Omega$ is s.t. $\sum_{n=0}^\infty Y_n\left(\omega\right) = \infty$ then\\$\sum_{n=0}^{N_l\left(\omega\right) - 1} Y_n\left(\omega\right) \geq l$. We get
 
 $$\Pr\left[\sum_{n=0}^\infty  Y_n = \infty \implies \exists k \in \Nats \forall l > k: X_{N_l} - X_0 \geq \alpha l - l^{\frac{3}{4}}\right]=1$$
 
@@ -1038,7 +1045,8 @@ $$\A{X''_n - X_n} \leq \A{X''_n - X'_n} + \A{X'_n - X_n} \leq 2M$$
 
 $$\forall m \geq n: \A{X''_{m}-X''_n} \leq \A{X_{m}-X_n} + 4M \leq \sum_{l=n}^{n-1} Y_l + 4M$$
 
-$$\E\left[X''_{n+1}-X''_n \mid \F_n\right] = \E\left[\E\left[X_{n+1} \mid \F_{n+1}\right]-\E\left[X_n \mid \F_n\right] \mid \F_n\right] = \E\left[X_{n+1}-X_n \mid \F_n\right] \geq \alpha Y_n$$
+\[\E\left[X''_{n+1}-X''_n \mid \F_n\right] = \E\left[\E\left[X_{n+1} \mid \F_{n+1}\right]-\E\left[X_n \mid \F_n\right] \mid \F_n\right]\]
+\[\E\left[X''_{n+1}-X''_n \mid \F_n\right] = \E\left[X_{n+1}-X_n \mid \F_n\right] \geq \alpha Y_n\]
 
 Applying Lemma~\ref{lmm:prudent} to $X''$ and using ${\A{X''_n - X_n} \leq 2M}$, we get the desired result.
 \end{proof}
@@ -1072,11 +1080,13 @@ $$\SV \PG{S}_{n+1}\left(y,\BM\right)=\SV \PG{S}_n\left(y_{:n-1},\BM_{:n}\right)$
 
 $$\SVM \PG{S}_{n+1}\left(y,\BM\right) \geq \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right)$$
 
-$$\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq \SV \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) - \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) $$
+\begin{multline*}\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq \\ \SV \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) - \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right)
+\end{multline*}
 
 By the induction hypothesis, we get
 
-$$\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq  2 \max_{m < n} \sup_{y \in \Ob^m} \N{S_m\left(y\right)}  + 1 \leq \max_{m \leq n} \sup_{y \in \Ob^m} \N{S_m\left(y\right)}  + 1$$
+\[\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq  2 \max_{m < n} \sup_{y \in \Ob^m} \N{S_m\left(y\right)}  + 1\]
+\[\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq 2 \max_{m \leq n} \sup_{y \in \Ob^m} \N{S_m\left(y\right)}  + 1\]
 
 Now, assume that 
 
@@ -1088,7 +1098,9 @@ $$\SV \PG{S}_{n+1}\left(y,\BM\right)=\SV \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) 
 
 We get
 
-$$\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq \SVX \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) - \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) + 2 \N{S_n\left(y\right)}$$
+\begin{multline*}
+\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq\\ \SVX \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) - \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) + 2 \N{S_n\left(y\right)}
+\end{multline*}
 
 By the assumption, the first two terms total to ${\leq 1}$, yielding the desired result.
 \end{proof}
@@ -1159,7 +1171,9 @@ $$\E\left[X_{n+1} - X_n \mid \F_n\right]\left(x\right) = \E_{x' \sim \mu^*}\left
 
 (As before, the notation on the right hand side signifies the use of a regular conditional probability)
 
-$$\E\left[X_{n+1} - X_n \mid \F_n\right]\left(x\right) = \E_{x' \sim \mu^*}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right) \mid x' \in x_{:n}\OO\right] - \E_{x' \sim F_n\left(x_{:n}\right)}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right)\right]$$
+\begin{multline*}
+\E\left[X_{n+1} - X_n \mid \F_n\right]\left(x\right) = \\ \E_{x' \sim \mu^*}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right) \mid x' \in x_{:n}\OO\right] - \E_{x' \sim F_n\left(x_{:n}\right)}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right)\right]
+\end{multline*}
 
 Let $\alpha > 0$ be as in Definition~\ref{def:prudent}. By definition of $\PG{S}$, $\overline{\PG{S}}_{n}^F\left(x_{:n}\right)$ is equal to either $S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)$ or 0. In either case, we get that for $\mu^*$-almost any $x \in \OO$
 
@@ -1248,7 +1262,9 @@ $$\A{\E_\nu\left[f\right] - \varphi\left(\nu\right)} < \frac{\epsilon}{2}$$
 
 Consider any $\mu \in \PM\left(X\right)$. Choose $\nu \in A$ s.t. $\DKR\left(\mu,\nu\right) < \frac{\epsilon}{4}$. We get
 
-$$\A{\E_\mu\left[f\right] - \varphi\left(\mu\right)} \leq \A{\E_\mu\left[f\right] - \E_\nu\left[f\right]} + \A{\E_\nu\left[f\right] - \varphi\left(\nu\right)} + \A{\varphi\left(\nu\right) - \varphi\left(\mu\right)} < \frac{\epsilon}{4} + \frac{\epsilon}{2} + \frac{\epsilon}{4} = \epsilon$$
+\begin{multline*}
+\A{\E_\mu\left[f\right] - \varphi\left(\mu\right)} \leq \A{\E_\mu\left[f\right] - \E_\nu\left[f\right]} + \A{\E_\nu\left[f\right] - \varphi\left(\nu\right)} + \A{\varphi\left(\nu\right) - \varphi\left(\mu\right)} \\< \frac{\epsilon}{4} + \frac{\epsilon}{2} + \frac{\epsilon}{4} = \epsilon
+\end{multline*}
 \end{proof}
 
 \begin{samepage}
@@ -1283,7 +1299,8 @@ Taking $\delta$ to 0 we get $\varphi\left(\nu\right) \geq \varphi\left(\mu_0\rig
 
 $$\N{f}_\rho \leq \frac{3}{4} \left(r - r_0\right) < r - r_0$$ 
 
-$$\E_\nu\left[f\right] \geq \varphi\left(\nu\right) - \frac{1}{16} r \left(r - r_0\right) \geq \varphi\left(\mu_0\right) + \frac{11}{16} r \left(r - r_0\right) \geq \E_{\mu_0}\left[f\right] +  \frac{5}{8} r \left(r - r_0\right) > \E_{\mu_0}\left[f\right] +  \frac{1}{2} r \left(r - r_0\right)$$
+\[\E_\nu\left[f\right] \geq \varphi\left(\nu\right) - \frac{1}{16} r \left(r - r_0\right) \geq \varphi\left(\mu_0\right) + \frac{11}{16} r \left(r - r_0\right)\]
+\[\E_\nu\left[f\right] \geq \E_{\mu_0}\left[f\right] +  \frac{5}{8} r \left(r - r_0\right) >  \E_{\mu_0}\left[f\right] +  \frac{1}{2} r \left(r - r_0\right)\]
 \end{proof}
 
 \begin{samepage}
@@ -1367,7 +1384,9 @@ $$Z_1:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \
 
 $$Z_2:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid \N{\beta\left(\mu\right)} \leq \left(\DKR\left(\mu,\xi\right) - \epsilon\right)_+\}$$
 
-$$Z_3:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid \E_\nu\left[\beta\left(\mu\right)\right] - \E_\mu\left[\beta\left(\mu\right)\right] \geq \frac{1}{2}\left(\DKR\left(\mu,\zeta\right) - \epsilon\right)_+ \DKR\left(\mu,\zeta\right)\}$$
+\begin{multline*}
+Z_3:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid\\ \E_\nu\left[\beta\left(\mu\right)\right] - \E_\mu\left[\beta\left(\mu\right)\right] \geq \frac{1}{2}\left(\DKR\left(\mu,\zeta\right) - \epsilon\right)_+ \DKR\left(\mu,\zeta\right)\}
+\end{multline*}
 
 Define $Z := Z_1 \cap Z_2 \cap Z_3$. It is easy to see that $Z_{1,2,3}$ are closed and therefore $Z$ also. Define $Z' \subseteq Y \times \Gm\left(X\right) \times \PM\left(X\right)^3$ by
 
@@ -1487,7 +1506,7 @@ The following variant of the Optional Stopping Theorem appears in \cite{Durrett_
 \begin{theorem}
 \label{thm:optional_stopping}
 
-Let ${\Omega}$ be a probability space, ${\Sqn{\F_n \subseteq 2^\Omega}}$ a filtration of ${\Omega}$, ${\Sqn{X_n: \Omega \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and ${M,N: \Omega \rightarrow \Nats \sqcup \{\infty\}}$ stopping times (w.r.t. ${\F}$) s.t. ${M \leq N}$. Assume that ${\Sqn{X_{\min\left(n,N\right)}}}$ is a uniformly integrable submartingale. Using Doob's martingale convergence theorem, we can define ${X_N : \Omega \rightarrow \Reals}$ by
+Let ${\Omega}$ be a probability space, ${\Sqn{\F_n \subseteq 2^\Omega}}$ a filtration of ${\Omega}$, ${\Sqn{X_n: \Omega \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and\\${M,N: \Omega \rightarrow \Nats \sqcup \{\infty\}}$ stopping times (w.r.t. ${\F}$) s.t. ${M \leq N}$. Assume that ${\Sqn{X_{\min\left(n,N\right)}}}$ is a uniformly integrable submartingale. Using Doob's martingale convergence theorem, we can define ${X_N : \Omega \rightarrow \Reals}$ by
 
 \begin{equation}
 \label{eqn:thm_optional_stopping__xn}
@@ -1601,7 +1620,7 @@ This immediately implies the desired result.
 \end{proof}
 
 \begin{proof}[Proof of Example~\ref{exm:update_incomplete_kernels}]
-Fix $\rho$ a metrization of $\OO$. The condition $\Sp{\mu} \subseteq y\OO$ is closed because it is equivalent to the vanishing of the continuous function $\E_{x\sim\mu}\left[\rho\left(x,y\OO\right)\right]$. The other condition in the definition of $M^K_n$ is closed because pushforward by a continuous mapping and semidirect product with a Feller continuous kernel are continuous in the weak topology. This gives us condition~\ref{con:def__update_incomplete__clos}. Condition~\ref{con:def__update_incomplete__conv} holds since the convex combination of measures supported on $y\OO$ is supported on $y\OO$ and since pushforward and semidirect product commute with convex combinations.
+Fix $\rho$ a metrization of $\OO$. The condition\\$\Sp{\mu} \subseteq y\OO$ is closed because it is equivalent to the vanishing of the continuous function $\E_{x\sim\mu}\left[\rho\left(x,y\OO\right)\right]$. The other condition in the definition of $M^K_n$ is closed because pushforward by a continuous mapping and semidirect product with a Feller continuous kernel are continuous in the weak topology. This gives us condition~\ref{con:def__update_incomplete__clos}. Condition~\ref{con:def__update_incomplete__conv} holds since the convex combination of measures supported on $y\OO$ is supported on $y\OO$ and since pushforward and semidirect product commute with convex combinations.
 
 Consider any $\mu \in M^K$. We know that for any $m \geq n$, $\PO_{m+1*}\mu=\PO_{m*}\mu \ltimes K_m$. Applying Proposition~\ref{prp:four_factors}, this implies that for $\PO_{n*}\mu$-almost any $y\in\Ob^n$
 
@@ -1637,8 +1656,8 @@ $$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\le
 
 Now consider any $f \in C\left(X\right)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\N{f-f_k} < \epsilon$ and therefore, for any $y \in A$
 
-$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \limsup_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] + \epsilon = \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right] + \epsilon  $$
-
+$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \limsup_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] + \epsilon$$
+$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right] + \epsilon$$
 $$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right] + 2\epsilon$$
 
 Similarly
