@@ -386,7 +386,13 @@ A gambler is considered to observe a forecaster and bet against it. Given $y \in
 \begin{samepage}
 \begin{example}
 
-Consider some measurable mapping $f: \Ob^n \rightarrow \Ob_n$...
+Suppose that the $\Ob_n$ are finite sets with discrete topology. Consider a family of mappings $\left\{f_n: \Ob^n \rightarrow \Ob_n\right\}_{n\in\Nats}$. Define the gambler $G^f$ by
+
+\begin{equation}
+G^f_n(y,\BM):=\beta^{\{yf(y)\}}
+\end{equation}
+
+That is, $G^f$ always bets on the next observation being $f(y)$.
 
 \end{example}
 \end{samepage}
@@ -443,7 +449,15 @@ Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ 
 
 \end{definition}
 
-The following is the main theorem of this section, which is our analogue of Theorem 4.0.6 from \cite{Garrabrant_2016}.
+\begin{samepage}
+\begin{example}
+
+Suppose that the $\Ob_n$ are finite sets with discrete topology. Consider a family of mappings $\left\{f_n: \Ob^n \rightarrow \Ob_n\right\}_{n\in\Nats}$. Define the forecaster $F^f$ by $F_n(y) := \delta_{f_n(y)}$. Then, it is easy to see that $F^f$ dominates $G^f$.
+
+\end{example}
+\end{samepage}
+
+The following is the main theorem of this section, which is our analogue of \enquote{Theorem 4.0.6} from \cite{Garrabrant_2016}.
 
 \begin{theorem}
 \label{thm:exist_dominant}
@@ -519,6 +533,8 @@ We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
 \begin{equation}
 \bar{G}^F_n\left(y\right) := G^F_n\left(y;F_n\left(y\right)\right)
 \end{equation}
+
+The following is our analogue of \enquote{Theorem 1} from \cite{Vovk_2005}.
 
 \begin{corollary}
 \label{crl:dominate_one}
@@ -795,6 +811,10 @@ A \emph{gambling strategy} is a uniformly bounded family of measurable mappings
 
 \[\Sqn{S_n: \Ob^n \rightarrow \GMO}\]
 
+\end{definition}
+
+As opposed to a gambler, a gambling strategy doesn't depend on the forecast history.
+
 \begin{definition}
 \label{def:prudent}
 
@@ -803,8 +823,6 @@ Given a gambling strategy $S$ and $\mu^* \in \PMO$, $S$ is said to be \emph{$\mu
 \begin{equation}
 \E_{\mu^*}\left[S_n\left(y; \mu\right) \mid y\OO\right] - \E_\mu\left[S_n\left(y; \mu\right)\right] \geq \alpha \left(\max_{y\OO}{S_n\left(y; \mu\right)} - \min_{y\OO}{S_n\left(y; \mu\right)}\right)
 \end{equation}
-
-\end{definition}
 
 \end{definition}
 
