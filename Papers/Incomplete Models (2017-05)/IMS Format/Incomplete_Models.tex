@@ -1,5 +1,5 @@
 %
-\documentclass[preprint]{imsart}
+\documentclass[aop,preprint]{imsart}
 %"preprint" option removes info line on the page footer
 %Put target journal in the options:
 %   The Annals of Probability           [aop]
@@ -8,12 +8,17 @@
 %   The Annals of Applied Statistics    [aoas]
 %   Stochastic Systems                  [ssy]
 
-\usepackage{cite}
-\usepackage[unicode]{hyperref}
+\RequirePackage[OT1]{fontenc}
+\RequirePackage{amsthm,amsmath}
+\RequirePackage[numbers]{natbib}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+
+%\usepackage{cite}
+%\usepackage[unicode]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{csquotes}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amssymb}
 \usepackage{enumerate}
 \usepackage{commath}
 \usepackage{bm}
@@ -26,18 +31,17 @@
 %%%%%%----------------------------------%%%%%%
 \startlocaldefs
 
-
-%\numberwithin{equation}{section}
+\numberwithin{equation}{section}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}%[section]
-\newtheorem{example}{Example}%[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
 
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}%[section]
-\newtheorem{lemma}{Lemma}%[section]
-\newtheorem{proposition}{Proposition}%[section]
-\newtheorem{corollary}{Corollary}%[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
 %\newtheorem{conjecture}{Conjecture}[section]
 
 %\theoremstyle{remark}
@@ -112,7 +116,7 @@
 %%%%%%----------------------------------%%%%%%
 
 % provide arXiv number if available:
-%\arxiv{1705.04630}
+\arxiv{arXiv:1705.04630}
 
 
 \begin{document}
@@ -127,8 +131,8 @@
 
 %+Author
 \begin{aug}
-\author{\fnms{Vadim} \snm{Kosoy}\ead[label=e1]{vadim.kosoy@intelligence.org}},
-
+\author{\fnms{Vadim} \snm{Kosoy}\ead[label=e1]{vadim.kosoy@intelligence.org}}
+\thankstext{t}{This work was supported by the Machine Intelligence Research Institute in Berkeley, California.}
 \runauthor{V. Kosoy}
 
 \address{
@@ -141,8 +145,9 @@
 %-Author
 
 %+Abstract
+\renewcommand{\abstractname}{}
 \begin{abstract}
-We consider the task of forecasting an infinite sequence of future observations based on some number of past observations, where the probability measure generating the observations is \enquote{suspected} to satisfy one or more of a set of \emph{incomplete} models, i.e. convex sets in the space of probability measures. This setting is in some sense intermediate between the \emph{realizable} setting where the probability measure comes from some known set of probability measures (which can be addressed using e.g. Bayesian inference) and the \emph{unrealizable} setting where the probability measure is completely arbitrary. We demonstrate a method of forecasting which guarantees that, whenever the true probability measure satisfies an incomplete model in a given countable set, the forecast converges to the same incomplete model in the (appropriately normalized) Kantorovich-Rubinstein metric. This is analogous to merging of opinions for Bayesian inference, except that convergence in the Kantorovich-Rubinstein metric is weaker than convergence in total variation.
+We consider the task of forecasting an infinite sequence of future observations based on some number of past observations, where the probability measure generating the observations is \enquote{suspected} to satisfy one or more of a set of \emph{incomplete} models, i.e., convex sets in the space of probability measures. This setting is in some sense intermediate between the \emph{realizable} setting where the probability measure comes from some known set of probability measures (which can be addressed using, e.g., Bayesian inference) and the \emph{unrealizable} setting where the probability measure is completely arbitrary. We demonstrate a method of forecasting which guarantees that, whenever the true probability measure satisfies an incomplete model in a given countable set, the forecast converges to the same incomplete model in the (appropriately normalized) Kantorovich-Rubinstein metric. This is analogous to merging of opinions for Bayesian inference, except that convergence in the Kantorovich-Rubinstein metric is weaker than convergence in total variation.
 \end{abstract}
 %-Abstract
 
@@ -156,7 +161,7 @@ We consider the task of forecasting an infinite sequence of future observations 
 \kwd{statistical learning theory}
 \kwd{online learning}
 \kwd{sequence prediction}
-\kwd{knightian uncertainty}
+\kwd{Knightian uncertainty}
 \end{keyword}
 
 \end{frontmatter}
@@ -168,7 +173,7 @@ We consider the task of forecasting an infinite sequence of future observations 
 
 \section{Introduction}
 
-Forecasting future observations based on past observations is one of the fundamental problems in machine learning, and more broadly is one of the fundamental components of rational reasoning in general. This problem received much attention, using different methods (see e.g. \cite{Cesa-Bianchi_2006} or Chapter 21 in \cite{Shalev-Shwartz_2014}). Most of those methods assume fixing a class $\MC$ of models or \enquote{hypotheses}, each of which defines a probability measure on sequences of observations (and also conditional probability measures), and produce a forecast $F^\MC$ which satisfies at least one of two kinds of guarantees:
+Forecasting future observations based on past observations is one of the fundamental problems in machine learning, and more broadly is one of the fundamental components of rational reasoning in general. This problem received a great deal of attention, using different methods (see e.g. \cite{Cesa-Bianchi_2006} or Chapter 21 in \cite{Shalev-Shwartz_2014}). Most of those methods assume fixing a class $\MC$ of models or \enquote{hypotheses}, each of which defines a probability measure on sequences of observations (and also conditional probability measures), and produce a forecast $F^\MC$ which satisfies at least one of two kinds of guarantees:
 
 \begin{itemize}
 \item 
@@ -177,13 +182,13 @@ In the \emph{realizable} setting, the guarantee is that if the observations are 
 In the \emph{unrealizable} setting, the guarantee is that for \emph{any} sequence of observations, $F^\MC$ is asymptotically as good as the forecast produced by any $\mu \in \MC$.
 \end{itemize}
 
-The realizable setting is often unrealistic, in particular because it requires that the environment under observation is simpler than the observer itself. Indeed, even though we avoid analyzing computational complexity in this work, it should be noted that the computational (e.g. time) complexity of a forecaster is always greater than the complexities of all $\mu \in \MC$. On the other hand, the unrealizable setting usually only provides guarantees for short-term forecasts (since otherwise the training data is insufficient). The latter is in contrast to e.g. Bayesian inference where the time to learn the model depends on its prior probability, but once \enquote{learned} (i.e. once $F^\MC$ converged to a given total variation distance from the true probability measure), arbitrarily long-term forecasts become reliable.
+The realizable setting is often unrealistic, in particular because it requires that the environment under observation is simpler than the observer itself. Indeed, even though we avoid analyzing computational complexity in this work, it should be noted that the computational (e.g., time) complexity of a forecaster is always greater than the complexities of all $\mu \in \MC$. On the other hand, the unrealizable setting usually only provides guarantees for short-term forecasts (since otherwise the training data is insufficient). The latter is in contrast to, e.g., Bayesian inference where the time to learn the model depends on its prior probability, but once \enquote{learned} (i.e., once $F^\MC$ has converged to a given total variation distance from the true probability measure), arbitrarily long-term forecasts become reliable.
 
-The spirit of our approach is that the environment might be very complex, but at the same time it might posses some simple features, and it is these features that the forecast must capture. For example, if we consider a sequence of observations $\{o_n \in \{0,1\}\}_{n \in \Nats}$ s.t. $o_{2k+1}=o_{2k}$, then whatever is the behavior of the even observations $o_{2k}$, the property $o_{2k+1}=o_{2k}$ should asymptotically be assigned high probability by the forecast (this idea was discussed in \cite{Hutter_2009} as \enquote{open problem 4j}).
+The spirit of our approach is that the environment might be very complex, but at the same time it might possess some simple features, and it is these features that the forecast must capture. For example, if we consider a sequence of observations $\{o_n \in \{0,1\}\}_{n \in \Nats}$ s.t. $o_{2k+1}=o_{2k}$, then whatever is the behavior of the even observations $o_{2k}$, the property $o_{2k+1}=o_{2k}$ should asymptotically be assigned high probability by the forecast (this idea was discussed in \cite{Hutter_2009} as \enquote{open problem 4j}).
 
-Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PMO$ of probability measures on the space of sequences $\OO$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable\footnote{This work only deals with the \emph{nonparametric} setting in which $\MC$ is discrete.} set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e. dependence on the forecast itself).
+Formally, we introduce the notion of an \emph{incomplete model}, which is a convex set $M$ in the space $\PMO$ of probability measures on the space of sequences $\OO$. Such an incomplete model may be regarded as a hybrid of probabilistic and \emph{Knightian} uncertainty. We then consider a countable set $\MC$ of incomplete models. For any $M \in \MC$ and $\mu \in M$, our forecasts will converge to $M$ in an appropriate sense with $\mu$-probability 1. This convergence theorem can be regarded as an analogue for incomplete models of Bayesian merging of opinions (see \cite{Blackwell_1962}), and is our main result. Our setting can be considered to be in between realizable and unrealizable: it is \enquote{partially realizable} since we require the environment to conform to some $M \in \MC$, it is \enquote{partially unrealizable} since $\mu \in M$ can be chosen adversarially (we can even allow non-oblivious choice, i.e., dependence on the forecast itself).
 
-The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016}. The forecast may be regarded as the pricing of a certain combinatorial prediction market, with a countable set of gamblers making bets. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit. The existence of such a pricing follows from the Kakutani-Glicksberg-Fan fixed point theorem and the Kuratowski-Rill-Nardzewski measurable selection theorem (the latter in order to show that the dependence on observation history can be made measurable). The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit.
+The forecasting method we demonstrate is based on the principles introduced in \cite{Garrabrant_2016} (similar ideas appeared in \cite{Vovk_2005} in a somewhat simpler setting). The forecast may be regarded as the pricing of a certain combinatorial prediction market, with a countable set of gamblers making bets. The market pricing is then defined by the requirement that the aggregate of all gamblers doesn't make a net profit. The existence of such a pricing follows from the Kakutani-Glicksberg-Fan fixed point theorem and the Kuratowski-Rill-Nardzewski measurable selection theorem (the latter in order to show that the dependence on observation history can be made measurable). The fact that the aggregate of all gamblers cannot make a net profit implies that each individual gambler can only make a bounded profit.
 
 The above method is fairly general, but for our purposes, we associate with each incomplete model $M \in \MC$ a set of gamblers that make bets which are guaranteed to be profitable assuming the true environment $\mu$ satisfies the incomplete model (i.e. $\mu \in M$). The existence of these gamblers follows from the Hahn-Banach separation theorem (where the incomplete model defines the convex set in question) and selection theorems used to ensure that the choice of separating functional depends in a sufficiently \enquote{regular} way on the market pricing. In order to show that the forecaster we described satisfies the desired convergence property, we use tools from martingale theory.
 
@@ -194,7 +199,7 @@ The structure of the paper is as follows. Section~\ref{sec:learning} defines the
 
 $\Nats$ will denote the set of natural numbers $\{0, 1, 2 \ldots\}$.
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_m$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO_n\left(x\right)$. Given $y \in \Ob^n$, $y\OO := \left(\PO_n\right)^{-1}\left(y\right)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM\left(X\right)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM\left(X\right)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM\left(X\right)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_m$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO_n\left(x\right)$. Given $y \in \Ob^n$, $y\OO := \left(\PO_n\right)^{-1}\left(y\right)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets (the fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}). For any measurable space $X$, $\PM\left(X\right)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM\left(X\right)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM\left(X\right)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
 \begin{samepage}
 \begin{definition}
@@ -210,6 +215,14 @@ s.t. $\Sp {F_n\left(y\right)} \subseteq y\OO$.
 
 Given a forecaster $F$ and $y \in \Ob^n$, $F_n\left(y\right)$ represents the forecast corresponding to observation history $y$. The condition $\Sp {F_n\left(y\right)} \subseteq y\OO$ reflects the obvious requirement of consistency with past observations.
 
+\begin{samepage}
+\begin{example}
+
+Consider any $\mu\in\PMO$. Then we can take $F_n(y)$ to be a regular conditional probability of $\mu$ (where the condition is $x \in y\OO$). This corresponds to Bayesian forecasting with prior $\mu$.
+
+\end{example}
+\end{samepage}
+
 In order to formulate a claim about forecast convergence, we will need a metric on $\PMO$. Consider $\rho: \OO \times \OO \rightarrow \Reals$ a metrization of $\OO$. Let $\Lp\left(\OO,\rho\right)$ be the Banach space of $\rho$-Lipschitz functions on $\OO$, equipped with the norm
 
 \begin{equation}
@@ -222,7 +235,7 @@ $\PMO$ can be regarded as a compact subset of the dual space $\Lp\left(\OO,\rho\
 \DKR^\rho\left(\mu,\nu\right):=\sup_{\N{f}_\rho \leq 1}{\left(\E_\mu\left[f\right] - \E_\nu\left[f\right]\right)}
 \end{equation}
 
-We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}\footnote{This is slightly different from the conventional definition but strongly equivalent (i.e. each metric is bounded by a constant multiple of the other). Other names used in the literature for the strongly equivalent metric are \enquote{1st Wasserstein metric} and \enquote{earth mover's distance.}}.
+We call $\DKR^\rho$ the \emph{Kantorovich-Rubinstein metric}. This is slightly different from the conventional definition but strongly equivalent (i.e. each metric is bounded by a constant multiple of the other). Other names used in the literature for the strongly equivalent metric are \enquote{1st Wasserstein metric} and \enquote{earth mover's distance}.
 
 Fix any $x \in \OO$. It is easy to see that
 
@@ -236,7 +249,7 @@ Denote $\delta_x \in \PMO$ the unique probability measure s.t. $\delta_x\left(\{
 \lim_{n \rightarrow \infty} \DKR^\rho\left(\mu_n, \delta_x\right) = 0
 \end{equation}
 
-Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. In the special case when $\Ob_n=\Ob$ for all $n \in \Nats$ and some fixed space $\Ob$, there is a natural class of metrizations with the property that $\rho_n(yx,yx')=\rho(x,x')$ for some fixed metric $\rho$ on $\OO$ and any $y \in \Ob^n$, $x,x' \in \OO$\footnote{In this special case, the need for renormalization is a side effect of our choice of notation where the forecaster produces a probability measure over the entire sequence rather than over future observations only. Also, in this case the choice of $\rho$ determines everything, since we only use Kantorovich-Rubinstein distance between measures with support in $y\OO$ for the same $y \in \Ob^n$.}. We denote $\DKR^n:=\DKR^{\rho_n}$.
+Therefore, formulating a non-vacuous convergence theorem requires \enquote{renormalizing} $\DKR$ for each $n \in \Nats$. To this end, we consider a \emph{sequence} of metrizations of $\OO$: $\Sqn{\rho_n: \OO \times \OO \rightarrow \Reals}$. We denote $\DKR^n:=\DKR^{\rho_n}$. In the special case when $\Ob_n=\Ob$ for all $n \in \Nats$ and some fixed space $\Ob$, there is a natural class of metrizations with the property that $\rho_n(yx,yx')=\rho(x,x')$ for some fixed metric $\rho$ on $\OO$ and any $y \in \Ob^n$, $x,x' \in \OO$. In this special case, the need for renormalization is a side effect of our choice of notation where the forecaster produces a probability measure over the entire sequence rather than over future observations only. Also, in this case the choice of $\rho$ determines everything, since we only use Kantorovich-Rubinstein distance between measures with support in $y\OO$ for the same $y \in \Ob^n$.
 
 Another ingredient we will need is a notion of regular conditional probability for incomplete models. Given measurable spaces $X$ and $Y$, we will use the notation $K: X \M Y$ to denote a Markov kernel with source $X$ and target $Y$. Given $x \in X$, we will use the notation $K\left(x\right) \in \PM\left(Y\right)$. Given $\mu \in \PM\left(X\right)$, $\mu \ltimes K \in \PM\left(X \times Y\right)$ denotes the semidirect product of $\mu$ and $K$, that is, the unique measure satisfying
 
@@ -305,9 +318,9 @@ M^K:=\{\mu \in \PMO \mid \forall n \in I: \PO_{n+1*}\mu = \PO_{n*}\mu \ltimes K_
 
 For each $n \in \Nats$, define $M^K_n: \Ob^n \rightarrow 2^{\PMO}$ by
 
-\begin{multline}
-M^K_n(y) = \{\mu \in \PMO \mid \Sp{\mu} \subseteq y\OO,\\ \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
-\end{multline}
+\begin{equation}
+M^K_n(y) = \{\mu \in \PMO \mid \Sp{\mu} \subseteq y\OO,\, \forall m \in I: m \geq n \implies \PO_{m+1*}\mu = \PO_{m*}\mu \ltimes K_m\}
+\end{equation}
 
 Then, $M^K_n$ is a regular upper bound for $M^K \mid \PO_n$.
 
@@ -345,6 +358,8 @@ Fix any $\MC \subseteq 2^{\PMO}$ countable. For every $M \in \MC$ and $n \in \Na
 
 \end{theorem}
 
+That is, the forecaster $F^\MC$ ensures that, for any incomplete model $M$ satisfied by the true environment $\mu$, the forecast will (almost surely) converge to the model (as opposed to complete models, there may be several incomplete models satisfied by the same environment).
+
 Note that $F^\MC$ as above exists for any choice of $\Sqn{\rho_n}$ but it depends on the choice. Informally, we can think of this choice as determining the duration of the future time period over which we need our forecast to be reliable. It also might depend on the choice of regular upper bounds (of course, if there are \emph{minimal} regular upper bounds, these yield a forecaster than works for any other regular upper bounds).
 
 The example from the Introduction section can now be realized as follows. Take $\Ob_n=\Ob=\{0,1\}$ and let $M^K \subseteq \PMO$ be as in Example~\ref{exm:update_incomplete_kernels}, where $I = 2\Nats+1$ and $\Pr_{o\sim K_{2n+1}(y)}\left[o=y_{2n}\right]=1$. Define $\rho_n$  by
@@ -380,19 +395,40 @@ In particular, no special treatment of expected values is required.
 The observations are stochastic rather than deterministic.
 \end{itemize}
 
-Our terminology also differs from \cite{Garrabrant_2016}: their \enquote{market} is our \enquote{forecaster}, their \enquote{trader} is our \enquote{gambler}. In any case, our exposition assumes no prior knowledge about logical inductors.
+Our terminology also differs from \cite{Garrabrant_2016}: their \enquote{market} is our \enquote{forecaster}, their \enquote{trader} is our \enquote{gambler}.
+
+Similar ideas were investigated in \cite{Vovk_2005} under the name \enquote{defensive forecasting}. However in \cite{Vovk_2005}, the forecast is a single probability of an impending observation in $\{0,1\}$ rather than a probability measure in the space of infinite sequences of observations taking values in arbitrary compact Polish spaces.
+
+In any case, our exposition assumes no prior knowledge about logical inductors or defensive forecasting.
 
 The idea is to consider a collection of gamblers making bets against the forecaster. If a gambler with finite budget cannot make an infinite profit, the gambler is said to be \enquote{dominated} by the forecaster. We then prove that for any countable collection of gamblers, there is a forecaster that dominates all of them.
 
 Given a compact Polish space $X$, $C\left(X\right)$ will denote the Banach space of continuous functions with uniform norm. We will also use the shorthand notation $\Gm\left(X\right):=C\left(\PM\left(X\right) \times X\right)$. Equivalently, $\Gm\left(X\right)$ can be regarded to be the space of continuous functions from $\PM\left(X\right)$ to $C\left(X\right)$, and we will curry implicitly in our notation.
 
-We regard $\GMO$ as the space of \emph{bets} that can be made against a forecaster. Given $\beta \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \OO$, the value of the bet $\beta$ is
+We regard $\GMO$ as the space of \emph{bets} that can be made against a forecaster. Given $\beta \in \GMO$, a forecast $\mu \in \PMO$ and observation sequence $x \in \OO$, the payoff of the bet $\beta$ is
 
 \begin{equation}
 \V{\beta}\left(\mu,x\right):=\beta\left(\mu,x\right) - \E_{x' \sim \mu}\left[\beta\left(\mu,x'\right)\right]
 \end{equation}
 
+This definition ensures that $\E_{x\sim\mu}\left[\V{\beta}(\mu,x)\right] = 0$, so that the bet is fair from the perspective of the forecaster.
+
 Note that this defines a bounded linear operator $\V: \Gm\left(X\right) \rightarrow \Gm\left(X\right)$.
+
+\begin{samepage}
+\begin{example}
+
+Suppose that the $\Ob_n$ are finite sets with discrete topology. Fix some $n\in\Nats$ and $A \subseteq \Ob^n$. Define $\beta^A \in \GMO$ by
+
+\begin{equation}
+\beta^{A}(\mu,x):=\begin{cases} 1 \text{ if } x_{:n} \in A \\ 0 \text{ if } x_{:n} \not\in A \end{cases}
+\end{equation}
+
+
+$\beta^y$ represents betting that the sequence of observations will begin with an element of $A$. The payoff $\V{\beta^A}(\mu,x)$ is $1 - \mu\left(\left(\PO_n\right)^{-1}(A)\right)$ when $x_{:n} \in A$ and $-\mu\left(\left(\PO_n\right)^{-1}(A)\right)$ when $x_{:n} \not\in A$.
+
+\end{example}
+\end{samepage}
 
 $C\left(X\right)$ and $\Gm\left(X\right)$ will also be regarded as a measurable spaces, using the $\sigma$-algebra of Borel sets. We remind that the $\sigma$-algebra on $\Ob^n$ is the algebra of \emph{universally measurable} sets.
 
@@ -405,6 +441,20 @@ A \emph{gambler} is a family of measurable mappings
 \end{definition}
 
 A gambler is considered to observe a forecaster and bet against it. Given $y \in \Ob^n$ and $\BM \in \PMO^n$, $G_n\left(y,\BM\right)=\beta$ means that, if $y$ are the first $n$ observations and $\BM$ are the first $n$ forecasts (made after observing $n-1$ out of the $n$ observations), the gambler will make bet $\beta$ (which is in itself a function of the forecast the forecaster makes after the $n$-th observation).
+
+\begin{samepage}
+\begin{example}
+
+Suppose that the $\Ob_n$ are finite sets with discrete topology. Consider a family of mappings $\left\{f_n: \Ob^n \rightarrow \Ob_n\right\}_{n\in\Nats}$. Define the gambler $G^f$ by
+
+\begin{equation}
+G^f_n(y,\BM):=\beta^{\{yf(y)\}}
+\end{equation}
+
+That is, $G^f$ always bets on the next observation being $f(y)$.
+
+\end{example}
+\end{samepage}
 
 We now introduce some notation regarding the interaction of gamblers and forecasters. 
 
@@ -429,15 +479,21 @@ We define the measurable mappings $\overline{\V G}^F_n: \Ob^n \rightarrow \CO$ a
 
 In the definition of $\SV G^F_0$, $\Ob^{-1}$ is considered to be equal to $\Ob^0$ (i.e. the one point space).
 
+That is, $\overline{\V G}^F_n\left(y\right)(x)$ is the payoff of the $n$-th gamble of gambler $G$ playing against forecaster $F$, assuming initial history $y$ and full history $x$. $\SV G^F_n\left(y\right)$ is the total payoff of the first $n$ gambles.
+
 We define the measurable mappings $\SVM G^F_n, \SVX G^F_n: \Ob^{n-1} \rightarrow \Reals$ by
 
 \begin{equation}
+\label{eqn:svmf}
 \SVM G^F_n\left(y\right):=\min_{y\OO} \SV G^F_n(y)
 \end{equation}
 
 \begin{equation}
+\label{eqn:svxf}
 \SVX G^F_n\left(y\right):=\max_{y\OO} \SV G^F_n(y)
 \end{equation}
+
+Thus, $\SVM G^F_n\left(y\right)$ is the minimal possible payoff of the first $n$ gambles and $\SVX G^F_n\left(y\right)$ is the maximal possible payoff. $y$ appears twice on the right hand side of equations (\ref{eqn:svmf},\ref{eqn:svxf}) because, first, it defines the space of histories over which we minimize/maximize and, second, it defined the input to the gambler and forecaster.
 
 We are now ready to state the formally state the definition of \enquote{dominance} alluded to in the beginning of the section.
 
@@ -458,7 +514,17 @@ Consider a forecaster $F$ and a gambler $G$. $F$ is said to \emph{dominate} $G$ 
 
 \end{definition}
 
-The following is the main theorem of this section, which is our analogue of Theorem 4.0.6 from \cite{Garrabrant_2016}.
+That is, as long as the gambler doesn't go into infinite debt, it cannot make an infinite profit.
+
+\begin{samepage}
+\begin{example}
+
+Suppose that the $\Ob_n$ are finite sets with discrete topology. Consider a family of mappings $\left\{f_n: \Ob^n \rightarrow \Ob_n\right\}_{n\in\Nats}$. Define the forecaster $F^f$ by $F_n(y) := \delta_{f_n(y)}$. Then, it is easy to see that $F^f$ dominates $G^f$.
+
+\end{example}
+\end{samepage}
+
+The following is the main theorem of this section, which is our analogue of \enquote{Theorem 4.0.6} from \cite{Garrabrant_2016}.
 
 \begin{theorem}
 \label{thm:exist_dominant}
@@ -491,6 +557,8 @@ Define ${K: \PM\left(X\right) \rightarrow 2^{\PM\left(X\right)}}$ as follows:
 For any ${\mu}$, ${K}\left(\mu\right)$ is obviously convex and non-empty. It is also easy to see that the graph of $K$ in $\PM\left(X\right) \times \PM\left(X\right)$ is closed. Applying the Kakutani-Glicksberg-Fan theorem, we conclude that $K$ has a fixed point, i.e. $\mu \in \PM\left(X\right)$ s.t. $\mu \in K\left(\mu\right)$.
 \end{proof}
 
+Note that for $\beta$ and $\mu$ as in Lemma~\ref{lmm:unwinnable}, we have $\V{\beta}(\mu) \leq 0$.
+
 Next, we show that the probability measure of Lemma~\ref{lmm:unwinnable} can be made to depend measurably on past observations and the bet.
 
 \begin{lemma}
@@ -518,7 +586,7 @@ We can view ${Z}$ as the graph of a \emph{multivalued} mapping from ${Y_1 \times
 
 Fix $\rho$ a metrization of $Y_1$. $Z_1$ is the vanishing locus of the continuous function $\E_{\left(y_1, y_2\right) \sim \mu}\left[\rho\left(y_1,y\right)\right]$. $Z_2$ is the vanishing locus of the continuous function $\E_\mu\left[\beta\left(\mu\right)\right] - \max_{y_2 \in Y_2} \beta\left(\mu,y,y_2\right)$. Therefore $Z_{1,2}$ are closed and so is $Z$. In particular, the fiber ${Z_{y\beta}}$ of ${Z}$ over any ${\left(y,\beta\right) \in Y_1 \times \Gm\left(X\right)}$ is also closed. 
 
-\sloppy{For any ${y \in Y_1}$, ${\beta \in \Gm\left(X\right)}$, define ${i_y: Y_2 \rightarrow X}$ by ${i_y\left(y_2\right):=\left(y,y_2\right)}$ and ${\beta_y \in \Gm\left(Y_{2}\right)}$ by $\beta_y\left(\nu,y'\right):=\beta\left(i_{y*}\nu,y,y'\right)$. Applying Lemma~\ref{lmm:unwinnable} to ${\beta_y}$ we get ${\nu \in \PM\left(Y_2\right)}$ s.t.}
+For any ${y \in Y_1}$, ${\beta \in \Gm\left(X\right)}$, define ${i_y: Y_2 \rightarrow X}$ by ${i_y\left(y_2\right):=\left(y,y_2\right)}$ and ${\beta_y \in \Gm\left(Y_{2}\right)}$ by $\beta_y\left(\nu,y'\right):=\beta\left(i_{y*}\nu,y,y'\right)$. Applying Lemma~\ref{lmm:unwinnable} to ${\beta_y}$ we get ${\nu \in \PM\left(Y_2\right)}$ s.t.
 
 $$\Sp \nu \subseteq \Argmax{} \beta_y\left(\nu\right)$$
 
@@ -534,6 +602,10 @@ We define the measurable mappings $\bar{G}^F_n: \Ob^n \rightarrow \CO$ by
 \begin{equation}
 \bar{G}^F_n\left(y\right) := G^F_n\left(y;F_n\left(y\right)\right)
 \end{equation}
+
+Here, the notation $G^F_n\left(y;F_n\left(y\right)\right)$ means $G^F_n(y)\left(F_n\left(y\right)\right)$ ($G^F_n(y)$ is a function from $\PMO$ to $\CO$ which we apply to $F_n\left(y\right)\in\PMO$). We will use the semicolon in a similar way in the rest of paper as well: to indicate applying a function which is the result of another function.
+
+The following is our analogue of \enquote{Theorem 1} from \cite{Vovk_2005}.
 
 \begin{corollary}
 \label{crl:dominate_one}
@@ -564,12 +636,16 @@ We will now introduce a way to transform a gambler in a way that enforces a \enq
 Here, $\BM_{:m}$ denotes the projection of $\BM \in \PMO^n$ to $\PMO^m$ that takes components $l < m$ and $\BM_m$ denotes the $m$-th component of $\BM$. Define the measurable functions $\SVM G_n, \SVX G_n: \Ob^{n-1} \times \PMO^n  \rightarrow \Reals$ by
 
 \begin{equation}
+\label{eqn:svm}
 \SVM G_n\left(y,\BM\right) := \min_{y\OO}{\SV G_n\left(y,\BM\right)}
 \end{equation}
 
 \begin{equation}
+\label{eqn:svx}
 \SVX G_n\left(y,\BM\right) := \max_{y\OO}{\SV G_n\left(y,\BM\right)}
 \end{equation}
+
+Equations~(\ref{eqn:svm},\ref{eqn:svx}) are completely analogical to equations~(\ref{eqn:svmf},\ref{eqn:svxf}) except that we define functions of forecast histories instead of considering a particular forecaster.
 
 Define the measurable sets
 
@@ -650,35 +726,30 @@ $$\SVM \Bd_b G_m\left(y_{:m-1},\BM_{:m}\right)=\SVM G_m\left(y_{:m-1},\BM_{:m}\r
 
 For ${m=m_0+1}$ and any $x \in y_{:m_0}\OO$, we have
 
-\begin{multline*}
-\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) = \SV \Bd_b G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) + \\ \left(\V \Bd_b G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
-\end{multline*}
+$$\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) = \SV \Bd_b G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) + \left(\V \Bd_b G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)$$
 
 The first term only involves ${\Bd_b G_l}$ for ${l < m_0}$, allowing us to apply Proposition~\ref{prp:b_no_effect}. The second term is in the second case of the definition of $\Bd_b$.
 
-\begin{multline*}
-\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) = \SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) +\\ \Nr_b G_{m_0}\left(y_{:m_0},\BM_{:m_0};\BM_{m_0}\right) \cdot \left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
-\end{multline*}
+\begin{align*}
+\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) = &\SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) +\\ &\Nr_b G_{m_0}\left(y_{:m_0},\BM_{:m_0};\BM_{m_0}\right) \cdot \left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
+\end{align*}
 
 If ${x}$ is s.t. ${\left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right) \geq 0}$, then
 
-\[\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq \SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right)\]
-\[\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq \SVM G_{m_0}\left(y_{:m_0-1},\BM_{:m_0}\right) > -b\]
+\[\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq \SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right)\geq \SVM G_{m_0}\left(y_{:m_0-1},\BM_{:m_0}\right) > -b\]
 
 If ${x}$ is s.t. ${\left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right) < 0}$, then, by the definition of $\Nr_b$
 
-\begin{multline*}
-\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq \SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right)+ \\
-\frac{\SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) + b}{-\left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)} \cdot \left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
-\end{multline*}
+\begin{align*}
+\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq &\SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right)+ \\
+&\frac{\SV G_{m_0}\left(y_{:m_0-1},\BM_{:m_0};x\right) + b}{-\left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)} \cdot \left(\V G_{m_0}\left(y_{:m_0},\BM_{:m_0}\right)\right)\left(\BM_{m_0},x\right)
+\end{align*}
 
 $$\SV \Bd_b G_{m_0+1}\left(y_{:m_0},\BM_{:m_0+1};x\right) \geq -b$$
 
 Finally, consider ${m > m_0 + 1}$.
 
-\begin{multline*}
-\SV \Bd_b G_{m}\left(y_{:m-1},\BM_{:m};x\right) = \SV \Bd_b G_{m-1}\left(y_{:m-2},\BM_{:m-1};x\right) + \\ \left(\V \Bd_b G_{m-1}\left(y_{:m-1},\BM_{:m-1}\right)\right)\left(\BM_{m-1},x\right)
-\end{multline*}
+$$\SV \Bd_b G_{m}\left(y_{:m-1},\BM_{:m};x\right) = \SV \Bd_b G_{m-1}\left(y_{:m-2},\BM_{:m-1};x\right) + \left(\V \Bd_b G_{m-1}\left(y_{:m-1},\BM_{:m-1}\right)\right)\left(\BM_{m-1},x\right)$$
 
 The second term is in the first case of the definition of $\Bd_b$ and therefore vanishes.
 
@@ -729,9 +800,7 @@ Consider $x \in \OO$ s.t. condition~\ref{eqn:def_dominance__loss} holds. Denote
 
 By Proposition~\ref{prp:b_no_effect}, for any $b > b_0$ we have $\Bd_b G^F = G^F$. We get
 
-\begin{multline*}
-\sup_{n \in \Nats} \max_{x' \in x_{:n-1}\OO} \left(\sum_{b \leq b_0} \zeta\left(b\right) {\SV \Bd_b G^F_{n}\left(x_{:n-1},x'\right)} + \right. \\ \left. \sum_{b > b_0} \zeta\left(b\right) \SV G^F_{n}\left(x_{:n-1},x'\right)\right) < +\infty
-\end{multline*}
+\[\sup_{n \in \Nats} \max_{x' \in x_{:n-1}\OO} \left(\sum_{b \leq b_0} \zeta\left(b\right) {\SV \Bd_b G^F_{n}\left(x_{:n-1},x'\right)} + \sum_{b > b_0} \zeta\left(b\right) \SV G^F_{n}\left(x_{:n-1},x'\right)\right) < +\infty\]
 
 Applying Proposition~\ref{prp:b_stays_in_budget} to the first term
 
@@ -772,10 +841,7 @@ Therefore we have
 
 \[\sup_{n \in \Nats} \SVX G^{\xi F}_{n}\left(x_{:n-1}\right) < +\infty\]
 
-%The following equation looks kind of ugly... the \vphantom is to make the height of the left bracket the same size as the right one across the line break. Perhaps try using \Bigg instead?
-\begin{multline*}
-\sup_{n \geq k} \max_{x' \in x_{:n-1}\OO} \left(\xi\left(k\right) \SV G^{k F}_{n}\left(x_{:n-1},x'\right) \vphantom{\sum_{\substack{j \ne k\\ j \leq n}}} \right. + \\ \left. \sum_{\substack{j \ne k\\ j \leq n}} \xi\left(j\right) \SV G^{j F}_{n}\left(x_{:n-1},x'\right)\right) < +\infty
-\end{multline*}
+\[\sup_{n \geq k} \max_{x' \in x_{:n-1}\OO} \left(\xi\left(k\right) \SV G^{k F}_{n}\left(x_{:n-1},x'\right) + \sum_{\substack{j \ne k\\ j \leq n}} \xi\left(j\right) \SV G^{j F}_{n}\left(x_{:n-1},x'\right)\right) < +\infty\]
 
 \[\sup_{n \geq k} \max_{x' \in x_{:n-1}\OO} \left(\xi\left(k\right) \SV G^{k F}_{n}\left(x_{:n-1},x'\right) - b_\xi\right) < +\infty\]
 
@@ -820,6 +886,10 @@ A \emph{gambling strategy} is a uniformly bounded family of measurable mappings
 
 \[\Sqn{S_n: \Ob^n \rightarrow \GMO}\]
 
+\end{definition}
+
+As opposed to a gambler, a gambling strategy doesn't depend on the forecast history.
+
 \begin{definition}
 \label{def:prudent}
 
@@ -831,9 +901,7 @@ Given a gambling strategy $S$ and $\mu^* \in \PMO$, $S$ is said to be \emph{$\mu
 
 \end{definition}
 
-\end{definition}
-
-The \enquote{correct} way for a gambler to use a prudent gambling strategy is not employing it all the time: in order to avoid running out of budget, a gambler shouldn't place too many bets simultaneously. To address this, we define a gambler that \enquote{plays} (employs the given strategy) only when all previous bets are close to being settled.
+The \enquote{correct} way for a gambler to use a prudent gambling strategy is not employing it all the time: in order to avoid running out of budget, a gambler shouldn’t place too many bets simultaneously. To address this, we define a gambler that \enquote{plays} (employs the given strategy) only when all previous bets are close to being settled.
 
 \begin{definition}
 
@@ -867,7 +935,7 @@ We start by showing, in a more abstract setting (not specific to forecasting), t
 \begin{lemma}
 \label{lmm:prudent}
 
-Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow \left[0,M\right]}$ stochastic processes adapted to $\F$ (i.e. $X_n$ and $Y_n$ are $\F_n$-measurable). Assume the following conditions\footnote{Equalities and inequalities between random variables are implicitly understood as holding almost surely.}:
+Consider $\Omega$ a probability space, $\Sqn{\F_n \subseteq 2^\Omega}$ a filtration of $\Omega$, $\alpha,M > 0$, $\Sqn{X_n: \Omega \rightarrow \Reals}$ and $\Sqn{Y_n: \Omega \rightarrow \left[0,M\right]}$ stochastic processes adapted to $\F$ (i.e. $X_n$ and $Y_n$ are $\F_n$-measurable). Assume the following conditions. Here and elsewhere, equalities and inequalities between random variables are implicitly understood as holding almost surely.
 
 \begin{enumerate}[i.]
 
@@ -970,8 +1038,7 @@ $$\A{X''_n - X_n} \leq \A{X''_n - X'_n} + \A{X'_n - X_n} \leq 2M$$
 
 $$\forall m \geq n: \A{X''_{m}-X''_n} \leq \A{X_{m}-X_n} + 4M \leq \sum_{l=n}^{n-1} Y_l + 4M$$
 
-\[\E\left[X''_{n+1}-X''_n \mid \F_n\right] = \E\left[\E\left[X_{n+1} \mid \F_{n+1}\right]-\E\left[X_n \mid \F_n\right] \mid \F_n\right]\]
-\[\E\left[X''_{n+1}-X''_n \mid \F_n\right] = \E\left[X_{n+1}-X_n \mid \F_n\right] \geq \alpha Y_n\]
+$$\E\left[X''_{n+1}-X''_n \mid \F_n\right] = \E\left[\E\left[X_{n+1} \mid \F_{n+1}\right]-\E\left[X_n \mid \F_n\right] \mid \F_n\right] = \E\left[X_{n+1}-X_n \mid \F_n\right] \geq \alpha Y_n$$
 
 Applying Lemma~\ref{lmm:prudent} to $X''$ and using ${\A{X''_n - X_n} \leq 2M}$, we get the desired result.
 \end{proof}
@@ -1005,13 +1072,11 @@ $$\SV \PG{S}_{n+1}\left(y,\BM\right)=\SV \PG{S}_n\left(y_{:n-1},\BM_{:n}\right)$
 
 $$\SVM \PG{S}_{n+1}\left(y,\BM\right) \geq \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right)$$
 
-\begin{multline*}\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq \\ \SV \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) - \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right)
-\end{multline*}
+$$\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq \SV \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) - \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) $$
 
 By the induction hypothesis, we get
 
-\[\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq  2 \max_{m < n} \sup_{y \in \Ob^m} \N{S_m\left(y\right)}  + 1\]
-\[\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq 2 \max_{m \leq n} \sup_{y \in \Ob^m} \N{S_m\left(y\right)}  + 1\]
+$$\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq  2 \max_{m < n} \sup_{y \in \Ob^m} \N{S_m\left(y\right)}  + 1 \leq \max_{m \leq n} \sup_{y \in \Ob^m} \N{S_m\left(y\right)}  + 1$$
 
 Now, assume that 
 
@@ -1023,11 +1088,9 @@ $$\SV \PG{S}_{n+1}\left(y,\BM\right)=\SV \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) 
 
 We get
 
-\begin{multline*}
-\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq\\ \SVX \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) - \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) + 2 \N{S_n\left(y\right)}
-\end{multline*}
+$$\SV \PG{S}_{n+1}\left(y,\BM\right) - \SVM \PG{S}_{n+1}\left(y,\BM\right) \leq \SVX \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) - \SVM \PG{S}_n\left(y_{:n-1},\BM_{:n}\right) + 2 \N{S_n\left(y\right)}$$
 
-By the assumption, the first two terms on the right hand side total to ${\leq 1}$, yielding the desired result.
+By the assumption, the first two terms total to ${\leq 1}$, yielding the desired result.
 \end{proof}
 
 As a final ingredient for the proof of Theorem~\ref{thm:prudent}, we will need another property of $\PG$, namely that when the total magnitude of all bets made is finite, the gambler eventually starts \enquote{playing} in every round.
@@ -1096,9 +1159,7 @@ $$\E\left[X_{n+1} - X_n \mid \F_n\right]\left(x\right) = \E_{x' \sim \mu^*}\left
 
 (As before, the notation on the right hand side signifies the use of a regular conditional probability)
 
-\begin{multline*}
-\E\left[X_{n+1} - X_n \mid \F_n\right]\left(x\right) = \\ \E_{x' \sim \mu^*}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right) \mid x' \in x_{:n}\OO\right] - \E_{x' \sim F_n\left(x_{:n}\right)}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right)\right]
-\end{multline*}
+$$\E\left[X_{n+1} - X_n \mid \F_n\right]\left(x\right) = \E_{x' \sim \mu^*}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right) \mid x' \in x_{:n}\OO\right] - \E_{x' \sim F_n\left(x_{:n}\right)}\left[\overline{\PG{S}}_{n}^F\left(x_{:n},x'\right)\right]$$
 
 Let $\alpha > 0$ be as in Definition~\ref{def:prudent}. By definition of $\PG{S}$, $\overline{\PG{S}}_{n}^F\left(x_{:n}\right)$ is equal to either $S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)$ or 0. In either case, we get that for $\mu^*$-almost any $x \in \OO$
 
@@ -1222,9 +1283,7 @@ Taking $\delta$ to 0 we get $\varphi\left(\nu\right) \geq \varphi\left(\mu_0\rig
 
 $$\N{f}_\rho \leq \frac{3}{4} \left(r - r_0\right) < r - r_0$$ 
 
-\[\E_\nu\left[f\right] \geq \varphi\left(\nu\right) - \frac{1}{16} r \left(r - r_0\right) \geq \varphi\left(\mu_0\right) + \frac{11}{16} r \left(r - r_0\right)\]
-\[\E_\nu\left[f\right] \geq \E_{\mu_0}\left[f\right] +  \frac{5}{8} r \left(r - r_0\right) >  \E_{\mu_0}\left[f\right] +  \frac{1}{2} r \left(r - r_0\right)\]
-
+$$\E_\nu\left[f\right] \geq \varphi\left(\nu\right) - \frac{1}{16} r \left(r - r_0\right) \geq \varphi\left(\mu_0\right) + \frac{11}{16} r \left(r - r_0\right) \geq \E_{\mu_0}\left[f\right] +  \frac{5}{8} r \left(r - r_0\right) > \E_{\mu_0}\left[f\right] +  \frac{1}{2} r \left(r - r_0\right)$$
 \end{proof}
 
 \begin{samepage}
@@ -1308,9 +1367,7 @@ $$Z_1:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \
 
 $$Z_2:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid \N{\beta\left(\mu\right)} \leq \left(\DKR\left(\mu,\xi\right) - \epsilon\right)_+\}$$
 
-\begin{multline*}
-Z_3:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid\\ \E_\nu\left[\beta\left(\mu\right)\right] - \E_\mu\left[\beta\left(\mu\right)\right] \geq \frac{1}{2}\left(\DKR\left(\mu,\zeta\right) - \epsilon\right)_+ \DKR\left(\mu,\zeta\right)\}
-\end{multline*}
+$$Z_3:=\{\left(y,\beta,\mu,\nu,\xi,\zeta\right) \in Y \times \Gm\left(X\right) \times \PM\left(X\right)^4 \mid \E_\nu\left[\beta\left(\mu\right)\right] - \E_\mu\left[\beta\left(\mu\right)\right] \geq \frac{1}{2}\left(\DKR\left(\mu,\zeta\right) - \epsilon\right)_+ \DKR\left(\mu,\zeta\right)\}$$
 
 Define $Z := Z_1 \cap Z_2 \cap Z_3$. It is easy to see that $Z_{1,2,3}$ are closed and therefore $Z$ also. Define $Z' \subseteq Y \times \Gm\left(X\right) \times \PM\left(X\right)^3$ by
 
@@ -1357,7 +1414,7 @@ Consider $M \subseteq \PMO$, $\Sqn{M_n: \Ob^n \rightarrow 2^{\PMO}}$ and $\epsil
 
 \begin{proof}
 
-\sloppy{Fix any $\mu^* \in M$. By Definition~\ref{def:update_incomplete}, for $\PO_{n*}\mu$-almost any $y\in\Ob^n$, ${\left(\mu^* \mid \PO_n\right)\left(y\right) \in M_n(y)}$. Since $S_n\left(y\right)$ is $\left(M_n(y),\epsilon\right)$-savvy, for any $\mu \in \PM\left(X\right)$, denoting $r_{\mu y}:=\DKR^n\left(\mu,\,M_n(y)\right)$:}
+Fix any $\mu^* \in M$. By Definition~\ref{def:update_incomplete}, for $\PO_{n*}\mu$-almost any $y\in\Ob^n$, ${\left(\mu^* \mid \PO_n\right)\left(y\right) \in M_n(y)}$. Since $S_n\left(y\right)$ is $\left(M_n(y),\epsilon\right)$-savvy, for any $\mu \in \PM\left(X\right)$, denoting $r_{\mu y}:=\DKR^n\left(\mu,\,M_n(y)\right)$:
 
 $$\E_{\mu^*}\left[S_n\left(y;\mu\right) \mid y\OO\right] - \E_{\mu}\left[S_n\left(y;\mu\right)\right] \geq \frac{1}{2} \left(r_{\mu y} - \epsilon\right)_+ r_{\mu y} \geq \frac{1}{2} \N{S_n\left(y;\mu\right)} r_{\mu y}$$
 
@@ -1400,7 +1457,7 @@ We are finally ready to complete the proof of the main theorem.
 
 \begin{proof}[Proof of Theorem~\ref{thm:main}]
 
-\sloppy{Consider any $M \in \MC$ and a positive integer $k$. By Lemma~\ref{lmm:savvy}, for any $n \in \Nats$, there exists ${S^{Mk}_{n}: \Ob^n \rightarrow \GMO}$ measurable s.t. for all $y \in \Ob^n$,} $S^{Mk}_{n}\left(y\right)$ is $\left(M_n(y),\frac{1}{k}\right)$-savvy. We fix such a $S^{Mk}_{n}$ for each $M$ and $k$. It is easy to see that the $\DKR^n$-diameter of $\PMO$ is at most 2, therefore $\N{S^{Mk}_{n}\left(y\right)} \leq 2$ and $\Sqn{S^{Mk}_{n}}$ is a gambling strategy. By Theorem~\ref{thm:exist_dominant}, there is a forecaster $F^\MC$ that dominates $\PG{S}^{Mk}$ for all $M$ and $k$. By Corollary~\ref{crl:vicinity_convergence}, for any $M \in \MC$, $\mu \in M$, positive integer $k$ and $\mu$-almost any $x \in X$
+Consider any $M \in \MC$ and a positive integer $k$. By Lemma~\ref{lmm:savvy}, for any $n \in \Nats$, there exists ${S^{Mk}_{n}: \Ob^n \rightarrow \GMO}$ measurable s.t. for all $y \in \Ob^n$, $S^{Mk}_{n}\left(y\right)$ is $\left(M_n(y),\frac{1}{k}\right)$-savvy. We fix such a $S^{Mk}_{n}$ for each $M$ and $k$. It is easy to see that the $\DKR^n$-diameter of $\PMO$ is at most 2, therefore $\N{S^{Mk}_{n}\left(y\right)} \leq 2$ and $\Sqn{S^{Mk}_{n}}$ is a gambling strategy. By Theorem~\ref{thm:exist_dominant}, there is a forecaster $F^\MC$ that dominates $\PG{S}^{Mk}$ for all $M$ and $k$. By Corollary~\ref{crl:vicinity_convergence}, for any $M \in \MC$, $\mu \in M$, positive integer $k$ and $\mu$-almost any $x \in X$
 
 $$\limsup_{n \rightarrow \infty} {\DKR^n\left(F^\MC_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right)} \leq \frac{1}{k}$$
 
@@ -1409,7 +1466,7 @@ It follows that
 $$\lim_{n \rightarrow \infty} {\DKR^n\left(F^\MC_n\left(x_{:n}\right),M_n\left(x_{:n}\right)\right)} = 0$$
 \end{proof}
 
-\section{Discussion}
+\Comment{\section{Discussion}
 
 We see several natural directions for extending this work.
 
@@ -1417,7 +1474,7 @@ Theorem~\ref{thm:main} is formulated using the Kantorovich-Rubinstein metric, bu
 
 The present work doesn't analyze any considerations of computational complexity or even computability. It would be very valuable, especially for practical applications, to understand the complexity of forecasters satisfying equation~\ref{eqn:thm_main} given various complexity-theoretic assumptions on $\MC$. In particular, that would entail designing concrete forecasting algorithms of this type, whereas the existence proof in the present work is non-constructive. Also, it would be valuable to analyze the speed of convergence in \ref{eqn:thm_main} and the possibly also the trade-offs between forecaster complexity and speed of convergence.
 
-Finally, we think that the current work may have some bearing on the so-called \enquote{grain of truth} problem (problem 5j in \cite{Hutter_2009}). The problem is, given a system of interacting rational agents, proving their convergence to some reasonable game-theoretic solution concept, e.g. a Nash equilibrium. For a pair of Bayesian agents, this normally requires each agent to lie in the model class $\MC$ of the other agent. However, this requirement is difficult to satisfy in settings that are fairly general, since usually the computational complexity of a Bayesian agent is higher than the complexities of all models in its prior. On the other hand, using our approach, each agent may learn incomplete models satisfied by the other agent that are computationally simpler than a full simulation. This might be sufficient to produce meaningful game-theoretic guarantees.
+Finally, we think that the current work may have some bearing on the so-called \enquote{grain of truth} problem (problem 5j in \cite{Hutter_2009}). The problem is, given a system of interacting rational agents, proving their convergence to some reasonable game-theoretic solution concept, e.g. a Nash equilibrium. For a pair of Bayesian agents, this normally requires each agent to lie in the model class $\MC$ of the other agent. However, this requirement is difficult to satisfy in settings that are fairly general, since usually the computational complexity of a Bayesian agent is higher than the complexities of all models in its prior. On the other hand, using our approach, each agent may learn incomplete models satisfied by the other agent that are computationally simpler than a full simulation. This might be sufficient to produce meaningful game-theoretic guarantees.}
 
 \appendix
 
@@ -1430,14 +1487,16 @@ The following variant of the Optional Stopping Theorem appears in \cite{Durrett_
 \begin{theorem}
 \label{thm:optional_stopping}
 
-Let ${\Omega}$ be a probability space, ${\Sqn{\F_n \subseteq 2^\Omega}}$ a filtration of ${\Omega}$, ${\Sqn{X_n: \Omega \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and ${M,N: \Omega \rightarrow \Nats \sqcup \{\infty\}}$ stopping times (w.r.t. ${\F}$) s.t. ${M \leq N}$. Assume that ${\Sqn{X_{\min\left(n,N\right)}}}$ is a uniformly integrable submartingale. Using Doob's martingale convergence theorem, we can define ${X_N : \Omega \rightarrow \Reals}$ by\footnote{The limit in equation~\ref{eqn:thm_optional_stopping__xn} is converges \emph{almost} surely, which is sufficient for our purpose.}
+Let ${\Omega}$ be a probability space, ${\Sqn{\F_n \subseteq 2^\Omega}}$ a filtration of ${\Omega}$, ${\Sqn{X_n: \Omega \rightarrow \Reals}}$ a stochastic process adapted to ${\F}$ and ${M,N: \Omega \rightarrow \Nats \sqcup \{\infty\}}$ stopping times (w.r.t. ${\F}$) s.t. ${M \leq N}$. Assume that ${\Sqn{X_{\min\left(n,N\right)}}}$ is a uniformly integrable submartingale. Using Doob's martingale convergence theorem, we can define ${X_N : \Omega \rightarrow \Reals}$ by
 
 \begin{equation}
 \label{eqn:thm_optional_stopping__xn}
 X_N\left(x\right):=\lim_{n \rightarrow \infty} X_{\min\left(n,N\right)}\left(x\right)=\begin{cases}X_{N\left(x\right)}\left(x\right) \text{ if } N\left(x\right) < \infty\\\lim_{n \rightarrow \infty} X_n\left(x\right) \text{ if } N\left(x\right) = \infty\end{cases}
 \end{equation}
 
-We define ${X_M: \Omega \rightarrow \Reals}$ is an analogous way\footnote{This time we can't use Doob's martingale convergence theorem, but whenever ${M\left(x\right) = \infty}$ we also have ${N\left(x\right) = \infty}$, therefore the limit still almost surely converges.}. We also define the $\sigma$-algebra ${\F_M \subseteq 2^\Omega}$ by
+The limit in equation~(\ref{eqn:thm_optional_stopping__xn}) converges \emph{almost} surely, which is sufficient for our purpose.
+
+We define ${X_M: \Omega \rightarrow \Reals}$ is an analogous way (this time we can't use Doob's martingale convergence theorem, but whenever ${M\left(x\right) = \infty}$ we also have ${N\left(x\right) = \infty}$, therefore the limit still almost surely converges). We also define the $\sigma$-algebra ${\F_M \subseteq 2^\Omega}$ by
 
 \begin{equation}
 \F_M:=\{A \subseteq X \text{ measurable} \mid \forall n \in \Nats: A \cap M^{-1}\left(n\right) \in \F_n\}
@@ -1501,7 +1560,7 @@ We got that $A$ is convex and therefore $N(y)=\overline{A}$ is also convex.
 \begin{proposition}
 \label{prp:four_factors}
 
-\sloppy{Consider $W_{1,2,3,4}$ Polish spaces, $X:=\prod_{i=1}^4 W_i$, $Y:=\prod_{i=1}^3 W_i$ and $Z = W_1 \times W_2$. Let $\pi^Y: X \rightarrow Y$, $\pi^Z: X \rightarrow Z$ and $\pi^W: X \rightarrow W_1$ be the projection mappings, $\mu \in \PM(X)$ and $K: Z \M W_3$. Assume that $\pi^Y_* \mu = \pi^Z_*\mu \ltimes K$. Then, for $\pi^W_* \mu$-almost any $w \in W_1$}
+Consider $W_{1,2,3,4}$ Polish spaces, $X:=\prod_{i=1}^4 W_i$, $Y:=\prod_{i=1}^3 W_i$ and $Z = W_1 \times W_2$. Let $\pi^Y: X \rightarrow Y$, $\pi^Z: X \rightarrow Z$ and $\pi^W: X \rightarrow W_1$ be the projection mappings, $\mu \in \PM(X)$ and $K: Z \M W_3$. Assume that $\pi^Y_* \mu = \pi^Z_*\mu \ltimes K$. Then, for $\pi^W_* \mu$-almost any $w \in W_1$
 
 \begin{equation}
 \pi^Y_* \left(\mu \mid \pi^W\right)(w) = \pi^Z_* \left(\mu \mid \pi^W\right)(w) \ltimes K
@@ -1578,8 +1637,8 @@ $$\forall k \in \Nats: \lim_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\le
 
 Now consider any $f \in C\left(X\right)$. For any $\epsilon > 0$, there is $k \in \Nats$ s.t. $\N{f-f_k} < \epsilon$ and therefore, for any $y \in A$
 
-$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \limsup_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] + \epsilon$$
-$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right] + \epsilon$$
+$$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \limsup_{r \rightarrow 0} \E_{\mu}\left[f_k \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] + \epsilon = \E_{\mu}\left[f_k \mid \pi^{-1}\left(y\right)\right] + \epsilon  $$
+
 $$\limsup_{r \rightarrow 0} \E_{\mu}\left[f \mid \pi^{-1}\left(\B_r\left(y\right)\right)\right] \leq \E_{\mu}\left[f \mid \pi^{-1}\left(y\right)\right] + 2\epsilon$$
 
 Similarly
@@ -1599,9 +1658,7 @@ There is a unique minimum since all three defining properties of $N$ are closed 
 
 \section*{Acknowledgments}
 
-This work was supported by the Machine Intelligence Research Institute in Berkeley, California.
-
-We wish to thank Michael Greinecker for pointing out Theorem~\ref{thm:selection} to us.
+We wish to thank Michael Greinecker for pointing out Theorem~\ref{thm:selection} to us. We also thank Rob Bensinger for correcting some grammatical errors in the text and Jimmy Rintjema for help with formatting.
 
 \bibliographystyle{imsart-number}
 %%%if you want author-year style instead%%%
