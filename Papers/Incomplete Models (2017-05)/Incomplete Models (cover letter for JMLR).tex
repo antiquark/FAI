@@ -1,0 +1,56 @@
+%&latex
+\documentclass{letter}
+
+%+Make Labels
+\makelabels
+%-Make Labels
+
+\begin{document}
+
+% 04/10/03 name and address are moved out from preamble to enjoy TeXWord ...
+
+%+Your Name
+\name{Vadim Kosoy} % Your name, used for printing on the envelope together with the return address
+%-Your Name
+
+%+Return Address
+\address{Email: vadim.kosoy@intelligence.org\\Post: Shraga Rafaeli 3/15\\
+Petah Tikva\\
+Israel}
+%-Return Address
+
+\begin{letter}{Journal of Machine Learning Research} % Receiver Address
+
+\opening{Dear Editors,}
+
+This is a cover letter for my submission "Forecasting using incomplete models". I wish to inform you, that:
+
+\begin{itemize}
+\item No previous publications overlap with this submission.
+\item I am the sole author of this submission and I consent to its review by JMLR.
+\item To the best of my knowledge, there are no possible conflicts of interest.
+\item The action editors that, in my humble opinion, seem to be best suited to handle the submission are: Gabor Lugosi, Peter Auer, Alexander Rakhlin and Csaba Szepesvari.
+\end{itemize}
+
+Thank you for considering my submission!
+
+\signature{Vadim Kosoy}
+\closing{Sincerely,}
+
+%+CC
+%\cc{Kate Schechter\\Rob McKenna}
+%-CC
+
+%+Encl
+\encl{Incomplete Models.tex} % Generate a list of enclosed material
+%-Encl
+
+%+PS
+%\ps{Please replay me in any case.}
+%-PS
+
+\end{letter}
+
+\end{document}
+
+
