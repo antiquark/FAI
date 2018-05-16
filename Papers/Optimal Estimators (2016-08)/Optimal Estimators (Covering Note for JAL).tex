@@ -1,0 +1,65 @@
+%&latex
+\documentclass{letter}
+
+\usepackage{csquotes}
+
+%+Make Labels
+\makelabels
+%-Make Labels
+
+\begin{document}
+
+% 04/10/03 name and address are moved out from preamble to enjoy TeXWord ...
+
+%+Your Name
+\name{Vadim Kosoy} % Your name, used for printing on the envelope together with the return address
+%-Your Name
+
+%+Return Address
+\address{}
+%-Return Address
+
+\begin{letter}{To the Journal of Applied Logic} % Receiver Address
+
+\opening{Dear editors and/or referees,}
+
+Thank you for reviewing my paper and accepting it (subject to revision)!
+
+I have addressed the comments of the referees. Specifically:
+
+\begin{itemize}
+\item 
+Referee 1 wrote: \enquote{The paper says "we avoid choosing a specific category of mathematical 
+questions", but then chooses questions that are concrete in the sense of 
+being about (computable) valuations on the space of bitstrings, as 
+opposed to e.g. statements about infinite objects; it might be good to 
+clarify this restriction.} This is somewhat inaccurate, since the formalism is applicable to uncomputable valuations as well (e.g. we could consider the decision problem of true sentences in ZFC with some family of distributions on sentences). Many or most of the interesting examples are indeed computable, but e.g. Theorem 5.1 doesn't assume computability. To address the comment, I added footnote 2 which reads \enquote{We do require that these questions can be represented as finite strings of bits.}
+\item I fixed all the other errata provided by referee 1.
+\item Referee 2 wrote: \enquote{Also the introduction brings up notation that is 
+undefined, in the context of defining certain notions: if the goal is to 
+just give the spirit of definitions that will be formalized later, then 
+at least give forward reference to where the undefined notation will be 
+defined.} Indeed, the goal is to just give the spirit of the definition. To address this comment, I added forward references to the relevant definitions.
+\item I fixed the typos and misspellings pointed out by referee 2.
+\end{itemize}
+
+\signature{Vadim Kosoy}
+\closing{Sincerely,}
+
+%+CC
+%\cc{Kate Schechter\\Rob McKenna}
+%-CC
+
+%+Encl
+\encl{Optimal Estimators.pdf} % Generate a list of enclosed material
+%-Encl
+
+%+PS
+%\ps{Please replay me in any case.}
+%-PS
+
+\end{letter}
+
+\end{document}
+
+
