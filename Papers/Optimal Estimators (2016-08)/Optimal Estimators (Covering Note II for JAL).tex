@@ -1,0 +1,193 @@
+%&latex
+\documentclass{letter}
+
+\usepackage{csquotes}
+
+%+Make Labels
+\makelabels
+%-Make Labels
+\usepackage[normalem]{ulem}
+\usepackage{color}
+
+\begin{document}
+
+% 04/10/03 name and address are moved out from preamble to enjoy TeXWord ...
+
+%+Your Name
+\name{Vadim Kosoy} % Your name, used for printing on the envelope together with the return address
+%-Your Name
+
+%+Return Address
+\address{}
+%-Return Address
+
+\begin{letter}{To the Journal of Applied Logic} % Receiver Address
+
+\opening{Dear editors and/or referees,}
+
+Per your request, this is annotated version of the referee reports, explaining how I addressed each point. The relevant paragraphs in the reports are in red, my comments are in green.
+
+\uline{\textbf{Report 1}}
+\begin{verbatim}
+
+EVALUATION
+
+The paper gives complexity-theoretic definitions of optimal prediction 
+and estimation, with the goal of recovering something resembling a 
+theory of probabilistic belief under uncertainty, where the uncertainty 
+is due to computational limitations as opposed to information-theoretic 
+limitations. That is, there is an intuition that good reasoning under 
+uncertainty due to insufficient information may share some structure 
+with good reasoning under uncertainty due to insufficient computational 
+resources; and this intuition is explored by studying the values 
+assigned by optimal computationally bounded algorithms for estimating 
+hard-to-compute functions, as though they were probabilities (or 
+estimates of random variables).
+
+I regard the main novelties of the paper to be the definition of optimal 
+estimators and the non-triviality of the definition (existence); the 
+observation that they satisfy basic properties of probability theory 
+(Section 3); and the theorems of uniqueness and uniqueness of 
+conditionals, which support the view that there are objectively correct 
+probabilities to assign to the outcomes of some computations. These seem 
+like technically non-trivial and philosophically interesting results, 
+with room for significant further work. They also seem potentially 
+useful for abstractly modeling intelligent systems; for example, if a 
+problem class faced by some intelligent systems admits an optimal 
+estimator, then uniqueness potentially gives ways to compare reasoning 
+across those systems (because there is one true best set of beliefs to 
+hold about that problem class).
+
+\end{verbatim}
+\color{red}
+\begin{verbatim}
+
+Some of the theorems are hard to parse; it may be helpful to add brief 
+English translations of the theorem statements, even if they gloss over 
+important details.
+
+\end{verbatim}
+\color[rgb]{0,0.501961,0}
+\begin{verbatim}
+
+I'm not sure how to fix this, also not sure which theorems are the difficult ones.
+
+\end{verbatim}
+\color{red}
+\begin{verbatim}
+
+The relevant work section is good, but might be
+improved by a bit more comparison with average-case complexity.
+
+\end{verbatim}
+\color[rgb]{0,0.501961,0}
+\begin{verbatim}
+
+I'm not sure what specifically should be added.
+
+\end{verbatim}
+\color{black}
+\begin{verbatim}
+
+ERRATA
+
+\end{verbatim}
+\color{red}
+\begin{verbatim}
+
+p3-4:
+The paper says "we avoid choosing a specific category of mathematical 
+questions", but then chooses questions that are concrete in the sense of 
+being about (computable) valuations on the space of bitstrings, as 
+opposed to e.g. statements about infinite objects; it might be good to 
+clarify this restriction.
+
+\end{verbatim}
+\color[rgb]{0,0.501961,0}
+\begin{verbatim}
+
+This is somewhat inaccurate, since the formalism is applicable to
+uncomputable valuations as well (e.g. we could consider the decision
+problem of true sentences in ZFC with some family of distributions on
+sentences). Many or most of the interesting examples are indeed
+computable, but e.g. Theorem 5.1 doesn't assume computability. To
+address the comment, I added footnote 2 which reads "We do require
+that these questions can be represented as finite strings of bits."
+
+\end{verbatim}
+\color{red}
+\begin{verbatim}
+
+p4:
+(Specifically, we will consider the resources of time, random and 
+advice.)
+(Specifically, we will consider the resources of time, randomness
+and advice.)
+
+\end{verbatim}
+\color[rgb]{0,0.501961,0}
+\begin{verbatim}
+
+Fixed as requested.
+
+\end{verbatim}
+\color{red}
+\begin{verbatim}
+
+p5:
+Again we can consider the corresponding weaker condition
+Again we can consider the corresponding weaker condition that for all Q
+
+\end{verbatim}
+\color[rgb]{0,0.501961,0}
+\begin{verbatim}
+
+Fixed as requested.
+
+\end{verbatim}
+\color{red}
+\begin{verbatim}
+
+p5, above the last displayed eq'n:
+<< S : N^n × {0, 1}*}...
+S : N2 × {0, 1}*...
+p7, last paragraph:
+<< the a instance
+an instance
+p8:
+<< determined but the space of functions
+determined by the space of functions
+<< an F1/2#(?)-optima polynomial-time
+an F1/2#(?)-optimal polynomial-time
+p9:
+<< Unique Games Conjugate
+Unique Games Conjecture
+p10, end of 1.1:
+<< sgn : R ? {0, 1}
+sgn : R ? {-1, 1}
+p18:
+<< 2.2.1 Optimality Relatively to Uniform Families
+2.2.1 Optimality Relative to Uniform Families
+p19, proof of 2.10:
+<< As easy to see
+As is easy to see
+p20, after 2.12:
+<< To relationship to the role
+The relationship to the role
+p55, bottom:
+<< is a fall space
+is a fall space.
+
+\end{verbatim}
+\uline{\textbf{Report 2}}
+
+TBD
+
+\signature{Vadim Kosoy}
+\closing{Sincerely,}
+
+\end{letter}
+
+\end{document}
+
+
