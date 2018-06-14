@@ -29,7 +29,6 @@ Per your request, this is annotated version of the referee reports, explaining h
 
 \uline{\textbf{Report 1}}
 \begin{verbatim}
-
 EVALUATION
 
 The paper gives complexity-theoretic definitions of optimal prediction 
@@ -57,55 +56,42 @@ problem class faced by some intelligent systems admits an optimal
 estimator, then uniqueness potentially gives ways to compare reasoning 
 across those systems (because there is one true best set of beliefs to 
 hold about that problem class).
-
 \end{verbatim}
 \color{red}
 \begin{verbatim}
-
 Some of the theorems are hard to parse; it may be helpful to add brief 
 English translations of the theorem statements, even if they gloss over 
 important details.
-
 \end{verbatim}
 \color[rgb]{0,0.501961,0}
 \begin{verbatim}
-
-I'm not sure how to fix this, also not sure which theorems are the difficult ones.
-
+I'm not sure how to fix this, also not sure which theorems are the
+difficult ones.
 \end{verbatim}
 \color{red}
 \begin{verbatim}
-
 The relevant work section is good, but might be
 improved by a bit more comparison with average-case complexity.
-
 \end{verbatim}
 \color[rgb]{0,0.501961,0}
 \begin{verbatim}
-
 I'm not sure what specifically should be added.
-
 \end{verbatim}
 \color{black}
 \begin{verbatim}
-
 ERRATA
-
 \end{verbatim}
 \color{red}
 \begin{verbatim}
-
 p3-4:
 The paper says "we avoid choosing a specific category of mathematical 
 questions", but then chooses questions that are concrete in the sense of 
 being about (computable) valuations on the space of bitstrings, as 
 opposed to e.g. statements about infinite objects; it might be good to 
 clarify this restriction.
-
 \end{verbatim}
 \color[rgb]{0,0.501961,0}
 \begin{verbatim}
-
 This is somewhat inaccurate, since the formalism is applicable to
 uncomputable valuations as well (e.g. we could consider the decision
 problem of true sentences in ZFC with some family of distributions on
@@ -113,41 +99,17 @@ sentences). Many or most of the interesting examples are indeed
 computable, but e.g. Theorem 5.1 doesn't assume computability. To
 address the comment, I added footnote 2 which reads "We do require
 that these questions can be represented as finite strings of bits."
-
 \end{verbatim}
 \color{red}
 \begin{verbatim}
-
 p4:
 (Specifically, we will consider the resources of time, random and 
 advice.)
 (Specifically, we will consider the resources of time, randomness
 and advice.)
-
-\end{verbatim}
-\color[rgb]{0,0.501961,0}
-\begin{verbatim}
-
-Fixed as requested.
-
-\end{verbatim}
-\color{red}
-\begin{verbatim}
-
 p5:
 Again we can consider the corresponding weaker condition
 Again we can consider the corresponding weaker condition that for all Q
-
-\end{verbatim}
-\color[rgb]{0,0.501961,0}
-\begin{verbatim}
-
-Fixed as requested.
-
-\end{verbatim}
-\color{red}
-\begin{verbatim}
-
 p5, above the last displayed eq'n:
 << S : N^n × {0, 1}*}...
 S : N2 × {0, 1}*...
@@ -177,11 +139,161 @@ The relationship to the role
 p55, bottom:
 << is a fall space
 is a fall space.
-
 \end{verbatim}
+\color[rgb]{0,0.501961,0}
+\begin{verbatim}
+All of the above were fixed as requested.
+\end{verbatim}
+\color{black}
 \uline{\textbf{Report 2}}
+\begin{verbatim}
+The paper under review addresses the following question. Suppose that I 
+have a hard-to-compute decision problem L, or, more generally, a 
+hard-to-compute function f(.). Given x, the statement "x in L" is 
+definitely either true or false, and, similarly, the value f(x) is a 
+fixed value. A computationally bounded party, however, might be unable 
+to decide whether x is in L, or what is the value f(x), and would thus 
+have a certain amount of "uncertainty" about whether x is in L and about 
+the value f(x). Is there a notion of "computationally-bounded Bayesian 
+reasoning" that can be used to talk about the "probability"
 
-TBD
+ Pr [ x in L ]
+
+ or the "expectation"
+
+  E [ f(x) ]
+
+ from the point of such a computationally bounded entity?
+
+The author casts this problem in the framework of average-case 
+complexity, which appears to be the right framing of the question. Given 
+a function f and a distribution D of inputs, the author calls an 
+algorithm A an optimal estimator for a certain complexity bound if A 
+runs within such a bound and the error
+
+(1)  E_{x ~ D} [  (A(x) - f(x) )2 ]
+
+of A in computing f is approximately minimized among all algorithms A' 
+of similar running time.
+
+One has to work a bit to make sure that the above definition make sense.
+
+As usual in average-case complexity, one computes (1) conditioned on x 
+having length n, and  one ignores additive terms that go to zero 
+sufficiently fast as n grows. Alternatively, one thinks of D as an 
+ensemble of distributions D1,D2,...,Dn,... where Dn is a distribution 
+over instances of "size" n (but not necessarily of bit-length n).
+
+Then one has to decide what kind of additive terms going to zero in n 
+can be ignored when we say that (1) is *approximately* minimized by A. A 
+couple of reasonable options is to ignore *negligible* terms, where a 
+function is negligible if it goes to zero faster than any 
+inverse-polynomial functions, or to ignore terms smaller than epsilon, 
+where epsilon is known to A, and A is allowed to run in time polynomial 
+in 1/epsilon.
+
+We will return to these issues in a moment.
+
+Having given the definition of an optimal estimator for a certain 
+complexity bound, if A is an optimal estimator for a function f under 
+distribution D, the idea is that, given an x sampled from D, we will 
+take A(x) to be the "expectation of the value f(x)." Decision problems 
+are a special case, in which f(.) is a boolean function, the indicator 
+function of membership in the language. Thus, if A is an optimal 
+estimator for f, and f is the indicator function of a language L, we 
+will take A(x) to be the "probability that x is in L".
+
+The paper shows various ways in which this definition makes sense. If 
+f(.) is computable within the complexity bound, then the optimal 
+estimator is just an algorithm that computes the function, so there is 
+no "uncertainty" and the expectation of f(x) is just the value of f(x) 
+and the probability that x is in L is just 0 or 1 depending on whether 
+the statement is false or true. At the other extreme, if f(.) is the 
+indicator function of a decision problem that is very hard on average 
+(meaning that no algorithm with the required running time is able to 
+decide the problem with a noticeable advantage over a random guess), 
+then an optimal estimator is to output 1/2 on all inputs, capturing the 
+intuition that a computationally bounded party has "no information" 
+whether a given x is in the language or not.
+
+It's important to note that the second example above would not hold if 
+the error was measured as
+ E_{x ~ D} [   | A(x) - f(x) |  ]
+because in such a case *every* algorithm would be an optimal estimator.
+
+ The author proceeds to show that the definition satisfies several 
+desirable properties: in many cases optimal estimators exist, and when 
+they exist they have reasonable properties such as "linearity of 
+expectation," a "union bound" and additivity for probabilities of 
+disjoint events, it is possible to define "conditional probabilities" 
+and, most importantly, any two optimal estimators must approximately 
+agree, so that the definition is indeed sound.
+
+ Although it does not have any immediate application, the definition 
+introduced in this paper is appealing and well motivated, and it is 
+likely that it will inspire further work and that applications may come 
+later.
+
+ Let me now return to the definitional issues. As mentioned above, to 
+instantiate the general idea one has to specify which complexity 
+resources are allowed for the algorithms among which we will optimize, 
+and one has to define what approximation error is allowed between the 
+optimal estimator and all other algorithms; furthermore one may want to 
+think of the distribution of inputs as a collection of distributions, 
+indexed by a "length" parameter, and one may also want to think of the 
+approximation error as an additional parameter.
+
+ This is an annoyance that is common to all work on average-case 
+complexity, but the author doubles down with a bizarrely overwrought 
+definitional edifice that obscures the elegance of the ideas in the 
+paper in order to gain a generality that has no visible advantage in the 
+paper. A sign that something has gone astray is that one can see a few 
+long proofs in the paper in which only two or three steps in the middle 
+are doing the actual work, and all the rest of the proof is boilerplate 
+to unfold the definitions used in the assumptions and then fold back the 
+result in the form of the definitions used in the conclusions.
+\end{verbatim}
+\color{red}
+\begin{verbatim}
+ My advice for the author would be to rewrite this work in the simplest 
+setting (corresponding to "heuristic algorithms") without any new 
+notation, and give the proofs of the main result just in this setting, 
+which can probably be done in 10-15 pages.
+
+ If this is not something that the author is interested in doing, I 
+think that the submission is publishable in the current form. 
+\end{verbatim}
+\color[rgb]{0,0.501961,0}
+\begin{verbatim}
+I am currently not interested in this simplification.
+\end{verbatim}
+\color{red}
+\begin{verbatim}
+In the 
+attached file I note some typo and misspelling. In particular note that 
+"random" and "pseudorandom" are (in the context in which they are used) 
+adjectives and the corresponding nouns are "randomness" and 
+"pseudorandomness." 
+\end{verbatim}
+\color[rgb]{0,0.501961,0}
+\begin{verbatim}
+All typos were fixed.
+\end{verbatim}
+\color{red}
+\begin{verbatim}
+Also the introduction brings up notation that is 
+undefined, in the context of defining certain notions: if the goal is to 
+just give the spirit of definitions that will be formalized later, then 
+at least give forward reference to where the undefined notation will be 
+defined.
+\end{verbatim}
+\color[rgb]{0,0.501961,0}
+\begin{verbatim}
+Indeed, the goal is to just give the spirit of the definition. To
+address this comment, I added forward references to the relevant
+definitions.
+\end{verbatim}
+\color{black}
 
 \signature{Vadim Kosoy}
 \closing{Sincerely,}
