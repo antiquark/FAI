@@ -188,21 +188,31 @@ However, Solomonoff induction is incomputable, so a realistic agent would have t
 
 * It satisfies some universality properties analogous to the Solomonoff measure (but appropriately weaker).
 
-\#Optimality conditions
+\#Towards a rigorous definition of intelligence
 
 The combination of perfect Bayesian reinforcement learning and the Solomonoff prior is known as AIXI. AIXI may be regarded as a model ideal intelligence, but there are several issues that were argued to be flaws in this concept:
 
-* Cartesian duality: AIXI's "reasoning" (and RL in general) seems to assume the environment cannot influence the algorithm executed by the agent. This is unrealistic. For example if our agent is a robot, then it's perfectly possible to imagine some external force breaking into its computer and modifying its software.
-
-* Decision-theoretic paradoxes: ??? 
-
-* Irreflexivity: The Solomonoff measure contains only computable hypotheses but the agent itself is uncomputable. In particular, AIXI satisfies no guarantees pertaining to environments that e.g. contain other AIXIs. An analogous problem persists with any simple attempt to modify the prior: the prior can only contain hypotheses simpler than the agent.
-
 * Traps: AIXI doesn't satisfy any interesting regret bounds, because the environment might contain traps. In fact, the set of all computable environments is an *unlearnable* class of hypotheses: no agent has a sublinear regret bound w.r.t. this class.
 
-The Cartesian duality problem and the traps problem are actually strongly related. Indeed, one can model any event that destroys the agent (including modifying its source code) as the transition of the environment into some inescapable state. Such a state should be assigned a reward that corresponds to the expected utility of the universe going on without the agent. However, it's not obvious how the agent can learn to anticipate such states since observing it once eliminates any chance of using this knowledge later.
+* Cartesian duality: AIXI's "reasoning" (and RL in general) seems to assume the environment cannot influence the algorithm executed by the agent. This is unrealistic. For example if our agent is a robot, then it's perfectly possible to imagine some external force breaking into its computer and modifying its software.
 
-TBD
+* Irreflexivity: The Solomonoff measure contains only computable hypotheses but the agent itself is uncomputable. In particular, AIXI can satisfy no guarantees pertaining to environments that e.g. contain other AIXIs. An analogous problem persists with any simple attempt to modify the prior: the prior can only contain hypotheses simpler than the agent.
+
+* Decision-theoretic paradoxes: AIXI seems to be similar to a Causal Decision\ Theorist so apparently it will fail on Newcomb-like problems.
+
+The Cartesian duality problem and the traps problem are actually strongly related. Indeed, one can model any event that destroys the agent (including modifying its source code) as the transition of the environment into some inescapable state. Such a state should be assigned a reward that corresponds to the expected utility of the universe going on without the agent. However, it's not obvious how the agent can learn to anticipate such states, since observing it once eliminates any chance of using this knowledge later. DRL already partially addresses this problem: more discussion in the next section.
+
+Solving Irreflexivity requires going beyond the Bayesian paradigm by including models that don't fully specify the environment. More details in the next section.
+
+Finally, the decision-theoretic paradoxes are a more equivocal issue than it seems, because the usual philosophical way of thinking about decision theory assumes that the model of the environment is *given*, whereas in our way of thinking, the model is *learned*. This is important: for example, if AIXI is placed in a repeated Newcomb's problem, it will learn to one-box, since its model will predict that one-boxing *causes* the money to appear inside the box. In other words, AIXI might be regarded as a CDT, but the learned "causal" relationships are not the same as physical causality. Formalizing other Newcomb-like problems require solving Irreflexivity first, because the environment contains Omega which cannot be simulated by the agent. Therefore, my current working hypothesis is that decision theory will be mostly solved (or dissolved) by
+
+* Solving Irreflexivity
+
+* Value learning will automatically learn some aspects of the decision theory too.
+
+* Allowing for self-modification, which should be possible after solving Irreflexivity + Cartesian duality (self-modification may be again be regarded as a terminal state)
+
+To sum up, clarifying all of these issues should result in formulating a certain optimality condition (regret bound) which may be regarded as a rigorous definition of intelligence. This would also constitute progress towards defining "values" (having certain values means being intelligent w.r.t. these values), but the latter might require making the definition even more lax. More on that later.
 
 \section{Research Programme Outline}
 
