@@ -190,7 +190,17 @@ However, Solomonoff induction is incomputable, so a realistic agent would have t
 
 \#Optimality conditions
 
-The combination of perfect Bayesian reinforcement learning and the Solomonoff prior...
+The combination of perfect Bayesian reinforcement learning and the Solomonoff prior is known as AIXI. AIXI may be regarded as a model ideal intelligence, but there are several issues that were argued to be flaws in this concept:
+
+* Cartesian duality: AIXI's "reasoning" (and RL in general) seems to assume the environment cannot influence the algorithm executed by the agent. This is unrealistic. For example if our agent is a robot, then it's perfectly possible to imagine some external force breaking into its computer and modifying its software.
+
+* Decision-theoretic paradoxes: ??? 
+
+* Irreflexivity: The Solomonoff measure contains only computable hypotheses but the agent itself is uncomputable. In particular, AIXI satisfies no guarantees pertaining to environments that e.g. contain other AIXIs. An analogous problem persists with any simple attempt to modify the prior: the prior can only contain hypotheses simpler than the agent.
+
+* Traps: AIXI doesn't satisfy any interesting regret bounds, because the environment might contain traps. In fact, the set of all computable environments is an *unlearnable* class of hypotheses: no agent has a sublinear regret bound w.r.t. this class.
+
+The Cartesian duality problem and the traps problem are actually strongly related. Indeed, one can model any event that destroys the agent (including modifying its source code) as the transition of the environment into some inescapable state. Such a state should be assigned a reward that corresponds to the expected utility of the universe going on without the agent. However, it's not obvious how the agent can learn to anticipate such states since observing it once eliminates any chance of using this knowledge later.
 
 TBD
 
