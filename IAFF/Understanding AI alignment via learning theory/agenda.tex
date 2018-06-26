@@ -178,9 +178,19 @@ I believe that the development of AI alignment theory should start focusing on t
 
 \#Algorithmic Information Theory
 
-TBD
+The choice of hypothesis space plays a crucial role in any learning task, and the choice of prior plays a crucial role in Bayesian reinforcement learning. In *narrow* AI this choice is based entirely on the prior knowledge of the AI designers about the problem. On the other hand, *general* AI should be able to learn its environment with little prior knowledge, by noticing patterns and using Occam's razor. Indeed, the latter the basis of epistemic rationality to the best of understanding. The Solomonoff measure is an elegant formalization of this idea.
+
+However, Solomonoff induction is incomputable, so a realistic agent would have to use some truncated form of it, for example by bounding the computational resources made available to the universal Turing machine. It thus becomes an important problem to find a natural prior such that:
+
+* It allows for a (sufficiently good) sublinear regret bound with a computationally feasible algorithm.
+
+* It ranks hypotheses by description complexity in some appropriate sense.
+
+* It satisfies some universality properties analogous to the Solomonoff measure (but appropriately weaker).
 
 \#Optimality conditions
+
+The combination of perfect Bayesian reinforcement learning and the Solomonoff prior...
 
 TBD
 
