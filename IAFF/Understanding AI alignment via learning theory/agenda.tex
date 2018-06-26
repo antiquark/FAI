@@ -156,11 +156,21 @@ In this section I briefly explain the mathematical tools with which I set out to
 
 \#Statistical Learning Theory
 
-Statistical learning theory studies the information-theoretic constraints on various types of learning tasks, answering questions such as, when is a learning task solvable at all, and how much data is required to solve the learning task within given accuracy (sample complexity).
+Statistical learning theory studies the information-theoretic constraints on various types of learning tasks, answering questions such as, when is a learning task solvable at all, and how much training data is required to solve the learning task within given accuracy (sample complexity). Learning tasks can be broadly divided into:
 
-TBD
+* Classifications tasks: The input is sampled from a fixed probability distribution, and the objective is assigning the correct label. The deployment phase (during which the performance of the algorithm is evaluated) is distinct from the training phase (during which the correct labels are revealed).
+
+* Online learning / multi-armed bandits: There is no distinction between deployment and training. Instead, the algorithm's performance on each round is evaluated, but also the algorithm might receive some feedback on its performance. The behavior of the environment might change over time, possibly even respond to the algorithm's output. However, we only evaluate each output conditioned on the past history (we don't require the algorithm to plan ahead).
+
+* Reinforcement learning: There is two-sided interaction between the algorithm and the environment, and the algorithm's performance is the aggregate of some reward function over time. The algorithm *is* required to plan ahead in order to achieve optimal performance. This might or might not assume "resets" (when the environment periodically returns to the initial state) or partition of time into "episodes"\ (when the performance of the algorithm is only evaluated conditioned on the previous episodes, so that it doesn't have to plan ahead more than one episode into the future).
+
+It is the last type of learning tasks, in particular assuming no resets or episodes, that is the most relevant for studying intelligence in the relevant sense. Indeed, the abstract setting of reinforcement learning is a good formalization for the informal definition of intelligence we had before. Note that the name "reward" might be misleading: this is not necessarily a signal received from outside, but can just as easily be some formally specified mathematical function.
+
+In online learning and reinforcement learning, the theory typically aims to derive upper and lower bounds on "regret": the difference between the expected utility received by the algorithm and the expected utility it *would* receive if the environment was known a priori. Such an upper bound is effectively a *performance guarantee* for the given algorithm. In particular, if the reward function is assumed to be "aligned" then this performance guarantee is, to some extent, an alignment guarantee. This observation is not vacuous, since the learning protocol might be such that the true reward function is not directly available to the algorithm, as exemplified by [DIRL](https://agentfoundations.org/item?id=1550) and [DRL](https://agentfoundations.org/item?id=1656). Thus, formally proving alignment guarantees takes the form of proving appropriate regret bounds.
 
 \#Computational Learning Theory
+
+In addition to information-theoretic considerations, we have to consider considers of computational complexity...
 
 TBD
 
