@@ -240,13 +240,17 @@ Formal communication is difficult because human values are complicated and descr
 
 Overall, it might be more realistic to rely on formal communication for tasks of limited scope (putting a strawberry on plate) rather than actually learning human values in full. However, it is also possible to combine several mechanisms in a single protocol, and formal communication might be only one of them.
 
-The problem of corruption may be regarded as a special cases of the problem of traps (the latter was outlined in the previous section), if we assume that the agent is expected to achieve its goals without entering corrupt states. [Delegative Reinforcement Learning](https://agentfoundations.org/item?id=1656) aims to solve both problems by occasionally passing control to the human operator, and using it to learn which actions are safe. The analysis of DRL that I produced so far can and should be improved in multiple ways:
+The problem of corruption may be regarded as a special cases of the problem of traps (the latter was outlined in the previous section), if we assume that the agent is expected to achieve its goals without entering corrupt states. [Delegative Reinforcement Learning](https://agentfoundations.org/item?id=1656) aims to solve both problems by occasionally passing control to the human operator ("advisor"), and using it to learn which actions are safe. The analysis of DRL that I produced so far can and should be improved in multiple ways:
 
 * Instead of considering only a finite or countable set of hypotheses, we should consider a space of hypotheses of finite "dimension" (for some appropriate notion of dimension; it is a common theme in statistical learning theory that different learning setups have different natural notions of dimensionality for hypothesis classes). We then should obtain a regret bounded depending on the dimension and the entropy of the prior. I believe that I already have significant progress on this point, with results expected soon.
 
-* ???
+* Merge the ideas of [quantilal control](https://agentfoundations.org/item?id=1785) and [catastrophe mitigation](https://agentfoundations.org/item?id=1715) to yield a setting where, corruption is a quantitative/gradual rather than boolean and there is a low but non-vanishing rate of corruption along the advisor policy. Successful catastrophe mitigation will be achieved if it is possible without high Renyi divergence from the advisor policy, in some sense.
 
-% DRL with realistic scheduling
+* In the current form DRL requires the advisor to be ready to act instead of the agent at any given time moment. If the temporal rate at which actions are taken is high, this is an unrealistic demand. Naively, we can solve this by dividing time into intervals, and considering the policy on each interval as a single action. However, this would introduce an exponential penalty into the regret bound. Therefore, a more sophisticated way to manage the scheduling of control between the agent and the advisor is required, with a corresponding regret bound.
+
+* Instead of only considering MDPs with a finite state space, we can consider e.g. Feller continuous MDPs with a compact state space, and/or POMDPs.
+
+The demonstration mechanism avoids some of the difficulties with formal communication, but introduces its own drawbacks...
 
 TBD
 
