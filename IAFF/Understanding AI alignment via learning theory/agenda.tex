@@ -96,7 +96,7 @@ In this essay I will try to explain the overall structure and motivation of my A
 
 * Evaluating solutions by their formal mathematical properties, ultimately aiming at a quantitative theory of risk assessment
 
-* Relying on the mathematical intuition derived from learning theory to pave the way to solving philosophical questions, to the extent these questions need to be addressed at all
+* Relying on the mathematical intuition derived from learning theory to pave the way to solving philosophical questions
 
 \section{Philosophy}
 
@@ -216,7 +216,43 @@ To sum up, clarifying all of these issues should result in formulating a certain
 
 \section{Research Programme Outline}
 
-% The "work plan" for the future
+In this section I break down the research programme into different domains and subproblems. The list below is not intended to be a linear sequence. Indeed, many of the subproblems can be initially attacked in parallel, but also many of them are interconnected and progress in one subproblem can be leveraged to produce a more refined analysis of another. Any concrete plan I have regarding the order with which these questions should be addressed is liable to change significantly as progress is made. Moreover, I expect the entire breakdown to change as progress is made and new insights are available. However, I do believe that the high-level principles of the approach have a good chance of surviving, in some form, into the future.
+
+\#Value learning protocols
+
+At present, I conceive of the following possible basic mechanisms for value learning:
+
+* Formal communication: Information about the values is communicated to the agent in a form with pre-defined formal semantics. Examples of this are, communicating a full formal specification of the utility function or manually producing a reward signal. Other possibilities are, communicating partial information about the reward signal, or evaluating particular hypothetical situations.
+
+* Informal communication: Information about the values is communicated to the agent using natural language or other form whose semantics have to be learned somehow.
+
+* Demonstration: The agent observes a human pursuing eir values and deduces the values from the behavior.
+
+* Reverse engineering: The agent somehow acquires a full formal specification of a human (e.g. an uploaded brain) and deduces the values from this specification.
+
+Formal communication is difficult because human values are complicated and describing them precisely is hard. A manual reward signal is more realistic than a full specification, but:
+
+* % even this is hard
+
+* % corruption is possible
+
+* % for long-term tasks there is scarce feedback
+
+% might be more realistic for relatively limited tasks ("strawberry test") 
+
+% DRL with realistic scheduling
+
+TBD
+
+\#Universal reinforcement learning
+
+TBD
+
+\#Taming daemons
+
+TBD
+
+\#Recursive self-improvement
 
 TBD
 
