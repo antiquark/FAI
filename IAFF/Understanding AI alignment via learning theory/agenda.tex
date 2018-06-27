@@ -232,13 +232,19 @@ At present, I conceive of the following possible basic mechanisms for value lear
 
 Formal communication is difficult because human values are complicated and describing them precisely is hard. A manual reward signal is more realistic than a full specification, but:
 
-* % even this is hard
+* Still difficult to produce, especially if this reward is support to reflect the true aggregate of the human's values as observed by em across the universe (which is what it would have to be in order to aim at the true human utility function).
 
-* % corruption is possible
+* The reward signal will become erroneous if the human or just the communication channel between the human and the agent will be corrupted in some way. This is serious problem since, if not taken into account, it incentives the agent to produce such corruption.
 
-* % for long-term tasks there is scarce feedback
+* If the agent is supposed to aim at a very long-term goal, there might be little to no relevant information in the reward signal until the goal is attained.
 
-% might be more realistic for relatively limited tasks ("strawberry test") 
+Overall, it might be more realistic to rely on formal communication for tasks of limited scope (putting a strawberry on plate) rather than actually learning human values in full. However, it is also possible to combine several mechanisms in a single protocol, and formal communication might be only one of them.
+
+The problem of corruption may be regarded as a special cases of the problem of traps (the latter was outlined in the previous section), if we assume that the agent is expected to achieve its goals without entering corrupt states. [Delegative Reinforcement Learning](https://agentfoundations.org/item?id=1656) aims to solve both problems by occasionally passing control to the human operator, and using it to learn which actions are safe. The analysis of DRL that I produced so far can and should be improved in multiple ways:
+
+* Instead of considering only a finite or countable set of hypotheses, we should consider a space of hypotheses of finite "dimension" (for some appropriate notion of dimension; it is a common theme in statistical learning theory that different learning setups have different natural notions of dimensionality for hypothesis classes). We then should obtain a regret bounded depending on the dimension and the entropy of the prior. I believe that I already have significant progress on this point, with results expected soon.
+
+* ???
 
 % DRL with realistic scheduling
 
