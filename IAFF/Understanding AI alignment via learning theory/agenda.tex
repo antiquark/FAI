@@ -248,8 +248,6 @@ The problem of corruption may be regarded as a special cases of the problem of t
 
 * In the current form DRL requires the advisor to be ready to act instead of the agent at any given time moment. If the temporal rate at which actions are taken is high, this is an unrealistic demand. Naively, we can solve this by dividing time into intervals, and considering the policy on each interval as a single action. However, this would introduce an exponential penalty into the regret bound. Therefore, a more sophisticated way to manage the scheduling of control between the agent and the advisor is required, with a corresponding regret bound.
 
-* ??? % Lax Cartesian boundary
-
 * Instead of only considering MDPs with a finite state space, we can consider e.g. Feller continuous MDPs with a compact state space, and/or POMDPs.
 
 The demonstration mechanism avoids some of the difficulties with formal communication, but has its own drawbacks. The ability to demonstrate a certain preference is limited by the ability to satisfy this preference. For example, suppose I am offered to play against Kasparov for money: if I win the game, I win \$100 and if I lose the game, I lose \$100. Then, I will refuse the best because I know that I have few chances of winning. On the other hand, an AI might be able to win against Kasparov, but, seeing my demonstration it will remain uncertain whether I avoided the game because I'm afraid to lose or because of some other reason (for example, maybe I don't want to have more money, or maybe there is something intrinsically bad about playing chess). Therefore, it seems hard to produce a performance guarantee which will imply successfully learning the human's preferences *and* significantly outperforming the human in satisfying these preferences. In particular, the regret bound I currently have for [Delegative Inverse Reinforcement Learning](https://agentfoundations.org/item?id=1550) assumes that the "advisor" (the human) already takes the optimal action with maximal likelihood among all actions on any given step.
@@ -258,7 +256,7 @@ In other words, the advantage of providing a manual reward signal over demonstra
 
 We can use the demonstration mechanism to a much greater advantage by designing a protocol that allows *the human to learn from the AI*. This is because many tasks can be much easier to solve with external advice. On the other hand, the AI can tell which advice is useful by seeing that the human changes eir behavior. For example, suppose that the task at hand is receiving the adjacency matrices of two graphs and producing an isomorphism between them. Then, if the human is unable to always solve this on eir own, it might be impossible for the AI to unambiguously understand what the task is. However, suppose that the AI can make several plausible guesses and test them by communicating the corresponding answer to the human. It will then observe which of those guesses cause the human to endorse the answer, and will thereby become able to carry out the task on its own.
 
-More generally, we can consider the following learning protocol... name??? We have our learning agent, and two addition actors (in the simplest case, humans): an "operator" and an "advisor". The agent can, at each given moment, decide between 3 modes:
+More generally, we can consider the following learning protocol that I call "Learning By Teaching" (LBT). We have our agent and two additional actors (in the simplest case, humans): an "operator" and an "advisor". The agent can, at each given moment, decide between 3 modes:
 
 * Mode I: The operator and the advisor carry on without the AI's input. In this case, the advisor communicates something (the "advice") to the operator, and the operator takes actions that influences the external environment.
 
@@ -268,11 +266,11 @@ More generally, we can consider the following learning protocol... name??? We ha
 
 In all modes, all actors observe the percept produced by the environment.
 
-Note that the AI is at risk of committing dangerous actions both in mode\ II and in mode III. In particular, there might be some forms of advice that will corrupt the operator and cause irreversible damage. However, like in DRL, it can mitigate this risk by learning from the advisor and the operator which actions are safe.
-
-Note also that, the semantics of the advisor's communications are a priori unknown to the agent, and ultimately it seems reasonable this communication will use natural language, so this learning protocol may be said to incorporate both demonstration and informal communication.
+Now, the AI is at risk of committing dangerous actions both in mode II and in mode III. In particular, there might be some forms of advice that will corrupt the operator and cause irreversible damage. However, like in DRL, it can mitigate this risk by learning from the advisor and the operator which actions are safe.
 
 We can expect to obtain a regret bound...
+
+Note that, the semantics of the advisor's communications are a priori unknown to the agent, and ultimately it seems reasonable this communication will use natural language, so this learning protocol may be said to incorporate both demonstration and informal communication.
 
 % Incomplete models
 % Captain's log
@@ -280,6 +278,10 @@ We can expect to obtain a regret bound...
 TBD
 
 \#Universal reinforcement learning
+
+% Using incomplete models to justify Cartesian assumptions in DRL and so forth
+
+%* So far, we assumed that there are no side effects on the environment from the act of delegation itself.\ That is, the same action has exactly the same results whether carried out by the advisor or by the agent. Obviously, this is not entirely realistic since any physical isolation layer created to ensure this will not be entirely fool-proof. The sole exception is, perhaps, if both the agent and the advisor are programs running inside a [homeomorphic cryptography box](https://www.lesswrong.com/posts/2Wf3R4NZ77CLczLL2/cryptographic-boxes-for-unfriendly-ai). Therefore, it is desirable to derive a regret bound that assumes small (in some sense) but non-vanishing violations of this assumption. Similarly, the algorithm we analyzed (a form of Posterior-Sampling Reinforcement Learning) assumes access to a source of random which is invisible to the environment. This invisibility assumption should also be made more lax (although it is also possible to use deterministic algorithms instead).
 
 TBD
 
