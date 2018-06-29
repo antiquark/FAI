@@ -226,7 +226,25 @@ The aim of this part in the agenda is deriving regret bounds or other performanc
 
 I believe that a key step towards this goal is solving the problem of "irreflexivity". That is, we need to define a form of reinforcement learning in which the agent achieves reasonable performance guarantees despite an environment which is as complex or more than the agent itself. My previous attempts to make progress towards that goal include [minimax forecasting](https://agentfoundations.org/item?id=1107) and [dominant forecasters for incomplete models](https://arxiv.org/pdf/1705.04630.pdf). There, the aim was passive forecasting rather than reinforcement learning.
 
-The idea of minimax forecasting can be naturally extended to reinforcement learning. Environments in reinforcement learning naturally form a convex set $E$ in some topological vector space (where convex linear combinations correspond to probabilistic mixtures). Normally, models are points of $E$, i.e. specific environments. Instead, we can consider *incomplete* models which are convex subsets of $E$. Instead of considering $\Ea{\mu\bowtie\pi}{U}$, the expected utility of policy $\pi$ interacting with environment $\mu \in E$, we can consider $\min_{\mu\in\Phi}{\Ea{\mu\bowtie\pi}{U}}$, where $\Phi$ is an incomplete model: the minimal guaranteed expected utility of $\pi$ for environments compatible with the incomplete model $\Phi$...
+The idea of minimax forecasting can be naturally extended to reinforcement learning. Environments in reinforcement learning naturally form a convex set $E$ in some topological vector space (where convex linear combinations correspond to probabilistic mixtures). Normally, models are points of $E$, i.e. specific environments. Instead, we can consider *incomplete* models which are non-empty convex subsets of $E$. Instead of considering $\Ea{\mu\bowtie\pi}{U}$, the expected utility of policy $\pi$ interacting with environment $\mu \in E$, we can consider $\min_{\mu\in\Phi}{\Ea{\mu\bowtie\pi}{U}}$, where $\Phi$ is an incomplete model: the minimal guaranteed expected utility of $\pi$ for environments compatible with the incomplete model $\Phi$. We can define a set $H$ of incomplete models to be *learnable* when there is a metapolicy $\pi^*$ s.t. for any $\Phi \in H$
+
+$$\lim_{\gamma \rightarrow 1} \AP{\max_{\pi} \min_{\mu\in\Phi}{\Ea{\mu\bowtie\pi}{U_\gamma}}-\min_{\mu\in\Phi}{\Ea{\mu\bowtie\pi_\gamma^*}{U_\gamma}}} = 0$$
+
+Here, $\gamma\in[0,1)$ is the time discount parameter. Notably, this setting satisfies the analogue of the universality property of Bayes-optimality (see "Proposition 1" in [this](https://agentfoundations.org/item?id=1550) essay). Here, the role of the Bayes-optimal policy is replaced by the policy
+
+$$\pi_\gamma^\zeta := \Argmax{\pi}{\min_{\mu\in\Phi^\zeta}{\Ea{\mu\bowtie\pi}{U_\gamma}}}$$
+
+Here, $\Phi^\zeta$ is the "incomplete prior" corresponding to some $\zeta\in\Delta H$:
+
+$$\Phi^\zeta = \ACM{\Ea{\Phi\sim\zeta}{\mu(\Phi)}}{\mu: H \rightarrow E,\ \forall\Phi \in H: \mu(\Phi) \in \Phi}$$
+
+Moreover, it is possible to define an incomplete analogue of MDPs. There are stochastic games where the choices of the opponent correspond to the "Knightian uncertainty" of the incomplete model. Thus, it is natural to try and derive regret bounds for learning classes of such incomplete MDPs.
+
+It is possible to generalize this setting further by replacing "crisp" sets of environments by fuzzy sets. That is, we can define a "fuzzy model" to be a function $\phi: E \rightarrow [0,1]$ s.t. $\phi^{-1}(1)$ is non-empty. The performance of a policy $\pi$ on the model $\phi$ is then given by
+
+$$\min_{\mu \in E}\AP{{\Ea{\mu\bowtie\pi}{U}}+1-\phi(\mu)}$$
+
+Note that $U$ is assumed to take values in $[0,1]$, so no $\mu \in E$ with $\phi(\mu) = 0$ can affect the above value.
 
 TBD
 
