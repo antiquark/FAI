@@ -240,11 +240,25 @@ $$\Phi^\zeta = \ACM{\Ea{\Phi\sim\zeta}{\mu(\Phi)}}{\mu: H \rightarrow E,\ \foral
 
 Moreover, it is possible to define an incomplete analogue of MDPs. There are stochastic games where the choices of the opponent correspond to the "Knightian uncertainty" of the incomplete model. Thus, it is natural to try and derive regret bounds for learning classes of such incomplete MDPs.
 
-It is possible to generalize this setting further by replacing "crisp" sets of environments by fuzzy sets. That is, we can define a "fuzzy model" to be a function $\phi: E \rightarrow [0,1]$ s.t. $\phi^{-1}(1)$ is non-empty. The performance of a policy $\pi$ on the model $\phi$ is then given by
+It is possible to generalize this setting further by replacing "crisp" sets of environments by fuzzy sets. That is, we can define a "fuzzy model" to be a function $\phi: E \rightarrow [0,1]$ (the membership function) s.t. $\phi^{-1}(1)$ is non-empty. The performance of a policy $\pi$ on the model $\phi$ is then given by
 
 $$\min_{\mu \in E}\AP{{\Ea{\mu\bowtie\pi}{U}}+1-\phi(\mu)}$$
 
 Note that $U$ is assumed to take values in $[0,1]$, so no $\mu \in E$ with $\phi(\mu) = 0$ can affect the above value.
+
+This generalization allows capturing a broad spectrum of performance guarantees. For example, given any policy $\pi$ we can define $\phi_\pi: E \rightarrow [0,1]$ by
+
+$$\phi_\pi(\mu):=\Ea{\mu\bowtie\pi}{U}$$
+
+Then, learning the model $\phi_\pi$ amounts to learning to perform at least as well as $\pi$, whatever the environment is. Thus, the setting of "fuzzy reinforcement learning" might be regarded as a hybrid of model-based and model-free approaches.
+
+I think that another important step towards universal RL is deriving regret bounds that exploit *structural hierarchies*. This builds on the intuition that, although the real world is very complex and diverse, the presence of structural hierarchies seems like a nearly universal feature. Indeed, it is arguable that we would never reach our current level of understanding physics if there was no separation of scales that allowed studying the macroscopic world without knowing string theory et cetera. I see 3 types of hierarchies that need to be addressed, together with their mutual interactions:
+
+* Temporal hierarchy: Separation between processes that happen on different time-scales. We can try to model it by considering MDPs with a hierarchical state-space, s.t. transitions on a higher levels of the hierarchy happen much slower than transitions on a lower level of the hierarchy. This means that w.r.t. to a higher level, the lower level can always be considered to occupy an equilibrium distribution over states.
+
+* Spatial hierarchy: TBD
+
+* Informational hierarchy: TBD
 
 TBD
 
