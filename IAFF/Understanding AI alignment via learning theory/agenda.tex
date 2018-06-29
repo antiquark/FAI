@@ -256,15 +256,15 @@ I think that another important step towards universal RL is deriving regret boun
 
 * Temporal hierarchy: Separation between processes that happen on different time-scales. We can try to model it by considering MDPs with a hierarchical state-space, s.t. transitions on a higher levels of the hierarchy happen much slower than transitions on a lower level of the hierarchy. This means that w.r.t. to a higher level, the lower level can always be considered to occupy an equilibrium distribution over states.
 
-* Spatial hierarchy: TBD
+* Spatial hierarchy: Separation between processes that happen on different space-scales. We consider a "cellular decision process" which is an MDP that is structured like a cellular automaton. It is then tempting to try and connected RL theory with renormalization group methods from physics.
 
-* Informational hierarchy: TBD
+* Informational hierarchy: We consider a hierarchical structure on the *space of hypotheses*. That is, we expect the agent to first learn the high-level class to which the environment belongs, then learn the class corresponding to the lower level of the hierarchy et cetera, until it learns the actual environment. This is a formalization of the idea of "learning how to learn", a rather well-known idea for reducing the sample complexity of reinforcement learning.
 
-TBD
+In particular, we expect these hierarchies to yield regret bounds which do not have the "trial and error" form of most known regret bounds. That is, known regret bounds imply a sample complexity that is a large multiple of either the reset time (for RL with resets) or the mixing time (for RL without resets). This seems unsatisfactory: a model-based learner should be able to extrapolate its knowledge forward without waiting for a full "cycle" of environment response. Certainly we expect an artificial superintelligence to achieve a [pivotal event](https://arbital.com/p/pivotal/) from the first attempt, in some sense.
 
 \#Value learning protocols
 
-The aim... ???
+The aim of this part in the agenda is developing learning setups that allow one agent (the AI) to learn the values of a different agent or group of agents (humans). This involves directly or indirectly tackling the issues of, what does it mean for an agent to have particular values if it is imperfectly rational and possibly vulnerable to manipulation or other forms of "corruption".
 
 At present, I conceive of the following possible basic mechanisms for value learning:
 
@@ -294,7 +294,9 @@ The problem of corruption may be regarded as a special cases of the problem of t
 
 * In the current form DRL requires the advisor to be ready to act instead of the agent at any given time moment. If the temporal rate at which actions are taken is high, this is an unrealistic demand. Naively, we can solve this by dividing time into intervals, and considering the policy on each interval as a single action. However, this would introduce an exponential penalty into the regret bound. Therefore, a more sophisticated way to manage the scheduling of control between the agent and the advisor is required, with a corresponding regret bound.
 
-* ??? %Cartesian assumptions and incomplete models
+* So far, we assumed that there are no side effects on the environment from the act of delegation itself.\ That is, the same action has exactly the same results whether carried out by the advisor or by the agent. Obviously, this is not realistic since any physical isolation layer created to ensure this will not be entirely fool-proof (as a bare minimum, the advisor emself will remember which actions ey took). The sole exception is, perhaps, if both the agent and the advisor are programs running inside a [homeomorphic cryptography box](https://www.lesswrong.com/posts/2Wf3R4NZ77CLczLL2/cryptographic-boxes-for-unfriendly-ai). However, this is perhaps not very different from ignoring the indirect side-effects that the execution of the agent's algorithm on the ??? but cryptography !!!
+
+...Similarly, the algorithm we analyzed (a form of Posterior-Sampling Reinforcement Learning) assumes access to a source of random which is invisible to the environment... (although it is also possible to use deterministic algorithms instead).
 
 * Instead of only considering MDPs with a finite state space, we can consider e.g. Feller continuous MDPs with a compact state space, and/or POMDPs.
 
