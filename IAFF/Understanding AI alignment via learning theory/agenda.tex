@@ -352,9 +352,14 @@ In my opinon, the theory of imperfect rationality suggested by these considerati
 
 \#Taming daemons
 
-Daemons are... The aim of this part of the agenda...
+"Daemons" are intelligent agents that are simulated, within some degree of fidelity, inside the AI's reasoning process and whose malicious agendas can render the entire system unaligned even if the AI's "main" reasoning process is correctly designed to acquire human values in some sense. The aim of this part of the agenda is to formalize the problem and provide solutions in the form of theoretical guarantees.
 
-% Cartesian and non-Cartesian
+I distinguish between two types of daemons: Cartesian and non-Cartesian. Cartesian daemons are those that are dangerous *even if the Cartesian boundary between the AI and the rest of the universe is perfect.* In other words, Cartesian daemons influence the word through the normal output channels given to the AI and while preserving the computational process inside the AI's hardware conformant to the software model assumed by the designers. On the other hand, non-Cartesian daemons rely on violatios of the Cartesian boundary: they either exploit some physical side effects of the computation on the world or "hack" the AI from the inside in a way that breaks its software model (e.g. violate an abstraction layer in the software). Of course we might have a single (in some sense) subagent that utilizes both Cartesian and non-Cartesian attack mechanisms. In the following, we will refer to a "Cartesian daemon" in the sense of "a Cartesian attack mechanism of some daemon" and similarly for a "non-Cartesian daemon".
+
+The taming of Cartesian daemons is guaranteed by the same regret bounds that guarantee the AI's alignment in general. ??? % How does it work for the malicious prior...
+
+% Non-Cartesian: homeomorphic encryption, formal verification...
+% Non-Cartesian effects are small in general but small for daemons?
 
 TBD
 
