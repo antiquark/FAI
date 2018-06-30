@@ -340,19 +340,19 @@ We can expect to obtain a regret bound which guarantees that, whenever the envir
 
 Note that the notion of "computational complexity" in the previous paragraph does not have to bear a simple relationship to time or space complexity in a simple computational model, but rather has to do with the operator's modeling abilities vs. the agent's modeling abilities. In particular, it might involve some peculiar limitations of human cognitive architecture.
 
-Finally, whatever the ultimate value learning protocol will be, it is desirable to have it grounded in a coherent theory of imperfect rationality. Specifically LBT suggests 3 types of "flaws" an agent is allowed to have while maintaining particular values:
+Finally, whatever the ultimate value learning protocol will be, it is desirable to have it grounded in a coherent theory of imperfect rationality. Conversly, I belive that a reasonable theory of imperfect rationality should admit a value learning protocol (i.e. the concept of "values" should be observable and measurable in an appropriate sense). Specifically LBT suggests 3 types of "flaws" an agent is allowed to have while maintaining particular values:
 
-* Its modeling abilities are limited: some computable and even efficiently computable models don't appear in its prior...
+* Its modeling abilities are limited: some computable and even efficiently computable models don't appear in its prior. This flaw is entirely relative (i.e. some agents are more limited than others), since any feasible agent is limited.
 
-* ??? % Corruptions
+* Some events might result in a plastic response of the agent ("corruption") which makes it irreversibly lose rationality and/or alignment with its initial values. For this to be consistent with well-defined values, we need to assume that "left to its own devices" the agent only becomes corrupt with a small rate. A peculiar thing about this assumption is that it depends on the environment rather than only on the agent. This seems unavoidable. The philosophical implication is, the values of an agent (and perhaps therby also its "identity" or "consciousness") reside not only inside the agent (in the case of a human, the brain) but also in its environment. They are contextual. Indeed, if we imagine a whole brain emulation of a human transmitted to aliens in a different dimension with completely different physics, that know nothing about our universe, it seems impossible for those aliens to reconstruct the human's value. Placing the brain in arbitrary environments might lead to "reprogramming" it with a wide array of different values. Moreover, assuming that the environment is one that is plausible to "naturally" contain a human brain also doesn't solve the problem: malicious superintelligences across the mutliverse might exploit this assumption by creating human brains in odd environments on purpose (see Christiano's closely related discussion of the [malicious prior](https://ordinaryideas.wordpress.com/2016/11/30/what-does-the-universal-prior-actually-look-like/)).
 
-* ??? % Noise
+* The agent's policy might involve significant random noise, for example s.t. only the maximal likelihood policy is "rational" even given the two previous flaws (like the advisor in DIRL). This requires some nuanced analysis of what counts as "random": some process might appear random given a certain level of computational resources and predictable given a higher level. Therefore, we might need to "project" the actual agent onto a suitable bounded model thereof.
 
-% Philosophical grounding in imperfect rationality; The self is outside the brain
-
-TBD
+In my opinon, the theory of imperfect rationality suggested by these considerations might already be close to capturing all the nuances of human irrationality.
 
 \#Taming daemons
+
+Daemons are... The aim of this part of the agenda...
 
 % Cartesian and non-Cartesian
 
