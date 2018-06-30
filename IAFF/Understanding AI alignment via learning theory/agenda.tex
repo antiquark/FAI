@@ -332,15 +332,22 @@ More generally, we can consider the following learning protocol that I call "Lea
 
 In all modes, all actors observe the percept produced by the environment.
 
-Now, the AI is at risk of committing dangerous actions both in mode II and in mode III. In particular, there might be some forms of advice that will corrupt the operator and cause irreversible damage. However, like in DRL, it can mitigate this risk by learning from the advisor and the operator which actions are safe.
-
-We can expect to obtain a regret bound which guarantees that, whenever the environment satisfies a fuzzy model A that appears in the agent's prior and that implies a fuzzy model B that appears in the *operator's* prior, model B will be learnt with the speed determined by the prior weight of model *A*. That is, we benefit in situations in which the environment has a simple to describe but computationally complex property (that the agent will pick up on but the operator cannot; or at least it's not a model the operator can use in practice), from which some complex to describe (and therefore complex to learn) but computationally simple (s.t. the operator can comprehend and use it) "effective model" can be derived. Moreover, thanks to mode III, we don't even need to assume that the operator can exploit model B perfectly: it only needs to be able to exploit it (i.e. follow the corresponding optimal policy) up to "noise" (that can have a large utility cost), similary to DIRL.
-
-??? % comput. complexity of brains
-
 Note that, the semantics of the advisor's communications are a priori unknown to the agent, and ultimately it seems reasonable this communication will use natural language, so this learning protocol may be said to incorporate both demonstration and informal communication.
 
-% Captain's log variant
+Now, the AI is at risk of committing dangerous actions both in mode II and in mode III. In particular, there might be some forms of advice that will corrupt the operator and cause irreversible damage. However, like in DRL, it can mitigate this risk by learning from the advisor and the operator which actions are safe.
+
+We can expect to obtain a regret bound which guarantees that, whenever the environment satisfies a fuzzy model A that appears in the agent's prior and that implies a fuzzy model B that appears in the *operator's* prior, model B will be learnt with the speed determined by the prior weight of model *A*. That is, we benefit in situations in which the environment has a simple to describe but "computationally complex" property (that the agent will pick up on but the operator cannot; or at least it's not a model the operator can use in practice), from which some complex to describe (and therefore complex to learn) but "computationally simple" (s.t. the operator can comprehend and use it) "effective model" can be derived. Moreover, thanks to mode III, we don't even need to assume that the operator can exploit model B perfectly: it only needs to be able to exploit it (i.e. follow the corresponding optimal policy) up to "noise" (that can have a large utility cost), similary to the advisor in DIRL.
+
+Note that the notion of "computational complexity" in the previous paragraph does not have to bear a simple relationship to time or space complexity in a simple computational model, but rather has to do with the operator's modeling abilities vs. the agent's modeling abilities. In particular, it might involve some peculiar limitations of human cognitive architecture.
+
+Finally, whatever the ultimate value learning protocol will be, it is desirable to have it grounded in a coherent theory of imperfect rationality. Specifically LBT suggests 3 types of "flaws" an agent is allowed to have while maintaining particular values:
+
+* Its modeling abilities are limited: some computable and even efficiently computable models don't appear in its prior...
+
+* ??? % Corruptions
+
+* ??? % Noise
+
 % Philosophical grounding in imperfect rationality; The self is outside the brain
 
 TBD
