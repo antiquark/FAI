@@ -204,15 +204,15 @@ The combination of perfect Bayesian reinforcement learning and the Solomonoff pr
 
 The Cartesian duality problem and the traps problem are actually strongly related. Indeed, one can model any event that destroys the agent (including modifying its source code) as the transition of the environment into some inescapable state. Such a state should be assigned a reward that corresponds to the expected utility of the universe going on without the agent. However, it's not obvious how the agent can learn to anticipate such states, since observing it once eliminates any chance of using this knowledge later. DRL already partially addresses this problem: more discussion in the next section.
 
-Solving Irreflexivity requires going beyond the Bayesian paradigm by including models that don't fully specify the environment. More details in the next section.
+Solving irreflexivity requires going beyond the Bayesian paradigm by including models that don't fully specify the environment. More details in the next section.
 
 Finally, the decision-theoretic paradoxes are a more equivocal issue than it seems, because the usual philosophical way of thinking about decision theory assumes that the model of the environment is *given*, whereas in our way of thinking, the model is *learned*. This is important: for example, if AIXI is placed in a repeated Newcomb's problem, it will learn to one-box, since its model will predict that one-boxing *causes* the money to appear inside the box. In other words, AIXI might be regarded as a CDT, but the learned "causal" relationships are not the same as physical causality. Formalizing other Newcomb-like problems require solving Irreflexivity first, because the environment contains Omega which cannot be simulated by the agent. Therefore, my current working hypothesis is that decision theory will be mostly solved (or dissolved) by
 
-* Solving Irreflexivity
+* Solving irreflexivity
 
 * Value learning will automatically learn some aspects of the decision theory too.
 
-* Allowing for self-modification, which should be possible after solving Irreflexivity + Cartesian duality (self-modification may be again be regarded as a terminal state)
+* Allowing for self-modification, which should be possible after solving irreflexivity + Cartesian duality (self-modification may be again be regarded as a terminal state)
 
 To sum up, clarifying all of these issues should result in formulating a certain optimality condition (regret bound) which may be regarded as a rigorous definition of intelligence. This would also constitute progress towards defining "values" (having certain values means being intelligent w.r.t. these values), but the latter might require making the definition even more lax. More on that later.
 
@@ -252,13 +252,15 @@ $$\phi_\pi(\mu):=\Ea{\mu\bowtie\pi}{U}$$
 
 Then, learning the model $\phi_\pi$ amounts to learning to perform at least as well as $\pi$, whatever the environment is. Thus, the setting of "fuzzy reinforcement learning" might be regarded as a hybrid of model-based and model-free approaches.
 
+One test for any theory attempting to solve irreflexivity is whether it leads to reasonable game-theoretic solution concepts in multi-agent scenarios. For example, it is obvious that incomplete models lead to Nash equiblria in *zero-sum* games (an incomplete model *is* a zero-sum game, in some sense), but the situation in more general games in currently unknown. Another sort of test is applying the theory to Newcomb-like decision-theoretic puzzles, although solving all of them might require additional elements, such as self-modification. Further applications of such a theory which may also be regarded as tests will appear in the next subsection.
+
 Next, the problem of traps has to be addressed. DRL partially solves this problem by postulating an advisor that has prior knowledge about the traps. It seems reasonable to draw a parallel between this and real-world human intelligence: humans learn from previous generations regarding the dangers of their environment. In particular, children seems like a salient example of an algorithm employing a lot of exploration while trusting a different agent (the parent) to prevent falling into traps. However, from a different perspective, this seems like hiding the difficulty in a different place. Namely, if we consider the whole of *humanity* as an intelligent agent (which seems a legitimate model at least for the purposes of this particular issue), then how did *it* avoid traps? To some extent, we can claim that human DNA is another source for prior knowledge, acquired by evolution, but somewhere this recursion must come to an end.
 
 One hypothesis is, the main way humanity avoids traps is by happening to exist in a relatively favorable environment and *knowing* this fact, on some level. Specifically, it seems rather difficult for a single human to pursue a policy that will lead all of humanity into a trap (incidentally, this hypothesis doesn't reflect optimistically on our chances to survive AI risk), and also rather rare for many humans to coordinate on simultaneously exploring an unusual policy. Therefore, human history may be very roughly likened to *episodic* RL where each human life is an episode.
 
 This mechanism should be formalized using the ideas of [quantilal control](https://agentfoundations.org/item?id=1785). The baseline policy comes from the prior knowledge / advisor, and the allowed deviation (some variant of Renyi divergence) from the baseline policy is chosen according to the prior assumption about the rate of falling into a trap while following the baseline policy. This should lead to an appropriate regret bound.
 
-Finally, I think that another important step towards universal RL is deriving regret bounds that exploit *structural hierarchies*. This builds on the intuition that, although the real world is very complex and diverse, the presence of structural hierarchies seems like a nearly universal feature. Indeed, it is arguable that we would never reach our current level of understanding physics if there was no separation of scales that allowed studying the macroscopic world without knowing string theory et cetera. I see 3 types of hierarchies that need to be addressed, together with their mutual interactions:
+I think that another important step towards universal RL is deriving regret bounds that exploit *structural hierarchies*. This builds on the intuition that, although the real world is very complex and diverse, the presence of structural hierarchies seems like a nearly universal feature. Indeed, it is arguable that we would never reach our current level of understanding physics if there was no separation of scales that allowed studying the macroscopic world without knowing string theory et cetera. I see 3 types of hierarchies that need to be addressed, together with their mutual interactions:
 
 * Temporal hierarchy: Separation between processes that happen on different time-scales. We can try to model it by considering MDPs with a hierarchical state-space, s.t. transitions on a higher levels of the hierarchy happen much slower than transitions on a lower level of the hierarchy. This means that w.r.t. to a higher level, the lower level can always be considered to occupy an equilibrium distribution over states.
 
@@ -268,7 +270,15 @@ Finally, I think that another important step towards universal RL is deriving re
 
 In particular, we expect these hierarchies to yield regret bounds which do not have the "trial and error" form of most known regret bounds. That is, known regret bounds imply a sample complexity that is a large multiple of either the reset time (for RL with resets) or the mixing time (for RL without resets). This seems unsatisfactory: a model-based learner should be able to extrapolate its knowledge forward without waiting for a full "cycle" of environment response. Certainly we expect an artificial superintelligence to achieve a [pivotal event](https://arbital.com/p/pivotal/) from the first attempt, in some sense.
 
+Also, the hierarchies should bridge at least part of the gap between weak and strong feasibility. Indeed, many of the successes of deep learning were based on CNNs and Boltzmann machines which seem to be exploiting the spatial hierarchy.
+
 Returning to the issue of traps, there might be some sense in which our environment is "favorable" which is more sophisticated than the discussion before and which may be formalized using hierarchies (e.g. early levels of the information hierarchy can be learned safely and late levels only contain traps predictable by the early levels).
+
+Finally, as discussed in the previous section, defining the correct universal prior and analyzing its properties is crucial to complete the theory. Given the hypotheses put forth in this section, this prior should be
+
+* A *fuzzy* prior rather than a "complete" prior
+* Reflect some "favorability" assumptions
+* Have a hierarchical structure and consist of hierarchical models
 
 \#Value learning protocols
 
@@ -324,7 +334,9 @@ In all modes, all actors observe the percept produced by the environment.
 
 Now, the AI is at risk of committing dangerous actions both in mode II and in mode III. In particular, there might be some forms of advice that will corrupt the operator and cause irreversible damage. However, like in DRL, it can mitigate this risk by learning from the advisor and the operator which actions are safe.
 
-We can expect to obtain a regret bound... ??? % fuzzy models...
+We can expect to obtain a regret bound which guarantees that, whenever the environment satisfies a fuzzy model A that appears in the agent's prior and that implies a fuzzy model B that appears in the *operator's* prior, model B will be learnt with the speed determined by the prior weight of model *A*. That is, we benefit in situations in which the environment has a simple to describe but computationally complex property (that the agent will pick up on but the operator cannot; or at least it's not a model the operator can use in practice), from which some complex to describe (and therefore complex to learn) but computationally simple (s.t. the operator can comprehend and use it) "effective model" can be derived. Moreover, thanks to mode III, we don't even need to assume that the operator can exploit model B perfectly: it only needs to be able to exploit it (i.e. follow the corresponding optimal policy) up to "noise" (that can have a large utility cost), similary to DIRL.
+
+??? % comput. complexity of brains
 
 Note that, the semantics of the advisor's communications are a priori unknown to the agent, and ultimately it seems reasonable this communication will use natural language, so this learning protocol may be said to incorporate both demonstration and informal communication.
 
