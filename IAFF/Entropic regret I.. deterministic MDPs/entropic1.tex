@@ -104,7 +104,7 @@ The regret bound we [previously](https://agentfoundations.org/item?id=1739) deri
 
 The underlying technique of our proof was lower bounding the information gain in a single episode of posterior sampling by the expected regret incurred during this episode. Although we have not previously stated it in this form, the resulting regret bound depends on the *entropy* of the prior (we considered a uniform prior instead). This idea (unbeknownst to us) appeared earlier in [Russo and Van Roy](https://arxiv.org/abs/1403.5341). Moreover, later [Russo and Van Roy](https://arxiv.org/abs/1403.5556) used to it formulate a generalization of posterior sampling they call "information-directed sampling" the can produce far better regret bounds in certain scenarios. However, to the best of our knowledge, this technique was not previously used to analyze reinforcement learning (as opposed to bandits). Therefore, it seems natural to derive such an "entropic" regret bound for ordinary RL, before extending it to DRL.
 
-Now, [Osband and Van Roy](https://arxiv.org/abs/1406.1853) derived a regret bound for priors supported on some space of transition kernels as a function of its Kolmogorov dimension and "eluder" dimension (the latter introduced previously by [Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration)). They also consider a continuous state space. This is a more fine approach than considering nearly arbitrary transition kernels on a fixed state space, but it still doesn't distinguish between different priors with the same support. Our new results involve a variant of eluder dimension, but instead of Kolmogorov dimension we use entropy (in the following chapters we will see that Kolmogorov dimension is, in some sense, an *upper bound* on entropy). As opposed to Osband and Van Roy, we currently limit ourselves to finite state spaces, but on the other hand we consider no resets (at the price of a "no traps" assumption).
+Now, [Osband and Van Roy](https://arxiv.org/abs/1406.1853) derived a regret bound for priors supported on some space of transition kernels as a function of its Kolmogorov dimension and "eluder" dimension (the latter introduced previously by [Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration)). They also consider a continuous state space. This is a more fine approach than considering nearly arbitrary transition kernels on a fixed state space, but it still doesn't distinguish between different priors with the same support. Our new results involve a parameter similar to eluder dimension, but instead of Kolmogorov dimension we use entropy (in the following chapters we will see that Kolmogorov dimension is, in some sense, an *upper bound* on entropy). As opposed to Osband and Van Roy, we currently limit ourselves to finite state spaces, but on the other hand we consider no resets (at the price of a "no traps" assumption).
 
 In this chapter we derive the entropic regret bound for *deterministic* MDPs. This latter restriction significantly simplifies the analysis. In the following chapters, we will extend it to stochastic MDPs, however the resulting regret bound will be weaker.
 
@@ -112,21 +112,21 @@ In this chapter we derive the entropic regret bound for *deterministic* MDPs. Th
 
 We fix a finite nonempty set $\St$ (the set of states), a non-empty set $\A$ (the set of actions) and an initial state $s_0 \in \St$. We also consider some set of hypotheses $\Hy$ where each $h\in\Hy$ is of the form $h=\AP{T_h,R_h}$ where $T_h: \St \times \A \rightarrow \St$ is a (deterministic) transition kernel, and $R_h: \St \rightarrow [0,1]$ is a reward function.
 
-The following definition is a slight variation of "eluder dimension" as defined in Russo and Van Roy, and later generalized by Osband and Van Roy. The main difference is that we consider exact equalities instead of approximate equalities that involve an additional parameter $\epsilon$ (something we can afford because of the determinism assumption).
+??? % Isn't the weaker form (where we consider points on the graph rather than only arguments) sufficient?
 
 \#Definition 1
 
-Given $B \subseteq \St \times \A$ and $(s,a) \in \St \times \A$, we say that $(s,a)$ is *$\Hy$-dependent* of $B$ when, given any $h,g\in\Hy$ s.t. for all $(t,b) \in B$, $T_h(t,b) = T_g(t,b)$ and $R_h(t) = R_g(t)$, we have $T_h(s,a)=T_g(s,a)$ and $R_h(s)=R_g(s)$. Otherwise, $(s,a)$ is said to be *$\Hy$-independent* of $B$.
+Given $B \subseteq \St \times \A \times \St \times [0,1]$ and $\AP{s_*,a_*} \in \St \times \A \times \St \times [0,1]$, we say that $\AP{s_*,a_*}$ is *$\Hy$-dependent* of $B$ when, given any $h,g\in\Hy$ s.t. for all $(s,a,t,r) \in B$, $T_h(s,a) = T_g(s,a)=t$ and $R_h(s) = R_g(s)=r$, we have $T_h\AP{s_*,a_*}=T_g\AP{s_*,a_*}$ and $R_h\AP{s_*}=R_g\AP{s_*}$. Otherwise, $\AP{s_*,a_*}$ is said to be *$\Hy$-independent* of $B$.
 
-The *Russo-Van Roy dimension* (RV dimension) of $\Hy$ is the length $n\in\Nats$ of the longest sequence $\AC{\AP{s_k\in\St,a_k\in\A}}_{k\in[n]}$ s.t. for each $k\in[n]$, $\AP{s_k,a_k}$ is $\Hy$-independent of $\AC{\AP{s_j,a_j}}_{j\in[k]}$.
-
-\#Lemma 1
-
-Foo
+The *prediction dimension* of $\Hy$ is the length $n\in\Nats$ of the longest sequence\\$\AC{\AP{s_k\in\St,a_k\in\A,t_k\in\St_t,r_k\in[0,1]}}_{k\in[n]}$ s.t. for each $k\in[n]$, $\AP{s_k,a_k}$ is $\Hy$-independent of $\AC{\AP{s_j,a_j,t_j,r_j}}_{j\in[k]}$.
 
 ***
 
-Bar
+Obvious bounds...
+
+% number of states/actions
+% number of hypotheses
+% cellular automata
 
 \section{Proofs}
 
