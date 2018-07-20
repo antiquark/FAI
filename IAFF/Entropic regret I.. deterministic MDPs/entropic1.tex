@@ -82,7 +82,15 @@
 
 % Paper specific
 
-% TBD
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\R}{\mathcal{R}}
+
+\newcommand{\Ut}{\operatorname{U}}
+\newcommand{\V}{\operatorname{V}}
+
+\newcommand{\Hy}{\mathcal{H}}
 
 \begin{document}
 
@@ -92,17 +100,21 @@ This is the first in a series of essays that aim to derive a regret bound for DR
 
 \section{Background}
 
-The regret bound we [previously](https://agentfoundations.org/item?id=1739) derived for DRL assumes a finite number of hypotheses. In contrast, the RL literature is usually concerned with considering all transition kernels on a fixed state space satisfying some simple assumption (e.g. a bound on the diameter or bias span). While the former seems too restrictive (although it's relatively simple to generalize it to *countable* hypothesis class), the latter seems too coarse. Indeed, we expect a universally intelligent agent to detect *patterns* in the data, i.e. follow some kind of simplicity prior rather than a uniform distribution over transition kernels. [Osband and Van Roy](https://arxiv.org/abs/1406.1853) derive a regret bound for priors supported on some space of transition kernels as a function of its Kolmogorov dimension and "Eluder" dimension (the latter introduced previously by [Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration)). They also consider a continuous state space.
+The regret bound we [previously](https://agentfoundations.org/item?id=1739) derived for DRL grows as a power law with the number of hypotheses. In contrast, the RL literature is usually concerned with considering all transition kernels on a fixed state space satisfying some simple assumption (e.g. a bound on the diameter or bias span). In particular, the number of hypotheses is uncountable. While the former seems too restrictive (although it's relatively simple to generalize it to *countable* hypothesis classes), the latter seems too coarse. Indeed, we expect a universally intelligent agent to detect *patterns* in the data, i.e. follow some kind of simplicity prior rather than a uniform distribution over transition kernels.
 
-TBD
+The underlying technique of our proof was lower bounding the information gain in a single episode of posterior sampling by the expected regret incurred during this episode. Although we have not previously stated it in this form, the resulting regret bound depends on the *entropy* of the prior (we considered a uniform prior instead). This idea (unbeknownst to us) appeared earlier in [Russo and Van Roy](https://arxiv.org/abs/1403.5341). Moreover, later [Russo and Van Roy](https://arxiv.org/abs/1403.5556) used to it formulate a generalization of posterior sampling they call "information-directed sampling" the can produce far better regret bounds in certain scenarios. However, to the best of our knowledge, this technique was not previously used to analyze reinforcement learning (as opposed to bandits). Therefore, it seems natural to derive such an "entropic" regret bound for ordinary RL, before extending it to DRL.
+
+Now, [Osband and Van Roy](https://arxiv.org/abs/1406.1853) derived a regret bound for priors supported on some space of transition kernels as a function of its Kolmogorov dimension and "Eluder" dimension (the latter introduced previously by [Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration)). They also consider a continuous state space. This is a more fine approach than considering nearly arbitrary transition kernels on a fixed state space, but it still doesn't distinguish between different priors with the same support. Our new results involves a parameter very similar to Eluder dimension, but instead of Kolmogorov dimension we use entropy (in the following chapters we will see that Kolmogorov dimension is, in some sense, an *upper bound* on entropy). As opposed to Osband and Van Roy, we currently limit ourselves to finite state spaces, but on the other hand we consider no resets (at the price of a "no traps" assumption).
+
+In this chapter we derive the entropic regret bound for *deterministic* MDPs. This latter restriction significantly simplifies the analysis. In the following chapters, we will extend it to stochastic MDPs, however the resulting regret bound will be weaker.
 
 \section{Results}
 
-Foo
+We fix a finite nonempty set $\St$ (the set of states) and an initial state $s_0 \in \St$. We also consider some set of hypotheses $\Hy$ where each $h\in\Hy$ is of the form $h=\AP{T_h,R_h}$ where $T_h: \St \times \A \rightarrow \St$ is a (deterministic) transition kernel, and $R_h: \St \rightarrow [0,1]$ is a reward function.
 
 \#Definition 1
 
-Bar
+The ? dimension...
 
 \#Lemma 1
 
