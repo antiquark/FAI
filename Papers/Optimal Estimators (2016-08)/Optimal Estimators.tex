@@ -12,6 +12,7 @@
 \usepackage{enumerate}
 \usepackage{commath}
 \usepackage{bm}
+\usepackage{color}
 
 \numberwithin{equation}{section}
 
@@ -175,7 +176,7 @@ Such a ${P}$ is called an \enquote{${\Fall_{neg}(\Gamma_0^1,\Gamma_0^1)}$-optima
 
 Denote ${\textsc{OP}[{\EG}]}$ the set of distributional decision problems that admit ${\EG}$-optimal polynomial-time estimators. Obviously ${\textsc{OP}[\Fall_{neg}(\Gamma_0^1,\Gamma_0^1)] \supseteq \textsc{Heur}_\text{neg}\textsc{P}}$. Moreover, if one-way functions exist the inclusion is proper since it is possible to use any function with a hard-core predicate to construct an example where the constant ${\frac{1}{2}}$ is an ${\Fall_{neg}(\Gamma_0^1,\Gamma_0^1)}$-optimal polynomial-time estimator (see Theorem~\ref{thm:hard_core}). Thus, it seems that we constructed novel natural distributional complexity classes.
 
-The distributional complexity class ${\textsc{HeurP}}$ is defined as the set of distributional decision problems with admit a polynomial-time heuristic scheme\cite{Bogdanov_2006}. That is, ${(\Dist,L) \in \textsc{HeurP}}$ iff there is\\ ${S: \Nats^2 \times \Words \Alg \Bool}$ s.t. ${S(K_0,K_1,x)}$ runs in time polynomial in ${K_0, K_1}$ and\footnote{We slightly reformulated the definition given in \cite{Bogdanov_2006}: replaced the rational input parameter ${\delta}$ by the integer input parameter ${K_1}$. The equivalence of the two formulations may be observed via the substitution ${\delta=(K_1+1)^{-1}}$.}\\ ${\Prb_{x \sim \Dist^{K_0}}[S(K_0,K_1,x) \ne \chi_L(x)] \leq (K_1+1)^{-1}}$. Analogously to before, we have the following equivalent condition. ${(\Dist,L) \in \textsc{HeurP}}$ iff there is ${P: \Nats^2 \times \Words \Alg \Rats}$ s.t. ${P(K_0,K_1,x)}$ runs in time polynomial in ${K_0,K_1}$ and for some ${M > 0}$, ${\E_{x \sim \Dist^{K_0}}[(P(K_0,K_1,x)-\chi_L(x))^2] \leq M (K_1+1)^{-1}}$. In the language of the present work, such a ${P}$ is a called an \enquote{${\Fall_{(K_1+1)^{-1}}(\Gamma_0^2, \Gamma_0^2)}$-optimal polynomial-time estimator for ${(\Dist^\eta,\chi_L)}$} (see Example~\ref{exm:fall_zeta}), where ${\Dist^\eta}$ is a two-parameter (${K_0,K_1 \in \Nats}$) family of distributions which is constant along the parameter ${K_1}$.
+The distributional complexity class ${\textsc{HeurP}}$ is defined as the set of distributional decision problems which admit a polynomial-time heuristic scheme\cite{Bogdanov_2006}. That is, ${(\Dist,L) \in \textsc{HeurP}}$ iff there is\\ ${S: \Nats^2 \times \Words \Alg \Bool}$ s.t. ${S(K_0,K_1,x)}$ runs in time polynomial in ${K_0, K_1}$ and\footnote{We slightly reformulated the definition given in \cite{Bogdanov_2006}: replaced the rational input parameter ${\delta}$ by the integer input parameter ${K_1}$. The equivalence of the two formulations may be observed via the substitution ${\delta=(K_1+1)^{-1}}$.}\\ ${\Prb_{x \sim \Dist^{K_0}}[S(K_0,K_1,x) \ne \chi_L(x)] \leq (K_1+1)^{-1}}$. Analogously to before, we have the following equivalent condition. ${(\Dist,L) \in \textsc{HeurP}}$ iff there is ${P: \Nats^2 \times \Words \Alg \Rats}$ s.t. ${P(K_0,K_1,x)}$ runs in time polynomial in ${K_0,K_1}$ and for some ${M > 0}$, ${\E_{x \sim \Dist^{K_0}}[(P(K_0,K_1,x)-\chi_L(x))^2] \leq M (K_1+1)^{-1}}$. In the language of the present work, such a ${P}$ is a called an \enquote{${\Fall_{(K_1+1)^{-1}}(\Gamma_0^2, \Gamma_0^2)}$-optimal polynomial-time estimator for ${(\Dist^\eta,\chi_L)}$} (see Example~\ref{exm:fall_zeta}), where ${\Dist^\eta}$ is a two-parameter (${K_0,K_1 \in \Nats}$) family of distributions which is constant along the parameter ${K_1}$.
 
 Again we can consider the corresponding weaker condition, that for all ${Q: \Nats^2 \times \Words \Alg \Rats}$ s.t. ${Q(K_0,K_1,x)}$ runs in time polynomial in ${K_0,K_1}$
 
@@ -212,11 +213,11 @@ We give separate proofs for the invariance of ${\ESG}$-optimal polynomial-time e
 
 Explicit construction of optimal polynomial-time estimators is likely to often be difficult because it requires proving a hardness result (that no polynomial-time estimator can outperform the given polynomial-time estimator). However, for a specific choice of ${\Fall}$ which we denote ${\FallU}$ (see Example~\ref{exm:e_uni}), we prove two broad existence theorems.
 
-The first (Theorem~\ref{thm:exists_all}) shows that for suitable ${\Gamma}$ (in particular it has to allow sufficiently long advice strings, e.g. logarithmic advice is sufficient), \emph{any} distributional decision problem ${(\Dist,L)}$ admits an ${\FallU(\Gamma)}$-optimal polynomial-time estimator for ${(\Dist^\eta,L)}$. The construction of this estimator is rather trivial: the advice string for ${(K_0,K_1)}$ is the optimal (i.e. least ${\E_{x \sim D^{K_0}}[(P(x)-f(x))^2]}$) program that runs in time ${K_1}$ and is of length at most ${l(K_0,K_1)}$ where ${l: \Nats^2 \rightarrow \Nats}$ is some function which determines the allowed asymptotical advice length (${\Gamma}$ depends on ${l}$ and an analogous function ${r: \Nats^2 \rightarrow \Nats}$ which determines the allowed asymptotical number of random bits used by the estimators). The non-trivial part here is the definition of ${\FallU}$ which is s.t. allowing any estimator an amount of resources greater by a polynomial always translates to a reduction in error which lies in ${\FallU}$.
+The first (Theorem~\ref{thm:exists_all}) shows that for suitable ${\Gamma}$ (in particular it has to allow sufficiently long advice strings, e.g. logarithmic advice is sufficient), \emph{any} distributional decision problem ${(\Dist,L)}$ admits an ${\FallU(\Gamma)}$-optimal polynomial-time estimator for ${(\Dist^\eta,L)}$. The construction of this estimator is rather trivial: the advice string for ${(K_0,K_1)}$ is the optimal (i.e. least ${\E_{x \sim D^{K_0}}[(P(x)-f(x))^2]}$) program that runs in time ${K_1}$ and is of length at most ${l(K_0,K_1)}$ where ${l: \Nats^2 \rightarrow \Nats}$ is some function which determines the allowed asymptotic advice length (${\Gamma}$ depends on ${l}$ and an analogous function ${r: \Nats^2 \rightarrow \Nats}$ which determines the allowed asymptotic number of random bits used by the estimators). The non-trivial part here is the definition of ${\FallU}$ which is s.t. allowing any estimator an amount of resources greater by a polynomial always translates to a reduction in error which lies in ${\FallU}$.
 
 The second (Theorem~\ref{thm:exists_smp}), which is another central result, shows that for suitable ${\Gamma}$ (logarithmic advice and enough random e.g. logarithmic amount of random bits is sufficient), any distributional decision\footnote{All of the theorems are described for decision problems in the overview for the sake of simplicity but we actually prove them for \enquote{estimation} problems i.e. ${f: \Words \rightarrow \Reals}$ instead of ${L \subseteq \Words}$. Here this generalisation is more important since any efficient algorithm producing ${(x,t)}$ pairs is the sampler of some distributional estimation problem.} problem ${(\Dist,L)}$ which is \emph{samplable} (i.e. it is possible to efficiently sample pairs ${(x,t)}$ where ${x \in \Words}$ is distributed approximately according to ${\Dist}$ and ${t \in \Rats}$ is an estimate of ${\chi_L(x)}$ which is approximately unbiased on average) admits an ${\FallU(\Gamma)}$-optimal polynomial-time estimator with the same advice strings as the sampler. In particular, if the sampler is uniform the estimator is also uniform.
 
-The samplability property allows recasting the estimation problem as a learning problem. That is, we use the sampler to generate a number (we use ${l(K_0,K_1)^4}$) of problem instances for which an unbiased estimate of the correct answer is known, and we should now generalize from these instances to an instance for which the correct answer is unknown. The optimal polynomial-time estimator we construct accomplishes this using the empirical risk minimization principle from statical learning theory, applied to a hypothesis space which consists of programs. Specifically, the estimator iterates over all programs of length at most ${l(K_0,K_1)}$, runs each of them on the samples ${\{(x_i,t_i)\}_{i \in [l(K_0,K_1)^4]}}$ for time ${K_1}$ getting estimates ${\{p_i\}_{i \in [l(K_0,K_1)^4]}}$ and computes the empirical risk ${\sum_{i \in [l(K_0,K_1)^4]}(p_i-t_i)^2}$. It then selects the program with the minimal risk and runs it on the input for time ${K_1}$ to get the desired estimate. This is similar to Levin's universal search which dovetails all programs to get optimality. The optimality of this estimator is also closely related to the fundamental theorem of statistical learning theory for agnostic PAC learning\cite{Shalev-Shwartz_2014}: like in agnostic PAC learning we get an estimate which is not  but is optimal within the hypothesis space (which in our case is the space of efficient estimators).
+The samplability property allows recasting the estimation problem as a learning problem. That is, we use the sampler to generate a number \textcolor{red}{(we use ${\mathcal{O}(l(K_0,K_1)^2)}$)} of problem instances for which an unbiased estimate of the correct answer is known, and we should now generalize from these instances to an instance for which the correct answer is unknown. The optimal polynomial-time estimator we construct accomplishes this using the empirical risk minimization principle from statical learning theory, applied to a hypothesis space which consists of programs. Specifically, the estimator iterates over all programs of length at most ${l(K_0,K_1)}$, runs each of them on the \textcolor{red}{samples ${\{(x_i,t_i)\}_{i \in [\mathcal{O}(l(K_0,K_1)^2)]}}$ for time ${K_1}$ getting estimates ${\{p_i\}_{i \in [\mathcal{O}(l(K_0,K_1)^2)]}}$ and computes the empirical risk ${\sum_{i \in [\mathcal{O}(l(K_0,K_1)^2)]}(p_i-t_i)^2}$}. It then selects the program with the minimal risk and runs it on the input for time ${K_1}$ to get the desired estimate. This is similar to Levin's universal search which dovetails all programs to get optimality. The optimality of this estimator is also closely related to the fundamental theorem of statistical learning theory for agnostic PAC learning\cite{Shalev-Shwartz_2014}: like in agnostic PAC learning we get an estimate which is not  but is optimal within the hypothesis space (which in our case is the space of efficient estimators).
 
 On the other hand, we rule out the existence of optimal polynomial-time estimators in the uniform case for certain problems. These negative results rely on the simple observation that if the veracity of ${x \in L}$ for ${x \sim \Dist^k}$ depends only on ${k}$, then advice strings of size $O(1)$ enable storing the exact answer to all such questions. Additionally, it is easy to see that an optimal polynomial-time estimator in the uniform case is still optimal when we allow ${O(1)}$ advice. This means that any optimal polynomial-time estimator for such a problem has to be a  polynomial-time estimator. So, any problem of this form that doesn't have uniform  polynomial-time estimators also doesn't have uniform optimal polynomial-time estimators. Consequently, any problem that is reducible to the former sort of problem also doesn't have optimal polynomial-time estimators.
 
@@ -373,7 +374,7 @@ Fix ${n \in \Nats}$. A \emph{distributional estimation problem of rank ${n}$} is
 
 \subsubsection{Growth Spaces and Polynomial-Time \texorpdfstring{$\Gamma$}{Γ}-Schemes}
 
-In the motivational model, the estimator was restricted to lie in a class of functions that factor through a fixed mapping. Of course we are interested in more realistic notions of efficiency. In the present work we consider restrictions on time complexity, access to random bits and size of advice strings. Spatial complexity is also of interest but treating it is out of our current scope. It is possible to consider weaker or stronger restrictions which we represent using the following abstraction:
+In the motivational model, the estimator was restricted to lie in a class of functions that factor through a fixed mapping. Of course we are interested in more realistic notions of efficiency. In the present work we consider restrictions on time complexity, access to random bits and size of advice strings. Spatial complexity is also of interest but treating it is out of our current scope. It is possible to consider weaker or stronger restrictions which we represent using the following abstraction \textcolor{red}{which is closely tied to big-$\mathcal{O}$ notation}:
 
 \begin{samepage}
 \begin{definition}
@@ -435,12 +436,13 @@ Fix ${n \in \Nats^{>0}}$. ${\gamma: \NatFun \Nats}$ is said to be \emph{steadily
 \item\label{con:def__sgrow__poly} There is ${s \in \NatPoly}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \gamma(J,k) \leq \frac{1}{2}\gamma(J,s(J,k))}$.
 \end{enumerate}
 \end{definition}
+\textcolor{red}{This could be thought of as a polynomial that is monotonically increasing in the last argument quickly enough that a polynomial increase in the last argument can double the available resources.}
 \end{samepage}
 
 \begin{samepage}
 \begin{example}
 
-For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, we define ${\Gamma_{\gamma^*}}$, a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. 
+For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, we define ${\Gamma_{\gamma^*}}$, a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. \textcolor{red}{This is the space of functions that are bounded above by the reference function ${\gamma^*}$ with the last argument growing at a polynomial rate.}
 
 To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p_1(J,k))}$ and ${\gamma_2(J,k) \leq \gamma^*(J,p_2(J,k))}$. Choose ${p,s \in \NatPoly}$ s.t. ${p \geq \max(p_1,p_2)}$ and ${s}$ is as in condition~\ref{con:def__sgrow__poly} of Definition~\ref{def:sgrow}.
 
@@ -460,20 +462,19 @@ We now introduce our notion of an \enquote{efficient} algorithm.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$. Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where\\ ${S: \Nats^n \times X \times \Words \times \Words \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \NatFun \Words$ are s.t.
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ \textcolor{red}{that correspond to the length of the random and advice strings}. Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where\\ ${S: \Nats^n \times X \times \Words \times \Words \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \NatFun \Words$ are s.t.
 
 \begin{enumerate}[(i)]
 
 \item $\max_{x \in X} \max_{y,z \in \Words} \T_S(K,x,y,z) \in \GammaPoly^n$
 
-\item $\max_{z \in \Words} \T_{\R_S}(K,z) \in \GammaPoly^n$
+\item $\max_{z \in \Words} \T_{\R_S}(K,z) \in \GammaPoly^n$ \textcolor{red}{Note that $\R_S$, the polynomial-time function that outputs the number of random bits to read, takes the advice string z as input.}
 
-\item The function $r: \NatFun n$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\GrowR$.
+\item The function $r: \NatFun \Nats$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\GrowR$.
 
 \item $\Abs{\A_S} \in \GrowA$
 
 \end{enumerate}
-
 Abusing notation, we denote the polynomial-time $\Gamma$-scheme $(S,\R_S,\A_S)$ by $S$. $S^K(x,y,z)$ will denote $S(K,x,y,z)$, $S^K(x,y)$ will denote $S(K,x,y,\A_S(K))$ and $S^K(x)$ will denote the $Y$-valued random variable which equals $S(K,x,y,a(K))$ for $y$ sampled from $\Un^{\R_S(K)}$. $\Un_S^K$ will denote $\Un^{\R_S(K)}$. We think of $S$ as a randomized algorithm with advice where $y$ are the internal coin tosses and $\A_S$ is the advice\footnote{Note that the number of random bits $\R_S(K)$ has to be efficiently computable modulo the advice $\A_S(K)$ rather than being an arbitrary function. This requirement is needed to prevent using the function $\R_S$ as advice in itself. In particular, when $\GrowA=\Gamma_0^2$, $S$ represents a uniform randomized algorithm.}. Similarly, $\R_S(K)$ will denote $\R_S(K,\A_S(K))$.
 
 We will use the notation $S: X \Scheme Y$ to signify $S$ is a polynomial-time $\Gamma$-scheme of signature $X \rightarrow Y$.
@@ -534,14 +535,15 @@ Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of ran
 
 \begin{proof}
 
-Choose ${p,q \in \NatPoly}$ and ${\{a_K, b_K \in \Words\}}_{K \in \Nats^n}$ s.t. there is only a finite number of different words ${a_K}$ and ${b_K}$ and for any ${K,L \in \Nats^n}$, ${x \in X}$ and ${y,z \in \Words}$
+Choose ${p,q \in \NatPoly}$ \textcolor{red}{(time bounds to emulate an arbitrary randomness function and algorithm from the uniform family)} and ${\{a_K, b_K \in \Words\}}_{K \in \Nats^n}$ 
+\textcolor{red}{(encodings of the randomness functions and algorithms, which by the definition of a uniform family, is a finite set.)} For any ${K,L \in \Nats^n}$, ${x \in X}$ and ${y,z \in \Words}$
 
 \begin{align*}
 \Ev^{q(L)}(b_K;\En_{\Nats^n}(L),z) &= \R_{S_K}(L,z) \\
 \Ev^{p(L)}(a_K;\En_{\Nats^n}(L),x,y,z) &= S_K^L(x,y,z) 
 \end{align*}
 
-Construct ${\Delta_{\mathcal{S}}}$ s.t. for any ${K \in \Nats^n}$, ${x \in X}$, ${y, w \in \Words}$, ${u \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{a_K}}}$ and\\ ${v \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{b_K}}}$
+\textcolor{red}{Now, use the nonzero advice string to encode which algorithm is to be used on which input.} Construct ${\Delta_{\mathcal{S}}}$ s.t. for any ${K \in \Nats^n}$, ${x \in X}$, ${y, w \in \Words}$, ${u \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{a_K}}}$ and\\ ${v \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{b_K}}}$
 
 \begin{align*}
 \A_{\Delta_{\mathcal{S}}}(K)&=\Chev{a_K,b_K,\A_{\mathcal{S}_K}(K)} \\
@@ -601,6 +603,8 @@ To verify condition \ref{con:def__fall__pol} note that ${2^{-K_{n-1}} \in \FallU
 
 For ${\varphi \equiv \infty}$ we use the notation ${\FallU:=\FallUt{\varphi}}$.
 
+\textcolor{red}{This is a very slowly-shrinking error space. As an example, when $\varepsilon_{1}(J,k):=\frac{\log\log(J)}{\log k}$ and $\varepsilon_{2}(J,k):=\frac{\log\log(J)}{\log\log k}$, then $\varepsilon_{1}(J,k)\in\FallU$, but $\varepsilon_{2}(J,k)\not\in\FallU$ because it shrinks too slowly to force the sum to converge.}
+
 \end{example}
 \end{samepage}
 
@@ -657,7 +661,7 @@ For any fall space $\Fall$, $\varepsilon \in \Fall$ and $\alpha \in \Reals$, if 
 
 \begin{proof}
 
-$$\varepsilon^\alpha = (\sup \varepsilon)^\alpha (\frac{\varepsilon}{\sup \varepsilon})^\alpha \leq  (\sup \varepsilon)^\alpha \frac{\varepsilon}{\sup \varepsilon} \in \Fall$$
+$$\varepsilon^\alpha = (\sup \varepsilon)^\alpha \left(\frac{\varepsilon}{\sup \varepsilon}\right)^\alpha \leq  (\sup \varepsilon)^\alpha \frac{\varepsilon}{\sup \varepsilon} \in \Fall$$
 \end{proof}
 
 \begin{samepage}
@@ -764,7 +768,7 @@ In this subsection we discuss some basic properties of optimal polynomial-time e
 
 \subsubsection{Optimality Relative to Uniform Families}
 
-Note that $\varepsilon$ in \ref{eqn:op} depends on $Q$. However in some sense the optimality condition is automatically uniform w.r.t. the resources required by $Q$.
+Note that $\varepsilon$ in \ref{eqn:op} depends on $Q$. However in some sense the optimality condition is automatically uniform w.r.t. the resources required by $Q$. \textcolor{red}{The upcoming Proposition \ref{prp:unif} can be used to reduce domination of a uniform family to domination of a single polynomial-time $\Gamma$-scheme constructed via Proposition \ref{prp:fam_diag}.}
 
 \begin{proposition}
 \label{prp:unif}
@@ -816,6 +820,8 @@ Observe that $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ is a growth space and 
 
 \begin{proof}
 
+\textcolor{red}{The proof will proceed by taking a $Q$ with access to extra randomness, and then considering another algorithm $\overline{Q}$ with access to the old amount of randomness, which uses the advice to encode an optimal prefix to the random string. Then we just need to show that $\overline{Q}$ dominates $Q$ and is dominated by $P$. This proof strategy also applies to the next proposition.}
+
 Consider any $Q: \Words \xrightarrow{\bar{\Gamma}} \Rats$. Suppose $\R_Q=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any $K \in \Nats^n$, choose 
 \[\bar{\A}_Q(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \Dist^{K} \times U^{r_{\mathfrak{R}}(K)}}[(Q^{K}(x,yz) - f(x))^2]\]
 
@@ -843,7 +849,6 @@ Denote $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ and $\bar{\Gamma}:=(\bar{\Ga
 \end{proposition}
 
 \begin{proof}
-
 Suppose $\R_{\bar{P}}=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any ${K \in \Nats^n}$, choose 
 
 \[\bar{\A}_P(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \Dist^{K} \times \Un^{r_{\mathfrak{R}}(K)}}[(\bar{P}^{K}(x,yz) - f(x))^2]\]
@@ -869,7 +874,7 @@ Although the word ensemble plays a central role in the definition of an optimal 
 Given a growth space $\Gamma_*$ of rank $n$, $\Fall$ is called \emph{$\Gamma_*$-ample} when there is\\ $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_*$.
 
 \end{definition}
-
+\textcolor{red}{The intuitive interpretation of this is that, when $\Gamma_*$ represents the amount of advice, the advice bits are sufficient to write down an approximation to some parameter with error at most $\zeta$.}
 \begin{samepage}
 \begin{example}
 
@@ -897,6 +902,8 @@ Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimati
 
 \end{proposition}
 
+\textcolor{red}{This essentially says that if there is enough advice available, then an optimal estimator continues to be optimal when a poly-time adversary with access to more random bits assigns weights to how important the various problem instances are. The proof will come after the following corollary.}
+
 The relationship to the role of the word ensemble is as follows.
 
 \begin{samepage}
@@ -908,7 +915,7 @@ Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimati
 \[\mathcal{E}^K(x):=\frac{\E_{y \sim \Un_W^K}[W^K(x,y)] \Dist^K(x)}{\E_{(x',y) \sim \Dist^K \times \Un_W^K}[W^K(x',y)]}\]
 
 Then, $P$ is an $\Fall_W(\Gamma)$-optimal estimator for $(\mathcal{E},f)$.
-
+\textcolor{red}{In short, if the distribution on problem instances is reweighted by a poly-time adversary, an optimal estimator will continue being optimal, although with an increased error if the expected weight assigned by the adversary keeps shrinking as K increases. Therefore, the property of being an optimal estimator is robust against distributional shift when enough advice is available.}
 \end{corollary}
 \end{samepage}
 
@@ -926,7 +933,7 @@ $$\E_{\mathcal{E}^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \\ \E_{\mathcal{E}^{
 
 Let $M$ be the supremum of the left hand side.
 
-$$\E_{\mathcal{E}^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \\ \E_{\mathcal{E}^{K} \times \Un_Q^{K}}[(Q^{K} - f)^2] + \min(\frac{\varepsilon(K)}{\E_{\Dist^{K} \times \Un_W^{K}}[W^{K}(x)]},M)$$
+$$\E_{\mathcal{E}^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \\ \E_{\mathcal{E}^{K} \times \Un_Q^{K}}[(Q^{K} - f)^2] + \min\left(\frac{\varepsilon(K)}{\E_{\Dist^{K} \times \Un_W^{K}}[W^{K}(x)]},M\right)$$
 
 The second term on the right hand side is clearly in $\Fall_W$.
 \end{proof}
@@ -934,6 +941,8 @@ The second term on the right hand side is clearly in $\Fall_W$.
 We now give the proof of Proposition~\ref{prp:weight}.
 
 \begin{proof}[Proof of Proposition \ref{prp:weight}]
+
+\textcolor{red}{Intuitively, if the result was false, then $W$ being high implies that the Brier score of $Q$ is less than the Brier score of $P$. Thus, the proof will construct a uniform family of algorithms that use their advice to encode an approximation of some number $t$, and use $P$ if $W$ assigns a weight less than the approximation, and $Q$ otherwise. $P$ dominates all the algorithms in this family, and after some reshuffling, and integrating over $t$, $W$ can be recovered, and this leads to the desired result.}
 
 Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho_\zeta^{K}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \GrowA$ s.t. for any $t \in [0, M]$, ${\Abs{\En_\Rats(\rho_\zeta^{K}(t))} \leq \gamma(K)}$.
 
@@ -958,7 +967,7 @@ We integrate both sides of the inequality over $t$ from 0 to $M$.
 
 \begin{equation}
 \label{eqn:prp__weight__prf1}
-\E[\int_0^M\theta(W^{K}-\rho_\zeta^{K}(t)) \dif t \cdot ((P^{K}-f)^2-(Q^{K}-f)^2)] \leq M \varepsilon(K)
+\E\left[\int_0^M\theta(W^{K}-\rho_\zeta^{K}(t)) \dif t \cdot ((P^{K}-f)^2-(Q^{K}-f)^2)\right] \leq M \varepsilon(K)
 \end{equation}
 
 For any $s \in \Reals$
@@ -971,14 +980,14 @@ $$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t = \int_0^{s-\zeta(K)} \dif t + \in
 
 $$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t = s-\zeta(K) + \int_{s-\zeta(K)}^{s+\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t$$
 
-$$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t - s = \zeta(K) + \int_{s-\zeta(K)}^{s+\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t$$
+$$\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t - s = -\zeta(K) + \int_{s-\zeta(K)}^{s+\zeta(K)} \theta(s-\rho_\zeta^{K}(t)) \dif t$$
 
 \begin{equation}
 \label{eqn:prp__weight__prf2}
-\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t - s \in [0,3\zeta(K)]
+\int_0^M \theta(s-\rho_\zeta^{K}(t)) \dif t - s \in [-\zeta(K),\zeta(K)]
 \end{equation}
 
-Combining \ref{eqn:prp__weight__prf1} and \ref{eqn:prp__weight__prf2} we conclude that for some $M' \in \Reals^{\geq 0}$
+Combining \ref{eqn:prp__weight__prf1} and \ref{eqn:prp__weight__prf2} we conclude that for some $M' \in \Reals$
 
 $$\E[W^{K} \cdot ((P^{K}-f)^2-(Q^{K}-f)^2)] \leq M \varepsilon(K) + M'\zeta(K)$$
 \end{proof}
@@ -997,7 +1006,7 @@ Assume ${\GrowA=\Gamma_0^n}$. Consider ${(\Dist,f)}$ a distributional estimation
 \end{samepage}
 
 \begin{proof}
-
+\textcolor{red}{This proof proceeds by using the standard "domaination of a uniform family" result to dominate all the algorithms with a bounded-size input string that never changes. An algorithm with constant advice can be interpreted as switching around within this family, and thus is dominated.}
 Consider any ${Q: \Words \xrightarrow{\Gamma_1} \Rats}$. Choose ${l \in \Nats}$ s.t. ${\forall K \in \Nats^n: \Abs{\A_Q(K)} \leq l}$. For each\\ $a \in \Bool^{\leq l}$, construct ${Q_a: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x,y \in \Words}$
 
 \begin{align*}
@@ -1034,7 +1043,7 @@ Consider $(\Dist,f)$ a distributional estimation problem and ${P: \Words \Scheme
 \end{equation}
 
 For the sake of brevity, we will say \enquote{${\ESG}$-optimal estimator} rather than \enquote{${\ESG}$-optimal polynomial-time estimator.}
-
+\textcolor{red}{This definition is interesting because it can be interpreted as a game against an adversary that is allowed to look at what the estimator outputs, which then predicts whether the estimator will overestimate or underestimate the true value. $\ESG$-optimal polynomial-time estimators are inexploitable against this class of adversaries. As we will show shortly, inexploitability is a slightly stronger condition than optimality, in the sense than any $\ESG$-optimal polynomial-time estimator is $\mathcal{F}$-optimal, but going in the other direction requires at most logarithmic advice and is associated with an increase in the error. The inexploitability property will be used in many additional proofs.}
 \end {definition}
 
 The following theorem is the analogue in our language of the previous fact about inner product spaces. The notation $\Fall^{\frac{1}{2}}$ refers to Definition~\ref{def:fall_space_power}, i.e. it is just the set of square roots of all the functions in $\Fall$.
@@ -1062,7 +1071,7 @@ $$\E_{\Dist^{K} \times \Un_P^{K}}[(P^{K} - f)^2] \leq \E_{\Dist^{K} \times \Un_P
 
 $$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f)^2 - (P^{K} - t(K)S^{K} - f)^2] \leq \varepsilon(K)$$
 
-$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(-t(K)S^{K} + 2 (P^{K} - f)) S^{K}] t(K) \leq \varepsilon(K)$$
+$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(-t(K)(S^{K})^2 + 2 (P^{K} - f)) S^{K}] t(K) \leq \varepsilon(K)$$
 
 $$-\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(S^{K})^2] t(K)^2 + 2 \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] t(K) \leq \varepsilon(K)$$
 
@@ -1074,17 +1083,17 @@ $$2 \E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] \sigma(K
 
 Multiplying both sides by $2^{m(K)-1}$ we get
 
-$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] \sigma(K) \leq \frac{1}{2}((\sup \Abs{S^{K}})^2 2^{-m(K)} + \varepsilon(K) 2^{m(K)})$$
+$$\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}] \sigma(K) \leq \frac{1}{2}\left((\sup \Abs{S^{K}})^2 2^{-m(K)} + \varepsilon(K) 2^{m(K)}\right)$$
 
 Let $\sigma(K):=\Sgn \E_{\Dist^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}]$.
 
 $$\Abs{\E_{\Dist^{K} \times \Un_P^{K} \times \Un_S^{K}}[(P^{K} - f) S^{K}]} \leq \frac{1}{2}((\sup \Abs{S^{K}})^2 2^{-m(K)} + \varepsilon(K) 2^{m(K)})$$
 
-Let $m(K):=\min(\Floor{\frac{1}{2}\log \max(\frac{1}{\varepsilon(K)},1)},\Floor{\log \frac{1}{\zeta(K)}})$.
+Let $m(K):=\min\left(\Floor{\frac{1}{2}\log \max(\frac{1}{\varepsilon(K)},1)},\Floor{\log \frac{1}{\zeta(K)}}\right)$.
 
-$$\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max(\min(\varepsilon(K)^{\frac{1}{2}},1),\zeta(K)) + \frac{1}{2}\varepsilon(K) \min(\max(\varepsilon(K)^{-\frac{1}{2}},1),\zeta(K)^{-1})$$
+$$\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max\left(\min\left(\varepsilon(K)^{\frac{1}{2}},1\right),\zeta(K)\right) + \frac{1}{2}\varepsilon(K) \min\left(\max\left(\varepsilon(K)^{-\frac{1}{2}},1\right),\zeta(K)^{-1}\right)$$
 
-$$\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max(\varepsilon(K)^{\frac{1}{2}},\zeta(K)) + \frac{1}{2} \max(\varepsilon(K)^{\frac{1}{2}},\varepsilon(K))$$
+$$\Abs{\E[(P^{K} - f) S^{K}]} \leq (\sup \Abs{S^{K}})^2 \max\left(\varepsilon(K)^{\frac{1}{2}},\zeta(K)\right) + \frac{1}{2} \max\left(\varepsilon(K)^{\frac{1}{2}},\varepsilon(K)\right)$$
 
 The right hand side is obviously in $\Fall^{\frac{1}{2}}$.
 \end{proof}
@@ -1113,12 +1122,14 @@ $$\E[(P^{K}-f)^2]+\E[(Q^{K}-P^{K})^2]=\E[(Q^{K}-f)^2]+2\E[(P^{K}-Q^{K})(P^{K}-f)
 $$\E[(P^{K}-f)^2] \leq \E[(Q^{K}-f)^2] + 2\E[(P^{K}-Q^{K})(P^{K}-f)]$$
 
 We can assume $Q$ is bounded without loss of generality since given any $Q$ it easy to construct bounded $\tilde{Q}$ s.t. $\E[(\tilde{Q}^{K}-f)^2] \leq \E[(Q^{K}-f)^2]$. Applying \ref{eqn:op_sharp}, we get \ref{eqn:op}.
+
+\textcolor{red}{It is instructive to compare this proof with the proof of the Pythagorean theorem in linear algebra.}
 \end{proof}
 
 \subsection{Simple Example}
 \label{sec:fundamentals__one_way}
 
-The concept of an optimal polynomial-time estimator is in some sense complementary to the concept of pseudorandomness: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal polynomial-time estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal polynomial-time estimator, we use the concept of a hard-core predicate (which may be regarded as en elementary example of pseudorandom). The notation $\Fall_\text{neg}$ below refers to the fall space defined in Example~\ref{exm:fall_neg} (functions that fall faster than any polynomial).
+The concept of an optimal polynomial-time estimator is in some sense complementary to the concept of pseudorandomness: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal polynomial-time estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal polynomial-time estimator, we use the concept of a hard-core predicate (which may be regarded as en elementary example of pseudorandomness). The notation $\Fall_\text{neg}$ below refers to the fall space defined in Example~\ref{exm:fall_neg} (functions that fall faster than any polynomial). \textcolor{red}{$\frac{1}{2}$ is an optimal polynomial-time estimator for a hard-core predicate.}
 
 \begin{theorem}
 \label{thm:hard_core}
@@ -1247,6 +1258,9 @@ Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimati
 Then, $\alpha^{-1}\delta^2 \in \Fall$.
 
 \end{theorem}
+\textcolor{red}{Looking at the definition of an $\ESG$-optimal estimator, we see that, when $Q$ is $\{0,1\}$-valued to pick out a small subset of inputs, $P$ may be biased on that small subset, because the bias isn't normalized by dividing by the fraction of probability mass where $Q$ outputs 1. In the language of the above theorem, $\delta$ lies in $\Fall$, but $\frac{\delta}{\alpha}$ may not.}
+
+\textcolor{red}{Proposition~\ref{prp:weight} says that, given ample advice, optimal estimators continue to be optimal (although with increased error) on small subsets of their input, which is a slightly stronger condition. Therefore, the above theorem essentially says that if enough advice is available for Proposition~\ref{prp:weight} to apply, the property of resistance to reweighting implies that, for the subset that $W$ picks out, the unnormalized bias times the normalized bias is a small term that lies in $\Fall$.}
 
 To see the relationship between Theorem~\ref{thm:calib} and calibration, consider the following corollary.
 
@@ -1321,7 +1335,7 @@ Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\l
 
 \begin{align*}
 I&:=\{K \in \Nats^n \mid \frac{\Abs{\delta(K)}}{\alpha(K)} \geq \zeta(K)\} \\
-E^{K}&:=\Rats \cap [\frac{\Abs{\delta(K)}}{2\alpha(K)},\frac{\Abs{\delta(K)}}{\alpha(K)}] \\
+E^{K}&:=\Rats \cap \left[\frac{\Abs{\delta(K)}}{2\alpha(K)},\frac{\Abs{\delta(K)}}{\alpha(K)}\right] \\
 \epsilon(K) &\in (\Sgn \delta(K)) \cdot \Argmin{t \in E^{K}} \Abs{\En_\Rats(t)}
 \end{align*}
 
@@ -1332,6 +1346,8 @@ It is easy to see that ${\Abs{\En_\Rats(\epsilon)} = O(\log \frac{\alpha}{\Abs{\
 \R_Q(K) &= \R_P(K) \\
 Q^{K}(x,y) &= P^{K}(x,y)-\epsilon(K)
 \end{align*}
+
+\textcolor{red}{This algorithm uses the advice string to check whether the normalized bias is too high, and if it is, it perturbs the estimated values accordingly.}
 
 Applying Proposition~\ref{prp:weight} to $P$, $Q$ and $W$, we conclude there is $\varepsilon \in \Fall$ s.t.
 
@@ -1349,13 +1365,13 @@ $$ \epsilon(K) (2 \delta(K) - \alpha(K)\epsilon(K)) \leq \varepsilon(K)$$
 
 Dividing both sides by $ \alpha(K)$ we get
 
-$$\epsilon(K) (\frac{2\delta(K)}{\alpha(K)} - \epsilon(K)) \leq \frac{\varepsilon(K)}{\alpha(K)}$$
+$$\epsilon(K) \left(\frac{2\delta(K)}{\alpha(K)} - \epsilon(K)\right) \leq \frac{\varepsilon(K)}{\alpha(K)}$$
 
-$$\frac{\delta(K)^2}{\alpha(K)^2}-(\epsilon(K) - \frac{\delta(K)}{\alpha(K)})^2 \leq \frac{\varepsilon(K)}{\alpha(K)}$$
+$$\frac{\delta(K)^2}{\alpha(K)^2}-\left(\epsilon(K) - \frac{\delta(K)}{\alpha(K)}\right)^2 \leq \frac{\varepsilon(K)}{\alpha(K)}$$
 
 $\epsilon$ is between $\frac{\delta}{2\alpha}$ and $\frac{\delta}{\alpha}$ therefore $(\epsilon-\frac{\delta}{\alpha})^2 \leq (\frac{\delta}{2\alpha} - \frac{\delta}{\alpha})^2$  which yields
 
-$$\frac{\delta(K)^2}{\alpha(K)^2}-(\frac{\delta(K)}{2\alpha(K)} - \frac{\delta(K)}{\alpha(K)})^2 \leq \frac{\varepsilon(K)}{\alpha(K)}$$
+$$\frac{\delta(K)^2}{\alpha(K)^2}-\left(\frac{\delta(K)}{2\alpha(K)} - \frac{\delta(K)}{\alpha(K)}\right)^2 \leq \frac{\varepsilon(K)}{\alpha(K)}$$
 
 $$\frac{3}{4} \cdot \frac{\delta(K)^2}{\alpha(K)^2} \leq \frac{\varepsilon(K)}{\alpha(K)}$$
 
@@ -1418,7 +1434,7 @@ This identity is tautologous if interpreted as a definition of $\E[F \mid A]$. H
 
 The language of optimal polynomial-time estimators provides a natural way to define an analogue of conditional expectation. Namely, consider a distributional estimation problem $(\Dist, f)$ and a decision problem ${L \subseteq \Words}$. Then, $P: \Words \Scheme \Rats$ represents the conditional expectation of $f$ given $L$ when it is an optimal polynomial-time estimator for $(\Dist \mid L, f)$. That is, the conditional expectation is the best estimate of $f(x)$ when the problem instance $x$ is sampled with the \emph{promise} $x \in L$.
 
-The above perspective allows us stating and proving non-tautological theorems analogous to \ref{eqn:cond_ev}. We give two such theorems, corresponding to two different ways to group the variables in \ref{eqn:cond_ev}.
+The above perspective allows us stating and proving non-tautological theorems analogous to \ref{eqn:cond_ev}. We give two such theorems, corresponding to two different ways to group the variables in \ref{eqn:cond_ev}. \textcolor{red}{Let $\chi_{L}$ be the indicator function for $L$. The first states that an optimal estimator for $\chi_{L}*f$ can be made by multiplying together an optimal estimator for $\chi_{L}$ and a less accurate optimal estimator for $f|L$, and the second theorem states that a less accurate optimal estimator for $f|L$ can be made by dividing the output of an optimal estimator for $\chi_{L}*f$ by the output of an optimal estimator for $L$. The amplification of error comes about from $L$ being a low-probability event, and conditional probabilities for low-probability events being less accurate than conditional probabilities for high-probability events.}
 
 \begin{samepage}
 \begin{theorem}
@@ -1741,13 +1757,13 @@ Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\MGrow$-scheme of signa
 
 Abusing notation, we denote the polynomial-time $\MGrow$-scheme $(S,\R_S,\M_S)$ by $S$.
 
-$\R_S^K(z)$ will denote $\R_S(K,z)$. $\UM_S^K \in \mathcal{P}(\Words \times \Words)$ is given by 
+$\R_S^K(z)$ will denote $\R_S(K,z)$. $\UM_S^K \in \mathcal{P}(\Words \times \Words)$ is \textcolor{red}{the joint probability distribution over advice bitstrings and randomness bitstrings,} given by 
 
 \[\UM_S^K(y,z):= \M_S^K(z) \delta_{\Abs{y},\R_S^K(z)} 2^{-\R_S^K(z)}\]
 
 $S^K(x,y,z)$ will denote $S(K,x,y,z)$. Given $w=(y,z)$, $S^K(x,w)$ will denote $S(K,x,y,z)$. $S^K(x)$ will denote the $Y$-valued random variable which equals $S(K,x,y,z)$ for $(y,z)$ sampled from $\UM_S^K$. $S_x^K$ will denote the probability distribution of this random variable i.e. $S_x^K$ is the push-forward of $\UM_S^K$ by the mapping $(y,z) \mapsto S(K,x,y,z)$.
 
-We think of $S$ as a randomized algorithm with advice which is random in itself. In particular any polynomial-time $\Gamma$-scheme can $S$ can be regarded as a polynomial-time $\MGrow$-scheme with
+We think of $S$ as a randomized algorithm with advice which is random in itself. In particular any polynomial-time $\Gamma$-scheme $S$ can be regarded as a polynomial-time $\MGrow$-scheme with
 
 \[\M_S^K(z):=\delta_{z\A_S^K}\]
 
@@ -1815,13 +1831,14 @@ We require that the function $\varepsilon(K):=\E_{x \sim \Dist^{K}}[\Abs{f_\sigm
 
 \end{enumerate}
 
+\textcolor{red}{This is easily seen to capture the requirement of being able to efficiently generate question-answer pairs, such that the distribution of questions converges to the distribution $\Words$, and the answers converge to the true output of the function $f$.}
+
 When $\sup{\Abs{\sigma_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $(\Dist,f)$}.
 
 \end{definition}
 \end{samepage}
 
-For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability become very weak, as seen in the following propositions.
-
+For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability become very weak, as seen in the following propositions, \textcolor{red}{which essentially say that if the bitstrings on which $\Words$ has support are short enough relative to the length of the advice string, then the randomized advice can just duplicate the distribution. And if there is ample advice available, then the randomized advice can also output an approximation to the true value of $f(x)$ along with $x$.}
 \begin{samepage}
 \begin{proposition}
 \label{prp:adv_mgamma_smp}
@@ -1861,11 +1878,11 @@ $$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Abs{\Dist
 
 $$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} \sum_{x \in \Words} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}}$$
 
-$$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}}+\sum_{x \in \Bool^{>l(K)}} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}})$$
+$$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} \left(\sum_{x \in \Bool^{\leq l(K)}} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}}+\sum_{x \in \Bool^{>l(K)}} \Dist^{K}(x) \Abs{1-\frac{\chi^K(x)}{\Dist^{K}(\Bool^{\leq l(K)})}}\right)$$
 
-$$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} (\sum_{x \in \Bool^{\leq l(K)}} \Dist^{K}(x)(\frac{1}{\Dist^{K}(\Bool^{\leq l(K)})}-1)+\sum_{x \in \Bool^{>l(K)}} \Dist^{K}(x))$$
+$$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} \left(\sum_{x \in \Bool^{\leq l(K)}} \Dist^{K}(x)\left(\frac{1}{\Dist^{K}(\Bool^{\leq l(K)})}-1\right)+\sum_{x \in \Bool^{>l(K)}} \Dist^{K}(x)\right)$$
 
-$$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} (\Dist^{K}(\Bool^{\leq l(K)})(\frac{1}{\Dist^{K}(\Bool^{\leq l(K)})}-1)+1 - \Dist^{K}(\Bool^{\leq l(K)}))$$
+$$\Dtv(\Dist^{K}, \sigma_\bullet^K) = \frac{1}{2} \left(\Dist^{K}(\Bool^{\leq l(K)})\left(\frac{1}{\Dist^{K}(\Bool^{\leq l(K)})}-1\right)+1 - \Dist^{K}(\Bool^{\leq l(K)})\right)$$
 
 $$\Dtv(\Dist^{K}, \sigma_\bullet^K) = 1-\Dist^{K}(\Bool^{\leq l(K)})$$
 
@@ -1923,7 +1940,7 @@ We now introduce the notions of samplability over a given \enquote{base space} $
 
 Consider a word ensemble $\Dist$, an encoded set $Y$ and a family of Markov kernels ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$. $\Dist$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\Dist^{K}}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
 
-In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$ relative to $\pi$}.
+In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$ relative to $\pi$}. \textcolor{red}{In short, even though the underlying distribution may not be samplable, if some evidence ($y$) is given, that permits sampling from the distribution conditional on $y$.}
 
 \end{definition}
 
@@ -1952,7 +1969,7 @@ When $\sup{\Abs{\sigma_1}} < \infty$, $\sigma$ is called a \emph{polynomial-time
 
 Note that relative samplability reduces to absolute (ordinary) samplability when $Y=\bm{1}$.
 
-The following propositions are basic properties of samplable ensembles and problems which often come in handy.
+The following propositions are basic properties of samplable ensembles and problems which often come in handy. \textcolor{red}{Proposition~\ref{prp:smp} states that the expectation of a efficiently computable function $h(x)$ remains unchanged when $x$ is replaced with the sampler of $\Dist$, and Proposition~\ref{prp:gen} states that the expectation of the product of $h(x)$ and $f(x)$ remains unchanged when $x$ and $f(x)$ are replaced by question/answer pairs produced by the sampler for $(\Dist,f)$.}
 
 \begin{samepage}
 \begin{proposition}
@@ -2042,8 +2059,9 @@ Independent random variables $F_1, F_2$ satisfy
 
 To formulate an analogous property for optimal polynomial-time estimators, we need a notion of independence for distributional decision problems which doesn't make the identity tautologous. Consider distributional decision problems $(\Dist, f_1)$, $(\Dist, f_2)$. Informally, $f_1$ is \enquote{independent} of $f_2$ when learning the value of $f_2(x)$ provides no efficiently accessible information about $f_1(x)$. In the present work, we won't try to formalise this in full generality. Instead, we will construct a specific scenario in which the independence assumption is justifiable.
 
-We start with an informal description. Suppose that $f_1(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_1(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\Dist \mid \pi^{-1}(y)$ for which $f_2(x')$ is known. Then, the knowledge of $f_2(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge.
+We start with an informal description. Suppose that $f_1(x)$ depends only on part $\pi(x)$ of the information in $x$ i.e. $f_1(x) = g(\pi(x))$. Suppose further that given $y=\pi(x)$ it is possible to efficiently produce samples $x'$ of $\Dist \mid \pi^{-1}(y)$ for which $f_2(x')$ is known. Then, the knowledge of $f_2(x)$ doesn't provide new information about $g(\pi(x))$ since equivalent information can be efficiently produced without this knowledge, by observing $y$.
  Moreover, if we can only efficiently produce samples $x'$ of $\Dist \mid \pi^{-1}(y)$ together with $\tilde{f}_2(x')$ an \emph{unbiased estimate} of $f_2(x')$, we still expect the analogue of \ref{eqn:ev_mult} to hold since the expected value of $\tilde{f}_2(x') - f_2(x')$ vanishes for any given $x'$ so it is uncorrelated with $f_1(x)$.
+ \textcolor{red}{It is instructive to consider the special case where $\pi$ is the identity mapping, and $g=f_{2}$. If the optimal estimators for $f_{1}$ and $f_{2}$ have correlated overestimates and underestimates, then multiplying together the optimal estimators may fail to be an optimal estimator. The requirement that $(\Dist,f)$ is sampleable prevents this, and ensures that $f_{1}$ and $f_{2}$ are "independent enough" for multiplying together the optimal estimators to be an optimal estimator for $f_{1}f_{2}$.}
  
 The following theorem formalises this setting.
 
@@ -2076,7 +2094,7 @@ Then, $P$ is an $\ESG$-optimal estimator for $(\Dist,f_1 f_2)$.
 \end{theorem}
 \end{samepage}
 
-In order to prove Theorem~\ref{thm:mult} we will need the following proposition.
+In order to prove Theorem~\ref{thm:mult} we will need the following proposition\textcolor{red}{, which takes the defining inexploitability property of an $\ESG$-optimal estimator, and extends it to the adversary $S$ having access to randomized advice, which can be done because deterministic advice can copy the "luckiest possible advice string" drawn from the distribution over advice strings.}
 
 \begin{samepage}
 \begin{proposition}
@@ -2165,7 +2183,7 @@ By Proposition~\ref{prp:mixed_ort}, this implies
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \equiv 0 \pmod \Fall$$
 \end{proof}
 
-The following corollary demonstrates one natural scenario in which the conditions of Theorem~\ref{thm:mult} hold.
+The following corollary demonstrates one natural scenario in which the conditions of Theorem~\ref{thm:mult} hold. \textcolor{red}{The scenario is one where the distribution is $\Dist_{1}\times\Dist_{2}$, and the task is to estimate $f_{1}(x_{1})f_{2}(x_{2})$. By Theorem~\ref{thm:mult}, this can be done if there is a sampler for $(\Dist_{2},f_{2})$, and a sampler for $\Dist_{1}$, because the two samplers can be put together to approximately sample from $\Dist_{1}\times\Dist_{2}$, and this is a sufficient condition for the product of the optimal estimators to be an optimal estimator.}
 
 \begin{samepage}
 \begin{corollary}
@@ -2180,7 +2198,7 @@ P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
 \end{corollary}
 \end{samepage}
 
-In order to prove Corollary~\ref{crl:dir_prod}, we'll need the following propositions
+In order to prove Corollary~\ref{crl:dir_prod}, we'll need \textcolor{red}{to prove several minor propositions first. (original: "the following propositions")}
 
 \begin{samepage}
 \begin{proposition}
@@ -2365,7 +2383,7 @@ In particular, for any ${x_1 \in \Supp \sigma_{1\bullet}^K}$ and $x_2 \in \Words
 
 In this section we study notions of Karp reduction between distributional estimation problems such that the pull-back of an optimal polynomial-time estimator is an optimal polynomial-time estimator. It is also interesting to study Cook reductions but we avoid it in the present work.
 
-First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose. 
+First, we demonstrate that the notion of Karp reduction used in average-case complexity theory is insufficiently strong for our purpose, \textcolor{red}{This is done by considering a one-way function $\pi$ such that $f(x)=g(\pi(x))$. However, because it is much easier to compute $f(x)$ given $x$ than $g(\pi(x))$ given $\pi(x)$, an optimal estimator for $g$ will be substantially less accurate than an optimal estimator for $f$.} 
 
 Consider the setting of Corollary~\ref{crl:one_way}. Denote $\Dist^k:=\Un^{2k}$ and define ${\chi: \Supp \Dist \rightarrow \Bool}$ s.t. for any $x,y \in \Bool^k$, $\chi(xy)$ = $x \cdot y$. Construct $\pi_f: \Words \Scheme \Words$ s.t. for any\\ $x,y \in \Bool^k$, ${\pi_f^k(xy) = \Chev{f(x),y}}$. $\pi_f$ can be regarded as a Karp reduction of $(\Dist, \chi)$ to $(\Dist_{(f)},\chi_f)$ since for any ${z \in \Supp \Dist^k}$ we have $\chi_f(\pi_f^k(z))=\chi(z)$ and $(\pi_f)_*\Dist=\Dist_{(f)}$\footnote{This is a much stronger condition than what is needed for a reduction to preserve average-case complexity. See \cite{Bogdanov_2006} for details.}. However, the pullback of $P$ is \emph{not} an $\Fall_{\text{neg}}(\Gamma)$-optimal estimator for $(\Dist,\chi)$ since its error is $\E_{z \sim \Dist^k}[(\frac{1}{2}-\chi(z))^2]=\frac{1}{4}$ whereas we can construct $Q: \Words \Scheme \Rats$ s.t. for any $z \in \Supp \Dist^k$, $Q^k(z)=\chi(z)$ and therefore $\E_{z \sim \Dist^k}[(Q^k(z)-\chi(z))^2]=0$.
 
@@ -2394,7 +2412,7 @@ Consider $(\Dist,f)$, $(\mathcal{E},g)$ distributional estimation problems and $
 \end{definition}
 \end{samepage}
 
-Note that condition~\ref{con:def__psp_reduce__smp} is violated in the one-way function example above.
+Note that condition~\ref{con:def__psp_reduce__smp} is violated in the one-way function example above\textcolor{red}{, so it can be seen as a formalization of the requirement that the problem doesn't become significantly more difficult after applying $\pi$.}
 
 Precise strict pseudo-invertible $\EG$-reductions preserve $\ESG$-optimal estimators as a simple corollary of Theorem~\ref{thm:mult}:
 
@@ -2532,7 +2550,7 @@ Suppose $\gamma \in \GammaPoly^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Con
 
 \begin{align}
 \label{eqn:thm__sp_reduce__rpf}\R_{P_f}(K) &= \gamma(K) (\R_{P_g}(K) + \R_\pi(K)) \\
-\label{eqn:thm__sp_reduce__pf}P_f^K(x, \prod_{i \in [\gamma(K)]} w_i z_i) &= \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i)
+\label{eqn:thm__sp_reduce__pf}P_f^K\left(x, \prod_{i \in [\gamma(K)]} w_i z_i\right) &= \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i)
 \end{align}
 
 Then, $P_f$ is an $\ESG$-optimal estimator for $(\Dist, f)$.
@@ -2556,13 +2574,19 @@ Consider $\gamma \in \GammaPoly^n$, $\Dist$ a word ensemble and $\bar{g}: \Words
 
 \begin{proof}
 
-Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$.
+Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$. \textcolor{red}{By the equality of $\Abs{X}$ and $\sqrt{X^2}$, applying Jensen's Inequality to move the square inside the second expectation, and partially pulling the $\frac{1}{\gamma(K)}$ out,}
 
 \begin{align*}
-&\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq\\ &\E_{\Dist^{K}}[\E_{\Un_\gamma^K}[(\E_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))^2]^{\frac{1}{2}}]
+&\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq\\ &\frac{1}{\sqrt{\gamma(K)}}\E_{\Dist^{K}}\left[\sqrt{\frac{1}{\gamma(K)}\E_{\Un_\gamma^K}\left[\left(\sum_{i\in[\gamma(K)]}\E_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]- \bar{g}(\pi^K(x,z_i))\right)^2\right]}\right]
 \end{align*}
 
-\[\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \frac{1}{\gamma(K)^{\frac{1}{2}}} \E_{\Dist^{K}}[\Var_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]^{\frac{1}{2}}]\]
+\textcolor{red}{Because the $z_{i}$ are i.i.d, the sum of the variance is the variance of the sum, so}
+
+\[\E_{\Un_\gamma^K}\left[\left(\sum_{i\in[\gamma(K)]}\E_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]- \bar{g}(\pi^K(x,z_i))\right)^2\right]=\gamma(K)\Var_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]\]
+
+\textcolor{red}{Substituting this into the previous equation, canceling $\gamma(K)$, and applying the fact that $\sqrt{\Var(X)}\le\sup\Abs{X}$, we get}
+
+\[\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq \frac{\sup\Abs{\overline{g}}}{\gamma(K)^{\frac{1}{2}}}\]
 %
 \end{proof}
 
@@ -2576,7 +2600,7 @@ Using the construction of $P_f$, the assumption on $\gamma$ and Proposition~\ref
 
 \begin{align*}
 &\E[(P_f^K - f)S] \equiv\\ 
-&\E_{\Dist^{K} \times \Un_{PS}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i) - \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall
+&\E_{\Dist^{K} \times \Un_{PS}^K}\left[\left(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w_i) - \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))\right)S(x,P_f^K(x))\right] \pmod \Fall
 \end{align*}
 
 \[\E[(P_f^K - f)S] \equiv \frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \E_{\Dist^{K} \times \Un_{PS}^K}[(P_g^K(\pi^K(x,z_i),w_i) - \bar{g}(\pi^K(x,z_i)))S(x,P_f^K(x))] \pmod \Fall\]
@@ -2589,17 +2613,17 @@ Let $\sigma$ be a polynomial-time $\EMG$-sampler of $\Dist$ relative to ${\pi}$.
 
 \begin{align*}
 \Dist_\pi^K &:= \pi_*^K\Dist^{K} \\
-\Un_0^K&:=(\prod_{i \in [\gamma(K)]} \Un_{P_g}^K) \times (\prod_{i \in [\gamma(K)] \setminus 0} \Un_{\pi}^K) \times \Un_S^K \times \UM_\sigma^K 
+\Un_0^K&:=\left(\prod_{i \in [\gamma(K)]} \Un_{P_g}^K\right) \times \left(\prod_{i \in [\gamma(K)] \setminus 0} \Un_{\pi}^K\right) \times \Un_S^K \times \UM_\sigma^K 
 \end{align*}
 
 Applying Proposition~\ref{prp:smp} we get
 %Denoting ${y_i:=\pi^K(x,z_i)}$
 
-\[\E[(P_f^K - f)S] \equiv\E_{\Dist_\pi^K \times \Un_0^K}[(P_g^K - \bar{g})S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
+\[\E[(P_f^K - f)S] \equiv\E_{\Dist_\pi^K \times \Un_0^K}\left[(P_g^K - \bar{g})S\left(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_i)))\right)\right] \pmod \Fall\]
 
 Using condition~\ref{con:def__sp_reduce__dist} of Definition~\ref{def:sp_reduce}, we get
 
-\[\E[(P_f^K - f)S] \equiv \E_{\mathcal{E}^{K} \times \Un_0^K}[(P_g^K - g)S(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_j))))] \pmod \Fall\]
+\[\E[(P_f^K - f)S] \equiv \E_{\mathcal{E}^{K} \times \Un_0^K}\left[(P_g^K - g)S\left(\sigma^K,\frac{1}{\gamma(K)}(P_g^K+\sum_{i \in [\gamma(K)] \setminus 0} P_g^K(\pi^K(\sigma^K,z_j)))\right)\right] \pmod \Fall\]
 
 $P_g$ is a $\ESG$-optimal estimator for $(\mathcal{E},g)$, therefore
 
@@ -2608,6 +2632,7 @@ $P_g$ is a $\ESG$-optimal estimator for $(\mathcal{E},g)$, therefore
 \end{proof}
 
 \begin{samepage}
+\textcolor{red}{As shown above, strict pseudo-invertible reductions preserve $\ESG$-optimal estimators. We will soon see that they preserve $\EG$-optimal estimators as well, as Theorem~\ref{thm:sp_reduce} states.}
 \begin{theorem}
 \label{thm:sp_reduce}
 
@@ -2615,7 +2640,7 @@ Suppose $\gamma \in \GammaPoly^n$ is s.t. $\gamma^{-\frac{1}{2}} \in \Fall$. Con
 
 \begin{align}
 \label{eqn:thm__sp_reduce__rpf}\R_{P_f}(K) &= \R_{P_g}(K) + \gamma(K) \R_\pi(K) \\
-\label{eqn:thm__sp_reduce__pf}P_f^K(x, w \prod_{i \in [\gamma(K)]} z_i) &= \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w)
+\label{eqn:thm__sp_reduce__pf}P_f^K\left(x, w \prod_{i \in [\gamma(K)]} z_i\right) &= \frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]} P_g^K(\pi^K(x,z_i),w)
 \end{align}
 
 
@@ -2672,24 +2697,26 @@ The right hand side has the form of the right hand side in \ref{eqn:prp__smp} en
 
 \[\E_{\Dist^{K} \times \Un_\pi^K \times \Un_{P_g}^K}[((P_g \circ \pi)^K-\bar{g} \circ \pi^K)^2] \leq \E_{\Dist^{K} \times \Un_\pi^K \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+(P_g \circ \pi)^K - \bar{g} \circ \pi^K)^2] \pmod \Fall\]
 
-We can consider the expressions within the expected values on both sides as random variables w.r.t. $\Un_\pi^K$ while fixing the other components of the distribution. This allows us applying Proposition~\ref{prp:ev_diff_sq} to the difference between the right hand side and the left hand side (with the terms that don't depend on $\Un_\pi^K$ playing the role of the constants), which results in moving the expected value over $\Un_\pi^K$ inside the squares:
+We can consider the expressions within the expected values on both sides as random variables w.r.t. $\Un_\pi^K$ while fixing the other components of the distribution. This allows us applying Proposition~\ref{prp:ev_diff_sq} to the difference between the right hand side and the left hand side (with the terms that don't depend on $\Un_\pi^K$ playing the role of the constants), which results in moving the expected value over $\Un_\pi^K$ inside the squares. \textcolor{red}{Let $\Un^K_{PQ}:=\Un^K_{Q_f}\times \Un^K_{P_f}$.}
 
-\[\E_{\Dist^{K} \times \Un_{P_g}^K}[\E_{\Un_\pi^K}[(P_g \circ \pi)^K-\bar{g} \circ \pi^K]^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K - \bar{g} \circ \pi^K])^2] \pmod \Fall\]
+\[\E_{\Dist^{K} \times \Un_{P_g}^K}[\E_{\Un_\pi^K}[(P_g \circ \pi)^K-\bar{g} \circ \pi^K]^2] \leq \E_{\Dist^{K} \times \Un_{PQ}^K} [(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K - \bar{g} \circ \pi^K])^2] \pmod \Fall\]
 
 \begin{align*}
 &\E_{\Dist^{K} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-\E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \leq\\ 
-&\E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - \E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \pmod \Fall 
+&\E_{\Dist^{K} \times \Un_{PQ}^K} [(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - \E_{\Un_\pi^K}[\bar{g} \circ \pi^K])^2] \pmod \Fall 
 \end{align*}
 
 We now apply Proposition~\ref{prp:sq_diff_cong} via condition \ref{con:def__sp_reduce__fun} of Definition~\ref{def:sp_reduce}
 
-\[\E_{\Dist^{K} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-f)^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - f)^2] \pmod \Fall\]
+\[\E_{\Dist^{K} \times \Un_{P_g}^K}[(\E_{\Un_\pi^K}[(P_g \circ \pi)^K]-f)^2] \leq \E_{\Dist^{K} \times \Un_{PQ}^K}[(Q_f ^K - P_f^K+\E_{\Un_\pi^K}[(P_g \circ \pi)^K] - f)^2] \pmod \Fall\]
 
 Denote $y_i:=\pi^K(x,z_i)$ where the ${z_i}$ are sampled independently from ${\Un_\pi^K}$. Applying Proposition~\ref{prp:sq_diff_cong} via Proposition~\ref{prp:ev_equiv_mean} and the assumption on $\gamma$, we get
 
-\[\E_{\Dist^{K} \times \Un_{P_f}^K}[(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i)-f)^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i) - f)^2] \pmod \Fall\]
+\[\E_{\Dist^{K} \times \Un_{P_f}^K}\left[\left(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i)-f\right)^2\right] \leq \E_{\Dist^{K} \times \Un_{PQ}^K}\left[\left(Q_f ^K - P_f^K+\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i) - f\right)^2\right] \pmod \Fall\]
 
-\[\E_{\Dist^{K} \times \Un_{P_f}^K}[(P_f^K-f)^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K \times \Un_{P_f}^K}[(Q_f ^K - P_f^K+P_f^K - f)^2] \pmod \Fall\]
+\textcolor{red}{maybe fix the alignment of the above?}
+
+\[\E_{\Dist^{K} \times \Un_{P_f}^K}[(P_f^K-f)^2] \leq \E_{\Dist^{K} \times \Un_{PQ}^K}[(Q_f ^K - P_f^K+P_f^K - f)^2] \pmod \Fall\]
 
 \[\E_{\Dist^{K} \times \Un_{P_f}^K}[(P_f^K-f)^2] \leq \E_{\Dist^{K} \times \Un_{Q_f}^K}[(Q_f ^K - f)^2] \pmod \Fall\]
 %
@@ -2712,6 +2739,7 @@ Consider ${\Dist}$, ${\mathcal{E}}$ word ensembles. ${\Dist}$ is said to be \emp
 
 In this case, ${W}$ is called a \emph{Radon-Nikodym ${\EG}$-derivative of ${\Dist}$ w.r.t. ${\mathcal{E}}$}.
 
+\textcolor{red}{${\Dist}$ being dominated by ${\mathcal{E}}$ means that there is a bounded reweighting function that, on average, turns ${\mathcal{E}}$ into $\Dist$. This is a more restrictive reweighting condition than has been considered in the past, because a sequence of distributions that, in the limit, are supported on a vanishing fraction of the probability mass of $\mathcal{E}$, would force $W$ to be unboundedly large. The resistance of optimal estimators to reweighting carries over to the following two theorems (although the requirement of ample advice for $\EG$-optimal estimators to be optimal under reweightings still applies, unfortunately.) }
 \end{definition}
 \end{samepage}
 
@@ -2779,7 +2807,7 @@ Using the assumption on ${W}$
 
 \subsection{Ensemble Pullbacks}
 
-Finally, we consider another scenario in which the identity mapping is a valid reduction. This scenario is a simple re-indexing of the word ensemble. For the remainder of section~\ref{sec:reductions}, we fix some ${m \in \Nats}$.
+Finally, we consider another scenario in which the identity mapping is a valid reduction. This scenario is a simple re-indexing of the word ensemble \textcolor{red}{to pass back and forth between problems with different numbers of hardness parameters}. For the remainder of section~\ref{sec:reductions}, we fix some ${m \in \Nats}$. \textcolor{red}{Note that is important that the growth spaces for the resources and fall space for the error, after reindexing, lie in the growth spaces and fall space of the new problem.}
 
 \begin{samepage}
 \begin{definition}
@@ -2798,7 +2826,7 @@ Consider ${\Gamma_*}$ a growth space of rank ${n}$ and ${\alpha \in \GammaPoly^{
 
 \begin{equation}
 \label{eqn:tbd}
-\Gamma_*\alpha:=\{\gamma_\alpha: \Nats^m \rightarrow \Reals^{\geq 0} \textnormal{ bounded} \mid \exists \gamma \in \Gamma_*: \gamma_\alpha \leq \gamma \circ \alpha\}
+\Gamma_*\alpha:=\{\gamma_\alpha: \Nats^m \rightarrow \Reals^{\geq 0} \mid \exists \gamma \in \Gamma_*: \gamma_\alpha \leq \gamma \circ \alpha\}
 \end{equation}
 
 Obviously ${\Gamma_*\alpha}$ is a growth space of rank ${m}$.
@@ -2971,6 +2999,9 @@ Consider $(\Dist,f)$ a distributional estimation problem of rank ${m}$, $(\mathc
 \end{samepage}
 
 \begin{samepage}
+
+\textcolor{red}{In short, an optimal estimator for $(\mathcal{E},g)$ is an optimal estimator for the pullback $(\mathcal{E}^{\alpha},g)$. This pullback can be reweighted to $\pi_{*}\Dist$ (however, the resources to do so must lie in $\Gamma$ after reindexing), and this preserves optimal estimators. Finally, $\Dist$ is samplable relative to $\pi$ and $g(\pi(x,z))$ is approximately $f(x)$, which is a reduction which preserves optimal estimators. The mapping finds $\pi(x,z)$, reindexes $K$ to $\alpha(K)$, and invokes the optimal estimator for $(\mathcal{E},g)$ with $\alpha(K)$ as the parameter which controls available resources.}
+
 \begin{corollary}
 \label{crl:pp_reduce_sharp}
 
@@ -3094,6 +3125,10 @@ Fix ${r,s: \Nats^n \Alg \Nats}$ s.t.
 Denote ${\Gamma_\text{det}:=(\Gamma_0^n,\Gamma_0^n)}$, ${\Gamma_{\textnormal{red}}:=(\Gamma_{r},\Gamma_0^n)}$, ${\Gamma_{\textnormal{smp}}:=(\Gamma_{s},\Gamma_0^n)}$.
 
 We will show that certain classes of functions paired with ${\Fall(\Gamma_{\text{smp}})}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\Fall(\Gamma_{\text{red}})}$-reductions. This construction is an adaption of the standard construction of a complete problem for ${\mathsf{SampNP}}$.
+
+\textcolor{red}{Due to the large number of variables and functions in the following theorem, some intuitive exposition of the result seems helpful. A universal function $\mathfrak{F}$ will be constructed, which takes three inputs. There is a bitstring $b$ which encodes some element $\phi$ that tells $\mathfrak{F}$ which hard-to-compute function $f$ to emulate, a time parameter $k$ which controls the computational resources used in computing $f$, and a bitstring $x$ which is just the input to $f$. When $k$ is sufficiently large, and $b$ is chosen appropriately, $\mathfrak{F}(b,k,x)=f(x)$. The distribution $\Dist_{\mathfrak{F}}$ is over 4-element tuples of a bitstring (which dictates what $f$ is), the last coordinate of $K$, $k$, which serves as a time parameter, a bitstring $a$ (which can be interpreted as a sampler), and a bitstring $x$ (which is the output of the sampler when run for $k$ steps.}
+
+\textcolor{red}{For samplable distributions $\Dist$, and functions $f$ which have a corresponding $b$ that makes $\mathfrak{F}$ emulate them, there is a reduction to this universal problem. To begin, observe that if $\Dist$ is samplable, there is some bitstring $a$ which encodes a turing machine that samples from $\Dist$. The reduction maps $x$ to the tuple $(b,p(k),a,x)$, and then reindexes to run the optimal estimator for the universal problem, on coordinate $K^{n-1},p(k)$. (This is to ensure that the time parameter is large enough for the distribution $D_{\mathfrak{F}}^{K^{n-1},p(k)}$ to fully run the sampler.) It is trivially possible to sample from $D$ given the tuple, $\mathfrak{F}$ perfectly mimics $f$ on the resulting distribution, there are no problems with reindexing for more computation time, and it is possible to reweight the universal distribution to copy the produced distribution (because $b$ and $a$ are finite bitstrings, so the image of the mapping is a small fixed portion of the universal distribution). Therefore, an optimal predictor for the universal problem can be used in a reduction to yield an optimal predictor for $(\Dist,f)$.}
 
 \begin{samepage}
 \begin{theorem}
@@ -3320,7 +3355,7 @@ We got ${\varepsilon_1 \circ \beta_p \in \FallUt{\varphi}}$.
 
 We give two existence theorems for ${\FallU(\Gamma)}$-optimal estimators (the fall space $\FallU$ was defined in Example~\ref{exm:e_uni}). Theorem~\ref{thm:exists_all} shows that, for appropriate steadily growing functions ${r}$ and ${l}$, \emph{all} distributional estimation problems of rank ${n-1}$ admit ${\FallU(\Gamma_r,\Gamma_l)}$-optimal estimators when trivially extended to rank ${n}$. The extra parameter serves to control the resources available to the estimator. To illustrate its significance using the informal\footnote{Strictly speaking, this example cannot be formalized in the framework as presented here since the set of prime numbers is in $\textsc{P}$. We can tackle it by e.g. taking ${\textsc{NC}}$ instead of ${\textsc{P}}$ as the permissible time complexity for our estimators, but we don't explore this variant in the present work.} example from the introduction, observe that the question \enquote{what is the probability 7614829 is prime?} should depend on the amount of available time. For example, we can use additional time to test for divisibility by additional smaller primes (or in some more clever way) until eventually we are able to test primality and assign a probability in $\{0,1\}$. 
 
-However, in general the estimators constructed in Theorem~\ref{thm:exists_all} are non-uniform. Theorem~\ref{thm:exists_smp} shows that, under certain stronger assumptions on ${r}$ and ${l}$, for \emph{samplable} distributional estimation problems there is an estimator which requires only as much advice as the sampler. In particular, the existence of a uniform sampler implies the existence of a uniform ${\FallU(\Gamma_r,\Gamma_l)}$-optimal estimator.
+However, in general the estimators constructed in Theorem~\ref{thm:exists_all} are non-uniform \textcolor{red}{because they rely on the advice string to emulate the $Q$ with the lowest Brier score}. Theorem~\ref{thm:exists_smp} shows that, under certain stronger assumptions on ${r}$ and ${l}$, for \emph{samplable} distributional estimation problems there is an estimator which requires only as much advice as the sampler. In particular, the existence of a uniform sampler implies the existence of a uniform ${\FallU(\Gamma_r,\Gamma_l)}$-optimal estimator.
 
 We will use the notation ${\eta: \NatFun \Nats^{n-1}}$ defined by
 
@@ -3336,14 +3371,17 @@ Fix ${l: \NatFun \Nats^{>0}}$ steadily growing. Denote ${\Gamma_{\textnormal{adv
 \end{samepage}
 
 \begin{samepage}
+
+\textcolor{red}{The following two propositions approximately state that, given an arbitrary function $\zeta(J,k)$ for which polynomial increases in $k$ lead to a decrease in $\zeta$, the difference between $\zeta(J,k)$ and a mixture of values around $\zeta(J,q(J,k))$ lies in $\FallU$, a very slowly decreasing fall space. Intuitively, this occurs because either $\zeta$ shrinks quickly enough that, in the asymptotic tail, the values are approximately equal, or $\zeta$ shrinks slowly enough that, going polynomially further out doesn't change $\zeta$ very much. (might be a confused explanation)}
+
 \begin{proposition}
 \label{prp:fall_uni_weak}
 
-For any ${q \in \NatPolyJ}$ s.t. ${q \geq 2}$ there are ${\{\omega_q^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any ${\zeta: \NatFun \Reals}$ bounded, if 
+For any ${q \in \NatPolyJ}$ s.t. ${q \geq 2}$ there are ${\{\omega_q^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any ${\zeta: \NatFun \Reals}$ bounded, if \textcolor{red}{there is a function $\varepsilon\in\FallU$ s.t.}
 
 \begin{equation}
 \label{eqn:prp__fall_uni_weak__prem}
-\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq (k+2)^{\Floor{\log q(J)}}-2 \implies \zeta(J,k') \leq \zeta(J,k)
+\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq (k+2)^{\Floor{\log q(J)}}-2 \implies \zeta(J,k') \leq \zeta(J,k)+\varepsilon(J,k+2)
 \end{equation}
 
 then
@@ -3390,19 +3428,33 @@ We have ${\dif (\log \log t^{\Floor{\log q(J)}}) = \dif(\log \log t)}$ therefore
 
 \[\int_{t = 2}^{a} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-Assume ${\zeta}$ satisfies \ref{eqn:prp__fall_uni_weak__prem}. ${\Floor{t^{\Floor{\log q(J)}}}-2 \geq \Floor{t}^{\Floor{\log q(J)}}-2}$ therefore the integrand is non-negative. Taking ${a}$ to ${\infty}$ we get
+\[\int_{t = 2}^{a} \frac{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}{t \log t} \dif t \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-\[\int_{t = 2}^{\infty} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+Note that, because $\varepsilon\in\FallU$ there is some polynomial $p$ and positive constant $M$ s.t
 
-\[\int_2^\infty (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \frac{\dif t}{(\ln 2)^2 t \log t} \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+\[\int_{t=2}^{a} \frac{\varepsilon(J,\Floor{t})}{t \log t}\dif t \le \sum_{k=2}^{\infty}\frac{\varepsilon(J,k)}{k \log k}\le M\log\log p(J)\]
 
-\[\sum_{k=0}^\infty \int_{k+2}^{k+3} \frac{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}{t \log t} \dif t \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+Define $c_{1}:=2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}$, and $c_{2}:=M\log\log p(J)$. Assume ${\zeta}$ satisfies \ref{eqn:prp__fall_uni_weak__prem}. ${\Floor{t^{\Floor{\log q(J)}}}-2 \geq \Floor{t}^{\Floor{\log q(J)}}-2}$ therefore the integrand in the following equation is non-negative.
 
-\[\sum_{k=0}^\infty \int_0^1 \frac{\zeta(J,k) - \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)}{(k+t+2) \log (k+t+2)}\dif t \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+\[\int_{t = 2}^{a} \frac{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)+\varepsilon(J,\Floor{t})}{t \log t} \dif t \leq c_{1}+c_{2}\]
 
-For ${k \geq 2}$ we have ${(k + 3) \log (k + 3) \leq \frac{5}{2}k \log \frac{5}{2}k \leq \frac{5}{2}k \log k^{\log 5} = \frac{5}{2} (\log 5) k \log k}$.
+Because the integrand is non-negative, we can take $a$ to $\infty$. Subtracting off the $\varepsilon$ leaves the integral well-defined. Also, because $\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)\ge -\varepsilon(J,\Floor{t})$, the following integral has a well-defined lower bound. 
 
-\[\sum_{k=2}^\infty \frac{\zeta(J,k) - \int_0^1 \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)\dif t}{\frac{5}{2} (\log 5) k \log k} \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+\[-c_{2}\leq\int_2^\infty \frac{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}{t \log t} \dif t \leq c_{1}\]
+
+Now, if $\int_2^\infty \theta(-f(t))f(t)\dif t$ and $\int_2^\infty f(t)\dif t$ are both well-defined, $\int_{2}^{\infty}\Abs{f(t)}\dif t$ is well-defined and equals $\int_2^\infty f(t)\dif t - 2\int_2^\infty \theta(-f(t))f(t)\dif t$.
+
+Fortunately, both of these integrals are well-defined, as established above, so the upper and lower bounds can be applied to yield
+
+\[\int_2^\infty \frac{\Abs{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}}{t \log t} \dif t \leq c_{1}+2c_{2}\]
+
+\[\sum_{k=0}^\infty \int_{k+2}^{k+3} \frac{\Abs{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}}{t \log t} \dif t \leq c_{1}+2c_{2}\]
+
+\[\sum_{k=0}^\infty \int_0^1 \frac{\Abs{\zeta(J,k) - \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)}}{(k+t+2) \log (k+t+2)}\dif t \leq c_{1}+2c_{2}\]
+
+For ${k \geq 2}$ we have ${(k + 3) \log (k + 3) \leq \frac{5}{2}k \log \frac{5}{2}k \leq \frac{5}{2}k \log k^{\log 5} = \frac{5}{2} (\log 5) k \log k}$. Also, for all $c$ and $f$ such that the following integrals are well-defined, $\int_0^1 \Abs{c-f(t)}\dif t\ge\Abs{c-\int_0^1 f(t)\dif t}$.
+
+\[\sum_{k=2}^\infty \frac{\Abs{\zeta(J,k) - \int_0^1 \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)\dif t}}{\frac{5}{2} (\log 5) k \log k} \leq c_{1}+2c_{2}\]
 
 Define
 
@@ -3412,9 +3464,9 @@ Define
 
 We get
 
-\[\sum_{k=2}^\infty \frac{\zeta(J,k) - \sum_{i=0}^\infty \zeta(J,(k+2)^{\Floor{\log q(J)}}-2+i)\omega_q^{Jk}(i) }{k \log k}  \leq \frac{4}{5}(\ln 2)(\ln 5)(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+\[\sum_{k=2}^\infty \frac{\Abs{\zeta(J,k) - \sum_{i=0}^\infty \zeta(J,(k+2)^{\Floor{\log q(J)}}-2+i)\omega_q^{Jk}(i) }}{k \log k}  \leq \frac{2}{5}(\ln 5)(c_{1}+2c_{2})\]
 
-The above obviously implies \ref{eqn:prp__fall_uni_weak__conc}.
+The above implies \ref{eqn:prp__fall_uni_weak__conc} when $c_{1}$ and $c_{2}$ are expanded.
 %
 \end{proof}
 
@@ -3422,11 +3474,11 @@ The above obviously implies \ref{eqn:prp__fall_uni_weak__conc}.
 \begin{proposition}
 \label{prp:fall_uni}
 
-For any ${p \in \NatPoly}$ there are ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any\\ $\zeta: \NatFun \Reals$ bounded, if 
+For any ${p \in \NatPoly}$ there are ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K \in \Nats^n}}$ s.t. for any\\ $\zeta: \NatFun \Reals$ bounded, if \textcolor{red}{there is a function $\varepsilon\in\FallU$ s.t.}
 
 \begin{equation}
 \label{eqn:prp__fall_uni__prem}
-\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq p(J,k) \implies \zeta(J,k') \leq \zeta(J,k)
+\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq p(J,k) \implies \zeta(J,k') \leq \zeta(J,k) + \varepsilon(J,k+2)
 \end{equation}
 
 then
@@ -3462,8 +3514,8 @@ In the following, we use the notation ${\alpha_{p}(J,k):=(J,p(J,k))}$.
 Consider ${p \in \NatPoly}$, ${(\Dist,f)}$ a distributional estimation problem and\\ ${P,Q: \Words \Scheme \Rats}$ bounded. Suppose that
 
 \begin{align}
-\label{eqn:prp__fall_uni_amp__p}\sup_{i \in \Nats} \E_{ \Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}-f)^2] &\leq \E_{ \Dist^{K} \times \Un_P^{K}}[(P^{K}-f)^2] \pmod \FallU \\
-\label{eqn:prp__fall_uni_amp__q}\sup_{i \in \Nats} \E_{\Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}-f)^2] &\leq \E_{\Dist^{K} \times \Un_Q^{K}}[(Q^{K}-f)^2] \pmod \FallU
+\label{eqn:prp__fall_uni_amp__p}\sup_{i \in \Nats} \E_{ \Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}-f)^2] &\leq \E_{ \Dist^{K} \times \Un_P^{K}}[(P^{K}-f)^2] \pmod\FallU \\
+\label{eqn:prp__fall_uni_amp__q}\sup_{i \in \Nats} \E_{\Dist^{\alpha_{p+i}(K)} \times \Un_P^{\alpha_{p+i}(K)}}[(P^{\alpha_{p+i}(K)}-f)^2] &\leq \E_{\Dist^{K} \times \Un_Q^{K}}[(Q^{K}-f)^2] \pmod\FallU
 \end{align}
 
 Then
@@ -3507,7 +3559,7 @@ Construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x,y,b_0 
 P^K(x,y,\Chev{a_0,b_0}) &= D(\Ev^{K_{n-1}}(a_0;x,y))
 \end{align}
 
-Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume $\sup \Abs{Q} \leq M$ (otherwise we can replace ${Q}$ by ${\tilde{Q}:=\max(\min(Q,+M),-M)}$ and have ${\E[(\tilde{Q}-f)^2]\leq\E[(Q-f)^2]}$). Choose ${q \in \NatPoly}$ s.t. for any ${K \in \Nats^n}$ there exits ${a_Q^K \in \Bool^{l(\alpha_q(K))}}$ for which
+Consider ${Q: \Words \Scheme \Rats}$ bounded. Without loss of generality we can assume $\sup \Abs{Q} \leq M$ (otherwise we can replace ${Q}$ by ${\tilde{Q}:=\max(\min(Q,+M),-M)}$ and have ${\E[(\tilde{Q}-f)^2]\leq\E[(Q-f)^2]}$). Choose ${q \in \NatPoly}$ s.t. for any ${K \in \Nats^n}$ there exists ${a_Q^K \in \Bool^{l(\alpha_q(K))}}$ for which
 
 \begin{align}
 \label{eqn:thm__exists_all__q_rnd}\R_Q(K) &\leq r(\alpha_q(K)) \\
@@ -3639,30 +3691,30 @@ Fix $M \geq \sup \Abs{f}$ and construct ${D: \Words \Alg \Rats}$ s.t.
 
 \[D(x)=\begin{cases}D(x)=\max(\min(t,M),-M) \text{ if ${x = \En_\Rats(t)}$}\\D(x)=0 \text{ if } x \not\in \Img \En_\Rats\end{cases}\]
 
-Denote ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. Construct ${R: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$ and ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
+Denote ${l(K):=\Floor{\log (K_{n-1} + 2)}}$. \textcolor{red}{Denote $s(K):=2\Ceil{M^2}l(K)^2$}. Construct ${R: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, $w \in \Words$, ${a \in \Bool^{l(K)}}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [s(K)]}}$ and ${\{z_i \in \Bool^{r(K)}\}_{i \in [s(K)]}}$
 
 \begin{align}
 \label{eqn:thm__exists_smp__l_adv}\A_R(K) &= \A_\sigma(K) \\
-\label{eqn:thm__exists_smp__l_rnd}\R_R(K,w) &= l(K)^4 (\R_\sigma(K,w) + r(K)) \\
-\label{eqn:thm__exists_smp__l_alg}R^K(a,\prod_{i \in [l(K)^4]}y_i z_i,w) &= \frac{1}{l(K)^4}\sum_{i \in [l(K)^4]}(D(\Ev^{K_{n-1}}(a;\sigma^K(y_i,w)_0,z_i))-\sigma^K(y_i,w)_1)^2 
+\label{eqn:thm__exists_smp__l_rnd}\R_R(K,w) &= s(K) (\R_\sigma(K,w) + r(K)) \\
+\label{eqn:thm__exists_smp__l_alg}R^K\left(a,\prod_{i \in [s(K)]}y_i z_i,w\right) &= \frac{1}{s(K)}\sum_{i \in [s(K)]}(D(\Ev^{K_{n-1}}(a;\sigma^K(y_i,w)_0,z_i))-\sigma^K(y_i,w)_1)^2 
 \end{align}
 
-That is, ${R}$ generates ${l(K)^4}$ estimates of ${f}$ using ${\sigma}$ and computes the \enquote{empirical risk} of the program ${a}$ w.r.t. these estimates. Here, \ref{eqn:thm__exists_smp__l_rnd} is legitimate due to Proposition~\ref{prp:std_grow_log}. 
+That is, ${R}$ generates ${2\Ceil{M^2}l(K)^2}$ estimates of ${f}$ using ${\sigma}$ and computes the \enquote{empirical risk} of the program ${a}$ w.r.t. these estimates. Here, \ref{eqn:thm__exists_smp__l_rnd} is legitimate due to Proposition~\ref{prp:std_grow_log}. 
 
-Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$ and\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$
+Construct ${A: \bm{1} \Scheme \Words}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [s(K)]}}$ and\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [s(K)]}}$
 
 \begin{align}
 \label{eqn:thm__exists_smp__a_adv}\A_A(K) &= \A_\sigma(K) \\
 \label{eqn:thm__exists_smp__a_rnd}\R_A(K,w) &= \R_R(K,w) \\
-\label{eqn:thm__exists_smp__a_alg}A^K(\prod_{i \in [l(K)^4]}y_i z_i,w) &\in \Argmin{a \in \Bool^{\leq l(K)}} R^K(a,\prod_{i \in [l(K)^4]}y_i z_i,w)
+\label{eqn:thm__exists_smp__a_alg}A^K\left(\prod_{i \in [s(K)]}y_i z_i,w\right) &\in \Argmin{a \in \Bool^{\leq l(K)}} R^K\left(a,\prod_{i \in [s(K)]}y_i z_i,w\right)
 \end{align}
 
-Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [l(K)^4]}}$,\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [l(K)^4]}}$ and ${z_* \in \Bool^{r(K)}}$
+Finally, construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${w \in \Words}$, ${\{y_i \in \Bool^{r_\sigma(K,w)}\}_{i \in [s(K)]}}$,\\ ${\{z_i \in \Bool^{r(K)}\}_{i \in [s(K)]}}$ and ${z_* \in \Bool^{r(K)}}$
 
 \begin{align}
 \label{eqn:thm__exists_smp__p_adv}\A_P(K) &= \A_\sigma(K) \\
 \label{eqn:thm__exists_smp__p_rnd}\R_P(K,w) &= \R_R(K,w) + r(K) \\
-\label{eqn:thm__exists_smp__p_alg}P^K(x,(\prod_{i \in [l(K)^4]}y_i z_i)z_{*},w) &= D(\Ev^{K_{n-1}}(A^K(\prod_{i \in [l(K)^4]}y_i z_i,w);x,z_{*}))
+\label{eqn:thm__exists_smp__p_alg}P^K(x,\left(\prod_{i \in [s(K)]}y_i z_i\right)z_{*},w) &= D(\Ev^{K_{n-1}}(A^K\left(\prod_{i \in [s(K)]}y_i z_i,w\right);x,z_{*}))
 \end{align}
 
 Define ${\varrho_0^K \in \Reals}$ by
@@ -3689,39 +3741,39 @@ By Proposition~\ref{prp:est_err_smp}
 \E_{\Un_\sigma^K}[\E[(h_\alpha^K(\sigma^K(y)_0)-\sigma^K(y)_1)^2]] \overset{\alpha}{\equiv} \varrho^K(\alpha(K)) + \varrho_0^K \pmod \FallM
 \end{equation}
 
-${R^K(\alpha(K),y)}$ is the average of ${l(K)^4}$ independent and and identically distributed bounded random variables. By \ref{eqn:thm__exists_smp__prf1}, there is ${\varepsilon \in \FallM}$ that doesn't depend on ${\alpha}$ s.t. the expected value of these random variables is in ${[\varrho^K(\alpha(K)) + \varrho_0^K - \varepsilon(K), \varrho^K(\alpha(K)) + \varrho_0^K + \varepsilon(K)]}$. Applying Hoeffding's inequality we conclude that for some ${\epsilon \in \Reals^{>0}}$
+${R^K(\alpha(K),y)}$ is the average of ${2\Ceil{M^2}l(K)^2}$ independent and and identically distributed bounded random variables. By \ref{eqn:thm__exists_smp__prf1}, there is ${\varepsilon \in \FallM}$ that doesn't depend on ${\alpha}$ s.t. the expected value of these random variables is in ${[\varrho^K(\alpha(K)) + \varrho_0^K - \varepsilon(K), \varrho^K(\alpha(K)) + \varrho_0^K + \varepsilon(K)]}$. Applying Hoeffding's inequality we conclude that
 
-\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_R^K}[R^K(b,y) > \varrho^K(b) + \varrho_0^K  + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2}\]
+\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_R^K}[R^K(b,y) > \varrho^K(b) + \varrho_0^K  + \varepsilon(K) + l(K)^{-1/2}] \leq 2^{-\log(e) l(K)}\]
 
 In particular, since for any ${b \in \Bool^{l(K)}}$, ${R^K(A^K(y),y) \leq R^K(b,y)}$
 
 \begin{equation}
 \label{eqn:thm__exists_smp__prf2}
-\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_R^K}[R^K(A^K(y),y) > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2}
+\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_R^K}[R^K(A^K(y),y) > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1/2}] \leq 2^{-\log(e) l(K)}
 \end{equation}
 
 Similarly, we have
 
-\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_R^K}[R^K(b,y) < \varrho^K(b) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2}\]
+\[\forall b \in \Bool^{\leq l(K)}: \Prb_{\Un_R^K}[R^K(b,y) < \varrho^K(b) + \varrho_0^K - \varepsilon(K) - l(K)^{-1/2}] \leq 2^{-\log(e) l(K)}\]
 
-\[\Prb_{\Un_R^K}[\exists b \in \Bool^{\leq l(K)}: R^K(b,y) < \varrho^K(b) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2+l(K)+1}\]
+\[\Prb_{\Un_R^K}[\exists b \in \Bool^{\leq l(K)}: R^K(b,y) < \varrho^K(b) + \varrho_0^K - \varepsilon(K) - l(K)^{-1/2}] \leq 2^{-(\log(e)-1) l(K)+1}\]
 
 \begin{equation}
 \label{eqn:thm__exists_smp__prf3}
-\Prb_{\Un_R^K}[R^K(A^K(y),y) < \varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1}] \leq 2^{-\epsilon l(K)^2+l(K)+1}
+\Prb_{\Un_R^K}[R^K(A^K(y),y) < \varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1/2}] \leq 2^{-(\log(e)-1)l(K)+1}
 \end{equation}
 
 Combining \ref{eqn:thm__exists_smp__prf2} and \ref{eqn:thm__exists_smp__prf3}, we conclude that for any ${b \in \Bool^{\leq l(K)}}$
 
-\[\Prb_{\Un_R^K}[\varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1} > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1}] \leq 2^{-\epsilon l(K)^2} + 2^{-\epsilon l(K)^2+l(K)+1}\]
+\[\Prb_{\Un_R^K}[\varrho^K(A^K(y)) + \varrho_0^K - \varepsilon(K) - l(K)^{-1/2} > \varrho^K(b) + \varrho_0^K + \varepsilon(K) + l(K)^{-1/2}] \leq 2^{-\log(e) l(K)} + 2^{-(\log(e)-1) l(K)+1}\]
 
-\[\Prb_{\Un_R^K}[\varrho^K(A^K(y)) > \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1})] \leq 2^{-\epsilon l(K)^2+l(K)+2}\]
+\[\Prb_{\Un_R^K}[\varrho^K(A^K(y)) > \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1/2})] \leq 2^{-(\log(e)-1) l(K)+2}\]
 
 It follows that for some ${M_0 \in \Reals^{>0}}$
 
-\[\E_{\Un_R^K}[\varrho^K(A^K(y)] \leq \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+2} M_0\]
+\[\E_{\Un_R^K}[\varrho^K(A^K(y)] \leq \varrho^K(b) + 2(\varepsilon(K) + l(K)^{-1/2}) + 2^{-(\log(e)-1)l(K)+2} M_0\]
 
- Denote ${\varepsilon_1(K):=2(\varepsilon(K) + l(K)^{-1}) + 2^{-\epsilon l(K)^2+l(K)+1} M_0}$. It is easy to see that ${\varepsilon_1 \in \FallM}$.
+ Denote ${\varepsilon_1(K):=2(\varepsilon(K) + l(K)^{-1/2}) + 2^{-(\log(e)-1) l(K)+2} M_0}$. \textcolor{red}{Note that ${\varepsilon_1 \in \FallM}$ because $\varepsilon$ is by assumption, the last two terms are monotonically decreasing, and both $\sum_{k=2}^{\infty}\frac{1}{k\log k \sqrt{\Floor{\log(k+2)}}}$ and $\sum_{k=2}^{\infty}\frac{2^{-(\log(e)-1)\Floor{\log(k+2)}}}{k\log k}$ converge.}
 
 \[\E_{\Un_R^K}[\E_{\Dist^{\eta(K)} \times \Un^{r(K)}}[(D(\Ev^{K_{n-1}}(A^K(y);x,z))-f(x))^2]] \leq \varrho^K(b) + \varepsilon_1(K)\]
 
@@ -3797,7 +3849,7 @@ We have
 
 \[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} \log 3 \int_2^\infty \frac{\varepsilon(J,\Floor{t})}{t \log t} \dif t\]
 
-\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} (\log 3) (\ln 2)^2 \int_0^\infty \varepsilon(J,\Floor{t}) \dif (\log \log t)\]
+\[\sum_{k=2}^\infty \frac{\varepsilon(J,k)}{k \log k} \leq \frac{3}{2} (\log 3) (\ln 2)^2 \int_2^\infty \varepsilon(J,\Floor{t}) \dif (\log \log t)\]
 
 Substitute ${t=2^{(\log p(J) \log s)^m}}$. Denoting ${s_0=2^{(\log p(J))^{-1}}}$
 
@@ -3825,7 +3877,7 @@ Denoting ${M_2 := 2^{M_1^{-1} M}}$
 
 \subsubsection{Negative Results}
 
-The following propositions lead to disproving the existence of optimal polynomial-time estimators for certain distributional estimation problems in the case ${\GrowA = \Gamma_0^n}$.
+The following propositions lead to disproving the existence of optimal polynomial-time estimators \textcolor{red}{with no advice} for certain distributional estimation problems.
 
 \begin{samepage}
 \begin{proposition}
@@ -3837,6 +3889,8 @@ Consider ${h: \Nats^n \rightarrow \Reals}$ bounded and ${\Dist}$ a word ensemble
 \end{samepage}
 
 \begin{proof}
+
+\textcolor{red}{In short, because the computational problem only depends on the index $K$, the advice allows the estimator to either memorize $f$ directly or closely approximate it.}
 
 In the case ${\Fall^{\frac{1}{2}}}$ is ${\GrowA}$-ample, let $\zeta: \NatFun (0,\frac{1}{2}]$ be s.t.  $\zeta \in \Fall^{\frac{1}{2}}$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. In the other case, let ${\zeta \equiv 0}$. For any $K \in \Nats^n$, let ${\rho(K) \in \Argmin{s \in \Rats \cap [h(K)-\zeta(K),h(K)+\zeta(K)]} \Abs{\En_\Rats(s)}}$. It is easy to see that there is $\gamma \in \GrowA$ s.t. for any ${K \in \Nats^n}$, ${\Abs{\En_\Rats(\rho(K))} \leq \gamma(K)}$. Construct ${P: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x \in \Words}$ and ${t \in \Rats}$ s.t. ${\Abs{\En_\Rats(t)} \leq \gamma(K)}$ 
 
@@ -3858,7 +3912,7 @@ In the setting of Proposition~\ref{prp:tally_perfect}, any ${\EG}$-optimal estim
 
 Denote ${\Gamma_0:=(\GrowR,\Gamma_0^n)}$, ${\Gamma_1:=(\GrowR,\Gamma_1^n)}$. Taking ${\Gamma=\Gamma_1}$ in Proposition~\ref{prp:tally_perfect} and using Proposition~\ref{prp:adv_amp}, we conclude that if the image of ${h}$ is a finite subset of ${\Rats}$ and there is no ${\Fall(\Gamma_0)}$-perfect estimator for ${(\Dist,f)}$ then there is no ${\Fall(\Gamma_0)}$-optimal estimator for ${(\Dist,f)}$. 
 
-For distributional decision problems and ${\EG}$-samplable word ensembles we have the following stronger proposition.
+For distributional decision problems and ${\EG}$-samplable word ensembles we have the following stronger proposition \textcolor{red}{which permits constructing a perfect estimator from an optimal estimator, although the perfect estimator may have more available advice, in order to run the sampler.}
 
 \begin{samepage}
 \begin{proposition}
@@ -3885,9 +3939,9 @@ A^K(y_1 y_2) &= \begin{cases}0 \text{ if } P^K(\sigma^K(y_1),y_2) \leq \frac{1}{
 
 We get
 
-\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_L(K)] \leq \Prb_{y_1 \sim \Un_\sigma^K,y_2 \sim \Un_P^K}[\Abs{P^K(\sigma^K(y_1),y_2) - \chi_L(K)} \geq \frac{1}{2}]\]
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_L(K)] \leq \Prb_{y_1 \sim \Un_\sigma^K,y_2 \sim \Un_P^K}\left[\Abs{P^K(\sigma^K(y_1),y_2) - \chi_L(K)} \geq \frac{1}{2}\right]\]
 
-\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_L(K)] \leq \Prb_{y_1 \sim \Un_\sigma^K,y_2 \sim \Un_P^K}[(P^K(\sigma^K(y_1),y_2) - \chi_L(K))^2 \geq \frac{1}{4}]\]
+\[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_L(K)] \leq \Prb_{y_1 \sim \Un_\sigma^K,y_2 \sim \Un_P^K}\left[(P^K(\sigma^K(y_1),y_2) - \chi_L(K))^2 \geq \frac{1}{4}\right]\]
 
 \[\Prb_{y \sim \Un_A^K}[A^K(y) \neq \chi_L(K)] \leq 4 \E_{y_1 \sim \Un_\sigma^K,y_2 \sim \Un_P^K}[(P^K(\sigma^K(y_1),y_2) - \chi_L(K))^2]\]
 
@@ -3903,9 +3957,11 @@ By Proposition~\ref{prp:tally_perfect}, ${P}$ is an ${\Fall(\Delta)}$-perfect es
 %
 \end{proof}
 
-Again, the statement can be reversed to disprove existence of ${\Fall(\Delta)}$-optimal estimators for ${\Delta_{\mathfrak{A}}}=\Gamma_0^n$.
+Again, the statement can be reversed to disprove the existence of ${\Fall(\Delta)}$-optimal estimators for ${\Delta_{\mathfrak{A}}}=\Gamma_0^n$.
 
-Now we consider the special case ${\Fall=\FallUt{\varphi}}$, ${\GrowR = \GammaPoly^n}$. 
+Now we consider the special case ${\Fall=\FallUt{\varphi}}$, ${\GrowR = \GammaPoly^n}$. \textcolor{red}{Consider the standard decomposition of the index into two parameters $J$ (which is the only thing $\chi$ depends on), and $k$ which controls the computation time available. The following proposition states that if there is a $\FallUt{\varphi}(\Delta)$-optimal estimator for $(\Dist,\chi)$, and a $\FallUt{\varphi}(\Delta)$ sampler for $\Dist$, then quasi-polynomial computing resources suffice to get a bounded-error randomized algorithm for computing $\chi$.}
+
+\textcolor{red}{The implication from this proposition is that, if there is some language $L$ with a uniform sampler that can't be decided in quasi-polynomial time by a bounded-error randomized algorithm, then there is no optimal estimator for $\chi$ with no advice and error that lies in $\FallUt{\varphi}$ (which is a very slowly-shrinking error space).}
 
 \begin{samepage}
 \begin{proposition}
@@ -3931,10 +3987,12 @@ Denote ${\Gamma^1:=(\GammaPoly^1,\Gamma_0^1)}$. Adapting the standard argument t
 
 \begin{align*}
 \R_B(J,k) &\geq \R_\tau(k) + \max_{i \in [k]} \R_A(J,i) \\
-B^{Jk}(y z) &= A^{J,\tau^{k}(y)}(z_{<\R_A(J,\tau^{k}(y))}) 
+B^{Jk}(y,z) &= A^{J,\tau^{k}(y)}(z_{<\R_A(J,\tau^{k}(y))}) 
 \end{align*}
 
-We know that from some ${M \in \Reals^{\geq 0}}$ and ${p \in \NatPolyJ}$ s.t. ${p \geq 1}$
+\textcolor{red}{$B$ functions by generating a distribution over numbers up to $k$ that is approximately $\frac{1}{i\log i}$, and then sampling from it to determine how much computing resources to allocate to $A$, which is a perfect estimator.}
+
+We know that for some ${M \in \Reals^{\geq 0}}$ and ${p \in \NatPolyJ}$ s.t. ${p \geq 1}$
 
 \[\sum_{k=2}^{\varphi(J)-1} \frac{\Prb_{z \sim \Un_A^{Jk}}[A^{Jk}(z) \neq \chi_L(J)]}{k \log k} \leq M \log \log p(J)\]
 
@@ -3966,7 +4024,7 @@ Thanks to the results of section~\ref{sec:reductions} and Theorem~\ref{thm:con_o
 
 \subsection{Uniqueness}
 
-Since we view optimal polynomial-time estimators as computing \enquote{expected values}, it is natural to expect that their values only depend on the distributional estimation problem rather than the particular optimal polynomial-time estimator. However, since they are defined via an asymptotic property exact uniqueness is impossible. Instead, we have uniqueness up to an equivalence relation that means \enquote{asymptotically small difference on average.}
+Since we view optimal polynomial-time estimators as computing \enquote{expected values}, it is natural to expect that their values only depend on the distributional estimation problem rather than the particular optimal polynomial-time estimator. However, since they are defined via an asymptotic property exact uniqueness is impossible. Instead, different \textcolor{red}{$\Fall^\sharp(\Gamma)$-optimal estimators have the expectation of the squared difference in their estimates limit to zero.}
 
 \begin{samepage}
 \begin{theorem}
@@ -4002,7 +4060,7 @@ Construct ${T: \Words \times \Rats \Scheme \Rats}$ bounded s.t. for any ${K \in 
 
 \begin{align*}
 \R_{T}(K) &= \R_P(K) \\
-T^K(x,t,y) &= P^K(x,y)-s 
+T^K(x,s,y) &= P^K(x,y)-s 
 \end{align*}
 
 ${P}$ is an ${\ESG}$-optimal estimator for ${(\Dist,f)}$, therefore
@@ -4031,13 +4089,13 @@ Subtracting \ref{eqn:thm__uniq__prf2} from \ref{eqn:thm__uniq__prf1}, we get \re
 %
 \end{proof}
 
-The notion of \enquote{conditional expected value} introduced in subsection~\ref{subsec:alg} allows conditions which are occasionally \emph{false}. In some sense this provides us with well-defined (probabilistic) answers to \enquote{what if} questions that are meaningless in formal logic due to the principle of explosion, a concept which was hypothesized to be useful for solving paradoxes in decision theory\cite{Soares_2015}. However, Theorem~\ref{thm:uniq} suggests that the values of an optimal polynomial-time estimator are only meaningful inside ${\Supp \Dist^K}$ whereas \enquote{conditional expected values} require using the word ensemble ${\Dist \mid L}$ (see Theorem~\ref{thm:cond}) so violation of the condition (i.e. ${x \not\in L}$) means falling outside the support of the word ensemble. On the other hand, we will now show that when the condition is unpredictable with the given amount of computational resources, a stronger uniqueness theorem holds that ensures \enquote{counterfactual} values are also stable.
+The notion of \enquote{conditional expected value} introduced in subsection~\ref{subsec:alg} allows conditions which are occasionally \emph{false}. In some sense this provides us with well-defined (probabilistic) answers to \enquote{what if} questions that are meaningless in formal logic due to the principle of explosion, a concept which was hypothesized to be useful for solving paradoxes in decision theory\cite{Soares_2015}. However, Theorem~\ref{thm:uniq} suggests that the values of an optimal polynomial-time estimator are only meaningful inside ${\Supp \Dist^K}$ whereas \enquote{conditional expected values} require using the word ensemble ${\Dist \mid L}$ (see Theorem~\ref{thm:cond}) so violation of the condition (i.e. ${x \not\in L}$) means falling outside the support of the word ensemble. On the other hand, we will now show that when the condition is unpredictable with the given amount of computational resources, a stronger uniqueness theorem holds that ensures \enquote{counterfactual} values are also stable \textcolor{red}{, although the error space measuring the difference of the optimal predictors is scaled up by the inverse of a lower bound on the probability an optimal predictor for $L$ assigns to an element being in $L$.}
 
 \begin{samepage}
 \begin{theorem}
 \label{thm:uniq_cond}
 
-Consider ${(\Dist,f)}$ a distributional estimation problem and ${L \subseteq \Words}$ s.t. for all ${K \in \Nats^n}$, $\Dist^K(L) > 0$. Define $\gamma_L: \NatFun \Reals$ by $\gamma(K):=\Dist^{K}(L)^{-1}$ and $\Fall_L:=\gamma_L \Fall$. Assume there is\\ ${p \in \NatPoly}$ s.t. \ref{eqn:thm__uniq__dist} holds. Let ${R}$ be an ${\ESG}$-optimal estimator for ${(\Dist, \chi_L)}$. Assume ${\epsilon: \NatFun \Reals^{>0}}$ is s.t. for all ${x,y \in \Words}$, ${R^K(x,y) \geq \epsilon(K) \Dist^K(L)}$. Suppose ${P}$ and ${Q}$ are ${\Fall_L^\sharp(\Gamma)}$-optimal estimators for ${(\Dist \mid L,f)}$. Then
+Consider ${(\Dist,f)}$ a distributional estimation problem and ${L \subseteq \Words}$ s.t. for all ${K \in \Nats^n}$, $\Dist^K(L) > 0$. Define $\gamma_L: \NatFun \Reals$ by $\gamma_L(K):=\Dist^{K}(L)^{-1}$ and $\Fall_L:=\gamma_L \Fall$. Assume there is\\ ${p \in \NatPoly}$ s.t. \ref{eqn:thm__uniq__dist} holds. Let ${R}$ be an ${\ESG}$-optimal estimator for ${(\Dist, \chi_L)}$. Assume ${\epsilon: \NatFun \Reals^{>0}}$ is s.t. for all ${x,y \in \Words}$, ${R^K(x,y) \geq \epsilon(K) \Dist^K(L)}$. Suppose ${P}$ and ${Q}$ are ${\Fall_L^\sharp(\Gamma)}$-optimal estimators for ${(\Dist \mid L,f)}$. Then
 
 \begin{equation}
 %\label{eqn:thm__?}
@@ -4193,10 +4251,9 @@ This work was partially supported by the Machine Intelligence Research Institute
 
 \section*{Acknowledgments}
 
-We thank Patrick LaVictoire for many useful discussions and also suggesting some corrections in the paper. We thank Scott Aaronson for reading a draft version of the paper and providing important advice on the form of presentation. We thank an anonymous reviewer, writing by the request of the Open Philanthropy Project, who read a draft version of the paper and provided useful suggestions. We thank Rob Bensinger for helping to polish some of the English. We thank Alex Appel and Brian Njenga for locating typos. We thank Scott Garrabrant for useful discussions.
+We thank Patrick LaVictoire for many useful discussions and also suggesting some corrections in the paper. We thank Scott Aaronson for reading a draft version of the paper and providing important advice on the form of presentation. We thank an anonymous reviewer, writing by the request of the Open Philanthropy Project, who read a draft version of the paper and provided useful suggestions. We thank Rob Bensinger for helping to polish some of the English. We thank Alex Appel and Brian Njenga for locating typos. We thank Scott Garrabrant for useful discussions. \textcolor{red}{can I get a bit more of a shoutout here?}
 
 \bibliographystyle{plain}
 \bibliography{Optimal_Estimators}
 
 \end{document}
-
