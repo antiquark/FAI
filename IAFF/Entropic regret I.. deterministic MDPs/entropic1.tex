@@ -1,0 +1,144 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Comment}[1]{}
+
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Dom}{dom}
+
+% autosize delimiters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
+\newcommand{\APM}[2]{\left(#1\;\middle\vert\;#2\right)}
+\newcommand{\ABM}[2]{\left[#1\;\middle\vert\;#2\right]}
+\newcommand{\ACM}[2]{\left\{#1\;\middle\vert\;#2\right\}}
+
+% operators that require brackets
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\CI}[3]{\underset{#1}{\operatorname{I}}\ABM{#2}{#3}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
+
+% operators that require parentheses
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+\newcommand{\PS}[1]{\mathcal{P}\AP{#1}}
+
+\newcommand{\D}{\mathrm{d}}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}\AP{#1\middle\vert\middle\vert#2}}
+\newcommand{\RD}[3]{\operatorname{D}_{#1}\AP{#2\middle\vert\middle\vert#3}}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\textnormal{tv}}\AP{#1}}
+
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
+
+\newcommand{\K}{\xrightarrow{\textnormal{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+
+% Paper specific
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\R}{\mathcal{R}}
+
+\newcommand{\Ut}{\operatorname{U}}
+\newcommand{\V}{\operatorname{V}}
+
+\newcommand{\Hy}{\mathcal{H}}
+
+\begin{document}
+
+This is the first in a series of essays that aim to derive a regret bound for DRL the depends on finer attributes of the prior than just the number of hypotheses. Specifically, we consider the entropy of the prior and a certain learning-theoretic dimension parameter. As a "by product", we derive a new regret bound for ordinary RL without resets and without traps. In this chapter, we open the series by demonstrating the latter, under the significant simplifying assumption that the MDPs are deterministic.
+
+***
+
+\section{Background}
+
+The regret bound we [previously](https://agentfoundations.org/item?id=1739) derived for DRL grows as a power law with the number of hypotheses. In contrast, the RL literature is usually concerned with considering all transition kernels on a fixed state space satisfying some simple assumption (e.g. a bound on the diameter or bias span). In particular, the number of hypotheses is uncountable. While the former seems too restrictive (although it's relatively simple to generalize it to *countable* hypothesis classes), the latter seems too coarse. Indeed, we expect a universally intelligent agent to detect *patterns* in the data, i.e. follow some kind of simplicity prior rather than a uniform distribution over transition kernels.
+
+The underlying technique of our proof was lower bounding the information gain in a single episode of posterior sampling by the expected regret incurred during this episode. Although we have not previously stated it in this form, the resulting regret bound depends on the *entropy* of the prior (we considered a uniform prior instead). This idea (unbeknownst to us) appeared earlier in [Russo and Van Roy](https://arxiv.org/abs/1403.5341). Moreover, later [Russo and Van Roy](https://arxiv.org/abs/1403.5556) used to it formulate a generalization of posterior sampling they call "information-directed sampling" the can produce far better regret bounds in certain scenarios. However, to the best of our knowledge, this technique was not previously used to analyze reinforcement learning (as opposed to bandits). Therefore, it seems natural to derive such an "entropic" regret bound for ordinary RL, before extending it to DRL.
+
+Now, [Osband and Van Roy](https://arxiv.org/abs/1406.1853) derived a regret bound for priors supported on some space of transition kernels as a function of its Kolmogorov dimension and "eluder" dimension (the latter introduced previously by [Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration)). They also consider a continuous state space. This is a more fine approach than considering nearly arbitrary transition kernels on a fixed state space, but it still doesn't distinguish between different priors with the same support. Our new results involve a parameter similar to eluder dimension, but instead of Kolmogorov dimension we use entropy (in the following chapters we will see that Kolmogorov dimension is, in some sense, an *upper bound* on entropy). As opposed to Osband and Van Roy, we currently limit ourselves to finite state spaces, but on the other hand we consider no resets (at the price of a "no traps" assumption).
+
+In this chapter we derive the entropic regret bound for *deterministic* MDPs. This latter restriction significantly simplifies the analysis. In the following chapters, we will extend it to stochastic MDPs, however the resulting regret bound will be weaker.
+
+\section{Results}
+
+We fix a finite nonempty set $\St$ (the set of states), a non-empty set $\A$ (the set of actions) and an initial state $s_0 \in \St$. We also consider some set of hypotheses $\Hy$ where each $h\in\Hy$ is of the form $h=\AP{T_h,R_h}$ where $T_h: \St \times \A \rightarrow \St$ is a (deterministic) transition kernel, and $R_h: \St \rightarrow [0,1]$ is a reward function.
+
+??? % Isn't the weaker form (where we consider points on the graph rather than only arguments) sufficient?
+
+\#Definition 1
+
+Given $B \subseteq \St \times \A \times \St \times [0,1]$ and $\AP{s_*,a_*} \in \St \times \A \times \St \times [0,1]$, we say that $\AP{s_*,a_*}$ is *$\Hy$-dependent* of $B$ when, given any $h,g\in\Hy$ s.t. for all $(s,a,t,r) \in B$, $T_h(s,a) = T_g(s,a)=t$ and $R_h(s) = R_g(s)=r$, we have $T_h\AP{s_*,a_*}=T_g\AP{s_*,a_*}$ and $R_h\AP{s_*}=R_g\AP{s_*}$. Otherwise, $\AP{s_*,a_*}$ is said to be *$\Hy$-independent* of $B$.
+
+The *prediction dimension* of $\Hy$ is the length $n\in\Nats$ of the longest sequence\\$\AC{\AP{s_k\in\St,a_k\in\A,t_k\in\St_t,r_k\in[0,1]}}_{k\in[n]}$ s.t. for each $k\in[n]$, $\AP{s_k,a_k}$ is $\Hy$-independent of $\AC{\AP{s_j,a_j,t_j,r_j}}_{j\in[k]}$.
+
+***
+
+Obvious bounds...
+
+% number of states/actions
+% number of hypotheses
+% cellular automata
+
+\section{Proofs}
+
+\#Proposition A.1
+
+Hahaha
+
+\#Proof of Proposition A.1
+
+Mwhahaha
+
+\end{document}
+
+
+
