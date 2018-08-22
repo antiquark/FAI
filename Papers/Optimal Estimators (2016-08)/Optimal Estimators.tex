@@ -942,7 +942,8 @@ We now give the proof of Proposition~\ref{prp:weight}.
 
 \begin{proof}[Proof of Proposition \ref{prp:weight}]
 
-\textcolor{red}{Intuitively, if the result was false, then $W$ being high implies that the Brier score of $Q$ is less than the Brier score of $P$. Thus, the proof will construct a uniform family of algorithms that use their advice to encode an approximation of some number $t$, and use $P$ if $W$ assigns a weight less than the approximation, and $Q$ otherwise. $P$ dominates all the algorithms in this family, and after some reshuffling, and integrating over $t$, $W$ can be recovered, and this leads to the desired result.}
+%Intuitively, if the result was false, then $W$ being high implies that the Brier score of $Q$ is less than the Brier score of $P$. Thus,
+\textcolor{red}{The proof will construct a uniform family of algorithms that use their advice to encode an approximation of some number $t$, and use $P$ if $W$ assigns a weight less than the approximation, and $Q$ otherwise. $P$ dominates all the algorithms in this family, and after some reshuffling, and integrating over $t$, $W$ can be recovered, and this leads to the desired result.}
 
 Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho_\zeta^{K}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \GrowA$ s.t. for any $t \in [0, M]$, ${\Abs{\En_\Rats(\rho_\zeta^{K}(t))} \leq \gamma(K)}$.
 
