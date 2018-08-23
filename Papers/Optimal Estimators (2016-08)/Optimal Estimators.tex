@@ -2713,9 +2713,10 @@ We now apply Proposition~\ref{prp:sq_diff_cong} via condition \ref{con:def__sp_r
 
 Denote $y_i:=\pi^K(x,z_i)$ where the ${z_i}$ are sampled independently from ${\Un_\pi^K}$. Applying Proposition~\ref{prp:sq_diff_cong} via Proposition~\ref{prp:ev_equiv_mean} and the assumption on $\gamma$, we get
 
-\[\E_{\Dist^{K} \times \Un_{P_f}^K}\left[\left(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i)-f\right)^2\right] \leq \E_{\Dist^{K} \times \Un_{PQ}^K}\left[\left(Q_f ^K - P_f^K+\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i) - f\right)^2\right] \pmod \Fall\]
-
-\textcolor{red}{maybe fix the alignment of the above?}
+\begin{align*}
+&\E_{\Dist^{K} \times \Un_{P_f}^K}\left[\left(\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i)-f\right)^2\right] \leq \\ 
+&\E_{\Dist^{K} \times \Un_{PQ}^K}\left[\left(Q_f ^K - P_f^K+\frac{1}{\gamma(K)}\sum_{i \in [\gamma(K)]}P_g^K(y_i) - f\right)^2\right] \pmod \Fall 
+\end{align*}
 
 \[\E_{\Dist^{K} \times \Un_{P_f}^K}[(P_f^K-f)^2] \leq \E_{\Dist^{K} \times \Un_{PQ}^K}[(Q_f ^K - P_f^K+P_f^K - f)^2] \pmod \Fall\]
 
