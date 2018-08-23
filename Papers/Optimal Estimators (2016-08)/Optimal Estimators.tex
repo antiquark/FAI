@@ -2575,7 +2575,7 @@ Consider $\gamma \in \GammaPoly^n$, $\Dist$ a word ensemble and $\bar{g}: \Words
 
 \begin{proof}
 
-Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$. \textcolor{red}{By the equality of $\Abs{X}$ and $\sqrt{X^2}$, applying Jensen's Inequality to move the square inside the second expectation, and partially pulling the $\frac{1}{\gamma(K)}$ out,}
+Denote $\Un_\gamma^K:=\prod_{i \in [\gamma(K)]} \Un_\pi^K$. \textcolor{red}{Using $\Abs{X}=\sqrt{X^2}$, applying Jensen's inequality to move the square root outside the second expectation, and partially pulling the $\frac{1}{\gamma(K)}$ out,}
 
 \begin{align*}
 &\E[\Abs{\E[\bar{g}(\pi^{K}(x,z))]-\frac{1}{\gamma(K)} \sum_{i \in [\gamma(K)]} \bar{g}(\pi^K(x,z_i))}] \leq\\ &\frac{1}{\sqrt{\gamma(K)}}\E_{\Dist^{K}}\left[\sqrt{\frac{1}{\gamma(K)}\E_{\Un_\gamma^K}\left[\left(\sum_{i\in[\gamma(K)]}\E_{\Un_\pi^K}[\bar{g}(\pi^{K}(x,z))]- \bar{g}(\pi^K(x,z_i))\right)^2\right]}\right]
