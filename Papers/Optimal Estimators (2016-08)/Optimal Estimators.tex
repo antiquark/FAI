@@ -2184,13 +2184,13 @@ By Proposition~\ref{prp:mixed_ort}, this implies
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \equiv 0 \pmod \Fall$$
 \end{proof}
 
-The following corollary demonstrates one natural scenario in which the conditions of Theorem~\ref{thm:mult} hold. \textcolor{red}{The scenario is one where the distribution is $\Dist_{1}\times\Dist_{2}$, and the task is to estimate $f_{1}(x_{1})f_{2}(x_{2})$. By Theorem~\ref{thm:mult}, this can be done if there is a sampler for $(\Dist_{2},f_{2})$, and a sampler for $\Dist_{1}$, because the two samplers can be put together to approximately sample from $\Dist_{1}\times\Dist_{2}$, and this is a sufficient condition for the product of the optimal estimators to be an optimal estimator.}
+The following corollary demonstrates one natural scenario in which the conditions of Theorem~\ref{thm:mult} hold. \textcolor{red}{The scenario is one where the distribution is $\Dist_{1}\times\Dist_{2}$, and the task is to estimate $f_{1}(x_{1})f_{2}(x_{2})$. By Theorem~\ref{thm:mult}, this can be done if there is a sampler for $(\Dist_{2},f_{2})$, and a sampler for $\Dist_{1}$.}%, because the two samplers can be put together to approximately sample from $\Dist_{1}\times\Dist_{2}$, and this is a sufficient condition for the product of the optimal estimators to be an optimal estimator.}
 
 \begin{samepage}
 \begin{corollary}
 \label{crl:dir_prod}
 
-Consider $(\Dist_1,f_1)$, $(\Dist_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist_1,f_1)$, $P_2$ is an $\ESG$-optimal estimator for $(\Dist_2,f_2)$, $\sigma_1$ is a polynomial-time $\EMG$-sampler for $\Dist_1$ and $\sigma_2$ is a polynomial-time $\EMG$-sampler for $(\Dist_2,f_2)$. Define\\ ${\Dist^{K}:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Define ${f: \Supp \Dist \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal estimator for $(\Dist,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_{1\bullet}^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
+Consider $(\Dist_1,f_1)$, $(\Dist_2,f_2)$ distributional estimation problems. Suppose $P_1$ is an $\ESG$-optimal estimator for $(\Dist_1,f_1)$, $P_2$ is an $\ESG$-optimal estimator for $(\Dist_2,f_2)$, $\sigma_1$ is a polynomial-time $\EMG$-sampler for $\Dist_1$ and $\sigma_2$ is a polynomial-time $\EMG$-sampler for $(\Dist_2,f_2)$. Define ${\Dist^{K}:=\En_*^2(\Dist_1^k \times \Dist_2^k)}$. Define ${f: \Supp \Dist \rightarrow \Reals}$ by ${f(\Chev{x_1,x_2}):=f_1(x_1)f_2(x_2)}$. Then, there is $P$, an $\ESG$-optimal estimator for $(\Dist,f)$, s.t. $\R_P=\R_{P_1}+\R_{P_2}$ and for any $K \in \Nats^n$, $x_1 \in \Supp \sigma_{1\bullet}^{K}$, $x_2 \in \Words$, $z_1 \in \WordsLen{\R_{P_1}(K)}$ and $z_2 \in \WordsLen{\R_{P_2}(K)}$
 
 \begin{equation}
 P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
