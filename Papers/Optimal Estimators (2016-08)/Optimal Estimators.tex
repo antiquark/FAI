@@ -1832,14 +1832,14 @@ We require that the function $\varepsilon(K):=\E_{x \sim \Dist^{K}}[\Abs{f_\sigm
 
 \end{enumerate}
 
-\textcolor{red}{This represents the requirement of being able to efficiently generate question-answer pairs, such that the distribution of questions converges to the distribution $\Words$, and the answers converge to the true output of the function $f$.}
+\textcolor{red}{This represents the requirement of being able to efficiently generate question-answer pairs, such that the distribution of questions converges to the distribution $\Dist$, and the answers converge to the true output of the function $f$.}
 
 When $\sup{\Abs{\sigma_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $(\Dist,f)$}.
 
 \end{definition}
 \end{samepage}
 
-For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability become very weak, as seen in the following propositions, \textcolor{red}{which essentially say that if the bitstrings on which $\Words$ has support are short enough relative to the length of the advice string, then the randomized advice can just duplicate the distribution. And if there is ample advice available, then the randomized advice can also output an approximation to the true value of $f(x)$ along with $x$.}
+For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability become very weak, as seen in the following propositions, \textcolor{red}{which essentially say that if the bitstrings on which $\Dist$ is supported are short enough relative to the length of the advice string, then the randomized advice can just duplicate the distribution. And if there is ample advice available, then the randomized advice can also output an approximation to the true value of $f(x)$ along with $x$.}
 \begin{samepage}
 \begin{proposition}
 \label{prp:adv_mgamma_smp}
