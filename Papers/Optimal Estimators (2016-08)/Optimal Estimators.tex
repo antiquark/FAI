@@ -3383,7 +3383,7 @@ For any ${q \in \NatPolyJ}$ s.t. ${q \geq 2}$ there are ${\{\omega_q^K \in \math
 
 \begin{equation}
 \label{eqn:prp__fall_uni_weak__prem}
-\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq (k+2)^{\Floor{\log q(J)}}-2 \implies \zeta(J,k') \leq \zeta(J,k)+\varepsilon(J,k+2)
+\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq (k+2)^{\Floor{\log q(J)}}-2 \implies \zeta(J,k') \leq \zeta(J,k)+\varepsilon(J,k)
 \end{equation}
 
 then
@@ -3398,7 +3398,7 @@ then
 
 \begin{proof}
 
-Take any ${a \in \Reals}$ s.t. ${a \geq 2}$.
+Take any ${a \in \Nats}$ s.t. ${a \geq 5}$.
 
 \[\int_{t = a}^{a^{\Floor{\log q(J)}}} \dif (\log \log t) = \log \log a^{\Floor{\log q(J)}} - \log \log a\]
 
@@ -3430,33 +3430,19 @@ We have ${\dif (\log \log t^{\Floor{\log q(J)}}) = \dif(\log \log t)}$ therefore
 
 \[\int_{t = 2}^{a} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-\[\int_{t = 2}^{a} \frac{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}{t \log t} \dif t \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
+%Assume ${\zeta}$ satisfies \ref{eqn:prp__fall_uni_weak__prem}. ${\Floor{t^{\Floor{\log q(J)}}}-2 \geq \Floor{t}^{\Floor{\log q(J)}}-2}$ therefore the integrand is non-negative. Taking ${a}$ to ${\infty}$ we get
 
-Note that, because $\varepsilon\in\FallU$ there is some polynomial $p$ and positive constant $M$ s.t
+%\[\int_{t = 2}^{\infty} (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \dif (\log \log t) \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-\[\int_{t=2}^{a} \frac{\varepsilon(J,\Floor{t})}{t \log t}\dif t \le \sum_{k=2}^{\infty}\frac{\varepsilon(J,k)}{k \log k}\le M\log\log p(J)\]
+\[\int_2^a (\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)) \frac{\dif t}{(\ln 2)^2 t \log t} \leq 2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-Define $c_{1}:=2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}$, and $c_{2}:=M\log\log p(J)$. Assume ${\zeta}$ satisfies \ref{eqn:prp__fall_uni_weak__prem}. ${\Floor{t^{\Floor{\log q(J)}}}-2 \geq \Floor{t}^{\Floor{\log q(J)}}-2}$ therefore the integrand in the following equation is non-negative.
+\[\sum_{k=0}^{a-3} \int_{k+2}^{k+3} \frac{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}{t \log t} \dif t \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-\[\int_{t = 2}^{a} \frac{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)+\varepsilon(J,\Floor{t})}{t \log t} \dif t \leq c_{1}+c_{2}\]
+\[\sum_{k=0}^{a-3} \int_0^1 \frac{\zeta(J,k) - \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)}{(k+t+2) \log (k+t+2)}\dif t \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-Because the integrand is non-negative, we can take $a$ to $\infty$. Subtracting off the $\varepsilon$ leaves the integral well-defined. Also, because $\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)\ge -\varepsilon(J,\Floor{t})$, the following integral has a well-defined lower bound. 
+For ${k \geq 2}$ we have ${(k + 3) \log (k + 3) \leq \frac{5}{2}k \log \frac{5}{2}k \leq \frac{5}{2}k \log k^{\log 5} = \frac{5}{2} (\log 5) k \log k}$.
 
-\[-c_{2}\leq\int_2^\infty \frac{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}{t \log t} \dif t \leq c_{1}\]
-
-Now, if $\int_2^\infty \theta(-f(t))f(t)\dif t$ and $\int_2^\infty f(t)\dif t$ are both well-defined, $\int_{2}^{\infty}\Abs{f(t)}\dif t$ is well-defined and equals $\int_2^\infty f(t)\dif t - 2\int_2^\infty \theta(-f(t))f(t)\dif t$.
-
-Fortunately, both of these integrals are well-defined, as established above, so the upper and lower bounds can be applied to yield
-
-\[\int_2^\infty \frac{\Abs{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}}{t \log t} \dif t \leq c_{1}+2c_{2}\]
-
-\[\sum_{k=0}^\infty \int_{k+2}^{k+3} \frac{\Abs{\zeta(J,\Floor{t}-2) - \zeta(J,\Floor{t^{\Floor{\log q(J)}}}-2)}}{t \log t} \dif t \leq c_{1}+2c_{2}\]
-
-\[\sum_{k=0}^\infty \int_0^1 \frac{\Abs{\zeta(J,k) - \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)}}{(k+t+2) \log (k+t+2)}\dif t \leq c_{1}+2c_{2}\]
-
-For ${k \geq 2}$ we have ${(k + 3) \log (k + 3) \leq \frac{5}{2}k \log \frac{5}{2}k \leq \frac{5}{2}k \log k^{\log 5} = \frac{5}{2} (\log 5) k \log k}$. Also, for all $c$ and $f$ such that the following integrals are well-defined, $\int_0^1 \Abs{c-f(t)}\dif t\ge\Abs{c-\int_0^1 f(t)\dif t}$.
-
-\[\sum_{k=2}^\infty \frac{\Abs{\zeta(J,k) - \int_0^1 \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)\dif t}}{\frac{5}{2} (\log 5) k \log k} \leq c_{1}+2c_{2}\]
+\[\sum_{k=2}^{a-3} \frac{\zeta(J,k) - \int_0^1 \zeta(J,\Floor{(k+t+2)^{\Floor{\log q(J)}}}-2)\dif t}{\frac{5}{2} (\log 5) k \log k} \leq 2(\ln 2)^2(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
 Define
 
@@ -3466,9 +3452,17 @@ Define
 
 We get
 
-\[\sum_{k=2}^\infty \frac{\Abs{\zeta(J,k) - \sum_{i=0}^\infty \zeta(J,(k+2)^{\Floor{\log q(J)}}-2+i)\omega_q^{Jk}(i) }}{k \log k}  \leq \frac{2}{5}(\ln 5)(c_{1}+2c_{2})\]
+\[\sum_{k=2}^{a-3} \frac{\zeta(J,k) - \sum_{i=0}^\infty \zeta(J,(k+2)^{\Floor{\log q(J)}}-2+i)\omega_q^{Jk}(i) }{k \log k}  \leq \frac{4}{5}(\ln 2)(\ln 5)(\sup \Abs{\zeta}) \log \Floor{\log q(J)}\]
 
-The above implies \ref{eqn:prp__fall_uni_weak__conc} when $c_{1}$ and $c_{2}$ are expanded.
+Denote $M:=\frac{4}{5}(\ln 2)(\ln 5)(\sup \Abs{\zeta})$ and $\bar{\zeta}(J,k):=\sum_{i=0}^\infty \zeta(J,(k+2)^{\Floor{\log q(J)}}-2+i)\omega_q^{Jk}(i)$. Using~\ref{eqn:prp__fall_uni_weak__prem}
+
+\[\zeta(J,k) - \bar{\zeta}(J,k) \geq -\epsilon(J,k)\]
+
+\[\Abs{\zeta(J,k) - \bar{\zeta}(J,k)} \leq \zeta(J,k) - \bar{\zeta}(J,k) + 2\epsilon(J,k)\]
+
+\[\sum_{k=2}^{a-3} \frac{\Abs{\zeta(J,k) - \bar{\zeta}(J,k)}}{k \log k}  \leq M \log \Floor{\log q(J)}+2\sum_{k=2}^{a-3}\frac{\epsilon(J,k)}{k\log{k}} \]
+
+Taking $a$ to infinity and using the fact that $\epsilon\in\FallU$, we get the desired result.
 %
 \end{proof}
 
@@ -3480,7 +3474,7 @@ For any ${p \in \NatPoly}$ there are ${\{\omega_p^K \in \mathcal{P}(\Nats)\}_{K 
 
 \begin{equation}
 \label{eqn:prp__fall_uni__prem}
-\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq p(J,k) \implies \zeta(J,k') \leq \zeta(J,k) + \varepsilon(J,k+2)
+\forall J \in \Nats^{n-1}, k,k' \in \Nats: k' \geq p(J,k) \implies \zeta(J,k') \leq \zeta(J,k) + \varepsilon(J,k)
 \end{equation}
 
 then
