@@ -3908,7 +3908,7 @@ In the setting of Proposition~\ref{prp:tally_perfect}, any ${\EG}$-optimal estim
 
 Denote ${\Gamma_0:=(\GrowR,\Gamma_0^n)}$, ${\Gamma_1:=(\GrowR,\Gamma_1^n)}$. Taking ${\Gamma=\Gamma_1}$ in Proposition~\ref{prp:tally_perfect} and using Proposition~\ref{prp:adv_amp}, we conclude that if the image of ${h}$ is a finite subset of ${\Rats}$ and there is no ${\Fall(\Gamma_0)}$-perfect estimator for ${(\Dist,f)}$ then there is no ${\Fall(\Gamma_0)}$-optimal estimator for ${(\Dist,f)}$. 
 
-For distributional decision problems and ${\EG}$-samplable word ensembles we have the following stronger proposition: \textcolor{red}{given an optimal estimator, we get not just a perfect estimator, but an algorithm that depends only on $K$ and doesn't need a problem instance.}
+For distributional decision problems and ${\EG}$-samplable word ensembles we have the following stronger proposition: \textcolor{red}{given an optimal estimator, we get not just a perfect estimator, but a "heuristic" algorithm that depends only on $K$ and doesn't need a problem instance.}
 
 \begin{samepage}
 \begin{proposition}
@@ -3955,9 +3955,7 @@ By Proposition~\ref{prp:tally_perfect}, ${P}$ is an ${\Fall(\Delta)}$-perfect es
 
 Again, the statement can be reversed to disprove the existence of ${\Fall(\Delta)}$-optimal estimators for ${\Delta_{\mathfrak{A}}}=\Gamma_0^n$.
 
-Now we consider the special case ${\Fall=\FallUt{\varphi}}$, ${\GrowR = \GammaPoly^n}$. \textcolor{red}{Consider the standard decomposition of the index into two parameters $J$ (which is the only thing $\chi$ depends on), and $k$ which controls the computation time available. The following proposition states that if there is a $\FallUt{\varphi}(\Delta)$-optimal estimator for $(\Dist,\chi)$, and a $\FallUt{\varphi}(\Delta)$ sampler for $\Dist$, then quasi-polynomial computing resources suffice to get a bounded-error randomized algorithm for computing $\chi$.}
-
-\textcolor{red}{The implication from this proposition is that, if there is some language $L$ with a uniform sampler that can't be decided in quasi-polynomial time by a bounded-error randomized algorithm, then there is no optimal estimator for $\chi$ with no advice and error that lies in $\FallUt{\varphi}$ (which is a very slowly-shrinking error space).}
+Now we consider the special case ${\Fall=\FallUt{\varphi}}$, ${\GrowR = \GammaPoly^n}$. \textcolor{red}{Consider the standard decomposition of the index into two parameters $J$ (which is going to be the only relevant variable in the estimation problem) and $k$ which controls the computation time available. The following proposition states that if there is an $\FallUt{\varphi}(\Delta)$-optimal estimator for $(\Dist,\chi)$, and an $\FallUt{\varphi}(\Gamma)$ sampler for $\Dist$, then quasi-polynomial computing resources suffice to get a bounded-error randomized algorithm for computing $\chi$.}
 
 \begin{samepage}
 \begin{proposition}
