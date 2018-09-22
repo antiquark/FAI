@@ -1,0 +1,97 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Co}[1]{}
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Dom}{dom}
+% autosize delimiters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
+\newcommand{\APM}[2]{\left(#1\;\middle\vert\;#2\right)}
+\newcommand{\ABM}[2]{\left[#1\;\middle\vert\;#2\right]}
+\newcommand{\ACM}[2]{\left\{#1\;\middle\vert\;#2\right\}}
+% probability theory
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\CI}[3]{\underset{#1}{\operatorname{I}}\ABM{#2}{#3}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}\AP{#1\middle\vert\middle\vert#2}}
+\newcommand{\RD}[3]{\operatorname{D}_{#1}\AP{#2\middle\vert\middle\vert#3}}
+\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\textnormal{tv}}\AP{#1}}
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+% power set
+\newcommand{\PS}[1]{\mathcal{P}\AP{#1}}
+% differential
+\newcommand{\D}{\mathrm{d}}
+% arg
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+% numbers
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+% empty string
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+% limits
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+% more delimiters
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
+% arrows
+\newcommand{\K}{\xrightarrow{\textnormal{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+% Paper specific
+% TBD
+
+\begin{document}
+
+\textbf{TLDR:}\Co{b} I derive a variant of the RL regret bound by [Osband and Van Roy](https://arxiv.org/abs/1406.1853), that applies to learning without resets of environments without traps. The advantage of this regret bound over those known in the literature, is that it scales with certain learning-theoretic dimensions rather than number of states and actions. My goal is building on this result to derive this type of regret bound for [DRL](https://agentfoundations.org/item?id=1656), and, later on, other settings interesting from an AI\ alignment perspective.
+
+[Previously](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) I derived a regret bound for \textit{deterministic}\Co{i} environments that scales with prior entropy and "prediction dimension". That bound behaves as $O\AP{\sqrt{1-\gamma}}$ in the episodic setting but only as $O\AP{\sqrt[3]{1-\gamma}}$ in the setting without resets. Moreover, my attempts to generalize the result to stochastic environments led to bounds that are \textit{even weaker}\Co{i} (have a lower exponent). Therefore, I decided to put that line of attack on hold, and use Osband and Van Roy's technique instead, leading to an $O\AP{\sqrt{1-\gamma}}$ bound in the stochastic setting without resets. The main disadvantage is, this bound doesn't scale down with the entropy of the prior, but this does not seem as important as dependence on $\gamma$.
+
+\begin{Huge}Results\end{Huge}
+
+Foo
+
+\textbf{Definition 1}\Co{b}
+
+\textit{Bar}\Co{i}
+
+\end{document}
+
+
