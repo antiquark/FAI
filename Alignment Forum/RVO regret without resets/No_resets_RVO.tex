@@ -76,7 +76,9 @@
 \newcommand{\K}{\xrightarrow{\textnormal{k}}}
 \newcommand{\PF}{\xrightarrow{\circ}}
 % Paper specific
-% TBD
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\F}{\mathcal{F}}
 
 \begin{document}
 
@@ -86,11 +88,21 @@
 
 \begin{Huge}Results\end{Huge}
 
-Foo
+[Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration) introduced the concept of "eluder dimension" for the benefit of the multi-armed bandit setting, and Osband and Van Roy extended it to a form suitable for studying reinforcement learning. Their definition is as follows.
 
 \textbf{Definition 1}\Co{b}
 
-\textit{Bar}\Co{i}
+\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals$. Consider also $n\in\Nats$, a sequence $\AC{x_k\in\X}_{k\in[n]}$ and $x^*\in\X$. $x^*$ is said to be} $\AP{\F,\epsilon}$-dependant on $\AC{x_k}$ \textit{when, for any $f,\tilde{f}\in\F$}\Co{i}
+
+$$\sum_{k=0}^{n-1}\Norm{f\AP{x_k}-\tilde{f}\AP{x_k}}^2 \leq \epsilon^2 \implies \Norm{f\AP{x^*}-\tilde{f}\AP{x^*}}\leq\epsilon$$
+
+\textit{Otherwise, $x^*$ is said to be}\Co{i} $\AP{\F,\epsilon}$-independent of $\AC{x_k}$.
+
+\textbf{Definition 2}\Co{b}
+
+\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals$. The}\Co{i} eluder dimension $\dim_{e}(\F,\epsilon)$ \textit{is the supremum of the set of $n\in\Nats$ for which there is $\AC{x_k\in\X}_{k\in[n]}$ and $\epsilon'\geq\epsilon$ s.t. for all $m\in[n]$, $x_m$ is $\AP{\F,\epsilon'}$-independent of $\AC{x_k\in\X}_{k\in[m]}$.}\Co{i}
+
+% Is eluder dimension logarithmic for cellular automata?
 
 \end{document}
 
