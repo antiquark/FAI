@@ -42,8 +42,8 @@
 \newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
 \newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}\AP{#1\middle\vert\middle\vert#2}}
 \newcommand{\RD}[3]{\operatorname{D}_{#1}\AP{#2\middle\vert\middle\vert#3}}
-\newcommand{\Dtv}{\operatorname{d}_{\textnormal{tv}}}
-\newcommand{\Dtva}[1]{\operatorname{d}_{\textnormal{tv}}\AP{#1}}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
 \newcommand{\En}{\operatorname{H}}
 \newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
 % power set
@@ -73,22 +73,26 @@
 \newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
 \newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
 % arrows
-\newcommand{\K}{\xrightarrow{\textnormal{k}}}
+\newcommand{\K}{\xrightarrow{\text{k}}}
 \newcommand{\PF}{\xrightarrow{\circ}}
 % Paper specific
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\Y}{\mathcal{Y}}
 \newcommand{\F}{\mathcal{F}}
+\newcommand{\RVO}{\dim_{\text{RVO}}}
+
 
 \begin{document}
 
 \textbf{TLDR:}\Co{b} I derive a variant of the RL regret bound by [Osband and Van Roy](https://arxiv.org/abs/1406.1853), that applies to learning without resets of environments without traps. The advantage of this regret bound over those known in the literature, is that it scales with certain learning-theoretic dimensions rather than number of states and actions. My goal is building on this result to derive this type of regret bound for [DRL](https://agentfoundations.org/item?id=1656), and, later on, other settings interesting from an AI\ alignment perspective.
 
+***
+
 [Previously](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) I derived a regret bound for \textit{deterministic}\Co{i} environments that scales with prior entropy and "prediction dimension". That bound behaves as $O\AP{\sqrt{1-\gamma}}$ in the episodic setting but only as $O\AP{\sqrt[3]{1-\gamma}}$ in the setting without resets. Moreover, my attempts to generalize the result to stochastic environments led to bounds that are \textit{even weaker}\Co{i} (have a lower exponent). Therefore, I decided to put that line of attack on hold, and use Osband and Van Roy's technique instead, leading to an $O\AP{\sqrt{1-\gamma}}$ bound in the stochastic setting without resets. The main disadvantage is, this bound doesn't scale down with the entropy of the prior, but this does not seem as important as dependence on $\gamma$.
 
 \begin{Huge}Results\end{Huge}
 
-[Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration) introduced the concept of "eluder dimension" for the benefit of the multi-armed bandit setting, and Osband and Van Roy extended it to a form suitable for studying reinforcement learning. Their definition is as follows.
+[Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration) introduced the concept of "eluder dimension" for the benefit of the multi-armed bandit setting, and Osband and Van Roy extended it to a form suitable for studying reinforcement learning. The following two definitions are adapted from the latter.
 
 \textbf{Definition 1}\Co{b}
 
@@ -100,9 +104,19 @@ $$\sum_{k=0}^{n-1}\Norm{f\AP{x_k}-\tilde{f}\AP{x_k}}^2 \leq \epsilon^2 \implies 
 
 \textbf{Definition 2}\Co{b}
 
-\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals$. The}\Co{i} eluder dimension $\dim_{e}(\F,\epsilon)$ \textit{is the supremum of the set of $n\in\Nats$ for which there is $\AC{x_k\in\X}_{k\in[n]}$ and $\epsilon'\geq\epsilon$ s.t. for all $m\in[n]$, $x_m$ is $\AP{\F,\epsilon'}$-independent of $\AC{x_k\in\X}_{k\in[m]}$.}\Co{i}
+\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals$. The}\Co{i} eluder dimension $\dim_{\text{e}}(\F,\epsilon)$ \textit{is the supremum of the set of $n\in\Nats$ for which there is $\AC{x_k\in\X}_{k\in[n]}$ and $\epsilon'\geq\epsilon$ s.t. for all $m\in[n]$, $x_m$ is $\AP{\F,\epsilon'}$-independent of $\AC{x_k\in\X}_{k\in[m]}$.}\Co{i}
 
 % Is eluder dimension logarithmic for cellular automata?
+
+As opposed to other learning-theoretic dimensions, eluder dimension depends on the parameter $\epsilon$. However, in natural examples it seems to be always bounded by a logarithmic function of $\epsilon$. This motivates the following definition
+
+\textbf{Definition 3}\Co{b}
+
+\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Then, the}\Co{i} Russo-Van Roy-Osband dimension (RVO dimension) of $\F$ \textit{is defined by}\Co{i}
+
+$$\RVO{\F}:=\limsup_{\epsilon \rightarrow 0}{\frac{\dim_{\text{e}}(\F,\epsilon)}{\ln\frac{1}{\epsilon}}}$$
+
+Note that, in general, RVO dimension is fractional.
 
 \end{document}
 
