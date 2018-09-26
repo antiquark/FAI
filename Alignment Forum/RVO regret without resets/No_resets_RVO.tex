@@ -83,6 +83,7 @@
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\R}{\mathcal{R}}
 \newcommand{\T}{\mathcal{T}}
+\newcommand{\El}{\mathrm{L}}
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\RVO}{\dim_{\text{RVO}}}
 \newcommand{\MB}{\dim_{\text{MB}}}
@@ -100,7 +101,7 @@
 
 \begin{Huge}Results\end{Huge}
 
-[Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration) introduced the concept of "eluder dimension" for the benefit of the multi-armed bandit setting, and Osband and Van Roy extended it to a form suitable for studying reinforcement learning. The following two definitions are adapted from the latter.
+[Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration) introduced the concept of "eluder dimension" (which we will call "eluder number") for the benefit of the multi-armed bandit setting, and Osband and Van Roy extended it to a form suitable for studying reinforcement learning. The following two definitions are adapted from the latter.
 
 \textbf{Definition 1}\Co{b}
 
@@ -112,17 +113,21 @@ $$\sum_{k=0}^{n-1}\Norm{f\AP{x_k}-\tilde{f}\AP{x_k}}^2 \leq \epsilon^2 \implies 
 
 \textbf{Definition 2}\Co{b}
 
-\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals^+$. The}\Co{i} eluder dimension $\dim_{\text{e}}(\F,\epsilon)$ \textit{is the supremum of the set of $n\in\Nats$ for which there is $\AC{x_k\in\X}_{k\in[n]}$ and $\epsilon'\geq\epsilon$ s.t. for all $m\in[n]$, $x_m$ is $\AP{\F,\epsilon'}$-independent of $\AC{x_k\in\X}_{k\in[m]}$.}\Co{i}
+\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals^+$. The}\Co{i} eluder number $\El(\F,\epsilon)$ \textit{is the supremum of the set of $n\in\Nats$ for which there is $\AC{x_k\in\X}_{k\in[n]}$ and $\epsilon'\geq\epsilon$ s.t. for all $m\in[n]$, $x_m$ is $\AP{\F,\epsilon'}$-independent of $\AC{x_k\in\X}_{k\in[m]}$.}\Co{i}
 
 % Is eluder dimension logarithmic for cellular automata?
 
-As opposed to other learning-theoretic dimensions, eluder dimension depends on the parameter $\epsilon$. However, in natural examples it seems to be always bounded by a logarithmic function of $\epsilon$. This motivates the following definition
+As opposed to other learning-theoretic dimensions, the eluder number depends on the parameter $\epsilon$. However, in natural examples it seems to be always bounded by a logarithmic function of $\epsilon$. This motivates the following definition
 
 \textbf{Definition 3}\Co{b}
 
 \textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Then, the}\Co{i} Russo-Van Roy-Osband dimension (RVO dimension) of $\F$ \textit{is defined by}\Co{i}
 
-$$\RVO{\F}:=\limsup_{\epsilon \rightarrow 0}{\frac{\dim_{\text{e}}(\F,\epsilon)}{\ln\frac{1}{\epsilon}}}$$
+$$\RVO{\F}:=\limsup_{\epsilon \rightarrow 0}{\frac{\El(\F,\epsilon)}{\ln\frac{1}{\epsilon}}}$$
+
+We will give two simple bounds on these quantities: a bound in terms of number of functions in the family, and a bound in terms of number of elements in $\X$ and $\Y$. Besides these, the bound on prediction dimension for cellular decision processes we demonstrated [before](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) also carries over, since eluder number is trivially bounded by prediction dimension in the deterministic case. It would also be interesting to investigate stochastic versions of cellular decision processes, but we will not attempt it at present.
+
+TBD: Bounds on eluder number / RVO dimension
 
 Another concept we need to formulate the regret bound is the Minkowski–Bouligand dimension.
 
@@ -132,7 +137,7 @@ Another concept we need to formulate the regret bound is the Minkowski–Bouliga
 
 $$\forall f\in\F\exists g\in A: \sup_{x\in\X}\Norm{f(x)-g(x)}<\epsilon$$
 
-That is, we always consider the covering number of function families w.r.t. the $\sup$ norm.
+Note that we always consider the covering number of function families w.r.t. the $\sup$ norm.
 
 \textbf{Definition 5}\Co{b}
 
@@ -144,9 +149,11 @@ That is, we always consider the covering number of function families w.r.t. the 
 
 $$\MB{\F}:=\limsup_{\epsilon \rightarrow 0}{\frac{\ln{\N(\F,\epsilon)}}{\ln\frac{1}{\epsilon}}}$$
 
+TBD: Bounds on covering number / MB dimension
+
 Note that, in general, RVO and MB dimensions are fractional.
 
-Consider finite non-empty sets $\St$ (states) and $\A$ (actions). Note that $\Delta\St$ can be regarded as a subset of the vector space $\Reals^\St$ and the later can be equipped with the inner product $\Chev{v,w}:=\sum_{s\in\St} v_s w_s$. This allows us to speak of the RVO and MB dimensions of a hypothesis class of transition kernels $\Hy\subseteq\AC{\St\times\A\K\St}$ (that is, in this case $\X=\St\times\A$ and $\Y=\Delta\St$). We can now formulate the regret bound.
+Consider finite non-empty sets $\St$ (states) and $\A$ (actions). Observe that $\Delta\St$ can be regarded as a subset of the vector space $\Reals^\St$ and the later can be equipped with the inner product $\Chev{v,w}:=\sum_{s\in\St} v_s w_s$. This allows us to speak of the RVO and MB dimensions of a hypothesis class of transition kernels $\Hy\subseteq\AC{\St\times\A\K\St}$ (that is, in this case $\X=\St\times\A$ and $\Y=\Delta\St$). We can now formulate the regret bound.
 
 \textbf{Theorem 1}\Co{b}
 
@@ -160,7 +167,14 @@ $$\tau_{\zeta\R}:=\Ea{\T\sim\zeta}{\max_{s\in\St}\Abs{\V^1_{\T\R}(s)}}$$
 
 $$\limsup_{\gamma \rightarrow 1}\frac{\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi^\dagger_\gamma}_{\T\R}(\gamma)}}{\tau_{\zeta\R}\ln{\frac{1}{1-\gamma}}\sqrt{\AP{\MB\Hy+\epsilon}\AP{\RVO\Hy+\epsilon}(1-\gamma)}}\leq C$$
 
-Here (like in previous essays), $\V^1_{\T\R}(s)$ is the first derivative of the value function at $\gamma=1$ for transition kernel $\T$, reward function $\R$ and state $s$; $\EU^{\pi}_{\T\R}(\gamma)$ is the expected utility for policy $\pi$ and geometric time discount parameter $\gamma$; $\EU^*_{\T\R}(\gamma)$ is the maximal expected utility over policies.
+Here (like in previous essays), $\V^1_{\T\R}(s)$ is the first derivative of the value function at $\gamma=1$ for transition kernel $\T$, reward function $\R$ and state $s$; $\EU^{\pi}_{\T\R}(\gamma)$ is the expected utility for policy $\pi$ and geometric time discount parameter $\gamma$; $\EU^*_{\T\R}(\gamma)$ is the maximal expected utility over policies. The expression in the numerator is, thereby, the Bayesian regret.
+
+As one can infer from the proof, it is also possible to write down a concrete bound for fixed $\gamma$ (rather than considering the $\gamma\rightarrow 1$ limit) using the covering and eluder numbers, but its form is somewhat convoluted. Also, it is possible to find an *anytime* policy with this form of regret, but we won't prove it here.
+
+\begin{Huge}Proofs\end{Huge}
+
+TBD
+
 \end{document}
 
 
