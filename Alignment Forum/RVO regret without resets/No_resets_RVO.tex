@@ -80,6 +80,8 @@
 \newcommand{\Y}{\mathcal{Y}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\RVO}{\dim_{\text{RVO}}}
+\newcommand{\MB}{\dim_{\text{MB}}}
+\newcommand{\N}{\mathrm{N}}
 
 
 \begin{document}
@@ -96,7 +98,7 @@
 
 \textbf{Definition 1}\Co{b}
 
-\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals$. Consider also $n\in\Nats$, a sequence $\AC{x_k\in\X}_{k\in[n]}$ and $x^*\in\X$. $x^*$ is said to be} $\AP{\F,\epsilon}$-dependant on $\AC{x_k}$ \textit{when, for any $f,\tilde{f}\in\F$}\Co{i}
+\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals^+$. Consider also $n\in\Nats$, a sequence $\AC{x_k\in\X}_{k\in[n]}$ and $x^*\in\X$. $x^*$ is said to be} $\AP{\F,\epsilon}$-dependant on $\AC{x_k}$ \textit{when, for any $f,\tilde{f}\in\F$}\Co{i}
 
 $$\sum_{k=0}^{n-1}\Norm{f\AP{x_k}-\tilde{f}\AP{x_k}}^2 \leq \epsilon^2 \implies \Norm{f\AP{x^*}-\tilde{f}\AP{x^*}}\leq\epsilon$$
 
@@ -104,7 +106,7 @@ $$\sum_{k=0}^{n-1}\Norm{f\AP{x_k}-\tilde{f}\AP{x_k}}^2 \leq \epsilon^2 \implies 
 
 \textbf{Definition 2}\Co{b}
 
-\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals$. The}\Co{i} eluder dimension $\dim_{\text{e}}(\F,\epsilon)$ \textit{is the supremum of the set of $n\in\Nats$ for which there is $\AC{x_k\in\X}_{k\in[n]}$ and $\epsilon'\geq\epsilon$ s.t. for all $m\in[n]$, $x_m$ is $\AP{\F,\epsilon'}$-independent of $\AC{x_k\in\X}_{k\in[m]}$.}\Co{i}
+\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals^+$. The}\Co{i} eluder dimension $\dim_{\text{e}}(\F,\epsilon)$ \textit{is the supremum of the set of $n\in\Nats$ for which there is $\AC{x_k\in\X}_{k\in[n]}$ and $\epsilon'\geq\epsilon$ s.t. for all $m\in[n]$, $x_m$ is $\AP{\F,\epsilon'}$-independent of $\AC{x_k\in\X}_{k\in[m]}$.}\Co{i}
 
 % Is eluder dimension logarithmic for cellular automata?
 
@@ -117,6 +119,28 @@ As opposed to other learning-theoretic dimensions, eluder dimension depends on t
 $$\RVO{\F}:=\limsup_{\epsilon \rightarrow 0}{\frac{\dim_{\text{e}}(\F,\epsilon)}{\ln\frac{1}{\epsilon}}}$$
 
 Note that, in general, RVO dimension is fractional.
+
+Another concept we need to formulate the regret bound is the Minkowski–Bouligand dimension.
+
+\textbf{Definition 4}\Co{b}
+
+\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals^+$. A set $A\subseteq\F$ is said to be an}\Co{i} $\epsilon$-covering of $\F$ \textit{when}\Co{i}
+
+$$\forall f\in\F\exists g\in A: \sup_{x\in\X}\Norm{f(x)-g(x)}\leq\epsilon$$
+
+That is, we always consider the covering number of function families w.r.t. the $\sup$ norm.
+
+\textbf{Definition 5}\Co{b}
+
+\textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals^+$.\ The}\Co{i} covering number $\N(\F,\epsilon)$ \textit{is the infimum of the set of $n\in\Nats$ for which there is an $\epsilon$-covering of $\F$ of size $n$.}\Co{i}
+
+\textbf{Definition 6}\Co{b}
+
+\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Then, the}\Co{i} Minkowski–Bouligand dimension (MB dimension) of $\F$ \textit{is defined by}\Co{i}
+
+$$\MB{\F}:=\limsup_{\epsilon \rightarrow 0}{\frac{\ln{\N(\F,\epsilon)}}{\ln\frac{1}{\epsilon}}}$$
+
+
 
 \end{document}
 
