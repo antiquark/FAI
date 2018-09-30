@@ -89,7 +89,9 @@
 \newcommand{\MB}{\dim_{\text{MB}}}
 \newcommand{\N}{\mathrm{N}}
 \newcommand{\V}{\mathrm{V}}
+\newcommand{\Q}{\mathrm{Q}}
 \newcommand{\EU}{\mathrm{EU}}
+\newcommand{\PSR}{\text{PSRL}}
 
 \begin{document}
 
@@ -171,11 +173,29 @@ $$\limsup_{\gamma \rightarrow 1}\frac{\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^
 
 Here (like in previous essays), $\V^1_{\T\R}(s)$ is the first derivative of the value function at $\gamma=1$ for transition kernel $\T$, reward function $\R$ and state $s$; $\EU^{\pi}_{\T\R}(\gamma)$ is the expected utility for policy $\pi$ and geometric time discount parameter $\gamma$; $\EU^*_{\T\R}(\gamma)$ is the maximal expected utility over policies. The expression in the numerator is, thereby, the Bayesian regret.
 
-As one can infer from the proof, it is also possible to write down a concrete bound for fixed $\gamma$ (rather than considering the $\gamma\rightarrow 1$ limit) using the covering and eluder numbers, but its form is somewhat convoluted. Also, it is possible to find an *anytime* policy with this form of regret, but we won't prove it here.
+As one can infer from the proof, it is also possible to write down a concrete bound for fixed $\gamma$ (rather than considering the $\gamma\rightarrow 1$ limit) using the covering and eluder numbers, but its form is somewhat convoluted. Also, it is probably possible to find an *anytime* policy with this form of regret, but we won't prove it here.
 
-\begin{Huge}Proofs\end{Huge}
+\begin{Huge}Proof\end{Huge}
 
-TBD
+The proof follows Osband and Van Roy rather closely. The main differences are:
+
+* No resets (at the price of a "no traps" assumption)
+
+* Geometric time discount instead of step function (finite horizon) time discount
+
+* We only consider finite MDPs
+
+* Instead of assuming a certain value function is Lipschitz (this assumption plays a role even in the discrete special case since the Lipschitz constant appears in their regret bound), we use the bound on $\V^1$ that we need in the setting without resets anyway.
+
+\textbf{Proposition A.1}\Co{b}
+
+In the setting of Theorem 1, fix $T\in\Nats^+$ and let $\pi_{\zeta\R T}^{\PSR}: \St^*\times\St\K\A$ be the policy implemented by a PSRL algorithm with prior $\zeta$, reward function $\R$ and episode length $T$. Let $(\Omega,P)$ be a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm (see the proof of "Lemma 1" in [this](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) previous essay or the proof of "Theorem 1" in [another](https://agentfoundations.org/item?id=1739) previous essay). Furthermore, let $K:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{J_l:\Omega\rightarrow\Hy}_{l\in\Nats}$ be the random variables s.t. $J_l$ represents the hypothesis sampled during the $l$-th episode, $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be random variables s.t. $\Theta_n$ represents the state at time $n$ and $\AC{A_n:\Omega\rightarrow\A}_{n\in\Nats}$ be random variables s.t. $A_n$ represents the action taken at time $n$. Then
+
+$$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gamma)}=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Q_{J_{\Floor{n/T}}\R}\AP{\Theta_n,A_n,\gamma}-\Q_{KR}\AP{\Theta_n,A_n,\gamma}}$$
+
+% Proof uses Proposition B.1 from https://agentfoundations.org/item?id=1723
+
+% TODO: complete statements of lemmas, then proof of main theorem, then proofs of lemmas + appendix (B)
 
 \end{document}
 
