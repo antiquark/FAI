@@ -92,6 +92,9 @@
 \newcommand{\Q}{\mathrm{Q}}
 \newcommand{\EU}{\mathrm{EU}}
 \newcommand{\PSR}{\text{PSRL}}
+\newcommand{\LS}{\mathrm{LS}}
+\newcommand{\CS}{\mathrm{CS}}
+\newcommand{\W}{\mathrm{W}}
 
 \begin{document}
 
@@ -139,7 +142,7 @@ Another concept we need to formulate the regret bound is the Minkowski–Bouliga
 
 \textit{Consider a set $\X$, a real inner product space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and $\epsilon\in\Reals^+$. A set $A\subseteq\F$ is said to be an}\Co{i} $\epsilon$-covering of $\F$ \textit{when}\Co{i}
 
-$$\forall f\in\F\exists g\in A: \sup_{x\in\X}\Norm{f(x)-g(x)}<\epsilon$$
+$$\forall f\in\F\exists\tilde{f}\in A: \sup_{x\in\X}\Norm{f(x)-\tilde{f}(x)}<\epsilon$$
 
 Note that we always consider the covering number of function families w.r.t. the $\sup$ norm.
 
@@ -187,13 +190,69 @@ The proof follows Osband and Van Roy rather closely. The main differences are:
 
 * Instead of assuming a certain value function is Lipschitz (this assumption plays a role even in the discrete special case since the Lipschitz constant appears in their regret bound), we use the bound on $\V^1$ that we need in the setting without resets anyway.
 
-\textbf{Proposition A.1}\Co{b}
+\textbf{Proposition A.N1}\Co{b}
 
 In the setting of Theorem 1, fix $T\in\Nats^+$ and let $\pi_{\zeta\R T}^{\PSR}: \St^*\times\St\K\A$ be the policy implemented by a PSRL algorithm with prior $\zeta$, reward function $\R$ and episode length $T$. Let $(\Omega,P)$ be a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm (see the proof of "Lemma 1" in [this](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) previous essay or the proof of "Theorem 1" in [another](https://agentfoundations.org/item?id=1739) previous essay). Furthermore, let $K:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{J_l:\Omega\rightarrow\Hy}_{l\in\Nats}$ be the random variables s.t. $J_l$ represents the hypothesis sampled during the $l$-th episode, $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be random variables s.t. $\Theta_n$ represents the state at time $n$ and $\AC{A_n:\Omega\rightarrow\A}_{n\in\Nats}$ be random variables s.t. $A_n$ represents the action taken at time $n$. Then
 
 $$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gamma)}=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Q_{J_{\Floor{n/T}}\R}\AP{\Theta_n,A_n,\gamma}-\Q_{KR}\AP{\Theta_n,A_n,\gamma}}$$
 
+\textbf{Proof of Proposition A.N1}\Co{b}
+
 % Proof uses Proposition B.1 from https://agentfoundations.org/item?id=1723
+
+\textit{TBD}\Co{i}
+
+\textbf{Definition A.N1}\Co{b}
+
+\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Assume $\F$ is compact w.r.t. the product topology on $\X\rightarrow\Y\cong\prod_{x\in\X}\Y$, where $\Y$ is equipped with the topology induced by the inner product. Consider also some $n\in\Nats$, $\bold{x}\in\X^n$, $\bold{y}\in\Y^n$ and $r\in\Reals^+$. We then use the notation}\Co{i}
+
+$$\LS^\F[\bold{x},\bold{y}]:=\Argmin{f\in\F}{\sum_{m=0}^{n-1}\Norm{f\AP{\bold{x}_m}-\bold{y}_m}^2}$$
+
+$$\CS^\F_{r}[\bold{x},\bold{y}]:=\ACM{f\in\F}{\sum_{m=0}^{n-1}\Norm{f\AP{\bold{x}_m}-\LS^\F[\bold{x},\bold{y}]\AP{\bold{x}_m}}^2\leq r^2}$$
+
+I chose the notation $\LS$ as an abbreviation of "least squares" and $\CS$ as an abbreviation of "confidence set". Note that $\LS$ is somewhat ambiguous (and therefore, so is $\CS$) since there might be multiple minima, but this will not be important in the following (i.e. an arbitrary minimum can be chosen).
+
+\textbf{Definition A.N2}\Co{b}
+
+\textit{Consider a set $\X$, some $x\in\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. The}\Co{i} width of $\F$ at $x$ \textit{is defined by}\Co{i}
+
+$$\W^\F(x):=\sup_{f,\tilde{f}\in\F}\Norm{f(x)-\tilde{f}(x)}$$  
+
+\textbf{Proposition A.N2}\Co{b}
+
+\textit{There is some $C_{\mathrm{A.N2}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+
+\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\theta\in\Reals^+$, and $\eta_0,\eta_1,\eta_2\in\Reals^+$. For any $t\in\Reals^+$, define $\beta(t)$ by}\Co{i}
+
+$$\beta(t):=\eta_0 + \eta_1t+\eta_2t\ln{t}$$
+
+For any $n\in\Nats$, define $\F_n$ by
+
+$$\F_n:=\CS^\F_{\sqrt{\beta(n+1)}}[\bold{x}_{:n},\bold{y}_{:n}]$$
+
+Then,
+
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m}}>\theta]]} \leq C_{\mathrm{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}\ln{\frac{1}{\theta}}$$
+
+\textbf{Proof of Proposition A.N2}\Co{b}
+
+\textit{TBD}\Co{i}
+
+\textbf{Proposition A.N3}\Co{b}
+
+\textit{There is some $C_{\mathrm{A.N3}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+
+\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Assume that for any $x\in\X$ and $f\in\F$, $\Norm{f(x)}\leq 1$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, and $\eta_0,\eta_1,\eta_2\in\Reals^+$. Define $\beta$ and $\F_n$ the same way as in Proposition A.N2. Then,}\Co{i}
+
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m}}} \leq C_{\mathrm{A.N3}}\AP{1+\RVO{\F}\cdot T\ln\frac{1}{1-\gamma}+\sqrt{\RVO{\F}\cdot\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$$
+
+\textbf{Proof of Proposition A.N3}\Co{b}
+
+\textit{TBD}\Co{i}
+
+\textbf{Proof of Theorem 1}\Co{b}
+
+\textit{TBD}\Co{i}
 
 % TODO: complete statements of lemmas, then proof of main theorem, then proofs of lemmas + appendix (B)
 
