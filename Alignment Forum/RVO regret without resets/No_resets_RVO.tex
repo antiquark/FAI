@@ -204,8 +204,11 @@ $$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gam
 
 \textbf{Proposition A.N4}\Co{b}
 
-% sigma is O(1)
-\textit{TBD}\Co{i}
+\textit{Consider a finite set $\St$ and some $\mu\in\Delta\St$. Let $\sigma=3$ and define $\iota:\St\rightarrow\Reals^\St$ by $\iota(s)_t:=[[s=t]]$. Then, $\iota_*\mu$ is $\sigma$-sub-Gaussian, i.e., for any $\lambda\in\Reals^\St$}\Co{i}
+
+$$\Ea{y\sim\iota_*\mu}{\exp\AP{\Chev{\lambda,\ y-\mu}}} \leq \exp\AP{\frac{\sigma^2\Norm{\lambda}^2}{2}}$$
+
+\textit{Here, $\mu$ is regarded as a vector in $\Reals^\St$ in the obvious way. Note that $\mu=\Ea{y\sim\iota_*\mu}{y}$.}\Co{i}
 
 \textbf{Proof of Proposition A.N4}\Co{b}
 
@@ -213,11 +216,29 @@ $$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gam
 
 \textbf{Proposition A.N5}\Co{b}
 
-% A.N4 + B.N2
-\textit{TBD}\Co{i}
+\textit{There is some $C_{\mathrm{A.N5}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+
+\textit{Consider finite sets $\X,\St$ and some $\F\subseteq\AC{\X\K\St}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\St^\omega}}_{n\in\Nats}$ be the natural filtration, i.e.}\Co{i}
+
+$$\mathfrak{H}_n:=\ACM{A'\subseteq\X^\omega\times\St^\omega}{A'=\ACM{\bold{xs}}{\bold{xs}_{:n}\in A},\ A\subseteq\X^n\times\St^n}$$
+
+\textit{Consider also $f^*\in\F$ and $\mu\in\Delta\AP{\X^\omega\times\St^\omega}$ s.t. for any $n\in\Nats$ $x\in\X$, and $s\in\St$}\Co{i}
+
+$$\CP{\bold{xs}\sim\mu}{\bold{s}_n=s}{\bold{x}_n=x,\ \mathfrak{H}_n} = f^*(s\mid x)$$
+
+\textit{Fix $\epsilon\in\Reals^+$, $\delta\in(0,1)$. Denote}\Co{i}
+
+$$\beta(t):=C_{\mathrm{A.N5}}\AP{\ln{\frac{\N(\F,\epsilon)}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}}$$
+
+\textit{Then,}\Co{i}
+
+$$\Pa{\bold{xs}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F_{\sqrt{\beta(n+1)}}\AB{\bold{xs}_{:n}}} \leq \delta$$
+
+??? Does CS make sense here? We only defined it below! Also, tweak the other propositions to better accommodate the form of delta! ???
 
 \textbf{Proof of Proposition A.N5}\Co{b}
 
+% A.N4 + B.N2
 \textit{TBD}\Co{i}
 
 \textbf{Definition A.N1}\Co{b}
@@ -287,7 +308,6 @@ The proposition below appeared in Osband and Van Roy as "Lemma 1", so we state i
 \textit{TBD}\Co{i}
 
 The next proposition appeared (in slightly greater generality) in Osband and Van Roy as "Proposition 5".
-% We need to show that \sigma=O(1)...
 
 \textbf{Proposition B.N2}\Co{b}
 
