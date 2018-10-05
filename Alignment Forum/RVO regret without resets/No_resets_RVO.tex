@@ -202,13 +202,31 @@ $$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gam
 
 \textit{TBD}\Co{i}
 
+\textbf{Proposition A.N4}\Co{b}
+
+% sigma is O(1)
+\textit{TBD}\Co{i}
+
+\textbf{Proof of Proposition A.N4}\Co{b}
+
+\textit{TBD}\Co{i}
+
+\textbf{Proposition A.N5}\Co{b}
+
+% A.N4 + B.N2
+\textit{TBD}\Co{i}
+
+\textbf{Proof of Proposition A.N5}\Co{b}
+
+\textit{TBD}\Co{i}
+
 \textbf{Definition A.N1}\Co{b}
 
 \textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Assume $\F$ is compact w.r.t. the product topology on $\X\rightarrow\Y\cong\prod_{x\in\X}\Y$, where $\Y$ is equipped with the topology induced by the inner product. Consider also some $n\in\Nats$, $\bold{x}\in\X^n$, $\bold{y}\in\Y^n$ and $r\in\Reals^+$. We then use the notation}\Co{i}
 
-$$\LS^\F[\bold{x},\bold{y}]:=\Argmin{f\in\F}{\sum_{m=0}^{n-1}\Norm{f\AP{\bold{x}_m}-\bold{y}_m}^2}$$
+$$\LS^\F[\bold{xy}]:=\Argmin{f\in\F}{\sum_{m=0}^{n-1}\Norm{f\AP{\bold{x}_m}-\bold{y}_m}^2}$$
 
-$$\CS^\F_{r}[\bold{x},\bold{y}]:=\ACM{f\in\F}{\sum_{m=0}^{n-1}\Norm{f\AP{\bold{x}_m}-\LS^\F[\bold{x},\bold{y}]\AP{\bold{x}_m}}^2\leq r^2}$$
+$$\CS^\F_{r}[\bold{xy}]:=\ACM{f\in\F}{\sum_{m=0}^{n-1}\Norm{f\AP{\bold{x}_m}-\LS^\F[\bold{xy}]\AP{\bold{x}_m}}^2\leq r^2}$$
 
 I chose the notation $\LS$ as an abbreviation of "least squares" and $\CS$ as an abbreviation of "confidence set". Note that $\LS$ is somewhat ambiguous (and therefore, so is $\CS$) since there might be multiple minima, but this will not be important in the following (i.e. an arbitrary minimum can be chosen).
 
@@ -228,7 +246,7 @@ $$\beta(t):=\eta_0 + \eta_1t+\eta_2t\ln{t}$$
 
 For any $n\in\Nats$, define $\F_n$ by
 
-$$\F_n:=\CS^\F_{\sqrt{\beta(n+1)}}[\bold{x}_{:n},\bold{y}_{:n}]$$
+$$\F_n:=\CS^\F_{\sqrt{\beta(n+1)}}[\bold{xy}_{:n}]$$
 
 Then,
 
@@ -242,9 +260,9 @@ $$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m
 
 \textit{There is some $C_{\mathrm{A.N3}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Assume that for any $x\in\X$ and $f\in\F$, $\Norm{f(x)}\leq 1$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, and $\eta_0,\eta_1,\eta_2\in\Reals^+$. Define $\beta$ and $\F_n$ the same way as in Proposition A.N2. Then,}\Co{i}
+\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Assume that for any $x\in\X$ and $f\in\F$, $\Norm{f(x)}\leq 1$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, and $\eta_0,\eta_1,\eta_2\in\Reals^+$. Define $\beta$ and $\F_n$ the same way as in Proposition A.N2. Denote $D:=\RVO{\F}$. Then,}\Co{i}
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m}}} \leq C_{\mathrm{A.N3}}\AP{1+\RVO{\F}\cdot T\ln\frac{1}{1-\gamma}+\sqrt{\RVO{\F}\cdot\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m}}} \leq C_{\mathrm{A.N3}}\AP{1+D T\ln\frac{1}{1-\gamma}+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$$
 
 \textbf{Proof of Proposition A.N3}\Co{b}
 
@@ -254,7 +272,48 @@ $$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m}}
 
 \textit{TBD}\Co{i}
 
-% TODO: complete statements of lemmas, then proof of main theorem, then proofs of lemmas + appendix (B)
+\begin{Huge}Appendix\end{Huge}
+
+The proposition below appeared in Osband and Van Roy as "Lemma 1", so we state it without proof.
+
+\textbf{Proposition B.N1}\Co{b}
+
+\textit{TBD}\Co{i}
+
+... %episode decoupling
+
+\textbf{Proposition B.N3}\Co{b}
+
+\textit{TBD}\Co{i}
+
+The next proposition appeared (in slightly greater generality) in Osband and Van Roy as "Proposition 5".
+% We need to show that \sigma=O(1)...
+
+\textbf{Proposition B.N2}\Co{b}
+
+\textit{There is some $C_{\mathrm{B.N2}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+
+\textit{Consider finite set $\X$, finite-dimensional real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\Y^\omega}}_{n\in\Nats}$ be the natural filtration, i.e.}\Co{i}
+
+$$\mathfrak{H}_n:=\ACM{A'\subseteq\X^\omega\times\Y^\omega}{A'=\ACM{\bold{xy}}{\bold{xy}_{:n}\in A},\ A\subseteq\X^n\times\Y^n\text{ Borel}}$$
+
+\textit{Consider also $f^*\in\F$ and $\mu\in\Delta\AP{\X^\omega\times\Y^\omega}$ s.t. for any $n\in\Nats$ and $x\in\X$}\Co{i}
+
+$$\CE{\bold{xy}\sim\mu}{\bold{y}_n}{\bold{x}_n=x,\ \mathfrak{H}_n} = f^*(x)$$
+
+\textit{Assume that $M\in\Reals^+$ is s.t. $\Norm{\bold{y}_n}\leq M$ with $\mu$-probability $1$ for all $n\in\Nats$. Assume also that $\sigma\in\Reals^+$ is s.t. $\mu$ is $\sigma$-sub-Gaussian, i.e., for any $\lambda\in\Y$, $n\in\Nats$ and $x\in\X$}\Co{i}
+
+$$\CE{\bold{xy}\sim\mu}{\exp\AP{\Chev{\lambda,\ \bold{y}_n-f^*(x)}}}{\bold{x}_n=x,\ \mathfrak{H}_n} \leq \exp\AP{\frac{\sigma^2\Norm{\lambda}^2}{2}}$$
+
+\textit{Fix $\epsilon\in\Reals^+$, $\delta\in(0,1)$. Denote}\Co{i}
+
+$$\beta(t):=C_{\mathrm{B.N2}}\AP{\sigma^2 \ln{\frac{\N(\F,\epsilon)}{\delta}}+\epsilon t\AP{M+\sigma\ln{\frac{et}{\delta}}}}$$
+
+\textit{Then,}\Co{i}
+
+$$\Pa{\bold{xy}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F_{\sqrt{\beta(n+1)}}\AB{\bold{xy}_{:n}}} \leq \delta$$
+
+Note that we removed a square root in the definition of $\beta$ compared to equation (7) in Osband and Van Roy. This only makes $\beta$ larger (up to a constant factor) and therefore, only makes the claim weaker.
 
 \end{document}
 
