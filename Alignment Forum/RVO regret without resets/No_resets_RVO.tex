@@ -91,7 +91,8 @@
 \newcommand{\V}{\mathrm{V}}
 \newcommand{\Q}{\mathrm{Q}}
 \newcommand{\EU}{\mathrm{EU}}
-\newcommand{\PSR}{\text{PSRL}}
+\newcommand{\Reg}{\mathrm{R}}
+\newcommand{\PSR}{\text{PS}}
 \newcommand{\LS}{\mathrm{LS}}
 \newcommand{\CS}{\mathrm{CS}}
 \newcommand{\W}{\mathrm{W}}
@@ -188,13 +189,15 @@ The proof follows Osband and Van Roy rather closely. The main differences are:
 
 * We only consider finite MDPs
 
-* Instead of assuming a certain value function is Lipschitz (this assumption plays a role even in the discrete special case since the Lipschitz constant appears in their regret bound), we use the bound on $\V^1$ that we need in the setting without resets anyway.
+* Instead of assuming a certain value function is Lipschitz (this assumption plays a role even in the discrete special case since the Lipschitz constant appears in their regret bound), we use the bound on $\V^1$ that we need in the setting without resets anyway. ??? maybe it's not "anyway" but it *is* the only way we do episode decoupling ???
 
 \textbf{Proposition A.N1}\Co{b}
 
 In the setting of Theorem 1, fix $T\in\Nats^+$ and let $\pi_{\zeta\R T}^{\PSR}: \St^*\times\St\K\A$ be the policy implemented by a PSRL algorithm with prior $\zeta$, reward function $\R$ and episode length $T$. Let $(\Omega,P)$ be a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm (see the proof of "Lemma 1" in [this](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) previous essay or the proof of "Theorem 1" in [another](https://agentfoundations.org/item?id=1739) previous essay). Furthermore, let $K:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{J_l:\Omega\rightarrow\Hy}_{l\in\Nats}$ be the random variables s.t. $J_l$ represents the hypothesis sampled during the $l$-th episode, $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be random variables s.t. $\Theta_n$ represents the state at time $n$ and $\AC{A_n:\Omega\rightarrow\A}_{n\in\Nats}$ be random variables s.t. $A_n$ represents the action taken at time $n$. Then
 
 $$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gamma)}=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Q_{J_{\Floor{n/T}}\R}\AP{\Theta_n,A_n,\gamma}-\Q_{KR}\AP{\Theta_n,A_n,\gamma}}$$
+
+??? This seems wrong. We should apply both Bellman operators to the same value function, so it's not exactly $\Q$ ???
 
 \textbf{Proof of Proposition A.N1}\Co{b}
 
@@ -206,7 +209,7 @@ $$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gam
 
 \textit{Consider a finite set $\St$ and some $\mu\in\Delta\St$. Let $\sigma=3$ and define $\iota:\St\rightarrow\Reals^\St$ by $\iota(s)_t:=[[s=t]]$. Then, $\iota_*\mu$ is $\sigma$-sub-Gaussian, i.e., for any $\lambda\in\Reals^\St$}\Co{i}
 
-$$\Ea{y\sim\iota_*\mu}{\exp\AP{\Chev{\lambda,\ y-\mu}}} \leq \exp\AP{\frac{\sigma^2\Norm{\lambda}^2}{2}}$$
+$$\Ea{y\sim\iota_*\mu}{\exp\AP{\lambda\cdot\AP{y-\mu}}} \leq \exp\AP{\frac{\sigma^2\Norm{\lambda}^2}{2}}$$
 
 \textit{Here, $\mu$ is regarded as a vector in $\Reals^\St$ in the obvious way. Note that $\mu=\Ea{y\sim\iota_*\mu}{y}$.}\Co{i}
 
@@ -291,7 +294,29 @@ $$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m}}
 
 \textbf{Proof of Theorem 1}\Co{b}
 
-\textit{TBD}\Co{i}
+We take $\pi^\dagger_\gamma:=\pi^\PSR_{\zeta\R T}$ for some $T\in\Nats^+$ to be specified later. We denote the Bayesian regret by
+
+$$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\gamma}^{\dagger}}_{\T\R}(\gamma)}$$
+
+By Proposition A.N1
+
+$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Q_{J_{\Floor{n/T}}\R}\AP{\Theta_n,A_n,\gamma}-\Q_{KR}\AP{\Theta_n,A_n,\gamma}}???$$
+
+By definition of $\Q$, it follows that
+
+$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n+1}\Ea{}{?-?}$$
+
+% Use \tau and the no-traps condition
+
+% Apply A.N5
+ 
+% Balance \delta = 1-\gamma
+ 
+% Apply A.N3
+
+% Balance \epsilon = (1-\gamma)^2
+
+\textbf{Q.E.D.}\Co{b}
 
 \begin{Huge}Appendix\end{Huge}
 
@@ -301,7 +326,8 @@ The proposition below appeared in Osband and Van Roy as "Lemma 1", so we state i
 
 \textit{TBD}\Co{i}
 
-... %episode decoupling
+% episode decoupling seems to be redundant, it is already taken care of using the "Lipschitz constant"
+\Co{...
 
 \textbf{Proposition B.N3}\Co{b}
 
@@ -319,9 +345,7 @@ iii. For any $\theta\in(\gamma,1)$ $$\Abs{\frac{\D\V_{M}\AP{S(h),\theta}}{\D\the
 
 Then
 
-$$\EU^{*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}$$
-
-\textit{TBD}\Co{i}
+$$\EU^{*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}$$}
 
 The next proposition appeared (in slightly greater generality) in Osband and Van Roy as "Proposition 5".
 
