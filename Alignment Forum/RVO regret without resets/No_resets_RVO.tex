@@ -17,6 +17,7 @@
 \DeclareMathOperator{\Sgn}{sgn}
 \DeclareMathOperator{\Supp}{supp}
 \DeclareMathOperator{\Dom}{dom}
+\DeclareMathOperator{\Sp}{span}
 % autosize delimiters
 \newcommand{\AP}[1]{\left(#1\right)}
 \newcommand{\AB}[1]{\left[#1\right]}
@@ -87,6 +88,7 @@
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\RVO}{\dim_{\text{RVO}}}
 \newcommand{\MB}{\dim_{\text{MB}}}
+\newcommand{\LD}{\dim_{\text{loc}}}
 \newcommand{\N}{\mathrm{N}}
 \newcommand{\V}{\mathrm{V}}
 \newcommand{\Q}{\mathrm{Q}}
@@ -127,7 +129,7 @@ As opposed to other learning-theoretic dimensions, the eluder number depends on 
 
 \textbf{Definition 3}\Co{b}
 
-\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Then, the}\Co{i} Russo-Van Roy-Osband dimension (RVO dimension) of $\F$ \textit{is defined by}\Co{i}
+\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. The}\Co{i} Russo-Van Roy-Osband dimension (RVO dimension) of $\F$ \textit{is defined by}\Co{i}
 
 $$\RVO{\F}:=\limsup_{\epsilon \rightarrow 0}{\frac{\El(\F,\epsilon)}{\ln\frac{1}{\epsilon}}}$$
 
@@ -153,7 +155,7 @@ Note that we always consider the covering number of function families w.r.t. the
 
 \textbf{Definition 6}\Co{b}
 
-\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Then, the}\Co{i} Minkowski–Bouligand dimension (MB dimension) of $\F$ \textit{is defined by}\Co{i}
+\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. The}\Co{i} Minkowski–Bouligand dimension (MB dimension) of $\F$ \textit{is defined by}\Co{i}
 
 $$\MB{\F}:=\limsup_{\epsilon \rightarrow 0}{\frac{\ln{\N(\F,\epsilon)}}{\ln\frac{1}{\epsilon}}}$$
 
@@ -161,7 +163,17 @@ For finite $\F$ and $\epsilon\ll1$, it's obvious that $\N(\F,\epsilon)=\Abs{\F}$
 
 Note that, in general, RVO and MB dimensions are fractional.
 
-Consider finite non-empty sets $\St$ (states) and $\A$ (actions). Observe that $\Delta\St$ can be regarded as a subset of the vector space $\Reals^\St$ and the later can be equipped with the inner product $\Chev{v,w}:=\sum_{s\in\St} v_s w_s$. This allows us to speak of the RVO and MB dimensions of a hypothesis class of transition kernels $\Hy\subseteq\AC{\St\times\A\K\St}$ (that is, in this case $\X=\St\times\A$ and $\Y=\Reals^\St$). We can now formulate the regret bound.
+Finally, we need yet another (but rather simple) notion of "dimension".
+
+\textbf{Definition 7}\Co{b}
+
+\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. The}\Co{i} local dimension of $\F$ \textit{is defined by}\Co{i}
+
+$$\LD{\F}:=\max_{x\in\X}{\dim\Sp\ACM{f(x)}{f\in\F}}$$
+
+Obviously $\LD{\F}\leq\Abs{\F}$ and $\LD{\F}\leq\dim{\Y}$.
+
+Consider finite non-empty sets $\St$ (states) and $\A$ (actions). Observe that $\Delta\St$ can be regarded as a subset of the vector space $\Reals^\St$ and the later can be equipped with the inner product $\Chev{v,w}:=\sum_{s\in\St} v_s w_s$. This allows us to speak of the RVO, MB and local dimensions of a hypothesis class of transition kernels $\Hy\subseteq\AC{\St\times\A\K\St}$ (that is, in this case $\X=\St\times\A$ and $\Y=\Reals^\St$). We can now formulate the regret bound.
 
 \textbf{Theorem 1}\Co{b}
 
@@ -195,7 +207,8 @@ The proof follows Osband and Van Roy rather closely. The main differences are:
 
 In the setting of Theorem 1, fix $T\in\Nats^+$ and let $\pi_{\zeta\R T}^{\PSR}: \St^*\times\St\K\A$ be the policy implemented by a PSRL algorithm with prior $\zeta$, reward function $\R$ and episode length $T$. Let $(\Omega,P)$ be a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm (see the proof of "Lemma 1" in [this](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) previous essay or the proof of "Theorem 1" in [another](https://agentfoundations.org/item?id=1739) previous essay). Furthermore, let $K:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{J_l:\Omega\rightarrow\Hy}_{l\in\Nats}$ be the random variables s.t. $J_l$ represents the hypothesis sampled during the $l$-th episode, $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be random variables s.t. $\Theta_n$ represents the state at time $n$ and $\AC{A_n:\Omega\rightarrow\A}_{n\in\Nats}$ be random variables s.t. $A_n$ represents the action taken at time $n$. Then
 
-$$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gamma)}=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Q_{J_{\Floor{n/T}}\R}\AP{\Theta_n,A_n,\gamma}-\Q_{KR}\AP{\Theta_n,A_n,\gamma}}$$
+$$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gamma)}=\sum_{n=0}^\infty\gamma^{n+1}\Ea{}{?-?
+}$$
 
 ??? This seems wrong. We should apply both Bellman operators to the same value function, so it's not exactly $\Q$ ???
 
