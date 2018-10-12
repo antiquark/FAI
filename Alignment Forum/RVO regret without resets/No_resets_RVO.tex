@@ -74,7 +74,7 @@
 \newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
 \newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
 % arrows
-\newcommand{\K}{\xrightarrow{\text{k}}}
+\newcommand{\K}{\xrightarrow{\mathrm{k}}}
 \newcommand{\PF}{\xrightarrow{\circ}}
 % Paper specific
 \newcommand{\X}{\mathcal{X}}
@@ -86,9 +86,12 @@
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\El}{\mathrm{L}}
 \newcommand{\Hy}{\mathcal{H}}
-\newcommand{\RVO}{\dim_{\text{RVO}}}
-\newcommand{\MB}{\dim_{\text{MB}}}
-\newcommand{\LD}{\dim_{\text{loc}}}
+\DeclareMathOperator{\RVO}{\dim_{RVO}}
+\DeclareMathOperator{\MB}{\dim_{MB}}
+\DeclareMathOperator{\LD}{\dim_{loc}}
+\newcommand{\DRVO}{D_{\mathrm{RVO}}}
+\newcommand{\DMB}{D_{\mathrm{MB}}}
+\newcommand{\DL}{D_{\mathrm{loc}}}
 \newcommand{\N}{\mathrm{N}}
 \newcommand{\V}{\mathrm{V}}
 \newcommand{\Q}{\mathrm{Q}}
@@ -179,17 +182,25 @@ Consider finite non-empty sets $\St$ (states) and $\A$ (actions). Observe that $
 
 \textit{There is some $C\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider any finite non-empty sets $\St$ and $\A$, $\R:\St\rightarrow[0,1]$ (reward function), closed set $\Hy\subseteq\AC{\St\times\A\K\St}$ and Borel probability measure $\zeta$ on $\Hy$ (prior). Assume that for any $\T\in\Hy$ and $s\in\St$, $\A^0_{\T\R}(s) = \A$ (no traps). We define $\tau_{\zeta\R}$ by}\Co{i}
+\textit{Consider any finite non-empty sets $\St$ and $\A$, $\R:\St\rightarrow[0,1]$ (reward function), closed set $\Hy\subseteq\AC{\St\times\A\K\St}$ and Borel probability measure $\zeta$ on $\Hy$ (prior). Assume that for any $\T\in\Hy$ and $s,s'\in\St$, $\V_{\T\R}^0(s)=\V_{\T\R}^0\AP{s'}.$}\Co{i} [i.e. there are no traps. This is a stronger condition than the condition $\A^0_{\T\R}(s) = \A$ we used before: not only that long-term value cannot be lost \textit{in expectation}\Co{i}, it cannot be lost at all.] \textit{We define $\tau_{\zeta\R}$ by}\Co{i}
 
 $$\tau_{\zeta\R}:=\Ea{\T\sim\zeta}{\max_{s\in\St}\Abs{\V^1_{\T\R}(s)}}$$
 
-\textit{Then, there is a family of policies $\AC{\pi^\dagger_\gamma:\St^*\times\St\K\A}_{\gamma\in(0,1)}$ s.t. for any $\epsilon\in\Reals^+$}\Co{i}
+\textit{Denote $\DL:=\LD{\Hy}$, $\DMB:=\MB{\Hy}$ and $\DRVO:=\RVO{\Hy}$. Then, there is a family of policies $\AC{\pi^\dagger_\gamma:\St^*\times\St\K\A}_{\gamma\in(0,1)}$ s.t. for any $\epsilon\in\Reals^+$}\Co{i}
 
-$$\limsup_{\gamma \rightarrow 1}\frac{\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi^\dagger_\gamma}_{\T\R}(\gamma)}}{\tau_{\zeta\R}\ln{\frac{1}{1-\gamma}}\sqrt{\AP{\MB\Hy+\epsilon}\AP{\RVO\Hy+\epsilon}(1-\gamma)}}\leq C$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi^\dagger_\gamma}_{\T\R}(\gamma)}}{\tau_{\zeta\R}\DL\ln{\frac{1}{1-\gamma}}\sqrt{\AP{\DMB+\epsilon}\AP{\DRVO+\epsilon}(1-\gamma)}}\leq C$$
 
 Here (like in previous essays), $\V^1_{\T\R}(s)$ is the first derivative of the value function at $\gamma=1$ for transition kernel $\T$, reward function $\R$ and state $s$; $\EU^{\pi}_{\T\R}(\gamma)$ is the expected utility for policy $\pi$ and geometric time discount parameter $\gamma$; $\EU^*_{\T\R}(\gamma)$ is the maximal expected utility over policies. The expression in the numerator is, thereby, the Bayesian regret.
 
-As one can infer from the proof, it is also possible to write down a concrete bound for fixed $\gamma$ (rather than considering the $\gamma\rightarrow 1$ limit) using the covering and eluder numbers, but its form is somewhat convoluted. Also, it is probably possible to find an *anytime* policy with this form of regret, but we won't prove it here.
+A few directions for improving on this result:
+
+* It is not hard to see from the proof that it is also possible to write down a concrete bound for fixed $\gamma$ (rather than considering the $\gamma\rightarrow 1$ limit) using the covering and eluder numbers, but its form is somewhat convoluted.
+
+* It is probably possible to get an *anytime* policy with this form of regret, using PSRL with \textit{dynamic}\Co{i} episode duration.
+
+* Like I said in the start, I was unable to derive a satisfactory "entropic" regret bound using RVO dimension. However, at the time I did not try to use local dimension: its significance only became apparent to me when working on the current approach.
+
+* It seems tempting to generalize local dimension by allowing the values of $f(x)$ to lie on some \textit{nonlinear} manifold of given dimension for any given $x$. This approach, if workable, might require a substantially more difficult proof.
 
 \begin{Huge}Proof\end{Huge}
 
