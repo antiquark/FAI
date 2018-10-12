@@ -104,7 +104,7 @@
 
 \begin{document}
 
-\textbf{TLDR:}\Co{b} I derive a variant of the RL regret bound by [Osband and Van Roy](https://arxiv.org/abs/1406.1853), that applies to learning without resets of environments without traps. The advantage of this regret bound over those known in the literature, is that it scales with certain learning-theoretic dimensions rather than number of states and actions. My goal is building on this result to derive this type of regret bound for [DRL](https://agentfoundations.org/item?id=1656), and, later on, other settings interesting from an AI\ alignment perspective.
+\textbf{TLDR:}\Co{b} I derive a variant of the RL regret bound by [Osband and Van Roy (2014)](https://arxiv.org/abs/1406.1853), that applies to learning without resets of environments without traps. The advantage of this regret bound over those known in the literature, is that it scales with certain learning-theoretic dimensions rather than number of states and actions. My goal is building on this result to derive this type of regret bound for [DRL](https://agentfoundations.org/item?id=1656), and, later on, other settings interesting from an AI\ alignment perspective.
 
 ***
 
@@ -188,7 +188,7 @@ $$\tau_{\zeta\R}:=\Ea{\T\sim\zeta}{\max_{s\in\St}\Abs{\V^1_{\T\R}(s)}}$$
 
 \textit{Denote $\DL:=\LD{\Hy}$, $\DMB:=\MB{\Hy}$ and $\DRVO:=\RVO{\Hy}$. Then, there is a family of policies $\AC{\pi^\dagger_\gamma:\St^*\times\St\K\A}_{\gamma\in(0,1)}$ s.t. for any $\epsilon\in\Reals^+$}\Co{i}
 
-$$\limsup_{\gamma \rightarrow 1}\frac{\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi^\dagger_\gamma}_{\T\R}(\gamma)}}{\tau_{\zeta\R}\DL\ln{\frac{1}{1-\gamma}}\sqrt{\AP{\DMB+\epsilon}\AP{\DRVO+\epsilon}(1-\gamma)}}\leq C$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi^\dagger_\gamma}_{\T\R}(\gamma)}}{\tau_{\zeta\R}\AP{\DL-1}\ln{\frac{1}{1-\gamma}}\sqrt{\AP{\DMB+\epsilon}\AP{\DRVO+\epsilon}(1-\gamma)}}\leq C$$
 
 Here (like in previous essays), $\V^1_{\T\R}(s)$ is the first derivative of the value function at $\gamma=1$ for transition kernel $\T$, reward function $\R$ and state $s$; $\EU^{\pi}_{\T\R}(\gamma)$ is the expected utility for policy $\pi$ and geometric time discount parameter $\gamma$; $\EU^*_{\T\R}(\gamma)$ is the maximal expected utility over policies. The expression in the numerator is, thereby, the Bayesian regret.
 
