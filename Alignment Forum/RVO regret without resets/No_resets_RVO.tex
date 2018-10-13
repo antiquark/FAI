@@ -173,7 +173,7 @@ Finally, we need yet another (but rather simple) notion of "dimension".
 
 \textbf{Definition 7}\Co{b}
 
-\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. The}\Co{i} local dimension of $\F$ \textit{is defined by}\Co{i}
+\textit{Consider a set $\X$, a vector space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. The}\Co{i} local dimension of $\F$ \textit{is defined by}\Co{i}
 
 $$\LD{\F}:=\max_{x\in\X}{\dim\Sp\ACM{f(x)}{f\in\F}}$$
 
@@ -233,7 +233,12 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N6}\Co{b}
 
-\textit{TBD: Existence of quadratic form}\Co{i}
+% Existence of quadratic form
+\textit{Consider a real finite-dimensional normed vector space $V$ and a linear subspace $W\subseteq V$. Then, there exists a positive semidefinite symmetric bilinear form $Q: V \times V \rightarrow \Reals$ s.t.}\Co{i}
+
+1. \textit{For any $v\in V$, $Q(v,v)\leq\Norm{v}^2$}\Co{i}
+
+2. \textit{For any $w\in W$, $\AP{\dim{W}}^2 Q(w,w)\geq \Norm{w}^2$}\Co{i}
 
 \textbf{Proof of Proposition A.N6}\Co{b}
 
