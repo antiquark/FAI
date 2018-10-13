@@ -143,7 +143,7 @@ It is easy to see that, for finite $\F$, $\El(\F,\epsilon)\leq\Abs{\F}$ and in p
 
 $$\RVO\F\leq \frac{2e}{e-1}\Abs{\X}\AP{4\dim{\Y}-1}$$
 
-(See "Proposition 2" in their paper.) The bound on prediction dimension for "cellular decision processes" we demonstrated [before](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) also carries over, since eluder number is trivially bounded by prediction dimension in the deterministic case. It would also be interesting to investigate stochastic versions of cellular decision processes, but we will not attempt it at present.
+(See "Proposition 2" in their paper.) \Co{The bound on prediction dimension for "cellular decision processes" we demonstrated [before](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) also carries over, since eluder number is trivially bounded by prediction dimension in the deterministic case. It would also be interesting to investigate stochastic versions of cellular decision processes, but we will not attempt it at present.}
 
 Another concept we need to formulate the regret bound is the Minkowski–Bouligand dimension.
 
@@ -207,6 +207,8 @@ A few directions for improving on this result:
 
 * It seems tempting to generalize local dimension by allowing the values of $f(x)$ to lie on some \textit{nonlinear} manifold of given dimension for any given $x$. This approach, if workable, might require a substantially more difficult proof.
 
+* The "cellular decision processes" discussed [previously](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) in "Proposition 3" have exponentially large local dimension, meaning that this regret bound is ineffective for them. However, it's possible that there is a natural class of "robust" cellular decision processes for which value doesn't change much when changing a smaller number of cells. Such an assumption would be usable for deriving a regret bound instead of local dimension (both play the role of the Lipschitz constant in Osband and Van\ Roy).
+
 \begin{Huge}Proof\end{Huge}
 
 The proof follows Osband and Van Roy rather closely. The main differences are:
@@ -234,7 +236,7 @@ TBD \textbf{Q.E.D.}\Co{b}
 \textbf{Proposition A.N6}\Co{b}
 
 % Existence of quadratic form
-\textit{Consider a real finite-dimensional normed vector space $V$ and a linear subspace $W\subseteq V$. Then, there exists a positive semidefinite symmetric bilinear form $Q: V \times V \rightarrow \Reals$ s.t.}\Co{i}
+\textit{Consider a real finite-dimensional normed vector space $V$ and a linear subspace $W\subseteq V$. Then, there exists a positive semidefinite bilinear form $Q: V \times V \rightarrow \Reals$ s.t.}\Co{i}
 
 1. \textit{For any $v\in V$, $Q(v,v)\leq\Norm{v}^2$}\Co{i}
 
