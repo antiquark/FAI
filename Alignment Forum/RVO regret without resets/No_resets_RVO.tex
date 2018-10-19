@@ -197,7 +197,7 @@ Here (like in previous essays), $\V^1_{\T\R}(s)$ is the first derivative of the 
 
 A few directions for improving on this result:
 
-* It is not hard to see from the proof that it is also possible to write down a concrete bound for fixed $\gamma$ (rather than considering the $\gamma\rightarrow 1$ limit) using the covering and eluder numbers, but its form is somewhat convoluted.
+* It is not hard to see from the proof that it is also possible to write down a concrete bound for fixed $\gamma$ (rather than considering the $\gamma\rightarrow 1$ limit), but its form is somewhat convoluted.
 
 * It is probably possible to get an *anytime* policy with this form of regret, using PSRL with \textit{dynamic}\Co{i} episode duration.
 
@@ -218,16 +218,6 @@ TBD \textbf{Q.E.D.}\Co{b}
 \textbf{Proof of Proposition 2}\Co{b}
 
 TBD \textbf{Q.E.D.}\Co{b} % graph must be a tree
-
-The proof of Theorem 1 follows Osband and Van Roy rather closely. The main differences are:
-
-* No resets (at the price of a "no traps" assumption)
-
-* Geometric time discount instead of step function (finite horizon) time discount
-
-* We only consider finite MDPs
-
-* Instead of assuming a certain value function is Lipschitz (this assumption plays a role even in the discrete special case since the Lipschitz constant appears in their regret bound), we use the bound on $\V^1$ that we need in the setting without resets anyway. ??? maybe it's not "anyway" but it *is* the only way we do episode decoupling ???
 
 \textbf{Proposition A.N1}\Co{b}
 
@@ -256,13 +246,9 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N4}\Co{b}
 
-!!! Fix formulation: any bounded distribution !!!
+\textit{Consider a finite-dimensional real vector space $\Y$, a positive definite bilinear form $Q:\Y\times\Y\rightarrow\Reals$ and a Borel probability measure $\mu\in\Delta\Y$ s.t. $\Pa{y\sim\mu}{Q(y,y) \leq 1} = 1$. Let $y_0:=\Ea{y\sim\mu}{y}$ and $\sigma:=\sqrt{e}$. Then, $\mu$ is $\sigma$-sub-Gaussian w.r.t. $Q$, i.e., for any $\lambda\in\Y^*$}\Co{i}
 
-\textit{Consider a finite set $\St$ and some $\mu\in\Delta\St$. Let $\sigma=3$ and define $\iota:\St\rightarrow\Reals^\St$ by $\iota(s)_t:=[[s=t]]$. Then, $\iota_*\mu$ is $\sigma$-sub-Gaussian, i.e., for any $\lambda\in\Reals^\St$}\Co{i}
-
-$$\Ea{y\sim\iota_*\mu}{\exp\AP{\lambda\cdot\AP{y-\mu}}} \leq \exp\AP{\frac{\sigma^2\Norm{\lambda}^2}{2}}$$
-
-\textit{Here, $\mu$ is regarded as a vector in $\Reals^\St$ in the obvious way. Note that $\mu=\Ea{y\sim\iota_*\mu}{y}$.}\Co{i}
+$$\Ea{y\sim\mu}{\exp\AP{\lambda\AP{y-y_0}}} \leq \exp\AP{\frac{\sigma^2Q^{-1}(\lambda,\lambda)}{2}}$$
 
 \textbf{Proof of Proposition A.N4}\Co{b}
 
@@ -272,7 +258,7 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 !!! Fix formulation: arbitrary quadratic form !!!
 
-\textit{Consider a set $\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Assume $\F$ is compact w.r.t. the product topology on $\X\rightarrow\Y\cong\prod_{x\in\X}\Y$, where $\Y$ is equipped with the topology induced by the inner product. Consider also some $n\in\Nats$, $\bold{x}\in\X^n$, $\bold{y}\in\Y^n$ and $r\in\Reals^+$. We then use the notation}\Co{i}
+\textit{Consider a set $\X$, a finite-dimensional real vector space $\Y$ some $\F\subseteq\AC{\X\rightarrow\Y}$ and a positive semidefinite bilinear form $Q:\Y\times\Y\rightarrow\Reals$. Assume $\F$ is compact w.r.t. the product topology on $\X\rightarrow\Y\cong\prod_{x\in\X}\Y$, where $\Y$ is equipped with the topology induced by the inner product. Consider also some $n\in\Nats$, $\bold{x}\in\X^n$, $\bold{y}\in\Y^n$ and $r\in\Reals^+$. We then use the notation}\Co{i}
 
 $$\LS^\F[\bold{xy}]:=\Argmin{f\in\F}{\sum_{m=0}^{n-1}\Norm{f\AP{\bold{x}_m}-\bold{y}_m}^2}$$
 
