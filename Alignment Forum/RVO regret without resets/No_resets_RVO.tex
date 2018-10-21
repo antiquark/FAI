@@ -346,17 +346,27 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proof of Theorem 1}\Co{b}
 
-We take $\pi^\dagger_\gamma:=\pi^\PSR_{\zeta\R T}$ for some $T\in\Nats^+$ to be specified later. We denote the Bayesian regret by
+Consider $\Y=\Reals^\St$ equipped with the $L^1$ norm. Given $s\in\St$ and $a\in\A$, consider also the subspace
+
+$$W_{sa}:=\Sp\ACM{\T(s,a)}{\T\in\Hy}$$
+
+By Proposition A.N6, there is $\B_{sa}\in\PSD\AP{\Y}$ s.t.
+
+1. For any $\mu\in\Delta\St$
+
+$$\B_{sa}\mu^{\otimes2}\leq1$$
+
+2. For any $\T,\tilde{\T}\in\Hy$
+
+$$\frac{1}{4}\DL^2 B_{sa}\AP{\T(s,a)-\tilde{\T}(s,a)}^{\otimes2} \geq \Dtva{\T(s,a),\tilde{\T}(s,a)}^2$$
+
+We take $\pi^\dagger_\gamma:=\pi^\PSR_{\zeta\R T}$ for some $T\in\Nats^+$ to be specified later. Denote the Bayesian regret by
 
 $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\gamma}^{\dagger}}_{\T\R}(\gamma)}$$
 
 By Proposition A.N1
 
-$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Q_{J_{\Floor{n/T}}\R}\AP{\Theta_n,A_n,\gamma}-\Q_{KR}\AP{\Theta_n,A_n,\gamma}}???$$
-
-By definition of $\Q$, it follows that
-
-$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n+1}\Ea{}{?-?}$$
+$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}$$
 
 % Use \tau and the no-traps condition
 
