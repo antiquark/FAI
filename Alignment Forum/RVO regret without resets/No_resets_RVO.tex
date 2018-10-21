@@ -274,48 +274,40 @@ I chose the notation $\LS$ as an abbreviation of "least squares" and $\CS$ as an
 
 \textbf{Proposition A.N5}\Co{b}
 
-!!! Split: canonical form vs. general form !!!
-
 \textit{There is some $C_{\mathrm{A.N5}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider finite sets $\X,\St$ and some $\F\subseteq\AC{\X\K\St}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\St^\omega}}_{n\in\Nats}$ be the natural filtration, i.e.}\Co{i}
+\textit{Consider finite sets $\X,\St$, some $\F\subseteq\AC{\X\K\St}$ and a family $\AC{Q_x\in\PSD\AP{\Reals^\St}}_{x\in\X}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\St^\omega}}_{n\in\Nats}$ be the natural filtration, i.e.}\Co{i}
 
 $$\mathfrak{H}_n:=\ACM{A'\subseteq\X^\omega\times\St^\omega}{A'=\ACM{\bold{xs}}{\bold{xs}_{:n}\in A},\ A\subseteq\X^n\times\St^n}$$
 
-\textit{Consider also $f^*\in\F$ and $\mu\in\Delta\AP{\X^\omega\times\St^\omega}$ s.t. for any $n\in\Nats$ $x\in\X$, and $s\in\St$}\Co{i}
+\textit{Consider also $f^*\in\F$ and $\mu\in\Delta\AP{\X^\omega\times\St^\omega}$ s.t. for any $n\in\Nats$, $x\in\X$, and $s\in\St$}\Co{i}
 
 $$\CP{\bold{xs}\sim\mu}{\bold{s}_n=s}{\bold{x}_n=x,\ \mathfrak{H}_n} = f^*(s\mid x)$$
 
 \textit{Fix $\epsilon\in\Reals^+$, $\delta\in(0,1)$. Denote}\Co{i}
 
-$$\beta(t):=C_{\mathrm{A.N5}}\AP{\ln{\frac{\N(\F,\epsilon)}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}}$$
+$$\beta(t):=C_{\mathrm{A.N5}}\AP{\ln{\frac{\N(\F,\epsilon^{-2}Q)}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}}$$
+
+$$Q_n:=\frac{Q}{\beta(n+1)}$$
 
 \textit{Then,}\Co{i}
 
-$$\Pa{\bold{xs}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F_{\sqrt{\beta(n+1)}}\AB{\bold{xs}_{:n}}} \leq \delta$$
+$$\Pa{\bold{xs}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F_{Q_n}\AB{\bold{xs}_{:n}}} \leq \delta$$
 
-\textit{Here, the $\CS$ is defined by thinking of $\St$ and $\Delta\St$ as subsets of $\Y=\Reals^\St$.}\Co{i}
+\textit{Here, $\N$ and $\CS$ are defined by thinking of $\St$ and $\Delta\St$ as subsets of $\Y=\Reals^\St$.}\Co{i}
 
 \textbf{Proof of Proposition A.N5}\Co{b}
 
 % A.N4 + B.N2
 TBD \textbf{Q.E.D.}\Co{b}
 
-\textbf{Corollary A.N7}\Co{b}
-
-\textit{TBD}\Co{i}
-
-\textbf{Proof of Corollary A.N7}\Co{b}
-
-TBD \textbf{Q.E.D.}\Co{b}
+\Co{b}
 
 \textbf{Definition A.N2}\Co{b}
 
-!!! Fix formulation: arbitrary quadratic form !!!
+\textit{Consider a set $\X$, some $x\in\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{Q_x\in\PSD(\Y)}_{x\in\X}$. The}\Co{i} $Q$-width of $\F$ at $x$ \textit{is defined by}\Co{i}
 
-\textit{Consider a set $\X$, some $x\in\X$, a real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. The}\Co{i} width of $\F$ at $x$ \textit{is defined by}\Co{i}
-
-$$\W^\F(x):=\sup_{f,\tilde{f}\in\F}\Norm{f(x)-\tilde{f}(x)}$$  
+$$\W^\F_Q(x):=\sup_{f,\tilde{f}\in\F}\sqrt{Q_x\AP{f(x)-\tilde{f}(x)}^{\otimes2}}$$  
 
 \textbf{Proposition A.N2}\Co{b}
 
