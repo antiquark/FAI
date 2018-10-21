@@ -120,9 +120,9 @@
 
 [Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration) introduced the concept of "eluder dimension"  for the benefit of the multi-armed bandit setting, and Osband and Van Roy extended it to a form suitable for studying reinforcement learning. We will consider the following, slightly modified version of their definition.
 
-Given a real vector space $\Y$, we will use $\PSD(\Y)$ to denote the set of positive semidefinite bilinear forms on $\Y$ and $\PD(\Y)$ to denote the set of positive definite bilinear forms on $\Y$.
+Given a real vector space $\Y$, we will use $\PSD(\Y)$ to denote the set of positive semidefinite bilinear forms on $\Y$ and $\PD(\Y)$ to denote the set of positive definite bilinear forms on $\Y$. Given a bilinear form $Q:\Y\times\Y\rightarrow\Reals$, we will slightly abuse notation by also regarding it as a linear functional $Q:\Y\otimes\Y\rightarrow\Reals$. Thereby, we have $Q(v \otimes w) = Q(v, w)$ and $Qv^{\otimes 2}=Q(v,v)$. Also, if $\Y$ is finite-dimensional and $Q$ is non-degenerate, we will denote $Q^{-1}:\Y^*\times\Y^*\rightarrow\Reals$ the unique bilinear form which satisfies
 
-!!! Notation for $Q(x,x)$ !!!
+$$\forall v\in\Y,\alpha\in\Y^*:\AP{\forall\beta\in\Y^*:Q^{-1}(\alpha,\beta)=\beta v}\implies\forall w\in\Y:Q(v,w)=\alpha w$$ 
 
 \textbf{Definition 1}\Co{b}
 
