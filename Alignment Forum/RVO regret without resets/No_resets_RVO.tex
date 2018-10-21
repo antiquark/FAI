@@ -122,13 +122,13 @@
 
 Given a real vector space $\Y$, we will use $\PSD(\Y)$ to denote the set of positive semidefinite bilinear forms on $\Y$ and $\PD(\Y)$ to denote the set of positive definite bilinear forms on $\Y$. Given a bilinear form $Q:\Y\times\Y\rightarrow\Reals$, we will slightly abuse notation by also regarding it as a linear functional $Q:\Y\otimes\Y\rightarrow\Reals$. Thereby, we have $Q(v \otimes w) = Q(v, w)$ and $Qv^{\otimes 2}=Q(v,v)$. Also, if $\Y$ is finite-dimensional and $Q$ is non-degenerate, we will denote $Q^{-1}:\Y^*\times\Y^*\rightarrow\Reals$ the unique bilinear form which satisfies
 
-$$\forall v\in\Y,\alpha\in\Y^*:\AP{\forall\beta\in\Y^*:Q^{-1}(\alpha,\beta)=\beta v}\implies\forall w\in\Y:Q(v,w)=\alpha w$$ 
+$$\forall v\in\Y,\alpha\in\Y^*:\AP{\forall\beta\in\Y^*:Q^{-1}(\alpha,\beta)=\beta v}\iff\AP{\forall w\in\Y:Q(v,w)=\alpha w}$$ 
 
 \textbf{Definition 1}\Co{b}
 
 \textit{Consider a set $\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{Q_x\in\PSD(\Y)}_{x\in\X}$. Consider also $n\in\Nats$, a sequence $\AC{x_k\in\X}_{k\in[n]}$ and $x^*\in\X$. $x^*$ is said to be} $\AP{\F,Q}$-dependant on $\AC{x_k}$ \textit{when, for any $f,\tilde{f}\in\F$}\Co{i}
 
-$$\sum_{k=0}^{n-1}Q_{x_k}\AP{f\AP{x_k}-\tilde{f}\AP{x_k},\ f\AP{x_k}-\tilde{f}\AP{x_k}}\leq1\implies Q_{x^*}\AP{f\AP{x^*}-\tilde{f}\AP{x^*},\ f\AP{x^*}-\tilde{f}\AP{x^*}}\leq1$$
+$$\sum_{k=0}^{n-1}Q_{x_k}\AP{f\AP{x_k}-\tilde{f}\AP{x_k}}^{\otimes 2}\leq1\implies Q_{x^*}\AP{f\AP{x^*}-\tilde{f}\AP{x^*}}^{\otimes 2}\leq1$$
 
 \textit{Otherwise, $x^*$ is said to be}\Co{i} $\AP{\F,Q}$-independent of $\AC{x_k}$.
 
@@ -156,7 +156,7 @@ Another concept we need to formulate the regret bound is the Minkowski–Bouliga
 
 \textit{Consider a set $\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{Q_x\in\PSD(\Y)}_{x\in\X}$. A set $A\subseteq\F$ is said to be a}\Co{i} $Q$-covering of $\F$ \textit{when}\Co{i}
 
-$$\forall f\in\F\exists\tilde{f}\in A: \sup_{x\in\X}{Q_x\AP{f(x)-\tilde{f}(x),\ f(x)-\tilde{f}(x)}}<1$$
+$$\forall f\in\F\exists\tilde{f}\in A: \sup_{x\in\X}{Q_x\AP{f(x)-\tilde{f}(x)}^{\otimes 2}}<1$$
 
 \textbf{Definition 4}\Co{b}
 
@@ -242,12 +242,11 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N6}\Co{b}
 
-% Existence of quadratic form
-\textit{Consider a real finite-dimensional normed vector space $V$ and a linear subspace $W\subseteq V$. Then, there exists a positive semidefinite bilinear form $Q: V \times V \rightarrow \Reals$ s.t.}\Co{i}
+\textit{Consider a real finite-dimensional normed vector space $V$ and a linear subspace $W\subseteq V$. Then, there exists a $Q\in\PSD(V)$ s.t.}\Co{i}
 
-1. \textit{For any $v\in V$, $Q(v,v)\leq\Norm{v}^2$}\Co{i}
+1. \textit{For any $v\in V$, $Qv^{\otimes 2}\leq\Norm{v}^2$}\Co{i}
 
-2. \textit{For any $w\in W$, $\AP{\dim{W}}^2 Q(w,w)\geq \Norm{w}^2$}\Co{i}
+2. \textit{For any $w\in W$, $\AP{\dim{W}}^2 Qw^{\otimes 2}\geq \Norm{w}^2$}\Co{i}
 
 \textbf{Proof of Proposition A.N6}\Co{b}
 
@@ -255,9 +254,9 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N4}\Co{b}
 
-\textit{Consider a finite-dimensional real vector space $\Y$, some $Q\in\PD(\Y)$ and a Borel probability measure $\mu\in\Delta\Y$ s.t. $\Pa{y\sim\mu}{Q(y,y) \leq 1} = 1$. Let $y_0:=\Ea{y\sim\mu}{y}$ and $\sigma:=\sqrt{e}$. Then, $\mu$ is $\sigma$-sub-Gaussian w.r.t. $Q$, i.e., for any $\lambda\in\Y^*$}\Co{i}
+\textit{Consider a finite-dimensional real vector space $\Y$, some $Q\in\PD(\Y)$ and a Borel probability measure $\mu\in\Delta\Y$ s.t. $\Pa{y\sim\mu}{Qy^{\otimes 2} \leq 1} = 1$. Let $y_0:=\Ea{y\sim\mu}{y}$ and $\sigma:=\sqrt{e}$. Then, $\mu$ is $\sigma$-sub-Gaussian w.r.t. $Q$, i.e., for any $\alpha\in\Y^*$}\Co{i}
 
-$$\Ea{y\sim\mu}{\exp\AP{\lambda\AP{y-y_0}}} \leq \exp\AP{\frac{\sigma^2Q^{-1}(\lambda,\lambda)}{2}}$$
+$$\Ea{y\sim\mu}{\exp\AP{\alpha\AP{y-y_0}}} \leq \exp\AP{\frac{\sigma^2Q^{-1}\alpha^{\otimes 2}}{2}}$$
 
 \textbf{Proof of Proposition A.N4}\Co{b}
 
@@ -267,9 +266,9 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textit{Consider a set $\X$, a finite-dimensional real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{Q_x\in\PSD(\Y)}_{x\in\X}$. Assume $\F$ is compact w.r.t. the product topology on $\X\rightarrow\Y\cong\prod_{x\in\X}\Y$. Consider also some $n\in\Nats$, $\bold{x}\in\X^n$, $\bold{y}\in\Y^n$ and $r\in\Reals^+$. We then use the notation}\Co{i}
 
-$$\LS^{\F}_Q[\bold{xy}]:=\Argmin{f\in\F}{\sum_{m=0}^{n-1}Q_{\bold{x}_m}\AP{f\AP{\bold{x}_m}-\bold{y},\ f\AP{\bold{x}_m}-\bold{y}}}$$
+$$\LS^{\F}_Q[\bold{xy}]:=\Argmin{f\in\F}{\sum_{m=0}^{n-1}Q_{\bold{x}_m}\AP{f\AP{\bold{x}_m}-\bold{y} }^{\otimes2}}$$
 
-$$\CS^{\F}_{Q}[\bold{xy}]:=\ACM{f\in\F}{\sum_{m=0}^{n-1}Q_{\bold{x}_m}\AP{f\AP{\bold{x}_m}-\LS_Q^\F[\bold{xy}]\AP{\bold{x}_m},\ f\AP{\bold{x}_m}-\LS_Q^\F[\bold{xy}]\AP{\bold{x}_m}}\leq 1}$$
+$$\CS^{\F}_{Q}[\bold{xy}]:=\ACM{f\in\F}{\sum_{m=0}^{n-1}Q_{\bold{x}_m}\AP{f\AP{\bold{x}_m}-\LS_Q^\F[\bold{xy}]\AP{\bold{x}_m}}^{\otimes2}\leq 1}$$
 
 I chose the notation $\LS$ as an abbreviation of "least squares" and $\CS$ as an abbreviation of "confidence set". Note that $\LS$ is somewhat ambiguous (and therefore, so is $\CS$) since there might be multiple minima, but this will not be important in the following (i.e. an arbitrary minimum can be chosen).
 
@@ -300,6 +299,14 @@ $$\Pa{\bold{xs}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F_{\sqrt{\beta(n+1)}}
 \textbf{Proof of Proposition A.N5}\Co{b}
 
 % A.N4 + B.N2
+TBD \textbf{Q.E.D.}\Co{b}
+
+\textbf{Corollary A.N7}\Co{b}
+
+\textit{TBD}\Co{i}
+
+\textbf{Proof of Corollary A.N7}\Co{b}
+
 TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Definition A.N2}\Co{b}
