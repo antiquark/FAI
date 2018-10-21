@@ -405,7 +405,7 @@ The next proposition appeared (in slightly greater generality) in Osband and Van
 
 \textit{There is some $C_{\mathrm{B.N2}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider finite set $\X$, finite-dimensional real inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\Y^\omega}}_{n\in\Nats}$ be the natural filtration, i.e.}\Co{i}
+\textit{Consider a finite set $\X$, the vector space $\Y:=\Reals^d$ for some $d\in\Nats$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\Y^\omega}}_{n\in\Nats}$ be the natural filtration, i.e.}\Co{i}
 
 $$\mathfrak{H}_n:=\ACM{A'\subseteq\X^\omega\times\Y^\omega}{A'=\ACM{\bold{xy}}{\bold{xy}_{:n}\in A},\ A\subseteq\X^n\times\Y^n\text{ Borel}}$$
 
@@ -413,17 +413,19 @@ $$\mathfrak{H}_n:=\ACM{A'\subseteq\X^\omega\times\Y^\omega}{A'=\ACM{\bold{xy}}{\
 
 $$\CE{\bold{xy}\sim\mu}{\bold{y}_n}{\bold{x}_n=x,\ \mathfrak{H}_n} = f^*(x)$$
 
-\textit{Assume that $M\in\Reals^+$ is s.t. $\Norm{\bold{y}_n}\leq M$ with $\mu$-probability $1$ for all $n\in\Nats$. Assume also that $\sigma\in\Reals^+$ is s.t. $\mu$ is $\sigma$-sub-Gaussian, i.e., for any $\lambda\in\Y$, $n\in\Nats$ and $x\in\X$}\Co{i}
+\textit{Assume that $M\in\Reals^+$ is s.t. $\bold{y}_n\cdot\bold{y}_n\leq M^2$ with $\mu$-probability $1$ for all $n\in\Nats$. Assume also that $\sigma\in\Reals^+$ is s.t. $\mu$ is $\sigma$-sub-Gaussian, i.e., for any $\alpha\in\Y$, $n\in\Nats$ and $x\in\X$}\Co{i}
 
-$$\CE{\bold{xy}\sim\mu}{\exp\AP{\Chev{\lambda,\ \bold{y}_n-f^*(x)}}}{\bold{x}_n=x,\ \mathfrak{H}_n} \leq \exp\AP{\frac{\sigma^2\Norm{\lambda}^2}{2}}$$
+$$\CE{\bold{xy}\sim\mu}{\exp\AP{\alpha\cdot\AP{\bold{y}_n-f^*(x)}}}{\bold{x}_n=x,\ \mathfrak{H}_n} \leq \exp\AP{\frac{\sigma^2\AP{\alpha\cdot\alpha}}{2}}$$
 
-\textit{Fix $\epsilon\in\Reals^+$, $\delta\in(0,1)$. Denote}\Co{i}
+\textit{Fix $\epsilon\in\Reals^+$, $\delta\in(0,1)$. Define $\beta:\Reals^+\rightarrow\Reals$ and, for each $n\in\Nats$, $Q_n\in\PD(\Y)$ by}\Co{i}
 
 $$\beta(t):=C_{\mathrm{B.N2}}\AP{\sigma^2 \ln{\frac{\N(\F,\epsilon)}{\delta}}+\epsilon t\AP{M+\sigma\ln{\frac{et}{\delta}}}}$$
 
+$$Q_n(v,w):=\frac{v\cdot w}{\beta(n+1)}$$
+
 \textit{Then,}\Co{i}
 
-$$\Pa{\bold{xy}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F_{\sqrt{\beta(n+1)}}\AB{\bold{xy}_{:n}}} \leq \delta$$
+$$\Pa{\bold{xy}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F_{Q_n}\AB{\bold{xy}_{:n}}} \leq \delta$$
 
 Note that we removed a square root in the definition of $\beta$ compared to equation (7) in Osband and Van Roy. This only makes $\beta$ larger (up to a constant factor) and therefore, only makes the claim weaker.
 
