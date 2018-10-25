@@ -177,7 +177,7 @@ For finite $\F$ and $\epsilon\ll1$, it's obvious that $\N\AP{\F,\epsilon^{-2}\B 
 
 Note that, in general, MB dimension is fractional.
 
-Finally, we need yet another (but rather simple) notion of "dimension".
+We will need yet another (but rather simple) notion of "dimension".
 
 \textbf{Definition 6}\Co{b}
 
@@ -187,15 +187,33 @@ $$\LD{\F}:=\max_{x\in\X}{\dim\Sp\ACM{f(x)}{f\in\F}}$$
 
 Obviously $\LD{\F}\leq\Abs{\F}$ and $\LD{\F}\leq\dim{\Y}$.
 
-Consider finite non-empty sets $\St$ (states) and $\A$ (actions). Observe that $\Delta\St$ can be regarded as a subset of the vector space $\Reals^\St$. This allows us to speak of the RVO, MB and local dimensions of a hypothesis class of transition kernels $\Hy\subseteq\AC{\St\times\A\K\St}$ (that is, in this case $\X=\St\times\A$ and $\Y=\Reals^\St$). We can now formulate the regret bound.
+Consider finite non-empty sets $\St$ (states) and $\A$ (actions). Observe that $\Delta\St$ can be regarded as a subset of the vector space $\Reals^\St$. This allows us to speak of the RVO, MB and local dimensions of a hypothesis class of transition kernels $\Hy\subseteq\AC{\St\times\A\K\St}$ (that is, in this case $\X=\St\times\A$ and $\Y=\Reals^\St$). 
+
+Finally, there is a certain regularity condition in our main theorem that depends on the following parameters of MDPs.
+
+\textbf{Definition 7}\Co{b}
+
+\textit{Consider finite non-empty sets $\St$ and $\A$, $\R:\St\rightarrow[0,1]$ (reward function) and $\T:\St\times\A\K\St$ (transition kernel). The value function $\V_{\T\R}(s,\gamma)$ is always piecewise differentiable w.r.t. $\gamma$. Let $\partial_+\V_{\T\R}(s,\gamma)$ and $\partial_-\V_{\T\R}(s,\gamma)$ denote its right and left derivative respectively. We denote}\Co{i}
+
+$$\partial_{\max}\V_{\T\R}(s,\gamma):=\sup_{x\in(\gamma,1)}{\partial_+\V_{\T\R}(s,x)}$$
+
+$$\partial_{\min}\V_{\T\R}(s,\gamma):=\inf_{x\in(\gamma,1)}{\partial_-\V_{\T\R}(s,x)}$$
+
+We can now formulate the regret bound.
 
 \textbf{Theorem 1}\Co{b}
 
 \textit{There is some $C\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider any finite non-empty sets $\St$ and $\A$, $\R:\St\rightarrow[0,1]$ (reward function), closed set $\Hy\subseteq\AC{\St\times\A\K\St}$ and Borel probability measure $\zeta$ on $\Hy$ (prior). Assume that for any $\T\in\Hy$ and $s,s'\in\St$, $\V_{\T\R}^0(s)=\V_{\T\R}^0\AP{s'}.$}\Co{i} [i.e. there are no traps. This is a stronger condition than the condition $\A^0_{\T\R}(s) = \A$ we used before: not only that long-term value cannot be lost \textit{in expectation}\Co{i}, it cannot be lost at all.] \textit{We define the expected bias span $\tau_{\zeta\R}$ by}\Co{i}
+\textit{Consider any finite non-empty sets $\St$ and $\A$, $\R:\St\rightarrow[0,1]$, closed set $\Hy\subseteq\AC{\St\times\A\K\St}$ and Borel probability measure $\zeta$ on $\Hy$ (prior). Assume that for any $\T\in\Hy$ and $s,s'\in\St$, $\V_{\T\R}^0(s)=\V_{\T\R}^0\AP{s'}.$}\Co{i} [i.e. there are no traps. This is a stronger condition than the condition $\A^0_{\T\R}(s) = \A$ we used before: not only that long-term value cannot be lost \textit{in expectation}\Co{i}, it cannot be lost at all.] \textit{We define the expected bias span $\tau_{\zeta\R}$ by}\Co{i}
 
 $$\tau_{\zeta\R}:=\Ea{\T\sim\zeta}{\max_{s\in\St}\V^1_{\T\R}(s)-\min_{s\in\St}\V^1_{\T\R}(s)}$$
+
+\textit{Assume that for $1-\gamma\ll1$}\Co{i}
+
+$$\Ea{\T\sim\zeta}{\max_{s\in\St}\partial_{\max}\V_{\T\R}(s,\gamma)-\min_{s\in\St}\partial_{\min}\V_{\T\R}(s,\gamma)}<\infty$$
+
+[When this assumption is true, the left hand side converges to $\tau_{\zeta\R}$ with $\gamma\rightarrow1$.]
 
 \textit{Denote $\DL:=\LD{\Hy}$, $\DMB:=\MB{\Hy}$ and $\DRVO:=\RVO{\Hy}$. Then, there is a family of policies $\AC{\pi^\dagger_\gamma:\St^*\times\St\K\A}_{\gamma\in(0,1)}$ s.t. for any $\epsilon\in\Reals^+$}\Co{i}
 
@@ -368,6 +386,18 @@ By Proposition A.N1
 
 $$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}$$
 
+??? By the mean while theorem, for each $\T\in\Hy$, $s\in\St$ and $\gamma\in(0,1)$ we can choose some $\Gamma_{\T}(s,\gamma)\in(\gamma,1)$ s.t.
+
+$$\V_{\T\R}(s,\gamma)=\V^0_{\T\R}\AP{s}-(1-\gamma)\frac{\D\V_{\T\R}(s,x)}{\D x}\Big\vert_{x=\Gamma_{\T}(s,\gamma)}$$
+
+Moreover, we have
+
+$$\frac{\D\V_{\T\R}(s,x)}{\D x}\Big\vert_{x=\Gamma_{\T}(s,\gamma)}=\V^1_{\T\R}(s)\pm O(1-\gamma)$$
+
+...
+
+$$\Reg(\gamma)=(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}$$
+
 % Use \tau and the no-traps condition
 
 % Apply A.N5 (confidence)
@@ -378,7 +408,7 @@ $$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT
 
 % Balance \epsilon = (1-\gamma)^2
 
-\textbf{Q.E.D.}\Co{b}
+TBD\ \textbf{Q.E.D.}\Co{b}
 
 \begin{Huge}Appendix\end{Huge}
 
