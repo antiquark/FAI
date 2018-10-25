@@ -199,6 +199,8 @@ $$\partial_{\max}\V_{\T\R}(s,\gamma):=\sup_{x\in(\gamma,1)}{\partial_+\V_{\T\R}(
 
 $$\partial_{\min}\V_{\T\R}(s,\gamma):=\inf_{x\in(\gamma,1)}{\partial_-\V_{\T\R}(s,x)}$$
 
+Note that, since $\V_{\T\R}(s,\gamma)$ is the maximum of a finite set of differentiable functions (the value functions corresponding to the deterministic stationary policies $\St\rightarrow\A$), we have $\partial_+\V_{\T\R}(s,\gamma)\geq\partial_-\V_{\T\R}(s,\gamma)$.
+
 We can now formulate the regret bound.
 
 \textbf{Theorem 1}\Co{b}
@@ -386,17 +388,21 @@ By Proposition A.N1
 
 $$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}$$
 
-??? By the mean while theorem, for each $\T\in\Hy$, $s\in\St$ and $\gamma\in(0,1)$ we can choose some $\Gamma_{\T}(s,\gamma)\in(\gamma,1)$ s.t.
+$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Abs{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}}$$
 
-$$\V_{\T\R}(s,\gamma)=\V^0_{\T\R}\AP{s}-(1-\gamma)\frac{\D\V_{\T\R}(s,x)}{\D x}\Big\vert_{x=\Gamma_{\T}(s,\gamma)}$$
+$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\Ea{}{\AP{\max_{s\in\St}{\V_{\SHy_n\R}(s,\gamma)}-\min_{s\in\St}{\V_{\SHy_n\R}(s,\gamma)}}\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
 
-Moreover, we have
+It is easy to see that, for each $\T\in\Hy$, $s\in\St$ and $\gamma\in(0,1)$ we have
 
-$$\frac{\D\V_{\T\R}(s,x)}{\D x}\Big\vert_{x=\Gamma_{\T}(s,\gamma)}=\V^1_{\T\R}(s)\pm O(1-\gamma)$$
+$$\V^0_{\T\R}\AP{s}-(1-\gamma)\partial_{\max}\V_{\T\R}(s,\gamma)\leq\V_{\T\R}(s,\gamma)\leq\V^0_{\T\R}\AP{s}-(1-\gamma)\partial_{\min}\V_{\T\R}(s,\gamma)$$
 
-...
+By the no-traps condition, $\V^0_{\T\R}(s)$ doesn't depend on $s$ and we get
 
-$$\Reg(\gamma)=(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}$$
+$$\Reg(\gamma)\leq(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\AP{\max_{s\in\St}{\partial_{\max}\V_{\SHy_n\R}(s,\gamma)}-\min_{s\in\St}{\partial_{\min}\V_{\SHy_n\R}(s,\gamma)}}\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
+
+Using the dominated convergence theorem, we conclude that there is some function $\delta\tau:[0,1]\rightarrow\Reals^+$ s.t. $\lim_{\gamma\rightarrow1}\delta\tau(\gamma)=0$ and
+
+$$\Reg(\gamma)\leq(1-\gamma)\AP{\tau_{\zeta\R}+\delta\tau(\gamma)}\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
 
 % Use \tau and the no-traps condition
 
