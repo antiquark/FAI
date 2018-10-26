@@ -289,9 +289,9 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textit{Consider a set $\X$, a finite-dimensional real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. Assume $\F$ is compact w.r.t. the product topology on $\X\rightarrow\Y\cong\prod_{x\in\X}\Y$. Consider also some $n\in\Nats$, $\bold{x}\in\X^n$, $\bold{y}\in\Y^n$ and $r\in\Reals^+$. We then use the notation}\Co{i}
 
-$$\LS^{\F}_\B [\bold{xy}]:=\Argmin{f\in\F}{\sum_{m=0}^{n-1}\B _{\bold{x}_m}\AP{f\AP{\bold{x}_m}-\bold{y} }^{\otimes2}}$$
+$$\LS^{\F}[\bold{xy},\B]:=\Argmin{f\in\F}{\sum_{m=0}^{n-1}\B _{\bold{x}_m}\AP{f\AP{\bold{x}_m}-\bold{y} }^{\otimes2}}$$
 
-$$\CS^{\F}_{\B }[\bold{xy}]:=\ACM{f\in\F}{\sum_{m=0}^{n-1}\B _{\bold{x}_m}\AP{f\AP{\bold{x}_m}-\LS_\B ^\F[\bold{xy}]\AP{\bold{x}_m}}^{\otimes2}\leq 1}$$
+$$\CS^{\F}[\bold{xy},B]:=\ACM{f\in\F}{\sum_{m=0}^{n-1}\B _{\bold{x}_m}\AP{f\AP{\bold{x}_m}-\LS_\B ^\F[\bold{xy}]\AP{\bold{x}_m}}^{\otimes2}\leq 1}$$
 
 I chose the notation $\LS$ as an abbreviation of "least squares" and $\CS$ as an abbreviation of "confidence set". Note that $\LS$ is somewhat ambiguous (and therefore, so is $\CS$) since there might be multiple minima, but this will not be important in the following (i.e. an arbitrary minimum can be chosen).
 
@@ -311,11 +311,9 @@ $$\CP{\bold{xs}\sim\mu}{\bold{s}_n=s}{\bold{x}_n=x,\ \mathfrak{H}_n} = f^*(s\mid
 
 $$\beta(t):=C_{\mathrm{A.N5}}\AP{\ln{\frac{\N(\F,\epsilon^{-2}\B )}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}}$$
 
-$$\B _n:=\frac{\B }{\beta(n+1)}$$
-
 \textit{Then,}\Co{i}
 
-$$\Pa{\bold{xs}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F_{\B _n}\AB{\bold{xs}_{:n}}} \leq \delta$$
+$$\Pa{\bold{xs}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F\AB{\bold{xs}_{:n},\frac{\B }{\beta(n+1)}}} \leq \delta$$
 
 \textit{Here, $\N$ and $\CS$ are defined by thinking of $\St$ and $\Delta\St$ as subsets of $\Y=\Reals^\St$.}\Co{i}
 
@@ -330,7 +328,7 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textit{Consider a set $\X$, some $x\in\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. The}\Co{i} $\B $-width of $\F$ at $x$ \textit{is defined by}\Co{i}
 
-$$\W^\F_\B (x):=\sup_{f,\tilde{f}\in\F}\sqrt{\B _x\AP{f(x)-\tilde{f}(x)}^{\otimes2}}$$  
+$$\W^\F(x,B):=\sup_{f,\tilde{f}\in\F}\sqrt{\B _x\AP{f(x)-\tilde{f}(x)}^{\otimes2}}$$  
 
 \textbf{Proposition A.N2}\Co{b}
 
@@ -340,15 +338,13 @@ $$\W^\F_\B (x):=\sup_{f,\tilde{f}\in\F}\sqrt{\B _x\AP{f(x)-\tilde{f}(x)}^{\otime
 
 $$\beta(t):=\eta_0 + \eta_1t\ln{\frac{et}{\delta}}$$
 
-$$\B _n:=\frac{\B }{\beta(n+1)}$$
-
 For any $n\in\Nats$, define $\F_n$ by
 
-$$\F_n:=\CS^\F_{\B _n}[\bold{xy}_{:n}]$$
+$$\F_n:=\CS^\F\AB{\bold{xy}_{:n},\frac{\B }{\beta(n+1)}}$$
 
 Then,
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}_\B \AP{\bold{x}_{lT+m}}>\theta]]} \leq C_{\mathrm{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}\ln{\frac{1}{\theta}}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}\ln{\frac{1}{\theta}}$$
 
 \textbf{Proof of Proposition A.N2}\Co{b}
 
@@ -360,7 +356,7 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textit{Consider a set $\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. Assume that for any $x\in\X$ and $f\in\F$, $\B _x{f(x)}^{\otimes2}\leq 1$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\eta_0,\eta_1\in\Reals^+$ and $\delta\in(0,1)$. Define $\beta$ and $\F_n$ the same way as in Proposition A.N2. Denote $D:=\RVO{\F}$. Then,}\Co{i}
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}_\B \AP{\bold{x}_{lT+m}}} \leq C_{\mathrm{A.N3}}\AP{1+D T\ln\frac{1}{1-\gamma}+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}} \leq C_{\mathrm{A.N3}}\AP{1+D T\ln\frac{1}{1-\gamma}+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$$
 
 \textbf{Proof of Proposition A.N3}\Co{b}
 
@@ -477,7 +473,7 @@ $$Q_n(v,w):=\frac{v\cdot w}{\beta(n+1)}$$
 
 \textit{Then,}\Co{i}
 
-$$\Pa{\bold{xy}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F_{Q_n}\AB{\bold{xy}_{:n}}} \leq \delta$$
+$$\Pa{\bold{xy}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F\AB{\bold{xy}_{:n},Q_n}} \leq \delta$$
 
 Note that we removed a square root in the definition of $\beta$ compared to equation (7) in Osband and Van Roy. This only makes $\beta$ larger (up to a constant factor) and therefore, only makes the claim weaker.
 
