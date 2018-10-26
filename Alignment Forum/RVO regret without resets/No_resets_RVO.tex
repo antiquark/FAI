@@ -108,6 +108,7 @@
 \newcommand{\AT}{\mathrm{A}}
 \newcommand{\THy}{\mathrm{H}_*}
 \newcommand{\SHy}{\mathrm{H}}
+\newcommand{\De}{\Delta\!}
 
 \begin{document}
 
@@ -193,7 +194,7 @@ Finally, there is a certain regularity condition in our main theorem that depend
 
 \textbf{Definition 7}\Co{b}
 
-\textit{Consider finite non-empty sets $\St$ and $\A$, $\R:\St\rightarrow[0,1]$ (reward function) and $\T:\St\times\A\K\St$ (transition kernel). The value function $\V_{\T\R}(s,\gamma)$ is always piecewise differentiable w.r.t. $\gamma$. Let $\partial_+\V_{\T\R}(s,\gamma)$ and $\partial_-\V_{\T\R}(s,\gamma)$ denote its right and left derivative respectively. We denote}\Co{i}
+\textit{Consider finite non-empty sets $\St$ and $\A$, $\R:\St\rightarrow[0,1]$ (reward function) and $\T:\St\times\A\K\St$ (transition kernel). The value function $\V_{\T\R}(s,\gamma)$ is always continuous and piecewise differentiable w.r.t. $\gamma$. Let $\partial_+\V_{\T\R}(s,\gamma)$ and $\partial_-\V_{\T\R}(s,\gamma)$ denote its right and left derivative respectively. We denote}\Co{i}
 
 $$\partial_{\max}\V_{\T\R}(s,\gamma):=\sup_{x\in(\gamma,1)}{\partial_+\V_{\T\R}(s,x)}$$
 
@@ -271,6 +272,7 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proof of Proposition A.N6}\Co{b}
 
+% Use the Kadec-Snobar (can also be cited: Koenig-Jaegermann) projection constant bound and John's ellipsoid 
 TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N4}\Co{b}
@@ -366,20 +368,6 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proof of Theorem 1}\Co{b}
 
-Consider $\Y=\Reals^\St$ equipped with the $L^1$ norm. Given $s\in\St$ and $a\in\A$, consider also the subspace
-
-$$W_{sa}:=\Sp\ACM{\T(s,a)}{\T\in\Hy}$$
-
-By Proposition A.N6, there is $\B_{sa}\in\PSD\AP{\Y}$ s.t.
-
-1. For any $\mu\in\Delta\St$
-
-$$\B_{sa}\mu^{\otimes2}\leq1$$
-
-2. For any $\T,\tilde{\T}\in\Hy$
-
-$$\frac{1}{4}\DL^2 B_{sa}\AP{\T(s,a)-\tilde{\T}(s,a)}^{\otimes2} \geq \Dtva{\T(s,a),\tilde{\T}(s,a)}^2$$
-
 We take $\pi^\dagger_\gamma:=\pi^\PSR_{\zeta\R T}$ for some $T\in\Nats^+$ to be specified later. Denote the Bayesian regret by
 
 $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\gamma}^{\dagger}}_{\T\R}(\gamma)}$$
@@ -396,23 +384,41 @@ It is easy to see that, for each $\T\in\Hy$, $s\in\St$ and $\gamma\in(0,1)$ we h
 
 $$\V^0_{\T\R}\AP{s}-(1-\gamma)\partial_{\max}\V_{\T\R}(s,\gamma)\leq\V_{\T\R}(s,\gamma)\leq\V^0_{\T\R}\AP{s}-(1-\gamma)\partial_{\min}\V_{\T\R}(s,\gamma)$$
 
+We will use the notation 
+
+$$\De \V_{\T\R}(\gamma):=\max_{s\in\St}{\partial_{\max}\V_{\T\R}(s,\gamma)}-\min_{s\in\St}{\partial_{\min}\V_{\T\R}(s,\gamma)}$$
+
 By the no-traps condition, $\V^0_{\T\R}(s)$ doesn't depend on $s$ and we get
 
-$$\Reg(\gamma)\leq(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\AP{\max_{s\in\St}{\partial_{\max}\V_{\SHy_n\R}(s,\gamma)}-\min_{s\in\St}{\partial_{\min}\V_{\SHy_n\R}(s,\gamma)}}\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
+$$\Reg(\gamma)\leq(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\De\V_{\SHy_n\R}(\gamma)\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
 
-Using the dominated convergence theorem, we conclude that there is some function $\delta\tau:[0,1]\rightarrow\Reals^+$ s.t. $\lim_{\gamma\rightarrow1}\delta\tau(\gamma)=0$ and
+Consider $\Y=\Reals^\St$ equipped with the $L^1$ norm. Given $s\in\St$ and $a\in\A$, consider also the subspace
 
-$$\Reg(\gamma)\leq(1-\gamma)\AP{\tau_{\zeta\R}+\delta\tau(\gamma)}\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
+$$W_{sa}:=\Sp\ACM{\T(s,a)}{\T\in\Hy}$$
 
-% Use \tau and the no-traps condition
+By Proposition A.N6, there is $\B_{sa}\in\PSD\AP{\Y}$ s.t.
+
+1. For any $\mu\in\Delta\St$
+
+$$\B_{sa}\mu^{\otimes2}\leq1$$
+
+2. For any $\T,\tilde{\T}\in\Hy$
+
+$$\frac{1}{4}\DL^2 B_{sa}\AP{\T(s,a)-\tilde{\T}(s,a)}^{\otimes2} \geq \Dtva{\T(s,a),\tilde{\T}(s,a)}^2$$
+
+It follows that
+
+$$\Reg(\gamma)\leq\frac{1}{2}\DL(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\De\V_{\SHy_n\R}(\gamma)\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}} }$$
 
 % Apply A.N5 (confidence)
- 
+
 % Balance \delta = 1-\gamma
  
 % Apply A.N3 (widths)
 
 % Balance \epsilon = (1-\gamma)^2
+ 
+% Use the dominated convergence theorem to recover \tau_{\zeta\R}
 
 TBD\ \textbf{Q.E.D.}\Co{b}
 
@@ -420,7 +426,7 @@ TBD\ \textbf{Q.E.D.}\Co{b}
 
 The proposition below appeared in Osband and Van Roy as "Lemma 1", so we state it without proof.
 
-\textbf{Proposition B.N1}\Co{b}
+\textbf{Proposition B.N1 (Osband-Van Roy)}\Co{b}
 
 \textit{TBD}\Co{i}
 
@@ -447,7 +453,7 @@ $$\EU^{*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0
 
 The next proposition appeared (in slightly greater generality) in Osband and Van Roy as "Proposition 5".
 
-\textbf{Proposition B.N2}\Co{b}
+\textbf{Proposition B.N2 (Osband-Van Roy)}\Co{b}
 
 \textit{There is some $C_{\mathrm{B.N2}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
