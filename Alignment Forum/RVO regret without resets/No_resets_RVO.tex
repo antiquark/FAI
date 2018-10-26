@@ -406,6 +406,31 @@ It follows that
 
 $$\Reg(\gamma)\leq\frac{1}{2}\DL(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\De\V_{\SHy_n\R}(\gamma)\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}} }$$
 
+We now apply Proposition A.N5 with $\delta:=1-\gamma$ and $\epsilon:=(1-\gamma)^2$. We get
+
+$$\Pa{}{\SHy_*\in\bigcap_{n=0}^\infty\CS^\Hy\AB{\Theta\AT_{:n}\Theta_n,\frac{\B }{\beta(n+1)}}} \geq \gamma$$
+
+Here, $\beta$ was defined in Proposition A.N5.
+
+Since the hypothesis $\SHy_n$ is sampled from the posterior, for any $l\in\Nats$ we also have
+
+$$\Pa{}{\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\frac{\B }{\beta(lT+1)}}} \geq \gamma$$
+
+$$\Pa{}{\SHy_*,\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\frac{\B }{\beta(lT+1)}}} \geq 2\gamma-1$$
+
+Denote
+
+$$\Hy_n:=\CS^\Hy\AB{\Theta\AT_{:n}\Theta_n,\frac{\B }{\beta(n+1)}}$$
+
+It follows that
+
+$$\Pa{}{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}}\leq\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B}}\geq2\gamma-1$$
+
+% It seems easy to proceed if we have a uniform bound of the bias span. But using only the expected value?
+% What if we use Cauchy-Shwartz? This will give us a term proportional to the 2nd moment times 1-\gamma
+
+$$\Reg(\gamma)\leq\frac{1}{2}\DL(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\De\V_{\SHy_n\R}(\gamma)\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}} }??$$
+
 % Apply A.N5 (confidence)
 
 % Balance \delta = 1-\gamma
