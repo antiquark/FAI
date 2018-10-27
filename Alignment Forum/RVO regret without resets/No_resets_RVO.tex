@@ -415,29 +415,29 @@ $$\CSE_n:=\AC{\SHy_*,\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\frac{\B 
 
 We get
 
-$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\AP{(1-\gamma)^2+\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};G_n }}$$
+$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\AP{(1-\gamma)^2+\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }}$$
 
-$$\Reg(\gamma)\leq1-\gamma+\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};G_n }$$
+$$\Reg(\gamma)\leq1-\gamma+\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }$$
 
 Using property 2 of B
 
-$$\Reg(\gamma)\leq1-\gamma+\frac{1}{2}\DL\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}};G_n }$$
+$$\Reg(\gamma)\leq1-\gamma+\frac{1}{2}\DL\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}};\CSE_n }$$
 
 Denote
 
-$$\Hy_n:=\CS^\Hy\AB{\Theta\AT_{:n}\Theta_n,\frac{\B }{\beta(n+1)}}$$
+$$\Hy_l:=\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_lT,\frac{\B }{\beta(lT+1)}}$$
 
 Clearly
 
-$$\Pa{}{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}}\leq\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B};G_n}=1$$
+$$\Pa{}{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}}\leq\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B};\CSE_n}=1$$
 
-$$\Reg(\gamma)\leq1-\gamma+\frac{1}{2}\DL\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B};G_n }$$
+$$\Reg(\gamma)\leq1-\gamma+\frac{1}{2}\DL\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }$$
 
-Dropping $;G_n$ (since it can only make the right hand side smaller) and moving the sum inside the expected value, we get
+% How do we separate \Delta\V and \W?
+% Not clear how it works in Osband-Van Roy
+% One option is assume a uniform bound on the bias span rather than just the expected value
 
-$$\Reg(\gamma)\leq1-\gamma+\frac{1}{2}\DL\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }$$
- 
-% Apply A.N3 (widths)
+??? Applying Proposition A.N3, we conclude ???
 
 ...
 
