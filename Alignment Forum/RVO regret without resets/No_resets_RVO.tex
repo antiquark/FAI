@@ -108,7 +108,8 @@
 \newcommand{\AT}{\mathrm{A}}
 \newcommand{\THy}{\mathrm{H}_*}
 \newcommand{\SHy}{\mathrm{H}}
-\newcommand{\De}{\Delta\!}
+\newcommand{\De}{\Delta}
+\newcommand{\CSE}{G}
 
 \begin{document}
 
@@ -218,9 +219,9 @@ $$\Ea{\T\sim\zeta}{\max_{s\in\St}\partial_{\max}\V_{\T\R}(s,\gamma)-\min_{s\in\S
 
 [When this assumption is true, the left hand side converges to $\tau_{\zeta\R}$ with $\gamma\rightarrow1$.]
 
-\textit{Denote $\DL:=\LD{\Hy}$, $\DMB:=\MB{\Hy}$ and $\DRVO:=\RVO{\Hy}$. Then, there is a family of policies $\AC{\pi^\dagger_\gamma:\St^*\times\St\K\A}_{\gamma\in(0,1)}$ s.t. for any $\epsilon\in\Reals^+$}\Co{i}
+\textit{Denote $\DL:=\LD{\Hy}$, $\DMB:=\MB{\Hy}$ and $\DRVO:=\RVO{\Hy}$. Then, there is a family of policies $\AC{\pi^\dagger_\gamma:\St^*\times\St\K\A}_{\gamma\in(0,1)}$ s.t.}\Co{i}
 
-$$\limsup_{\gamma \rightarrow 1}\frac{\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi^\dagger_\gamma}_{\T\R}(\gamma)}}{\tau_{\zeta\R}\DL\sqrt{\ln{\frac{1}{1-\gamma}}\AP{\DMB+\epsilon}\DRVO(1-\gamma)}}\leq C$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi^\dagger_\gamma}_{\T\R}(\gamma)}}{\tau_{\zeta\R}\DL\sqrt{\ln{\frac{1}{1-\gamma}}\AP{\DMB+1}\DRVO(1-\gamma)}}\leq C$$
 
 Here (like in previous essays), $\V^1_{\T\R}(s)$ is the first derivative of the value function at $\gamma=1$ for transition kernel $\T$, reward function $\R$ and state $s$; $\EU^{\pi}_{\T\R}(\gamma)$ is the expected utility for policy $\pi$ and geometric time discount parameter $\gamma$; $\EU^*_{\T\R}(\gamma)$ is the maximal expected utility over policies. The expression in the numerator is, thereby, the Bayesian regret.
 
@@ -238,7 +239,7 @@ A few directions for improving on this result:
 
 * It seems tempting to generalize local dimension by allowing the values of $f(x)$ to lie on some \textit{nonlinear} manifold of given dimension for any given $x$. This approach, if workable, might require a substantially more difficult proof.
 
-* The "cellular decision processes" discussed [previously](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) in "Proposition 3" have exponentially large local dimension, meaning that this regret bound is ineffective for them. However, it's possible that there is a natural class of "robust" cellular decision processes for which value doesn't change much when changing a smaller number of cells. Such an assumption would be usable for deriving a regret bound instead of local dimension (both play the role of the Lipschitz constant in Osband and Van\ Roy).
+* The "cellular decision processes" discussed [previously](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) in "Proposition 3" have exponentially high local dimension, meaning that this regret bound is ineffective for them. We can consider a variant in which, on every time step, only one cell or a very small number of cells (possibly chosen randomly) change. This would have low local dimension. One way to interpret it is, as a continuous time process in which each cell has a certain *rate* of changing its state.
 
 \begin{Huge}Proofs\end{Huge}
 
@@ -374,19 +375,13 @@ $$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT
 
 $$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Abs{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}}$$
 
-$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\Ea{}{\AP{\max_{s\in\St}{\V_{\SHy_n\R}(s,\gamma)}-\min_{s\in\St}{\V_{\SHy_n\R}(s,\gamma)}}\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
+We will use the notation
 
-It is easy to see that, for each $\T\in\Hy$, $s\in\St$ and $\gamma\in(0,1)$ we have
+$$\De\V_{\T\R}(\gamma):=\max_{s\in\St}{\V_{\T\R}(s,\gamma)}-\min_{s\in\St}{\V_{\T\R}(s,\gamma)}$$
 
-$$\V^0_{\T\R}\AP{s}-(1-\gamma)\partial_{\max}\V_{\T\R}(s,\gamma)\leq\V_{\T\R}(s,\gamma)\leq\V^0_{\T\R}\AP{s}-(1-\gamma)\partial_{\min}\V_{\T\R}(s,\gamma)$$
+It follows that
 
-We will use the notation 
-
-$$\De \V_{\T\R}(\gamma):=\max_{s\in\St}{\partial_{\max}\V_{\T\R}(s,\gamma)}-\min_{s\in\St}{\partial_{\min}\V_{\T\R}(s,\gamma)}$$
-
-By the no-traps condition, $\V^0_{\T\R}(s)$ doesn't depend on $s$ and we get
-
-$$\Reg(\gamma)\leq(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\De\V_{\SHy_n\R}(\gamma)\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
+$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
 
 Consider $\Y=\Reals^\St$ equipped with the $L^1$ norm. Given $s\in\St$ and $a\in\A$, consider also the subspace
 
@@ -402,46 +397,65 @@ $$\B_{sa}\mu^{\otimes2}\leq1$$
 
 $$\frac{1}{4}\DL^2 B_{sa}\AP{\T(s,a)-\tilde{\T}(s,a)}^{\otimes2} \geq \Dtva{\T(s,a),\tilde{\T}(s,a)}^2$$
 
-It follows that
+We now apply Proposition A.N5 with $\delta:=\frac{1}{2}(1-\gamma)^2$ and $\epsilon:=(1-\gamma)^2$. We get
 
-$$\Reg(\gamma)\leq\frac{1}{2}\DL(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\De\V_{\SHy_n\R}(\gamma)\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}} }$$
-
-We now apply Proposition A.N5 with $\delta:=1-\gamma$ and $\epsilon:=(1-\gamma)^2$. We get
-
-$$\Pa{}{\SHy_*\in\bigcap_{n=0}^\infty\CS^\Hy\AB{\Theta\AT_{:n}\Theta_n,\frac{\B }{\beta(n+1)}}} \geq \gamma$$
+$$\Pa{}{\SHy_*\in\bigcap_{n=0}^\infty\CS^\Hy\AB{\Theta\AT_{:n}\Theta_n,\frac{\B }{\beta(n+1)}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
 
 Here, $\beta$ was defined in Proposition A.N5.
 
 Since the hypothesis $\SHy_n$ is sampled from the posterior, for any $l\in\Nats$ we also have
 
-$$\Pa{}{\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\frac{\B }{\beta(lT+1)}}} \geq \gamma$$
+$$\Pa{}{\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\frac{\B }{\beta(lT+1)}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
 
-$$\Pa{}{\SHy_*,\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\frac{\B }{\beta(lT+1)}}} \geq 2\gamma-1$$
+$$\Pa{}{\SHy_*,\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\frac{\B }{\beta(lT+1)}}} \geq 1-(1-\gamma)^2$$
+
+Denote
+
+$$\CSE_n:=\AC{\SHy_*,\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\frac{\B }{\beta(lT+1)}}}\subseteq\Omega$$
+
+We get
+
+$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\AP{(1-\gamma)^2+\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};G_n }}$$
+
+$$\Reg(\gamma)\leq1-\gamma+\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};G_n }$$
+
+Using property 2 of B
+
+$$\Reg(\gamma)\leq1-\gamma+\frac{1}{2}\DL\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}};G_n }$$
 
 Denote
 
 $$\Hy_n:=\CS^\Hy\AB{\Theta\AT_{:n}\Theta_n,\frac{\B }{\beta(n+1)}}$$
 
-It follows that
+Clearly
 
-$$\Pa{}{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}}\leq\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B}}\geq2\gamma-1$$
+$$\Pa{}{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}}\leq\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B};G_n}=1$$
 
-% It seems easy to proceed if we have a uniform bound of the bias span. But using only the expected value?
-% What if we use Cauchy-Shwartz? This will give us a term proportional to the 2nd moment times 1-\gamma
+$$\Reg(\gamma)\leq1-\gamma+\frac{1}{2}\DL\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B};G_n }$$
 
-$$\Reg(\gamma)\leq\frac{1}{2}\DL(1-\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\De\V_{\SHy_n\R}(\gamma)\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}} }??$$
+Dropping $;G_n$ (since it can only make the right hand side smaller) and moving the sum inside the expected value, we get
 
-% Apply A.N5 (confidence)
-
-% Balance \delta = 1-\gamma
+$$\Reg(\gamma)\leq1-\gamma+\frac{1}{2}\DL\Ea{}{\Delta\V_{\SHy_n\R}(\gamma)\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }$$
  
 % Apply A.N3 (widths)
 
-% Balance \epsilon = (1-\gamma)^2
+...
+
+It is easy to see that, for each $\T\in\Hy$, $s\in\St$ and $\gamma\in(0,1)$ we have
+
+$$\V^0_{\T\R}\AP{s}-(1-\gamma)\partial_{\max}\V_{\T\R}(s,\gamma)\leq\V_{\T\R}(s,\gamma)\leq\V^0_{\T\R}\AP{s}-(1-\gamma)\partial_{\min}\V_{\T\R}(s,\gamma)$$
+
+We will use the notation 
+
+$$\partial_{\Delta}\V_{\T\R}(\gamma):=\max_{s\in\St}{\partial_{\max}\V_{\T\R}(s,\gamma)}-\min_{s\in\St}{\partial_{\min}\V_{\T\R}(s,\gamma)}$$
+
+By the no-traps condition, $\V^0_{\T\R}(s)$ doesn't depend on $s$ and we get
+
+...
  
 % Use the dominated convergence theorem to recover \tau_{\zeta\R}
 
-TBD\ \textbf{Q.E.D.}\Co{b}
+TBD \textbf{Q.E.D.}\Co{b}
 
 \begin{Huge}Appendix\end{Huge}
 
