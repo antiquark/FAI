@@ -108,6 +108,7 @@
 \newcommand{\AT}{\mathrm{A}}
 \newcommand{\THy}{\mathrm{H}_*}
 \newcommand{\SHy}{\mathrm{H}}
+\newcommand{\Ev}{\mathcal{E}}
 \newcommand{\De}{\Delta}
 \newcommand{\CSE}{G}
 
@@ -249,15 +250,29 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 TBD \textbf{Q.E.D.}\Co{b} % graph must be a tree
 
+Given a measurable space $X$, some $\mu,\nu\in\Delta X$ and measurable function $f:X\rightarrow\Reals$, we will use the notation
+
+$$\Ea{x\sim\mu-\nu}{f(x)}:=\Ea{x\sim\mu}{f(x)}-\Ea{x\sim\nu}{f(x)}$$
+
+Given finite sets $\St,\A$, some $\T:\St\times\A\K\St$ and $\pi:\St\rightarrow\A$, we will use the notation $\T\pi:\St\K\St$ defined by
+
+$$\T\pi(s):=\T\AP{s,\pi(s)}$$
+
 \textbf{Proposition A.N1}\Co{b}
 
-In the setting of Theorem 1, fix $T\in\Nats^+$ and let $\pi_{\zeta\R T}^{\PSR}: \St^*\times\St\K\A$ be the policy implemented by a PSRL algorithm with prior $\zeta$, reward function $\R$ and episode length $T$. Let $(\Omega,P)$ be a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm (see the proof of "Lemma 1" in [this](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) previous essay or the proof of "Theorem 1" in [another](https://agentfoundations.org/item?id=1739) previous essay). Furthermore, let $\THy:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{\SHy_n:\Omega\rightarrow\Hy}_{n\in\Nats}$ be the random variables s.t. $\SHy_n$ represents the hypothesis sampled at time $n$ (i.e. during episode number $\Floor{n/T}$), $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be random variables s.t. $\Theta_n$ represents the state at time $n$ and $\AC{\AT_n:\Omega\rightarrow\A}_{n\in\Nats}$ be random variables s.t. $\AT_n$ represents the action taken at time $n$. Then
+\textit{In the setting of Theorem 1, fix $T\in\Nats^+$ and $\gamma\in(0,1)$. Let $\Pi:\Hy\times\St\rightarrow\A$ be a Borel measurable mapping s.t. $\Pi(\T)$ is an optimal policy, i.e.}\Co{i}
 
-$$\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\R T}^{\PSR}}_{\T\R}(\gamma)}=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}$$
+$$\EU^{\Pi(\T)}_{\T\R}(\gamma)=\EU^{*}_{\T\R}(\gamma)$$
+
+\textit{Let $\pi_{\zeta\Pi T}^{\PSR}: \St^*\times\St\K\A$ be the policy implemented by a PSRL algorithm with prior $\zeta$ and episode length $T$, s.t. whenever hypothesis $\T$ is sampled, policy $\Pi(\T)$ is followed. Denote the Bayesian regret by}\Co{i}
+
+$$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\Pi T}^{\PSR}}_{\T\R}(\gamma)}$$
+
+\textit{Let $(\Omega,P)$ be a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm.}\Co{i} [See the proof of "Lemma 1" in [this](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) previous essay or the proof of "Theorem 1" in [another](https://agentfoundations.org/item?id=1739) previous essay.]\textit{ Furthermore, let $\THy:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{\SHy_n:\Omega\rightarrow\Hy}_{n\in\Nats}$ be the random variables s.t. $\SHy_n$ represents the hypothesis sampled at time $n$ (i.e. during episode number $\Floor{n/T}$), $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be random variables s.t. $\Theta_n$ represents the state at time $n$ and $\AC{\AT_n:\Omega\rightarrow\A}_{n\in\Nats}$ be random variables s.t. $\AT_n$ represents the action taken at time $n$. Denote $\Ev_n:=\SHy_*\Pi\AP{\SHy_n}$ and $\bar{\Ev}_n:=\SHy_{n}\Pi\AP{\SHy_*}$. Then}\Co{i}
+
+$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(\gamma)}}+\sum_{l=0}^\infty{\gamma^{lT}}\Ea{}{\Ea{\Ev_{lT}^T\AP{\Theta_{lT}}-\bar{\Ev}_{lT}^T\AP{\Theta_{lT}}}{\V_{\SHy_*\R}(\gamma)}}$$
 
 \textbf{Proof of Proposition A.N1}\Co{b}
-
-% Proof uses Proposition B.1 from https://agentfoundations.org/item?id=1723
 
 TBD \textbf{Q.E.D.}\Co{b}
 
@@ -363,15 +378,15 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proof of Theorem 1}\Co{b}
 
-We take $\pi^\dagger_\gamma:=\pi^\PSR_{\zeta\R T}$ for some $T\in\Nats^+$ to be specified later. Denote the Bayesian regret by
+We take $\pi^\dagger_\gamma:=\pi^\PSR_{\zeta\Pi T}$ where $\Pi$ is as in Proposition A.N1 and $T\in\Nats^+$ will be specified later. Denote the Bayesian regret by
 
 $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\gamma}^{\dagger}}_{\T\R}(\gamma)}$$
 
 By Proposition A.N1
 
-$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}$$
+$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(\gamma)}}+\sum_{l=0}^\infty{\gamma^{lT}}\Ea{}{\Ea{\Ev_{lT}^T\AP{\Theta_{lT}}-\bar{\Ev}_{lT}^T\AP{\Theta_{lT}}}{\V_{\SHy_*\R}(\gamma)}}$$
 
-$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Abs{\Ea{s\sim \SHy_n\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}-\Ea{s\sim \THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(s,\gamma)}}}$$
+$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Abs{\Ea{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(\gamma)}}}+\sum_{l=0}^\infty{\gamma^{lT}}\Ea{}{\Abs{\Ea{\Ev_{lT}^T\AP{\Theta_{lT}}-\bar{\Ev}_{lT}^T\AP{\Theta_{lT}}}{\V_{\SHy_*\R}(\gamma)}}}$$
 
 We will use the notation
 
@@ -379,7 +394,9 @@ $$\De\V(\gamma):=\max_{\T\in\Hy}{\AP{\max_{s\in\St}{\V_{\T\R}(s,\gamma)}-\min_{s
 
 It follows that
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }+\sum_{l=0}^\infty\gamma^{lT}\Ea{}{\Dtva{\Ev_{lT}^T\AP{\Theta_{lT}},\bar{\Ev}_{lT}^T\AP{\Theta_{lT}}}}}$$
+
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }+\frac{1}{1-\gamma^T}}$$
 
 Consider $\Y=\Reals^\St$ equipped with the $L^1$ norm. Given $s\in\St$ and $a\in\A$, consider also the subspace
 
@@ -415,11 +432,11 @@ We get
 
 $$\Reg(\gamma)\leq\Delta\V(\gamma)\sum_{n=0}^\infty\gamma^{n}\AP{\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+(1-\gamma)^2}$$
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+1-\gamma}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
 Using property 2 of B
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}\DL\sum_{n=0}^\infty\gamma^{n}\Ea{}{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}};\CSE_n }+1-\gamma}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}\DL\sum_{n=0}^\infty\gamma^{n}\Ea{}{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}};\CSE_n }+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
 Denote
 
@@ -431,21 +448,31 @@ $$\Pa{}{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\A
 
 Using this inequality, dropping the $;G_n$ (since it can only the right hand side smaller) and moving the sum inside the expected value, we get
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}\DL\Ea{}{\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }+1-\gamma}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}\DL\Ea{}{\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }+1-\gamma+\frac{1}{1-\gamma^T}}$$
+
+Denote 
+
+$$\phi(\gamma):=\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}\ln{\frac{1}{1-\gamma}}$$
 
 Applying Proposition A.N3, we conclude
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\DL C_{\mathrm{A.N3}}}{2}\AP{1+\DRVO T\ln\frac{1}{1-\gamma}+\sqrt{\DRVO\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}\ln{\frac{1}{1-\gamma}}}}+1-\gamma}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\DL C_{\mathrm{A.N3}}}{2}\AP{1+\DRVO T\ln\frac{1}{1-\gamma}+\sqrt{\DRVO\phi(\gamma)}}+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
-Denote the right hand side $F(\gamma)$. We have
+Denote the second factor on the right hand side $F(\gamma)$, so that the inequality becomes 
 
-$$\limsup_{\gamma\rightarrow1}{\frac{\Reg(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{1-\gamma}}}}}\leq \limsup_{\gamma\rightarrow1}{\frac{F(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{1-\gamma}}}}}$$
+$$\Reg(\gamma)\leq\De\V(\gamma)F(\gamma)$$
 
-We will now analyze the contribution of each term in $F(\gamma)$ to the right hand side. We assume $\tau_{\zeta\R}<\infty$, otherwise the theorem is vacuous.
+Now, we analyze the $\gamma\rightarrow1$ limit.
 
-$$\limsup_{\gamma\rightarrow1}{\frac{\Delta\V(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{1-\gamma}}}}}=\tau_{\zeta\R}\lim_{\gamma\rightarrow1}\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}=0$$
+$$\limsup_{\gamma\rightarrow1}{\frac{\Reg(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{1-\gamma}}}}}\leq \limsup_{\gamma\rightarrow1}{\frac{\De\V(\gamma)F(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{1-\gamma}}}}}$$
 
-% recover \tau
+We assume $\tau_{\zeta\R}<\infty$, otherwise the theorem is vacuous. Multiplying the numerator and denominator on the right hand side by $\sqrt{1-\gamma}$, we get
+
+$$\limsup_{\gamma\rightarrow1}{\frac{\Reg(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{1-\gamma}}}}}\leq  \tau_{\zeta\R}\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot F(\gamma)}$$
+
+We will now analyze the contribution of each term in $F(\gamma)$ to the right hand side.
+
+??? Set the value of $T$ ???
 
 TBD \textbf{Q.E.D.}\Co{b}
 
