@@ -358,7 +358,7 @@ $$\F_n:=\CS^\F\AB{\bold{xy}_{:n},\frac{\B }{\beta(n+1)}}$$
 
 Then,
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}\ln{\frac{1}{\theta}}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
 
 \textbf{Proof of Proposition A.N2}\Co{b}
 
@@ -370,7 +370,7 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textit{Consider a set $\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. Assume that for any $x\in\X$ and $f\in\F$, $\B _x{f(x)}^{\otimes2}\leq 1$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\eta_0,\eta_1\in\Reals^+$ and $\delta\in(0,1)$. Define $\beta$ and $\F_n$ the same way as in Proposition A.N2. Denote $D:=\RVO{\F}$. Then,}\Co{i}
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}} \leq C_{\mathrm{A.N3}}\AP{1+D T\ln\frac{1}{1-\gamma}+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}} \leq C_{\mathrm{A.N3}}\AP{1+D T\ln\frac{1}{1-\gamma}+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
 
 \textbf{Proof of Proposition A.N3}\Co{b}
 
@@ -450,13 +450,9 @@ Using this inequality, dropping the $;G_n$ (since it can only the right hand sid
 
 $$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}\DL\Ea{}{\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
-Denote 
-
-$$\phi(\gamma):=\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}\ln{\frac{1}{1-\gamma}}$$
-
 Applying Proposition A.N3, we conclude
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\DL C_{\mathrm{A.N3}}}{2}\AP{1+\DRVO T\ln\frac{1}{1-\gamma}+\sqrt{\DRVO\phi(\gamma)}}+1-\gamma+\frac{1}{1-\gamma^T}}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\DL C_{\mathrm{A.N3}}}{2}\AP{1+\DRVO T\ln\frac{1}{1-\gamma}+\sqrt{\DRVO\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
 Denote the second factor on the right hand side $F(\gamma)$, so that the inequality becomes 
 
