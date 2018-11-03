@@ -470,7 +470,7 @@ We assume $\tau_{\zeta\R}<\infty$, otherwise the theorem is vacuous. Multiplying
 
 $$\limsup_{\gamma\rightarrow1}{\frac{\Reg(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{1-\gamma}}}}}\leq  \tau_{\zeta\R}\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot F(\gamma)}$$
 
-We will now analyze the contribution of each term in $F(\gamma)$ to the limit on the right hand side. We ignore multiplicative constants that can be absorbed into $C$.
+We will now analyze the contribution of each term in $F(\gamma)$ to the limit on the right hand side (using the fact that $\limsup\AP{F_1+F_2}\leq\limsup{F_1}+\limsup{F_2}$). We ignore multiplicative constants that can be absorbed into $C$.
 
 The first term gives
 
@@ -482,7 +482,19 @@ $$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\c
 
 The third term gives (using the definitions of $\beta$ and our choices of $\delta$ and $\epsilon$)
 
-$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\DRVO\AP{\ln{\frac{\N(\F,\epsilon^{-2}\B )}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}??}\frac{1}{1-\gamma}}}$$
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\DRVO\AP{\ln{\frac{2\N(\F,(1-\gamma)^{-4}\B )}{(1-\gamma)^2}}+(1-\gamma) \ln{\frac{2e}{(1-\gamma)^3}}}\frac{1}{1-\gamma}}}\leq$$
+
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\frac{\DRVO}{1-\gamma}}\AP{\sqrt{\ln {\N(\F,(1-\gamma)^{-4}\B )}}+\sqrt{\ln{\frac{2}{(1-\gamma)}}}+\sqrt{(1-\gamma) \ln{\frac{2e}{(1-\gamma)^3}}}}}$$
+
+We analyze each subterm separately. The first subterm gives
+
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\frac{\DRVO}{1-\gamma}\ln{\N(\F,(1-\gamma)^{-4}\B )}}}=$$
+
+$$\DL\sqrt{\DRVO}\limsup_{\gamma\rightarrow1}{\sqrt{\frac{\ln{\N(\F,(1-\gamma)^{-4}\B )}}{\frac{1}{2}\ln{\frac{1}{(1-\gamma)^2}}}}}\leq$$
+
+$$\DL\sqrt{2\DRVO\DMB}$$
+
+?? We need to argue that for PSD B we get $\leq$ instead of $=$ like for PD\ B ??
 
 The fourth term gives
 
