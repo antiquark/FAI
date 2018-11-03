@@ -168,7 +168,7 @@ $$\forall f\in\F\exists\tilde{f}\in A: \sup_{x\in\X}{\B _x\AP{f(x)-\tilde{f}(x)}
 
 \textbf{Definition 5}\Co{b}
 
-\textit{Consider a finite set $\X$, a finite-dimensional real vector product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Fix any $\AC{\B \in\PD(\Y)}_{x\in\X}$.  The}\Co{i} Minkowski–Bouligand dimension (MB dimension) of $\F$ \textit{is defined by}\Co{i}
+\textit{Consider a finite set $\X$, a finite-dimensional real vector product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Fix any $\AC{\B_x \in\PD(\Y)}_{x\in\X}$.  The}\Co{i} Minkowski–Bouligand dimension (MB dimension) of $\F$ \textit{is defined by}\Co{i}
 
 $$\MB{\F}:=\limsup_{\epsilon \rightarrow 0}{\frac{\ln{\N\AP{\F,\epsilon^{-2} \B }}}{\ln\frac{1}{\epsilon}}}$$
 
@@ -176,7 +176,11 @@ It is easy to see the above is indeed well-defined, i.e. doesn't depend on the c
 
 $$c_1 \N\AP{\F,\epsilon^{-2} \B } \leq \N\AP{\F,\epsilon^{-2} \tilde{\B }} \leq c_2\N\AP{\F,\epsilon^{-2} \B }$$
 
-For finite $\F$ and $\epsilon\ll1$, it's obvious that $\N\AP{\F,\epsilon^{-2}\B }=\Abs{\F}$, and in particular $\MB\F=0$. It is also possible to show that, for any $\F$, $\MB{\F}\leq\Abs{\X}\dim{\Y}$.
+Similarly, for any $\AC{B_x\in\PSD(\Y)}_{x\in\X}$, we have
+
+$$\MB{\F}\geq\limsup_{\epsilon \rightarrow 0}{\frac{\ln{\N\AP{\F,\epsilon^{-2} \B }}}{\ln\frac{1}{\epsilon}}}$$
+
+For finite $\F$ and $\epsilon\ll1$, it's obvious that $\N\AP{\F,\epsilon^{-2}\B }\leq\Abs{\F}$, and in particular $\MB\F=0$. It is also possible to show that, for any $\F$, $\MB{\F}\leq\Abs{\X}\dim{\Y}$.
 
 Note that, in general, MB dimension is fractional.
 
@@ -482,25 +486,45 @@ $$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\c
 
 The third term gives (using the definitions of $\beta$ and our choices of $\delta$ and $\epsilon$)
 
-$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\DRVO\AP{\ln{\frac{2\N(\F,(1-\gamma)^{-4}\B )}{(1-\gamma)^2}}+(1-\gamma) \ln{\frac{2e}{(1-\gamma)^3}}}\frac{1}{1-\gamma}}}\leq$$
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\DRVO\AP{\ln{\frac{2\N\AP{\Hy,(1-\gamma)^{-4}\B}}{(1-\gamma)^2}}+(1-\gamma) \ln{\frac{2e}{(1-\gamma)^3}}}\frac{1}{1-\gamma}}}\leq$$
 
-$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\frac{\DRVO}{1-\gamma}}\AP{\sqrt{\ln {\N(\F,(1-\gamma)^{-4}\B )}}+\sqrt{\ln{\frac{2}{(1-\gamma)}}}+\sqrt{(1-\gamma) \ln{\frac{2e}{(1-\gamma)^3}}}}}$$
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\frac{\DRVO}{1-\gamma}}\AP{\sqrt{\ln {\N\AP{\Hy,(1-\gamma)^{-4}\B}}}+\sqrt{\ln{\frac{2}{(1-\gamma)}}}+\sqrt{(1-\gamma) \ln{\frac{2e}{(1-\gamma)^3}}}}}$$
 
 We analyze each subterm separately. The first subterm gives
 
-$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\frac{\DRVO}{1-\gamma}\ln{\N(\F,(1-\gamma)^{-4}\B )}}}=$$
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\frac{\DRVO}{1-\gamma}\ln{\N\AP{\Hy,(1-\gamma)^{-4}\B }}}}=$$
 
-$$\DL\sqrt{\DRVO}\limsup_{\gamma\rightarrow1}{\sqrt{\frac{\ln{\N(\F,(1-\gamma)^{-4}\B )}}{\frac{1}{2}\ln{\frac{1}{(1-\gamma)^2}}}}}\leq$$
+$$\DL\sqrt{\DRVO}\limsup_{\gamma\rightarrow1}{\sqrt{\frac{\ln{\N\AP{\Hy,(1-\gamma)^{-4}\B}}}{\frac{1}{2}\ln{\frac{1}{(1-\gamma)^2}}}}}\leq$$
 
 $$\DL\sqrt{2\DRVO\DMB}$$
 
-?? We need to argue that for PSD B we get $\leq$ instead of $=$ like for PD\ B ??
+The second subterm gives
+
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\frac{\DRVO}{1-\gamma}\ln{\frac{2}{1-\gamma}}}}=\DL\sqrt{\DRVO}$$
+
+The third subterm gives
+
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\frac{\DRVO}{1-\gamma}(1-\gamma) \ln{\frac{2e}{(1-\gamma)^3}}}}=0$$
 
 The fourth term gives
 
-$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot?}=?$$
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot(1-\gamma)}=0$$
 
-TBD \textbf{Q.E.D.}\Co{b}
+To analyze the fifth term, observe that $\lim_{\gamma\rightarrow1}{(1-\gamma)T(\gamma)}=0$. Hence
+
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\frac{1}{1-\gamma^{T(\gamma)}}}=$$
+
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\frac{1}{(1-\gamma)T(\gamma)}}=$$
+
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\frac{\sqrt{\DL\DRVO(1-\gamma)\ln\frac{1}{1-\gamma}}}{(1-\gamma)}}=$$
+
+$$\sqrt{\DL\DRVO}$$
+
+Putting everything together, we observe that the expression $\DL\sqrt{\DRVO(\DMB+1)}$ dominates all the terms (up to a multiplicative constant). Here, we use that $\DL$ is an integer and hence $\DL\geq\sqrt{\DL}$. We conclude
+
+$$\limsup_{\gamma\rightarrow1}{\frac{\Reg(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{1-\gamma}}}}}\leq C\tau_{\zeta\R}\DL\sqrt{\DRVO(\DMB+1)}$$
+
+\textbf{Q.E.D.}\Co{b}
 
 \begin{Huge}Appendix\end{Huge}
 
