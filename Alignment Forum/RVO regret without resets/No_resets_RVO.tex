@@ -278,7 +278,7 @@ $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\Pi T}^{\PS
 
 \textit{Let $(\Omega,P)$ be a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm.}\Co{i} [See the proof of "Lemma 1" in [this](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) previous essay or the proof of "Theorem 1" in [another](https://agentfoundations.org/item?id=1739) previous essay.]\textit{ Furthermore, let $\THy:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{\SHy_n:\Omega\rightarrow\Hy}_{n\in\Nats}$ be the random variables s.t. $\SHy_n$ represents the hypothesis sampled at time $n$ (i.e. during episode number $\Floor{n/T}$), $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be random variables s.t. $\Theta_n$ represents the state at time $n$ and $\AC{\AT_n:\Omega\rightarrow\A}_{n\in\Nats}$ be random variables s.t. $\AT_n$ represents the action taken at time $n$. Denote $\Ev_l:=\SHy_*\Pi\AP{\SHy_{lT}}$ and $\bar{\Ev}_l:=\SHy_{lT}\Pi\AP{\SHy_*}$. Then}\Co{i}
 
-$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{\SHy_n\R}(\gamma)}{\Theta_n,\AT_n}}+\sum_{l=0}^\infty{\gamma^{lT}}\Ea{}{\CE{\Ev_{l}^T-\bar{\Ev}_{l}^T}{\V_{\SHy_*\R}(\gamma)}{\Theta_{lT}}}$$
+$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{\SHy_n\R}(\gamma)}{\Theta_n,\AT_n}}+\sum_{l=0}^\infty{\gamma^{(l+1)T}}\Ea{}{\CE{\bar{\Ev}_{l}^T-\Ev_{l}^T}{\V_{\SHy_*\R}(\gamma)}{\Theta_{lT}}}$$
 
 Here, $\Ev_l^T$ means raising $\Ev_l$ to the $T$-th power w.r.t. Markov kernel composition, and the same for $\bar{\Ev}_l^T$.
 
@@ -341,7 +341,21 @@ Applying this identity to the second second term on the right hand side of the i
 
 $$\Ea{}{\V_{l}\AP{\Theta_{n_0}}-\V_{l0}\AP{\Theta_{n_0}}}=\sum_{n=n_0}^{n_1-1}\gamma^{n-n_0+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{l}}{\Theta_n,\AT_n}}+\gamma^T\Ea{}{\V_{l}\AP{\Theta_{n_1}}-\V_{*}\AP{\Theta_{n_1}}}$$
 
-TBD \textbf{Q.E.D.}\Co{b}
+Clearly 
+
+$$\Ea{}{\V_l\AP{\Theta_{n_1}}}=\Ea{}{\CE{\Ev_l^T}{\V_l}{\Theta_{n_0}}}$$
+
+$$\Ea{}{\V_*\AP{\Theta_{n_1}}}=\Ea{}{\CE{\Ev_l^T}{\V_*}{\Theta_{n_0}}}$$
+
+Using the definition of PSRL, we can exchange and true and sampled hypothesis and get
+
+$$\Ea{}{\V_l\AP{\Theta_{n_1}}}=\Ea{}{\CE{\bar{\Ev}_l^T}{\V_*}{\Theta_{n_0}}}$$
+
+It follows that
+
+$$\Ea{}{\V_{l}\AP{\Theta_{n_0}}-\V_{l0}\AP{\Theta_{n_0}}}=\sum_{n=n_0}^{n_1-1}\gamma^{n-n_0+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{l}}{\Theta_n,\AT_n}}+\gamma^T\Ea{}{\CE{\bar{\Ev}_l^T-\Ev_l^T}{\V_*}{\Theta_{n_0}}}$$
+
+Applying this to each term in the earlier expression for $\Reg(\gamma)$, we get the desired result. \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N6}\Co{b}
 
@@ -353,7 +367,9 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proof of Proposition A.N6}\Co{b}
 
-% Use the Kadec-Snobar (can also be cited: Koenig-Jaegermann) projection constant bound and John's ellipsoid 
+% Use the Kadec-Snobar (can also be cited: Koenig-Jaegermann) projection constant bound and John's ellipsoid
+% Add corresponding theorems to Appendix
+ 
 TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N4}\Co{b}
@@ -451,9 +467,9 @@ $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\gamma}^{\dagger
 
 By Proposition A.N1
 
-$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(\gamma)}}+\sum_{l=0}^\infty{\gamma^{lT}}\Ea{}{\Ea{\Ev_{lT}^T\AP{\Theta_{lT}}-\bar{\Ev}_{lT}^T\AP{\Theta_{lT}}}{\V_{\SHy_*\R}(\gamma)}}$$
+$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{\SHy_n\R}(\gamma)}{\Theta_n,\AT_n}}+\sum_{l=0}^\infty{\gamma^{(l+1)T}}\Ea{}{\CE{\bar{\Ev}_{l}^T-\Ev_{l}^T}{\V_{\SHy_*\R}(\gamma)}{\Theta_{lT}}}$$
 
-$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Abs{\Ea{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(\gamma)}}}+\sum_{l=0}^\infty{\gamma^{lT}}\Ea{}{\Abs{\Ea{\Ev_{lT}^T\AP{\Theta_{lT}}-\bar{\Ev}_{lT}^T\AP{\Theta_{lT}}}{\V_{\SHy_*\R}(\gamma)}}}$$
+$$\Reg(\gamma)\leq\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Abs{\CE{\SHy_n-\THy}{\V_{\SHy_n\R}(\gamma)}{\Theta_n,\AT_n}}}+\sum_{l=0}^\infty{\gamma^{lT}}\Ea{}{\Abs{\CE{\bar{\Ev}_{l}^T-\Ev_{l}^T}{\V_{\SHy_*\R}(\gamma)}{\Theta_{lT}}}}$$
 
 We will use the notation
 
