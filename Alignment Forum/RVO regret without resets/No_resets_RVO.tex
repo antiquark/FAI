@@ -238,8 +238,6 @@ A few directions for improving on this result:
 
 * It is interesting to study RVO dimension in more detail. For example, I'm not even sure whether Proposition 2 is the best possible bound in terms of $\Abs{\F}$ or it's e.g. possible to get a linear bound.
 
-* Like I said in the start, I was unable to derive a satisfactory "entropic" regret bound using RVO dimension. However, at the time I did not try to use local dimension: its significance only became apparent to me when working on the current approach.
-
 * It seems tempting to generalize local dimension by allowing the values of $f(x)$ to lie on some \textit{nonlinear} manifold of given dimension for any given $x$. This approach, if workable, might require a substantially more difficult proof.
 
 * The "cellular decision processes" discussed [previously](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) in "Proposition 3" have exponentially high local dimension, meaning that this regret bound is ineffective for them. We can consider a variant in which, on every time step, only one cell or a very small number of cells (possibly chosen randomly) change. This would have low local dimension. One way to interpret it is, as a continuous time process in which each cell has a certain *rate* of changing its state.
@@ -252,11 +250,17 @@ TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proof of Proposition 2}\Co{b}
 
-TBD \textbf{Q.E.D.}\Co{b} % graph must be a tree
+TBD \textbf{Q.E.D.}\Co{b}
 
-Given a measurable space $X$, some $\mu,\nu\in\Delta X$ and measurable function $f:X\rightarrow\Reals$, we will use the notation
+Given a measurable space $X$, some $\mu,\nu\in\Delta X$ and a measurable function $f:X\rightarrow\Reals$, we will use the notation
 
 $$\Ea{x\sim\mu-\nu}{f(x)}:=\Ea{x\sim\mu}{f(x)}-\Ea{x\sim\nu}{f(x)}$$
+
+Given $X,Y$ measurable spaces, some $K,L:X\K Y$ and a measurable function $f:Y\rightarrow\Reals$, we will use the notation
+
+$$\CE{y\sim K}{f(y)}{x}:=\Ea{y\sim K(x)}{f(y)}$$
+
+$$\CE{y\sim K-L}{f(y)}{x}:=\Ea{y\sim K(x)-L(x)}{f(y)}$$
 
 Given finite sets $\St,\A$, some $\T:\St\times\A\K\St$ and $\pi:\St\rightarrow\A$, we will use the notation $\T\pi:\St\K\St$ defined by
 
@@ -272,9 +276,11 @@ $$\EU^{\Pi(\T)}_{\T\R}(\gamma)=\EU^{*}_{\T\R}(\gamma)$$
 
 $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\zeta\Pi T}^{\PSR}}_{\T\R}(\gamma)}$$
 
-\textit{Let $(\Omega,P)$ be a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm.}\Co{i} [See the proof of "Lemma 1" in [this](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) previous essay or the proof of "Theorem 1" in [another](https://agentfoundations.org/item?id=1739) previous essay.]\textit{ Furthermore, let $\THy:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{\SHy_n:\Omega\rightarrow\Hy}_{n\in\Nats}$ be the random variables s.t. $\SHy_n$ represents the hypothesis sampled at time $n$ (i.e. during episode number $\Floor{n/T}$), $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be random variables s.t. $\Theta_n$ represents the state at time $n$ and $\AC{\AT_n:\Omega\rightarrow\A}_{n\in\Nats}$ be random variables s.t. $\AT_n$ represents the action taken at time $n$. Denote $\Ev_n:=\SHy_*\Pi\AP{\SHy_n}$ and $\bar{\Ev}_n:=\SHy_{n}\Pi\AP{\SHy_*}$. Then}\Co{i}
+\textit{Let $(\Omega,P)$ be a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm.}\Co{i} [See the proof of "Lemma 1" in [this](https://www.alignmentforum.org/posts/zTf946PQwN2AN3X3Y/entropic-regret-i-deterministic-mdps) previous essay or the proof of "Theorem 1" in [another](https://agentfoundations.org/item?id=1739) previous essay.]\textit{ Furthermore, let $\THy:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{\SHy_n:\Omega\rightarrow\Hy}_{n\in\Nats}$ be the random variables s.t. $\SHy_n$ represents the hypothesis sampled at time $n$ (i.e. during episode number $\Floor{n/T}$), $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be random variables s.t. $\Theta_n$ represents the state at time $n$ and $\AC{\AT_n:\Omega\rightarrow\A}_{n\in\Nats}$ be random variables s.t. $\AT_n$ represents the action taken at time $n$. Denote $\Ev_l:=\SHy_*\Pi\AP{\SHy_{lT}}$ and $\bar{\Ev}_l:=\SHy_{lT}\Pi\AP{\SHy_*}$. Then}\Co{i}
 
-$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Ea{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}{\V_{\SHy_n\R}(\gamma)}}+\sum_{l=0}^\infty{\gamma^{lT}}\Ea{}{\Ea{\Ev_{lT}^T\AP{\Theta_{lT}}-\bar{\Ev}_{lT}^T\AP{\Theta_{lT}}}{\V_{\SHy_*\R}(\gamma)}}$$
+$$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{\SHy_n\R}(\gamma)}{\Theta_n,\AT_n}}+\sum_{l=0}^\infty{\gamma^{lT}}\Ea{}{\CE{\Ev_{l}^T-\bar{\Ev}_{l}^T}{\V_{\SHy_*\R}(\gamma)}{\Theta_{lT}}}$$
+
+Here, $\Ev_l^T$ means raising $\Ev_l$ to the $T$-th power w.r.t. Markov kernel composition, and the same for $\bar{\Ev}_l^T$.
 
 We will use the notation $\V_{\T\pi\R}(s,\gamma)$ to stand for the expected utility achieved by policy $\pi$ when starting from state $s$ with transition kernel $\T$, reward function $\R$ and time discount parameter $\gamma$.
 
@@ -299,7 +305,7 @@ It is easy to see that
 
 $$\Reg(\gamma)=\sum_{l=0}^\infty{\gamma^{lT}\Ea{}{\V_{*}\AP{\Theta_{lT}}-\V_{l0}\AP{\Theta_{lT}}}}$$
 
-The above is essentially what appeared as "Proposition B.1" [before](https://agentfoundations.org/item?id=1723), for the special case of PSRL, and where we regard every episode as a single time step in a new MDP where every action is a policy for the duration of an episode in the original MDP.
+The above is essentially what appeared as "Proposition B.1" [before](https://agentfoundations.org/item?id=1723), for the special case of PSRL, and where we regard every episode as a single time step in a new MDP in which every action is a policy for the duration of an episode in the original MDP.
 
 By definition, $\SHy_{lT}$ and $\SHy_*$ have the same distribution even when conditioned by the history up to $lT$. Therefore
 
@@ -311,23 +317,29 @@ $$\Reg(\gamma)=\sum_{l=0}^\infty{\gamma^{lT}\Ea{}{\V_{l}\AP{\Theta_{lT}}-\V_{l0}
 
 We now prove by induction on $k\in[T+1]$ that
 
-$$\Ea{}{\V_{l}\AP{\Theta_{lT}}-\V_{l0}\AP{\Theta_{lT}}}=\sum_{n=lT}^{lT+k-1}\gamma^{n-lT}\Ea{}{\Ea{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}{\V_{l}}}+\gamma^k\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}$$
+$$\Ea{}{\V_{l}\AP{\Theta_{lT}}-\V_{l0}\AP{\Theta_{lT}}}=\sum_{n=lT}^{lT+k-1}\gamma^{n-lT+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{l}}{\Theta_n,\AT_n}}+\gamma^k\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}$$
 
 For $k=0$ this is a tautology. For any $k\in[T]$, the Bellman equation says that
 
-$$\V_l(s)=(1-\gamma)\R(s)+\gamma\Ea{\SHy_{lT}\Pi\AP{\SHy_{lT}}(s)}{\V_l}$$
+$$\V_l(s)=(1-\gamma)\R(s)+\gamma\CE{\SHy_{lT}\Pi\AP{\SHy_{lT}}}{\V_l}{s}$$
 
-$$\V_{lk}(s)=(1-\gamma)\R(s)+\gamma\Ea{\SHy_{*}\Pi\AP{\SHy_{lT}}(s)}{\V_{l,k+1}}$$
+$$\V_{lk}(s)=(1-\gamma)\R(s)+\gamma\CE{\SHy_{*}\Pi\AP{\SHy_{lT}}}{\V_{l,k+1}}{s}$$
 
 It follows that
 
-$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\Ea{}{\Ea{\SHy_{lT}\Pi\AP{\SHy_{lT}}\AP{\Theta_{lT+k}}}{\V_l}-\Ea{\SHy_{*}\Pi\AP{\SHy_{lT}}\AP{\Theta_{lT+k}}}{\V_{l,k+1}}}$$
+$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\Ea{}{\CE{\SHy_{lT}\Pi\AP{\SHy_{lT}}}{\V_l}{\Theta_{lT+k}}-\CE{\SHy_{*}\Pi\AP{\SHy_{lT}}}{\V_{l,k+1}}{\Theta_{lT+k}}}$$
 
 Since $\Pi\AP{\SHy_{lT}}$ is exactly the policy followed by PSRL at time $lT+k$, we get
 
-$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\Ea{}{\Ea{\SHy_{lT}\AP{\Theta_{lT+k},\AT_{lT+k}}}{\V_l}-\Ea{\SHy_{*}\AP{\Theta_{lT+k},\AT_{lT+k}}}{\V_{l,k+1}}}$$
+$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\Ea{}{\CE{\SHy_{lT}}{\V_l}{\Theta_{lT+k},\AT_{lT+k}}-\CE{\SHy_{*}}{\V_{l,k+1}}{\Theta_{lT+k},\AT_{lT+k}}}$$
 
-$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\AP{\Ea{}{\Ea{\SHy_{lT}\AP{\Theta_{lT+k},\AT_{lT+k}}-\SHy_{*}\AP{\Theta_{lT+k},\AT_{lT+k}}}{\V_l}}+\Ea{}{\V_l\AP{\Theta_{lT+k+1}}-\V_{l,k+1}\AP{\Theta_{lT+k+1}}}}$$
+We now subtract and add $\CE{\SHy_*}{\V_l}{\Theta_{lT+k},\AT_{lT+k}}$, and use the fact that $\SHy_*\AP{\Theta_{lT+k},\AT_{lT+k}}$ is the conditional distribution of $\Theta_{lT+k+1}$.
+
+$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\Ea{}{\CE{\SHy_{lT}-\SHy_{*}}{\V_l}{\Theta_{lT+k},\AT_{lT+k}}+\V_l\AP{\Theta_{lT+k+1}}-\V_{l,k+1}\AP{\Theta_{lT+k+1}}}$$
+
+Applying this identity to the second second term on the right hand side of the induction hypothesis, we prove the induction step. For $k=T$, we get, denoting $n_0:=lT$ and $n_1:=(l+1)T$
+
+$$\Ea{}{\V_{l}\AP{\Theta_{n_0}}-\V_{l0}\AP{\Theta_{n_0}}}=\sum_{n=n_0}^{n_1-1}\gamma^{n-n_0+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{l}}{\Theta_n,\AT_n}}+\gamma^T\Ea{}{\V_{l}\AP{\Theta_{n_1}}-\V_{*}\AP{\Theta_{n_1}}}$$
 
 TBD \textbf{Q.E.D.}\Co{b}
 
