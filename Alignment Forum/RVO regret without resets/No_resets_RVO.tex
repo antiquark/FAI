@@ -83,6 +83,7 @@
 \newcommand{\B}{B}
 \newcommand{\X}{\mathcal{X}}
 \newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathcal{Z}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\St}{\mathcal{S}}
 \newcommand{\A}{\mathcal{A}}
@@ -122,7 +123,7 @@
 
 \begin{Huge}Results\end{Huge}
 
-[Russo and Van Roy](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration) introduced the concept of "eluder dimension"  for the benefit of the multi-armed bandit setting, and Osband and Van Roy extended it to a form suitable for studying reinforcement learning. We will consider the following, slightly modified version of their definition.
+[Russo and Van Roy (2013)](https://papers.nips.cc/paper/4909-eluder-dimension-and-the-sample-complexity-of-optimistic-exploration) introduced the concept of "eluder dimension"  for the benefit of the multi-armed bandit setting, and Osband and Van Roy extended it to a form suitable for studying reinforcement learning. We will consider the following, slightly modified version of their definition.
 
 Given a real vector space $\Y$, we will use $\PSD(\Y)$ to denote the set of positive semidefinite bilinear forms on $\Y$ and $\PD(\Y)$ to denote the set of positive definite bilinear forms on $\Y$. Given a bilinear form $\B:\Y\times\Y\rightarrow\Reals$, we will slightly abuse notation by also regarding it as a linear functional $\B:\Y\otimes\Y\rightarrow\Reals$. Thereby, we have $\B(v \otimes w) = \B(v, w)$ and $\B v^{\otimes 2}=\B (v,v)$. Also, if $\Y$ is finite-dimensional and $\B$ is non-degenerate, we will denote $\B ^{-1}:\Y^*\times\Y^*\rightarrow\Reals$ the unique bilinear form which satisfies
 
@@ -359,11 +360,11 @@ Applying this to each term in the earlier expression for $\Reg(\gamma)$, we get 
 
 \textbf{Proposition A.N6}\Co{b}
 
-\textit{Consider a real finite-dimensional normed vector space $V$ and a linear subspace $W\subseteq V$. Then, there exists a $\B \in\PSD(V)$ s.t.}\Co{i}
+\textit{Consider a real finite-dimensional normed vector space $\Y$ and a linear subspace $\Z\subseteq \Y$. Then, there exists $\B \in\PSD(\Y)$ s.t.}\Co{i}
 
-1. \textit{For any $v\in V$, $\B v^{\otimes 2}\leq\Norm{v}^2$}\Co{i}
+1. \textit{For any $v\in \Y$, $\B v^{\otimes 2}\leq\Norm{v}^2$}\Co{i}
 
-2. \textit{For any $w\in W$, $\AP{\dim{W}}^2 \B w^{\otimes 2}\geq \Norm{w}^2$}\Co{i}
+2. \textit{For any $v\in \Z$, $\AP{\dim{\Z}}^2 \B v^{\otimes 2}\geq \Norm{v}^2$}\Co{i}
 
 \textbf{Proof of Proposition A.N6}\Co{b}
 
@@ -606,6 +607,22 @@ $$\limsup_{\gamma\rightarrow1}{\frac{\Reg(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{
 \textbf{Q.E.D.}\Co{b}
 
 \begin{Huge}Appendix\end{Huge}
+
+The following was proved in John (1948), available in the collection [Giorgi and Kjeldesen (2014)](https://www.springer.com/us/book/9783034804387) (the theorem in question is on page 214). 
+
+\textbf{Theorem B.N1 (John)}\Co{b}
+
+\textit{Consider a real finite-dimensional normed vector space $\Y$. Then, there exists $B\in\PD(\Y)$ s.t. for any $v\in\Y$}\Co{i}
+
+$$Bv^{\otimes2}\leq\Norm{v}^2\leq\dim{\Y}\cdot Bv^{\otimes2}$$
+
+The following is from [Kadets and Snobar (1971)](https://link.springer.com/article/10.1007%2FBF01106467).
+
+\textbf{Theorem B.N2 (Kadats-Snobar)}\Co{b}
+
+\textit{Consider a real Banach space $\Y$ and a finite-dimensional linear subspace $\Z\subseteq\Y$...}\Co{i}
+% Is the infimum attained by a specific projection operator?
+% At least for finite-dimensional \Y?
 
 The proposition below appeared in Osband and Van Roy as "Lemma 1", so we state it without proof.
 
