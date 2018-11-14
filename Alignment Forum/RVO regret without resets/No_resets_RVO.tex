@@ -371,10 +371,25 @@ Applying this to each term in the earlier expression for $\Reg(\gamma)$, we get 
 
 \textbf{Proof of Proposition A.N6}\Co{b}
 
-% Use the Kadec-Snobar (can also be cited: Koenig-Jaegermann) projection constant bound and John's ellipsoid
-% Add corresponding theorems to Appendix
+We assume $\dim{\Z}>0$ since otherwise the claim is trivial (take $B=0$).
+
+By Theorem B.N1 (see Appendix), there is $\tilde{B}\in\PSD(\Z)$ s.t. for any $v\in\Z$
+
+$$\tilde{B}v^{\otimes2}\leq\Norm{v}^2\leq\dim{\Z}\cdot\tilde{B}v^{\otimes2}$$
+
+By Corollary B.N1 (see Appendix), there is a projection operator $P:\Y\rightarrow\Y$ s.t. $\Img{\Y}=\Z$ and $\Norm{P}\leq\sqrt{\dim{\Z}}$. We define $B\in\PSD(\Y)$ by
+
+$$B(v,w):=\frac{\tilde{B}\AP{Pv,Pw}}{\dim{\Z}}$$
+
+For any $v\in\Y$, we have
+
+$$Bv^{\otimes2}=\frac{\tilde{B}\AP{Pv,Pv}}{\dim{\Z}}\leq\frac{\Norm{Pv}^2}{\dim{\Z}}\leq\frac{\Norm{P}^2\Norm{v}^2}{\dim{\Z}}\leq\Norm{v}^2$$
+
+For any $v\in\Z$, we have $Pv=v$ and therefore
+
+$$\Norm{v}^2\leq\dim{\Z}\cdot\tilde{B}v^{\otimes2}=\AP{\dim{\Z}}^2\frac{\tilde{B}(Pv,Pv)}{\dim{\Z}}=\AP{\dim{\Z}}^2Bv^{\otimes2}$$
  
-TBD \textbf{Q.E.D.}\Co{b}
+\textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N4}\Co{b}
 
