@@ -63,6 +63,9 @@
 % linear algebra
 \newcommand{\PD}{\mathrm{PD}}
 \newcommand{\PSD}{\mathrm{PSD}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\End}{\mathrm{End}}
+\DeclareMathOperator{\Img}{im}
 % empty string
 \newcommand{\Estr}{\boldsymbol{\lambda}}
 % limits
@@ -618,11 +621,32 @@ $$Bv^{\otimes2}\leq\Norm{v}^2\leq\dim{\Y}\cdot Bv^{\otimes2}$$
 
 The following is from [Kadets and Snobar (1971)](https://link.springer.com/article/10.1007%2FBF01106467).
 
-\textbf{Theorem B.N2 (Kadats-Snobar)}\Co{b}
+\textbf{Theorem B.N2 (Kadets-Snobar)}\Co{b}
 
-\textit{Consider a real Banach space $\Y$ and a finite-dimensional linear subspace $\Z\subseteq\Y$...}\Co{i}
+\textit{Consider a real Banach space $\Y$ and a finite-dimensional linear subspace $\Z\subseteq\Y$. Then, for any $\epsilon\in\Reals^+$, there is a projection operator $P:\Y\rightarrow\Y$ s.t. $\Img{P}=\Z$ and $\Norm{P}<\sqrt{\dim{\Z}}+\epsilon$.}\Co{i}
+
+\textbf{Corollary B.N1}\Co{b}
+
+\textit{Consider a real finite-dimensional normed vector space $\Y$ and a linear subspace $\Z\subseteq\Y$. Then, there is a projection operator $P^\star:\Y\rightarrow\Y$ s.t. $\Img{P^\star}=\Z$ and $\Norm{P^\star}\leq\sqrt{\dim{\Z}}$.}\Co{i}
+
+\textbf{Proof of Corollary B.N1}\Co{b}
+
+Let $\End(\Y)$ be the vector space of linear operators $\Y\rightarrow\Y$. Define
+
+$$\mathrm{Pr}(\Y,\Z):=\ACM{P\in\End(\Y)}{P^2=P,\ \Img{P}=\Z}$$
+
+$$X:=\ACM{P\in\mathrm{Pr}(\Y,\Z)}{\Norm{P}\leq\sqrt{\dim{\Z}}+1}$$
+
+$\mathrm{Pr}(\Y,\Z)$ is an affine subspace of $\End(\Y)$ and $X$ is a compact set. Define $f:X\rightarrow\Reals$ by $f(P):=\Norm{P}$. $f$ is a continuous function. By Theorem B.N2, $\inf f \leq \sqrt{\dim\Z}$. Since $X$ is compact, $f$ attains its infimum at some $P^\star\in X$, and we have $f\AP{P^\star} \leq \sqrt{\dim\Z}$, \textbf{Q.E.D.}\Co{b}
+
 % Is the infimum attained by a specific projection operator?
 % At least for finite-dimensional \Y?
+% In the finite-dimensional case the space of operators of norm \leq M is compact
+% The condition P^2 = P is closed
+% The condition Im P = \Z is not closed inside the space of all operators, however
+% The condition Im P = \Z *is* closed inside the space of projection operators
+% So the answer is yes!
+% (In fact, the projection operators to \Z form an affine space)
 
 The proposition below appeared in Osband and Van Roy as "Lemma 1", so we state it without proof.
 
