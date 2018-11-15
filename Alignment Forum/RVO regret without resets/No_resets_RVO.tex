@@ -35,7 +35,7 @@
 \newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
 \newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
 \newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
-\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Var}[2]{\underset{#1}{\operatorname{Var}}\AB{#2}}
 \newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
 \newcommand{\CI}[3]{\underset{#1}{\operatorname{I}}\ABM{#2}{#3}}
 \newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
@@ -393,13 +393,31 @@ $$\Norm{v}^2\leq\dim{\Z}\cdot\tilde{B}v^{\otimes2}=\AP{\dim{\Z}}^2\frac{\tilde{B
 
 \textbf{Proposition A.N4}\Co{b}
 
-\textit{Consider a finite-dimensional real vector space $\Y$, some $\B \in\PD(\Y)$ and a Borel probability measure $\mu\in\Delta\Y$ s.t. $\Pa{y\sim\mu}{\B y^{\otimes 2} \leq 1} = 1$. Let $y_0:=\Ea{y\sim\mu}{y}$ and $\sigma:=\sqrt{e}$. Then, $\mu$ is $\sigma$-sub-Gaussian w.r.t. $\B $, i.e., for any $\alpha\in\Y^*$}\Co{i}
+\textit{Consider a finite-dimensional real vector space $\Y$, some $\B \in\PD(\Y)$ and a Borel probability measure $\mu\in\Delta\Y$ s.t. $\Pa{y\sim\mu}{\B y^{\otimes 2} \leq 1} = 1$. Let $y_0:=\Ea{y\sim\mu}{y}$ and $\sigma:=2\sqrt{2}$. Then, $\mu$ is $\sigma$-sub-Gaussian w.r.t. $\B $, i.e., for any $\alpha\in\Y^*$}\Co{i}
 
 $$\Ea{y\sim\mu}{\exp\AP{\alpha\AP{y-y_0}}} \leq \exp\AP{\frac{\sigma^2\B ^{-1}\alpha^{\otimes 2}}{2}}$$
 
 \textbf{Proof of Proposition A.N4}\Co{b}
 
-TBD \textbf{Q.E.D.}\Co{b}
+By isomorphism, it is sufficient to consider the case $\Y=\Reals^n$, $B(v,w)=v\cdot w$, $\alpha(v)=tv_0$ for some $n\in\Nats$ and $t\in[0,\infty)$. For this form of $\alpha$ it is sufficient to consider the case $n=1$. It remains to show that
+
+$$\Ea{y\sim\mu}{e^{t\AP{y-y_0}}}\leq e^{\frac{1}{2}\sigma^2t^2}=e^{4t^2}$$
+
+Here, we assume that $\Pa{y\sim\mu}{\Abs{y}\leq1}=1$.
+
+We consider separately the cases $t\geq\frac{1}{2}$ and $t<\frac{1}{2}$. In the first case
+
+$$\Ea{y\sim\mu}{e^{t\AP{y-y_0}}}\leq \max_{y\in[-1,+1]}{e^{t(y-y_0)}} \leq e^{2t}\leq e^{(2t)^2}=e^{4t^2}$$
+
+In the second case, we use that for any $x\in(-\infty,+1]$
+
+$$e^x<1+x+\frac{e}{2}x^2$$
+
+The above holds because, at $x=0$ the left hand side and the right hand have the same value and first derivative, and for any $x\in(-\infty,+1)$, the second derivative of the left hand side is less than the second derivative of the right hand side. We get
+
+$$\Ea{y\sim\mu}{e^{t\AP{y-y_0}}}\leq\Ea{y\sim\mu}{1+t\AP{y-y_0}+\frac{e}{2}t^2\AP{y-y_0}^2}=1+\frac{e}{2}t^2\Var{y\sim\mu}{y}\leq1+\frac{e}{2}t^2\leq e^{\frac{e}{2}t^2}\leq e^{4t^2}$$
+
+\textbf{Q.E.D.}\Co{b}
 
 \textbf{Definition A.N1}\Co{b}
 
@@ -415,7 +433,7 @@ I chose the notation $\LS$ as an abbreviation of "least squares" and $\CS$ as an
 
 \textit{There is some $C_{\mathrm{A.N5}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider finite sets $\X,\St$, some $\F\subseteq\AC{\X\K\St}$ and a family $\AC{\B _x\in\PSD\AP{\Reals^\St}}_{x\in\X}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\St^\omega}}_{n\in\Nats}$ be the natural filtration, i.e.}\Co{i}
+\textit{Consider finite sets $\X,\St$, some $\F\subseteq\AC{\X\K\St}$ and a family $\AC{\B _x\in\PSD\AP{\Reals^\St}}_{x\in\X}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\St^\omega}}_{n\in\Nats}$ be the canonical filtration, i.e.}\Co{i}
 
 $$\mathfrak{H}_n:=\ACM{A'\subseteq\X^\omega\times\St^\omega}{A'=\ACM{\bold{xs}}{\bold{xs}_{:n}\in A},\ A\subseteq\X^n\times\St^n}$$
 
@@ -696,7 +714,7 @@ The next proposition appeared (in slightly greater generality) in Osband and Van
 
 \textit{There is some $C_{\mathrm{B.N2}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider a finite set $\X$, the vector space $\Y:=\Reals^d$ for some $d\in\Nats$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\Y^\omega}}_{n\in\Nats}$ be the natural filtration, i.e.}\Co{i}
+\textit{Consider a finite set $\X$, the vector space $\Y:=\Reals^d$ for some $d\in\Nats$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\Y^\omega}}_{n\in\Nats}$ be the canonical filtration, i.e.}\Co{i}
 
 $$\mathfrak{H}_n:=\ACM{A'\subseteq\X^\omega\times\Y^\omega}{A'=\ACM{\bold{xy}}{\bold{xy}_{:n}\in A},\ A\subseteq\X^n\times\Y^n\text{ Borel}}$$
 
