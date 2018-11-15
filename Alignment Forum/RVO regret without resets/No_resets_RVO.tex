@@ -433,7 +433,7 @@ I chose the notation $\LS$ as an abbreviation of "least squares" and $\CS$ as an
 
 \textit{There is some $C_{\mathrm{A.N5}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider finite sets $\X,\St$, some $\F\subseteq\AC{\X\K\St}$ and a family $\AC{\B _x\in\PSD\AP{\Reals^\St}}_{x\in\X}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\St^\omega}}_{n\in\Nats}$ be the canonical filtration, i.e.}\Co{i}
+\textit{Consider finite sets $\X,\St$, some $\F\subseteq\AC{\X\K\St}$ and a family $\AC{\B _x\in\PSD\AP{\Reals^\St}}_{x\in\X}$. Assume that for any $x\in\X$ and $\varphi\in\Delta\St$, $B_x\varphi^{\otimes2}\leq1$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\St^\omega}}_{n\in\Nats}$ be the canonical filtration, i.e.}\Co{i}
 
 $$\mathfrak{H}_n:=\ACM{A'\subseteq\X^\omega\times\St^\omega}{A'=\ACM{\bold{xs}}{\bold{xs}_{:n}\in A},\ A\subseteq\X^n\times\St^n}$$
 
@@ -449,12 +449,18 @@ $$\beta(t):=C_{\mathrm{A.N5}}\AP{\ln{\frac{\N(\F,\epsilon^{-2}\B )}{\delta}}+\ep
 
 $$\Pa{\bold{xs}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F\AB{\bold{xs}_{:n},\frac{\B }{\beta(n+1)}}} \leq \delta$$
 
-\textit{Here, $\N$ and $\CS$ are defined by thinking of $\St$ and $\Delta\St$ as subsets of $\Y=\Reals^\St$.}\Co{i}
 
 \textbf{Proof of Proposition A.N5}\Co{b}
 
-% A.N4 + B.N2
-TBD \textbf{Q.E.D.}\Co{b}
+For each $x\in\X$, choose a finite set $E_x$ and a linear mapping $P_x:\Reals^\St\rightarrow\Reals^{E_x}$ s.t. $B_x\AP{v,w}=P_x(v)\cdot P_x(w)$. Let $\tilde{\Y}:=\bigoplus_{x\in\X}\Reals^{E_x}$. Define $\tilde{\F}\subseteq\AC{\X\rightarrow\tilde{\Y}}$ by
+
+$$\tilde{\F}:=\ACM{\tilde{f}:\X\rightarrow\tilde{\Y}}{\tilde{f}(x)=P_x\AP{f(x)},\ f\in\F}$$
+
+Define $P^\omega:\X^\omega\times\St^\omega\rightarrow\X^\omega\times\tilde{\Y}^\omega$ by
+
+$$P^\omega(\bold{xs})_n:=\bold{x}_nP_{\bold{x}_n}\AP{\bold{s}_n}$$
+
+Let $\tilde{f}^*:=P^\omega\AP{f^*}$ and $\tilde{\mu}:=P^\omega_*\mu$. By Proposition A.N4, $\tilde{\mu}$ is $2\sqrt{2}$-sub-Gaussian. Applying Proposition B.N1 (see Appendix) to the tilde objects gives the desired result. Here, we choose the constant $C_{\text{A.N5}}$ s.t. the term $M=1$ in $\beta$ as defined in Proposition B.N1 is absorbed by the term $\sigma\ln{\frac{et}{\delta}}\geq1$ (note that $t\geq1$ since we substitute $t=n+1$, $\delta<1$ and $\sigma=2\sqrt{2}>1$). \textbf{Q.E.D.}\Co{b}
 
 \Co{b}
 
@@ -524,9 +530,9 @@ $$W_{sa}:=\Sp\ACM{\T(s,a)}{\T\in\Hy}$$
 
 By Proposition A.N6, there is $\B_{sa}\in\PSD\AP{\Y}$ s.t.
 
-1. For any $\mu\in\Delta\St$
+1. For any $\varphi\in\Delta\St$
 
-$$\B_{sa}\mu^{\otimes2}\leq1$$
+$$\B_{sa}\varphi^{\otimes2}\leq1$$
 
 2. For any $\T,\tilde{\T}\in\Hy$
 
@@ -672,45 +678,9 @@ $$X:=\ACM{P\in\mathrm{Pr}(\Y,\Z)}{\Norm{P}\leq\sqrt{\dim{\Z}}+1}$$
 
 $\mathrm{Pr}(\Y,\Z)$ is an affine subspace of $\End(\Y)$ and $X$ is a compact set. Define $f:X\rightarrow\Reals$ by $f(P):=\Norm{P}$. $f$ is a continuous function. By Theorem B.N2, $\inf f \leq \sqrt{\dim\Z}$. Since $X$ is compact, $f$ attains its infimum at some $P^\star\in X$, and we have $f\AP{P^\star} \leq \sqrt{\dim\Z}$, \textbf{Q.E.D.}\Co{b}
 
-% Is the infimum attained by a specific projection operator?
-% At least for finite-dimensional \Y?
-% In the finite-dimensional case the space of operators of norm \leq M is compact
-% The condition P^2 = P is closed
-% The condition Im P = \Z is not closed inside the space of all operators, however
-% The condition Im P = \Z *is* closed inside the space of projection operators
-% So the answer is yes!
-% (In fact, the projection operators to \Z form an affine space)
-
-The proposition below appeared in Osband and Van Roy as "Lemma 1", so we state it without proof.
-
-\textbf{Proposition B.N1 (Osband-Van Roy)}\Co{b}
-
-\textit{TBD}\Co{i}
-
-% episode decoupling seems to be redundant, it is already taken care of using the "Lipschitz constant"
-\Co{...
-
-\textbf{Proposition B.N3}\Co{b}
-
-Consider some $\gamma\in(0,1)$, $\tau\in(0,\infty)$, $T\in\Nats^+$, a universe..., some $\pi^*: ? \rightarrow \A$ and some $\pi^0: ? \K \A$. Assume that $\gamma \geq \gamma_M$. For any $n \in \Nats$, let $\pi^*_n$ be a policy s.t. for any $h \in ?$
-
-$$\pi^*_n(h):=\begin{cases} \pi^0(h) \text{ if } \Abs{h} < nT \\ \pi^*(h) \text{ otherwise} \end{cases}$$
-
-Assume that for any $h \in ?$
-
-i. $$\pi^*(s) \in \A_{M}^\omega\AP{S(h)}$$
-
-ii. $$\Supp{\pi^0(h)} \subseteq \A_{M}^0\AP{S(h)}$$
-
-iii. For any $\theta\in(\gamma,1)$ $$\Abs{\frac{\D\V_{M}\AP{S(h),\theta}}{\D\theta}} \leq \tau$$
-
-Then
-
-$$\EU^{*}_\upsilon(\gamma)-\EU^{\pi^0}_\upsilon(\gamma) \leq (1-\gamma)\sum_{n=0}^\infty \sum_{m=0}^{T-1} \gamma^{nT+m}\left(\E{x\sim\mu\bowtie\pi^*_n}\left[r\left(x_{:nT+m}\right)\right]-\E{x\sim\mu\bowtie\pi^0}\left[r\left(x_{:nT+m}\right)\right]\right) + \frac{2\tau\gamma^T(1-\gamma)}{1-\gamma^T}$$}
-
 The next proposition appeared (in slightly greater generality) in Osband and Van Roy as "Proposition 5".
 
-\textbf{Proposition B.N2 (Osband-Van Roy)}\Co{b}
+\textbf{Proposition B.N1 (Osband-Van Roy)}\Co{b}
 
 \textit{There is some $C_{\mathrm{B.N2}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
@@ -728,7 +698,7 @@ $$\CE{\bold{xy}\sim\mu}{\exp\AP{\alpha\cdot\AP{\bold{y}_n-f^*(x)}}}{\bold{x}_n=x
 
 \textit{Fix $\epsilon\in\Reals^+$, $\delta\in(0,1)$. Define $\beta:\Reals^+\rightarrow\Reals$ and, for each $n\in\Nats$, $Q_n\in\PD(\Y)$ by}\Co{i}
 
-$$\beta(t):=C_{\mathrm{B.N2}}\AP{\sigma^2 \ln{\frac{\N(\F,\epsilon)}{\delta}}+\epsilon t\AP{M+\sigma\ln{\frac{et}{\delta}}}}$$
+$$\beta(t):=C_{\mathrm{B.N2}}\AP{\sigma^2 \ln{\frac{\N\AP{\F,\epsilon^{-2}\mathrm{I}_d}}{\delta}}+\epsilon t\AP{M+\sigma\ln{\frac{et}{\delta}}}}$$
 
 $$Q_n(v,w):=\frac{v\cdot w}{\beta(n+1)}$$
 
@@ -737,6 +707,12 @@ $$Q_n(v,w):=\frac{v\cdot w}{\beta(n+1)}$$
 $$\Pa{\bold{xy}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F\AB{\bold{xy}_{:n},Q_n}} \leq \delta$$
 
 Note that we removed a square root in the definition of $\beta$ compared to equation (7) in Osband and Van Roy. This only makes $\beta$ larger (up to a constant factor) and therefore, only makes the claim weaker.
+
+The proposition below appeared in Osband and Van Roy as "Lemma 1".
+
+\textbf{Proposition B.N2 (Osband-Van Roy)}\Co{b}
+
+\textit{TBD}\Co{i}
 
 \end{document}
 
