@@ -489,6 +489,22 @@ $$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m
 
 \textbf{Proof of Proposition A.N2}\Co{b}
 
+% Two steps after Proposition B.N2:
+% From identity matrix to arbitrary form
+% From finite sum to discounted sum (use Laplace transform)
+ 
+For each $x\in\X$, choose a finite set $E_x$ and a linear mapping $P_x:\Y\rightarrow\Reals^{E_x}$ s.t. $B_x\AP{v,w}=P_x(v)\cdot P_x(w)$. Let $\tilde{\Y}:=\bigoplus_{x\in\X}\Reals^{E_x}$. Define $\tilde{\F}\subseteq\AC{\X\rightarrow\tilde{\Y}}$ by
+
+$$\tilde{\F}:=\ACM{\tilde{f}:\X\rightarrow\tilde{\Y}}{\tilde{f}(x)=P_x\AP{f(x)},\ f\in\F}$$
+
+Define also $\bold{\tilde{y}}$ by
+
+$$\bold{\tilde{y}}_n=P_{\bold{x}_n}\AP{\bold{y}_n}$$
+
+Applying Proposition B.N2 (see Appendix) to the tilde objects, we conclude that for any $N\in\Nats^+$
+
+$$\sum_{l=0}^{N-1}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\B}>\theta]]} \leq \RVO{\F}\cdot\AP{4\theta^{-2}\beta(NT)+T}$$
+
 TBD \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N3}\Co{b}
@@ -719,7 +735,7 @@ $$\F_n:=\CS^\F\AB{\bold{xy}_{:n},\beta_n^{-1}\Id_d}$$
 
 \textit{Then,}\Co{i}
 
-$$\sum_{l=0}^{N-1}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\Id_d}>\theta]]} \leq \RVO{\F}\cdot\AP{4\theta^{-2}\beta_{NT}+T}$$
+$$\sum_{l=0}^{N-1}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\Id_d}>\theta]]} \leq \RVO{\F}\cdot\AP{4\theta^{-2}\beta_{NT-1}+T}$$
 
 \end{document}
 
