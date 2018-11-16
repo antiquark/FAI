@@ -185,7 +185,7 @@ Similarly, for any $\AC{B_x\in\PSD(\Y)}_{x\in\X}$, we have
 
 $$\MB{\F}\geq\limsup_{\epsilon \rightarrow 0}{\frac{\ln{\N\AP{\F,\epsilon^{-2} \B }}}{\ln\frac{1}{\epsilon}}}$$
 
-For finite $\F$ and $\epsilon\ll1$, it's obvious that $\N\AP{\F,\epsilon^{-2}\B }\leq\Abs{\F}$, and in particular $\MB\F=0$. It is also possible to show that, for any $\F$, $\MB{\F}\leq\Abs{\X}\dim{\Y}$.
+For finite $\F$ and $\epsilon\ll1$, it's obvious that $\N\AP{\F,\epsilon^{-2}\B }\leq\Abs{\F}$, and in particular $\MB\F=0$. It is also possible to show that, for any bounded $\F$, $\MB{\F}\leq\Abs{\X}\dim{\Y}$.
 
 Note that, in general, MB dimension is fractional.
 
@@ -199,7 +199,7 @@ $$\LD{\F}:=\max_{x\in\X}{\dim\Sp\ACM{f(x)}{f\in\F}}$$
 
 Obviously $\LD{\F}\leq\Abs{\F}$ and $\LD{\F}\leq\dim{\Y}$.
 
-Consider finite non-empty sets $\St$ (states) and $\A$ (actions). Observe that $\Delta\St$ can be regarded as a subset of the vector space $\Reals^\St$. This allows us to speak of the RVO, MB and local dimensions of a hypothesis class of transition kernels $\Hy\subseteq\AC{\St\times\A\K\St}$ (that is, in this case $\X=\St\times\A$ and $\Y=\Reals^\St$). 
+Consider finite non-empty sets $\St$ (states) and $\A$ (actions). Observe that $\Delta\St$ can be regarded as a subset of the vector space $\Reals^\St$. This allows us to speak of the RVO, MB and local dimensions of a hypothesis class of transition kernels $\Hy\subseteq\AC{\St\times\A\K\St}$ (in this case $\X=\St\times\A$ and $\Y=\Reals^\St$). 
 
 \Co{Finally, there is a certain regularity condition in our main theorem that depends on the following parameters of MDPs.
 
@@ -295,7 +295,7 @@ Given finite sets $\St,\A$, some $\T:\St\times\A\K\St$ and $\pi:\St\rightarrow\A
 
 $$\T\pi(s):=\T\AP{s,\pi(s)}$$
 
-\textbf{Proposition A.N1}\Co{b}
+\textbf{Proposition A.1}\Co{b}
 
 \textit{In the setting of Theorem 1, fix $T\in\Nats^+$ and $\gamma\in(0,1)$. Let $\Pi:\Hy\times\St\rightarrow\A$ be a Borel measurable mapping s.t. $\Pi(\T)$ is an optimal policy, i.e.}\Co{i}
 
@@ -313,7 +313,7 @@ Here, $\Ev_l^T$ means raising $\Ev_l$ to the $T$-th power w.r.t. Markov kernel c
 
 We will use the notation $\V_{\T\pi\R}(s,\gamma)$ to stand for the expected utility achieved by policy $\pi$ when starting from state $s$ with transition kernel $\T$, reward function $\R$ and time discount parameter $\gamma$.
 
-\textbf{Proof of Proposition A.N1}\Co{b}
+\textbf{Proof of Proposition A.1}\Co{b}
 
 For any $n\in\Nats$, define $\Pi_n:\Hy\times\Hy\times\St^*\times\St\K\A$ as follows.
 
@@ -386,7 +386,7 @@ $$\Ea{}{\V_{l}\AP{\Theta_{n_0}}-\V_{l0}\AP{\Theta_{n_0}}}=\sum_{n=n_0}^{n_1-1}\g
 
 Applying this to each term in the earlier expression for $\Reg(\gamma)$, we get the desired result. \textbf{Q.E.D.}\Co{b}
 
-\textbf{Proposition A.N6}\Co{b}
+\textbf{Proposition A.2}\Co{b}
 
 \textit{Consider a real finite-dimensional normed vector space $\Y$ and a linear subspace $\Z\subseteq \Y$. Then, there exists $\B \in\PSD(\Y)$ s.t.}\Co{i}
 
@@ -394,15 +394,15 @@ Applying this to each term in the earlier expression for $\Reg(\gamma)$, we get 
 
 2. \textit{For any $v\in \Z$, $\AP{\dim{\Z}}^2 \B v^{\otimes 2}\geq \Norm{v}^2$}\Co{i}
 
-\textbf{Proof of Proposition A.N6}\Co{b}
+\textbf{Proof of Proposition A.2}\Co{b}
 
 We assume $\dim{\Z}>0$ since otherwise the claim is trivial (take $B=0$).
 
-By Theorem B.N1 (see Appendix), there is $\tilde{B}\in\PSD(\Z)$ s.t. for any $v\in\Z$
+By Theorem B.1 (see Appendix), there is $\tilde{B}\in\PSD(\Z)$ s.t. for any $v\in\Z$
 
 $$\tilde{B}v^{\otimes2}\leq\Norm{v}^2\leq\dim{\Z}\cdot\tilde{B}v^{\otimes2}$$
 
-By Corollary B.N1 (see Appendix), there is a projection operator $P:\Y\rightarrow\Y$ s.t. $\Img{\Y}=\Z$ and $\Norm{P}\leq\sqrt{\dim{\Z}}$. We define $B\in\PSD(\Y)$ by
+By Corollary B.1 (see Appendix), there is a projection operator $P:\Y\rightarrow\Y$ s.t. $\Img{\Y}=\Z$ and $\Norm{P}\leq\sqrt{\dim{\Z}}$. We define $B\in\PSD(\Y)$ by
 
 $$B(v,w):=\frac{\tilde{B}\AP{Pv,Pw}}{\dim{\Z}}$$
 
@@ -416,13 +416,13 @@ $$\Norm{v}^2\leq\dim{\Z}\cdot\tilde{B}v^{\otimes2}=\AP{\dim{\Z}}^2\frac{\tilde{B
  
 \textbf{Q.E.D.}\Co{b}
 
-\textbf{Proposition A.N4}\Co{b}
+\textbf{Proposition A.3}\Co{b}
 
 \textit{Consider a finite-dimensional real vector space $\Y$, some $\B \in\PD(\Y)$ and a Borel probability measure $\mu\in\Delta\Y$ s.t. $\Pa{y\sim\mu}{\B y^{\otimes 2} \leq 1} = 1$. Let $y_0:=\Ea{y\sim\mu}{y}$ and $\sigma:=2\sqrt{2}$. Then, $\mu$ is $\sigma$-sub-Gaussian w.r.t. $\B $, i.e., for any $\alpha\in\Y^*$}\Co{i}
 
 $$\Ea{y\sim\mu}{\exp\AP{\alpha\AP{y-y_0}}} \leq \exp\AP{\frac{\sigma^2\B ^{-1}\alpha^{\otimes 2}}{2}}$$
 
-\textbf{Proof of Proposition A.N4}\Co{b}
+\textbf{Proof of Proposition A.3}\Co{b}
 
 By isomorphism, it is sufficient to consider the case $\Y=\Reals^n$, $B(v,w)=v\cdot w$, $\alpha(v)=tv_0$ for some $n\in\Nats$ and $t\in[0,\infty)$. For this form of $\alpha$ it is sufficient to consider the case $n=1$. It remains to show that
 
@@ -444,7 +444,7 @@ $$\Ea{y\sim\mu}{e^{t\AP{y-y_0}}}\leq\Ea{y\sim\mu}{1+t\AP{y-y_0}+\frac{e}{2}t^2\A
 
 \textbf{Q.E.D.}\Co{b}
 
-\textbf{Definition A.N1}\Co{b}
+\textbf{Definition A.1}\Co{b}
 
 \textit{Consider a set $\X$, a finite-dimensional real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. Assume $\F$ is compact w.r.t. the product topology on $\X\rightarrow\Y\cong\prod_{x\in\X}\Y$. Consider also some $n\in\Nats$, $\bold{x}\in\X^n$, $\bold{y}\in\Y^n$ and $r\in\Reals^+$. We then use the notation}\Co{i}
 
@@ -454,9 +454,9 @@ $$\CS^{\F}[\bold{xy},B]:=\ACM{f\in\F}{\sum_{m=0}^{n-1}\B _{\bold{x}_m}\AP{f\AP{\
 
 I chose the notation $\LS$ as an abbreviation of "least squares" and $\CS$ as an abbreviation of "confidence set". Note that $\LS$ is somewhat ambiguous (and therefore, so is $\CS$) since there might be multiple minima, but this will not be important in the following (i.e. an arbitrary minimum can be chosen).
 
-\textbf{Proposition A.N5}\Co{b}
+\textbf{Proposition A.4}\Co{b}
 
-\textit{There is some $C_{\mathrm{A.N5}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+\textit{There is some $C_{\mathrm{A.4}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
 \textit{Consider finite sets $\X,\St$, some $\F\subseteq\AC{\X\K\St}$ and a family $\AC{\B _x\in\PSD\AP{\Reals^\St}}_{x\in\X}$. Assume that for any $x\in\X$ and $\varphi\in\Delta\St$, $B_x\varphi^{\otimes2}\leq1$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\St^\omega}}_{n\in\Nats}$ be the canonical filtration, i.e.}\Co{i}
 
@@ -468,13 +468,13 @@ $$\CP{\bold{xs}\sim\mu}{\bold{s}_n=s}{\bold{x}_n=x,\ \mathfrak{H}_n} = f^*(s\mid
 
 \textit{Fix $\epsilon\in\Reals^+$, $\delta\in(0,1)$. Denote}\Co{i}
 
-$$\beta(t):=C_{\mathrm{A.N5}}\AP{\ln{\frac{\N(\F,\epsilon^{-2}\B )}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}}$$
+$$\beta(t):=C_{\mathrm{A.4}}\AP{\ln{\frac{\N(\F,\epsilon^{-2}\B )}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}}$$
 
 \textit{Then,}\Co{i}
 
 $$\Pa{\bold{xs}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F\AB{\bold{xs}_{:n},\beta(n+1)^{-1}\B}} \leq \delta$$
 
-\textbf{Proof of Proposition A.N5}\Co{b}
+\textbf{Proof of Proposition A.4}\Co{b}
 
 For each $x\in\X$, choose a finite set $E_x$ and a linear mapping $P_x:\Reals^\St\rightarrow\Reals^{E_x}$ s.t. $B_x\AP{v,w}=P_x(v)\cdot P_x(w)$. Let $\tilde{\Y}:=\bigoplus_{x\in\X}\Reals^{E_x}$. Define $\tilde{\F}\subseteq\AC{\X\rightarrow\tilde{\Y}}$ by
 
@@ -484,19 +484,19 @@ Define $P^\omega:\X^\omega\times\St^\omega\rightarrow\X^\omega\times\tilde{\Y}^\
 
 $$P^\omega(\bold{xs})_n:=\bold{x}_nP_{\bold{x}_n}\AP{\bold{s}_n}$$
 
-Let $\tilde{f}^*:=P^\omega\AP{f^*}$ and $\tilde{\mu}:=P^\omega_*\mu$. By Proposition A.N4, $\tilde{\mu}$ is $2\sqrt{2}$-sub-Gaussian. Applying Proposition B.N1 (see Appendix) to the tilde objects gives the desired result. Here, we choose the constant $C_{\text{A.N5}}$ s.t. the term $M=1$ in $\beta$ as defined in Proposition B.N1 is absorbed by the term $\sigma\ln{\frac{et}{\delta}}\geq1$ (note that $t\geq1$ since we substitute $t=n+1$, $\delta<1$ and $\sigma=2\sqrt{2}>1$). \textbf{Q.E.D.}\Co{b}
+Let $\tilde{f}^*:=P^\omega\AP{f^*}$ and $\tilde{\mu}:=P^\omega_*\mu$. By Proposition A.3, $\tilde{\mu}$ is $2\sqrt{2}$-sub-Gaussian. Applying Proposition B.1 (see Appendix) to the tilde objects gives the desired result. Here, we choose the constant $C_{\text{A.4}}$ s.t. the term $M=1$ in $\beta$ as defined in Proposition B.1 is absorbed by the term $\sigma\ln{\frac{et}{\delta}}\geq1$ (note that $t\geq1$ since we substitute $t=n+1$, $\delta<1$ and $\sigma=2\sqrt{2}>1$). \textbf{Q.E.D.}\Co{b}
 
 \Co{b}
 
-\textbf{Definition A.N2}\Co{b}
+\textbf{Definition A.2}\Co{b}
 
 \textit{Consider a set $\X$, some $x\in\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. The}\Co{i} $\B $-width of $\F$ at $x$ \textit{is defined by}\Co{i}
 
 $$\W^\F(x,B):=\sup_{f,\tilde{f}\in\F}\sqrt{\B _x\AP{f(x)-\tilde{f}(x)}^{\otimes2}}$$  
 
-\textbf{Proposition A.N2}\Co{b}
+\textbf{Proposition A.5}\Co{b}
 
-\textit{There is some $C_{\mathrm{A.N2}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+\textit{There is some $C_{\mathrm{A.5}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
 \textit{Consider a set $\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\theta\in\Reals^+$, $\eta_0,\eta_1\in\Reals^+$ and $\delta\in(0,1)$. Denote}\Co{i}
 
@@ -508,13 +508,9 @@ $$\F_n:=\CS^\F\AB{\bold{xy}_{:n},\beta(n+1)^{-1}\B}$$
 
 \textit{Assume that $\gamma^T>\frac{1}{2}$. Then,}\Co{i}
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.5}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
 
-\textbf{Proof of Proposition A.N2}\Co{b}
-
-% Two steps after Proposition B.N2:
-% From identity matrix to arbitrary form
-% From finite sum to discounted sum (use Laplace transform)
+\textbf{Proof of Proposition A.5}\Co{b}
  
 For each $x\in\X$, choose a finite set $E_x$ and a linear mapping $P_x:\Y\rightarrow\Reals^{E_x}$ s.t. $B_x\AP{v,w}=P_x(v)\cdot P_x(w)$. Let $\tilde{\Y}:=\bigoplus_{x\in\X}\Reals^{E_x}$. Define $\tilde{\F}\subseteq\AC{\X\rightarrow\tilde{\Y}}$ by
 
@@ -524,7 +520,7 @@ Define also $\bold{\tilde{y}}$ by
 
 $$\bold{\tilde{y}}_n=P_{\bold{x}_n}\AP{\bold{y}_n}$$
 
-Applying Proposition B.N2 (see Appendix) to the tilde objects, we conclude that for any $N\in\Nats$
+Applying Proposition B.2 (see Appendix) to the tilde objects, we conclude that for any $N\in\Nats$
 
 $$\sum_{l=0}^{N-1}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\B}>\theta]]} \leq \RVO{\F}\cdot\AP{4\theta^{-2}\beta(NT)+T}$$
 
@@ -560,25 +556,25 @@ We conclude
 
 $$\frac{\gamma^T}{1-\gamma^T}\sum_{l=0}^{\infty}\gamma^{lT}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\B}>\theta]]} \leq \frac{\RVO{\F}}{T\gamma^T}\cdot\frac{1}{\ln{\frac{1}{\gamma}}}\AP{4\theta^{-2}\beta\AP{\frac{1}{\ln\frac{1}{\gamma}}}+T}$$
 
-Using the condition $\gamma^T>\frac{1}{2}$ and absorbing $O(1)$ factors into the definition of $C_{\text{A.N2}}$, we get
+Using the condition $\gamma^T>\frac{1}{2}$ and absorbing $O(1)$ factors into the definition of $C_{\text{A.5}}$, we get
 
-$$\sum_{l=0}^{\infty}\gamma^{lT}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\B}>\theta]]} \leq C_{\text{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
+$$\sum_{l=0}^{\infty}\gamma^{lT}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\B}>\theta]]} \leq C_{\text{A.5}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
 
 Since $\gamma^m\leq1$, this implies
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.5}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
 
 \textbf{Q.E.D.}\Co{b}
 
-\textbf{Proposition A.N3}\Co{b}
+\textbf{Proposition A.6}\Co{b}
 
-\textit{There is some $C_{\mathrm{A.N3}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+\textit{There is some $C_{\mathrm{A.6}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider a set $\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. Assume that for any $x\in\X$ and $f\in\F$, $\B _x{f(x)}^{\otimes2}\leq 1$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\eta_0,\eta_1\in\Reals^+$ and $\delta\in(0,1)$. Define $\beta$ and $\F_n$ the same way as in Proposition A.N2. Denote $D:=\RVO{\F}$. Assume $D>0$ and $\gamma^T>\frac{1}{2}$. Then,}\Co{i}
+\textit{Consider a set $\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. Assume that for any $x\in\X$ and $f\in\F$, $\B _x{f(x)}^{\otimes2}\leq 1$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\eta_0,\eta_1\in\Reals^+$ and $\delta\in(0,1)$. Define $\beta$ and $\F_n$ the same way as in Proposition A.5. Denote $D:=\RVO{\F}$. Assume $D>0$ and $\gamma^T>\frac{1}{2}$. Then,}\Co{i}
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}} \leq C_{\mathrm{A.N3}}\AP{D T+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}} \leq C_{\mathrm{A.6}}\AP{D T+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
 
-\textbf{Proof of Proposition A.N3}\Co{b}
+\textbf{Proof of Proposition A.6}\Co{b}
 
 Due to the assumption $B_xf(x)^{\otimes2}\leq1$, we have $\W^{\F_n}(x,\B)\leq 2$. For any $t\in\Reals^+$, we have
 
@@ -586,31 +582,31 @@ $$\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}=\int_0^2[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>
 
 $$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq\frac{t}{1-\gamma}+\int_t^2 \sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\B}>\theta]]}\D\theta$$
 
-Applying Proposition A.N2 to the right hand side
+Applying Proposition A.5 to the right hand side
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq\frac{t}{1-\gamma}+C_{\text{A.N2}}D\int_t^2 \AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}\D\theta$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq\frac{t}{1-\gamma}+C_{\text{A.5}}D\int_t^2 \AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}\D\theta$$
 
 Evaluating the integral and dropping some negative terms on the right hand side, we get
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq\frac{t}{1-\gamma}+C_{\text{A.N2}}D \AP{\frac{1}{t}\beta\AP{\frac{1}{1-\gamma}}+2T}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq\frac{t}{1-\gamma}+C_{\text{A.5}}D \AP{\frac{1}{t}\beta\AP{\frac{1}{1-\gamma}}+2T}$$
 
 We now set $t$ to be
 
 $$t:=\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\cdot(1-\gamma)}$$
 
-For an appropriate choice of $C_{\text{A.N3}}$, it follows that
+For an appropriate choice of $C_{\text{A.6}}$, it follows that
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq C_{\text{A.N3}}\AP{DT+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq C_{\text{A.6}}\AP{DT+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
 
 \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proof of Theorem 1}\Co{b}
 
-We take $\pi^\dagger_\gamma:=\pi^\PSR_{\zeta\Pi T}$ where $\Pi$ is as in Proposition A.N1 and $T\in\Nats^+$ will be specified later. Denote the Bayesian regret by
+We take $\pi^\dagger_\gamma:=\pi^\PSR_{\zeta\Pi T}$ where $\Pi$ is as in Proposition A.1 and $T\in\Nats^+$ will be specified later. Denote the Bayesian regret by
 
 $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R}(\gamma)-\EU^{\pi_{\gamma}^{\dagger}}_{\T\R}(\gamma)}$$
 
-By Proposition A.N1
+By Proposition A.1
 
 $$\Reg(\gamma)=\sum_{n=0}^\infty\gamma^{n+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{\SHy_n\R}(\gamma)}{\Theta_n,\AT_n}}+\sum_{l=0}^\infty{\gamma^{(l+1)T}}\Ea{}{\CE{\bar{\Ev}_{l}^T-\Ev_{l}^T}{\V_{\SHy_*\R}(\gamma)}{\Theta_{lT}}}$$
 
@@ -630,7 +626,7 @@ Consider $\Y=\Reals^\St$ equipped with the $L^1$ norm. Given $s\in\St$ and $a\in
 
 $$W_{sa}:=\Sp\ACM{\T(s,a)}{\T\in\Hy}$$
 
-By Proposition A.N6, there is $\B_{sa}\in\PSD\AP{\Y}$ s.t.
+By Proposition A.2, there is $\B_{sa}\in\PSD\AP{\Y}$ s.t.
 
 1. For any $\varphi\in\Delta\St$
 
@@ -640,11 +636,11 @@ $$\B_{sa}\varphi^{\otimes2}\leq1$$
 
 $$\frac{1}{4}\DL^2 B_{sa}\AP{\T(s,a)-\tilde{\T}(s,a)}^{\otimes2} \geq \Dtva{\T(s,a),\tilde{\T}(s,a)}^2$$
 
-We now apply Proposition A.N5 with $\delta:=\frac{1}{2}(1-\gamma)^2$ and $\epsilon:=(1-\gamma)^2$. We get
+We now apply Proposition A.4 with $\delta:=\frac{1}{2}(1-\gamma)^2$ and $\epsilon:=(1-\gamma)^2$. We get
 
 $$\Pa{}{\SHy_*\in\bigcap_{n=0}^\infty\CS^\Hy\AB{\Theta\AT_{:n}\Theta_n,\beta(n+1)^{-1}\B}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
 
-Here, $\beta$ was defined in Proposition A.N5.
+Here, $\beta$ was defined in Proposition A.4.
 
 Since the hypothesis $\SHy_n$ is sampled from the posterior, for any $l\in\Nats$ we also have
 
@@ -678,9 +674,9 @@ Using this inequality, dropping the $;G_n$ (since it can only the right hand sid
 
 $$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}\DL\Ea{}{\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
-We will now assume $\DRVO>0$ (if $\DRVO=0$, then $\Abs{\Hy}=1$ and $\Reg(\gamma)=0$) and $\gamma^T>\frac{1}{2}$. Applying Proposition A.N3, we conclude
+We will now assume $\DRVO>0$ (if $\DRVO=0$, then $\Abs{\Hy}=1$ and $\Reg(\gamma)=0$) and $\gamma^T>\frac{1}{2}$. Applying Proposition A.6, we conclude
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\DL C_{\mathrm{A.N3}}}{2}\AP{\DRVO T+\sqrt{\DRVO\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}+1-\gamma+\frac{1}{1-\gamma^T}}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\DL C_{\mathrm{A.6}}}{2}\AP{\DRVO T+\sqrt{\DRVO\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
 Denote the second factor on the right hand side $F(\gamma)$, so that the inequality becomes 
 
@@ -754,7 +750,7 @@ $$\limsup_{\gamma\rightarrow1}{\frac{\Reg(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{
 
 The following was proved in John (1948), available in the collection [Giorgi and Kjeldesen (2014)](https://www.springer.com/us/book/9783034804387) (the theorem in question is on page 214). 
 
-\textbf{Theorem B.N1 (John)}\Co{b}
+\textbf{Theorem B.1 (John)}\Co{b}
 
 \textit{Consider a real finite-dimensional normed vector space $\Y$. Then, there exists $B\in\PD(\Y)$ s.t. for any $v\in\Y$}\Co{i}
 
@@ -762,15 +758,15 @@ $$Bv^{\otimes2}\leq\Norm{v}^2\leq\dim{\Y}\cdot Bv^{\otimes2}$$
 
 The following is from [Kadets and Snobar (1971)](https://link.springer.com/article/10.1007%2FBF01106467).
 
-\textbf{Theorem B.N2 (Kadets-Snobar)}\Co{b}
+\textbf{Theorem B.2 (Kadets-Snobar)}\Co{b}
 
 \textit{Consider a real Banach space $\Y$ and a finite-dimensional linear subspace $\Z\subseteq\Y$. Then, for any $\epsilon\in\Reals^+$, there is a projection operator $P:\Y\rightarrow\Y$ s.t. $\Img{P}=\Z$ and $\Norm{P}<\sqrt{\dim{\Z}}+\epsilon$.}\Co{i}
 
-\textbf{Corollary B.N1}\Co{b}
+\textbf{Corollary B.1}\Co{b}
 
 \textit{Consider a real finite-dimensional normed vector space $\Y$ and a linear subspace $\Z\subseteq\Y$. Then, there is a projection operator $P^\star:\Y\rightarrow\Y$ s.t. $\Img{P^\star}=\Z$ and $\Norm{P^\star}\leq\sqrt{\dim{\Z}}$.}\Co{i}
 
-\textbf{Proof of Corollary B.N1}\Co{b}
+\textbf{Proof of Corollary B.1}\Co{b}
 
 Let $\End(\Y)$ be the vector space of linear operators $\Y\rightarrow\Y$. Define
 
@@ -778,13 +774,13 @@ $$\mathrm{Pr}(\Y,\Z):=\ACM{P\in\End(\Y)}{P^2=P,\ \Img{P}=\Z}$$
 
 $$X:=\ACM{P\in\mathrm{Pr}(\Y,\Z)}{\Norm{P}\leq\sqrt{\dim{\Z}}+1}$$
 
-$\mathrm{Pr}(\Y,\Z)$ is an affine subspace of $\End(\Y)$ and $X$ is a compact set. Define $f:X\rightarrow\Reals$ by $f(P):=\Norm{P}$. $f$ is a continuous function. By Theorem B.N2, $\inf f \leq \sqrt{\dim\Z}$. Since $X$ is compact, $f$ attains its infimum at some $P^\star\in X$, and we have $f\AP{P^\star} \leq \sqrt{\dim\Z}$, \textbf{Q.E.D.}\Co{b}
+$\mathrm{Pr}(\Y,\Z)$ is an affine subspace of $\End(\Y)$ and $X$ is a compact set. Define $f:X\rightarrow\Reals$ by $f(P):=\Norm{P}$. $f$ is a continuous function. By Theorem B.2, $\inf f \leq \sqrt{\dim\Z}$. Since $X$ is compact, $f$ attains its infimum at some $P^\star\in X$, and we have $f\AP{P^\star} \leq \sqrt{\dim\Z}$, \textbf{Q.E.D.}\Co{b}
 
 The next proposition appeared (in slightly greater generality) in Osband and Van Roy as "Proposition 5". We will use $\Id_d\in\PD\AP{\Reals^d}$ to denote the form corresponding to the identity matrix.
 
-\textbf{Proposition B.N1 (Osband-Van Roy)}\Co{b}
+\textbf{Proposition B.1 (Osband-Van Roy)}\Co{b}
 
-\textit{There is some $C_{\mathrm{B.N2}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+\textit{There is some $C_{\mathrm{B.1}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
 \textit{Consider a finite set $\X$, the vector space $\Y:=\Reals^d$ for some $d\in\Nats$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\Y^\omega}}_{n\in\Nats}$ be the canonical filtration, i.e.}\Co{i}
 
@@ -800,7 +796,7 @@ $$\CE{\bold{xy}\sim\mu}{\exp\AP{\alpha\cdot\AP{\bold{y}_n-f^*(x)}}}{\bold{x}_n=x
 
 \textit{Fix $\epsilon\in\Reals^+$, $\delta\in(0,1)$. Define $\beta:\Reals^+\rightarrow\Reals$ by}\Co{i}
 
-$$\beta(t):=C_{\mathrm{B.N2}}\AP{\sigma^2 \ln{\frac{\N\AP{\F,\epsilon^{-2}\Id_d}}{\delta}}+\epsilon t\AP{M+\sigma\ln{\frac{et}{\delta}}}}$$
+$$\beta(t):=C_{\mathrm{B.1}}\AP{\sigma^2 \ln{\frac{\N\AP{\F,\epsilon^{-2}\Id_d}}{\delta}}+\epsilon t\AP{M+\sigma\ln{\frac{et}{\delta}}}}$$
 
 \textit{Then,}\Co{i}
 
@@ -810,7 +806,7 @@ Note that we removed a square root in the definition of $\beta$ compared to equa
 
 The proposition below appeared in Osband and Van Roy as "Lemma 1".
 
-\textbf{Proposition B.N2 (Osband-Van Roy)}\Co{b}
+\textbf{Proposition B.2 (Osband-Van Roy)}\Co{b}
 
 \textit{Consider a set $\X$, the vector space $\Y=\Reals^d$ for some $d\in\Nats$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $N\in\Nats$, $\theta\in\Reals^+$, $\delta\in(0,1)$ and a nondecreasing sequence $\AC{\beta_n\in\Reals^+}_{n\in\Nats}$. For any $n\in\Nats$, define $\F_n$ by}\Co{i}
 
