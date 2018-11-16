@@ -541,19 +541,45 @@ Using the condition $\gamma^T>\frac{1}{2}$ and absorbing $O(1)$ factors into the
 
 $$\sum_{l=0}^{\infty}\gamma^{lT}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\B}>\theta]]} \leq C_{\text{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
 
-Since $\gamma^m\leq1$, the desired result follows, \textbf{Q.E.D.}\Co{b}
+Since $\gamma^m\leq1$, this implies
+
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.N2}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
+
+\textbf{Q.E.D.}\Co{b}
 
 \textbf{Proposition A.N3}\Co{b}
 
 \textit{There is some $C_{\mathrm{A.N3}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider a set $\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. Assume that for any $x\in\X$ and $f\in\F$, $\B _x{f(x)}^{\otimes2}\leq 1$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\eta_0,\eta_1\in\Reals^+$ and $\delta\in(0,1)$. Define $\beta$ and $\F_n$ the same way as in Proposition A.N2. Denote $D:=\RVO{\F}$. Assume $\gamma^T>\frac{1}{2}$. Then,}\Co{i}
+\textit{Consider a set $\X$, a real vector space $\Y$, some $\F\subseteq\AC{\X\rightarrow\Y}$ and a family $\AC{\B _x\in\PSD(\Y)}_{x\in\X}$. Assume that for any $x\in\X$ and $f\in\F$, $\B _x{f(x)}^{\otimes2}\leq 1$. Consider also some $\bold{x}\in\X^\omega$, $\bold{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\eta_0,\eta_1\in\Reals^+$ and $\delta\in(0,1)$. Define $\beta$ and $\F_n$ the same way as in Proposition A.N2. Denote $D:=\RVO{\F}$. Assume $D>0$ and $\gamma^T>\frac{1}{2}$. Then,}\Co{i}
 
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}} \leq C_{\mathrm{A.N3}}\AP{1+D T\ln\frac{1}{1-\gamma}+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}} \leq C_{\mathrm{A.N3}}\AP{D T+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
 
 \textbf{Proof of Proposition A.N3}\Co{b}
 
-TBD \textbf{Q.E.D.}\Co{b}
+Due to the assumption $B_xf(x)^{\otimes2}\leq1$, we have $\W^{\F_n}(x,\B)\leq 2$. For any $t\in\Reals^+$, we have
+
+$$\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}=\int_0^2[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]\D\theta\leq t+\int_t^2[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}>\theta]]\D\theta$$
+
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq\frac{t}{1-\gamma}+\int_t^2 \sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\bold{x}_{lT+m},\B}>\theta]]}\D\theta$$
+
+Applying Proposition A.N2 to the right hand side
+
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq\frac{t}{1-\gamma}+C_{\text{A.N2}}D\int_t^2 \AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}\D\theta$$
+
+Evaluating the integral and dropping some negative terms on the right hand side, we get
+
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq\frac{t}{1-\gamma}+C_{\text{A.N2}}D \AP{\frac{1}{t}\beta\AP{\frac{1}{1-\gamma}}+2T}$$
+
+We now set $t$ to be
+
+$$t:=\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\cdot(1-\gamma)}$$
+
+For an appropriate choice of $C_{\text{A.N3}}$, it follows that
+
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}\W^{F_{lT}}\AP{\bold{x}_{lT+m},B}}\leq C_{\text{A.N3}}\AP{DT+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
+
+\textbf{Q.E.D.}\Co{b}
 
 \textbf{Proof of Theorem 1}\Co{b}
 
@@ -629,9 +655,9 @@ Using this inequality, dropping the $;G_n$ (since it can only the right hand sid
 
 $$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}\DL\Ea{}{\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
-We will now assume $\gamma^T>\frac{1}{2}$. Applying Proposition A.N3, we conclude
+We will now assume $\DRVO>0$ (if $\DRVO=0$, then $\Abs{\Hy}=1$ and $\Reg(\gamma)=0$) and $\gamma^T>\frac{1}{2}$. Applying Proposition A.N3, we conclude
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\DL C_{\mathrm{A.N3}}}{2}\AP{1+\DRVO T\ln\frac{1}{1-\gamma}+\sqrt{\DRVO\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}+1-\gamma+\frac{1}{1-\gamma^T}}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\DL C_{\mathrm{A.N3}}}{2}\AP{\DRVO T+\sqrt{\DRVO\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
 Denote the second factor on the right hand side $F(\gamma)$, so that the inequality becomes 
 
@@ -655,15 +681,11 @@ $$\limsup_{\gamma\rightarrow1}{\frac{\Reg(\gamma)}{\sqrt{(1-\gamma)\ln{\frac{1}{
 
 We will now analyze the contribution of each term in $F(\gamma)$ to the limit on the right hand side (using the fact that $\limsup\AP{F_1+F_2}\leq\limsup{F_1}+\limsup{F_2}$). We ignore multiplicative constants that can be absorbed into $C$.
 
-The first term gives
+The first term gives (using our choice of $T$)
 
-$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL} = 0$$
+$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\sqrt{\frac{\DL\DRVO}{(1-\gamma)\ln\frac{1}{1-\gamma}}}} = 0$$
 
-The second term gives (using our choice of $T$)
-
-$$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\sqrt{\frac{\DL\DRVO\ln{\frac{1}{1-\gamma}}}{1-\gamma}}} = \sqrt{\DL\DRVO}$$
-
-The third term gives (using the definitions of $\beta$ and our choices of $\delta$ and $\epsilon$)
+The second term gives (using the definitions of $\beta$ and our choices of $\delta$ and $\epsilon$)
 
 $$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\DRVO\AP{\ln{\frac{2\N\AP{\Hy,(1-\gamma)^{-4}\B}}{(1-\gamma)^2}}+(1-\gamma) \ln{\frac{2e}{(1-\gamma)^3}}}\frac{1}{1-\gamma}}}\leq$$
 
@@ -685,7 +707,7 @@ The third subterm gives
 
 $$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot\DL\sqrt{\frac{\DRVO}{1-\gamma}(1-\gamma) \ln{\frac{2e}{(1-\gamma)^3}}}}=0$$
 
-The fourth term gives
+The third and fourth terms give
 
 $$\limsup_{\gamma\rightarrow1}{\sqrt{\frac{1-\gamma}{\ln{\frac{1}{1-\gamma}}}}\cdot(1-\gamma)}=0$$
 
