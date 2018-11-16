@@ -143,7 +143,7 @@ $$\sum_{k=0}^{n-1}\B _{x_k}\AP{f\AP{x_k}-\tilde{f}\AP{x_k}}^{\otimes 2}\leq1\imp
 
 \textbf{Definition 2}\Co{b}
 
-\textit{Consider a set $\X$, a real vector space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. The}\Co{i} Russo-Van Roy-Osband dimension (RVO dimension) $\RVO{\F}$ \textit{is the supremum of the set of $n\in\Nats$ for which there is $\AC{x_k\in\X}_{k\in[n]}$ and $\B $ s.t. for all $m\in[n]$, $x_m$ is $\AP{\F,\B }$-independent of $\AC{x_k\in\X}_{k\in[m]}$.}\Co{i}
+\textit{Consider a set $\X$, a real vector space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. The}\Co{i} Russo-Van Roy-Osband dimension (RVO dimension) $\RVO{\F}$ \textit{is the supremum of the set of $n\in\Nats$ for which there is $\AC{x_k\in\X}_{k\in[n]}$ and $\B $ s.t. for all $m\in[n]$, $x_m$ is $\AP{\F,\B }$-independent of $\AC{x_k}_{k\in[m]}$.}\Co{i}
 
 We have the following basic bounds on RVO dimension.
 
@@ -251,11 +251,35 @@ A few directions for improving on this result:
 
 \textbf{Proof of Proposition 1}\Co{b}
 
-TBD \textbf{Q.E.D.}\Co{b}
+Consider some $\AC{x_k\in\X}_{k\in[m]}$ and $x^*\in\X$ which is $(\F,\B)$-independent of $\AC{x_k}$. Then, there are some $f,\tilde{f}\in\F$ s.t. the following two inequalities hold
+
+$$\sum_{k=0}^{m-1}\B _{x_k}\AP{f\AP{x_k}-\tilde{f}\AP{x_k}}^{\otimes 2}\leq1$$
+
+$$\B _{x^*}\AP{f\AP{x^*}-\tilde{f}\AP{x^*}}^{\otimes 2}>1$$ 
+
+The first inequality implies that, for any $k\in[m]$, $\B _{x_k}\AP{f\AP{x_k}-\tilde{f}\AP{x_k}}^{\otimes 2}\leq1$. Comparing with the second inequality, we conclude that $x^*\ne x_k$.
+
+Now suppose that $\AC{x_k\in\X}_{k\in[n]}$ is s.t. for all $m\in[n]$, $x_m$ is $(\F,\B)$-independent of $\AC{x_k}_{k\in[m]}$. By the previous paragraph, it follows that $x_m\ne x_k$ for any $m,k\in[n]$ s.t. $k<m$. Hence, $n\leq\Abs{\X}$, \textbf{Q.E.D.}\Co{b}
 
 \textbf{Proof of Proposition 2}\Co{b}
 
-TBD \textbf{Q.E.D.}\Co{b}
+Suppose that $\AC{x_k\in\X}_{k\in[n]}$ is s.t. for all $m\in[n]$, $x_m$ is $(\F,\B)$-independent of $\AC{x_k}_{k\in[m]}$. Then, for each $m\in[n]$, we can choose $f_m,\tilde{f}_m\in\F$ s.t. the following two inequalities hold
+
+$$\sum_{k=0}^{m-1}\B _{x_k}\AP{f_m\AP{x_k}-\tilde{f}_m\AP{x_k}}^{\otimes 2}\leq1$$
+
+$$\B _{x_m}\AP{f_m\AP{x_m}-\tilde{f}_m\AP{x_m}}^{\otimes 2}>1$$ 
+
+In particular, the second inequality implies that $f_m\ne\tilde{f}_m$. 
+
+Now, consider some $k\in[m]$. By the first inequality
+
+$$\B _{x_k}\AP{f_m\AP{x_k}-\tilde{f}_m\AP{x_k}}^{\otimes 2}\leq1$$
+
+On the other hand, the second inequality with $k$ instead of $m$ gives
+
+$$\B _{x_k}\AP{f_k\AP{x_k}-\tilde{f}_k\AP{x_k}}^{\otimes 2}>1$$
+
+It follows that $\AC{f_m,\tilde{f}_m}\ne\AC{f_k,\tilde{f}_k}$. Therefore, $n$ cannot exceed the number of unordered pairs of distinct elements in $\F$, \textbf{Q.E.D.}\Co{b}
 
 Given a measurable space $X$, some $\mu,\nu\in\Delta X$ and a measurable function $f:X\rightarrow\Reals$, we will use the notation
 
@@ -449,7 +473,6 @@ $$\beta(t):=C_{\mathrm{A.N5}}\AP{\ln{\frac{\N(\F,\epsilon^{-2}\B )}{\delta}}+\ep
 \textit{Then,}\Co{i}
 
 $$\Pa{\bold{xs}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F\AB{\bold{xs}_{:n},\beta(n+1)^{-1}\B}} \leq \delta$$
-
 
 \textbf{Proof of Proposition A.N5}\Co{b}
 
