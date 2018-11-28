@@ -142,7 +142,7 @@ The structure of the paper is as follows. Section~\ref{sec:learning} defines the
 
 $\Nats$ will denote the set of natural numbers $\{0, 1, 2 \ldots\}$.
 
-Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_m$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO_n\left(x\right)$. Given $y \in \Ob^n$, $y\OO := \left(\PO_n\right)^{-1}\left(y\right)$ is a closed subspace of $\OO$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM\left(X\right)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM\left(X\right)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM\left(X\right)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
+Let $\Sqn{\Ob_n}$ be a sequence of compact Polish spaces. $\Ob_n$ represents the space of possible observations at time $n$. Denote $\Ob^n := \prod_{m < n} \Ob_m$  and $\Ob^\omega:=\prod_{n \in \Nats} \Ob_n$. $\PO_n: \Ob^\omega \rightarrow \Ob^n$ is the projection mapping and $x_{:n}:=\PO_n\left(x\right)$. Given $y \in \Ob^n$, $y\OO := \left(\PO_n\right)^{-1}\left(y\right)$ is a closed subspace of $\OO$. Given $A\subseteq\Ob^n$, we denote $A\Ob^\omega:=\left(\PO_n\right)^{-1}(A)$. $\Ob^n$ will be regarded as a topological space using the product topology and as a measurable space with the $\sigma$-algebra of \emph{universally measurable} sets\footnote{The fact we use universally measurable sets rather than Borel sets will play an important role in the proof of Lemma~\ref{lmm:savvy}.}. For any measurable space $X$, $\PM\left(X\right)$ will denote the space of probability measures on $X$. When $X$ is a Polish space with the Borel $\sigma$-algebra, $\PM\left(X\right)$ will be regarded as a topological space using the weak topology and as a measurable space using the $\sigma$-algebra of Borel sets. Given $\mu \in \PM\left(X\right)$, we denote $\Sp \mu \subseteq X$ the support of $\mu$.
 
 \begin{samepage}
 \begin{definition}
@@ -236,18 +236,6 @@ Here, $\mu \mid \pi^{-1}(y)$ is the conditional probability measure.
 
 \end{example}
 \end{samepage}
-%
-\Comment{\begin{samepage}
-\begin{example}
-
-Suppose that $M$ is convex, for each $n \in \Nats$, $\Ob_n = [0,1]$ and for each $\nu \in M$ and $n \in \Nats$, $\PO_{n*}\nu$ is absolutely continuous w.r.t. the Lebesgue measure on $\Ob^n=[0,1]^n$ and its PDF (Radon-Nikodym derivative) is continuous and positive everywhere. Then, $M \mid \Ob^n$ is the closure of the set of all $(y,\mu) \in \Ob^n \times \PMO$ for which there exists $\nu \in M$ s.t. for any $m \geq n$ and $A \subseteq [0,1]^{m-n}$ measurable
-
-\begin{equation}
-\mu\left(\left(\PO_m\right)^{-1}(y \times A)\right)=\frac{\int_A \frac{d\PO_{m*}\nu(z)}{dz}\prod_{k=n}^{m-1} dz_k}{\int_{[0,1]^{m-n}} \frac{d\PO_{m*}\nu(z)}{dz}\prod_{k=n}^{m-1} dz_k}
-\end{equation}
-
-\end{example}
-\end{samepage}}
 %
 \begin{samepage}
 \begin{example}
@@ -368,7 +356,7 @@ Suppose that the $\Ob_n$ are finite sets with discrete topology. Fix some $n\in\
 \end{equation}
 
 
-$\beta^y$ represents betting that the sequence of observations will begin with an element of $A$. The payoff $\V{\beta^A}(\mu,x)$ is $1 - \mu\left(\left(\PO_n\right)^{-1}(A)\right)$ when $x_{:n} \in A$ and $-\mu\left(\left(\PO_n\right)^{-1}(A)\right)$ when $x_{:n} \not\in A$.
+$\beta^y$ represents betting that the sequence of observations will begin with an element of $A$. The payoff $\V{\beta^A}(\mu,x)$ is $1 - \mu\left(A\Ob^\omega\right)$ when $x_{:n} \in A$ and $-\mu\left(A\Ob^\omega\right)$ when $x_{:n} \not\in A$.
 
 \end{example}
 \end{samepage}
@@ -486,7 +474,7 @@ The following lemma shows that for any bet, there is a forecast which makes the 
 Consider $X$ a compact Polish space and $\beta \in \Gm\left(X\right)$. Then, there exists $\mu \in \PM\left(X\right)$ s.t.
 
 \begin{equation}
-\Sp \mu \subseteq \Argmax{} \beta\left(\mu\right)
+\Sp \mu \subseteq \Argmax{x\in X} \beta\left(\mu,x\right)
 \end{equation}
 
 \end{lemma}
@@ -1082,7 +1070,7 @@ Using the definition of $\PG{S}$, we get the desired result.
 
 We regard ${\OO}$ as a probability space using the ${\sigma}$-algebra $\F$ of universally measurable sets and the probability measure ${\mu^*}$. For any ${n \in \Nats}$, we define ${\F_n \subseteq \F}$ and $X_n,X'_n,Y_n: \OO \rightarrow \Reals$ by 
 
-$$\F_n := \{\left(\PO_n\right)^{-1}\left(A\right) \mid A \subseteq \Ob^n \text{ universally measurable}\}$$
+$$\F_n := \{A\Ob^\omega \mid A \subseteq \Ob^n \text{ universally measurable}\}$$
 
 $$X_n\left(x\right):= \SV \PG{S}^F_{n}\left(x_{:n-1},x\right)$$
 
