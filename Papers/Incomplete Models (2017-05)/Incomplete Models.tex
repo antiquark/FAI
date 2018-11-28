@@ -488,7 +488,9 @@ Define ${K: \PM\left(X\right) \rightarrow 2^{\PM\left(X\right)}}$ as follows:
 For any ${\mu}$, ${K}\left(\mu\right)$ is obviously convex and non-empty. It is also easy to see that the graph of $K$ in $\PM\left(X\right) \times \PM\left(X\right)$ is closed. Applying the Kakutani-Glicksberg-Fan theorem, we conclude that $K$ has a fixed point, i.e. $\mu \in \PM\left(X\right)$ s.t. $\mu \in K\left(\mu\right)$.
 \end{proof}
 
-Note that for $\beta$ and $\mu$ as in Lemma~\ref{lmm:unwinnable}, we have $\V{\beta}(\mu) \leq 0$.
+Note that $\mu$ as above indeed makes $\beta$ unwinnable since
+
+$$\V{\beta}(\mu,x) = \beta\left(\mu,x\right) - \E_{x' \sim \mu}\left[\beta\left(\mu,x'\right)\right] = \beta(\mu,x)- \max_{x'\in X} \beta\left(\mu,x'\right) \leq 0$$
 
 Next, we show that the probability measure of Lemma~\ref{lmm:unwinnable} can be made to depend measurably on past observations and the bet.
 
