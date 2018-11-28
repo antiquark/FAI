@@ -1,0 +1,75 @@
+Let an "incomplete model" M be a convex set of probability distributions
+on infinite sequences. For every finite sequence of length n, we
+associate with M a 'regular upper bound' M_n. Let H be a countable set
+of incomplete models with corresponding regular upper bounds. Then the
+paper constructs a forecaster that, given a finite initial sequence
+x_{:n}, predicts a distribution over the entire infinite sequence x. The
+main result is that, for any incomplete model M in H and any mu in M,
+for mu-almost all infinite sequences the predictions of the forecaster
+asymptotically converge to the predictions of the regular upper bounds
+M_n for M (in a metric d_KL^n that is renormalized for each n). This
+holds even if the incomplete models overlap, and mu is contained in
+multiple incomplete models in H. Another noteworthy feature is that
+the predictions are not one-step-ahead, but for the entire infinite
+future and convergence also applies to this entire infinite future.
+
+The paper is generally well-written, but very technical with many
+(measure-theoretic) subtleties. Although examples and intuitive
+explanations are provided, the paper is still very hard to read (the
+main result is already difficult to interpret), and I believe it is only
+really accessible to specialists in the area. I have not been able to
+verify the correctness of the proofs.
+
+I do have some suggestions that might help to make the presentation a
+little more accessible:
+
+- Please explain the intuitive meaning of 'regular upper bounds'
+  (Definition 2). Even after reading the three examples that follow the
+  definition I still don't understand.
+
+- The results are now formulated in terms of unconditional distributions
+  on infinite sequences that are consistent with the observed data,
+  instead of in terms of conditional distributions. I presume the author
+  has technical reasons for this choice, but it would be very helpful
+  for the reader if the main result could be formulated in terms of
+  conditional distributions instead. In particular, I would hope that
+  it would then be possible to use a fixed metric instead of a metric
+  that depends on n.
+
+- Is it really necessary to use the mapping pi^{-1}(y) all the time?
+  Since all distributions are on infinite sequences anyway, can't you
+  just identify y with the cylinder set yO^omega?
+
+- The presentation initially allows the outcome space O_n to differ
+  depending on n, but then, at the top of p.4, restricts attention to
+  the case O_n = O. Since the generality is not used in the end, it
+  would be better to avoid it from the start.
+
+- The definitions above Definition 2 are very technical. Something that
+  confuses me is that K_*mu is only defined for Markov kernels K, but
+  then pi_* mu is applied to any measurable function pi. The intuitive
+  meaning of mu|pi is therefore not clear to me. 
+
+- I don't understand (24) in Lemma 1. Does argmax beta(mu) mean argmax_x
+  beta(mu,x)? And how does supp mu subset argmax beta(mu) mean that the
+  bet is unwinnable? Is it because mu is supported on a set of x for
+  which beta(mu,x) is constant, so that the bet has 0 variance? But why
+  is it then important that this set of x achieves the argmax of
+  beta(mu)? 
+
+- In Definition 6 it is initially very confusing that there are both mu*
+  and mu. It would be helpful to mention that it will later be applied
+  with mu equal to the Forecaster's prediction.
+
+Other remarks:
+
+- The online learning references [1] and [2] in the introduction are not
+  very appropriate, because they do not consider the setting of the
+  paper. It would make more sense to start with references like [3],
+  [5] or [6] to introduce the setting. And then maybe later point out
+  that there is a (distant) relation to the settings studied in [1] and
+  [2].
+
+- Please provide a reference for 'Knightian uncertainty'
+
+- Please define the upper bar in (6)
