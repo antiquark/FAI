@@ -1,0 +1,128 @@
+%&latex
+\documentclass[a4paper]{article}
+
+\usepackage[a4paper,margin=1.6in]{geometry}
+\usepackage[affil-it]{authblk}
+\usepackage{cite}
+\usepackage[unicode]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{commath}
+
+\newcommand{\Co}[1]{}
+\newcommand{\San}[1]{}
+% operators that are separated from the operand by a space
+\DeclareMathOperator{\Sgn}{sgn}
+\DeclareMathOperator{\Supp}{supp}
+\DeclareMathOperator{\Dom}{dom}
+\DeclareMathOperator{\Sp}{span}
+% autosize delimiters
+\newcommand{\AP}[1]{\left(#1\right)}
+\newcommand{\AB}[1]{\left[#1\right]}
+\newcommand{\AC}[1]{\left\{#1\right\}}
+\newcommand{\APM}[2]{\left(#1\;\middle\vert\;#2\right)}
+\newcommand{\ABM}[2]{\left[#1\;\middle\vert\;#2\right]}
+\newcommand{\ACM}[2]{\left\{#1\;\middle\vert\;#2\right\}}
+% probability theory
+\newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
+\newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
+\newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
+\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
+\newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
+\newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
+\newcommand{\Var}[2]{\underset{#1}{\operatorname{Var}}\AB{#2}}
+\newcommand{\I}[1]{\underset{#1}{\operatorname{I}}}
+\newcommand{\CI}[3]{\underset{#1}{\operatorname{I}}\ABM{#2}{#3}}
+\newcommand{\Ia}[2]{\underset{#1}{\operatorname{I}}\AB{#2}}
+\newcommand{\II}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{I}}}
+\newcommand{\III}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{I}}}
+\newcommand{\KL}[2]{\operatorname{D}_{\mathrm{KL}}\AP{#1\middle\vert\middle\vert#2}}
+\newcommand{\RD}[3]{\operatorname{D}_{#1}\AP{#2\middle\vert\middle\vert#3}}
+\newcommand{\Dtv}{\operatorname{d}_{\text{tv}}}
+\newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
+\newcommand{\En}{\operatorname{H}}
+\newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
+% power set
+\newcommand{\PS}[1]{\mathcal{P}\AP{#1}}
+% differential
+\newcommand{\D}{\mathrm{d}}
+% arg
+\newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
+\newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
+% numbers
+\newcommand{\Nats}{\mathbb{N}}
+\newcommand{\Ints}{\mathbb{Z}}
+\newcommand{\Rats}{\mathbb{Q}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Coms}{\mathbb{C}}
+% linear algebra
+\newcommand{\Id}{\mathrm{I}}
+\newcommand{\PD}{\mathrm{PD}}
+\newcommand{\PSD}{\mathrm{PSD}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\End}{\mathrm{End}}
+\DeclareMathOperator{\Img}{im}
+% empty string
+\newcommand{\Estr}{\boldsymbol{\lambda}}
+% limits
+\newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
+\newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
+\newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+% more delimiters
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
+% arrows
+\newcommand{\K}{\xrightarrow{\mathrm{k}}}
+\newcommand{\PF}{\xrightarrow{\circ}}
+% Paper specific
+% TBD
+
+\begin{document}
+
+\textbf{TLDR:}\Co{b} We define a variant of reinforcement learning in which the reward cannot be observed directly, but can be estimated at any given moment by some (possibly costly) experiment. We give two definitions of  "unobservable reward function" and prove their equivalence. We also derive a regret bound for this setting.
+
+\begin{Huge}Background\end{Huge}
+
+In "classical" reinforcement learning the agent observes the reward signal on every round of its interaction with the environment, whether through a distinct input channel or through some given way to compute the reward from the interaction history so far. On the other hand, we can rather easily imagine agents that optimize properties of their environment that they do not directly observe. For example, if Alice donates money to the Against Malaria Foundation in order to save someone in Africa, then the desired result is usually not visible at the time it occurs, if ever. Similarly, a paperclip maximizers doesn't always observe all the paperclips it produces.
+
+Now, it is possible to define the observable reward as the \textit{subjective expected value}\Co{i} of the "true" unobservable reward. However, this transformation is not free of charge: it changes the assumptions and parameters on which regret analysis depends. For example, a finite state space becomes a continuous state space, since the space of belief states is continuous. Therefore, deriving effectual regret bounds calls for developing a formalism for unobservable rewards. In particular, the regret bound we derive in this essay AFAIK doesn't easily follow from such a transformation.
+
+\textbf{Related Work:}\Co{b} [De Blanc 2011]\San{(https://arxiv.org/abs/1105.3821)}\Co{s} studies so called "ontological crises". That is, de Blanc examines the problem of translating a reward function from one ontology into another. Here, we avoid this problem by considering reward functions that are automatically defined in *all* ontologies. That said, it might still be interesting to think about how to specify our type of reward function starting from a reward function that is only defined in one particular ontology. We will return to this below.
+
+[Krueger et al 2016]\San{(https://pdfs.semanticscholar.org/a47f/52b25ce1e56a03876d9c0fd7c45e63270eb4.pdf)}\Co{s} consider a setting where querying the reward is instantaneous and has a fixed cost. This is a special case of our setting, but we allow a much more general type of "query". Also, Krueger et al don't derive any theoretical regret bound (but they present some experimental results).
+
+Finally, multi-armed bandits with partial monitoring are closely related, see for example [Bartok et al 2013]\San{(http://www.mit.edu/~rakhlin/papers/partial_monitoring.pdf)}\Co{s}. However, bandits by definition assume a stateless environment, and also our approach is rather different than what is usually studied in partial monitoring.
+
+The literature study was very cursory and I will be glad to know about prior work I missed!
+
+\begin{Huge}Results\end{Huge}
+
+Foo
+
+\textbf{Definition 1}\Co{b}
+
+\textit{Bar}\Co{i}
+
+\textbf{Proposition 1}\Co{b}
+
+\textit{Bar. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.}\Co{i}
+
+$$A=\int_M{\left(B+CD^E-\sum_{n=0}^\infty\frac{X_n\left[Q^\gamma+R^{\int_0^1\boldsymbol{x}(t)\cdot A_n\left(v_n\otimes w_n\right) dt}\right]}{\alpha_n+\beta_n-\theta_n^\gamma F\left(B+\sin\phi\right)}\land\frac{\int_\mathcal{X}\rho_n}{\frac{df}{dx}\left(x_n\right)-v_n\mathrm{D}F}\right)}d\omega$$
+
+\textbf{Proof of Proposition 1}\Co{b}
+
+Moo! $\blacksquare$
+
+\end{document}
+
+
