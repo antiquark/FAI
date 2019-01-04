@@ -92,6 +92,8 @@
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\ER}{\mathrm{E}}
+\newcommand{\Con}{\boldsymbol{\mathrm{Con}}}
+\newcommand{\M}{\mathrm{Mor}}
 \DeclareMathOperator{\RVO}{\dim_{RVO}}
 \DeclareMathOperator{\MB}{\dim_{MB}}
 \newcommand{\DRVO}{D_{\mathrm{RVO}}}
@@ -166,7 +168,18 @@ Here $aos\sim\T\pi$ is shorthand notation for the same probability distribution 
 
 Indeed, in Example 1 the LHS of the above is $\frac{1}{2}\cdot\frac{1}{1-\gamma}$ since $\ER\R\equiv\frac{1}{2}$, whereas the RHS is $\frac{1}{2}+\frac{\gamma}{1-\gamma}$.
 
-The pathology of Example 1 comes about because reward is not only imperceptible but entirely \textit{unobservable}\Co{i}. That is, no experiment can produce any information about whether the reward on a given round $n > 0$ was 0 or 1...
+The pathology of Example 1 comes about because reward is not only imperceptible but entirely \textit{unobservable}\Co{i}. That is, no experiment can produce any information about whether the reward on a given round $n > 0$ was 0 or 1. More specifically, the states $s_-$ and $s_+$ are assigned different rewards, but there is no observable difference between them. It is as if Alice would assign value, not to people in Africa (whose existence and well-being can be measured) but to some Flying Spaghetti Monster s.t. the world behaves exactly the same regardless of its existence or condition.
+
+This observation suggests that, instead of assigning rewards to states which are just abstract labels in a model, we should assign rewards to states that are defined in terms of the observable consequences of the interaction of the agent with the environment. This leads us to the notion of "instrumental state", which we will now define formally.
+
+First, it will be convenient to work with the category $\Con$ whose objects are pairs $(V,C)$ where $V$ is a real vector space and $C$ is a convex subset of $V$, and whose morphisms are
+
+$$\M\AP{(V,C),(W,D)}:=$$
+$$\ACM{f:C\rightarrow D}{\exists A \in \Hom(V,W),w\in W \forall v\in C: f(v)=Av+w}$$
+
+\textbf{Definition 1}\Co{b}
+
+\textit{TBD}\Co{i}
 
 \begin{Huge}Proofs\end{Huge}
 
