@@ -120,7 +120,7 @@
 
 In "classical" reinforcement learning the agent observes the reward signal on every round of its interaction with the environment, whether through a distinct input channel or through some given way to compute the reward from the interaction history so far. On the other hand, we can rather easily imagine agents that optimize properties of their environment that they do not directly observe. For example, if Alice donates money to the Against Malaria Foundation in order to save someone in Africa, then the result is usually not visible to Alice at the time it occurs, if ever. Similarly, a paperclip maximizer doesn't always observe all the paperclips in the universe.
 
-Now, it is possible to define the observable reward as the \textit{subjective expected value}\Co{i} of the "true" unobservable reward. Although this transformation preserves expected utility, it does \textit{not} preserve expected \textit{regret}\Co{i}. Indeed, expected regret is the difference between the expected utility attained by the agent and the expected utility attained by a "reference" agent that knows the true environment from the onset. However, after the transformation, the reference agent will behave as if it knows the observable dynamics of the true environment but still pretends not to know the true environment for the purpose of computing the reward. Therefore, regret analysis requires us to consider the unobservable reward honestly. In fact, as we will see, certain assumptions about the unobservable reward function are needed even to make the problem learnable at all. Finally, this transformation makes the reward function more complex and hence applying a "generic" reinforcement learning algorithm after the transformation (instead of exploiting the special form of the resulting reward function) might carry a significant computational complexity penalty.
+Now, it is possible to define the observable reward as the \textit{subjective expected value}\Co{i} of the "true" unobservable reward (see the Results section for details). Although this transformation preserves expected utility, it does \textit{not} preserve Bayesian regret. Indeed, Bayesian regret is the difference between the expected utility attained by the agent and the expected utility attained by a "reference" agent that knows the true environment from the onset. However, after the transformation, the reference agent will behave as if it knows the observable dynamics of the true environment but still pretends not to know the true environment for the purpose of computing the reward. Therefore, regret analysis requires us to consider the unobservable reward honestly. In fact, as we will see, certain assumptions about the unobservable reward function are needed even to make the problem learnable at all. Finally, this transformation makes the reward function more complex and hence applying a "generic" reinforcement learning algorithm after the transformation (instead of exploiting the special form of the resulting reward function) might carry a significant computational complexity penalty.
 
 \textbf{Related Work:}\Co{b} [De Blanc 2011]\San{(https://arxiv.org/abs/1105.3821)}\Co{s} studies so called "ontological crises". That is, de Blanc examines the problem of translating a reward function from one ontology into another. Here, we avoid this problem by considering reward functions that are automatically defined in *all* ontologies. That said, it might still be interesting to think about how to specify our type of reward function starting from a reward function that is only defined in one particular ontology. We will return to this below.
 
@@ -144,19 +144,39 @@ Such a problem can be unlearnable even if $\R$ is known and there are no irrever
 
 \textbf{Example 1}\Co{b}
 
-\textit{Suppose that $\St=\AC{s_0,s_-,s_+}$, $\A=\AC{a_-,a_+}$, $\Ob=\AC{\bot}$, $\R\AP{s_0}=\R\AP{s_-}=0, \R\AP{s_+}=1$ and $\Hy=\AC{\AP{\T_-,\R},\AP{\T_+,\R}}$ where for any $s\in\St$, $\T_-\APM{s_+,\bot}{s,a_-}=1$, $\T_-\APM{s_-,\bot}{s,a_+}=1$, $\T_+\APM{s_+,\bot}{s,a_+}=1$ and $\T_+\APM{s_-,\bot}{s,a_-}=1$. Since $\Abs{\Ob}=1$, there is no way to gain any information about which hypothesis is correct, however the optimal policies for the two hypotheses are different. Namely, for $\T_+$ we should always take action $a_+$ and for $\T_-$ we should always take action $a_-$.}\Co{i}
+\textit{Suppose that $\St=\AC{s_0,s_-,s_+}$, $\A=\AC{a_-,a_+}$, $\Ob=\AC{\bot}$, $\R\AP{s_0}=\frac{1}{2}$, $\R\AP{s_-}=0, \R\AP{s_+}=1$ and $\Hy=\AC{\AP{\T_-,\R},\AP{\T_+,\R}}$ where for any $s\in\St$, $\T_-\APM{s_+,\bot}{s,a_-}=1$, $\T_-\APM{s_-,\bot}{s,a_+}=1$, $\T_+\APM{s_+,\bot}{s,a_+}=1$ and $\T_+\APM{s_-,\bot}{s,a_-}=1$. Since $\Abs{\Ob}=1$, there is no way to gain any information about which hypothesis is correct, however the optimal policies for the two hypotheses are different. Namely, for $\T_+$ we should always take action $a_+$ and for $\T_-$ we should always take action $a_-$.}\Co{i}
 
 To formalize and illustrate the discussion in the Background section, suppose $\Hy$ is Borel and $\zeta\in\Delta\Hy$ is the prior. We can then define the "effective observable reward" $\ER\R:\AP{\A\times\Ob}^*\rightarrow[0,1]$ by
 
-?
+$$\ER\R(ao):=\CE{\substack{(\T,\R)\sim\zeta\\\AP{s_{n+1},o'_n}\sim\T\AP{s_n,a_n}}}{\R\AP{s_{\Abs{h}}}}{o'=o}$$
 
-\textbf{Proposition 1}\Co{b}
+It is then easy to see that the $\ER$ operator preserves expected utility: given any policy $\pi:\AP{\A\times\Ob}^*\K \A$ and $m\in\Nats$
 
-\textit{Bar. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.}\Co{i}
+$$\Ea{\substack{(\T,\R)\sim\zeta\\a_n\sim\pi\AP{ao_{:n}}\\\AP{s_{n+1},o_n}\sim\T\AP{s_n,a_n}}}{\ER\R\AP{ao_{:m}}}=\Ea{\substack{(\T,\R)\sim\zeta\\a_n\sim\pi\AP{ao_{:n}}\\\AP{s_{n+1},o_n}\sim\T\AP{s_n,a_n}}}{\R\AP{s_m}}$$
+
+and therefore, for any geometric time discount parameter $\gamma\in[0,1)$
+
+$$\Ea{\substack{(\T,\R)\sim\zeta\\a_n\sim\pi\AP{ao_{:n}}\\\AP{s_{n+1},o_n}\sim\T\AP{s_n,a_n}}}{\sum_{n=0}^\infty\gamma^n\ER\R\AP{ao_{:n}}}=\Ea{\substack{(\T,\R)\sim\zeta\\a_n\sim\pi\AP{ao_{:n}}\\\AP{s_{n+1},o_n}\sim\T\AP{s_n,a_n}}}{\sum_{n=0}^\infty\gamma^n\R\AP{s_n}}$$
+
+On the other hand, Bayesian regret is not preserved since, in general
+
+$$\Ea{(\T,\R)\sim\zeta}{\max_{\pi}\Ea{aos\sim\T\pi}{\sum_{n=0}^\infty\gamma^n\ER\R\AP{ao_{:n}}}}\ne\Ea{(\T,\R)\sim\zeta}{\max_{\pi}\Ea{aos\sim\T\pi}{\sum_{n=0}^\infty\gamma^n\R\AP{s_n}}}$$
+
+Here $aos\sim\T\pi$ is shorthand notation for the same probability distribution as before.
+
+Indeed, in Example 1 the LHS of the above is $\frac{1}{2}\cdot\frac{1}{1-\gamma}$ since $\ER\R\equiv\frac{1}{2}$, whereas the RHS is $\frac{1}{2}+\frac{\gamma}{1-\gamma}$.
+
+Is there a natural condition that guarantees learnability? Our thesis is, the pathology of Example 1 comes from...
+
+\begin{Huge}Proofs\end{Huge}
+
+\textbf{Proposition A.1}\Co{b}
+
+\textit{Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.}\Co{i}
 
 $$A=\int_M{\left(B+CD^E-\sum_{n=0}^\infty\frac{X_n\left[Q^\gamma+R^{\int_0^1\boldsymbol{x}(t)\cdot A_n\left(v_n\otimes w_n\right) dt}\right]}{\alpha_n+\beta_n-\theta_n^\gamma F\left(B+\sin\phi\right)}\land\frac{\int_\mathcal{X}\rho_n}{\frac{df}{dx}\left(x_n\right)-v_n\mathrm{D}F}\right)}d\omega$$
 
-\textbf{Proof of Proposition 1}\Co{b}
+\textbf{Proof of Proposition A.1}\Co{b}
 
 Moo! $\blacksquare$
 
