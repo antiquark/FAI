@@ -99,6 +99,7 @@
 \DeclareMathOperator{\Cone}{Cone}
 \newcommand{\Ht}{\mathrm{h}}
 \newcommand{\IS}{\mathcal{IS}}
+\newcommand{\Prj}{\mathrm{pr}}
 \DeclareMathOperator{\RVO}{\dim_{RVO}}
 \DeclareMathOperator{\MB}{\dim_{MB}}
 \newcommand{\DRVO}{D_{\mathrm{RVO}}}
@@ -220,7 +221,13 @@ The semantics of Definition 4 is as follows. Any $\alpha\in\AP{\prod_{o\in\Ob}\H
 
 The point of defining $\IS_n$ in this manner is that (i) different points in $\IS_n$ correspond to states that are truly not equivalent, i.e. can be empirically distinguished (statistically) and (ii) convex combinations of points in $\IS_n$ correspond precisely to probabilistic mixtures. 
 
-$\IS_n$ is a bounded polytope but it is \textit{not} a simplex: we cannot regard it as just probability distributions over some set. For example, if $\Abs{\A}=\Abs{\Ob}=2$, then it's easy to see that $\IS_1$ is a square (one axis is the probability to get a given observation when taking one action, the other axis is the probability for the other action). 
+$\IS_n$ is a bounded polytope but it is \textit{not} a simplex: we cannot regard it as just probability distributions over some set. For example, if $\Abs{\A}=\Abs{\Ob}=2$, then it's easy to see that $\IS_1$ is a square (one axis is the probability to get a given observation when taking one action, the other axis is the probability for the other action).
+
+There are a natural morphisms $\Prj_n:\IS_{n+1}\rightarrow\IS_n$ whose semantics is forgetting about the behavior of the state at time step $n$:
+
+\textbf{Definition 5}\Co{b}
+
+\textit{TBD}\Co{i}
 
 \begin{Huge}Discussion\end{Huge}
 
