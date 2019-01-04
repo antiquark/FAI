@@ -68,6 +68,8 @@
 \newcommand{\Hom}{\mathrm{Hom}}
 \newcommand{\End}{\mathrm{End}}
 \DeclareMathOperator{\Img}{im}
+% category theory
+\newcommand{\Mor}{\mathrm{Mor}}
 % empty string
 \newcommand{\Estr}{\boldsymbol{\lambda}}
 % limits
@@ -92,8 +94,9 @@
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\ER}{\mathrm{E}}
-\newcommand{\Con}{\boldsymbol{\mathrm{Con}}}
-\newcommand{\M}{\mathrm{Mor}}
+\newcommand{\Con}{\boldsymbol{\mathrm{ConSet}}}
+\DeclareMathOperator{\Cone}{Cone}
+\newcommand{\Ht}{\mathrm{h}}
 \DeclareMathOperator{\RVO}{\dim_{RVO}}
 \DeclareMathOperator{\MB}{\dim_{MB}}
 \newcommand{\DRVO}{D_{\mathrm{RVO}}}
@@ -172,14 +175,35 @@ The pathology of Example 1 comes about because reward is not only imperceptible 
 
 This observation suggests that, instead of assigning rewards to states which are just abstract labels in a model, we should assign rewards to states that are defined in terms of the observable consequences of the interaction of the agent with the environment. This leads us to the notion of "instrumental state", which we will now define formally.
 
-First, it will be convenient to work with the category $\Con$ whose objects are pairs $(V,C)$ where $V$ is a real vector space and $C$ is a convex subset of $V$, and whose morphisms are
+First, we introduce some technical definitions for notational convenience.
 
-$$\M\AP{(V,C),(W,D)}:=$$
+\textbf{Definition 1}
+
+\textit{$\Con$ is the category whose objects are pairs $(V,C)$ where $V$ is a real vector space and $C$ is a convex subset of $V$, and whose morphisms are}\Co{i}
+
+$$\Mor\AP{(V,C),(W,D)}:=$$
 $$\ACM{f:C\rightarrow D}{\exists A \in \Hom(V,W),w\in W \forall v\in C: f(v)=Av+w}$$
 
-\textbf{Definition 1}\Co{b}
+We omit describing identity and composition of morphisms since they are obvious.
 
-\textit{TBD}\Co{i}
+\textbf{Definition 2}\Co{b}
+
+\textit{The functor $\Cone:\Con\rightarrow\Con$ is defined by}\Co{i}
+
+$$\Cone{(V,C)}:=\AP{V\oplus\Reals,\ACM{(\lambda v,\lambda)}{\lambda\in[0,1], v\in C}}$$
+$$\AP{\Cone{f}}(\lambda v, \lambda):=\AP{\lambda f(v), \lambda}$$
+
+\textbf{Definition 3}\Co{b}
+
+\textit{For any $(V,C)\in\Con$, we define $\Ht_{(V,C)}:\Cone{\big(V,C\big)}\rightarrow\AP{\Reals,[0,1]}$ by}\Co{i}
+
+$$\Ht_{(V,C)}(\lambda v, \lambda):=\lambda$$
+
+Note that $\Ht$ is a natural transformation from $\Cone$ to the constant functor with value $\AP{\Reals,[0,1]}$.
+
+\begin{Huge}Discussion\end{Huge}
+
+TBD % Kamikaze...
 
 \begin{Huge}Proofs\end{Huge}
 
