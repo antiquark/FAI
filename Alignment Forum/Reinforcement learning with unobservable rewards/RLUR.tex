@@ -85,7 +85,32 @@
 \newcommand{\K}{\xrightarrow{\mathrm{k}}}
 \newcommand{\PF}{\xrightarrow{\circ}}
 % Paper specific
-% TBD
+\newcommand{\St}{\mathcal{S}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\Ob}{\mathcal{O}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\Hy}{\mathcal{H}}
+\newcommand{\ER}{\mathrm{E}}
+\DeclareMathOperator{\RVO}{\dim_{RVO}}
+\DeclareMathOperator{\MB}{\dim_{MB}}
+\newcommand{\DRVO}{D_{\mathrm{RVO}}}
+\newcommand{\DMB}{D_{\mathrm{MB}}}
+\newcommand{\N}{\mathrm{N}}
+\newcommand{\V}{\mathrm{V}}
+\newcommand{\Q}{\mathrm{Q}}
+\newcommand{\EU}{\mathrm{EU}}
+\newcommand{\Reg}{\mathrm{R}}
+\newcommand{\PSR}{\text{PS}}
+\newcommand{\LS}{\mathrm{LS}}
+\newcommand{\CS}{\mathrm{CS}}
+\newcommand{\W}{\mathrm{W}}
+\newcommand{\AT}{\mathrm{A}}
+\newcommand{\THy}{\mathrm{H}_*}
+\newcommand{\SHy}{\mathrm{H}}
+\newcommand{\Ev}{\mathcal{E}}
+\newcommand{\De}{\Delta}
+\newcommand{\CSE}{G}
 
 \begin{document}
 
@@ -109,9 +134,21 @@ The literature study was very cursory and I will be glad to know about prior wor
 
 Partially Observable Markov Decision\ Processes (POMDPs) serve as a natural starting point for thinking about unobservable rewards. Indeed, it might seem like all we have to do is consider RL in a POMDP environment and let the reward to be a function of the (unobservable) state. However, this setting is in general unlearnable even given assumptions that rule out traps.
 
-\textbf{Definition 1}\Co{b}
+A (finite) POMDP is defined by finite sets $\St$ (states), $\A$ (actions) and $\Ob$ (observations), the transition kernel $\T:\St\times\A\K\St\times\Ob$ and the reward function $\R:\St\rightarrow[0,1]$. As opposed to a "classical" POMDP, the value of $\R$ is assumed to be unobservable. The observable setting is a special case of the unobservable setting: we can always encode the reward into the observation.
 
-\textit{Bar}\Co{i}
+To formulate a learning problem, we assume $\St$, $\A$ and $\Ob$ to be fixed and an initial state $s_0\in\St$ to be given, while $\T$ and $\R$ are unknown and belong to some hypothesis class $\Hy$:
+
+$$\Hy\subseteq\AC{\St\times\A\K\St\times\Ob}\times\bigg\{\St\rightarrow[0,1]\bigg\}$$
+
+Such a problem can be unlearnable even if $\R$ is known and there are no irreversible events that can happen:
+
+\textbf{Example 1}\Co{b}
+
+\textit{Suppose that $\St=\AC{s_0,s_-,s_+}$, $\A=\AC{a_-,a_+}$, $\Ob=\AC{\bot}$, $\R\AP{s_0}=\R\AP{s_-}=0, \R\AP{s_+}=1$ and $\Hy=\AC{\AP{\T_-,\R},\AP{\T_+,\R}}$ where for any $s\in\St$, $\T_-\APM{s_+,\bot}{s,a_-}=1$, $\T_-\APM{s_-,\bot}{s,a_+}=1$, $\T_+\APM{s_+,\bot}{s,a_+}=1$ and $\T_+\APM{s_-,\bot}{s,a_-}=1$. Since $\Abs{\Ob}=1$, there is no way to gain any information about which hypothesis is correct, however the optimal policies for the two hypotheses are different. Namely, for $\T_+$ we should always take action $a_+$ and for $\T_-$ we should always take action $a_-$.}\Co{i}
+
+To formalize and illustrate the discussion in the Background section, suppose $\Hy$ is Borel and $\zeta\in\Delta\Hy$ is the prior. We can then define the "effective observable reward" $\ER\R:\AP{\A\times\Ob}^*\rightarrow[0,1]$ by
+
+?
 
 \textbf{Proposition 1}\Co{b}
 
