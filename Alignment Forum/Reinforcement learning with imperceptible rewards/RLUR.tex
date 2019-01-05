@@ -201,11 +201,13 @@ $$\AP{\Cone{f}}(\lambda v, \lambda):=\AP{\lambda f(v), \lambda}$$
 
 \textbf{Definition 3}\Co{b}
 
-\textit{For any $(V,C)\in\Con$, we define $\Ht_{(V,C)}:\Cone{\big(V,C\big)}\rightarrow\AP{\Reals,[0,1]}$ by}\Co{i}
+\textit{For any $C\in\Con$, we define $\Ht_{C}:\Cone{C}\rightarrow[0,1]$ by}\Co{i}
 
-$$\Ht_{(V,C)}(\lambda v, \lambda):=\lambda$$
+$$\Ht_{C}(\lambda v, \lambda):=\lambda$$
 
-Note that $\Ht$ is a natural transformation from $\Cone$ to the constant functor with value $\AP{\Reals,[0,1]}$.
+Note that $\Ht$ is a natural transformation from $\Cone$ to the constant functor with value $[0,1]$.
+
+Given $C\in\Con$ and $x\in \Cone C$ s.t. $x=(u,\lambda)$ for $\lambda > 0$, we denote $[x]:=\lambda^{-1}u\in C$.
 
 Now, we are ready to define instrumental states. We fix the sets $\A$ and $\Ob$.
 
@@ -218,11 +220,25 @@ $$\IS_{n+1}:=\prod_{a\in\A}\AP{\prod_{o\in\Ob}\Ht_{\IS_n}}^{-1}(\Delta\Ob)$$
 
 Here, $\prod_{o\in\Ob}\Ht_{\IS_n}$ is a mapping from $\prod_{o\in\Ob}\Cone\IS_n$ to $[0,1]^\Ob$. The inverse image of a convex set (in this case $\Delta\Ob\subseteq[0,1]^\Ob$) under an affine mapping (in this case $\prod_{o\in\Ob}\Ht_{\IS_n}$) is also a convex set.
 
-The semantics of Definition 4 is as follows. Any $\alpha\in\AP{\prod_{o\in\Ob}\Ht_{\IS_n}}^{-1}(\Delta\Ob)$ can be regarded as a pair consisting of some $\alpha_0\in\Delta\Ob$ (the image of $\alpha$ under $\prod_{o\in\Ob}\Ht_{\IS_n}$) and a mapping $\alpha_1:\Supp{\alpha_0}\rightarrow\IS_n$ ($\alpha_1(o)=\eta$ if and only if $\alpha_o$ is of the form $(\lambda\eta,\lambda)$). Given $\theta\in\IS_{n+1}$, $\theta_{a0}$ is the probability distribution over observations resulting from taking action $a$ in state $\theta$, whereas $\theta_{a1}(o)$ is the state resulting from taking action a in state $\theta$ when $o$ is observed.
-
-\textcolor{red}{TODO: Define $\theta(o\mid h)$ !!!}
+The semantics of Definition 4 is as follows. Any $\alpha\in\AP{\prod_{o\in\Ob}\Ht_{\IS_n}}^{-1}(\Delta\Ob)$ can be regarded as a pair consisting of some $\alpha'\in\Delta\Ob$ (the image of $\alpha$ under $\prod_{o\in\Ob}\Ht_{\IS_n}$) and a mapping $\alpha'':\Supp{\alpha'}\rightarrow\IS_n$ defined by $\alpha''(o):=\AB{\alpha_o}$. Given $\theta\in\IS_{n+1}$, $\theta_{a}'$ is the probability distribution over observations resulting from taking action $a$ in state $\theta$, whereas $\theta_{a}''(o)$ is the state resulting from taking action a in state $\theta$ conditional on observing $o$. This semantics can be made more formal as follows:
 
 \Co{In the following, we will use the notation $\theta\mid a$ instead of $\theta_a$ and $\theta\mid ao$ instead of $\theta_{a1}(o)$.}
+
+\textbf{Definition 5}\Co{b}
+
+\textit{Given $\theta\in\IS_n$, we define $\Dom\theta\subseteq\AP{\A\times\Ob}^*$ recursively as follows:}
+
+1. $\Estr\in\Dom\theta$
+
+2. \textit{For all $h\in\AP{\A\times\Ob}^*$, $a\in\A$ and $o\in\Ob$: $aoh\in\Dom\theta$ iff $n>0$, $\Ht_{\IS_{n-1}}(\theta_{ao})>0$ and $h\in\Dom\AB{\theta_{ao}}$.}
+
+\textbf{Definition 6}
+
+\textit{Given $\theta\in\IS_n$, $h\in\Dom\theta$ and $a\in\A$, and assuming that $\Abs{h}<n$, we recursively define $\theta(ha)\in\Delta\Ob$ by}\Co{i}
+
+1. For $h=\Estr$: $\theta( o\mid a):=\Ht_{\IS_{n-1}}(\theta_{ao})$.
+
+2. For $h=bph'$ with some $b\in\A$, $p\in\Ob$ and $h'\in\AP{\A\times\Ob}^*$: $\theta(ha):=\AB{\theta_{bp}}(h'a)$.
 
 The point of defining $\IS_n$ in this manner is that (i) different points in $\IS_n$ correspond to states that are truly not equivalent, i.e. can be empirically distinguished (statistically) and (ii) convex combinations of points in $\IS_n$ correspond precisely to probabilistic mixtures. 
 
@@ -230,7 +246,7 @@ $\IS_n$ is a bounded polytope but in general it is \textit{not} a simplex: we ca
 
 There are a natural morphisms $\Prj_n:\IS_{n+1}\rightarrow\IS_n$ whose semantics is forgetting about the behavior of the state at time step $n$:
 
-\textbf{Definition 5}\Co{b}
+\textbf{Definition 5?}\Co{b}
 
 \textit{We define $\Prj_n:\IS_{n+1}\rightarrow\IS_n$ for any $n\in\Nats$ recursively. $\Prj_0$ is the unique morphism from $\IS_1$ to $\IS_0\cong\Pt$. For any $n\in\Nats$, $\Prj_{n+1}$ is given by}\Co{i}
 
@@ -238,7 +254,7 @@ $$\Prj_{n+1}(\theta)_{ao}:=\AP{\Cone{\Prj_n}}\AP{\theta_{ao}}$$
 
 We thereby get a sequence $\IS_0 \leftarrow \IS_1 \leftarrow \IS_2 \leftarrow \ldots$
 
-\textbf{Definition 6}\Co{b}
+\textbf{Definition 6?}\Co{b}
 
 \textit{We define}\Co{i} $\IS_\omega$, the space of (infinite time step) instrumental states \textit{by}\Co{i}
 
@@ -254,7 +270,7 @@ An alternative approach is to consider the notion of "experiment" explicitly.
 
 We will use the notation $\mathcal{X}^{\leq\omega}:=\mathcal{X}^*\sqcup\mathcal{X}^\omega$. Given a logical condition $\phi$, the symbol $\boldsymbol{1}_\phi$ will denote 1 when $\phi$ is true and 0 when $\phi$ is false.
 
-\textbf{Definition 7}\Co{b}
+\textbf{Definition 7?}\Co{b}
 
 \textit{Given $\pi: \AP{\A\times\Ob}^*\K\A\sqcup\{\bot\}$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^{\leq\omega}$ by}\Co{i}
 
