@@ -189,7 +189,7 @@ $$\ACM{f:C\rightarrow D}{\exists A \in \Hom(V,W),w\in W \forall v\in C: f(v)=Av+
 
 We omit describing identity and composition of morphisms since they are obvious.
 
-$\Con$ has a final object that we denote by $\Pt$ (the one point set). $\Con$ has products: $(V,C)\times(W,D)\cong(V\oplus W,C\times D)$. For any finite set $A$, $\AP{\Reals^A,\Delta A}$ is an object in $\Con$. Also, we will sometimes abuse notation by regarding $C$ as an object of $\Con$ instead of $(V,C)$ (i.e. making $V$ implicit).
+It is easy to see that $\Con$ has arbitrary limits. In particular, $\Con$ has a final object that we denote by $\Pt$ (the one point set), products ($(V,C)\times(W,D)\cong(V\oplus W,C\times D)$) and inverse limits of sequences. For any finite set $A$, $\AP{\Reals^A,\Delta A}$ is an object in $\Con$. Also, we will sometimes abuse notation by regarding $C$ as an object of $\Con$ instead of $(V,C)$ (i.e. making $V$ implicit).
 
 \textbf{Definition 2}\Co{b}
 
@@ -210,7 +210,7 @@ Now, we are ready to define instrumental states. We fix the sets $\A$ and $\Ob$.
 
 \textbf{Definition 4}\Co{b}
 
-\textit{For any $n\in\Nats$, we define} $\IS_n\in\Con$, the space of $n$ time steps instrumental states, \textit{recursively by}
+\textit{For any $n\in\Nats$, we define} $\IS_n\in\Con$, the space of $n$ time step instrumental states, \textit{recursively by}
 
 $$\IS_0:=\Pt$$
 $$\IS_{n+1}:=\prod_{a\in\A}\AP{\prod_{o\in\Ob}\Ht_{\IS_n}}^{-1}(\Delta\Ob)$$
@@ -232,6 +232,16 @@ There are a natural morphisms $\Prj_n:\IS_{n+1}\rightarrow\IS_n$ whose semantics
 \textit{We define $\Prj_n:\IS_{n+1}\rightarrow\IS_n$ for any $n\in\Nats$ recursively. $\Prj_0$ is the unique morphism from $\IS_1$ to $\IS_0\cong\Pt$. For any $n\in\Nats$, $\Prj_{n+1}$ is given by}\Co{i}
 
 $$\Prj_{n+1}(\theta)_{ao}:=\AP{\Cone{\Prj_n}}\AP{\theta_{ao}}$$
+
+We thereby get a sequence $\IS_0 \leftarrow \IS_1 \leftarrow \IS_2 \leftarrow \ldots$
+
+\textbf{Definition 6}\Co{b}
+
+\textit{We define}\Co{i} $\IS_\omega$, the space of (infinite time step) instrumental states \textit{by}\Co{i}
+
+$$\IS_\omega:=\varprojlim_n \IS_n$$
+
+Of course, $\IS_\omega$ can also be regarded as the space of all possible stochastic environments.
 
 \begin{Huge}Discussion\end{Huge}
 
