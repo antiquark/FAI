@@ -119,6 +119,7 @@
 \newcommand{\Ev}{\mathcal{E}}
 \newcommand{\De}{\Delta}
 \newcommand{\CSE}{G}
+\usepackage{color}
 
 \begin{document}
 
@@ -219,11 +220,13 @@ Here, $\prod_{o\in\Ob}\Ht_{\IS_n}$ is a mapping from $\prod_{o\in\Ob}\Cone\IS_n$
 
 The semantics of Definition 4 is as follows. Any $\alpha\in\AP{\prod_{o\in\Ob}\Ht_{\IS_n}}^{-1}(\Delta\Ob)$ can be regarded as a pair consisting of some $\alpha_0\in\Delta\Ob$ (the image of $\alpha$ under $\prod_{o\in\Ob}\Ht_{\IS_n}$) and a mapping $\alpha_1:\Supp{\alpha_0}\rightarrow\IS_n$ ($\alpha_1(o)=\eta$ if and only if $\alpha_o$ is of the form $(\lambda\eta,\lambda)$). Given $\theta\in\IS_{n+1}$, $\theta_{a0}$ is the probability distribution over observations resulting from taking action $a$ in state $\theta$, whereas $\theta_{a1}(o)$ is the state resulting from taking action a in state $\theta$ when $o$ is observed.
 
+\textcolor{red}{TODO: Define $\theta(o\mid h)$ !!!}
+
 \Co{In the following, we will use the notation $\theta\mid a$ instead of $\theta_a$ and $\theta\mid ao$ instead of $\theta_{a1}(o)$.}
 
 The point of defining $\IS_n$ in this manner is that (i) different points in $\IS_n$ correspond to states that are truly not equivalent, i.e. can be empirically distinguished (statistically) and (ii) convex combinations of points in $\IS_n$ correspond precisely to probabilistic mixtures. 
 
-$\IS_n$ is a bounded polytope but it is \textit{not} a simplex: we cannot regard it as just probability distributions over some set. For example, if $\Abs{\A}=\Abs{\Ob}=2$, then it's easy to see that $\IS_1$ is a square (one axis is the probability to get a given observation when taking one action, the other axis is the probability for the other action).
+$\IS_n$ is a bounded polytope but in general it is \textit{not} a simplex: we cannot regard it as just probability distributions over some set. For example, if $\Abs{\A}=\Abs{\Ob}=2$, then it's easy to see that $\IS_1$ is a square (one axis is the probability to get a given observation when taking one action, the other axis is the probability for the other action). On the other hand, if $\Abs{\A}=1$ then $\IS_n$ \textit{is}\Co{i} a simplex: it is canonically isomorphic to $\Delta\Ob^n$.
 
 There are a natural morphisms $\Prj_n:\IS_{n+1}\rightarrow\IS_n$ whose semantics is forgetting about the behavior of the state at time step $n$:
 
@@ -242,6 +245,27 @@ We thereby get a sequence $\IS_0 \leftarrow \IS_1 \leftarrow \IS_2 \leftarrow \l
 $$\IS_\omega:=\varprojlim_n \IS_n$$
 
 Of course, $\IS_\omega$ can also be regarded as the space of all possible stochastic environments.
+
+For each $n\in\Nats$, $\IS_n$ is finite-dimensional and therefore has a natural topology. $\IS_\omega$ also becomes a topological space by equipping it with the inverse limit topology. Since the $\IS_n$ are closed and bounded they are compact, and therefore $\IS_\omega$ is also compact by Tychonoff's theorem. In the special case $\Abs{\A}=1$, $\IS_\omega\cong\Delta\Ob^\omega$ and the inverse limit topology is the weak topology for probability measures, defined w.r.t. the product topology on $\Ob^\omega$.
+
+We can now give the first definition of an imperceptible reward function: a continuous affine function $\R: \IS_\omega \rightarrow \Reals$. Why affine? A convex linear combination of instrumental states is empirically indistinguishable from a probabilistic lottery. If we assign expected values to probabilistic lotteries (as we should by the VNM theorem), then we must also assign them to convex linear combinations of instrumental states: otherwise our reward again depends on entirely unobservable parameters of our model.
+
+An alternative approach is to consider the notion of "experiment" explicitly.
+
+We will use the notation $\mathcal{X}^{\leq\omega}:=\mathcal{X}^*\sqcup\mathcal{X}^\omega$. Given a logical condition $\phi$, the symbol $\boldsymbol{1}_\phi$ will denote 1 when $\phi$ is true and 0 when $\phi$ is false.
+
+\textbf{Definition 7}\Co{b}
+
+\textit{Given $\pi: \AP{\A\times\Ob}^*\K\A\sqcup\{\bot\}$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^{\leq\omega}$ by}\Co{i}
+
+$$\Pa{ao\sim\mu\pi}{a_n=b}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}\geq n}\pi\APM{b}{ao_{:n}}}$$
+$$\Pa{ao\sim\mu\pi}{o_n=p}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}> n}\mu\APM{p}{ao_{:n}a_n}}$$
+
+\textit{$\pi$ is said to be a}\Co{i} terminable policy \textit{when for any $\mu\in\IS_\omega$}\Co{i}
+
+$$\Pa{ao\sim\mu\pi}{\Abs{ao}<\infty} = 1$$
+
+That is, a terminable policy is allowed to produce a special token $\bot$ which terminates the "experiment" (instead of choosing an action), and we require that, for any environment, this token will be eventually produced with probability 1.
 
 \begin{Huge}Discussion\end{Huge}
 
