@@ -127,11 +127,11 @@
 
 \begin{Huge}Background\end{Huge}
 
-In "classical" reinforcement learning the agent perceives the reward signal on every round of its interaction with the environment, whether through a distinct input channel or through some given way to compute the reward from the interaction history so far. On the other hand, we can rather easily imagine agents that optimize properties of their environment that they do not directly perceive. For example, if Alice donates money to the Against Malaria Foundation in order to save someone in Africa, then the result is usually not visible to Alice at the time it occurs, if ever. Similarly, a paperclip maximizer doesn't always perceive all the paperclips in the universe.
+In "classical" reinforcement learning the agent perceives the reward signal on every round of its interaction with the environment, whether through a distinct input channel or through some given way to compute the reward from the interaction history so far. On the other hand, we can rather easily imagine agents that optimize properties of their environment that they do not directly perceive. For example, if Alice donates money to the Against Malaria Foundation in order to save someone in Africa, then the result is usually not visible to Alice at the time it occurs, if ever. Similarly, Clippy the paperclip maximizer doesn't always perceive all the paperclips in the universe.
 
 Now, it is possible to define the perceived reward as the \textit{subjective expected value}\Co{i} of the "true" imperceptible reward (see the Results section for details). Although this transformation preserves expected utility, it does \textit{not} preserve Bayesian regret. Indeed, Bayesian regret is the difference between the expected utility attained by the agent and the expected utility attained by a "reference" agent that knows the true environment from the onset. However, after the transformation, the reference agent will behave as if it knows the observable dynamics of the true environment but still pretends not to know the true environment for the purpose of computing the reward. Therefore, regret analysis requires us to consider the imperceptible reward honestly. In fact, as we will see, certain assumptions about the imperceptible reward function are needed even to make the problem learnable at all. Finally, this transformation makes the reward function more complex and hence applying a "generic" reinforcement learning algorithm after the transformation (instead of exploiting the special form of the resulting reward function) might carry a significant computational complexity penalty.
 
-\textbf{Related Work:}\Co{b} [De Blanc 2011]\San{(https://arxiv.org/abs/1105.3821)}\Co{s} studies so called "ontological crises". That is, de Blanc examines the problem of translating a reward function from one ontology into another. Here, we avoid this problem by considering reward functions that are automatically defined in *all* ontologies. That said, it might still be interesting to think about how to specify our type of reward function starting from a reward function that is only defined in one particular ontology. We will return to this below.
+\textbf{Related Work:}\Co{b} [De Blanc 2011]\San{(https://arxiv.org/abs/1105.3821)}\Co{s} studies so called "ontological crises". That is, de Blanc examines the problem of translating a reward function from one ontology into another. Here, we avoid this problem by considering reward functions that are automatically defined in *all* ontologies. That said, it might still be interesting to think about how to specify our type of reward function starting from a reward function that is only defined in one particular ontology. We will return to this in the Discussion section.
 
 [Krueger et al 2016]\San{(https://pdfs.semanticscholar.org/a47f/52b25ce1e56a03876d9c0fd7c45e63270eb4.pdf)}\Co{s} consider a setting where querying the reward is instantaneous and has a fixed cost. This is a special case of our setting, but we allow a much more general type of query and cost. Also, Krueger et al don't derive any theoretical regret bound (but they do present some experimental results).
 
@@ -280,8 +280,6 @@ For each $n\in\Nats$, $\IS_n$ is finite-dimensional and therefore has a natural 
 
 We can now give the first definition of an imperceptible reward function: a continuous affine function $\R: \IS_\omega \rightarrow \Reals$. Why affine? A convex linear combination of instrumental states is empirically indistinguishable from a probabilistic lottery. If we assign expected values to probabilistic lotteries (as we should by the VNM theorem), then we must also assign them to convex linear combinations of instrumental states: otherwise our reward again depends on entirely unobservable parameters of our model.
 
-It is also possible to consider reward functions of the more general form $\R:\AP{\A\times\Ob}^*\times\IS_\omega\rightarrow\Reals$, required to be continuous and affine in the second argument. Such a reward function depends both on the current (unknown) instrumental state of the environment and the observable history so far.
-
 An alternative approach is to consider the notion of "experiment" explicitly.
 
 We will use the notation $\mathcal{X}^{\leq\omega}:=\mathcal{X}^*\sqcup\mathcal{X}^\omega$. Given a logical condition $\phi$, the symbol $\boldsymbol{1}_\phi$ will denote 1 when $\phi$ is true and 0 when $\phi$ is false.
@@ -299,25 +297,37 @@ $$\Pa{h\sim\mu\pi}{\Abs{h}<\infty} = 1$$
 
 That is, a terminable policy is allowed to produce a special token $\bot$ which terminates the "experiment" (instead of choosing an action), and we require that, for any environment, this token will be eventually produced with probability 1.
 
-Given a terminable policy $\pi$ and a function $r:\AP{\A\times\Ob}^*\rightarrow[0,1]$, we can define a reward function $\R:\IS_\omega\rightarrow[0,1]$ by
+\textbf{Definition 11}\Co{b}
 
-$$\R(\mu):=\Ea{h\sim\mu\pi}{r(h)}$$
+\textit{Given a terminable policy $\pi$ and a function $r:\AP{\A\times\Ob}^*\rightarrow[0,1]$, we define the function $\R_{\pi r}:\IS_\omega\rightarrow[0,1]$ by
+}\Co{i}
+$$\R_{\pi r}(\mu):=\Ea{h\sim\mu\pi}{r(h)}$$
 
-This gives us a second definition of imperceptible reward functions. Now, it is easy to see that $\R$ defined as above is continuous and affine. Therefore, any reward function of the second type is also a reward function of the first type. The converse, however, requires more work:
+This gives us a second definition of imperceptible reward functions. In fact, the two definitions are equivalent:
+
+\textbf{Proposition 1}\Co{b}
+
+\textit{For any terminable policy $\pi$ and function $r:\AP{\A\times\Ob}^*\rightarrow[0,1]$, $\R_{\pi r}$ is continuous and affine.}\Co{i}
 
 \textbf{Theorem 1}\Co{b}
 
-\textit{For any continuous affine $\R:\IS_\omega\rightarrow[0,1]$, there exists a terminable policy $\pi$ and $r:\AP{\A\times\Ob}^*\rightarrow[0,1]$ s.t.}\Co{i}
-
-$$\R(\mu)=\Ea{h\sim\mu\pi}{r(h)}$$
+\textit{For any continuous affine $\R:\IS_\omega\rightarrow[0,1]$, there exists a terminable policy $\pi$ and $r:\AP{\A\times\Ob}^*\rightarrow[0,1]$ s.t. $\R = \R_{\pi r}$.}\Co{i}
 
 In other words, for any imperceptible reward function (in the sense of the first definition) there is some experiment the agent can do which yields an \textit{unbiased estimate}\Co{i} of the reward for the instrumental state that existed at the beginning of the experiment.
 
-% Alice and the black box...
+To illustrate, imagine that Clippy has access to a black box with a collection of levers on its outside. Pulling the levers produces some sounds that hint at what happens inside the box, but are not enough to determine it with certainty. The box has a shuttered glass window, whose shutter can be opened from the outside. Through the window, Clippy can see a jumble of scrap metal, mechanical manipulators that are controlled by the levers (and can be used to shape the scrap metal), and also a few mice running around the box and wreaking havoc. However, it is not possible to control the manipulators while the shutter is open. Worse, while opening the shutter allows seeing a snapshot of the shape of the metal, it also causes the manipulators to move chaotically, ruining this shape. So, Clippy can experiment with the levers and occasionally open the shutter to test the result. However, in order to produce and maintain paperclips inside the box, the shutter has to be kept closed (and the paperclips hidden) most of the time.
+
+It is also possible to consider reward functions of the more general form $\R:\AP{\A\times\Ob}^*\times\IS_\omega\rightarrow\Reals$, required to be continuous and affine in the second argument. Such a reward function depends both on the current (unknown) instrumental state of the environment and the observable history so far...
+
+% description via terminable polies
+
+% Lipschitz and finite expected time
 
 \begin{Huge}Discussion\end{Huge}
 
-TBD % Kamikaze...
+TBD
+% Kamikaze...
+% Specification a la de Blanc...
 
 \begin{Huge}Proofs\end{Huge}
 
