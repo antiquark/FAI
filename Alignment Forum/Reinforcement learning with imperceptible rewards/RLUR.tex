@@ -91,6 +91,7 @@
 \newcommand{\St}{\mathcal{S}}
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\Ob}{\mathcal{O}}
+\newcommand{\FH}{\AP{\A\times\Ob}^*}
 \newcommand{\R}{\mathcal{R}}
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\Hy}{\mathcal{H}}
@@ -98,6 +99,7 @@
 \newcommand{\Con}{\boldsymbol{\mathrm{ConSet}}}
 \DeclareMathOperator{\Cone}{Cone}
 \newcommand{\Ht}{\mathrm{h}}
+\newcommand{\In}{\mathcal{I}}
 \newcommand{\IS}{\mathcal{IS}}
 \newcommand{\Prj}{\mathrm{pr}}
 \DeclareMathOperator{\RVO}{\dim_{RVO}}
@@ -155,11 +157,11 @@ Such a problem can be unlearnable even if $\R$ is known and there are no irrever
 
 \textit{Suppose that $\St=\AC{s_0,s_-,s_+}$, $\A=\AC{a_-,a_+}$, $\Ob=\AC{\bot}$, $\R\AP{s_0}=\frac{1}{2}$, $\R\AP{s_-}=0, \R\AP{s_+}=1$ and $\Hy=\AC{\AP{\T_-,\R},\AP{\T_+,\R}}$ where for any $s\in\St$, $\T_-\APM{s_+,\bot}{s,a_-}=1$, $\T_-\APM{s_-,\bot}{s,a_+}=1$, $\T_+\APM{s_+,\bot}{s,a_+}=1$ and $\T_+\APM{s_-,\bot}{s,a_-}=1$. Since $\Abs{\Ob}=1$, there is no way to gain any information about which hypothesis is correct, however the optimal policies for the two hypotheses are different. Namely, for $\T_+$ we should always take action $a_+$ and for $\T_-$ we should always take action $a_-$.}\Co{i}
 
-To formalize and illustrate the discussion in the Background section, suppose $\Hy$ is Borel and $\zeta\in\Delta\Hy$ is the prior. We can then define the "perceived effective reward" $\ER\R:\AP{\A\times\Ob}^*\rightarrow[0,1]$ by
+To formalize and illustrate the discussion in the Background section, suppose $\Hy$ is Borel and $\zeta\in\Delta\Hy$ is the prior. We can then define the "perceived effective reward" $\ER\R:\FH\rightarrow[0,1]$ by
 
 $$\ER\R(ao):=\CE{\substack{(\T,\R)\sim\zeta\\\AP{s_{n+1},o'_n}\sim\T\AP{s_n,a_n}}}{\R\AP{s_{\Abs{h}}}}{o'=o}$$
 
-It is then easy to see that the $\ER$ operator preserves expected utility: given any policy $\pi:\AP{\A\times\Ob}^*\K \A$ and $m\in\Nats$
+It is then easy to see that the $\ER$ operator preserves expected utility: given any policy $\pi:\FH\K \A$ and $m\in\Nats$
 
 $$\Ea{\substack{(\T,\R)\sim\zeta\\a_n\sim\pi\AP{ao_{:n}}\\\AP{s_{n+1},o_n}\sim\T\AP{s_n,a_n}}}{\ER\R\AP{ao_{:m}}}=\Ea{\substack{(\T,\R)\sim\zeta\\a_n\sim\pi\AP{ao_{:n}}\\\AP{s_{n+1},o_n}\sim\T\AP{s_n,a_n}}}{\R\AP{s_m}}$$
 
@@ -178,6 +180,8 @@ Indeed, in Example 1 the LHS of the above is $\frac{1}{2}\cdot\frac{1}{1-\gamma}
 The pathology of Example 1 comes about because reward is not only imperceptible but entirely \textit{unobservable}\Co{i}. That is, no experiment can produce any information about whether the reward on a given round $n > 0$ was 0 or 1. More specifically, the states $s_-$ and $s_+$ are assigned different rewards, but there is no observable difference between them. It is as if Alice would assign value, not to people in Africa (whose existence and well-being can be measured) but to some Flying Spaghetti Monster s.t. the world behaves exactly the same regardless of its existence or condition.
 
 This observation suggests that, instead of assigning rewards to states which are just abstract labels in a model, we should assign rewards to states that are defined in terms of the observable consequences of the interaction of the agent with the environment. This leads us to the notion of "instrumental state", which we will now define formally.
+
+\begin{Large}Instrumental States and Imperceptible Reward Functions\end{Large}
 
 First, we introduce some technical definitions for notational convenience.
 
@@ -226,11 +230,11 @@ The semantics of Definition 4 is as follows. Any $\alpha\in\AP{\prod_{o\in\Ob}\H
 
 \textbf{Definition 5}\Co{b}
 
-\textit{Given $\theta\in\IS_n$, we define $\Dom\theta\subseteq\AP{\A\times\Ob}^*$ recursively as follows:}
+\textit{Given $\theta\in\IS_n$, we define $\Dom\theta\subseteq\FH$ recursively as follows:}
 
 1. $\Estr\in\Dom\theta$
 
-2. \textit{For all $h\in\AP{\A\times\Ob}^*$, $a\in\A$ and $o\in\Ob$: $aoh\in\Dom\theta$ iff $n>0$, $\Ht_{\IS_{n-1}}(\theta_{ao})>0$ and $h\in\Dom\AB{\theta_{ao}}$.}
+2. \textit{For all $h\in\FH$, $a\in\A$ and $o\in\Ob$: $aoh\in\Dom\theta$ iff $n>0$, $\Ht_{\IS_{n-1}}(\theta_{ao})>0$ and $h\in\Dom\AB{\theta_{ao}}$.}
 
 \textbf{Definition 6}
 
@@ -238,7 +242,7 @@ The semantics of Definition 4 is as follows. Any $\alpha\in\AP{\prod_{o\in\Ob}\H
 
 1. For $h=\Estr$: $\theta( o\mid a):=\Ht_{\IS_{n-1}}(\theta_{ao})$.
 
-2. For $h=bph'$ with some $b\in\A$, $p\in\Ob$ and $h'\in\AP{\A\times\Ob}^*$: $\theta(ha):=\AB{\theta_{bp}}(h'a)$.
+2. For $h=bph'$ with some $b\in\A$, $p\in\Ob$ and $h'\in\FH$: $\theta(ha):=\AB{\theta_{bp}}(h'a)$.
 
 The point of defining $\IS_n$ in this manner is that (i) different points in $\IS_n$ correspond to states that are truly not equivalent, i.e. can be empirically distinguished (statistically) and (ii) convex combinations of points in $\IS_n$ correspond precisely to probabilistic mixtures. 
 
@@ -266,7 +270,7 @@ Of course, $\IS_\omega$ can also be regarded as the space of all possible stocha
 
 \textbf{Definition 8}\Co{b}
 
-\textit{For any $\mu\in\IS_\omega$ we define $\Dom\mu\in\AP{\A\times\Ob}^*$ by}\Co{i}
+\textit{For any $\mu\in\IS_\omega$ we define $\Dom\mu\in\FH$ by}\Co{i}
 
 $$\Dom\mu:=\bigcup_{n=0}^\infty \Dom\Prj^n\mu$$
 
@@ -286,7 +290,7 @@ We will use the notation $\mathcal{X}^{\leq\omega}:=\mathcal{X}^*\sqcup\mathcal{
 
 \textbf{Definition 10}\Co{b}
 
-\textit{Given $\pi: \AP{\A\times\Ob}^*\K\A\sqcup\{\bot\}$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^{\leq\omega}$ by}\Co{i}
+\textit{Given $\pi: \FH\K\A\sqcup\{\bot\}$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^{\leq\omega}$ by}\Co{i}
 
 $$\Pa{ao\sim\mu\pi}{a_n=b}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}\geq n}\pi\APM{b}{ao_{:n}}}$$
 $$\Pa{ao\sim\mu\pi}{o_n=p}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}> n}\mu\APM{p}{ao_{:n}a_n}}$$
@@ -299,7 +303,7 @@ That is, a terminable policy is allowed to produce a special token $\bot$ which 
 
 \textbf{Definition 11}\Co{b}
 
-\textit{Given a terminable policy $\pi$ and a bounded function $r:\AP{\A\times\Ob}^*\rightarrow\Reals$, we define the function $\R_{\pi r}:\IS_\omega\rightarrow\Reals$ by
+\textit{Given a terminable policy $\pi$ and a bounded function $r:\FH\rightarrow\Reals$, we define the function $\R_{\pi r}:\IS_\omega\rightarrow\Reals$ by
 }\Co{i}
 $$\R_{\pi r}(\mu):=\Ea{h\sim\mu\pi}{r(h)}$$
 
@@ -307,13 +311,13 @@ This gives us a second definition of imperceptible reward functions. In fact, th
 
 \textbf{Theorem 1}\Co{b}
 
-\textit{For any terminable policy $\pi$ and bounded function $r:\AP{\A\times\Ob}^*\rightarrow\Reals$, $\R_{\pi r}$ is continuous and affine. Conversely, for any continuous affine $\R:\IS_\omega\rightarrow\Reals$, there exists a terminable policy $\pi$ and $r:\AP{\A\times\Ob}^*\rightarrow\Reals$ s.t. $\R = \R_{\pi r}$, $\sup r \leq \max\R$ and $\inf r \geq \min\R$.}\Co{i}
+\textit{For any terminable policy $\pi$ and bounded function $r:\FH\rightarrow\Reals$, $\R_{\pi r}$ is continuous and affine. Conversely, for any continuous affine $\R:\IS_\omega\rightarrow\Reals$, there exists a terminable policy $\pi$ and $r:\FH\rightarrow\Reals$ s.t. $\R = \R_{\pi r}$, $\sup r \leq \max\R$ and $\inf r \geq \min\R$.}\Co{i}
 
 Putting the second part of the theorem into words, for any imperceptible reward function (in the sense of the first definition) there is some experiment the agent can do which yields an \textit{unbiased estimate}\Co{i} of the reward for the instrumental state that existed at the beginning of the experiment.
 
 To illustrate this concept of imperceptible reward function, imagine that Clippy has access to a black box with a collection of levers on its outside. Pulling the levers produces some sounds that hint at what happens inside the box, but are not enough to determine it with certainty. The box has a shuttered glass window, whose shutter can be opened from the outside. Through the window, Clippy can see a jumble of scrap metal, mechanical manipulators that are controlled by the levers (and can be used to shape the scrap metal), and also a few mice running around the box and wreaking havoc. However, it is not possible to control the manipulators while the shutter is open. Worse, while opening the shutter allows seeing a snapshot of the shape of the metal, it also causes the manipulators to move chaotically, ruining this shape. So, Clippy can experiment with the levers and occasionally open the shutter to test the result. However, in order to produce and maintain paperclips inside the box, the shutter has to be kept closed (and the paperclips hidden) most of the time.
 
-It is also possible to consider reward functions of the more general form $\R:\AP{\A\times\Ob}^*\times\IS_\omega\rightarrow\Reals$, required to be continuous and affine in the second argument. Such a reward function depends both on the current (unknown) instrumental state of the environment and the observable history so far. By Theorem 1, such a reward can be equivalently described in terms of a family $\AC{\pi_h:\AP{\A\times\Ob}^*\rightarrow\A\sqcup\{\bot\}}_{h\in\AP{\A\times\Ob}^*}$ of terminable policies and a family $\AC{r_h:\AP{\A\times\Ob}^*\rightarrow\Reals}_{h\in\AP{\A\times\Ob}^*}$ of bounded functions s.t. 
+It is also possible to consider reward functions of the more general form $\R:\FH\times\IS_\omega\rightarrow\Reals$, required to be continuous and affine in the second argument. Such a reward function depends both on the current (unknown) instrumental state of the environment and the observable history so far. By Theorem 1, such a reward can be equivalently described in terms of a family $\AC{\pi_h:\FH\rightarrow\A\sqcup\{\bot\}}_{h\in\FH}$ of terminable policies and a family $\AC{r_h:\FH\rightarrow\Reals}_{h\in\FH}$ of bounded functions s.t. 
 
 $$\R(h,\mu)=\R_{\pi_h r_h}(\mu)$$
  
@@ -321,11 +325,35 @@ $$\R(h,\mu)=\R_{\pi_h r_h}(\mu)$$
 
 \textbf{Definition 12}\Co{b}
 
-\textit{Consider any $C\in\Con$. Then, we can define the total variation distance $\Dtv:C\times C\rightarrow\Reals$ by}\Co{i}
+\textit{Consider any $C\in\Con$. Then, we can define the} total variation distance $\Dtv:C\times C\rightarrow\Reals$ \textit{by}\Co{i}
 
 $$\Dtv(x,y):=\sup_{r\in\Mor\AP{C,[0,1]}} \Abs{r(x)-r(y)}$$
 
-In general, $\Dtv$ is a pseudometric. Moreover, when $C$ is finite-dimensional and bounded, it is a metric. For a finite set $A$ and $C=\Delta A$, $\Dtv$ is just the usual total variation metric. For $C$ a ball in Euclidean space, $\Dtv$ is the Euclidean metric.
+In general, $\Dtv$ is a pseudometric. Moreover, when $C$ is finite-dimensional and bounded, it is a metrization of the natural topology. For a finite set $A$ and $C=\Delta A$, $\Dtv$ is just the usual total variation metric. For $C$ a ball in Euclidean space, $\Dtv$ is the Euclidean metric.
+
+\textbf{Definition 13}\Co{b}
+
+\textit{Consider any $\lambda\in(0,1)$. We define the metric} $\Dtv^\lambda$ \textit{on $\IS_\omega$ by}\Co{i}
+
+$$\Dtv^\lambda(\mu,\nu):=\sup_{n\in\Nats}{\lambda^n\Dtv\AP{\Prj^n\mu,\Prj^n\nu}}$$
+
+For any $\lambda$, $\Dtv^\lambda$ is a metrization of the inverse limit topology on $\IS_\omega$.
+
+\textbf{Proposition 1}\Co{b}
+
+\textit{Consider any $\lambda\in(0,1)$ and $\R:\IS_\omega\rightarrow\Reals$ affine and Lipschitz with respect to $\Dtv^\lambda$. Then there is a terminable policy $\pi$ and a bounded function $r:\FH\rightarrow\Reals$ s.t. $\R=\R_{\pi r}$ and}\Co{i}
+
+$$\sup_{\mu\in\IS_\omega}\Ea{h\sim\mu\pi}{\Abs{h}} < \infty$$
+
+\begin{Large}A Regret Bound for RL with Imperceptible Rewards\end{Large}
+
+Fix $\A$ and $\Ob$. For any $\St$ and $\T:\St\times\A\K\St\times\Ob$, there is a unique mapping $\In_\T:\St\rightarrow\IS_{\omega}$ s.t. 
+
+$$\In_\T(s)...$$
+
+...Fix $\R:\IS_\omega\rightarrow\Reals$ continuous affine...
+
+...One natural setting for a regret analysis is a fixed reward function $\R:\IS_\omega\rightarrow\Reals$ and a hypothesis class of transition kernels...
 
 \begin{Huge}Discussion\end{Huge}
 
