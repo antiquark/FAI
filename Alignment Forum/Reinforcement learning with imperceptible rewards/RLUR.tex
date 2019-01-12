@@ -317,10 +317,15 @@ It is also possible to consider reward functions of the more general form $\R:\A
 
 $$\R(h,\mu)=\R_{\pi_h r_h}(\mu)$$
  
+ In order to derive a regret bound, we will restrict attention to those reward functions for which the terminable policy can be made to terminate within time that has some finite and bounded expected value. I don't know an elegant way to characterize those reward functions in general, but we will describe one class of such functions.
 
-% description via terminable polies
+\textbf{Definition 12}\Co{b}
 
-% Lipschitz and finite expected time
+\textit{Consider any $C\in\Con$. Then, we can define the total variation distance $\Dtv:C\times C\rightarrow\Reals$ by}\Co{i}
+
+$$\Dtv(x,y):=\sup_{r\in\Mor\AP{C,[0,1]}} \Abs{r(x)-r(y)}$$
+
+In general, $\Dtv$ is a pseudometric. Moreover, when $C$ is finite-dimensional and bounded, it is a metric. For a finite set $A$ and $C=\Delta A$, $\Dtv$ is just the usual total variation metric. For $C$ a ball in Euclidean space, $\Dtv$ is the Euclidean metric.
 
 \begin{Huge}Discussion\end{Huge}
 
