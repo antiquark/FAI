@@ -299,25 +299,24 @@ That is, a terminable policy is allowed to produce a special token $\bot$ which 
 
 \textbf{Definition 11}\Co{b}
 
-\textit{Given a terminable policy $\pi$ and a function $r:\AP{\A\times\Ob}^*\rightarrow[0,1]$, we define the function $\R_{\pi r}:\IS_\omega\rightarrow[0,1]$ by
+\textit{Given a terminable policy $\pi$ and a bounded function $r:\AP{\A\times\Ob}^*\rightarrow\Reals$, we define the function $\R_{\pi r}:\IS_\omega\rightarrow\Reals$ by
 }\Co{i}
 $$\R_{\pi r}(\mu):=\Ea{h\sim\mu\pi}{r(h)}$$
 
 This gives us a second definition of imperceptible reward functions. In fact, the two definitions are equivalent:
 
-\textbf{Proposition 1}\Co{b}
-
-\textit{For any terminable policy $\pi$ and function $r:\AP{\A\times\Ob}^*\rightarrow[0,1]$, $\R_{\pi r}$ is continuous and affine.}\Co{i}
-
 \textbf{Theorem 1}\Co{b}
 
-\textit{For any continuous affine $\R:\IS_\omega\rightarrow[0,1]$, there exists a terminable policy $\pi$ and $r:\AP{\A\times\Ob}^*\rightarrow[0,1]$ s.t. $\R = \R_{\pi r}$.}\Co{i}
+\textit{For any terminable policy $\pi$ and bounded function $r:\AP{\A\times\Ob}^*\rightarrow\Reals$, $\R_{\pi r}$ is continuous and affine. Conversely, for any continuous affine $\R:\IS_\omega\rightarrow\Reals$, there exists a terminable policy $\pi$ and $r:\AP{\A\times\Ob}^*\rightarrow\Reals$ s.t. $\R = \R_{\pi r}$, $\sup r \leq \max\R$ and $\inf r \geq \min\R$.}\Co{i}
 
-In other words, for any imperceptible reward function (in the sense of the first definition) there is some experiment the agent can do which yields an \textit{unbiased estimate}\Co{i} of the reward for the instrumental state that existed at the beginning of the experiment.
+Putting the second part of the theorem into words, for any imperceptible reward function (in the sense of the first definition) there is some experiment the agent can do which yields an \textit{unbiased estimate}\Co{i} of the reward for the instrumental state that existed at the beginning of the experiment.
 
-To illustrate, imagine that Clippy has access to a black box with a collection of levers on its outside. Pulling the levers produces some sounds that hint at what happens inside the box, but are not enough to determine it with certainty. The box has a shuttered glass window, whose shutter can be opened from the outside. Through the window, Clippy can see a jumble of scrap metal, mechanical manipulators that are controlled by the levers (and can be used to shape the scrap metal), and also a few mice running around the box and wreaking havoc. However, it is not possible to control the manipulators while the shutter is open. Worse, while opening the shutter allows seeing a snapshot of the shape of the metal, it also causes the manipulators to move chaotically, ruining this shape. So, Clippy can experiment with the levers and occasionally open the shutter to test the result. However, in order to produce and maintain paperclips inside the box, the shutter has to be kept closed (and the paperclips hidden) most of the time.
+To illustrate this concept of imperceptible reward function, imagine that Clippy has access to a black box with a collection of levers on its outside. Pulling the levers produces some sounds that hint at what happens inside the box, but are not enough to determine it with certainty. The box has a shuttered glass window, whose shutter can be opened from the outside. Through the window, Clippy can see a jumble of scrap metal, mechanical manipulators that are controlled by the levers (and can be used to shape the scrap metal), and also a few mice running around the box and wreaking havoc. However, it is not possible to control the manipulators while the shutter is open. Worse, while opening the shutter allows seeing a snapshot of the shape of the metal, it also causes the manipulators to move chaotically, ruining this shape. So, Clippy can experiment with the levers and occasionally open the shutter to test the result. However, in order to produce and maintain paperclips inside the box, the shutter has to be kept closed (and the paperclips hidden) most of the time.
 
-It is also possible to consider reward functions of the more general form $\R:\AP{\A\times\Ob}^*\times\IS_\omega\rightarrow\Reals$, required to be continuous and affine in the second argument. Such a reward function depends both on the current (unknown) instrumental state of the environment and the observable history so far...
+It is also possible to consider reward functions of the more general form $\R:\AP{\A\times\Ob}^*\times\IS_\omega\rightarrow\Reals$, required to be continuous and affine in the second argument. Such a reward function depends both on the current (unknown) instrumental state of the environment and the observable history so far. By Theorem 1, such a reward can be equivalently described in terms of a family $\AC{\pi_h:\AP{\A\times\Ob}^*\rightarrow\A\sqcup\{\bot\}}_{h\in\AP{\A\times\Ob}^*}$ of terminable policies and a family $\AC{r_h:\AP{\A\times\Ob}^*\rightarrow\Reals}_{h\in\AP{\A\times\Ob}^*}$ of bounded functions s.t. 
+
+$$\R(h,\mu)=\R_{\pi_h r_h}(\mu)$$
+ 
 
 % description via terminable polies
 
