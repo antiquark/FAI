@@ -90,8 +90,10 @@
 % Paper specific
 \newcommand{\St}{\mathcal{S}}
 \newcommand{\A}{\mathcal{A}}
+\newcommand{\AX}{\A\sqcup\{\bot\}}
 \newcommand{\Ob}{\mathcal{O}}
 \newcommand{\FH}{\AP{\A\times\Ob}^*}
+\newcommand{\FHS}{\AP{\A\times\St}^*}
 \newcommand{\R}{\mathcal{R}}
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\Hy}{\mathcal{H}}
@@ -106,6 +108,8 @@
 \DeclareMathOperator{\MB}{\dim_{MB}}
 \newcommand{\DRVO}{D_{\mathrm{RVO}}}
 \newcommand{\DMB}{D_{\mathrm{MB}}}
+\newcommand{\Est}{\mathrm{est}}
+\newcommand{\PE}{\pi_\Est}
 \newcommand{\N}{\mathrm{N}}
 \newcommand{\V}{\mathrm{V}}
 \newcommand{\Q}{\mathrm{Q}}
@@ -290,7 +294,7 @@ We will use the notation $\mathcal{X}^{\leq\omega}:=\mathcal{X}^*\sqcup\mathcal{
 
 \textbf{Definition 10}\Co{b}
 
-\textit{Given $\pi: \FH\K\A\sqcup\{\bot\}$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^{\leq\omega}$ by}\Co{i}
+\textit{Given $\pi: \FH\K\AX$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^{\leq\omega}$ by}\Co{i}
 
 $$\Pa{ao\sim\mu\pi}{a_n=b}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}\geq n}\pi\APM{b}{ao_{:n}}}$$
 $$\Pa{ao\sim\mu\pi}{o_n=p}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}> n}\mu\APM{p}{ao_{:n}a_n}}$$
@@ -317,7 +321,7 @@ Putting the second part of the theorem into words, for any instrumental reward f
 
 To illustrate this concept of instrumental reward function, imagine that Clippy has access to a black box with a collection of levers on its outside. Pulling the levers produces some sounds that hint at what happens inside the box, but are not enough to determine it with certainty. The box has a shuttered glass window, whose shutter can be opened from the outside. Through the window, Clippy can see a jumble of scrap metal, mechanical manipulators that are controlled by the levers (and can be used to shape the scrap metal), and also a few mice running around the box and wreaking havoc. However, it is not possible to control the manipulators while the shutter is open. Worse, while opening the shutter allows seeing a snapshot of the shape of the metal, it also causes the manipulators to move chaotically, ruining this shape. So, Clippy can experiment with the levers and occasionally open the shutter to test the result. However, in order to produce and maintain paperclips inside the box, the shutter has to be kept closed (and the paperclips hidden) most of the time.
 
-It is also possible to consider reward functions of the more general form $\R:\FH\times\IS_\omega\rightarrow\Reals$, required to be continuous and affine in the second argument. Such a reward function depends both on the current (unknown) instrumental state of the environment and the observable history so far. By Theorem 1, such a reward can be equivalently described in terms of a family $\AC{\pi_h:\FH\rightarrow\A\sqcup\{\bot\}}_{h\in\FH}$ of terminable policies and a family $\AC{r_h:\FH\rightarrow\Reals}_{h\in\FH}$ of bounded functions s.t. 
+It is also possible to consider reward functions of the more general form $\R:\FH\times\IS_\omega\rightarrow\Reals$, required to be continuous and affine in the second argument. Such a reward function depends both on the current (unknown) instrumental state of the environment and the observable history so far. By Theorem 1, such a reward can be equivalently described in terms of a family $\AC{\pi_h:\FH\rightarrow\AX}_{h\in\FH}$ of terminable policies and a family $\AC{r_h:\FH\rightarrow\Reals}_{h\in\FH}$ of bounded functions s.t. 
 
 $$\R(h,\mu)=\R_{\pi_h r_h}(\mu)$$
 
@@ -361,11 +365,11 @@ $$\Hy\subseteq\AC{\St\times\A\K\St\times\Ob}$$
 
 However, regret analysis for POMDPs involves some technical complexity, and we prefer to start with a simpler setting. Hopefully, we will address the POMDP case in a followup essay.
 
-Suppose that $\Ob=\St^2$. Then, given any MPD transition kernel $\T:\St\times\A\K\St$, we can define the POMDP transition kernel $\T^\sharp:\St\times\A\K\St\times\Ob$ by
+Suppose that $\Ob=\St$. Then, given any MPD transition kernel $\T:\St\times\A\K\St$, we can define the POMDP transition kernel $\T^\sharp:\St\times\A\K\St\times\Ob$ by
 
-$$\T^\sharp\APM{s',\AP{s_1,s_2}}{s,a}:=\boldsymbol{1}_{s_1=s}\boldsymbol{1}_{s_2=s'}\T\APM{s'}{s,a}$$
+$$\T^\sharp\APM{s',s''}{s,a}:=\boldsymbol{1}_{s'=s''}\T\APM{s'}{s,a}$$
 
-Fix $\R:\IS_\omega\rightarrow[0,1]$ continuous affine. For any $\T$ as above, we get the induced reward function $\R_\T:\St\rightarrow[0,1]$ given by $\R_\T:=\R\circ\In_{\T^\sharp}$. More generally... %semi-instrumental We can now consider the learning problem corresponding to a hypothesis class of MDP transition kernels
+Fix $\R:\St\times\IS_\omega\rightarrow[0,1]$ continuous affine in the second argument (a type of semi-instrumental reward function). For any $\T$ as above, we get the induced reward function $\R_\T:\St\rightarrow[0,1]$ given by $\R_\T(s):=\R\AP{s,\In_{\T^\sharp}(s)}$. We can now consider the learning problem corresponding to a hypothesis class of MDP transition kernels
 
 $$\Hy\subseteq\AC{\St\times\A\K\St}$$
 
@@ -373,15 +377,19 @@ It might seem odd to consider a setting with fully observable states in the cont
 
 For example, imagine a robot tasked with sorting balls into bins according to their weight. Some of the balls are solid gold and some of them are solid silver, so it's in principle possible to know their weight just by looking at them. However, the robot doesn't know a priori whether silver or gold is heavier. On the other hand, the robot can perform some experiment with a ball to determine its weight. In this situation, the reward is imperceptible even if the state (e.g. the locations, colors and sizes of the balls, the locations and shapes of the bins and the location of the robot and the state of its manipulators) is fully observable.
 
-We can formulate the regret bound.
+Using the concepts of MB dimension and RVO dimension we defined in a [previous essay]\San{(https://www.alignmentforum.org/posts/Qa5jG9z9dC6E4s9JH/dimensional-regret-without-resets)}, we can formulate the regret bound.
 
 \textbf{Theorem 2}\Co{b}
 
 \textit{There is some $C\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider any finite non-empty sets $\St$ and $\A$, continuous affine function $\R:\IS_\omega\rightarrow[0,1]$, closed set $\Hy\subseteq\AC{\St\times\A\K\St}$ and Borel probability measure $\zeta$ on $\Hy$ (prior). Suppose $\pi_{\mathrm{est}}$ is a terminable policy and $r:\FH\rightarrow[0,1]$ is a bounded function s.t. $\R=\R_{\pi_{\mathrm{est}}r}$. Define the maximal expected reward estimation time $t_{\mathrm{est}}$ by}\Co{i}
+\textit{Consider any finite non-empty sets $\St$ and $\A$, function continuous affine in the second argument $\R:\St\times\IS_\omega\rightarrow[0,1]$, closed set $\Hy\subseteq\AC{\St\times\A\K\St}$ and Borel probability measure $\zeta$ on $\Hy$ (prior). Suppose $\PE:\St\times\FHS\K\AX$ is s.t. for any $s\in\St$, $\PE(s,\cdot)$ is terminable, and $r:\St\times\FHS\rightarrow[0,1]$ is a bounded function s.t.}\Co{i}
 
-$$t_{\mathrm{est}}:=\sup_{\mu\in\IS_\omega}\Ea{h\sim\mu\pi_{\mathrm{est}}}{\Abs{h}}$$
+$$\R(s,\cdot)=\R_{\pi_{\mathrm{est}}(s,\cdot)r(s,\cdot)}$$ 
+
+\textit{Define the maximal expected reward estimation time $t_\Est$ by}\Co{i}
+
+$$t_\Est=\sup_{s\in\St,\mu\in\IS_\omega}\Ea{h\sim\mu\pi_{\mathrm{est}}(s,\cdot)}{\Abs{h}}$$
 
 \textit{Define the maximal bias span $\tau$ by}\Co{i}
 
@@ -399,12 +407,12 @@ $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R_\T}(\gamma)-\EU^{\pi^\dagger_\gamma
 
 $$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\mathrm{est}}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\leq C$$
 
-% Explain DRVO and DMB
-
 \begin{Huge}Discussion\end{Huge}
 
-TBD
-% Bound is probably suboptimal for MDPs
+It might appear odd that the regret bound in Theorem 2 depends on the dimensions of the class of reward functions, but not on the dimensions on the class of transition kernels, like in the perceptible case. The reason for this is that we only give the asymptotic form. Asymptotically, the leading term is $O\AP{\sqrt[3]{\AP{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$ and its coefficient depends only on those parameters that appear in Theorem 2. However, examining the proof reveals that there is also an $O\AP{\sqrt{\AP{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$ term that has the same form as the regret bound in the perceptible case. For the sake of brevity and simplicity we will \textit{not}\Co{i} attempt to write down a more precise regret bound that reflects the role of the dimensions of the class of transition kernels, but in principle it is not difficult. We must keep in mind, however, that in practice the other term might be significant: \textit{a priori}\Co{i} the dimensions of the class of transition kernels are only bounded by a polynomial in $\Abs{\St}$ and $\Abs{\A}$ and the latter might be exponentially big for realistic models. 
+
+In fact, for the MDP setting we examine, the bound we give can probably be substantially improved. This is because we exploit the ability to measure an estimate of the reward, but we don't exploit the fact that knowing the transition kernel would make the reward effectively perceptible. For example, our ball sorting robot could measure the density of gold and silver once and consider it known thereafter (it's slightly worse if the measurement involves error, but not by that much). However, we mostly consider Theorem 2 to be a warm-up towards the POMDP setting, in which the reward never becomes effectively perceptible. In that setting, we suspect that $O\AP{\sqrt[3]{1-\gamma}}$ might be the best possible $\gamma$ dependence, up to logarithmic factors. 
+
 % Kamikaze...
 % Specification a la de Blanc...
 
