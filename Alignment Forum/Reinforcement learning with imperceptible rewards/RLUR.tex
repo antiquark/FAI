@@ -125,7 +125,7 @@
 
 \begin{document}
 
-\textbf{TLDR:}\Co{b} We define a variant of reinforcement learning in which the reward is not perceived directly, but can be estimated at any given moment by some (possibly costly) experiment. We give two definitions of  "imperceptible reward function" and prove their equivalence. We also derive a regret bound for this setting.
+\textbf{TLDR:}\Co{b} We define a variant of reinforcement learning in which the reward is not perceived directly, but can be estimated at any given moment by some (possibly costly) experiment. The reward function is no longer a function of the observation history, but a different object that we call "instrumental reward function". We give two definitions of instrumental reward function and prove their equivalence. We also derive a regret bound for this setting.
 
 \begin{Huge}Background\end{Huge}
 
@@ -143,7 +143,7 @@ The literature study was very cursory and I will be glad to know about prior wor
 
 \begin{Huge}Results\end{Huge}
 
-Partially Observable Markov Decision\ Processes (POMDPs) serve as a natural starting point for thinking about imperceptible rewards. Indeed, it might seem like all we have to do is consider RL in a POMDP environment and let the reward to be a function of the (imperceptible) state. However, this setting is in general unlearnable even given assumptions that rule out traps.
+Partially Observable Markov Decision Processes (POMDPs) serve as a natural starting point for thinking about imperceptible rewards. Indeed, it might seem like all we have to do is consider RL in a POMDP environment and let the reward to be a function of the (imperceptible) state. However, this setting is in general unlearnable even given assumptions that rule out traps.
 
 A (finite) POMDP is defined by non-empty finite sets $\St$ (states), $\A$ (actions) and $\Ob$ (observations), the transition kernel $\T:\St\times\A\K\St\times\Ob$ and the reward function $\R:\St\rightarrow[0,1]$. As opposed to a "classical" POMDP, the value of $\R$ is assumed to be imperceptible. The perceptible setting is a special case of the imperceptible setting: we can always encode the reward into the observation.
 
@@ -181,7 +181,7 @@ The pathology of Example 1 comes about because reward is not only imperceptible 
 
 This observation suggests that, instead of assigning rewards to states which are just abstract labels in a model, we should assign rewards to states that are defined in terms of the observable consequences of the interaction of the agent with the environment. This leads us to the notion of "instrumental state", which we will now define formally.
 
-\begin{Large}Instrumental States and Imperceptible Reward Functions\end{Large}
+\begin{Large}Instrumental States and Reward Functions\end{Large}
 
 First, we introduce some technical definitions for notational convenience.
 
@@ -282,7 +282,7 @@ $$\mu(ha):=\Prj^{\Abs{h}+1}\mu(ha)$$
 
 For each $n\in\Nats$, $\IS_n$ is finite-dimensional and therefore has a natural topology. $\IS_\omega$ also becomes a topological space by equipping it with the inverse limit topology. Since the $\IS_n$ are closed and bounded they are compact, and therefore $\IS_\omega$ is also compact by Tychonoff's theorem. In the special case $\Abs{\A}=1$, $\IS_\omega\cong\Delta\Ob^\omega$ and the inverse limit topology is the weak topology for probability measures, defined w.r.t. the product topology on $\Ob^\omega$.
 
-We can now give the first definition of an imperceptible reward function: a continuous affine function $\R: \IS_\omega \rightarrow \Reals$. Why affine? A convex linear combination of instrumental states is empirically indistinguishable from a probabilistic lottery. If we assign expected values to probabilistic lotteries (as we should by the VNM theorem), then we must also assign them to convex linear combinations of instrumental states: otherwise our reward again depends on entirely unobservable parameters of our model.
+We can now give the first definition of an instrumental reward function: a continuous affine function $\R: \IS_\omega \rightarrow \Reals$. Why affine? A convex linear combination of instrumental states is empirically indistinguishable from a probabilistic lottery. If we assign expected values to probabilistic lotteries (as we should by the VNM theorem), then we must also assign them to convex linear combinations of instrumental states: otherwise our reward again depends on entirely unobservable parameters of our model.
 
 An alternative approach is to consider the notion of "experiment" explicitly.
 
@@ -307,21 +307,23 @@ That is, a terminable policy is allowed to produce a special token $\bot$ which 
 }\Co{i}
 $$\R_{\pi r}(\mu):=\Ea{h\sim\mu\pi}{r(h)}$$
 
-This gives us a second definition of imperceptible reward functions. In fact, the two definitions are equivalent:
+This gives us a second definition of instrumental reward functions. In fact, the two definitions are equivalent:
 
 \textbf{Theorem 1}\Co{b}
 
 \textit{For any terminable policy $\pi$ and bounded function $r:\FH\rightarrow\Reals$, $\R_{\pi r}$ is continuous and affine. Conversely, for any continuous affine $\R:\IS_\omega\rightarrow\Reals$, there exists a terminable policy $\pi$ and $r:\FH\rightarrow\Reals$ s.t. $\R = \R_{\pi r}$, $\sup r \leq \max\R$ and $\inf r \geq \min\R$.}\Co{i}
 
-Putting the second part of the theorem into words, for any imperceptible reward function (in the sense of the first definition) there is some experiment the agent can do which yields an \textit{unbiased estimate}\Co{i} of the reward for the instrumental state that existed at the beginning of the experiment.
+Putting the second part of the theorem into words, for any instrumental reward function (in the sense of the first definition) there is some experiment the agent can do which yields an \textit{unbiased estimate}\Co{i} of the reward for the instrumental state that existed at the beginning of the experiment.
 
-To illustrate this concept of imperceptible reward function, imagine that Clippy has access to a black box with a collection of levers on its outside. Pulling the levers produces some sounds that hint at what happens inside the box, but are not enough to determine it with certainty. The box has a shuttered glass window, whose shutter can be opened from the outside. Through the window, Clippy can see a jumble of scrap metal, mechanical manipulators that are controlled by the levers (and can be used to shape the scrap metal), and also a few mice running around the box and wreaking havoc. However, it is not possible to control the manipulators while the shutter is open. Worse, while opening the shutter allows seeing a snapshot of the shape of the metal, it also causes the manipulators to move chaotically, ruining this shape. So, Clippy can experiment with the levers and occasionally open the shutter to test the result. However, in order to produce and maintain paperclips inside the box, the shutter has to be kept closed (and the paperclips hidden) most of the time.
+To illustrate this concept of instrumental reward function, imagine that Clippy has access to a black box with a collection of levers on its outside. Pulling the levers produces some sounds that hint at what happens inside the box, but are not enough to determine it with certainty. The box has a shuttered glass window, whose shutter can be opened from the outside. Through the window, Clippy can see a jumble of scrap metal, mechanical manipulators that are controlled by the levers (and can be used to shape the scrap metal), and also a few mice running around the box and wreaking havoc. However, it is not possible to control the manipulators while the shutter is open. Worse, while opening the shutter allows seeing a snapshot of the shape of the metal, it also causes the manipulators to move chaotically, ruining this shape. So, Clippy can experiment with the levers and occasionally open the shutter to test the result. However, in order to produce and maintain paperclips inside the box, the shutter has to be kept closed (and the paperclips hidden) most of the time.
 
 It is also possible to consider reward functions of the more general form $\R:\FH\times\IS_\omega\rightarrow\Reals$, required to be continuous and affine in the second argument. Such a reward function depends both on the current (unknown) instrumental state of the environment and the observable history so far. By Theorem 1, such a reward can be equivalently described in terms of a family $\AC{\pi_h:\FH\rightarrow\A\sqcup\{\bot\}}_{h\in\FH}$ of terminable policies and a family $\AC{r_h:\FH\rightarrow\Reals}_{h\in\FH}$ of bounded functions s.t. 
 
 $$\R(h,\mu)=\R_{\pi_h r_h}(\mu)$$
- 
- In order to derive a regret bound, we will restrict attention to those reward functions for which the terminable policy can be made to terminate within time that has some finite and bounded expected value. I don't know an elegant way to characterize those reward functions in general, but we will describe one class of such functions.
+
+This means that, the value of reward can be estimated empirically, but only if the agent remembers the entire observation history. If the history is forgotten at some point, it might never be able to estimate the reward again. We will such reward functions "semi-instrumental".
+
+In order to derive a regret bound, we will restrict attention to those reward functions for which the terminable policy can be made to terminate within time that has some finite and bounded expected value. I don't know an elegant way to characterize those reward functions in general, but we will describe one class of such functions.
 
 \textbf{Definition 12}\Co{b}
 
@@ -345,7 +347,7 @@ For any $\lambda$, $\Dtv^\lambda$ is a metrization of the inverse limit topology
 
 $$\sup_{\mu\in\IS_\omega}\Ea{h\sim\mu\pi}{\Abs{h}} < \infty$$
 
-\begin{Large}A Regret Bound for RL with Imperceptible Rewards\end{Large}
+\begin{Large}A Regret Bound for RL with Instrumental Rewards\end{Large}
 
 Fix $\A$ and $\Ob$. For any finite set $\St$ and $\T:\St\times\A\K\St\times\Ob$, there is a unique mapping $\In_\T:\St\rightarrow\IS_{\omega}$ s.t. 
 
@@ -363,7 +365,7 @@ Suppose that $\Ob=\St^2$. Then, given any MPD transition kernel $\T:\St\times\A\
 
 $$\T^\sharp\APM{s',\AP{s_1,s_2}}{s,a}:=\boldsymbol{1}_{s_1=s}\boldsymbol{1}_{s_2=s'}\T\APM{s'}{s,a}$$
 
-Fix $\R:\IS_\omega\rightarrow[0,1]$ continuous affine. For any $\T$ as above, we get the induced reward function $\R_\T:\St\rightarrow[0,1]$ given by $\R_\T:=\R\circ\In_{\T^\sharp}$. We can now consider the learning problem corresponding to a hypothesis class of MDP transition kernels
+Fix $\R:\IS_\omega\rightarrow[0,1]$ continuous affine. For any $\T$ as above, we get the induced reward function $\R_\T:\St\rightarrow[0,1]$ given by $\R_\T:=\R\circ\In_{\T^\sharp}$. More generally... %semi-instrumental We can now consider the learning problem corresponding to a hypothesis class of MDP transition kernels
 
 $$\Hy\subseteq\AC{\St\times\A\K\St}$$
 
@@ -395,7 +397,7 @@ $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R_\T}(\gamma)-\EU^{\pi^\dagger_\gamma
 
 \textit{Then, there is a family of policies $\AC{\pi^\dagger_\gamma:\St^*\times\St\K\A}_{\gamma\in(0,1)}$ s.t.}\Co{i}
 
-$$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{t_{\mathrm{est}}??\tau\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\leq C$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\mathrm{est}}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\leq C$$
 
 % Explain DRVO and DMB
 
