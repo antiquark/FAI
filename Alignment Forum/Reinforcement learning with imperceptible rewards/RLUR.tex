@@ -427,7 +427,19 @@ Another approach is assuming the agent becomes a "ghost": it keeps receiving obs
 
 The problem with death can be viewed from another perspective: our regret analysis assumes a no-traps condition ($\tau<\infty$) whereas death is usually a trap. Therefore, to guarantee rational behavior while accounting for death, we need to operate within a framework that allows for traps. One such framework is requiring Bayes-optimality and giving up on learnability. This seems both too weak (because nothing is guaranteed for specific environments) and too strong (because it's [computationally intractable]\San{(https://cstheory.stackexchange.com/questions/41396/is-bayes-optimal-rl-of-a-finite-set-of-dfas-feasible)}). That said, I think this approach can be salvaged by requiring something somewhat weaker than Bayes-optimality and proving something somewhat weaker than learnability (hopefully I will write on that in a future essay). In any case, once we give up on learnability we can allow unobservable rewards (the general POMDP setting in the beginning of the Results section) which allow handling death and kamikaze strategies easily. Specifically, we can have a plethora of "dead" states that produce only the $\bot$ observation and whose transitions do no depend on the action, but which have different rewards. So, this approach "solves" the problem but at a high cost: no learnability or regret analysis.
 
-Another framework for dealing with traps is [Delegative Reinforcement Learning]\San{(https://www.lesswrong.com/posts/5bd75cc58225bf06703754d5/delegative-reinforcement-learning-with-a-merely-sane-advisor)} (DRL)...
+Another framework for dealing with traps is [Delegative Reinforcement Learning]\San{(https://www.lesswrong.com/posts/5bd75cc58225bf06703754d5/delegative-reinforcement-learning-with-a-merely-sane-advisor)} (DRL). In DRL the agent interacts with an external advisor, and is thereby able to successfully navigate all traps that the advisor knows about. In other words, it converges to a policy that is Bayes-optimal with respect to the belief state of the advisor (while the advisor is not able to produce such a policy by itself). Combining DRL with the instrumental rewards formalism should allow accounting for death. Specifically, in any given POMDP hypothesis, the state space will be decomposed as $\St=\St_{\text{dead}}\sqcup\St_{\text{alive}}$, with the following assumptions:
+
+* The transition kernel on states in $\St_{\text{dead}}$ doesn't depend on the action.
+
+* $\St_{\text{dead}}$ is invariant under the dynamics (death is irreversible).
+
+* The reward function on $\St_{\text{dead}}$ can be arbitrary.
+
+* The reward function on $\St_{\text{alive}}$ has to factor through $\In_\T$ (i.e. depend only on the instrumental state), and moreover the policy for estimating the reward function is known to be safe (alternatively, we might let the agent learn a safe estimation policy from some space of candidate policies).
+
+Under these assumptions (or some variant thereof), it seems plausible that we should be able to prove learnability and derive a reasonable regret bound. Formalizing this line of thought is a task for future work.
+
+% corrigibility; human self-sacrifice
 
 % Kamikaze...
 % Specification a la de Blanc...
