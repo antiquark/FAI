@@ -255,7 +255,7 @@ The semantics of Definition 4 is as follows. Any $\alpha\in\AP{\prod_{o\in\Ob}\H
 
 1. For $h=\Estr$: $\theta( o\mid a):=\Ht_{\IS_{n-1}}(\theta_{ao})$.
 
-2. For $h=bph'$ with some $b\in\A$, $p\in\Ob$ and $h'\in\FH$: $\theta(ha):=\AB{\theta_{bp}}(h'a)$.
+2. For $h=a'o'h'$ with some $a'\in\A$, $o'\in\Ob$ and $h'\in\FH$: $\theta(ha):=\AB{\theta_{a'o'}}(h'a)$.
 
 The point of defining $\IS_n$ in this manner is that (i) different points in $\IS_n$ correspond to states that are truly not equivalent, i.e. can be empirically distinguished (statistically) and (ii) convex combinations of points in $\IS_n$ correspond precisely to probabilistic mixtures. Formally, we have:
 
@@ -263,8 +263,8 @@ The point of defining $\IS_n$ in this manner is that (i) different points in $\I
 
 \textit{Given $\theta\in\IS_n$ and $\pi:\AP{\A\times\Ob}^{<n}\K\A$ (a policy), we define $\theta\pi\in\Delta\AP{\A\times\Ob}^n$ (probability distribution over histories resulting from following policy $\pi$ in state $\theta$) by}\Co{i}
 
-$$\Pa{ao\sim\theta\pi}{a_m=b}=\Ea{ao\sim\theta\pi}{\pi\APM{b}{ao_{:m}}}$$
-$$\Pa{ao\sim\theta\pi}{o_m=p}=\Ea{ao\sim\theta\pi}{\theta\APM{p}{ao_{:m}a_m}}$$
+$$\Pa{ao\sim\theta\pi}{a_m=a_*}=\Ea{ao\sim\theta\pi}{\pi\APM{a_*}{ao_{:m}}}$$
+$$\Pa{ao\sim\theta\pi}{o_m=o_*}=\Ea{ao\sim\theta\pi}{\theta\APM{o_*}{ao_{:m}a_m}}$$
 
 \textbf{Proposition 1}\Co{b}
 
@@ -316,8 +316,8 @@ Like in the finite time case, we have
 
 \textit{Given $\mu\in\IS_\omega$ and $\pi:\AP{\A\times\Ob}^{*}\K\A$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^\omega$ by}\Co{i}
 
-$$\Pa{ao\sim\mu\pi}{a_n=b}=\Ea{ao\sim\mu\pi}{\pi\APM{b}{ao_{:n}}}$$
-$$\Pa{ao\sim\mu\pi}{o_n=p}=\Ea{ao\sim\mu\pi}{\mu\APM{p}{ao_{:n}a_n}}$$
+$$\Pa{ao\sim\mu\pi}{a_n=a_*}=\Ea{ao\sim\mu\pi}{\pi\APM{a_*}{ao_{:n}}}$$
+$$\Pa{ao\sim\mu\pi}{o_n=o_*}=\Ea{ao\sim\mu\pi}{\mu\APM{o_*}{ao_{:n}a_n}}$$
 
 \textbf{Proposition 3}\Co{b}
 
@@ -341,8 +341,8 @@ We will use the notation $\mathcal{X}^{\leq\omega}:=\mathcal{X}^*\sqcup\mathcal{
 
 \textit{Given $\pi: \FH\K\AX$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^{\leq\omega}$ by}\Co{i}
 
-$$\Pa{ao\sim\mu\pi}{a_n=b}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}\geq n}\pi\APM{b}{ao_{:n}}}$$
-$$\Pa{ao\sim\mu\pi}{o_n=p}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}> n}\mu\APM{p}{ao_{:n}a_n}}$$
+$$\Pa{ao\sim\mu\pi}{a_n=a_*}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}\geq n}\pi\APM{a_*}{ao_{:n}}}$$
+$$\Pa{ao\sim\mu\pi}{o_n=o_*}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}> n}\mu\APM{o_*}{ao_{:n}a_n}}$$
 
 \textit{$\pi$ is said to be a}\Co{i} terminable policy \textit{when for any $\mu\in\IS_\omega$}\Co{i}
 
@@ -507,21 +507,49 @@ These questions are left for future research.
 
 \textbf{Proof of Proposition 1}\Co{b}
 
-We proceed by induction on $n$. For $n=0$ there is nothing to prove since $\IS_0=\Pt$ so $\theta=\theta'$ a priori.
+We proceed by induction on $n$. For $n=0$ there is nothing to prove since $\IS_0=\Pt$ so $\theta=\theta'$ a priori. Now, suppose $n>0$.
 
-We need to show that for any $b\in\A$, $\theta_b=\theta'_b$. To show it for given $b$, we consider some $\pi$ s.t. $\pi(\Estr)=b$. Since $\theta\pi=\theta'\pi$, for any $p\in\Ob$ we have
+We need to show that for any $a_*\in\A$ and $o_*\in\Ob$, $\theta_{a_*o_*}=\theta'_{a_*o_*}$. To show it for given $a_*$ and $o_*$, we consider some $\pi$ s.t. $\pi(\Estr)=a_*$. Since $\theta\pi=\theta'\pi$, we have
 
-$$\Pa{ao\sim\theta\pi}{o_0=p}=\Pa{ao\sim\theta'\pi}{o_0=p}$$
+$$\Pa{ao\sim\theta\pi}{o_0=o_*}=\Pa{ao\sim\theta'\pi}{o_0=o_*}$$
 
 By Definition 7, we get,
 
-$$\theta(p\mid b)=\theta'(p\mid b)$$
+$$\theta\APM{o_*}{a_*}=\theta'\APM{o_*}{a_*}$$
 
 By Definition 6, we get,
 
-$$\Ht_{\IS_{n-1}}\Big(\theta_{bp}\Big)=\Ht_{\IS_{n-1}}\AP{\theta'_{bp}}$$
+$$\Ht_{\IS_{n-1}}\big(\theta_{a_*o_*}\big)=\Ht_{\IS_{n-1}}\AP{\theta'_{a_*o_*}}$$
 
-Moo! $\blacksquare$
+If this value vanishes then $\theta_{a_*o_*}=\theta'_{a_*o_*}=\boldsymbol{0}$. Otherwise, consider any $\sigma:\AP{\A\times\Ob}^{<n-1}\rightarrow\A$ and define $\pi:\AP{\A\times\Ob}^{<n}\rightarrow\A$ by
+
+$$\pi(\Estr):=a_*$$
+$$\pi(aoh):=\sigma(h)$$
+
+Definitions 6 and 7 imply that
+
+$$\AB{\theta_{a_*o_*}}\sigma(h)=\frac{\theta\pi(a_*o_*h)}{\theta\APM{o_*}{a_*}}$$
+
+and similarly for $\theta'$. We have $\theta\pi=\theta'\pi$ and $\theta\APM{o_*}{a_*}=\theta'\APM{o_*}{a_*}$, which implies $\Big[\theta_{a_*o_*}\Big]\sigma=\AB{\theta'_{a_*o_*}}\sigma$. By the induction hypothesis, we get $\big[\theta_{a_*o_*}\big]=\AB{\theta'_{a_*o_*}}$. Combining this with $\Ht_{\IS_{n-1}}\big(\theta_{a_*o_*}\big)=\Ht_{\IS_{n-1}}\AP{\theta'_{a_*o_*}}$, we get $\theta_{a_*o_*}=\theta'_{a_*o_*}$. $\blacksquare$
+
+\textbf{Proof of Proposition 2}\Co{b}
+
+Given $n\in\Nats^+$ and some $\alpha,\beta\in\Delta\AP{\A\times\Ob}^n$, to show that $\alpha=\beta$ it is sufficient to show that
+
+1. For any $a_*\in\A$ and $o_*\in\Ob$, 
+
+$$\Pa{ao\sim\alpha}{ao_{:1}=a_*o_*}=\Pa{ao\sim\beta}{ao_{:1}=a_*o_*}$$
+
+2. For any $a_*\in\A$ and $o_*\in\Ob$, if $\Pa{ao\sim\alpha}{ao_{:1}=a_*o_*}>0$ then for any $h\in\AP{\A\times\Ob}^{n-1}$
+
+$$\CP{ao\sim\alpha}{ao=a_*o_*h}{ao_{:1}=a_*o_*}=\CP{ao\sim\beta}{ao=a_*o_*h}{ao_{:1}=a_*o_*}$$
+
+We will use this to prove the claim by induction on $n$. For $n=0$, there is nothing to prove. For $n>0$, by Definition 7
+
+$$\Pa{ao\sim\AP{p\theta+(1-p)\theta}\pi}{ao_{:1}=a_*o_*}=\pi\APM{a_*}{\Estr}\AP{p\theta+(1-p)\theta}\APM{o_*}{ a_*}$$
+
+By Definition 6
+$$\Pa{ao\sim\AP{p\theta+(1-p)\theta}\pi}{ao_{:1}=a_*o_*}=\pi\APM{a_*}{\Estr}\Ht_{\IS_{n-1}}\AP{\AP{p\theta+(1-p)\theta}_{??}}$$
 
 \end{document}
 
