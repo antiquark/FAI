@@ -257,7 +257,7 @@ The semantics of Definition 4 is as follows. Any $\alpha\in\AP{\prod_{o\in\Ob}\H
 
 2. For $h=bph'$ with some $b\in\A$, $p\in\Ob$ and $h'\in\FH$: $\theta(ha):=\AB{\theta_{bp}}(h'a)$.
 
-The point of defining $\IS_n$ in this manner is that (i) different points in $\IS_n$ correspond to states that are truly not equivalent, i.e. can be empirically distinguished (statistically) and (ii) convex combinations of points in $\IS_n$ correspond precisely to probabilistic mixtures:
+The point of defining $\IS_n$ in this manner is that (i) different points in $\IS_n$ correspond to states that are truly not equivalent, i.e. can be empirically distinguished (statistically) and (ii) convex combinations of points in $\IS_n$ correspond precisely to probabilistic mixtures. Formally, we have:
 
 \textbf{Definition 7}\Co{b}
 
@@ -268,11 +268,13 @@ $$\Pa{ao\sim\theta\pi}{o_m=p}=\Ea{ao\sim\theta\pi}{\theta\APM{p}{ao_{:m}a_m}}$$
 
 \textbf{Proposition 1}\Co{b}
 
-TBD 
+\textit{Consider some $\theta,\theta'\in\IS_n$ and assume that for any $\pi:\AP{\A\times\Ob}^{<n}\rightarrow\A$, $\theta\pi=\theta'\pi$. Then, $\theta=\theta'$.}\Co{i}
 
 \textbf{Proposition 2}\Co{b}
 
-TBD
+\textit{Consider some $\theta,\theta'\in\IS_n$,  $\pi:\AP{\A\times\Ob}^{<n}\K\A$ and $p\in[0,1]$. Then}\Co{i}
+
+$$\AP{p\theta+(1-p)\theta'}\pi=p\theta\pi+(1-p)\theta'\pi$$
 
 $\IS_n$ is a bounded polytope but in general it is \textit{not} a simplex: we cannot regard it as just probability distributions over some set. For example, if $\Abs{\A}=\Abs{\Ob}=2$, then it's easy to see that $\IS_1$ is a square (one axis is the probability to get a given observation when taking one action, the other axis is the probability for the other action). On the other hand, if $\Abs{\A}=1$ then $\IS_n$ \textit{is}\Co{i} a simplex: it is canonically isomorphic to $\Delta\Ob^n$.
 
@@ -308,6 +310,25 @@ $$\Dom\mu:=\bigcup_{n=0}^\infty \Dom\Prj^n\mu$$
 
 $$\mu(ha):=\Prj^{\Abs{h}+1}\mu(ha)$$
 
+Like in the finite time case, we have
+
+\textbf{Definition 12}\Co{b}
+
+\textit{Given $\mu\in\IS_\omega$ and $\pi:\AP{\A\times\Ob}^{*}\K\A$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^\omega$ by}\Co{i}
+
+$$\Pa{ao\sim\mu\pi}{a_n=b}=\Ea{ao\sim\mu\pi}{\pi\APM{b}{ao_{:n}}}$$
+$$\Pa{ao\sim\mu\pi}{o_n=p}=\Ea{ao\sim\mu\pi}{\mu\APM{p}{ao_{:n}a_n}}$$
+
+\textbf{Proposition 3}\Co{b}
+
+\textit{Consider some $\mu,\mu'\in\IS_\omega$ and assume that for any $\pi:\AP{\A\times\Ob}^{*}\rightarrow\A$, $\mu\pi=\mu'\pi$. Then, $\mu=\mu'$.}\Co{i}
+
+\textbf{Proposition 4}\Co{b}
+
+\textit{Consider some $\mu,\mu'\in\IS_\omega$,  $\pi:\AP{\A\times\Ob}^{*}\K\A$ and $p\in[0,1]$. Then}\Co{i}
+
+$$\AP{p\mu+(1-p)\mu'}\pi=p\mu\pi+(1-p)\mu'\pi$$
+
 For each $n\in\Nats$, $\IS_n$ is finite-dimensional and therefore has a natural topology. $\IS_\omega$ also becomes a topological space by equipping it with the inverse limit topology. Since the $\IS_n$ are closed and bounded they are compact, and therefore $\IS_\omega$ is also compact by Tychonoff's theorem. In the special case $\Abs{\A}=1$, $\IS_\omega\cong\Delta\Ob^\omega$ and the inverse limit topology is the weak topology for probability measures, defined w.r.t. the product topology on $\Ob^\omega$.
 
 We can now give the first definition of an instrumental reward function: a continuous affine function $\R: \IS_\omega \rightarrow \Reals$. Why affine? A convex linear combination of instrumental states is empirically indistinguishable from a probabilistic lottery. If we assign expected values to probabilistic lotteries (as we should by the VNM theorem), then we must also assign them to convex linear combinations of instrumental states: otherwise our reward again depends on entirely unobservable parameters of our model.
@@ -316,7 +337,7 @@ An alternative approach is to consider the notion of "experiment" explicitly.
 
 We will use the notation $\mathcal{X}^{\leq\omega}:=\mathcal{X}^*\sqcup\mathcal{X}^\omega$. Given a logical condition $\phi$, the symbol $\boldsymbol{1}_\phi$ will denote 1 when $\phi$ is true and 0 when $\phi$ is false.
 
-\textbf{Definition 12}\Co{b}
+\textbf{Definition 13}\Co{b}
 
 \textit{Given $\pi: \FH\K\AX$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^{\leq\omega}$ by}\Co{i}
 
@@ -329,7 +350,7 @@ $$\Pa{h\sim\mu\pi}{\Abs{h}<\infty} = 1$$
 
 That is, a terminable policy is allowed to produce a special token $\bot$ which terminates the "experiment" (instead of choosing an action), and we require that, for any environment, this token will be eventually produced with probability 1.
 
-\textbf{Definition 13}\Co{b}
+\textbf{Definition 14}\Co{b}
 
 \textit{Given a terminable policy $\pi$ and a bounded function $r:\FH\rightarrow\Reals$, we define the function $\R_{\pi r}:\IS_\omega\rightarrow\Reals$ by
 }\Co{i}
@@ -353,7 +374,7 @@ This means that, the value of reward can be estimated empirically, but only if t
 
 In order to derive a regret bound, we will restrict attention to those reward functions for which the terminable policy can be made to terminate within time that has some finite and bounded expected value. I don't know an elegant way to characterize those reward functions in general, but we will describe one class of such functions.
 
-\textbf{Definition 14}\Co{b}
+\textbf{Definition 15}\Co{b}
 
 \textit{Consider any $C\in\Con$. Then, we can define the} total variation distance $\Dtv:C\times C\rightarrow\Reals$ \textit{by}\Co{i}
 
@@ -361,7 +382,7 @@ $$\Dtv(x,y):=\sup_{r\in\Mor\AP{C,[0,1]}} \Abs{r(x)-r(y)}$$
 
 In general, $\Dtv$ is a pseudometric. Moreover, when $C$ is finite-dimensional and bounded, it is a metrization of the natural topology. For a finite set $A$ and $C=\Delta A$, $\Dtv$ is just the usual total variation metric. For $C$ a ball of unit diameter in Euclidean space, $\Dtv$ is the Euclidean metric.
 
-\textbf{Definition 15}\Co{b}
+\textbf{Definition 16}\Co{b}
 
 \textit{Consider any $\lambda\in(0,1)$. We define the metric} $\Dtv^\lambda$ \textit{on $\IS_\omega$ by}\Co{i}
 
@@ -369,7 +390,7 @@ $$\Dtv^\lambda(\mu,\nu):=\sup_{n\in\Nats}{\lambda^n\Dtv\AP{\Prj^n\mu,\Prj^n\nu}}
 
 For any $\lambda$, $\Dtv^\lambda$ is a metrization of the inverse limit topology on $\IS_\omega$.
 
-\textbf{Proposition 3}\Co{b}
+\textbf{Proposition 5}\Co{b}
 
 \textit{Consider any $\lambda\in(0,1)$ and $\R:\IS_\omega\rightarrow\Reals$ affine and Lipschitz with respect to $\Dtv^\lambda$. Then there is a terminable policy $\pi$ and a bounded function $r:\FH\rightarrow\Reals$ s.t. $\R=\R_{\pi r}$ and}\Co{i}
 
@@ -484,13 +505,21 @@ These questions are left for future research.
 
 \begin{Huge}Proofs\end{Huge}
 
-\textbf{Proposition A.1}\Co{b}
+\textbf{Proof of Proposition 1}\Co{b}
 
-\textit{Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.}\Co{i}
+We proceed by induction on $n$. For $n=0$ there is nothing to prove since $\IS_0=\Pt$ so $\theta=\theta'$ a priori.
 
-$$A=\int_M{\left(B+CD^E-\sum_{n=0}^\infty\frac{X_n\left[Q^\gamma+R^{\int_0^1\boldsymbol{x}(t)\cdot A_n\left(v_n\otimes w_n\right) dt}\right]}{\alpha_n+\beta_n-\theta_n^\gamma F\left(B+\sin\phi\right)}\land\frac{\int_\mathcal{X}\rho_n}{\frac{df}{dx}\left(x_n\right)-v_n\mathrm{D}F}\right)}d\omega$$
+We need to show that for any $b\in\A$, $\theta_b=\theta'_b$. To show it for given $b$, we consider some $\pi$ s.t. $\pi(\Estr)=b$. Since $\theta\pi=\theta'\pi$, for any $p\in\Ob$ we have
 
-\textbf{Proof of Proposition A.1}\Co{b}
+$$\Pa{ao\sim\theta\pi}{o_0=p}=\Pa{ao\sim\theta'\pi}{o_0=p}$$
+
+By Definition 7, we get,
+
+$$\theta(p\mid b)=\theta'(p\mid b)$$
+
+By Definition 6, we get,
+
+$$\Ht_{\IS_{n-1}}\Big(\theta_{bp}\Big)=\Ht_{\IS_{n-1}}\AP{\theta'_{bp}}$$
 
 Moo! $\blacksquare$
 
