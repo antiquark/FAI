@@ -532,6 +532,22 @@ $$\AB{\theta_{a_*o_*}}\sigma(h)=\frac{\theta\pi(a_*o_*h)}{\theta\APM{o_*}{a_*}}$
 
 and similarly for $\theta'$. We have $\theta\pi=\theta'\pi$ and $\theta\APM{o_*}{a_*}=\theta'\APM{o_*}{a_*}$, which implies $\Big[\theta_{a_*o_*}\Big]\sigma=\AB{\theta'_{a_*o_*}}\sigma$. By the induction hypothesis, we get $\big[\theta_{a_*o_*}\big]=\AB{\theta'_{a_*o_*}}$. Combining this with $\Ht_{\IS_{n-1}}\big(\theta_{a_*o_*}\big)=\Ht_{\IS_{n-1}}\AP{\theta'_{a_*o_*}}$, we get $\theta_{a_*o_*}=\theta'_{a_*o_*}$. $\blacksquare$
 
+\textbf{Proposition A.1}\Co{b}
+
+\textit{Consider any $C\in\Con$, $\theta,\theta'\in\Cone{C}$ and $p\in[0,1]$. Assume that}\Co{i} 
+
+$$\Ht_C\AP{p\theta+(1-p)\theta'}>0$$
+
+\textit{Then}\Co{i}
+
+$$\AB{p\theta+(1-p)\theta'}=\frac{p\Ht_C\big(\theta\big)\big[\theta\big]+(1-p)\Ht_C\AP{\theta'}\AB{\theta'}}{p\Ht_C\big(\theta\big)+(1-p)\Ht_C\AP{\theta'}}$$
+
+Here, $\Ht_C\big(\theta\big)\big[\theta\big]$ is understood to mean $\boldsymbol{0}$ when $\Ht_C\big(\theta\big)=0$ and the same for $\theta'$.
+
+\textbf{Proof of Proposition A.1}\Co{b}
+
+Obvious from the definitions.
+
 \textbf{Proof of Proposition 2}\Co{b}
 
 Given $n\in\Nats^+$ and some $\alpha,\beta\in\Delta\AP{\A\times\Ob}^n$, to show that $\alpha=\beta$ it is sufficient to show that
@@ -546,10 +562,65 @@ $$\CP{ao\sim\alpha}{ao=a_*o_*h}{ao_{:1}=a_*o_*}=\CP{ao\sim\beta}{ao=a_*o_*h}{ao_
 
 We will use this to prove the claim by induction on $n$. For $n=0$, there is nothing to prove. For $n>0$, by Definition 7
 
-$$\Pa{ao\sim\AP{p\theta+(1-p)\theta}\pi}{ao_{:1}=a_*o_*}=\pi\APM{a_*}{\Estr}\AP{p\theta+(1-p)\theta}\APM{o_*}{ a_*}$$
+$$\Pa{ao\sim\AP{p\theta+(1-p)\theta'}\pi}{ao_{:1}=a_*o_*}=\pi\APM{a_*}{\Estr}\AP{p\theta+(1-p)\theta'}\APM{o_*}{ a_*}$$
 
 By Definition 6
-$$\Pa{ao\sim\AP{p\theta+(1-p)\theta}\pi}{ao_{:1}=a_*o_*}=\pi\APM{a_*}{\Estr}\Ht_{\IS_{n-1}}\AP{\AP{p\theta+(1-p)\theta}_{??}}$$
+$$\Pa{ao\sim\AP{p\theta+(1-p)\theta'}\pi}{ao_{:1}=a_*o_*}=\pi\APM{a_*}{\Estr}\Ht_{\IS_{n-1}}\AP{\AP{p\theta+(1-p)\theta'}_{a_*o_*}}$$
+
+$$\Pa{\AP{p\theta+(1-p)\theta'}\pi}{ao_{:1}=a_*o_*}=p\pi\APM{a_*}{\Estr}\Ht\AP{\theta_{a_*o_*}}+(1-p)\pi\APM{a_*}{\Estr}\Ht\AP{\theta'_{a_*o_*}}$$
+
+$$\Pa{\AP{p\theta+(1-p)\theta'}\pi}{ao_{:1}=a_*o_*}=p\pi\APM{a_*}{\Estr}\theta\APM{o_*}{a_*}+(1-p)\pi\APM{a_*}{\Estr}\theta'\APM{o_*}{a_*}$$
+
+$$\Pa{\AP{p\theta+(1-p)\theta'}\pi}{ao_{:1}=a_*o_*}=p\Pa{\theta\pi}{ao_{:1}=a_*o_*}+(1-p)\Pa{\theta'\pi}{ao_{:1}=a_*o_*}$$
+
+$$\Pa{\AP{p\theta+(1-p)\theta'}\pi}{ao_{:1}=a_*o_*}=\Pa{p\theta\pi+(1-p)\theta\pi}{ao_{:1}=a_*o_*}$$
+
+Furthermore, Definitions 6 and 7 imply that
+
+$$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{ao_{:1}=a_*o_*}=\Pa{\AB{\AP{p\theta+(1-p)\theta'}_{a_*o_*}}\sigma}{h}$$
+
+Here, $\sigma$ is defined by $\sigma(h):=\pi\AP{a_*o_*h}$. 
+
+Denote
+
+$$q:=\frac{p\Ht\big(\theta_{a_*o_*}\big)}{p\Ht\big(\theta_{a_*o_*}\big)+(1-p)\Ht\big(\theta'_{a_*o_*}\big)}$$
+
+By Proposition A.1
+
+$$\AB{\AP{p\theta+(1-p)\theta'}_{a_*o_*}}=q\big[\theta_{a_*o_*}\big]+(1-q)\AB{\theta'_{a_*o_*}}$$
+
+
+We get
+
+$$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{ao_{:1}=a_*o_*}=\Pa{\AP{q\big[\theta_{a_*o_*}\big]+(1-q)\AB{\theta'_{a_*o_*}}}\sigma}{h}$$
+
+By the induction hypothesis, we get
+
+$$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{ao_{:1}=a_*o_*}=\Pa{q\big[\theta_{a_*o_*}\big]\sigma+(1-q)\AB{\theta'_{a_*o_*}}\sigma}{h}$$
+
+Decomposing the right hand side and applying the same reasoning in reverse,
+
+$$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{a_*o_*}=q\CP{\theta\pi}{a_*o_*h}{a_*o_*}+(1-q)\CP{\theta'\pi}{a_*o_*h}{a_*o_*}$$
+
+By Definition 6, $q$ can be written as
+
+$$q=\frac{p\theta\APM{o_*}{a_*}}{p\theta\APM{o_*}{a_*}+(1-p)\theta'\APM{o_*}{a_*}}$$
+
+Multiplying the numerator and denominator by $\pi\APM{a_*}{\Estr}$, we get
+
+$$q=\frac{p\pi\APM{a_*}{\Estr}\theta\APM{o_*}{a_*}}{p\pi\APM{a_*}{\Estr}\theta\APM{o_*}{a_*}+(1-p)\pi\APM{a_*}{\Estr}\theta'\APM{o_*}{a_*}}$$
+
+$$q=\frac{p\Pa{\theta\pi}{a_*o_*}}{p\Pa{\theta\pi}{a_*o_*}+(1-p)\Pa{\theta'\pi}{a_*o_*}}$$
+
+Combining this with the previous identity, we get 
+
+$$\ldots=\frac{p\Pa{\theta\pi}{a_*o_*}\CP{\theta\pi}{a_*o_*h}{a_*o_*}+(1-p)\Pa{\theta'\pi}{a_*o_*}\CP{\theta'\pi}{a_*o_*h}{a_*o_*}}{p\Pa{\theta\pi}{a_*o_*}+(1-p)\Pa{\theta'\pi}{a_*o_*}}$$
+
+$$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{a_*o_*}=\frac{p\Pa{\theta\pi}{a_*o_*h}+(1-p)\Pa{\theta'\pi}{a_*o_*h}}{p\Pa{\theta\pi}{a_*o_*}+(1-p)\Pa{\theta'\pi}{a_*o_*}}$$
+
+$$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{a_*o_*}=\frac{\Pa{p\theta\pi+(1-p)\theta'\pi}{a_*o_*h}}{\Pa{p\theta\pi+(1-p)\theta'\pi}{a_*o_*}}$$
+
+$$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{a_*o_*}=\CP{p\theta\pi+(1-p)\theta'\pi}{a_*o_*h}{a_*o_*}\ \blacksquare$$
 
 \end{document}
 
