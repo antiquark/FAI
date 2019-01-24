@@ -128,6 +128,7 @@
 \newcommand{\De}{\Delta}
 \newcommand{\CSE}{G}
 \usepackage{color}
+\usepackage[normalem]{ulem}
 
 \begin{document}
 
@@ -684,7 +685,23 @@ For any $n\in\Nats$, Proposition 2 implies that
 
 $$\AP{p\cdot\Prj^n\mu+(1-p)\cdot\Prj^n\mu'}\pi=p\big(\Prj^n\mu\big)\pi+(1-p)\AP{\Prj^n\mu'}\pi$$
 
-TBD
+$\Prj^n$ is an affine mapping, therefore
+
+$$\Prj^n\AP{p\mu+(1-p)\mu'}\pi=p\big(\Prj^n\mu\big)\pi+(1-p)\AP{\Prj^n\mu'}\pi$$
+
+Using Proposition A.4
+
+$$\AP{p\mu+(1-p)\mu'}\pi_{:n}=p\mu\pi_{:n}+(1-p)\mu'\pi_{:n}=\AP{p\mu\pi+(1-p)\mu'\pi}_{:n}$$
+
+Since this holds for any $n$, we must have that
+
+$$\AP{p\mu+(1-p)\mu'}\pi=p\mu\pi+(1-p)\mu'\pi\ \blacksquare$$
+
+\textbf{Proof of Theorem 1}\Co{b}
+
+\textit{Direction 1:}\Co{i} $\R_{\pi r}$ is affine by Proposition 4...
+
+\textit{Direction 2:}\Co{i} TBD
 
 \end{document}
 
