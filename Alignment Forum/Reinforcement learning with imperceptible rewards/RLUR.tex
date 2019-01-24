@@ -92,7 +92,8 @@
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\AX}{\A\sqcup\{\bot\}}
 \newcommand{\Ob}{\mathcal{O}}
-\newcommand{\FH}{\AP{\A\times\Ob}^*}
+\newcommand{\AO}{\AP{\A\times\Ob}}
+\newcommand{\FH}{\AO^*}
 \newcommand{\FHS}{\AP{\A\times\St}^*}
 \newcommand{\R}{\mathcal{R}}
 \newcommand{\T}{\mathcal{T}}
@@ -110,6 +111,7 @@
 \newcommand{\DMB}{D_{\mathrm{MB}}}
 \newcommand{\Est}{\mathrm{est}}
 \newcommand{\PE}{\pi_\Est}
+\newcommand{\X}{\mathcal{X}}
 \newcommand{\N}{\mathrm{N}}
 \newcommand{\V}{\mathrm{V}}
 \newcommand{\Q}{\mathrm{Q}}
@@ -261,18 +263,18 @@ The point of defining $\IS_n$ in this manner is that (i) different points in $\I
 
 \textbf{Definition 7}\Co{b}
 
-\textit{Given $\theta\in\IS_n$ and $\pi:\AP{\A\times\Ob}^{<n}\K\A$ (a policy), we define $\theta\pi\in\Delta\AP{\A\times\Ob}^n$ (probability distribution over histories resulting from following policy $\pi$ in state $\theta$) by}\Co{i}
+\textit{Given $\theta\in\IS_n$ and $\pi:\AO^{<n}\K\A$ (a policy), we define $\theta\pi\in\Delta\AO^n$ (probability distribution over histories resulting from following policy $\pi$ in state $\theta$) by}\Co{i}
 
 $$\Pa{ao\sim\theta\pi}{a_m=a_*}=\Ea{ao\sim\theta\pi}{\pi\APM{a_*}{ao_{:m}}}$$
 $$\Pa{ao\sim\theta\pi}{o_m=o_*}=\Ea{ao\sim\theta\pi}{\theta\APM{o_*}{ao_{:m}a_m}}$$
 
 \textbf{Proposition 1}\Co{b}
 
-\textit{Consider some $\theta,\theta'\in\IS_n$ and assume that for any $\pi:\AP{\A\times\Ob}^{<n}\rightarrow\A$, $\theta\pi=\theta'\pi$. Then, $\theta=\theta'$.}\Co{i}
+\textit{Consider some $\theta,\theta'\in\IS_n$ and assume that for any $\pi:\AO^{<n}\rightarrow\A$, $\theta\pi=\theta'\pi$. Then, $\theta=\theta'$.}\Co{i}
 
 \textbf{Proposition 2}\Co{b}
 
-\textit{Consider some $\theta,\theta'\in\IS_n$,  $\pi:\AP{\A\times\Ob}^{<n}\K\A$ and $p\in[0,1]$. Then}\Co{i}
+\textit{Consider some $\theta,\theta'\in\IS_n$,  $\pi:\AO^{<n}\K\A$ and $p\in[0,1]$. Then}\Co{i}
 
 $$\AP{p\theta+(1-p)\theta'}\pi=p\theta\pi+(1-p)\theta'\pi$$
 
@@ -314,18 +316,18 @@ Like in the finite time case, we have
 
 \textbf{Definition 12}\Co{b}
 
-\textit{Given $\mu\in\IS_\omega$ and $\pi:\AP{\A\times\Ob}^{*}\K\A$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^\omega$ by}\Co{i}
+\textit{Given $\mu\in\IS_\omega$ and $\pi:\FH\K\A$, we define $\mu\pi\in\Delta\AO^\omega$ by}\Co{i}
 
 $$\Pa{ao\sim\mu\pi}{a_n=a_*}=\Ea{ao\sim\mu\pi}{\pi\APM{a_*}{ao_{:n}}}$$
 $$\Pa{ao\sim\mu\pi}{o_n=o_*}=\Ea{ao\sim\mu\pi}{\mu\APM{o_*}{ao_{:n}a_n}}$$
 
 \textbf{Proposition 3}\Co{b}
 
-\textit{Consider some $\mu,\mu'\in\IS_\omega$ and assume that for any $\pi:\AP{\A\times\Ob}^{*}\rightarrow\A$, $\mu\pi=\mu'\pi$. Then, $\mu=\mu'$.}\Co{i}
+\textit{Consider some $\mu,\mu'\in\IS_\omega$ and assume that for any $\pi:\FH\rightarrow\A$, $\mu\pi=\mu'\pi$. Then, $\mu=\mu'$.}\Co{i}
 
 \textbf{Proposition 4}\Co{b}
 
-\textit{Consider some $\mu,\mu'\in\IS_\omega$,  $\pi:\AP{\A\times\Ob}^{*}\K\A$ and $p\in[0,1]$. Then}\Co{i}
+\textit{Consider some $\mu,\mu'\in\IS_\omega$,  $\pi:\FH\K\A$ and $p\in[0,1]$. Then}\Co{i}
 
 $$\AP{p\mu+(1-p)\mu'}\pi=p\mu\pi+(1-p)\mu'\pi$$
 
@@ -335,11 +337,11 @@ We can now give the first definition of an instrumental reward function: a conti
 
 An alternative approach is to consider the notion of "experiment" explicitly.
 
-We will use the notation $\mathcal{X}^{\leq\omega}:=\mathcal{X}^*\sqcup\mathcal{X}^\omega$. Given a logical condition $\phi$, the symbol $\boldsymbol{1}_\phi$ will denote 1 when $\phi$ is true and 0 when $\phi$ is false.
+We will use the notation $\X^{\leq\omega}:=\X^*\sqcup\X^\omega$. Given a logical condition $\phi$, the symbol $\boldsymbol{1}_\phi$ will denote 1 when $\phi$ is true and 0 when $\phi$ is false.
 
 \textbf{Definition 13}\Co{b}
 
-\textit{Given $\pi: \FH\K\AX$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AP{\A\times\Ob}^{\leq\omega}$ by}\Co{i}
+\textit{Given $\pi: \FH\K\AX$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AO^{\leq\omega}$ by}\Co{i}
 
 $$\Pa{ao\sim\mu\pi}{a_n=a_*}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}\geq n}\pi\APM{a_*}{ao_{:n}}}$$
 $$\Pa{ao\sim\mu\pi}{o_n=o_*}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}> n}\mu\APM{o_*}{ao_{:n}a_n}}$$
@@ -464,7 +466,7 @@ In fact, for the MDP setting we examine, the bound we give can probably be subst
 
 \begin{Large}The Death of the Agent and Kamikaze Strategies\end{Large}
 
-There is one potential application of defining rewards that are not a direct function of observations which seems not supported by instrumental rewards as we defined them. Namely, one can imagine agents that are motivated to follow a certain strategy that is designed to \textit{destroy the agent}\Co{i} but produce some desirable results in the external world ("kamikaze policy"). In other words, although survival is a convergent instrumental goal, it seems entirely reasonable for it to be sacrificed in certain specific scenarios. To give an example, imagine a bodyguard robot whose primary goal is keeping a certain person alive. If assassins shoot at the person, and the only wait to stop them is for the robot to block the bullets with its body, then it can be the optimal strategy, even if it will destroy the robot and prevent it from continuing its function as bodyguard (assuming that e.g. it will give the person a chance to escape or someone else a chance to stop the assassins).
+There is one potential application of defining rewards that are not a direct function of observations which seems not supported by instrumental rewards as we defined them. Namely, one can imagine agents that are motivated to follow a certain strategy that is designed to \textit{destroy the agent}\Co{i} but produce some desirable results in the external world ("kamikaze strategy"). In other words, although survival is a convergent instrumental goal, it seems entirely reasonable for it to be sacrificed in certain specific scenarios. To give an example, imagine a bodyguard robot whose primary goal is keeping a certain person alive. If assassins shoot at the person, and the only wait to stop them is for the robot to block the bullets with its body, then it can be the optimal strategy, even if it will destroy the robot and prevent it from continuing its function as bodyguard (assuming that e.g. it will give the person a chance to escape or someone else a chance to stop the assassins).
 
 Our formalism doesn't directly address the possibility of the agent's death, because the sequence of actions and observations is assumed to be infinite. One simple way to accommodate death is postulating a special observation $\bot\in\Ob$ s.t. it is never received before death and always received after death. If we do this, then death corresponds to a specific instrumental state and therefore its reward is a fixed constant. This seems incompatible with kamikaze strategies where the decision of self-sacrifice is contingent on conditions in the external world after death. 
 
@@ -521,7 +523,7 @@ By Definition 6, we get,
 
 $$\Ht_{\IS_{n-1}}\big(\theta_{a_*o_*}\big)=\Ht_{\IS_{n-1}}\AP{\theta'_{a_*o_*}}$$
 
-If this value vanishes then $\theta_{a_*o_*}=\theta'_{a_*o_*}=\boldsymbol{0}$. Otherwise, consider any $\sigma:\AP{\A\times\Ob}^{<n-1}\rightarrow\A$ and define $\pi:\AP{\A\times\Ob}^{<n}\rightarrow\A$ by
+If this value vanishes then $\theta_{a_*o_*}=\theta'_{a_*o_*}=\boldsymbol{0}$. Otherwise, consider any $\sigma:\AO^{<n-1}\rightarrow\A$ and define $\pi:\AO^{<n}\rightarrow\A$ by
 
 $$\pi(\Estr):=a_*$$
 $$\pi(aoh):=\sigma(h)$$
@@ -550,13 +552,13 @@ Obvious from the definitions.
 
 \textbf{Proof of Proposition 2}\Co{b}
 
-Given $n\in\Nats^+$ and some $\alpha,\beta\in\Delta\AP{\A\times\Ob}^n$, to show that $\alpha=\beta$ it is sufficient to show that
+Given $n\in\Nats^+$ and some $\alpha,\beta\in\Delta\AO^n$, to show that $\alpha=\beta$ it is sufficient to show that
 
 1. For any $a_*\in\A$ and $o_*\in\Ob$, 
 
 $$\Pa{ao\sim\alpha}{ao_{:1}=a_*o_*}=\Pa{ao\sim\beta}{ao_{:1}=a_*o_*}$$
 
-2. For any $a_*\in\A$ and $o_*\in\Ob$, if $\Pa{ao\sim\alpha}{ao_{:1}=a_*o_*}>0$ then for any $h\in\AP{\A\times\Ob}^{n-1}$
+2. For any $a_*\in\A$ and $o_*\in\Ob$, if $\Pa{ao\sim\alpha}{ao_{:1}=a_*o_*}>0$ then for any $h\in\AO^{n-1}$
 
 $$\CP{ao\sim\alpha}{ao=a_*o_*h}{ao_{:1}=a_*o_*}=\CP{ao\sim\beta}{ao=a_*o_*h}{ao_{:1}=a_*o_*}$$
 
@@ -621,6 +623,26 @@ $$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{a_*o_*}=\frac{p\Pa{\theta\pi}{a_*o_
 $$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{a_*o_*}=\frac{\Pa{p\theta\pi+(1-p)\theta'\pi}{a_*o_*h}}{\Pa{p\theta\pi+(1-p)\theta'\pi}{a_*o_*}}$$
 
 $$\CP{\AP{p\theta+(1-p)\theta'}\pi}{a_*o_*h}{a_*o_*}=\CP{p\theta\pi+(1-p)\theta'\pi}{a_*o_*h}{a_*o_*}\ \blacksquare$$
+
+Given $\mu\in\Delta\X^\omega$ and $f:\mathcal{X}^\omega\rightarrow\mathcal{X}^n$ defined by $f(x):=x_{:n}$, we will denote $\mu_{:n}:=f_*\mu$.
+
+\textbf{Proposition A.2}\Co{b}
+
+\textit{Consider any $n\in\Nats$, $\theta\in\IS_{n+1}$, $a\in\A$ and $h\in\Dom\theta$ s.t. $\Abs{h}< n$. Then,}\Co{i} 
+
+$$\theta(ha)=\Prj_n(\theta)(ha)$$
+
+\textbf{Proof of Proposition A.2}\Co{b}
+
+We prove the claim by induction on $n$. For $n=0$, there is nothing to prove. For $n>0$...
+
+\textbf{Proof of Proposition 3}\Co{b}
+
+??? It's easy to see that for any $n\in\Nats$, $\AP{\Prj^n\mu}\pi=\mu\pi_{:n}$. Therefore, $\mu\pi=\mu'\pi$ implies that $\big(\Prj^n\mu\big)\pi=\AP{\Prj^n\mu'}\pi$. By Proposition 1, we get $\Prj^n\mu=\Prj^n\mu'$, and therefore $\mu=\mu'$. $\blacksquare$
+
+\textbf{Proof of Proposition 4}\Co{b}
+
+TBD
 
 \end{document}
 
