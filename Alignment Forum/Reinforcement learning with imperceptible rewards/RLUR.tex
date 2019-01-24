@@ -628,13 +628,51 @@ Given $\mu\in\Delta\X^\omega$ and $f:\mathcal{X}^\omega\rightarrow\mathcal{X}^n$
 
 \textbf{Proposition A.2}\Co{b}
 
-\textit{Consider any $n\in\Nats$, $\theta\in\IS_{n+1}$, $a\in\A$ and $h\in\Dom\theta$ s.t. $\Abs{h}< n$. Then,}\Co{i} 
+\textit{Consider any $C,D\in\Con$ and $f\in\Mor(C,D)$. Then,}\Co{i}
 
-$$\theta(ha)=\Prj_n(\theta)(ha)$$
+$$\Ht_D\circ \Cone f=h_C$$
 
 \textbf{Proof of Proposition A.2}\Co{b}
 
-We prove the claim by induction on $n$. For $n=0$, there is nothing to prove. For $n>0$...
+Obvious from the definitions.
+
+\textbf{Proposition A.3}\Co{b}
+
+\textit{Consider any $C,D\in\Con$, $f\in\Mor(C,D)$ and $\theta\in\Cone C\setminus\boldsymbol{0}$. Then,}\Co{i}
+
+$$\AB{\AP{\Cone f}(\theta)}=f\AP{\AB{\theta}}$$
+
+\textbf{Proof of Proposition A.3}\Co{b}
+
+Obvious from the definitions.
+
+\textbf{Proposition A.4}\Co{b}
+
+\textit{Consider any $n\in\Nats$, $\theta\in\IS_{n+1}$, $a\in\A$ and $h\in\Dom\theta$ s.t. $\Abs{h}< n$. Then,}\Co{i} 
+
+$$\Prj_n(\theta)(ha)=\theta(ha)$$
+
+\textbf{Proof of Proposition A.4}\Co{b}
+
+We prove the claim by induction on $n$. For $n=0$, there is nothing to prove. Assume $n>0$. For $h=\Estr$, we have
+
+$$\Prj_n(\theta)\APM{o}{a}=\Ht\AP{\Prj_n(\theta)_{ao}}=\Ht\AP{\AP{\Cone\Prj_{n-1}}\AP{\theta_{ao}}}$$
+
+By Proposition A.2
+
+$$\Prj_n(\theta)\APM{o}{a}=\Ht\AP{\theta_{ao}}=\theta\APM{o}{a}$$
+
+Now suppose that $h=a'o'h'$. We get
+
+$$\Prj_n(\theta)\AP{a'o'h'a}=\AB{\Prj_n(\theta)_{a'o'}}\AP{h'a}=\AB{\AP{\Cone\Prj_{n-1}}\AP{\theta_{a'o'}}}\AP{h'a}$$
+
+By Proposition A.3
+
+$$\Prj_n(\theta)\AP{a'o'h'a}=\Prj_{n-1}\AB{\theta_{a'o'}}\AP{h'a}$$
+
+Using the induction hypothesis
+
+$$\Prj_n(\theta)\AP{a'o'h'a}=\AB{\theta_{a'o'}}\AP{h'a}=\theta\AP{a'o'h'a}\ \blacksquare$$
 
 \textbf{Proof of Proposition 3}\Co{b}
 
