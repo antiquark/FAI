@@ -308,7 +308,7 @@ $$\Dom\mu:=\bigcup_{n=0}^\infty \Dom\Prj^n\mu$$
 
 \textbf{Definition 11}\Co{b}
 
-\textit{Given $\mu\in\IS_\omega$, $h\in\Dom\theta$ and $a\in\A$, we define $\mu(ha)\in\Delta\Ob$ by}\Co{i}
+\textit{Given $\mu\in\IS_\omega$, $h\in\Dom\mu$ and $a\in\A$, we define $\mu(ha)\in\Delta\Ob$ by}\Co{i}
 
 $$\mu(ha):=\Prj^{\Abs{h}+1}\mu(ha)$$
 
@@ -676,9 +676,13 @@ $$\Prj_n(\theta)\AP{a'o'h'a}=\AB{\theta_{a'o'}}\AP{h'a}=\theta\AP{a'o'h'a}\ \bla
 
 \textbf{Proof of Proposition 3}\Co{b}
 
-??? It's easy to see that for any $n\in\Nats$, $\AP{\Prj^n\mu}\pi=\mu\pi_{:n}$. Therefore, $\mu\pi=\mu'\pi$ implies that $\big(\Prj^n\mu\big)\pi=\AP{\Prj^n\mu'}\pi$. By Proposition 1, we get $\Prj^n\mu=\Prj^n\mu'$, and therefore $\mu=\mu'$. $\blacksquare$
+Proposition A.4 implies that, in Definition 11, we can replace $\Abs{h}+1$ by any $m\geq\Abs{h}+1$. Therefore, for any $n\in\Nats$, $\AP{\Prj^n\mu}\pi=\mu\pi_{:n}$. Hence, $\mu\pi=\mu'\pi$ implies that $\big(\Prj^n\mu\big)\pi=\AP{\Prj^n\mu'}\pi$. By Proposition 1, we get $\Prj^n\mu=\Prj^n\mu'$, and therefore $\mu=\mu'$. $\blacksquare$
 
 \textbf{Proof of Proposition 4}\Co{b}
+
+For any $n\in\Nats$, Proposition 2 implies that
+
+$$\AP{p\cdot\Prj^n\mu+(1-p)\cdot\Prj^n\mu'}\pi=p\big(\Prj^n\mu\big)\pi+(1-p)\AP{\Prj^n\mu'}\pi$$
 
 TBD
 
