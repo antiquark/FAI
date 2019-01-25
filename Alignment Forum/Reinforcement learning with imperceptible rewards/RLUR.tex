@@ -729,7 +729,19 @@ This contradicts the assumption that $\pi$ is terminable. $\blacksquare$
 
 \textbf{Proof of Theorem 1}\Co{b}
 
-\textit{Direction 1:}\Co{i} $\R_{\pi r}$ is affine by Proposition 4...
+\textit{Direction 1:}\Co{i} $\R_{\pi r}$ is affine by Proposition 4. To verify it is continuous, consider a sequence $\AC{\mu_k\in\IS_\omega}_{k\in\Nats}$ s.t. $\mu_*:=\lim_{k\rightarrow\infty}\mu_k$ exists. Denote $\Delta r:=\sup r - \inf r$, $\mu_k^n:=\Prj^n\AP{\mu_k}$ and $\mu^n_*:=\Prj^n\AP{\mu_*}$. For any $n\in\Nats$, we can decompose the expected value into the contribution of histories at length at most $n$ and the contribution of longer histories. This yields???
+
+$$\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq \Delta r\AP{\Dtva{\mu_k^n,\mu_*^n}+\Pa{\mu_k\pi}{\Abs{h}>n} +\Pa{\mu_*\pi}{\Abs{h}>n}}$$
+
+$\mu_k^n$ converges to $\mu_*^n$ as $k$ goes to $\infty$, therefore $\Dtva{\mu_k^n,\mu_*^n}$ converges to 0 and we get
+
+$$\lim_{k\rightarrow\infty}\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq 2\Delta r\sup_{\mu\in\IS_\omega}\Pa{\mu\pi}{\Abs{h}>n}$$
+
+Since this holds for any $n\in\Nats$, we get
+
+$$\lim_{k\rightarrow\infty}\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq 2\Delta r\inf_{n\in\Nats}\sup_{\mu\in\IS_\omega}\Pa{\mu\pi}{\Abs{h}>n}$$
+
+By Proposition A.5, the right hand side vanishes.
 
 \textit{Direction 2:}\Co{i} TBD
 
