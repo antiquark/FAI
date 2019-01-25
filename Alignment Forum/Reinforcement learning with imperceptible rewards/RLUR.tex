@@ -699,15 +699,33 @@ $$\AP{p\mu+(1-p)\mu'}\pi=p\mu\pi+(1-p)\mu'\pi\ \blacksquare$$
 
 \textbf{Proposition A.5}\Co{b}
 
-\textit{Consider any terminable policy $\pi$. Then, there exists a sequence $\AC{p_n\in[0,1]}_{n\in\Nats}$ s.t.}\Co{i}
+\textit{For any terminable policy $\pi$}\Co{i}
 
-1. \textit{For any $\mu\in\IS_\omega$, $\Pa{h\sim\mu\pi}{\Abs{h}>n}< p_n$.}\Co{i}
-
-2. $\lim_{n\rightarrow\infty} p_n=0$
+$$\lim_{n\rightarrow\infty}\sup_{\mu\in\IS_\omega}\Pa{h\sim\mu\pi}{\Abs{h}>n}=0$$
 
 \textbf{Proof of Proposition A.5}\Co{b}
 
-TBD
+Assume to the contrary that there is $\epsilon\in(0,1)$ and sequences $\AC{n_k\in\Nats}_{k\in\Nats}$ and $\AC{\mu_k\in\IS_\omega}_{k\in\Nats}$ s.t. $n_{k+1} > n_k$ and, for any $k\in\Nats$
+
+$$\Pa{h\sim\mu_k\pi}{\Abs{h}>n_k} > \epsilon$$
+
+$\IS_\omega$ is compact, therefore $\AC{\mu_k}$ has a convergent subsequence. Without loss of generality, we can assume that $\AC{\mu_k}$ itself converges and denote $\mu_*:=\lim_{k\rightarrow\infty}\mu_k$. For any $k\in\Nats$ and $j > k$, we have $n_k < n_j$ and therefore
+
+$$\Pa{h\sim\mu_j\pi}{\Abs{h}>n_k} \geq \Pa{h\sim\mu_j\pi}{\Abs{h}>n_j} > \epsilon$$
+
+Using Proposition A.4, it follows that
+
+$$\Pa{h\sim\Prj^{n_k+1}\AP{\mu_j}\pi}{\Abs{h}>n_k} > \epsilon$$
+
+The right hand side is clearly continuous in $\Prj^{n_k+1}\AP{\mu_j}$, and the latter converges to $\Prj^{n_k+1}\AP{\mu_*}$ as $j$ goes to $\infty$. We get
+
+$$\Pa{h\sim\mu_*\pi}{\Abs{h}>n_k}=\Pa{h\sim\Prj^{n_k+1}\AP{\mu_*}\pi}{\Abs{h}>n_k} > \epsilon$$
+
+Since this holds for any $k$, it follows that
+
+$$\Pa{h\sim\mu_*\pi}{\Abs{h}=\infty}=\lim_{k\rightarrow\infty}\Pa{h\sim\mu_*\pi}{\Abs{h}>n_k} \geq \epsilon$$
+
+This contradicts the assumption that $\pi$ is terminable. $\blacksquare$
 
 \textbf{Proof of Theorem 1}\Co{b}
 
