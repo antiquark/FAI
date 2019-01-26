@@ -701,7 +701,7 @@ $$\AP{p\mu+(1-p)\mu'}\pi=p\mu\pi+(1-p)\mu'\pi\ \blacksquare$$
 
 \textit{For any terminable policy $\pi$}\Co{i}
 
-$$\lim_{n\rightarrow\infty}\sup_{\mu\in\IS_\omega}\Pa{h\sim\mu\pi}{\Abs{h}>n}=0$$
+$$\Lim{n}\sup_{\mu\in\IS_\omega}\Pa{h\sim\mu\pi}{\Abs{h}>n}=0$$
 
 \textbf{Proof of Proposition A.5}\Co{b}
 
@@ -709,7 +709,7 @@ Assume to the contrary that there is $\epsilon\in(0,1)$ and sequences $\AC{n_k\i
 
 $$\Pa{h\sim\mu_k\pi}{\Abs{h}>n_k} > \epsilon$$
 
-$\IS_\omega$ is compact, therefore $\AC{\mu_k}$ has a convergent subsequence. Without loss of generality, we can assume that $\AC{\mu_k}$ itself converges and denote $\mu_*:=\lim_{k\rightarrow\infty}\mu_k$. For any $k\in\Nats$ and $j > k$, we have $n_k < n_j$ and therefore
+$\IS_\omega$ is compact, therefore $\AC{\mu_k}$ has a convergent subsequence. Without loss of generality, we can assume that $\AC{\mu_k}$ itself converges and denote $\mu_*:=\Lim{k}\mu_k$. For any $k\in\Nats$ and $j > k$, we have $n_k < n_j$ and therefore
 
 $$\Pa{h\sim\mu_j\pi}{\Abs{h}>n_k} \geq \Pa{h\sim\mu_j\pi}{\Abs{h}>n_j} > \epsilon$$
 
@@ -723,23 +723,49 @@ $$\Pa{h\sim\mu_*\pi}{\Abs{h}>n_k}=\Pa{h\sim\Prj^{n_k+1}\AP{\mu_*}\pi}{\Abs{h}>n_
 
 Since this holds for any $k$, it follows that
 
-$$\Pa{h\sim\mu_*\pi}{\Abs{h}=\infty}=\lim_{k\rightarrow\infty}\Pa{h\sim\mu_*\pi}{\Abs{h}>n_k} \geq \epsilon$$
+$$\Pa{h\sim\mu_*\pi}{\Abs{h}=\infty}=\Lim{k}\Pa{h\sim\mu_*\pi}{\Abs{h}>n_k} \geq \epsilon$$
 
 This contradicts the assumption that $\pi$ is terminable. $\blacksquare$
 
+\textbf{Proposition A.6}\Co{b}
+
+\textit{Consider $\AC{X_n}_{n\in\Nats}$ a sequence of compact Polish spaces, and $\AC{\Prj_n:X_{n+1}\rightarrow X_n}_{n\in\Nats}$ continuous mappings. Denote}\Co{i}
+
+$$X_\omega:=\varprojlim_n X_n$$
+
+\textit{Denote $\Prj^n:X_\omega\rightarrow X_n$ the canonical mapping. Let $f:X\rightarrow\Reals$ be continuous. Then,}\Co{i}
+
+$$\Lim{n}\sup_{\substack{x\in X_n\\x_{1,2}\in\AP{\Prj^n}^{-1}(x)}}\Abs{f\AP{x_1}-f\AP{x_2}}=0$$
+
+\textbf{Proof of Proposition A.6}\Co{b}
+
+Assume to the contrary that there is $\epsilon\in\Reals^+$, and sequences $\AC{n_k\in\Nats}_{k\in\Nats}$, $\AC{x_1^k,x_2^k\in X_\omega}_{k\in\Nats}$ s.t. $n_{k+1}>n_k$, $\Prj^{n_k}\AP{x_1^k}=\Prj^{n_k}\AP{x_2^k}$ and $f\AP{x_1^k}-f\AP{x_2^k}>\epsilon$. Without loss of generality, we assume that $n_k=k$ and the limits $x_{1,2}^*:=\Lim{n}x_{1,2}^n$ exist (the latter using the fact $X_\omega$ is compact by Tychonoff's theorem). It follows that $f\AP{x_1^*}-f\AP{x_2^*}\geq\epsilon$, and in particular $x_1^*\ne x_2^*$ and therefore there is $m\in\Nats$ s.t. $\Prj^m\AP{x_1^*}\ne\Prj^m\AP{x_2^*}$. On the other hand, $\Prj^{n}\AP{x_1^n}=\Prj^{n}\AP{x_2^n}$, implying that, for $n\geq m$, $\Prj^{m}\AP{x_1^n}=\Prj^{m}\AP{x_2^n}$ and therefore $\Prj^m\AP{x_1^*}=\Prj^m\AP{x_2^*}$, a contradiction. $\blacksquare$
+
+\textbf{Proposition A.7}\Co{b}
+
+\textit{Let $V$ be a finite-dimensional normed vector space and $W\subseteq V^*$ a linear subspace. Suppose $v\in V$ and $\epsilon\in\Reals^+$ are s.t. for any $\alpha\in W$, $\Abs{\alpha(v)} \leq \epsilon\Norm{\alpha}$ (we use the standard dual norm on $V^*$ here). Then, there is $v'\in W^\bot\subseteq V$ s.t. $\Norm{v-v'}\leq\epsilon$.}\Co{i}
+
+\textbf{Proof of Proposition A.7}\Co{b}
+
+Consider $v^*\in W^*$ defined by $v^*(\alpha):=\alpha(v)$. By the assumption about $v$, $\Norm{v^*}\leq\epsilon$. By the Hahn-Banach theorem, there is $u\in V^{**}$ s.t. $u|_W=v^*$ and $\Norm{u}\leq\epsilon$. Using the canonical isomorphism $V\cong V^{**}$, $u$ corresponds to some $u^*\in V$, and it follows that $\Norm{u}\leq\epsilon$ and for any $\alpha\in W$, $\alpha(u)=\alpha(v)$. We now take $v':=v-u$. $\blacksquare$
+
+\textbf{Proposition A.8}\Co{b}
+
+TBD % descend of an affine function onto a polytope
+
 \textbf{Proof of Theorem 1}\Co{b}
 
-\textit{Direction 1:}\Co{i} $\R_{\pi r}$ is affine by Proposition 4. To verify it is continuous, consider a sequence $\AC{\mu_k\in\IS_\omega}_{k\in\Nats}$ s.t. $\mu_*:=\lim_{k\rightarrow\infty}\mu_k$ exists. Denote $\Delta r:=\sup r - \inf r$, $\mu_k^n:=\Prj^n\AP{\mu_k}$ and $\mu^n_*:=\Prj^n\AP{\mu_*}$. For any $n\in\Nats$, we can decompose the expected value into the contribution of histories at length at most $n$ and the contribution of longer histories. This yields???
+\textit{Direction 1:}\Co{i} $\R_{\pi r}$ is affine by Proposition 4. To verify it is continuous, consider a sequence $\AC{\mu_k\in\IS_\omega}_{k\in\Nats}$ s.t. $\mu_*:=\Lim{k}\mu_k$ exists. Denote $\Delta r:=\sup r - \inf r$, $\mu_k^n:=\Prj^n\AP{\mu_k}$ and $\mu^n_*:=\Prj^n\AP{\mu_*}$. For any $n\in\Nats$, we can decompose the expected value into the contribution of histories at length at most $n$ and the contribution of longer histories.
 
 $$\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq \Delta r\AP{\Dtva{\mu_k^n,\mu_*^n}+\Pa{\mu_k\pi}{\Abs{h}>n} +\Pa{\mu_*\pi}{\Abs{h}>n}}$$
 
 $\mu_k^n$ converges to $\mu_*^n$ as $k$ goes to $\infty$, therefore $\Dtva{\mu_k^n,\mu_*^n}$ converges to 0 and we get
 
-$$\lim_{k\rightarrow\infty}\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq 2\Delta r\sup_{\mu\in\IS_\omega}\Pa{\mu\pi}{\Abs{h}>n}$$
+$$\LimSup{k}\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq 2\Delta r\sup_{\mu\in\IS_\omega}\Pa{\mu\pi}{\Abs{h}>n}$$
 
 Since this holds for any $n\in\Nats$, we get
 
-$$\lim_{k\rightarrow\infty}\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq 2\Delta r\inf_{n\in\Nats}\sup_{\mu\in\IS_\omega}\Pa{\mu\pi}{\Abs{h}>n}$$
+$$\LimSup{k}\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq 2\Delta r\inf_{n\in\Nats}\sup_{\mu\in\IS_\omega}\Pa{\mu\pi}{\Abs{h}>n}$$
 
 By Proposition A.5, the right hand side vanishes.
 
