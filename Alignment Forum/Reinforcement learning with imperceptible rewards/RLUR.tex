@@ -375,6 +375,8 @@ $$\R(h,\mu)=\R_{\pi_h r_h}(\mu)$$
 
 This means that, the value of reward can be estimated empirically, but only if the agent remembers the entire observation history. If the history is forgotten at some point, it might never be able to estimate the reward again. We will such reward functions "semi-instrumental".
 
+Although semi-instrumental reward functions are more general than instrumental reward functions, I think that there is some interest in studying the narrower class. Arguably, instrumental reward functions are a better model of what counts as "consequentialist" or "goal-directed" behavior, since they depend only on the state of the environment. Indeed, it is easy to construct a semi-instrumental reward function that makes any given policy Bayes-optimal for any given prior, so semi-instrumental reward functions are incapable (without further assumptions) to distinguish between "intelligent" and "unintelligent" behavior. On the other hand, optimality w.r.t. some instrumental reward function seems like a stronger condition.
+
 In order to derive a regret bound, we will restrict attention to those reward functions for which the terminable policy can be made to terminate within time that has some finite and bounded expected value. I don't know an elegant way to characterize those reward functions in general, but we will describe one class of such functions.
 
 \textbf{Definition 15}\Co{b}
