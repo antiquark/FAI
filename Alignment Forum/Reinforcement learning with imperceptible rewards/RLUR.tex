@@ -99,7 +99,7 @@
 \newcommand{\T}{\mathcal{T}}
 \newcommand{\Hy}{\mathcal{H}}
 \newcommand{\ER}{\mathrm{E}}
-\newcommand{\Con}{\boldsymbol{\mathrm{ConSet}}}
+\newcommand{\Con}{{\boldsymbol{\mathrm{ConSet}}}}
 \DeclareMathOperator{\Cone}{Cone}
 \newcommand{\Ht}{\mathrm{h}}
 \newcommand{\In}{\mathcal{I}}
@@ -745,15 +745,33 @@ Assume to the contrary that there is $\epsilon\in\Reals^+$, and sequences $\AC{n
 
 \textbf{Proposition A.7}\Co{b}
 
-\textit{Let $V$ be a finite-dimensional normed vector space and $W\subseteq V^*$ a linear subspace. Suppose $v\in V$ and $\epsilon\in\Reals^+$ are s.t. for any $\alpha\in W$, $\Abs{\alpha(v)} \leq \epsilon\Norm{\alpha}$ (we use the standard dual norm on $V^*$ here). Then, there is $v'\in W^\bot\subseteq V$ s.t. $\Norm{v-v'}\leq\epsilon$.}\Co{i}
+\textit{Let $V$ be a finite-dimensional normed vector space and $W\subseteq V^*$ a linear subspace. Suppose $v\in V$ and $\epsilon\in\Reals^+$ are s.t. for any $\alpha\in W$, $\Abs{\alpha(v)} \leq \epsilon\Norm{\alpha}$. Then, there is $v'\in W^\bot\subseteq V$ s.t. $\Norm{v-v'}\leq\epsilon$.}\Co{i}
+
+In the above, $\Norm{\alpha}$ refers to the standard dual norm on $V^*$, induced by the norm on $V$. $W^\bot$ refers to the set $\ACM{v\in V}{\forall\alpha\in W: \alpha(v)=0}$.
 
 \textbf{Proof of Proposition A.7}\Co{b}
 
-Consider $v^*\in W^*$ defined by $v^*(\alpha):=\alpha(v)$. By the assumption about $v$, $\Norm{v^*}\leq\epsilon$. By the Hahn-Banach theorem, there is $u\in V^{**}$ s.t. $u|_W=v^*$ and $\Norm{u}\leq\epsilon$. Using the canonical isomorphism $V\cong V^{**}$, $u$ corresponds to some $u^*\in V$, and it follows that $\Norm{u}\leq\epsilon$ and for any $\alpha\in W$, $\alpha(u)=\alpha(v)$. We now take $v':=v-u$. $\blacksquare$
+Consider $v^*\in W^*$ defined by $v^*(\alpha):=\alpha(v)$. By the assumption about $v$, $\Norm{v^*}\leq\epsilon$. By the Hahn-Banach theorem, there is $u^*\in V^{**}$ s.t. $u^*|_W=v^*$ and $\Norm{u^*}\leq\epsilon$. Using the canonical isomorphism $V\cong V^{**}$, $u^*$ corresponds to some $u\in V$, and it follows that $\Norm{u}\leq\epsilon$ and for any $\alpha\in W$, $\alpha(u)=\alpha(v)$. We now take $v':=v-u$. $\blacksquare$
 
 \textbf{Proposition A.8}\Co{b}
 
-TBD % descend of an affine function onto a polytope
+\textit{Let $C,D\in\Con$, $f\in\Mor(C,D)$ and $r\in\Mor\AP{C,[0,1]}$. Assume $D$ is a bounded closed finite-dimensional polytope, and $f$ is onto (as a mapping). Suppose $\epsilon\in\Reals^+$ s.t. for any $x_{1,2}\in C$, if $f\AP{x_1}=f\AP{x_2}$ then $\Abs{r\AP{x_1}-r\AP{x_2}} \leq \epsilon$. Then, there exists $r'\in\Mor\AP{D,[0,1]}$ s.t. for any $x\in C$}\Co{i} 
+
+$$\Abs{r\AP{x}-r'\AP{f(x)}} \leq \epsilon$$
+
+\textbf{Proof of Proposition A.8}\Co{b}
+
+Let $V$ be the vector space corresponding to $D$ (so that $D\subseteq V$) and $Y$ the (finite) set of vertices of $D$. Let $\Reals^Y_0$ be the linear subspace of $\Reals^Y$ given by 
+
+$$\Reals^Y_0:=\ACM{u\in\Reals^Y}{\sum_{y\in Y}u_y = 0}$$
+
+Define the linear operator $A:\Reals_0^Y\rightarrow V$ by
+
+$$Au:=\sum_{y\in Y}u_y y$$
+
+For any $y\in Y$, choose some $x\in f^{-1}(y)$...
+
+TBD
 
 \textbf{Proof of Theorem 1}\Co{b}
 
