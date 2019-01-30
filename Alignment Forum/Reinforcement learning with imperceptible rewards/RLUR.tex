@@ -68,6 +68,7 @@
 \newcommand{\Hom}{\mathrm{Hom}}
 \newcommand{\End}{\mathrm{End}}
 \DeclareMathOperator{\Img}{im}
+\DeclareMathOperator{\Ker}{ker}
 % topology and category theory
 \newcommand{\Mor}{\mathrm{Mor}}
 \newcommand{\Pt}{\boldsymbol{\mathrm{pt}}}
@@ -755,23 +756,31 @@ Consider $v^*\in W^*$ defined by $v^*(\alpha):=\alpha(v)$. By the assumption abo
 
 \textbf{Proposition A.8}\Co{b}
 
-\textit{Let $C,D\in\Con$, $f\in\Mor(C,D)$ and $r\in\Mor\AP{C,[0,1]}$. Assume $D$ is a bounded closed finite-dimensional polytope, and $f$ is onto (as a mapping). Suppose $\epsilon\in\Reals^+$ s.t. for any $x_{1,2}\in C$, if $f\AP{x_1}=f\AP{x_2}$ then $\Abs{r\AP{x_1}-r\AP{x_2}} \leq \epsilon$. Then, there exists $r'\in\Mor\AP{D,[0,1]}$ s.t. for any $x\in C$}\Co{i} 
+\textit{Let $C,D\in\Con$, $f\in\Mor(C,D)$ and $r\in\Mor\AP{C,\Reals}$. Assume $D$ is a bounded closed finite-dimensional polytope, and $f$ is onto (as a mapping). Suppose $\epsilon\in\Reals^+$ s.t. for any $x_{1,2}\in C$, if $f\AP{x_1}=f\AP{x_2}$ then $\Abs{r\AP{x_1}-r\AP{x_2}} \leq \epsilon$. Then, there exists $r'\in\Mor\AP{D,\Reals}$ s.t. for any $x\in C$}\Co{i} 
 
 $$\Abs{r\AP{x}-r'\AP{f(x)}} \leq \epsilon$$
 
 \textbf{Proof of Proposition A.8}\Co{b}
 
-Let $V$ be the vector space corresponding to $D$ (so that $D\subseteq V$) and $Y$ the (finite) set of vertices of $D$. Let $\Reals^Y_0$ be the linear subspace of $\Reals^Y$ given by 
+Let $V$ be the vector space corresponding to $D$ (so that $D\subseteq V$) and $Y$ the (finite) set of vertices of $D$. Choose any $g:Y\rightarrow C$ s.t. for any $y\in Y$, $f\AP{g(y)}=y$. Define $v\in\Reals^Y$ by $v_y:=r\AP{g(y)}$. Let $\Reals^Y_0$ be the linear subspace of $\Reals^Y$ given by 
 
 $$\Reals^Y_0:=\ACM{u\in\Reals^Y}{\sum_{y\in Y}u_y = 0}$$
 
-Define the linear operator $A:\Reals_0^Y\rightarrow V$ by
+Define the linear operator $A:\Reals^Y\rightarrow V$ by
 
 $$Au:=\sum_{y\in Y}u_y y$$
 
-For any $y\in Y$, choose some $x\in f^{-1}(y)$...
+Consider any $w\in\Ker{A}\cap\Reals^Y_0\setminus\boldsymbol{0}$. In particular, $w\in\Reals^Y_0\setminus\boldsymbol{0}$ and therefore
 
-TBD
+$$\sum_{y\in Y}\bold{1}_{w_y>0}w_y =-\sum_{y\in Y}\bold{1}_{w_y<0}w_y=\frac{\Norm{w}_1}{2}$$
+
+This allows us to define $w^+,w^-\in\Delta Y$ by
+
+$$w^+_y:=2\frac{\bold{1}_{w_y>0}w_y}{\Norm{w}_1}$$
+
+$$w^-_y:=-2\frac{\bold{1}_{w_y<0}w_y}{\Norm{w}_1}$$
+
+We have $w=\frac{1}{2}\Norm{w}_1\AP{w^+-w^-}$. Also, $Aw=0$ and therefore $Aw^+=Aw^-$...
 
 \textbf{Proof of Theorem 1}\Co{b}
 
