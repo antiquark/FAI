@@ -509,6 +509,10 @@ A different natural approach is using Occam's razor, i.e. looking for an extensi
 
 These questions are left for future research.
 
+\textcolor{red}{!!! TODO: Discussion of recovering instrumental reward function from policy !!!}
+% Paragraph about instrumental vs. semi-instrumental should probably be moved here
+% Discussion sections should be mentioned in TLDR somehow
+
 \begin{Huge}Proofs\end{Huge}
 
 \textbf{Proof of Proposition 1}\Co{b}
@@ -758,29 +762,79 @@ Consider $v^*\in W^*$ defined by $v^*(\alpha):=\alpha(v)$. By the assumption abo
 
 \textit{Let $C,D\in\Con$, $f\in\Mor(C,D)$ and $r\in\Mor\AP{C,\Reals}$. Assume $D$ is a bounded closed finite-dimensional polytope, and $f$ is onto (as a mapping). Suppose $\epsilon\in\Reals^+$ s.t. for any $x_{1,2}\in C$, if $f\AP{x_1}=f\AP{x_2}$ then $\Abs{r\AP{x_1}-r\AP{x_2}} \leq \epsilon$. Then, there exists $r'\in\Mor\AP{D,\Reals}$ s.t. for any $x\in C$}\Co{i} 
 
-$$\Abs{r\AP{x}-r'\AP{f(x)}} \leq \epsilon$$
+$$\Abs{r\AP{x}-r'\AP{f(x)}} \leq \frac{3}{2}\epsilon$$
 
 \textbf{Proof of Proposition A.8}\Co{b}
 
-Let $V$ be the vector space corresponding to $D$ (so that $D\subseteq V$) and $Y$ the (finite) set of vertices of $D$. Choose any $g:Y\rightarrow C$ s.t. for any $y\in Y$, $f\AP{g(y)}=y$. Define $v\in\Reals^Y$ by $v_y:=r\AP{g(y)}$. Let $\Reals^Y_0$ be the linear subspace of $\Reals^Y$ given by 
+Let $X$ be the vector space correspond to $C$, let $Y$ be the vector space corresponding to $D$ (so that $C\subseteq X$ and $D\subseteq Y$) and let $Q$ be the (finite) set of vertices of $D$. Since $f$ is onto, we can choose some $g:Q\rightarrow C$ s.t. for any $q\in Q$, $f\AP{g(q)}=q$. Define $v\in\Reals^Q$ by $v_q:=r\AP{g(q)}$. Let $\Reals^Q_0$ be the linear subspace of $\Reals^Q$ given by 
 
-$$\Reals^Y_0:=\ACM{u\in\Reals^Y}{\sum_{y\in Y}u_y = 0}$$
+$$\Reals^Q_0:=\ACM{u\in\Reals^Q}{\sum_{q\in Q}u_q = 0}$$
 
-Define the linear operator $A:\Reals^Y\rightarrow V$ by
+Define the linear operators $A:\Reals^Q\rightarrow X$ and $B:\Reals^Q\rightarrow Y$ by
 
-$$Au:=\sum_{y\in Y}u_y y$$
+$$Au:=\sum_{q\in Q}u_q g(q)$$
 
-Consider any $w\in\Ker{A}\cap\Reals^Y_0\setminus\boldsymbol{0}$. In particular, $w\in\Reals^Y_0\setminus\boldsymbol{0}$ and therefore
+$$Bu:=\sum_{q\in Q}u_q q$$
 
-$$\sum_{y\in Y}\bold{1}_{w_y>0}w_y =-\sum_{y\in Y}\bold{1}_{w_y<0}w_y=\frac{\Norm{w}_1}{2}$$
+Consider any $w\in\Ker{B}\cap\Reals^Q_0\setminus\boldsymbol{0}$. In particular, $w\in\Reals^Q_0$ and therefore
 
-This allows us to define $w^+,w^-\in\Delta Y$ by
+$$0=\sum_{q\in Q}w_q=\sum_{q\in Q}\bold{1}_{w_q>0}w_q+\sum_{q\in Q}\bold{1}_{w_q<0}w_q$$
 
-$$w^+_y:=2\frac{\bold{1}_{w_y>0}w_y}{\Norm{w}_1}$$
+Also
 
-$$w^-_y:=-2\frac{\bold{1}_{w_y<0}w_y}{\Norm{w}_1}$$
+$$\Norm{w}_1=\sum_{q\in Q}\Abs{w_q}=\sum_{q\in Q}\bold{1}_{w_q>0}w_q-\sum_{q\in Q}\bold{1}_{w_q<0}w_q$$
 
-We have $w=\frac{1}{2}\Norm{w}_1\AP{w^+-w^-}$. Also, $Aw=0$ and therefore $Aw^+=Aw^-$...
+Combining the last two identities, we conclude
+
+$$\sum_{q\in Q}\bold{1}_{w_q>0}w_q =-\sum_{q\in Q}\bold{1}_{w_q<0}w_q=\frac{\Norm{w}_1}{2}$$
+
+Using the assumption $w\ne\boldsymbol{0}$, this allows us to define $w^+,w^-\in\Delta Q$ by
+
+$$w^+_q:=\frac{2}{\Norm{w}_1}\bold{1}_{w_q>0}w_q$$
+
+$$w^-_q:=-\frac{2}{\Norm{w}_1}\bold{1}_{w_q<0}w_q$$
+
+We have $w=\frac{1}{2}\Norm{w}_1\AP{w^+-w^-}$. Also, $Bw=0$ and therefore $Bw^+=Bw^-$. 
+
+Now, for any $u\in\Delta Q$, we have
+
+$$u\cdot v=\sum_{q\in Q}u_q v_q=\sum_{q\in Q}u_q r\AP{g(q)}=r\AP{\sum_{q\in Q}u_q g(q)}=r\AP{Au}$$ 
+
+Moreover,
+
+$$f\AP{Au}=f\AP{\sum_{q\in Q}u_q g(q)}=\sum_{q\in Q}u_q f\AP{g(q)}=\sum_{q\in Q}u_q q = Bu$$
+
+It follows that
+
+$$w\cdot v=\frac{1}{2}\Norm{w}_1\AP{w^+\cdot v - w^-\cdot v}=\frac{1}{2}\Norm{w}_1\AP{r\AP{Aw^+}-r\AP{Aw^-}}$$
+
+By our previous reasoning, $f\AP{Aw^+}=Bw^+=Bw^-=f\AP{Aw^-}$. Therefore, we can use the assumption on $r$ to conclude that
+
+$$\Abs{w\cdot v}=\frac{1}{2}\Norm{w}_1\Abs{r\AP{Aw^+}-r\AP{Aw^-}}\leq\frac{\epsilon}{2}\Norm{w}_1$$
+
+By Proposition A.7, it follows that there is some $v'\in\Reals^Q$ s.t. $v'\in\AP{\Ker B\cap\Reals^Q_0}^\bot$ and $\Norm{v-v'}_\infty\leq\frac{\epsilon}{2}$ (the $L^\infty$ norm is dual to the $L^1$ norm). 
+
+Now, consider some $y\in D$. There is some $u\in\Delta Q$ s.t. $y=Bu$. We define $r'(y):=u\cdot v'$. To see this definition is unambiguous, consider some $u'\in\Delta Q$ s.t. also $y=Bu'$. In particular, $B\AP{u-u'}=0$ and therefore $u-u'\in\Ker B$. Moreover, $u-u'\in\Reals^Q_0$ since $u,u'\in\Delta Q$. Using that $u-u'\in\Ker B\cap\Reals^Q_0$ and $v'\in\AP{\Ker B\cap\Reals^Q_0}^\bot$, we get
+
+$$u\cdot v'-u'\cdot v'=\AP{u-u'}\cdot v'=0$$
+
+It is easy to see that $r'$ is affine. 
+
+Finally, consider any $x\in C$. Choose $u\in\Delta Q$ s.t. $f(x)=Bu$. We have
+
+$$\Big\lvert{r(x)-r'\AP{f(x)}}\Big\rvert\leq\Big\lvert{r(x)-r\AP{Au}}\Big\rvert+\Abs{r\AP{Au}-r'\AP{f(x)}}$$
+
+Since $f\AP{Au}=Bu$, we can use the assumption on $r$ to bound the first term on the right hand side:
+
+$$\Big\lvert{r(x)-r\AP{Au}}\Big\rvert\leq\epsilon$$
+
+For the second term, we have
+
+$$\Abs{r\AP{Au}-r'\AP{f(x)}}=\Big\lvert{u\cdot v-u\cdot v'}\Big\rvert=\Big\lvert{u\cdot\AP{v-v'}}\Big\rvert\leq\Norm{u}_1\Norm{v-v'}_\infty\leq\frac{\epsilon}{2}$$
+
+Combining the two, we conclude
+
+$$\Big\lvert{r(x)-r'\AP{f(x)}}\Big\rvert\leq\frac{3}{2}\epsilon\ \blacksquare$$
 
 \textbf{Proof of Theorem 1}\Co{b}
 
