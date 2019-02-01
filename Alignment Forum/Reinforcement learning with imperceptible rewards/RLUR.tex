@@ -849,7 +849,33 @@ For each $a\in\A$, define $\iota_a\in\Mor\AP{C,C^\A}$ by
 
 $$\iota_a(x)_b:=\begin{cases} x \text{ if } a=b \\ \theta^*_b \text{ if } a\ne b\end{cases}$$
 
-TBD
+Denote $\R_a:=\R\circ\iota_a$ and $N_a:=\sup\R_a-\inf\R_a$. If $N_a$ vanishes for every $a\in\A$, then $\R$ is constant, so we can set $r$ to the same constant and take arbitrary $\pi$. Otherwise, we define $\pi$ and $r$ by
+
+$$\pi_a:=\frac{N_a}{\sum_{b\in\A}N_b}$$
+
+$$r(a,x):=\R\AP{\theta^*} +\frac{\sum_{b\in\A}N_b}{N_a}\AP{\R_a(x)-\R\AP{\theta^*}}$$
+
+We need to show that $r$ takes values in $[0,1]$. It is non-negative since $\R$ is minimal at $\theta^*$, so both terms in $r$ are non-negative. To see it is not greater than $1$, observe that
+
+$$r(a,x)=\R\AP{\theta^*} +\frac{\sum_{b\in\A}N_b}{N_a}\AP{\R_a(x)-\R\AP{\theta^*}}\leq\inf\R +\frac{\sum_{b\in\A}N_b}{N_a}\AP{\sup\R_a-\inf\R}$$
+
+Clearly $\inf\R=\inf\R_a$ and therefore $\sup\R_a-\inf\R=N_a$. It is also easy to see that, since $\R$ is affine, $\sup\R-\inf\R=\sum_{b\in\A}N_b$. We get
+
+$$r(a,x)\leq\inf\R+\frac{\sum_{b\in\A}N_b}{N_a}N_a=\inf\R+\sum_{b\in\A}N_b=\sup\R\leq 1$$
+
+It remains to show that $\R(\theta)=\Ea{a\sim\pi}{r\AP{a,\theta_a}}$. We have
+
+$$\Ea{a\sim\pi}{r\AP{a,\theta_a}}=\sum_{a\in\A}\pi_ar\AP{a,\theta_a}$$
+
+$$\Ea{a\sim\pi}{r\AP{a,\theta_a}}=\sum_{a\in\A}\pi_a\AP{\R\AP{\theta^*} +\frac{\sum_{b\in\A}N_b}{N_a}\AP{\R_a\AP{\theta_a}-\R\AP{\theta^*}}}$$
+
+$$\Ea{a\sim\pi}{r\AP{a,\theta_a}}=\sum_{a\in\A}\pi_a\R\AP{\theta^*} +\sum_{a\in\A}\pi_a{\frac{\sum_{b\in\A}N_b}{N_a}\AP{\R_a\AP{\theta_a}-\R\AP{\theta^*}}}$$
+
+$$\Ea{a\sim\pi}{r\AP{a,\theta_a}}=\R\AP{\theta^*} +\sum_{a\in\A}\frac{N_a}{\sum_{b\in\A}N_b}\cdot{\frac{\sum_{b\in\A}N_b}{N_a}\AP{\R_a\AP{\theta_a}-\R\AP{\theta^*}}}$$
+
+$$\Ea{a\sim\pi}{r\AP{a,\theta_a}}=\R\AP{\theta^*} +\sum_{a\in\A}\AP{\R_a\AP{\theta_a}-\R\AP{\theta^*}}$$
+
+Using the fact $\R$ is affine, the desired conclusion follows. $\blacksquare$
 
 \textbf{Proof of Theorem 1}\Co{b}
 
