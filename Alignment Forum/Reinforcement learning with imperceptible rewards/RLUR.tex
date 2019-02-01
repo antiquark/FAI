@@ -836,6 +836,21 @@ Combining the two, we conclude
 
 $$\Big\lvert{r(x)-r'\AP{f(x)}}\Big\rvert\leq\frac{3}{2}\epsilon\ \blacksquare$$
 
+\textbf{Proposition A.9}\Co{b}
+
+\textit{Let $\A$ be a finite set, $C\in\Con$ and $\R\in\Mor\AP{C^\A,[0,1]}$. Assume $\R$ attains its infimum at some point $\theta^*\in C^\A$. Then, there exist $\pi\in\Delta\A$ and $r:\A\rightarrow\Mor\AP{C,[0,1]}$ s.t.}\Co{i} 
+$$\R(\theta)=\Ea{a\sim\pi}{r\AP{a,\theta_a}}$$
+
+Here, we used implicit currying: $r(a,x):=r(a)(x)$.
+
+\textbf{Proof of Proposition A.9}\Co{b}
+
+For each $a\in\A$, define $\iota_a\in\Mor\AP{C,C^\A}$ by
+
+$$\iota_a(x)_b:=\begin{cases} x \text{ if } a=b \\ \theta^*_b \text{ if } a\ne b\end{cases}$$
+
+TBD
+
 \textbf{Proof of Theorem 1}\Co{b}
 
 \textit{Direction 1:}\Co{i} $\R_{\pi r}$ is affine by Proposition 4. To verify it is continuous, consider a sequence $\AC{\mu_k\in\IS_\omega}_{k\in\Nats}$ s.t. $\mu_*:=\Lim{k}\mu_k$ exists. Denote $\Delta r:=\sup r - \inf r$, $\mu_k^n:=\Prj^n\AP{\mu_k}$ and $\mu^n_*:=\Prj^n\AP{\mu_*}$. For any $n\in\Nats$, we can decompose the expected value into the contribution of histories at length at most $n$ and the contribution of longer histories.
