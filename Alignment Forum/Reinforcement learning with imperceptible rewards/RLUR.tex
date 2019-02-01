@@ -887,7 +887,50 @@ $$\R(\theta)=\Ea{\theta\pi}{r}$$
 
 We proceed by induction on $n$. For $n=0$, $\R$ is constant and we set $r$ to the same constant. Now, suppose $n>0$.
 
-TBD
+Define $\IS_{n-\frac{1}{2}}\in\Con$ by
+
+$$\IS_{n-\frac{1}{2}}:=\AP{\prod_{o\in\Ob}\Ht_{\IS_{n-1}}}^{-1}(\Delta\Ob)$$
+
+Using Proposition A.9, we get $\pi_0\in\Delta\A$ and $r_0:\A\rightarrow\Mor\AP{\IS_{n-\frac{1}{2}},[0,1]}$ s.t. for any $\theta\in\IS_n$
+
+$$\R(\theta)=\Ea{a\sim\pi_0}{r_0\AP{a,\theta_a}}$$
+
+For every $o\in\Ob$, we define $j_o\in\Mor\AP{\IS_{n-1},\IS_{n-\frac{1}{2}}}$ by
+
+$$j_o(\theta)_{o'}:=\begin{cases} (\theta,1) \text{ if } o=o' \\ \boldsymbol{0} \text{ if } o\ne o' \end{cases}$$
+
+For every $a\in\A$ and $o\in\Ob$, we apply the induction hypothesis to $r_0(a)\circ j_o$, and get $\pi_{ao}:\AO^{<n-1}\K\A$ and $r_{ao}:\AO^{n-1}\rightarrow[0,1]$ s.t. for any $\theta\in\IS_{n-1}$
+
+$$r_0\AP{a,j_o(\theta)}=\Ea{\theta\pi_{ao}}{r_{ao}}$$
+
+We now define $\pi$ and $r$ by
+
+$$\pi(\Estr):=\pi_0$$
+$$\pi(aoh):=\pi_{ao}(h)$$
+
+$$r(aoh):=r_{ao}(h)$$
+
+Now, observe that, for any $\theta\in\IS_n$
+
+$$\Ea{h\sim\theta\pi}{r(h)}=\Ea{\substack{a\sim\pi_0\\o\sim\theta(a)}}{\Ea{\\h'\sim\AB{\theta_{ao}}\pi_{ao}}{r_{ao}\AP{h'}}}=\Ea{\substack{a\sim\pi_0\\o\sim\theta(a)}}{r_0\AP{a,j_o\AB{\theta_{ao}}}}$$
+
+Using the fact that $r_0$ is affine in the second argument, we get
+
+$$\Ea{h\sim\theta\pi}{r(h)}=\Ea{\substack{a\sim\pi_0}}{r_0\AP{a,\Ea{o\sim\theta(a)}{j_o\AB{\theta_{ao}}}}}$$
+
+Moreover, using Definition 6 and the definition of $j_0$, we get
+
+$$\Ea{o\sim\theta(a)}{j_o\AB{\theta_{ao}}}=\sum_{o\in\Ob}\Ht\AP{\theta_{ao}}\bigoplus_{o'\in\Ob}\AP{\boldsymbol{1}_{o'=o}\theta_{ao},\boldsymbol{1}_{o'=o}}$$
+
+$$\Ea{o\sim\theta(a)}{j_o\AB{\theta_{ao}}}=\bigoplus_{o'\in\Ob}\AP{\sum_{o\in\Ob}\Ht\AP{\theta_{ao}}\boldsymbol{1}_{o'=o}\theta_{ao},\sum_{o\in\Ob}\Ht\AP{\theta_{ao}}\boldsymbol{1}_{o'=o}}$$
+
+$$\Ea{o\sim\theta(a)}{j_o\AB{\theta_{ao}}}=\bigoplus_{o'\in\Ob}\AP{\Ht\AP{\theta_{ao'}}\theta_{ao'},\Ht\AP{\theta_{ao'}}}=\bigoplus_{o'\in\Ob}\theta_{ao'}=\theta_a$$
+
+Combining this with the previous identity, we get
+
+$$\Ea{h\sim\theta\pi}{r(h)}=\Ea{\substack{a\sim\pi_0}}{r_0\AP{a,\theta_a}}=\R(\theta)\ \blacksquare$$
+
+
 
 \textbf{Proof of Theorem 1}\Co{b}
 
