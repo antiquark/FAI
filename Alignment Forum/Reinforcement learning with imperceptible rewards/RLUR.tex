@@ -838,7 +838,7 @@ $$\Big\lvert{r(x)-r'\AP{f(x)}}\Big\rvert\leq\frac{3}{2}\epsilon\ \blacksquare$$
 
 \textbf{Proposition A.9}\Co{b}
 
-\textit{Let $\A$ be a finite set, $C\in\Con$ and $\R\in\Mor\AP{C^\A,[0,1]}$. Assume $\R$ attains its infimum at some point $\theta^*\in C^\A$. Then, there exist $\pi\in\Delta\A$ and $r:\A\rightarrow\Mor\AP{C,[0,1]}$ s.t.}\Co{i} 
+\textit{Let $\A$ be a finite set, $C\in\Con$ and $\R\in\Mor\AP{C^\A,[0,1]}$. Assume $\R$ attains its infimum at some point $\theta^*\in C^\A$. Then, there exist $\pi\in\Delta\A$ and $r:\A\rightarrow\Mor\AP{C,[0,1]}$ s.t. for any $\theta\in C^\A$}\Co{i} 
 $$\R(\theta)=\Ea{a\sim\pi}{r\AP{a,\theta_a}}$$
 
 Here, we used implicit currying: $r(a,x):=r(a)(x)$.
@@ -876,6 +876,18 @@ $$\Ea{a\sim\pi}{r\AP{a,\theta_a}}=\R\AP{\theta^*} +\sum_{a\in\A}\frac{N_a}{\sum_
 $$\Ea{a\sim\pi}{r\AP{a,\theta_a}}=\R\AP{\theta^*} +\sum_{a\in\A}\AP{\R_a\AP{\theta_a}-\R\AP{\theta^*}}$$
 
 Using the fact $\R$ is affine, the desired conclusion follows. $\blacksquare$
+
+\textbf{Proposition A.10}\Co{b}
+
+\textit{Consider any $n\in\Nats$ and $\R\in\Mor\AP{\IS_n,[0,1]}$. Then, there exist $\pi:\AO^{<n}\K\A$ and $r:\AO^n\rightarrow[0,1]$ s.t. for any $\theta\in\IS_n$}\Co{i}
+
+$$\R(\theta)=\Ea{\theta\pi}{r}$$
+
+\textbf{Proof of Proposition A.10}\Co{b}
+
+We proceed by induction on $n$. For $n=0$, $\R$ is constant and we set $r$ to the same constant. Now, suppose $n>0$.
+
+TBD
 
 \textbf{Proof of Theorem 1}\Co{b}
 
