@@ -933,19 +933,27 @@ $$\Ea{h\sim\theta\pi}{r(h)}=\Ea{\substack{a\sim\pi_0}}{r_0\AP{a,\theta_a}}=\R(\t
 
 \textbf{Proposition A.11}\Co{b}
 
-\textit{Consider $\alpha\in\Delta\Nats$ and sequences }\Co{i}
+\textit{Consider some $\alpha\in\Delta\Nats$ and sequences }\Co{i}
 
-$$\AC{\pi_n:\FH\K\AX}_{n\in\Nats}$$ 
+$$\AC{\pi_k:\FH\K\AX}_{k\in\Nats}$$ 
 
-$$\bigg\{r_n:\FH\rightarrow[0,1]\bigg\}_{n\in\Nats}$$
+$$\bigg\{r_k:\FH\rightarrow[0,1]\bigg\}_{k\in\Nats}$$
 
-\textit{Assume $\pi_n$ is a terminable policy for every $n\in\Nats$. Then, there is $\pi$ a terminable policy and $r:\FH\rightarrow[0,1]$ s.t.}\Co{i}
+\textit{Assume $\pi_k$ is a terminable policy for every $k\in\Nats$. Then, there is $\pi$ a terminable policy and $r:\FH\rightarrow[0,1]$ s.t.}\Co{i}
 
-$$\R_{\pi r}=\Ea{n\sim\alpha}{\R_{\pi_n r_n}}$$
+$$\R_{\pi r}=\Ea{k\sim\alpha}{\R_{\pi_k r_k}}$$
 
 \textbf{Proof of Proposition A.11}\Co{b}
 
-TBD
+Define $\pi$ and $r$ by setting, for any $n\in\Nats$ and $ao\in\AO^n$
+
+$$\pi(ao):=\frac{\Ea{n\sim\alpha}{\prod_{m=0}^{n-1}\pi_n\APM{a_m}{ao_{:m}}\cdot\pi_n\AP{ao}}}{\Ea{n\sim\alpha}{\prod_{m=0}^{n-1}\pi_n\APM{a_m}{ao_{:m}}}}$$
+
+$$r(ao):=\frac{\Ea{n\sim\alpha}{\prod_{m=0}^{n-1}\pi_n\APM{a_m}{ao_{:m}}\cdot \pi_n\APM{\bot}{ao}r_n\AP{ao}}}{\Ea{n\sim\alpha}{\prod_{m=0}^{n-1}\pi_n\APM{a_m}{ao_{:m}}\cdot\pi_n\APM{\bot}{ao}}}$$
+
+Essentially, what we do is sample $n$ from $\alpha$ and then run the "experiment" defined by $\AP{\pi_n,r_n}$. We have
+
+$$\R_{\pi r}(\mu)=\Ea{\mu\pi}{r}=\Ea{n\sim\alpha}{\Ea{\mu\pi_n}{r_n}}=\Ea{n\sim\alpha}{\R_{\pi_n r_n}(\mu)}\ \blacksquare$$
 
 \textbf{Proof of Theorem 1}\Co{b}
 
@@ -979,11 +987,11 @@ Define $\Delta\R_k\in\Mor\AP{\IS_{n_{k+1}},[0,1]}$ by
 
 $$\Delta\R_k(\theta):=\tilde{\R}_{n_{k+1}}\big(\theta\big)-\tilde{\R}_{n_k}\AP{\Prj^{n_k}(\theta)}$$
 
-By Proposition A.10, for every $k\in\Nats$, there is $\pi_k:\AO^{<n_{k+1}}\K\A$ and $r:\AO^{n_{k+1}}\rightarrow[0,1]$ s.t.
+By Proposition A.10, for every $k\in\Nats$, there is $\pi_k:\AO^{<n_{k+1}}\K\A$ and $r_k:\AO^{n_{k+1}}\rightarrow[0,1]$ s.t.
 
 $$\Delta\R_k(\theta)=\Ea{\theta\pi_k}{r_k}$$
 
-Denote $\delta_k:=\sup\Delta\R_k$. Define $\pi$ and $r$ by...
+Denote $\delta_k:=\sup\Delta\R_k$. By the construction, $\sum_{k=0}^\infty\delta_k < 1$...
 
 \end{document}
 
