@@ -955,6 +955,10 @@ Essentially, what we do is sample $n$ from $\alpha$ and then run the "experiment
 
 $$\R_{\pi r}(\mu)=\Ea{\mu\pi}{r}=\Ea{n\sim\alpha}{\Ea{\mu\pi_n}{r_n}}=\Ea{n\sim\alpha}{\R_{\pi_n r_n}(\mu)}\ \blacksquare$$
 
+For any $n,m\in\Nats$ s.t. $m\geq n$, we will denote by $\Prj^{m}_n:\IS_m\rightarrow\IS_n$ the canonical projection. That is
+
+$$\Prj^m_n:=\Prj_{m-1}\circ\Prj_{m-2}\ldots\circ\Prj_{n+1}\circ\Prj_n$$
+
 \textbf{Proof of Theorem 1}\Co{b}
 
 \textit{Direction 1:}\Co{i} $\R_{\pi r}$ is affine by Proposition 4. To verify it is continuous, consider a sequence $\AC{\mu_k\in\IS_\omega}_{k\in\Nats}$ s.t. $\mu_*:=\Lim{k}\mu_k$ exists. Denote $\Delta r:=\sup r - \inf r$, $\mu_k^n:=\Prj^n\AP{\mu_k}$ and $\mu^n_*:=\Prj^n\AP{\mu_*}$. For any $n\in\Nats$, we can decompose the expected value into the contribution of histories at length at most $n$ and the contribution of longer histories.
@@ -973,7 +977,7 @@ By Proposition A.5, the right hand side vanishes.
 
 \textit{Direction 2:}\Co{i} $\IS_\omega$ is compact and $\R$ is continuous, therefore $\R$ is bounded. Without loss of generality, assume that the image of $\R$ is contained in $[0,1]$ (otherwise we can redefine $\R$ by $\R':=a\R+b$ for suitable constants $a,b\in\Reals$ and apply the inverse transformation to the resulting $r':\FH\rightarrow[0,1]$). Define $\AC{\epsilon_n\in[0,1]}_{n\in\Nats}$ by
 
-$$\epsilon_n:=\sup_{\substack{\theta\in\IS_n\\\mu_{1,2}\in\IS_\omega}}\Abs{\R\AP{\mu_1}-\R\AP{\mu_2}}$$
+$$\epsilon_n:=\sup_{\substack{\theta\in\IS_n\\\mu_{1,2}\in\AP{\Prj^n}^{-1}(\theta)}}\Abs{\R\AP{\mu_1}-\R\AP{\mu_2}}$$
 
 By Proposition A.6, $\Lim{n}\epsilon_n=0$. By Proposition A.8, there is a sequence $\AC{\tilde{\R}_n\in\Mor\AP{\IS_n,[0,1]}}_{n\in\Nats}$ s.t. for any $n\in\Nats$
 
@@ -985,7 +989,7 @@ $$\sum_{k=0}^\infty \sup_{\mu\in\IS_\omega}\Abs{\tilde{\R}_{n_{k+1}}\AP{\Prj^{n_
 
 Define $\Delta\R_k\in\Mor\AP{\IS_{n_{k+1}},[0,1]}$ by
 
-$$\Delta\R_k(\theta):=\tilde{\R}_{n_{k+1}}\big(\theta\big)-\tilde{\R}_{n_k}\AP{\Prj^{n_k}(\theta)}$$
+$$\Delta\R_k(\theta):=\tilde{\R}_{n_{k+1}}\Big(\theta\Big)-\tilde{\R}_{n_k}\AP{\Prj^{n_{k+1}}_{n_k}(\theta)}$$
 
 By Proposition A.10, for every $k\in\Nats$, there is $\pi_k:\AO^{<n_{k+1}}\K\A$ and $r_k:\AO^{n_{k+1}}\rightarrow[0,1]$ s.t.
 
