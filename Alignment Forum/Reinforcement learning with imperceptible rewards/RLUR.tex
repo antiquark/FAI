@@ -106,6 +106,7 @@
 \newcommand{\In}{\mathcal{I}}
 \newcommand{\IS}{\mathcal{IS}}
 \newcommand{\Prj}{\mathrm{pr}}
+\newcommand{\Prjo}{\mathrm{pr}^\omega_n}
 \DeclareMathOperator{\RVO}{\dim_{RVO}}
 \DeclareMathOperator{\MB}{\dim_{MB}}
 \newcommand{\DRVO}{D_{\mathrm{RVO}}}
@@ -299,7 +300,7 @@ We thereby get a sequence $\IS_0 \leftarrow \IS_1 \leftarrow \IS_2 \leftarrow \l
 
 $$\IS_\omega:=\varprojlim_n \IS_n$$
 
-\textit{We denote the canonical projections by}\Co{i} $\Prj^n:\IS_\omega\rightarrow\IS_n$.
+\textit{We denote the canonical projections by}\Co{i} $\Prjo:\IS_\omega\rightarrow\IS_n$.
 
 Of course, $\IS_\omega$ can also be regarded as the space of all possible stochastic environments. Specifically, we have:
 
@@ -307,13 +308,13 @@ Of course, $\IS_\omega$ can also be regarded as the space of all possible stocha
 
 \textit{For any $\mu\in\IS_\omega$ we define $\Dom\mu\in\FH$ by}\Co{i}
 
-$$\Dom\mu:=\bigcup_{n=0}^\infty \Dom\Prj^n\mu$$
+$$\Dom\mu:=\bigcup_{n=0}^\infty \Dom\Prjo\mu$$
 
 \textbf{Definition 11}\Co{b}
 
 \textit{Given $\mu\in\IS_\omega$, $h\in\Dom\mu$ and $a\in\A$, we define $\mu(ha)\in\Delta\Ob$ by}\Co{i}
 
-$$\mu(ha):=\Prj^{\Abs{h}+1}\mu(ha)$$
+$$\mu(ha):=\Prj^\omega_{\Abs{h}+1}\mu(ha)$$
 
 Like in the finite time case, we have
 
@@ -365,9 +366,11 @@ This gives us a second definition of instrumental reward functions. In fact, the
 
 \textbf{Theorem 1}\Co{b}
 
-\textit{For any terminable policy $\pi$ and bounded function $r:\FH\rightarrow\Reals$, $\R_{\pi r}$ is continuous and affine. Conversely, for any continuous affine $\R:\IS_\omega\rightarrow\Reals$, there exists a terminable policy $\pi$ and $r:\FH\rightarrow\Reals$ s.t. $\R = \R_{\pi r}$, $\sup r \leq \max\R$ and $\inf r \geq \min\R$.}\Co{i}
+\textit{For any terminable policy $\pi$ and bounded function $r:\FH\rightarrow\Reals$, $\R_{\pi r}$ is continuous and affine. Conversely, for any continuous affine $\R:\IS_\omega\rightarrow[0,1]$, there exists a terminable policy $\pi$ and $r:\FH\rightarrow[-2,2]$ s.t. $\R = \R_{\pi r}$.}\Co{i}
 
 Putting the second part of the theorem into words, for any instrumental reward function (in the sense of the first definition) there is some experiment the agent can do which yields an \textit{unbiased estimate}\Co{i} of the reward for the instrumental state that existed at the beginning of the experiment.
+
+The range $[-2,2]$ is not optimal, but for the regret bound in the next subsection, it's only important that it is bounded by some fixed constant.
 
 To illustrate this concept of instrumental reward function, imagine that Clippy has access to a black box with a collection of levers on its outside. Pulling the levers produces some sounds that hint at what happens inside the box, but are not enough to determine it with certainty. The box has a shuttered glass window, whose shutter can be opened from the outside. Through the window, Clippy can see a jumble of scrap metal, mechanical manipulators that are controlled by the levers (and can be used to shape the scrap metal), and also a few mice running around the box and wreaking havoc. However, it is not possible to control the manipulators while the shutter is open. Worse, while opening the shutter allows seeing a snapshot of the shape of the metal, it also causes the manipulators to move chaotically, ruining this shape. So, Clippy can experiment with the levers and occasionally open the shutter to test the result. However, in order to produce and maintain paperclips inside the box, the shutter has to be kept closed (and the paperclips hidden) most of the time.
 
@@ -393,7 +396,7 @@ In general, $\Dtv$ is a pseudometric. Moreover, when $C$ is finite-dimensional a
 
 \textit{Consider any $\lambda\in(0,1)$. We define the metric} $\Dtv^\lambda$ \textit{on $\IS_\omega$ by}\Co{i}
 
-$$\Dtv^\lambda(\mu,\nu):=\sup_{n\in\Nats}{\lambda^n\Dtv\AP{\Prj^n\mu,\Prj^n\nu}}$$
+$$\Dtv^\lambda(\mu,\nu):=\sup_{n\in\Nats}{\lambda^n\Dtv\AP{\Prjo\mu,\Prjo\nu}}$$
 
 For any $\lambda$, $\Dtv^\lambda$ is a metrization of the inverse limit topology on $\IS_\omega$.
 
@@ -685,17 +688,17 @@ $$\Prj_n(\theta)\AP{a'o'h'a}=\AB{\theta_{a'o'}}\AP{h'a}=\theta\AP{a'o'h'a}\ \bla
 
 \textbf{Proof of Proposition 3}\Co{b}
 
-Proposition A.4 implies that, in Definition 11, we can replace $\Abs{h}+1$ by any $m\geq\Abs{h}+1$. Therefore, for any $n\in\Nats$, $\AP{\Prj^n\mu}\pi=\mu\pi_{:n}$. Hence, $\mu\pi=\mu'\pi$ implies that $\big(\Prj^n\mu\big)\pi=\AP{\Prj^n\mu'}\pi$. By Proposition 1, we get $\Prj^n\mu=\Prj^n\mu'$, and therefore $\mu=\mu'$. $\blacksquare$
+Proposition A.4 implies that, in Definition 11, we can replace $\Abs{h}+1$ by any $m\geq\Abs{h}+1$. Therefore, for any $n\in\Nats$, $\AP{\Prjo\mu}\pi=\mu\pi_{:n}$. Hence, $\mu\pi=\mu'\pi$ implies that $\big(\Prjo\mu\big)\pi=\AP{\Prjo\mu'}\pi$. By Proposition 1, we get $\Prjo\mu=\Prjo\mu'$, and therefore $\mu=\mu'$. $\blacksquare$
 
 \textbf{Proof of Proposition 4}\Co{b}
 
 For any $n\in\Nats$, Proposition 2 implies that
 
-$$\AP{p\cdot\Prj^n\mu+(1-p)\cdot\Prj^n\mu'}\pi=p\big(\Prj^n\mu\big)\pi+(1-p)\AP{\Prj^n\mu'}\pi$$
+$$\AP{p\cdot\Prjo\mu+(1-p)\cdot\Prjo\mu'}\pi=p\big(\Prjo\mu\big)\pi+(1-p)\AP{\Prjo\mu'}\pi$$
 
-$\Prj^n$ is an affine mapping, therefore
+$\Prjo$ is an affine mapping, therefore
 
-$$\Prj^n\AP{p\mu+(1-p)\mu'}\pi=p\big(\Prj^n\mu\big)\pi+(1-p)\AP{\Prj^n\mu'}\pi$$
+$$\Prjo\AP{p\mu+(1-p)\mu'}\pi=p\big(\Prjo\mu\big)\pi+(1-p)\AP{\Prjo\mu'}\pi$$
 
 Using Proposition A.4
 
@@ -723,11 +726,11 @@ $$\Pa{h\sim\mu_j\pi}{\Abs{h}>n_k} \geq \Pa{h\sim\mu_j\pi}{\Abs{h}>n_j} > \epsilo
 
 Using Proposition A.4, it follows that
 
-$$\Pa{h\sim\Prj^{n_k+1}\AP{\mu_j}\pi}{\Abs{h}>n_k} > \epsilon$$
+$$\Pa{h\sim\Prj^\omega_{n_k+1}\AP{\mu_j}\pi}{\Abs{h}>n_k} > \epsilon$$
 
-The right hand side is clearly continuous in $\Prj^{n_k+1}\AP{\mu_j}$, and the latter converges to $\Prj^{n_k+1}\AP{\mu_*}$ as $j$ goes to $\infty$. We get
+The right hand side is clearly continuous in $\Prj^\omega_{n_k+1}\AP{\mu_j}$, and the latter converges to $\Prj^\omega_{n_k+1}\AP{\mu_*}$ as $j$ goes to $\infty$. We get
 
-$$\Pa{h\sim\mu_*\pi}{\Abs{h}>n_k}=\Pa{h\sim\Prj^{n_k+1}\AP{\mu_*}\pi}{\Abs{h}>n_k} > \epsilon$$
+$$\Pa{h\sim\mu_*\pi}{\Abs{h}>n_k}=\Pa{h\sim\Prj^\omega_{n_k+1}\AP{\mu_*}\pi}{\Abs{h}>n_k} > \epsilon$$
 
 Since this holds for any $k$, it follows that
 
@@ -741,13 +744,13 @@ This contradicts the assumption that $\pi$ is terminable. $\blacksquare$
 
 $$X_\omega:=\varprojlim_n X_n$$
 
-\textit{Denote $\Prj^n:X_\omega\rightarrow X_n$ the canonical mapping. Let $f:X\rightarrow\Reals$ be continuous. Then,}\Co{i}
+\textit{Denote $\Prjo:X_\omega\rightarrow X_n$ the canonical mapping. Let $f:X\rightarrow\Reals$ be continuous. Then,}\Co{i}
 
-$$\Lim{n}\sup_{\substack{x\in X_n\\x_{1,2}\in\AP{\Prj^n}^{-1}(x)}}\Abs{f\AP{x_1}-f\AP{x_2}}=0$$
+$$\Lim{n}\sup_{\substack{x\in X_n\\x_{1,2}\in\AP{\Prjo}^{-1}(x)}}\Abs{f\AP{x_1}-f\AP{x_2}}=0$$
 
 \textbf{Proof of Proposition A.6}\Co{b}
 
-Assume to the contrary that there is $\epsilon\in\Reals^+$, and sequences $\AC{n_k\in\Nats}_{k\in\Nats}$, $\AC{x_1^k,x_2^k\in X_\omega}_{k\in\Nats}$ s.t. $n_{k+1}>n_k$, $\Prj^{n_k}\AP{x_1^k}=\Prj^{n_k}\AP{x_2^k}$ and $f\AP{x_1^k}-f\AP{x_2^k}>\epsilon$. Without loss of generality, we assume that $n_k=k$ and the limits $x_{1,2}^*:=\Lim{n}x_{1,2}^n$ exist (the latter using the fact $X_\omega$ is compact by Tychonoff's theorem). It follows that $f\AP{x_1^*}-f\AP{x_2^*}\geq\epsilon$, and in particular $x_1^*\ne x_2^*$ and therefore there is $m\in\Nats$ s.t. $\Prj^m\AP{x_1^*}\ne\Prj^m\AP{x_2^*}$. On the other hand, $\Prj^{n}\AP{x_1^n}=\Prj^{n}\AP{x_2^n}$, implying that, for $n\geq m$, $\Prj^{m}\AP{x_1^n}=\Prj^{m}\AP{x_2^n}$ and therefore $\Prj^m\AP{x_1^*}=\Prj^m\AP{x_2^*}$, a contradiction. $\blacksquare$
+Assume to the contrary that there is $\epsilon\in\Reals^+$, and sequences $\AC{n_k\in\Nats}_{k\in\Nats}$, $\AC{x_1^k,x_2^k\in X_\omega}_{k\in\Nats}$ s.t. $n_{k+1}>n_k$, $\Prj^\omega_{n_k}\AP{x_1^k}=\Prj^\omega_{n_k}\AP{x_2^k}$ and $f\AP{x_1^k}-f\AP{x_2^k}>\epsilon$. Without loss of generality, we assume that $n_k=k$ and the limits $x_{1,2}^*:=\Lim{n}x_{1,2}^n$ exist (the latter using the fact $X_\omega$ is compact by Tychonoff's theorem). It follows that $f\AP{x_1^*}-f\AP{x_2^*}\geq\epsilon$, and in particular $x_1^*\ne x_2^*$ and therefore there is $m\in\Nats$ s.t. $\Prj^\omega_m\AP{x_1^*}\ne\Prj^\omega_m\AP{x_2^*}$. On the other hand, $\Prjo\AP{x_1^n}=\Prjo\AP{x_2^n}$, implying that, for $n\geq m$, $\Prj^\omega_{m}\AP{x_1^n}=\Prj^\omega_{m}\AP{x_2^n}$ and therefore $\Prj^\omega_m\AP{x_1^*}=\Prj^\omega_m\AP{x_2^*}$, a contradiction. $\blacksquare$
 
 \textbf{Proposition A.7}\Co{b}
 
@@ -951,6 +954,8 @@ $$\pi(ao):=\frac{\Ea{n\sim\alpha}{\prod_{m=0}^{n-1}\pi_n\APM{a_m}{ao_{:m}}\cdot\
 
 $$r(ao):=\frac{\Ea{n\sim\alpha}{\prod_{m=0}^{n-1}\pi_n\APM{a_m}{ao_{:m}}\cdot \pi_n\APM{\bot}{ao}r_n\AP{ao}}}{\Ea{n\sim\alpha}{\prod_{m=0}^{n-1}\pi_n\APM{a_m}{ao_{:m}}\cdot\pi_n\APM{\bot}{ao}}}$$
 
+When the denominator vanishes, we can make an arbitrary choice.
+
 Essentially, what we do is sample $n$ from $\alpha$ and then run the "experiment" defined by $\AP{\pi_n,r_n}$. We have
 
 $$\R_{\pi r}(\mu)=\Ea{\mu\pi}{r}=\Ea{n\sim\alpha}{\Ea{\mu\pi_n}{r_n}}=\Ea{n\sim\alpha}{\R_{\pi_n r_n}(\mu)}\ \blacksquare$$
@@ -961,7 +966,7 @@ $$\Prj^m_n:=\Prj_{m-1}\circ\Prj_{m-2}\ldots\circ\Prj_{n+1}\circ\Prj_n$$
 
 \textbf{Proof of Theorem 1}\Co{b}
 
-\textit{Direction 1:}\Co{i} $\R_{\pi r}$ is affine by Proposition 4. To verify it is continuous, consider a sequence $\AC{\mu_k\in\IS_\omega}_{k\in\Nats}$ s.t. $\mu_*:=\Lim{k}\mu_k$ exists. Denote $\Delta r:=\sup r - \inf r$, $\mu_k^n:=\Prj^n\AP{\mu_k}$ and $\mu^n_*:=\Prj^n\AP{\mu_*}$. For any $n\in\Nats$, we can decompose the expected value into the contribution of histories at length at most $n$ and the contribution of longer histories.
+\textit{Direction 1:}\Co{i} $\R_{\pi r}$ is affine by Proposition 4. To verify it is continuous, consider a sequence $\AC{\mu_k\in\IS_\omega}_{k\in\Nats}$ s.t. $\mu_*:=\Lim{k}\mu_k$ exists. Denote $\Delta r:=\sup r - \inf r$, $\mu_k^n:=\Prjo\AP{\mu_k}$ and $\mu^n_*:=\Prjo\AP{\mu_*}$. For any $n\in\Nats$, we can decompose the expected value into the contribution of histories at length at most $n$ and the contribution of longer histories.
 
 $$\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq \Delta r\AP{\Dtva{\mu_k^n,\mu_*^n}+\Pa{\mu_k\pi}{\Abs{h}>n} +\Pa{\mu_*\pi}{\Abs{h}>n}}$$
 
@@ -975,13 +980,13 @@ $$\LimSup{k}\Abs{\R_{\pi r}\AP{\mu_k}-\R_{\pi r}\AP{\mu_*}} \leq 2\Delta r\inf_{
 
 By Proposition A.5, the right hand side vanishes.
 
-\textit{Direction 2:}\Co{i} $\IS_\omega$ is compact and $\R$ is continuous, therefore $\R$ is bounded. Without loss of generality, assume that the image of $\R$ is contained in $[0,1]$ (otherwise we can redefine $\R$ by $\R':=a\R+b$ for suitable constants $a,b\in\Reals$ and apply the inverse transformation to the resulting $r':\FH\rightarrow[0,1]$). Define $\AC{\epsilon_n\in[0,1]}_{n\in\Nats}$ by
+\textit{Direction 2:}\Co{i} \Co{$\IS_\omega$ is compact and $\R$ is continuous, therefore $\R$ is bounded. Without loss of generality, assume that the image of $\R$ is contained in $[0,1]$ (otherwise we can redefine $\R$ by $\R':=a\R+b$ for suitable constants $a,b\in\Reals$ and apply the inverse transformation to the resulting $r':\FH\rightarrow[0,1]$). }Define $\AC{\epsilon_n\in[0,1]}_{n\in\Nats}$ by
 
-$$\epsilon_n:=\sup_{\substack{\theta\in\IS_n\\\mu_{1,2}\in\AP{\Prj^n}^{-1}(\theta)}}\Abs{\R\AP{\mu_1}-\R\AP{\mu_2}}$$
+$$\epsilon_n:=\sup_{\substack{\theta\in\IS_n\\\mu_{1,2}\in\AP{\Prjo}^{-1}(\theta)}}\Abs{\R\AP{\mu_1}-\R\AP{\mu_2}}$$
 
 By Proposition A.6, $\Lim{n}\epsilon_n=0$. By Proposition A.8, there is a sequence $\AC{\tilde{\R}_n\in\Mor\AP{\IS_n,[0,1]}}_{n\in\Nats}$ s.t. for any $n\in\Nats$
 
-$$\sup_{\mu\in\IS_\omega}\Abs{\R(\mu)-\tilde{\R}_n\AP{\Prj^n(\mu)}}\leq\frac{3}{2}\epsilon_n$$
+$$\sup_{\mu\in\IS_\omega}\Abs{\R(\mu)-\tilde{\R}_n\AP{\Prjo(\mu)}}\leq\frac{3}{2}\epsilon_n$$
 
 It follows that there is a sequence $\AC{n_k\in\Nats}_{k\in\Nats}$ s.t. $n_{k+1}>n_k$ and
 
@@ -991,11 +996,19 @@ Define $\Delta\R_k\in\Mor\AP{\IS_{n_{k+1}},[0,1]}$ by
 
 $$\Delta\R_k(\theta):=\tilde{\R}_{n_{k+1}}\Big(\theta\Big)-\tilde{\R}_{n_k}\AP{\Prj^{n_{k+1}}_{n_k}(\theta)}$$
 
-By Proposition A.10, for every $k\in\Nats$, there is $\pi_k:\AO^{<n_{k+1}}\K\A$ and $r_k:\AO^{n_{k+1}}\rightarrow[0,1]$ s.t.
+Denote $\delta_k:=\sup\Abs{\Delta\R_k}$. We can assume without loss of generality that $\delta_k>0$ for every $k\in\Nats$ (this can be arranged by choosing appropriate $n_k$, unless for some $m\in\Nats$, $\R=\Prjo\circ\tilde{\R}_m$; but in the latter case, the theorem follows directly from Proposition A.10). By Proposition A.10, for every $k\in\Nats$, there is $\pi_{k+1}:\AO^{<n_{k+1}}\K\A$ and $r_{k+1}:\AO^{n_{k+1}}\rightarrow\AB{-1,1}$ s.t.
 
-$$\Delta\R_k(\theta)=\Ea{\theta\pi_k}{r_k}$$
+$$\frac{1}{\delta_k}\Delta\R_k(\theta)=\Ea{\theta\pi_{k+1}}{r_{k+1}}$$
 
-Denote $\delta_k:=\sup\Delta\R_k$. By the construction, $\sum_{k=0}^\infty\delta_k < 1$...
+Also by Proposition A.10, there is $\pi_0:\AO^{<n_0}\K\A$ and $r_0:\AO^{n_0}\rightarrow\AB{0,1}$ s.t.
+
+$$\tilde{\R}_{n_0}(\theta)=\Ea{\theta\pi_{0}}{r_{0}}$$
+
+By the construction, $\sum_{k=0}^\infty\delta_k < 1$, and moreover, denoting $C:=1+\sum_{k=0}^\infty\delta_k$
+
+$$\R=\Prj^\omega_{n_0}\circ\R_{n_0}+\sum_{k=0}^\infty\Prj^\omega_{n_{k+1}}\circ\Delta\R_k=C\AP{\frac{1}{C}\Prj^\omega_{n_0}\circ\R_{n_0}+\sum_{k=0}^\infty\frac{\delta_k}{C}\cdot\frac{\Prj^\omega_{n_{k+1}}\circ\Delta\R_k}{\delta_k}}$$
+
+By Proposition A.11, there is  $\pi$ a terminable policy and $r:\FH\rightarrow[-2,2]$ (the range of $r_k$ is $[-1,1]$ and $C<2$) s.t. $\R_{\pi r}= \R$. $\blacksquare$
 
 \end{document}
 
