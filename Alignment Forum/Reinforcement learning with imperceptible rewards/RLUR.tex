@@ -1010,6 +1010,54 @@ $$\R=\Prj^\omega_{n_0}\circ\R_{n_0}+\sum_{k=0}^\infty\Prj^\omega_{n_{k+1}}\circ\
 
 By Proposition A.11, there is  $\pi$ a terminable policy and $r:\FH\rightarrow[-2,2]$ (the range of $r_k$ is $[-1,1]$ and $C<2$) s.t. $\R_{\pi r}= \R$. $\blacksquare$
 
+\textbf{Proposition A.12}\Co{b}
+
+\textit{Consider any $\lambda\in(0,1)$, $n\in\Nats$, $\theta\in\IS_n$ and $\mu_{1,2}\in\AP{\Prjo}^{-1}(\theta)$. Then,}\Co{i}
+
+$$\Dtv^\lambda\AP{\mu_1,\mu_2} \leq \lambda^{n+1}$$
+
+\textbf{Proof of Proposition A.12}\Co{b}
+
+By Definition 16,
+
+$$\Dtv^\lambda\AP{\mu_1,\mu_2}=\sup_{m\in\Nats}{\lambda^m\Dtv\AP{\Prj^\omega_m\mu_1,\Prj^\omega_m\mu_2}}$$
+
+For $m\leq n$, $\Prj^\omega_m\mu_1=\Prj^n_m\theta=\Prj^\omega_m\mu_2$, and therefore $\Dtv\AP{\Prj^\omega_m\mu_1,\Prj^\omega_m\mu_2}=0$. For $m>n$, $\Dtv\AP{\Prj^\omega_m\mu_1,\Prj^\omega_m\mu_2}\leq 1$ by Definition 15. We get
+
+$$\Dtv^\lambda\AP{\mu_1,\mu_2}\leq\sup_{m>n}{\lambda^m}=\lambda^{n+1}\ \blacksquare$$
+
+\textbf{Proof of Proposition 5}\Co{b}
+
+Define $\AC{\epsilon_n\in[0,1]}_{n\in\Nats}$ by
+
+$$\epsilon_n:=\sup_{\substack{\theta\in\IS_n\\\mu_{1,2}\in\AP{\Prjo}^{-1}(\theta)}}\Abs{\R\AP{\mu_1}-\R\AP{\mu_2}}$$
+
+By Proposition A.6, $\Lim{n}\epsilon_n=0$. By Proposition A.8, there is a sequence $\AC{\tilde{\R}_n\in\Mor\AP{\IS_n,[0,1]}}_{n\in\Nats}$ s.t. for any $n\in\Nats$
+
+$$\sup_{\mu\in\IS_\omega}\Abs{\R(\mu)-\tilde{\R}_n\AP{\Prjo(\mu)}}\leq\frac{3}{2}\epsilon_n$$
+
+It follows that there is a sequence $\AC{n_k\in\Nats}_{k\in\Nats}$ s.t. $n_{k+1}>n_k$ and
+
+$$\sum_{k=0}^\infty \sup_{\mu\in\IS_\omega}\Abs{\tilde{\R}_{n_{k+1}}\AP{\Prj^{n_{k+1}}\AP{\mu}}-\tilde{\R}_{n_k}\AP{\Prj^{n_k}(\mu)}}<1$$
+
+Define $\Delta\R_k\in\Mor\AP{\IS_{n_{k+1}},[0,1]}$ by
+
+$$\Delta\R_k(\theta):=\tilde{\R}_{n_{k+1}}\Big(\theta\Big)-\tilde{\R}_{n_k}\AP{\Prj^{n_{k+1}}_{n_k}(\theta)}$$
+
+Denote $\delta_k:=\sup\Abs{\Delta\R_k}$. We can assume without loss of generality that $\delta_k>0$ for every $k\in\Nats$ (this can be arranged by choosing appropriate $n_k$, unless for some $m\in\Nats$, $\R=\Prjo\circ\tilde{\R}_m$; but in the latter case, the theorem follows directly from Proposition A.10). By Proposition A.10, for every $k\in\Nats$, there is $\pi_{k+1}:\AO^{<n_{k+1}}\K\A$ and $r_{k+1}:\AO^{n_{k+1}}\rightarrow\AB{-1,1}$ s.t.
+
+$$\frac{1}{\delta_k}\Delta\R_k(\theta)=\Ea{\theta\pi_{k+1}}{r_{k+1}}$$
+
+Also by Proposition A.10, there is $\pi_0:\AO^{<n_0}\K\A$ and $r_0:\AO^{n_0}\rightarrow\AB{0,1}$ s.t.
+
+$$\tilde{\R}_{n_0}(\theta)=\Ea{\theta\pi_{0}}{r_{0}}$$
+
+By the construction, $\sum_{k=0}^\infty\delta_k < 1$, and moreover, denoting $C:=1+\sum_{k=0}^\infty\delta_k$
+
+$$\R=\Prj^\omega_{n_0}\circ\R_{n_0}+\sum_{k=0}^\infty\Prj^\omega_{n_{k+1}}\circ\Delta\R_k=C\AP{\frac{1}{C}\Prj^\omega_{n_0}\circ\R_{n_0}+\sum_{k=0}^\infty\frac{\delta_k}{C}\cdot\frac{\Prj^\omega_{n_{k+1}}\circ\Delta\R_k}{\delta_k}}$$
+
+By Proposition A.11, there is  $\pi$ a terminable policy and $r:\FH\rightarrow[-2,2]$ (the range of $r_k$ is $[-1,1]$ and $C<2$) s.t. $\R_{\pi r}= \R$. $\blacksquare$???
+
 \end{document}
 
 
