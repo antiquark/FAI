@@ -114,22 +114,22 @@
 \newcommand{\Est}{\mathrm{est}}
 \newcommand{\PE}{\pi_\Est}
 \newcommand{\X}{\mathcal{X}}
-\newcommand{\F}{\mathcal{F}}
-\newcommand{\N}{\mathrm{N}}
 \newcommand{\V}{\mathrm{V}}
 \newcommand{\Q}{\mathrm{Q}}
 \newcommand{\EU}{\mathrm{EU}}
 \newcommand{\Reg}{\mathrm{R}}
 \newcommand{\PSR}{\text{PS}}
+\newcommand{\THy}{\mathrm{H}_*}
+\newcommand{\SHy}{\mathrm{H}}
+\newcommand{\AT}{\mathrm{A}}
+\newcommand{\Ev}{\mathcal{E}}
+\newcommand{\ET}{\Phi}
+\newcommand{\IT}{\Psi}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\N}{\mathrm{N}}
 \newcommand{\LS}{\mathrm{LS}}
 \newcommand{\CS}{\mathrm{CS}}
 \newcommand{\W}{\mathrm{W}}
-\newcommand{\AT}{\mathrm{A}}
-\newcommand{\THy}{\mathrm{H}_*}
-\newcommand{\SHy}{\mathrm{H}}
-\newcommand{\Ev}{\mathcal{E}}
-\newcommand{\De}{\Delta}
-\newcommand{\CSE}{G}
 \usepackage{color}
 \usepackage[normalem]{ulem}
 
@@ -1068,6 +1068,105 @@ $$\R=\tilde{\R}_{0}+\sum_{n=0}^\infty\Prj^\omega_{n+1}\circ\Delta\R_n=C\AP{\frac
 Here, the terms with $\delta_n=0$ are understood to vanish. By Proposition A.11, there is  $\pi$ a terminable policy and $r:\FH\rightarrow[-C,C]$ s.t. $\R_{\pi r}= \R$. Moreover, looking at the construction in the proof of Proposition A.11, we can see that
 
 $$\Ea{h\sim\mu\pi}{\Abs{h}} = \sum_{n=0}^\infty \frac{\delta_n}{C}(n+1)\leq\sum_{n=0}^\infty\frac{3L}{2}\AP{\lambda^{n+2}+\lambda^{n+1}}(n+1)<\infty\ \blacksquare$$
+
+In order to prove Theorem 2, we will consider the policy $\pi_{\gamma,T}^{\PSR}: \St^*\times\St\K\A$ implemented by an algorithm which is PSRL with two modifications:
+
+1. Each episode has random duration, uniformly distributed from $1$ to $T\in\Nats^+$.
+2. Between any two regular episodes, there is an "interlude" which consists of, performing the reward estimation experiment ($\pi_\Est$).
+
+The PSRL algorithm assumes choosing $\Pi:\Hy\times\St\rightarrow\A$, a Borel measurable mapping s.t. $\Pi(\T)$ is an optimal policy, i.e.
+
+$$\EU^{\Pi(\T)}_{\T\R_\T}(\gamma)=\EU^{*}_{\T\R_\T}(\gamma)$$
+
+As usual, we will consider $(\Omega,P)$, a probability space governing both the uncertainty about the true hypothesis, the stochastic behavior of the environment and the random sampling inside the algorithm. Let $\THy:\Omega\rightarrow\Hy$ be a random variable representing the true hypothesis, $\AC{\SHy_k:\Omega\rightarrow\Hy}_{k\in\Nats}$ be random variables s.t. $\SHy_n$ represents the hypothesis sampled at episode $k$, $\AC{\Theta_n:\Omega\rightarrow\St}_{n\in\Nats}$ be s.t. $\Theta_n$ represents the state at time $n$, $\AC{\AT_n:\Omega\rightarrow\A}_{n\in\Nats}$ be s.t. $\AT_n$ represents the action taken at time $n$, $\AC{\ET_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ be s.t. $\ET_{k}$ represents the time when the $k$-th episode starts and $\AC{\IT_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ be s.t. $\IT_k$ represents the time when the $k$-the interlude starts.
+
+This probability space can be formally defined via recursive equations on the random variables, but this is straightforward and we will omit it.
+
+\textbf{Proposition A.13}\Co{b}
+
+\textit{In the setting of Theorem 2, fix $T\in\Nats^+$ and $\gamma\in(0,1)$.}\Co{i}
+
+\textit{Denote $\R_k:=\R_{\SHy_k}$, $\R_*:=\R_{\THy}$, $\Delta\R_k:=\R_k-\R_*$, $\Delta\SHy_k:=\SHy_k-\THy$, $\Ev_k:=\SHy_*\Pi\AP{\SHy_{k}}$, $\bar{\Ev}_k:=\SHy_{k}\Pi\AP{\SHy_*}$ and $\Ev_*:=\THy\Pi\AP{\THy}$. Then,}\Co{i}
+
+$$\Reg(\gamma)=\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Delta\R_k\AP{\Theta_n}+\gamma\CE{\Delta\SHy_k}{\V_{\SHy_k\R_k}(\gamma)}{\Theta_n,\AT_n}}}$$
+$$+\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}\CE{\bar{\Ev}_{k}^{\IT_k-\ET_k}-\Ev_{k}^{\IT_k-\ET_k}}{\V_{\SHy_*\R_*}(\gamma)}{\Theta_{\ET_k}}}$$
+$$+\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\CE{\Ev_*^{n-\IT_k}-\Ev^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}$$
+$$+\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}\CE{\Ev_*^{\ET_{k+1}-\IT_k}-\Ev^{\ET_{k+1}-\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}$$
+
+\textbf{Proof of Proposition A.13}\Co{b}
+
+???
+
+For any $n\in\Nats$, define $\Pi_n:\Hy\times\Hy\times\St^*\times\St\K\A$ as follows.
+
+$$\Pi_n\AP{\T_1,\T_2,h,s}:=\begin{cases} \Pi\AP{\T_1,s} \text{ if } \Abs{h}<n \\ \Pi\AP{\T_2,s} \text{ if }\Abs{h} \geq n \end{cases}$$
+
+That is, $\Pi_n\AP{\T_1,\T_2}$ is a policy that follows $\Pi\AP{\T_1}$ for time $n$ and $\Pi\AP{\T_2}$ afterwards. 
+
+In the following, we use the shorthand notation 
+
+$$\V_*(s):=\V_{\SHy_*\R}(s,\gamma)$$
+
+$$\V_l(s):=\V_{\SHy_{lT}\R}(s,\gamma)$$
+
+%$$\V_{lk}:=\V_{\SHy_{*}\Pi_{T-k}\AP{\SHy_{lT},\SHy_*}\R}\AP{\Theta_{lT+k},\gamma}$$
+$$\V_{lk}(s):=\V_{\SHy_{*}\Pi_{T-k}\AP{\SHy_{lT},\SHy_*}\R}\AP{s,\gamma}$$
+
+It is easy to see that
+
+$$\Reg(\gamma)=\sum_{l=0}^\infty{\gamma^{lT}\Ea{}{\V_{*}\AP{\Theta_{lT}}-\V_{l0}\AP{\Theta_{lT}}}}$$
+
+The above is essentially what appeared as "Proposition B.1" [before](https://agentfoundations.org/item?id=1723), for the special case of PSRL, and where we regard every episode as a single time step in a new MDP in which every action is a policy for the duration of an episode in the original MDP.
+
+By definition, $\SHy_{lT}$ and $\SHy_*$ have the same distribution even when conditioned by the history up to $lT$. Therefore
+
+$$\Ea{}{\V_{*}\AP{\Theta_{lT}}}=\Ea{}{\V_{l}\AP{\Theta_{lT}}}$$
+
+It follows that
+
+$$\Reg(\gamma)=\sum_{l=0}^\infty{\gamma^{lT}\Ea{}{\V_{l}\AP{\Theta_{lT}}-\V_{l0}\AP{\Theta_{lT}}}}$$
+
+We now prove by induction on $k\in[T+1]$ that
+
+$$\Ea{}{\V_{l}\AP{\Theta_{lT}}-\V_{l0}\AP{\Theta_{lT}}}=\sum_{n=lT}^{lT+k-1}\gamma^{n-lT+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{l}}{\Theta_n,\AT_n}}+\gamma^k\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}$$
+
+For $k=0$ this is a tautology. For any $k\in[T]$, the Bellman equation says that
+
+$$\V_l(s)=(1-\gamma)\R(s)+\gamma\CE{\SHy_{lT}\Pi\AP{\SHy_{lT}}}{\V_l}{s}$$
+
+$$\V_{lk}(s)=(1-\gamma)\R(s)+\gamma\CE{\SHy_{*}\Pi\AP{\SHy_{lT}}}{\V_{l,k+1}}{s}$$
+
+It follows that
+
+$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\Ea{}{\CE{\SHy_{lT}\Pi\AP{\SHy_{lT}}}{\V_l}{\Theta_{lT+k}}-\CE{\SHy_{*}\Pi\AP{\SHy_{lT}}}{\V_{l,k+1}}{\Theta_{lT+k}}}$$
+
+Since $\Pi\AP{\SHy_{lT}}$ is exactly the policy followed by PSRL at time $lT+k$, we get
+
+$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\Ea{}{\CE{\SHy_{lT}}{\V_l}{\Theta_{lT+k},\AT_{lT+k}}-\CE{\SHy_{*}}{\V_{l,k+1}}{\Theta_{lT+k},\AT_{lT+k}}}$$
+
+We now subtract and add $\CE{\SHy_*}{\V_l}{\Theta_{lT+k},\AT_{lT+k}}$, and use the fact that $\SHy_*\AP{\Theta_{lT+k},\AT_{lT+k}}$ is the conditional distribution of $\Theta_{lT+k+1}$.
+
+$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\Ea{}{\CE{\SHy_{lT}-\SHy_{*}}{\V_l}{\Theta_{lT+k},\AT_{lT+k}}+\V_l\AP{\Theta_{lT+k+1}}-\V_{l,k+1}\AP{\Theta_{lT+k+1}}}$$
+
+Applying this identity to the second second term on the right hand side of the induction hypothesis, we prove the induction step. For $k=T$, we get, denoting $n_0:=lT$ and $n_1:=(l+1)T$
+
+$$\Ea{}{\V_{l}\AP{\Theta_{n_0}}-\V_{l0}\AP{\Theta_{n_0}}}=\sum_{n=n_0}^{n_1-1}\gamma^{n-n_0+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{l}}{\Theta_n,\AT_n}}+\gamma^T\Ea{}{\V_{l}\AP{\Theta_{n_1}}-\V_{*}\AP{\Theta_{n_1}}}$$
+
+Clearly 
+
+$$\Ea{}{\V_l\AP{\Theta_{n_1}}}=\Ea{}{\CE{\Ev_l^T}{\V_l}{\Theta_{n_0}}}$$
+
+$$\Ea{}{\V_*\AP{\Theta_{n_1}}}=\Ea{}{\CE{\Ev_l^T}{\V_*}{\Theta_{n_0}}}$$
+
+Using the definition of PSRL, we can exchange and true and sampled hypothesis and get
+
+$$\Ea{}{\V_l\AP{\Theta_{n_1}}}=\Ea{}{\CE{\bar{\Ev}_l^T}{\V_*}{\Theta_{n_0}}}$$
+
+It follows that
+
+$$\Ea{}{\V_{l}\AP{\Theta_{n_0}}-\V_{l0}\AP{\Theta_{n_0}}}=\sum_{n=n_0}^{n_1-1}\gamma^{n-n_0+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{l}}{\Theta_n,\AT_n}}+\gamma^T\Ea{}{\CE{\bar{\Ev}_l^T-\Ev_l^T}{\V_*}{\Theta_{n_0}}}$$
+
+Applying this to each term in the earlier expression for $\Reg(\gamma)$, we get the desired result.
 
 \end{document}
 
