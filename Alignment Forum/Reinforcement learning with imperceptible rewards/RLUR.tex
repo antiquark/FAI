@@ -119,12 +119,12 @@
 \newcommand{\EU}{\mathrm{EU}}
 \newcommand{\Reg}{\mathrm{R}}
 \newcommand{\PSR}{\text{PS}}
-\newcommand{\THy}{\mathrm{H}_*}
-\newcommand{\SHy}{\mathrm{H}}
+\newcommand{\THy}{Y_*}
+\newcommand{\SHy}{Y}
 \newcommand{\AT}{\mathrm{A}}
 \newcommand{\Ev}{\mathcal{E}}
-\newcommand{\ET}{\Phi}
-\newcommand{\IT}{\Psi}
+\newcommand{\ET}{N}
+\newcommand{\IT}{M}
 \newcommand{\TE}[1]{{\operatorname{E}_k}\AB{#1}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\N}{\mathrm{N}}
@@ -1110,7 +1110,7 @@ $$\V_*(s):=\V_{\SHy_*\R_*}(s,\gamma)$$
 
 $$\V_k(s):=\V_{\SHy_{k}\R_k}(s,\gamma)$$
 
-$$\V_{kl}(s):=\V_{\SHy_{*}\Pi_{\Delta\Phi_k-l}\AP{\SHy_{k},\SHy_*}\R_*}\AP{s,\gamma}$$
+$$\V_{kl}(s):=\V_{\SHy_{*}\Pi_{\Delta\ET_k-l}\AP{\SHy_{k},\SHy_*}\R_*}\AP{s,\gamma}$$
 
 It is easy to see that
 
@@ -1120,15 +1120,15 @@ $$+\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^
 
 Here, the first term represents the regret incurred during the episodes, whereas the second and third term represent the regret incurred during the interludes (the lost reward and lost value respectively). We will denote the first term $\Reg_0(\gamma)$ in the following.
 
-By definition, $\SHy_{k}$ and $\SHy_*$ have the same distribution even when conditioned by the history up to $\Phi_k$. Therefore
+By definition, $\SHy_{k}$ and $\SHy_*$ have the same distribution even when conditioned by the history up to $\ET_k$. Therefore
 
-$$\Ea{}{\V_{*}\AP{\Theta_{\Phi_k}}}=\Ea{}{\V_{k}\AP{\Theta_{\Phi_k}}}$$
+$$\Ea{}{\V_{*}\AP{\Theta_{\ET_k}}}=\Ea{}{\V_{k}\AP{\Theta_{\ET_k}}}$$
 
 It follows that
 
-$$\Reg_0(\gamma)=\sum_{k=0}^\infty{\Ea{}{\gamma^{\ET_k}\AP{\V_{k}\AP{\Theta_{\Phi_k}}-\V_{k0}\AP{\Theta_{\Phi_k}}}}}$$
+$$\Reg_0(\gamma)=\sum_{k=0}^\infty{\Ea{}{\gamma^{\ET_k}\AP{\V_{k}\AP{\Theta_{\ET_k}}-\V_{k0}\AP{\Theta_{\ET_k}}}}}$$
 
-Denote $\Theta_{kl}:=\Theta_{\Phi_k+l}$ and $\Delta\V_{kl}:=\V_k\AP{\Theta_{kl}}-\V_{kl}\AP{\Theta_{kl}}$. We now prove by induction on $l\in\Nats$ that, with probability 1
+Denote $\Theta_{kl}:=\Theta_{\ET_k+l}$ and $\Delta\V_{kl}:=\V_k\AP{\Theta_{kl}}-\V_{kl}\AP{\Theta_{kl}}$. We now prove by induction on $l\in\Nats$ that, with probability 1
 
 $$l\leq\Delta\ET_k\implies\CE{}{\Delta\V_{k0}}{\ET_k,\IT_k}=$$
 $$\CE{}{\sum_{n=\ET_k}^{\ET_k+l-1}\gamma^{n-\ET_k}\AP{(1-\gamma)\Delta\R_k\AP{\Theta_n}+\gamma\CE{\Delta\SHy_k}{\V_{k}}{\Theta_n,\AT_n}}+\gamma^l\Delta\V_{kl}}{\ET_k,\IT_k}$$
@@ -1139,11 +1139,11 @@ $$\V_k(s)=(1-\gamma)\R_k(s)+\gamma\CE{\SHy_{k}\Pi\AP{\SHy_{k}}}{\V_k}{s}$$
 
 $$l<\Delta\ET_k\implies\V_{kl}(s)=(1-\gamma)\R_*(s)+\gamma\CE{\SHy_{*}\Pi\AP{\SHy_{k}}}{\V_{k,l+1}}{s}$$
 
-Denote $\Ev_{kk}:=\SHy_k\Pi\AP{\SHy_k}$. We will also use the notation $\TE{X}:=\CE{}{X}{\ET_k,\IT_k}$. Substituting $s=\Theta_{kl}$ and subtracting the two identities, we get that, in the subspace of $\Omega$ defined by $l<\Delta\Phi_k$
+Denote $\Ev_{kk}:=\SHy_k\Pi\AP{\SHy_k}$. We will also use the notation $\TE{X}:=\CE{}{X}{\ET_k,\IT_k}$. Substituting $s=\Theta_{kl}$ and subtracting the two identities, we get that, in the subspace of $\Omega$ defined by $l<\Delta\ET_k$
 
 $$\TE{\Delta\V_{kl}}=\TE{(1-\gamma)\Delta\R\AP{\Theta_{kl}}+\gamma\AP{\CE{\Ev_{kk}}{\V_k}{\Theta_{kl}}-\CE{\Ev_{*k}}{\V_{k,l+1}}{\Theta_{kl}}}}$$
 
-Denote $\AT_{kl}:=\AT_{\Phi_k+l}$. Since $\Pi\AP{\SHy_{k}}$ is exactly the policy followed by PSRL at time $\Phi_k+l$, we get
+Denote $\AT_{kl}:=\AT_{\ET_k+l}$. Since $\Pi\AP{\SHy_{k}}$ is exactly the policy followed by PSRL at time $\ET_k+l$, we get
 
 $$\TE{\Delta\V_{kl}}=\TE{(1-\gamma)\Delta\R\AP{\Theta_{kl}}+\gamma\AP{\CE{\SHy_k}{\V_k}{\Theta_{kl},\AT_{kl}}-\CE{\THy}{\V_{k,l+1}}{\Theta_{kl},\AT_{kl}}}}$$
 
@@ -1175,7 +1175,11 @@ Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we ge
 
 \textbf{Proposition A.14}\Co{b}
 
-Let $\X$ be a measurable space, $(\Omega,P)$ be some probability space, $\AC{X_n:\Omega\rightarrow\X}_{n\in\Nats}$ be random variables and $\AC{f_n:\X^n\rightarrow[0,1]}_{n\in\Nats}$ be measurable functions. Consider some $\gamma\in(0,1)$ and $C\in\Reals^+$...
+Let $\Psi$ be a measurable space, $(\Omega,P)$ be some probability space, $\AC{X_n:\Omega\rightarrow\Psi}_{n\in\Nats}$, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ be random variables and $\AC{f_n:\Psi^{n+1}\rightarrow[0,1]}_{n\in\Nats}$ be measurable functions. Consider some $\gamma\in(0,1)$ and $C\in\Reals^+$ and assume that with probability 1
+
+$$\sum_{k=0}^\infty \gamma^kf_k\AP{X_{M_0},X_{M_1}\ldots X_{M_{k}}} \leq C$$
+
+Assume further that...
 
 \end{document}
 
