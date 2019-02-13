@@ -125,6 +125,7 @@
 \newcommand{\Ev}{\mathcal{E}}
 \newcommand{\ET}{\Phi}
 \newcommand{\IT}{\Psi}
+\newcommand{\TE}[1]{{\operatorname{E}_k}\AB{#1}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\N}{\mathrm{N}}
 \newcommand{\LS}{\mathrm{LS}}
@@ -1138,37 +1139,43 @@ $$\V_k(s)=(1-\gamma)\R_k(s)+\gamma\CE{\SHy_{k}\Pi\AP{\SHy_{k}}}{\V_k}{s}$$
 
 $$l<\Delta\ET_k\implies\V_{kl}(s)=(1-\gamma)\R_*(s)+\gamma\CE{\SHy_{*}\Pi\AP{\SHy_{k}}}{\V_{k,l+1}}{s}$$
 
-Denote $\Ev_{kk}:=\SHy_k\Pi\AP{\SHy_k}$. Substituting $s=\Theta_{kl}$ and subtracting the two identities, we get that, in the subspace of $\Omega$ defined by $l<\Delta\Phi_k$
+Denote $\Ev_{kk}:=\SHy_k\Pi\AP{\SHy_k}$. We will also use the notation $\TE{X}:=\CE{}{X}{\ET_k,\IT_k}$. Substituting $s=\Theta_{kl}$ and subtracting the two identities, we get that, in the subspace of $\Omega$ defined by $l<\Delta\Phi_k$
 
-$$\Ea{}{\Delta\V_{kl}}=\Ea{}{(1-\gamma)\Delta\R\AP{\Theta_{kl}}+\gamma\AP{\CE{\Ev_{kk}}{\V_l}{\Theta_{kl}}-\CE{\Ev_{*k}}{\V_{l,k+1}}{\Theta_{kl}}}}$$
+$$\TE{\Delta\V_{kl}}=\TE{(1-\gamma)\Delta\R\AP{\Theta_{kl}}+\gamma\AP{\CE{\Ev_{kk}}{\V_k}{\Theta_{kl}}-\CE{\Ev_{*k}}{\V_{k,l+1}}{\Theta_{kl}}}}$$
 
 Denote $\AT_{kl}:=\AT_{\Phi_k+l}$. Since $\Pi\AP{\SHy_{k}}$ is exactly the policy followed by PSRL at time $\Phi_k+l$, we get
 
-$$\Ea{}{\Delta\V_{kl}}=\Ea{}{(1-\gamma)\Delta\R\AP{\Theta_{kl}}+\gamma\AP{\CE{\SHy_k}{\V_l}{\Theta_{kl},\AT_{kl}}-\CE{\THy}{\V_{l,k+1}}{\Theta_{kl},\AT_{kl}}}}$$
+$$\TE{\Delta\V_{kl}}=\TE{(1-\gamma)\Delta\R\AP{\Theta_{kl}}+\gamma\AP{\CE{\SHy_k}{\V_k}{\Theta_{kl},\AT_{kl}}-\CE{\THy}{\V_{k,l+1}}{\Theta_{kl},\AT_{kl}}}}$$
 
-?? We now subtract and add $\CE{\SHy_*}{\V_l}{\Theta_{lT+k},\AT_{lT+k}}$, and use the fact that $\SHy_*\AP{\Theta_{lT+k},\AT_{lT+k}}$ is the conditional distribution of $\Theta_{lT+k+1}$.
+We now subtract and add $\gamma\CE{\SHy_*}{\V_k}{\Theta_{kl},\AT_{kl}}$, and use the fact that $\SHy_*\AP{\Theta_{kl},\AT_{kl}}$ is the conditional distribution of $\Theta_{k,l+1}$.
 
-$$\Ea{}{\V_{l}\AP{\Theta_{lT+k}}-\V_{lk}\AP{\Theta_{lT+k}}}=\gamma\Ea{}{\CE{\SHy_{lT}-\SHy_{*}}{\V_l}{\Theta_{lT+k},\AT_{lT+k}}+\V_l\AP{\Theta_{lT+k+1}}-\V_{l,k+1}\AP{\Theta_{lT+k+1}}}$$
+$$\TE{\Delta\V_{kl}}=\TE{(1-\gamma)\Delta\R\AP{\Theta_{kl}}+\gamma\AP{\CE{\Delta\SHy_k}{\V_k}{\Theta_{kl},\AT_{kl}}+\Delta\V_{k,l+1}}}$$
 
-Applying this identity to the second second term on the right hand side of the induction hypothesis, we prove the induction step. For $k=T$, we get, denoting $n_0:=lT$ and $n_1:=(l+1)T$
+Applying this identity to the last term on the right hand side of the induction hypothesis, we prove the induction step. For $l=\Delta\ET_k$, we get
 
-$$\Ea{}{\V_{l}\AP{\Theta_{n_0}}-\V_{l0}\AP{\Theta_{n_0}}}=\sum_{n=n_0}^{n_1-1}\gamma^{n-n_0+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{l}}{\Theta_n,\AT_n}}+\gamma^T\Ea{}{\V_{l}\AP{\Theta_{n_1}}-\V_{*}\AP{\Theta_{n_1}}}$$
+$$\TE{\Delta\V_{k0}}=\sum_{n=\ET_k}^{\IT_k}\gamma^{n-\ET_k}\TE{(1-\gamma)\Delta\R_k\AP{\Theta_n}+\gamma\CE{\Delta\SHy_k}{\V_{k}}{\Theta_n,\AT_n}}+$$
+$$\gamma^{\Delta\ET_k}\TE{\V_k\AP{\Theta_{\IT_k}}-\V_*\AP{\Theta_{\IT_k}}}$$
 
-Clearly 
+Clearly
 
-$$\Ea{}{\V_l\AP{\Theta_{n_1}}}=\Ea{}{\CE{\Ev_l^T}{\V_l}{\Theta_{n_0}}}$$
+$$\TE{\V_k\AP{\Theta_{\IT_k}}}=\TE{\CE{\Ev_{*k}^{\Delta\ET_k}}{\V_k}{\Theta_{\ET_k}}}$$
 
-$$\Ea{}{\V_*\AP{\Theta_{n_1}}}=\Ea{}{\CE{\Ev_l^T}{\V_*}{\Theta_{n_0}}}$$
+$$\TE{\V_*\AP{\Theta_{\IT_k}}}=\TE{\CE{\Ev_{*k}^{\Delta\ET_k}}{\V_*}{\Theta_{\ET_k}}}$$
 
 Using the definition of PSRL, we can exchange and true and sampled hypothesis and get
 
-$$\Ea{}{\V_l\AP{\Theta_{n_1}}}=\Ea{}{\CE{\bar{\Ev}_l^T}{\V_*}{\Theta_{n_0}}}$$
+$$\TE{\V_k\AP{\Theta_{\IT_k}}}=\TE{\CE{\Ev_{k*}^{\Delta\ET_k}}{\V_*}{\Theta_{\ET_k}}}$$
 
 It follows that
 
-$$\Ea{}{\V_{l}\AP{\Theta_{n_0}}-\V_{l0}\AP{\Theta_{n_0}}}=\sum_{n=n_0}^{n_1-1}\gamma^{n-n_0+1}\Ea{}{\CE{\SHy_n-\THy}{\V_{l}}{\Theta_n,\AT_n}}+\gamma^T\Ea{}{\CE{\bar{\Ev}_l^T-\Ev_l^T}{\V_*}{\Theta_{n_0}}}$$
+$$\TE{\Delta\V_{k0}}=\sum_{n=\ET_k}^{\IT_k}\gamma^{n-\ET_k}\TE{(1-\gamma)\Delta\R_k\AP{\Theta_n}+\gamma\CE{\Delta\SHy_k}{\V_{k}}{\Theta_n,\AT_n}}+$$
+$$\gamma^{\Delta\ET_k}\TE{\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_*}{\Theta_{\ET_k}}}$$
 
-Applying this to each term in the earlier expression for $\Reg(\gamma)$, we get the desired result.
+Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we get the desired result.
+
+\textbf{Proposition A.14}\Co{b}
+
+Let $\X$ be a measurable space, $(\Omega,P)$ be some probability space, $\AC{X_n:\Omega\rightarrow\X}_{n\in\Nats}$ be random variables and $\AC{f_n:\X^n\rightarrow[0,1]}_{n\in\Nats}$ be measurable functions. Consider some $\gamma\in(0,1)$ and $C\in\Reals^+$...
 
 \end{document}
 
