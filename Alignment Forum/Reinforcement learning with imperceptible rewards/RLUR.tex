@@ -1176,21 +1176,21 @@ Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we ge
 
 \textbf{Proposition A.14}\Co{b}
 
-Consider $\Psi$ be a measurable space, $(\Omega,P)$ a probability space, $\AC{\Fi_n\subseteq\PS{\Omega}}_{n\in\Nats}$ a filtration, $\AC{X_n:\Omega\rightarrow\Psi}_{n\in\Nats}$ a stochastic process adapted to $\Fi$, $\AC{N_k,M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ stopping times w.r.t. $\Fi$ and $\AC{f_n:\Psi^{n+1}\rightarrow[0,1]}_{n\in\Nats}$ measurable functions. Consider also $\gamma\in(0,1)$ and $C\in\Reals^+$ and assume that with probability 1
+Consider $\Psi$ be a measurable space, $(\Omega,P)$ a probability space, $\AC{\Fi_n\subseteq\PS{\Omega}}_{n\in\Nats}$ a filtration, $\AC{X_n:\Omega\rightarrow\Psi}_{n\in\Nats}$ a stochastic process adapted to $\Fi$, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ stopping times and $\AC{f_n:\Psi^{n+1}\rightarrow[0,1]}_{n\in\Nats}$ measurable functions. Consider also $\gamma\in(0,1)$ and $C\in\Reals^+$ and assume that with probability 1
 
 $$\sum_{k=0}^\infty \gamma^kf_k\AP{X_{M_0},X_{M_1}\ldots X_{M_{k}}} \leq C$$
 
 Consider also some $T\in\Nats^+$ and assume that
 
-$$\CP{}{M_{k}=n}{N_k}=\begin{cases} T^{-1} \text{ if } N_k + 1 \leq n \leq N_k+T\\ 0 \text{ otherwise} \end{cases}$$
+$$\CP{}{M_{k}=n}{M_k}=\begin{cases} T^{-1} \text{ if } M_k + 1 \leq n \leq M_k+T\\ 0 \text{ otherwise} \end{cases}$$
 
-Assume also that $M_k$ is $\Fi_{N_k}$-measurable and $N_{k+1}>M_k$. \Co{Define the $\Fi_n$-measurable random variable $K_n:\Omega\rightarrow\Nats$ by
+Finally, assume that, conditional on $M_k>n$, $M_k$ and $X_{n}$ are independent. Define the $\Fi_n$-measurable random variable $K_n:\Omega\rightarrow\Nats$ by
 
 $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
-}Then ???
+Then,
 
-$$\Ea{}{\sum_{k=0}^\infty\sum_{n=N_k}^{M_k-1} \gamma^{\frac{4n}{T}}f_{k}\AP{X_{M_0},X_{M_1}\ldots X_{M_{k-1}},X_{n+1}}}\leq CT+\frac{1}{1-\exp\AP{-\frac{8}{T}}}$$
+$$\sum_{n=0}^\infty\gamma^{\frac{4n}{T}}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{k-1}},X_n}}\leq CT+\frac{1}{1-\exp\AP{-\frac{8}{T}}}$$
 
 \end{document}
 
