@@ -1176,21 +1176,47 @@ Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we ge
 
 \textbf{Proposition A.14}\Co{b}
 
-Consider $\Psi$ be a measurable space, $(\Omega,P)$ a probability space, $\AC{\Fi_n\subseteq\PS{\Omega}}_{n\in\Nats}$ a filtration, $\AC{X_n:\Omega\rightarrow\Psi}_{n\in\Nats}$ a stochastic process adapted to $\Fi$, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ stopping times and $\AC{f_n:\Psi^{n+1}\rightarrow[0,1]}_{n\in\Nats}$ measurable functions. Consider also $\gamma\in(0,1)$ and $C\in\Reals^+$ and assume that with probability 1
+\textit{Consider $(\Omega,P)$ a probability space, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables and $T\in\Nats^+$. Assume that}\Co{i}
 
-$$\sum_{k=0}^\infty \gamma^kf_k\AP{X_{M_0},X_{M_1}\ldots X_{M_{k}}} \leq C$$
+$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} T^{-1} \text{ if } M_k + 1 \leq n \leq M_k+T\\ 0 \text{ otherwise} \end{cases}$$
 
-Consider also some $T\in\Nats^+$ and assume that
-
-$$\CP{}{M_{k}=n}{M_k}=\begin{cases} T^{-1} \text{ if } M_k + 1 \leq n \leq M_k+T\\ 0 \text{ otherwise} \end{cases}$$
-
-Finally, assume that, conditional on $M_k>n$, $M_k$ and $X_{n}$ are independent. Define the $\Fi_n$-measurable random variable $K_n:\Omega\rightarrow\Nats$ by
+\textit{Define the random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
 
 $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
-Then,
+\textit{Then,}\Co{i}
 
-$$\sum_{n=0}^\infty\gamma^{\frac{4n}{T}}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{k-1}},X_n}}\leq CT+\frac{1}{1-\exp\AP{-\frac{8}{T}}}$$
+$$\Pa{}{K_n\geq\frac{4n}{T}}\leq\exp\AP{-\frac{n}{2T}}$$
+
+\textbf{Proof of Proposition A.14}\Co{b}
+
+By Hoeffding's inequality, for any $k,m\in\Nats$
+
+$$\Pa{}{M_k\leq \frac{T+1}{2}\cdot k-m}\leq\Pa{}{M_k-M_0\leq\frac{T+1}{2}\cdot k-m}\leq\exp\AP{-\frac{2m^2}{kT^2}}$$
+
+TBD...
+
+\textbf{Proposition A.15}\Co{b}
+
+\textit{Consider $\Psi$ be a measurable space, $(\Omega,P)$ a probability space, $\AC{\Fi_n\subseteq\PS{\Omega}}_{n\in\Nats}$ a filtration, $\AC{X_n:\Omega\rightarrow\Psi}_{n\in\Nats}$ a stochastic process adapted to $\Fi$, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ stopping times and $\AC{f_n:\Psi^{n+1}\rightarrow[0,1]}_{n\in\Nats}$ measurable functions. Consider also $\gamma\in(0,1)$ and $C\in\Reals^+$ and assume that with probability 1}\Co{i}
+
+$$\sum_{k=0}^\infty \gamma^kf_k\AP{X_{M_0},X_{M_1}\ldots X_{M_{k}}} \leq C$$
+
+\textit{In addition, consider some $T\in\Nats^+$ and assume that}\Co{i}
+
+$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} T^{-1} \text{ if } M_k + 1 \leq n \leq M_k+T\\ 0 \text{ otherwise} \end{cases}$$
+
+\textit{Finally, assume that, conditional on $M_k>n$, $M_k$ and $X_{n}$ are independent. Define the $\Fi_n$-measurable random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
+
+$$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
+
+\textit{Then,}\Co{i}
+
+$$\sum_{n=0}^\infty\gamma^{\frac{4n}{T}}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq CT+\frac{1}{1-\exp\AP{-\frac{1}{2T}}}$$
+
+\textbf{Proof of Proposition A.15}\Co{b}
+
+TBD
 
 \end{document}
 
