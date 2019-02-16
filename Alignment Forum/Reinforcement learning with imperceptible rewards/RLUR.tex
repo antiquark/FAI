@@ -1097,8 +1097,6 @@ $$+\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^
 
 \textbf{Proof of Proposition A.13}\Co{b}
 
-???
-
 For any $n\in\Nats$, define $\Pi_n:\Hy\times\Hy\times\St^*\times\St\K\A$ as follows.
 
 $$\Pi_n\AP{\T_1,\T_2,h,s}:=\begin{cases} \Pi\AP{\T_1,s} \text{ if } \Abs{h}<n \\ \Pi\AP{\T_2,s} \text{ if }\Abs{h} \geq n \end{cases}$$
@@ -1172,7 +1170,7 @@ It follows that
 $$\TE{\Delta\V_{k0}}=\sum_{n=\ET_k}^{\IT_k}\gamma^{n-\ET_k}\TE{(1-\gamma)\Delta\R_k\AP{\Theta_n}+\gamma\CE{\Delta\SHy_k}{\V_{k}}{\Theta_n,\AT_n}}+$$
 $$\gamma^{\Delta\ET_k}\TE{\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_*}{\Theta_{\ET_k}}}$$
 
-Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we get the desired result.
+Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we get the desired result. $\blacksquare$
 
 \textbf{Proposition A.14}\Co{b}
 
@@ -1186,15 +1184,29 @@ $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\Pa{}{K_n\geq\frac{4n}{T}}\leq\exp\AP{-\frac{n}{2T}}$$
+$$\Pa{}{K_n>\frac{4n}{T}+1}\leq\exp\AP{-\frac{n}{2T}}$$
 
 \textbf{Proof of Proposition A.14}\Co{b}
 
-By Hoeffding's inequality, for any $k,m\in\Nats$
+By Hoeffding's inequality, for any $k\in\Nats$ and $m\in\Reals^{\geq0}$
 
 $$\Pa{}{M_k\leq \frac{T+1}{2}\cdot k-m}\leq\Pa{}{M_k-M_0\leq\frac{T+1}{2}\cdot k-m}\leq\exp\AP{-\frac{2m^2}{kT^2}}$$
 
-TBD...
+Taking $m:=\frac{1}{4}Tk$, we get
+
+$$\Pa{}{M_k< \frac{Tk}{4}}\leq\Pa{}{M_k\leq \frac{\AP{T+1}k}{2}-\frac{Tk}{4}}\leq\exp\AP{-\frac{2\AP{\frac{1}{4}Tk}^2}{kT^2}}=\exp\AP{-\frac{k}{8}}$$
+
+Moreover, by definition of $K_n$, we have, for any $k,n\in\Nats$
+
+$$\Pa{}{K_n> k}=\Pa{}{M_k< n}$$
+
+It follows that
+
+$$\Pa{}{K_{\Ceil{\frac{1}{4}Tk}}>k}=\Pa{}{M_k< \Ceil{\frac{Tk}{4}}}=\Pa{}{M_k<\frac{Tk}{4}}\leq\exp\AP{-\frac{k}{8}}$$
+
+Take $k:=\Ceil{\frac{4n}{T}}$. We get
+
+$$\Pa{}{K_n>\frac{4n}{T}+1}\leq\Pa{}{K_{\Ceil{\frac{1}{4}T\Ceil{\frac{4n}{T}}}}>\Ceil{\frac{4n}{T}}}\leq\exp\AP{-\frac{\Ceil{\frac{4n}{T}}}{8}}\leq\exp\AP{\frac{n}{2T}}\ \blacksquare$$
 
 \textbf{Proposition A.15}\Co{b}
 
@@ -1212,7 +1224,7 @@ $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\sum_{n=0}^\infty\gamma^{\frac{4n}{T}}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq CT+\frac{1}{1-\exp\AP{-\frac{1}{2T}}}$$
+$$\sum_{n=0}^\infty\gamma^{\frac{4n}{T}+1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq CT+\frac{1}{1-\exp\AP{-\frac{1}{2T}}}$$
 
 \textbf{Proof of Proposition A.15}\Co{b}
 
