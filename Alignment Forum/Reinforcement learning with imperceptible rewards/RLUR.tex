@@ -26,6 +26,13 @@
 \newcommand{\APM}[2]{\left(#1\;\middle\vert\;#2\right)}
 \newcommand{\ABM}[2]{\left[#1\;\middle\vert\;#2\right]}
 \newcommand{\ACM}[2]{\left\{#1\;\middle\vert\;#2\right\}}
+% more delimiters
+\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
+\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
 % probability theory
 \newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
 \newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
@@ -48,10 +55,6 @@
 \newcommand{\Dtva}[1]{\operatorname{d}_{\text{tv}}\AP{#1}}
 \newcommand{\En}{\operatorname{H}}
 \newcommand{\Ena}[1]{\operatorname{H}\AP{#1}}
-% power set
-\newcommand{\PS}[1]{\mathcal{P}\AP{#1}}
-% differential
-\newcommand{\D}{\mathrm{d}}
 % arg
 \newcommand{\Argmin}[1]{\underset{#1}{\operatorname{arg\,min}}\,}
 \newcommand{\Argmax}[1]{\underset{#1}{\operatorname{arg\,max}}\,}
@@ -72,22 +75,18 @@
 % topology and category theory
 \newcommand{\Mor}{\mathrm{Mor}}
 \newcommand{\Pt}{\boldsymbol{\mathrm{pt}}}
-% empty string
-\newcommand{\Estr}{\boldsymbol{\lambda}}
 % limits
 \newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
 \newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
 \newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
-% more delimiters
-\newcommand{\Abs}[1]{\left\vert #1 \right\vert}
-\newcommand{\Norm}[1]{\left\Vert #1 \right\Vert}
-\newcommand{\Floor}[1]{\left\lfloor #1 \right\rfloor}
-\newcommand{\Ceil}[1]{\left\lceil #1 \right\rceil}
-\newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
-\newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
 % arrows
 \newcommand{\K}{\xrightarrow{\mathrm{k}}}
 \newcommand{\PF}{\xrightarrow{\circ}}
+% miscellaneous
+\newcommand{\PS}[1]{\mathcal{P}\AP{#1}} % power set
+\newcommand{\D}{\mathrm{d}} % differential
+\newcommand{\Estr}{\boldsymbol{\lambda}} % empty string
+\newcommand{\KD}[1]{\boldsymbol{1}_{#1}}
 % Paper specific
 \newcommand{\St}{\mathcal{S}}
 \newcommand{\A}{\mathcal{A}}
@@ -343,14 +342,14 @@ We can now give the first definition of an instrumental reward function: a conti
 
 An alternative approach is to consider the notion of "experiment" explicitly.
 
-We will use the notation $\X^{\leq\omega}:=\X^*\sqcup\X^\omega$. Given a logical condition $\phi$, the symbol $\boldsymbol{1}_\phi$ will denote 1 when $\phi$ is true and 0 when $\phi$ is false.
+We will use the notation $\X^{\leq\omega}:=\X^*\sqcup\X^\omega$. Given a logical condition $\phi$, the symbol $\KD{\phi}$ will denote 1 when $\phi$ is true and 0 when $\phi$ is false.
 
 \textbf{Definition 13}\Co{b}
 
 \textit{Given $\pi: \FH\K\AX$ and $\mu\in\IS_\omega$, we define $\mu\pi\in\Delta\AO^{\leq\omega}$ by}\Co{i}
 
-$$\Pa{ao\sim\mu\pi}{a_n=a_*}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}\geq n}\pi\APM{a_*}{ao_{:n}}}$$
-$$\Pa{ao\sim\mu\pi}{o_n=o_*}=\Ea{ao\sim\mu\pi}{\boldsymbol{1}_{\Abs{ao}> n}\mu\APM{o_*}{ao_{:n}a_n}}$$
+$$\Pa{ao\sim\mu\pi}{a_n=a_*}=\Ea{ao\sim\mu\pi}{\KD{\Abs{ao}\geq n}\pi\APM{a_*}{ao_{:n}}}$$
+$$\Pa{ao\sim\mu\pi}{o_n=o_*}=\Ea{ao\sim\mu\pi}{\KD{\Abs{ao}> n}\mu\APM{o_*}{ao_{:n}a_n}}$$
 
 \textit{$\pi$ is said to be a}\Co{i} terminable policy \textit{when for any $\mu\in\IS_\omega$}\Co{i}
 
@@ -426,7 +425,7 @@ However, regret analysis for POMDPs involves some technical complexity, and we p
 
 Suppose that $\Ob=\St$. Then, given any MPD transition kernel $\T:\St\times\A\K\St$, we can define the POMDP transition kernel $\T^\sharp:\St\times\A\K\St\times\Ob$ by
 
-$$\T^\sharp\APM{s',s''}{s,a}:=\boldsymbol{1}_{s'=s''}\T\APM{s'}{s,a}$$
+$$\T^\sharp\APM{s',s''}{s,a}:=\KD{s'=s''}\T\APM{s'}{s,a}$$
 
 Fix $\R:\St\times\IS_\omega\rightarrow[0,1]$ continuous affine in the second argument (a type of semi-instrumental reward function). For any $\T$ as above, we get the induced reward function $\R_\T:\St\rightarrow[0,1]$ given by $\R_\T(s):=\R\AP{s,\In_{\T^\sharp}(s)}$. We can now consider the learning problem corresponding to a hypothesis class of MDP transition kernels
 
@@ -926,9 +925,9 @@ $$\Ea{h\sim\theta\pi}{r(h)}=\Ea{\substack{a\sim\pi_0}}{r_0\AP{a,\Ea{o\sim\theta(
 
 Moreover, using Definition 6 and the definition of $j_0$, we get
 
-$$\Ea{o\sim\theta(a)}{j_o\AB{\theta_{ao}}}=\sum_{o\in\Ob}\Ht\AP{\theta_{ao}}\bigoplus_{o'\in\Ob}\AP{\boldsymbol{1}_{o'=o}\theta_{ao},\boldsymbol{1}_{o'=o}}$$
+$$\Ea{o\sim\theta(a)}{j_o\AB{\theta_{ao}}}=\sum_{o\in\Ob}\Ht\AP{\theta_{ao}}\bigoplus_{o'\in\Ob}\AP{\KD{o'=o}\theta_{ao},\KD{o'=o}}$$
 
-$$\Ea{o\sim\theta(a)}{j_o\AB{\theta_{ao}}}=\bigoplus_{o'\in\Ob}\AP{\sum_{o\in\Ob}\Ht\AP{\theta_{ao}}\boldsymbol{1}_{o'=o}\theta_{ao},\sum_{o\in\Ob}\Ht\AP{\theta_{ao}}\boldsymbol{1}_{o'=o}}$$
+$$\Ea{o\sim\theta(a)}{j_o\AB{\theta_{ao}}}=\bigoplus_{o'\in\Ob}\AP{\sum_{o\in\Ob}\Ht\AP{\theta_{ao}}\KD{o'=o}\theta_{ao},\sum_{o\in\Ob}\Ht\AP{\theta_{ao}}\KD{o'=o}}$$
 
 $$\Ea{o\sim\theta(a)}{j_o\AB{\theta_{ao}}}=\bigoplus_{o'\in\Ob}\AP{\Ht\AP{\theta_{ao'}}\theta_{ao'},\Ht\AP{\theta_{ao'}}}=\bigoplus_{o'\in\Ob}\theta_{ao'}=\theta_a$$
 
@@ -1073,7 +1072,7 @@ $$\Ea{h\sim\mu\pi}{\Abs{h}} = \sum_{n=0}^\infty \frac{\delta_n}{C}(n+1)\leq\sum_
 
 In order to prove Theorem 2, we will consider the policy $\pi_{\gamma,T}^{\PSR}: \St^*\times\St\K\A$ implemented by an algorithm which is PSRL with two modifications:
 
-1. Each episode has random duration, uniformly distributed from $1$ to $T\in\Nats^+$.
+1. Each episode has random duration, uniformly distributed from $1$ to $2T-1$, for some fixed $T\in\Nats^+$.
 2. Between any two regular episodes, there is an "interlude" which consists of, performing the reward estimation experiment ($\pi_\Est$).
 
 The PSRL algorithm assumes choosing $\Pi:\Hy\times\St\rightarrow\A$, a Borel measurable mapping s.t. $\Pi(\T)$ is an optimal policy, i.e.
@@ -1176,7 +1175,7 @@ Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we ge
 
 \textit{Consider $(\Omega,P)$ a probability space, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables and $T\in\Nats^+$. Assume that}\Co{i}
 
-$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} T^{-1} \text{ if } M_k + 1 \leq n \leq M_k+T\\ 0 \text{ otherwise} \end{cases}$$
+$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_k < n < M_k+2T\\ 0 \text{ otherwise} \end{cases}$$
 
 \textit{Define the random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
 
@@ -1184,7 +1183,9 @@ $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\Pa{}{K_n>\frac{4n}{T}+1}\leq\exp\AP{-\frac{n}{2T}}$$
+$$\Pa{}{K_n>\frac{4n}{T}+1}\leq\exp\AP{-\frac{n}{2T}}???$$
+
+% needs to be reversed
 
 \textbf{Proof of Proposition A.14}\Co{b}
 
@@ -1216,19 +1217,45 @@ $$\sum_{k=0}^\infty \gamma^kf_k\AP{X_{M_0},X_{M_1}\ldots X_{M_{k}}} \leq C$$
 
 \textit{In addition, consider some $T\in\Nats^+$ and assume that}\Co{i}
 
-$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} T^{-1} \text{ if } M_k + 1 \leq n \leq M_k+T\\ 0 \text{ otherwise} \end{cases}$$
+$$\Pa{}{M_0=n}=\begin{cases} \AP{2T-1}^{-1} \text{ if } n < 2T-1\\ 0 \text{ otherwise} \end{cases}$$
 
-\textit{Finally, assume that, conditional on $M_k>n$, $M_k$ and $X_{n}$ are independent. Define the $\Fi_n$-measurable random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
+$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_k < n < M_k+2T\\ 0 \text{ otherwise} \end{cases}$$
+
+\textit{Finally, assume that, conditional on $M_k\geq n$, $M_k$ and $X_{n}$ are independent. Define the $\Fi_n$-measurable random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
 
 $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\sum_{n=0}^\infty\gamma^{\frac{4n}{T}+1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq CT+\frac{1}{1-\exp\AP{-\frac{1}{2T}}}$$
+$$\sum_{n=0}^\infty\gamma^{\frac{4n}{T}+1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq 2CT+\frac{1}{1-\exp\AP{-\frac{1}{2T}}}???$$
 
 \textbf{Proof of Proposition A.15}\Co{b}
 
-TBD
+We have, with probability 1
+
+$$\sum_{n=0}^\infty\KD{M_{K_n}=n}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n} \leq C$$
+
+Taking expected value
+
+$$\sum_{n=0}^\infty\Ea{}{\KD{M_{K_n}=n}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq C$$
+
+Denote by $K_n^\sharp$ the joint random variables $K_n$ and $M_0,M_1\ldots M_{K_n-1}$. Our assumptions imply that, conditional on $K_n^\sharp$, the factor $\KD{M_{K_n}=n}$ is independent of the rest of the expression inside the expected value. It follows that
+
+$$\sum_{n=0}^\infty\Ea{}{\CP{}{M_{K_n}=n}{K_n^\sharp}\gamma^{K_n}\CE{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}{K_n^\sharp}} \leq C$$
+
+Clearly
+
+$$\CP{}{M_{K_n}=n}{K_n^\sharp}=\frac{1}{T-n+M_{K_n-1}+1}\geq\frac{1}{T}$$
+
+Here, $M_{K_n-1}$ is understood to mean $-1$ when $K_n=0$. We get
+
+$$\sum_{n=0}^\infty\Ea{}{\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq CT$$
+
+Using Proposition A.14, we get ???
+
+% We need to reverse Propositon A.14: show why the probability tht {K_n is small} is small
+
+$$\sum_{n=0}^\infty\Ea{}{\gamma^{\frac{4n}{T}+1}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq CT$$
 
 \end{document}
 
