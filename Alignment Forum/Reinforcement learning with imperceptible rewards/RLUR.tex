@@ -1173,9 +1173,11 @@ Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we ge
 
 \textbf{Proposition A.14}\Co{b}
 
-\textit{Consider $(\Omega,P)$ a probability space, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables and $T\in\Nats^+$. Assume that}\Co{i}
+\textit{Consider $(\Omega,P)$ a probability space, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables and $T\in\Nats$, $T\geq2$. Assume that for any $k\in\Nats$}\Co{i}
 
-$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_k < n < M_k+2T\\ 0 \text{ otherwise} \end{cases}$$
+$$\CP{}{M_{k}=n}{M_{k-1}}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_{k-1} < n < M_{k-1}+2T\\ 0 \text{ otherwise} \end{cases}$$
+
+\textit{Here, $M_{-1}$ is understood to identically equal $0$.}\Co{i}
 
 \textit{Define the random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
 
@@ -1183,31 +1185,33 @@ $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\Pa{}{K_n>\frac{4n}{T}+1}\leq\exp\AP{-\frac{n}{2T}}???$$
+$$\Pa{}{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
 
 % needs to be reversed
 
 \textbf{Proof of Proposition A.14}\Co{b}
 
-By Hoeffding's inequality, for any $k\in\Nats$ and $m\in\Reals^{\geq0}$
+By Hoeffding's inequality, for any $k\in\Nats$ and $m\in\Nats$
 
-$$\Pa{}{M_k\leq \frac{T+1}{2}\cdot k-m}\leq\Pa{}{M_k-M_0\leq\frac{T+1}{2}\cdot k-m}\leq\exp\AP{-\frac{2m^2}{kT^2}}$$
+$$\Pa{}{M_k\geq (k+1)T+m}\leq\exp\AP{-\frac{2m^2}{(k+1)\AP{2T-2}^2}}$$
 
-Taking $m:=\frac{1}{4}Tk$, we get
+Taking $m:=(k+1)T$, we get
 
-$$\Pa{}{M_k< \frac{Tk}{4}}\leq\Pa{}{M_k\leq \frac{\AP{T+1}k}{2}-\frac{Tk}{4}}\leq\exp\AP{-\frac{2\AP{\frac{1}{4}Tk}^2}{kT^2}}=\exp\AP{-\frac{k}{8}}$$
+$$\Pa{}{M_k\geq 2(k+1)T}\leq\exp\AP{-\frac{2(k+1)^2T^2}{4(k+1)\AP{T-1}^2}}\leq\exp\AP{-\frac{k+1}{2}}$$
 
 Moreover, by definition of $K_n$, we have, for any $k,n\in\Nats$
 
-$$\Pa{}{K_n> k}=\Pa{}{M_k< n}$$
+$$\Pa{}{K_n\leq k}=\Pa{}{M_k\geq n}$$
 
 It follows that
 
-$$\Pa{}{K_{\Ceil{\frac{1}{4}Tk}}>k}=\Pa{}{M_k< \Ceil{\frac{Tk}{4}}}=\Pa{}{M_k<\frac{Tk}{4}}\leq\exp\AP{-\frac{k}{8}}$$
+$$\Pa{}{K_{2(k+1)T}\leq k}=\Pa{}{M_k\geq 2(k+1)T}\leq\exp\AP{-\frac{k+1}{2}}$$
 
-Take $k:=\Ceil{\frac{4n}{T}}$. We get
+Note that the above trivially holds for $k=-1$ as well. Consider any $n\in\Nats$ and take $k:=\Floor{\frac{n}{2T}}-1$. We get
 
-$$\Pa{}{K_n>\frac{4n}{T}+1}\leq\Pa{}{K_{\Ceil{\frac{1}{4}T\Ceil{\frac{4n}{T}}}}>\Ceil{\frac{4n}{T}}}\leq\exp\AP{-\frac{\Ceil{\frac{4n}{T}}}{8}}\leq\exp\AP{\frac{n}{2T}}\ \blacksquare$$
+$$\Pa{}{K_{2\Floor{\frac{n}{2T}}T}\leq \Floor{\frac{n}{2T}}-1}\leq\exp\AP{-\frac{1}{2}\Floor{\frac{n}{2T}}}\leq\exp\AP{-\frac{1}{2}\AP{\frac{n}{2T}-1}}$$
+
+$$\Pa{}{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}\ \blacksquare$$
 
 \textbf{Proposition A.15}\Co{b}
 
