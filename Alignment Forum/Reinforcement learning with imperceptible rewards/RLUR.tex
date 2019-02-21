@@ -1177,7 +1177,7 @@ Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we ge
 
 $$\CP{}{M_{k}=n}{M_{k-1}}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_{k-1} < n < M_{k-1}+2T\\ 0 \text{ otherwise} \end{cases}$$
 
-\textit{Here, $M_{-1}$ is understood to identically equal $0$.}\Co{i}
+\textit{Here, $M_{-1}$ is understood to identically equal $-1$.}\Co{i}
 
 \textit{Define the random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
 
@@ -1193,7 +1193,7 @@ $$\Pa{}{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
 
 By Hoeffding's inequality, for any $k\in\Nats$ and $m\in\Nats$
 
-$$\Pa{}{M_k\geq (k+1)T+m}\leq\exp\AP{-\frac{2m^2}{(k+1)\AP{2T-2}^2}}$$
+$$\Pa{}{M_k\geq (k+1)T+m-1}\leq\exp\AP{-\frac{2m^2}{(k+1)\AP{2T-2}^2}}$$
 
 Taking $m:=(k+1)T$, we get
 
@@ -1219,11 +1219,11 @@ $$\Pa{}{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}\ \black
 
 $$\sum_{k=0}^\infty \gamma^kf_k\AP{X_{M_0},X_{M_1}\ldots X_{M_{k}}} \leq C$$
 
-\textit{In addition, consider some $T\in\Nats^+$ and assume that}\Co{i}
+\textit{In addition, consider some $T\in\Nats^+$, $T\geq2$ and assume that for all $k\in\Nats$}\Co{i}
 
-$$\Pa{}{M_0=n}=\begin{cases} \AP{2T-1}^{-1} \text{ if } n < 2T-1\\ 0 \text{ otherwise} \end{cases}$$
+$$\CP{}{M_{k}=n}{M_{k-1}}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_{k-1} < n < M_{k-1}+2T\\ 0 \text{ otherwise} \end{cases}$$
 
-$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_k < n < M_k+2T\\ 0 \text{ otherwise} \end{cases}$$
+\textit{Here, $M_{-1}$ is understood to identically equal $-1$.}\Co{i}
 
 \textit{Finally, assume that, conditional on $M_k\geq n$, $M_k$ and $X_{n}$ are independent. Define the $\Fi_n$-measurable random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
 
@@ -1231,7 +1231,7 @@ $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\sum_{n=0}^\infty\gamma^{\frac{4n}{T}+1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq 2CT+\frac{1}{1-\exp\AP{-\frac{1}{2T}}}???$$
+$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq 2CT+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}$$
 
 \textbf{Proof of Proposition A.15}\Co{b}
 
@@ -1249,17 +1249,23 @@ $$\sum_{n=0}^\infty\Ea{}{\CP{}{M_{K_n}=n}{K_n^\sharp}\gamma^{K_n}\CE{}{f_{K_n}\A
 
 Clearly
 
-$$\CP{}{M_{K_n}=n}{K_n^\sharp}=\frac{1}{T-n+M_{K_n-1}+1}\geq\frac{1}{T}$$
+$$\CP{}{M_{K_n}=n}{K_n^\sharp}=\frac{1}{2T-n+M_{K_n-1}}\geq\frac{1}{2T}$$
 
-Here, $M_{K_n-1}$ is understood to mean $-1$ when $K_n=0$. We get
+We get
 
-$$\sum_{n=0}^\infty\Ea{}{\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq CT$$
+$$\sum_{n=0}^\infty\Ea{}{\frac{1}{2T}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq C$$
 
-Using Proposition A.14, we get ???
+$$\sum_{n=0}^\infty\Ea{}{\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT$$
 
-% We need to reverse Propositon A.14: show why the probability tht {K_n is small} is small
+Using Proposition A.14, we get
 
-$$\sum_{n=0}^\infty\Ea{}{\gamma^{\frac{4n}{T}+1}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq CT$$
+$$\sum_{n=0}^\infty\AP{\Ea{}{\gamma^{\frac{n}{2T}-1}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}-\exp\AP{\frac{1}{2}-\frac{n}{4T}}} \leq 2CT$$
+
+$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\sum_{n=0}^\infty\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
+
+$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}\ \blacksquare$$
+
+
 
 \end{document}
 
