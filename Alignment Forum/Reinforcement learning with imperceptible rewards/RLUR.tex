@@ -1267,6 +1267,12 @@ $$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots
 
 $$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}\ \blacksquare$$
 
+\textbf{Proposition A.16}\Co{b}
+
+% bound on \sum E[\gamma^N]
+
+???
+
 \textbf{Proof of Theorem 2}\Co{b}
 
 ???
@@ -1288,6 +1294,10 @@ It follows that
 
 $$\Reg(\gamma)\leq\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Abs{\Delta\R_k\AP{\Theta_n}}+\gamma\Delta\V(\gamma)\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}}}$$
 $$+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}}+\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n}+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}}$$
+
+% Show that \sum E[\gamma^M] and \sum E[\gamma^N] are O(1/(1-\gamma^T))
+% Use the decomposition of M and N into a sum of independent delta-s, by dropping the interlude terms
+% Show that \E E[\sum_M^N \gamma^n] is O(t_est/T)
 
 $$??\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }+\frac{1}{1-\gamma^T}}$$
 
