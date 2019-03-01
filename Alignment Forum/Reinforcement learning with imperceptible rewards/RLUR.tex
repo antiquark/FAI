@@ -1269,13 +1269,39 @@ $$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots
 
 \textbf{Proposition A.16}\Co{b}
 
-\textit{Consider $(\Omega,P)$ a probability space, $T\in\Nats^+$ and $\AC{N_k,\Delta_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables s.t. $N_{k+1}-N_k\geq\Delta_k$ and the $\Delta_k$ are all independent and uniformly distributed between $1$ to $2T-1$. Consider also $\gamma\in(0,1)$ and assume that $\gamma^T\geq\frac{1}{2}$. Then,}\Co{i}
+\textit{Consider $(\Omega,P)$ a probability space, $T\in\Nats^+$ and $\AC{N_k,\Delta_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables s.t. $N_{k+1}-N_k\geq\Delta_k$ and the $\Delta_k$ are all independent and uniformly distributed between $1$ and $2T-1$. Consider also $\gamma\in(0,1)$. Then,}\Co{i}
 
-$$\sum_{k=0}^\infty\Ea{}{\gamma^{N_k}}\leq\frac{2}{(1-\gamma)T}$$
+$$\sum_{k=0}^\infty\Ea{}{\gamma^{N_k}}\leq\frac{1}{\gamma^{2T-2}(1-\gamma)T}$$
 
 \textbf{Proof of Proposition A.16}\Co{b}
 
-TBD
+For any $n\in\Nats$, we have
+
+$$\frac{1-\gamma^n}{1-\gamma}=\sum_{m=0}^{n-1}\gamma^m$$
+
+$$1-\gamma^n=(1-\gamma)\sum_{m=0}^{n-1}\gamma^m\geq n(1-\gamma)\gamma^{n-1}$$
+
+$$\gamma^n\leq1-n(1-\gamma)\gamma^{n-1}$$
+
+Therefore, since $\Delta_0$ is uniformly distributed between $1$ and $2T-1$,
+
+$$\Ea{}{\gamma^{\Delta_0}}=\frac{1}{2T-1}\sum_{n=1}^{2T-1}\gamma^n\leq\frac{1}{2T-1}\sum_{n=1}^{2T-1}\AP{1-n(1-\gamma)\gamma^{n-1}}$$
+
+$$\Ea{}{\gamma^{\Delta_0}}\leq\frac{1}{2T-1}\sum_{n=1}^{2T-1}\AP{1-n(1-\gamma)\gamma^{2T-2}}=1-T(1-\gamma)\gamma^{2T-2}$$
+
+Also, for any $k\in\Nats$
+
+$$N_k\geq\sum_{l=0}^{k-1}\Delta_l$$
+
+$$\gamma^{N_k}\leq\gamma^{\sum_{l=0}^{k-1}\Delta_l}=\prod_{l=0}^{k-1}\gamma^{\Delta_l}$$
+
+$$\Ea{}{\gamma^{N_k}}\leq\Ea{}{\prod_{l=0}^{k-1}\gamma^{\Delta_l}}=\prod_{l=0}^{k-1}\Ea{}{\gamma^{\Delta_l}}=\Ea{}{\gamma^{\Delta_0}}^k$$
+
+Here, we used that the $\Delta_l$ are independent and equally distributed. It follows that
+
+$$\sum_{k=0}^\infty\Ea{}{\gamma^{N_k}}\leq\sum_{k=0}^\infty\Ea{}{\gamma^{\Delta_0}}^k=\frac{1}{1-\Ea{}{\gamma^{\Delta_0}}}\leq\frac{1}{1-\AP{1-T(1-\gamma)\gamma^{2T-2}}}$$
+
+$$\sum_{k=0}^\infty\Ea{}{\gamma^{N_k}}\leq\sum\frac{1}{T(1-\gamma)\gamma^{2T-2}}\ \ \blacksquare$$
 
 \textbf{Proof of Theorem 2}\Co{b}
 
