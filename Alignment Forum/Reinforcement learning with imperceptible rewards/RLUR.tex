@@ -1093,7 +1093,7 @@ This probability space can be formally defined via recursive equations on the ra
 
 $$\Reg(\gamma)=\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Delta\R_k\AP{\Theta_n}+\gamma\CE{\Delta\SHy_k}{\V_{\SHy_k\R_k}(\gamma)}{\Theta_n,\AT_n}}}$$
 $$+\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_{\SHy_*\R_*}(\gamma)}{\Theta_{\ET_k}}}$$
-$$+\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}$$
+$$+(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}$$
 $$+\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^{\Delta\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}$$
 
 \textbf{Proof of Proposition A.13}\Co{b}
@@ -1115,7 +1115,7 @@ $$\V_{kl}(s):=\V_{\SHy_{*}\Pi_{\Delta\ET_k-l}\AP{\SHy_{k},\SHy_*}\R_*}\AP{s,\gam
 It is easy to see that
 
 $$\Reg(\gamma)=\sum_{k=0}^\infty{\Ea{}{\gamma^{\ET_k}\AP{\V_{*}\AP{\Theta_{\ET_k}}-\V_{k0}\AP{\Theta_{\ET_k}}}}}$$
-$$+\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}$$
+$$+(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}$$
 $$+\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^{\Delta\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}$$
 
 Here, the first term represents the regret incurred during the episodes, whereas the second and third term represent the regret incurred during the interludes (the lost reward and lost value respectively). We will denote the first term $\Reg_0(\gamma)$ in the following.
@@ -1311,7 +1311,7 @@ We take $\pi^\dagger_\gamma:=\pi^\PSR_{\gamma,T}$ where $T\in\Nats^+$ will be sp
 
 $$\Reg(\gamma)\leq\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Abs{\Delta\R_k\AP{\Theta_n}}+\gamma\Abs{\CE{\Delta\SHy_k}{\V_{\SHy_k\R_k}(\gamma)}{\Theta_n,\AT_n}}}}$$
 $$+\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}\Abs{\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_{\SHy_*\R_*}(\gamma)}{\Theta_{\ET_k}}}}$$
-$$+\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\Abs{\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}}$$
+$$+(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\Abs{\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}}$$
 $$+\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}\Abs{\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^{\Delta\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}}$$
 
 We will use the notation
@@ -1323,29 +1323,42 @@ We will also use the notation $\Dtva{\mu-\nu}:=\Dtva{\mu,\nu}$.
 It follows that
 
 $$\Reg(\gamma)\leq\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Abs{\Delta\R_k\AP{\Theta_n}}+\gamma\Delta\V(\gamma)\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}}}$$
-$$+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}}+\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n}+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}}$$
+$$+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}}+(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n}+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}}$$
 
-% Show that \sum E[\gamma^M] and \sum E[\gamma^N] are O(1/(1-\gamma^T))
-% Use the decomposition of M and N into a sum of independent delta-s, by dropping the interlude terms
-% Show that \E E[\sum_M^N \gamma^n] is O(t_est/T)
+Denote $\Reg_{0}(\gamma)$ the first term on the RHS and $\Reg_{1}(\gamma)$ the sum of the others terms. We have
 
-$$??\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}} }+\frac{1}{1-\gamma^T}}$$
+$$\Reg(\gamma)\leq\Reg_0(\gamma)+\Reg_1(\gamma)$$
 
-Consider $\Y=\Reals^\St$ equipped with the $L^1$ norm. Given $s\in\St$ and $a\in\A$, consider also the subspace
+First, we analyze $\Reg_1(\gamma)$. In the second term, we have $\gamma^n\leq\gamma^{M_k}$, leading to
 
-$$W_{sa}:=\Sp\ACM{\T(s,a)}{\T\in\Hy}$$
+$$\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n}\leq\Ea{}{\Delta M_k\gamma^{M_k}}=\Ea{}{\CE{}{\Delta M_k}{M_k}\gamma^{M_k}}\leq t_\Est\Ea{}{\gamma^{M_k}}$$
 
-We now apply Proposition ?? with $\delta:=\frac{1}{2}(1-\gamma)^2$ and $\epsilon:=(1-\gamma)^2$. We get
+We get
 
-$$\Pa{}{\SHy_*\in\bigcap_{n=0}^\infty\CS^\Hy\AB{\Theta\AT_{:n}\Theta_n,\beta(n+1)^{-1}?}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
+$$\Reg_1(\gamma)\leq\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}}+t_\Est(1-\gamma)\sum_{k=0}^\infty\Ea{}{\gamma^{M_k}}+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}}$$
 
-Here, $\beta$ was defined in Proposition ??.
+Applying Proposition A.16 to each term, we get
 
-Since the hypothesis $\SHy_n$ is sampled from the posterior, for any $l\in\Nats$ we also have
+$$\Reg_1(\gamma)\leq\frac{2\Delta\V(\gamma)+t_\Est(1-\gamma)}{\gamma^{2T-2}(1-\gamma)T}$$
 
-$$\Pa{}{\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\beta(lT+1)^{-1}?}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
+Now, we analyze $\Reg_0(\gamma)$. Define $\Theta_M^r\in\AP{\St\times\Reals}^\omega$ by
 
-$$\Pa{}{\SHy_*,\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\beta(lT+1)^{-1}?}} \geq 1-(1-\gamma)^2$$
+$$\Theta_{Mk}^r:=\AP{\Theta_{M_k},r\AP{\Theta\AT_{M_k:N_{k+1}}\Theta_{N_{k+1}}}}$$
+
+That is, $\Theta_M^r$ is the history of reward estimation experiments. We apply Proposition B.1 with $\delta:=\frac{1}{2}(1-\gamma)^2$ and $\epsilon:=(1-\gamma)^2$, to each of the two terms in $\Reg_0(\gamma)$:
+
+$$\Pa{}{\R_*\in\bigcap_{k=0}^\infty\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
+$$\Pa{}{\SHy_*\in\bigcap_{n=0}^\infty\CS^{\Hy}\AB{\Theta\AT_{:n}\Theta_n,\beta_\T(n+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
+
+Here, $\beta_R$ and $\beta_\T$ correspond to $\beta$ in Proposition B.1.
+
+Since the hypotheses $\SHy_k$ is sampled from the posterior, for any $k\in\Nats$ we also have
+
+??? % add analogical claim for \R!
+
+$$\Pa{}{\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
+
+$$\Pa{}{\THy,\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}} \geq 1-(1-\gamma)^2$$
 
 Denote
 
