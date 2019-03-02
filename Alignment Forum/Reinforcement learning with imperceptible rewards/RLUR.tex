@@ -1094,10 +1094,10 @@ This probability space can be formally defined via recursive equations on the ra
 
 \textit{Denote $\R_k:=\R_{\SHy_k}$, $\R_*:=\R_{\THy}$, $\Delta\R_k:=\R_k-\R_*$, $\Delta\SHy_k:=\SHy_k-\THy$, $\Ev_{*k}:=\SHy_*\Pi\AP{\SHy_{k}}$, $\Ev_{k*}:=\SHy_{k}\Pi\AP{\SHy_*}$, $\Ev_{**}:=\THy\Pi\AP{\THy}$, $\Delta\ET_k:=\IT_k-\ET_k$ and $\Delta\IT_k:=\ET_{k+1}-\IT_k$. Then,}\Co{i}
 
-$$\Reg(\gamma)=\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Delta\R_k\AP{\Theta_n}+\gamma\CE{\Delta\SHy_k}{\V_{\SHy_k\R_k}(\gamma)}{\Theta_n,\AT_n}}}$$
-$$+\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_{\SHy_*\R_*}(\gamma)}{\Theta_{\ET_k}}}$$
-$$+(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}$$
-$$+\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^{\Delta\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}$$
+$$\Reg(\gamma)=\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Delta\R_k\AP{\Theta_n}+\gamma\CE{\Delta\SHy_k}{\V_{\SHy_k\R_k}(\gamma)}{\Theta_n,\AT_n}}}$$
+$$+\sum_{k=0}^\infty\E{{\gamma^{\IT_k}}\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_{\SHy_*\R_*}(\gamma)}{\Theta_{\ET_k}}}$$
+$$+(1-\gamma)\sum_{k=0}^\infty\E{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}$$
+$$+\sum_{k=0}^\infty\E{\gamma^{\ET_{k+1}}\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^{\Delta\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}$$
 
 \textbf{Proof of Proposition A.13}\Co{b}
 
@@ -1117,19 +1117,19 @@ $$\V_{kl}(s):=\V_{\SHy_{*}\Pi_{\Delta\ET_k-l}\AP{\SHy_{k},\SHy_*}\R_*}\AP{s,\gam
 
 It is easy to see that
 
-$$\Reg(\gamma)=\sum_{k=0}^\infty{\Ea{}{\gamma^{\ET_k}\AP{\V_{*}\AP{\Theta_{\ET_k}}-\V_{k0}\AP{\Theta_{\ET_k}}}}}$$
-$$+(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}$$
-$$+\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^{\Delta\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}$$
+$$\Reg(\gamma)=\sum_{k=0}^\infty{\E{\gamma^{\ET_k}\AP{\V_{*}\AP{\Theta_{\ET_k}}-\V_{k0}\AP{\Theta_{\ET_k}}}}}$$
+$$+(1-\gamma)\sum_{k=0}^\infty\E{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}$$
+$$+\sum_{k=0}^\infty\E{\gamma^{\ET_{k+1}}\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^{\Delta\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}$$
 
 Here, the first term represents the regret incurred during the episodes, whereas the second and third term represent the regret incurred during the interludes (the lost reward and lost value respectively). We will denote the first term $\Reg_0(\gamma)$ in the following.
 
 By definition, $\SHy_{k}$ and $\SHy_*$ have the same distribution even when conditioned by the history up to $\ET_k$. Therefore
 
-$$\Ea{}{\V_{*}\AP{\Theta_{\ET_k}}}=\Ea{}{\V_{k}\AP{\Theta_{\ET_k}}}$$
+$$\E{\V_{*}\AP{\Theta_{\ET_k}}}=\E{\V_{k}\AP{\Theta_{\ET_k}}}$$
 
 It follows that
 
-$$\Reg_0(\gamma)=\sum_{k=0}^\infty{\Ea{}{\gamma^{\ET_k}\AP{\V_{k}\AP{\Theta_{\ET_k}}-\V_{k0}\AP{\Theta_{\ET_k}}}}}$$
+$$\Reg_0(\gamma)=\sum_{k=0}^\infty{\E{\gamma^{\ET_k}\AP{\V_{k}\AP{\Theta_{\ET_k}}-\V_{k0}\AP{\Theta_{\ET_k}}}}}$$
 
 Denote $\Theta_{kl}:=\Theta_{\ET_k+l}$ and $\Delta\V_{kl}:=\V_k\AP{\Theta_{kl}}-\V_{kl}\AP{\Theta_{kl}}$. We now prove by induction on $l\in\Nats$ that, with probability 1
 
@@ -1190,7 +1190,7 @@ $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\Pa{}{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
+$$\Pb{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
 
 % needs to be reversed
 
@@ -1198,25 +1198,25 @@ $$\Pa{}{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
 
 By Hoeffding's inequality, for any $k\in\Nats$ and $m\in\Nats$
 
-$$\Pa{}{M_k\geq (k+1)T+m-1}\leq\exp\AP{-\frac{2m^2}{(k+1)\AP{2T-2}^2}}$$
+$$\Pb{M_k\geq (k+1)T+m-1}\leq\exp\AP{-\frac{2m^2}{(k+1)\AP{2T-2}^2}}$$
 
 Taking $m:=(k+1)T$, we get
 
-$$\Pa{}{M_k\geq 2(k+1)T}\leq\exp\AP{-\frac{2(k+1)^2T^2}{4(k+1)\AP{T-1}^2}}\leq\exp\AP{-\frac{k+1}{2}}$$
+$$\Pb{M_k\geq 2(k+1)T}\leq\exp\AP{-\frac{2(k+1)^2T^2}{4(k+1)\AP{T-1}^2}}\leq\exp\AP{-\frac{k+1}{2}}$$
 
 Moreover, by definition of $K_n$, we have, for any $k,n\in\Nats$
 
-$$\Pa{}{K_n\leq k}=\Pa{}{M_k\geq n}$$
+$$\Pb{K_n\leq k}=\Pb{M_k\geq n}$$
 
 It follows that
 
-$$\Pa{}{K_{2(k+1)T}\leq k}=\Pa{}{M_k\geq 2(k+1)T}\leq\exp\AP{-\frac{k+1}{2}}$$
+$$\Pb{K_{2(k+1)T}\leq k}=\Pb{M_k\geq 2(k+1)T}\leq\exp\AP{-\frac{k+1}{2}}$$
 
 Note that the above trivially holds for $k=-1$ as well. Consider any $n\in\Nats$ and take $k:=\Floor{\frac{n}{2T}}-1$. We get
 
-$$\Pa{}{K_{2\Floor{\frac{n}{2T}}T}\leq \Floor{\frac{n}{2T}}-1}\leq\exp\AP{-\frac{1}{2}\Floor{\frac{n}{2T}}}\leq\exp\AP{-\frac{1}{2}\AP{\frac{n}{2T}-1}}$$
+$$\Pb{K_{2\Floor{\frac{n}{2T}}T}\leq \Floor{\frac{n}{2T}}-1}\leq\exp\AP{-\frac{1}{2}\Floor{\frac{n}{2T}}}\leq\exp\AP{-\frac{1}{2}\AP{\frac{n}{2T}-1}}$$
 
-$$\Pa{}{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}\ \blacksquare$$
+$$\Pb{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}\ \blacksquare$$
 
 \textbf{Proposition A.15}\Co{b}
 
@@ -1236,7 +1236,7 @@ $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq 2CT+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}$$
+$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\E{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq 2CT+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}$$
 
 \textbf{Proof of Proposition A.15}\Co{b}
 
@@ -1246,11 +1246,11 @@ $$\sum_{n=0}^\infty\KD{M_{K_n}=n}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_
 
 Taking expected value
 
-$$\sum_{n=0}^\infty\Ea{}{\KD{M_{K_n}=n}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq C$$
+$$\sum_{n=0}^\infty\E{\KD{M_{K_n}=n}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq C$$
 
 Denote by $K_n^\sharp$ the joint random variables $K_n$ and $M_0,M_1\ldots M_{K_n-1}$. Our assumptions imply that, conditional on $K_n^\sharp$, the factor $\KD{M_{K_n}=n}$ is independent of the rest of the expression inside the expected value. It follows that
 
-$$\sum_{n=0}^\infty\Ea{}{\CP{}{M_{K_n}=n}{K_n^\sharp}\gamma^{K_n}\CE{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}{K_n^\sharp}} \leq C$$
+$$\sum_{n=0}^\infty\E{\CP{}{M_{K_n}=n}{K_n^\sharp}\gamma^{K_n}\CE{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}{K_n^\sharp}} \leq C$$
 
 Clearly
 
@@ -1258,23 +1258,27 @@ $$\CP{}{M_{K_n}=n}{K_n^\sharp}=\frac{1}{2T-n+M_{K_n-1}}\geq\frac{1}{2T}$$
 
 We get
 
-$$\sum_{n=0}^\infty\Ea{}{\frac{1}{2T}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq C$$
+$$\sum_{n=0}^\infty\E{\frac{1}{2T}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq C$$
 
-$$\sum_{n=0}^\infty\Ea{}{\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT$$
+$$\sum_{n=0}^\infty\E{\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT$$
 
 Using Proposition A.14, we get
 
-$$\sum_{n=0}^\infty\AP{\Ea{}{\gamma^{\frac{n}{2T}-1}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}-\exp\AP{\frac{1}{2}-\frac{n}{4T}}} \leq 2CT$$
+$$\sum_{n=0}^\infty\AP{\E{\gamma^{\frac{n}{2T}-1}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}-\exp\AP{\frac{1}{2}-\frac{n}{4T}}} \leq 2CT$$
 
-$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\sum_{n=0}^\infty\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
+$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\E{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\sum_{n=0}^\infty\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
 
-$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\Ea{}{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}\ \blacksquare$$
+$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\E{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}\ \blacksquare$$
 
 \textbf{Proposition A.16}\Co{b}
 
-\textit{Consider $(\Omega,P)$ a probability space, $T\in\Nats^+$ and $\AC{N_k,\Delta_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables s.t. $N_{k+1}-N_k\geq\Delta_k$ and the $\Delta_k$ are all independent and uniformly distributed between $1$ and $2T-1$. Consider also $\gamma\in(0,1)$. Then,}\Co{i}
+\textit{Consider $(\Omega,P)$ a probability space, $T\in\Nats^+$ and $\AC{N_k,\Delta_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables s.t. $N_{k+1}-N_k\geq\Delta_k$ and the $\Delta_k$ are all independent and uniformly distributed between $1$ and $2T-1$. Consider also $\gamma\in(0,1)$. Then, for any $k\in\Nats$}\Co{i}
 
-$$\sum_{k=0}^\infty\Ea{}{\gamma^{N_k}}\leq\frac{1}{\gamma^{2T-2}(1-\gamma)T}$$
+$$\E{\gamma^{N_k}}\leq\AP{1-T\gamma^{2T-2}(1-\gamma)}^k$$
+
+\textit{In particular,}\Co{i}
+
+$$\sum_{k=0}^\infty\E{\gamma^{N_k}}\leq\frac{1}{T\gamma^{2T-2}(1-\gamma)}$$
 
 \textbf{Proof of Proposition A.16}\Co{b}
 
@@ -1288,9 +1292,9 @@ $$\gamma^n\leq1-n(1-\gamma)\gamma^{n-1}$$
 
 Therefore, since $\Delta_0$ is uniformly distributed between $1$ and $2T-1$,
 
-$$\Ea{}{\gamma^{\Delta_0}}=\frac{1}{2T-1}\sum_{n=1}^{2T-1}\gamma^n\leq\frac{1}{2T-1}\sum_{n=1}^{2T-1}\AP{1-n(1-\gamma)\gamma^{n-1}}$$
+$$\E{\gamma^{\Delta_0}}=\frac{1}{2T-1}\sum_{n=1}^{2T-1}\gamma^n\leq\frac{1}{2T-1}\sum_{n=1}^{2T-1}\AP{1-n(1-\gamma)\gamma^{n-1}}$$
 
-$$\Ea{}{\gamma^{\Delta_0}}\leq\frac{1}{2T-1}\sum_{n=1}^{2T-1}\AP{1-n(1-\gamma)\gamma^{2T-2}}=1-T(1-\gamma)\gamma^{2T-2}$$
+$$\E{\gamma^{\Delta_0}}\leq\frac{1}{2T-1}\sum_{n=1}^{2T-1}\AP{1-n(1-\gamma)\gamma^{2T-2}}=1-T(1-\gamma)\gamma^{2T-2}$$
 
 Also, for any $k\in\Nats$
 
@@ -1298,13 +1302,23 @@ $$N_k\geq\sum_{l=0}^{k-1}\Delta_l$$
 
 $$\gamma^{N_k}\leq\gamma^{\sum_{l=0}^{k-1}\Delta_l}=\prod_{l=0}^{k-1}\gamma^{\Delta_l}$$
 
-$$\Ea{}{\gamma^{N_k}}\leq\Ea{}{\prod_{l=0}^{k-1}\gamma^{\Delta_l}}=\prod_{l=0}^{k-1}\Ea{}{\gamma^{\Delta_l}}=\Ea{}{\gamma^{\Delta_0}}^k$$
+$$\E{\gamma^{N_k}}\leq\E{\prod_{l=0}^{k-1}\gamma^{\Delta_l}}=\prod_{l=0}^{k-1}\E{\gamma^{\Delta_l}}=\E{\gamma^{\Delta_0}}^k$$
 
-Here, we used that the $\Delta_l$ are independent and equally distributed. It follows that
+Here, we used that the $\Delta_l$ are independent and equally distributed. Substituting the expression for $\E{\Delta_0}$, we get the desired result. $\blacksquare$
 
-$$\sum_{k=0}^\infty\Ea{}{\gamma^{N_k}}\leq\sum_{k=0}^\infty\Ea{}{\gamma^{\Delta_0}}^k=\frac{1}{1-\Ea{}{\gamma^{\Delta_0}}}\leq\frac{1}{1-\AP{1-T(1-\gamma)\gamma^{2T-2}}}$$
+\textbf{Proposition A.17}\Co{b}
 
-$$\sum_{k=0}^\infty\Ea{}{\gamma^{N_k}}\leq\sum\frac{1}{T(1-\gamma)\gamma^{2T-2}}\ \ \blacksquare$$
+\textit{In the setting of Proposition A.16, consider some $\delta\in\Reals^+$. Denote}\Co{i}
+
+$$\alpha:=1-T\gamma^{2T-2}(1-\gamma)$$
+
+\textit{Assume $\alpha>0$. Then,}\Co{i}
+
+$$\sum_{k=0}^\infty\min\AP{\E{\gamma^{N_k}},\delta}\leq\AP{\Ceil{\frac{\ln\delta}{\ln\alpha}}+\frac{1}{1-\alpha}}\delta$$
+
+\textbf{Proof of Proposition A.17}\Co{b}
+
+TBD
 
 \textbf{Proof of Theorem 2}\Co{b}
 
@@ -1312,10 +1326,10 @@ $$\sum_{k=0}^\infty\Ea{}{\gamma^{N_k}}\leq\sum\frac{1}{T(1-\gamma)\gamma^{2T-2}}
 
 We take $\pi^\dagger_\gamma:=\pi^\PSR_{\gamma,T}$ where $T\in\Nats^+$ will be specified later. By Proposition A.13
 
-$$\Reg(\gamma)\leq\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Abs{\Delta\R_k\AP{\Theta_n}}+\gamma\Abs{\CE{\Delta\SHy_k}{\V_{\SHy_k\R_k}(\gamma)}{\Theta_n,\AT_n}}}}$$
-$$+\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}\Abs{\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_{\SHy_*\R_*}(\gamma)}{\Theta_{\ET_k}}}}$$
-$$+(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\Abs{\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}}$$
-$$+\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}\Abs{\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^{\Delta\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}}$$
+$$\Reg(\gamma)\leq\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Abs{\Delta\R_k\AP{\Theta_n}}+\gamma\Abs{\CE{\Delta\SHy_k}{\V_{\SHy_k\R_k}(\gamma)}{\Theta_n,\AT_n}}}}$$
+$$+\sum_{k=0}^\infty\E{{\gamma^{\IT_k}}\Abs{\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_{\SHy_*\R_*}(\gamma)}{\Theta_{\ET_k}}}}$$
+$$+(1-\gamma)\sum_{k=0}^\infty\E{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n\Abs{\CE{\Ev_{**}^{n-\IT_k}-\Ev_{*k}^{n-\IT_k}}{\R_*}{\Theta_{\IT_k}}}}$$
+$$+\sum_{k=0}^\infty\E{\gamma^{\ET_{k+1}}\Abs{\CE{\Ev_{**}^{\Delta\IT_k}-\Ev_{*k}^{\Delta\IT_k}}{\V_{\THy\R_*}(\gamma)}{\Theta_{\IT_k}}}}$$
 
 We will use the notation
 
@@ -1325,8 +1339,8 @@ We will also use the notation $\Dtva{\mu-\nu}:=\Dtva{\mu,\nu}$.
 
 It follows that
 
-$$\Reg(\gamma)\leq\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Abs{\Delta\R_k\AP{\Theta_n}}+\gamma\Delta\V(\gamma)\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}}}$$
-$$+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}}+(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n}+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}}$$
+$$\Reg(\gamma)\leq\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Abs{\Delta\R_k\AP{\Theta_n}}+\gamma\Delta\V(\gamma)\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}}}$$
+$$+\Delta\V(\gamma)\sum_{k=0}^\infty\E{{\gamma^{\IT_k}}}+(1-\gamma)\sum_{k=0}^\infty\E{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n}+\Delta\V(\gamma)\sum_{k=0}^\infty\E{\gamma^{\ET_{k+1}}}$$
 
 Denote $\Reg_{0}(\gamma)$ the first term on the RHS and $\Reg_{1}(\gamma)$ the sum of the others terms. We have
 
@@ -1334,11 +1348,11 @@ $$\Reg(\gamma)\leq\Reg_0(\gamma)+\Reg_1(\gamma)$$
 
 First, we analyze $\Reg_1$. In the second term, we have $\gamma^n\leq\gamma^{M_k}$, leading to
 
-$$\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n}\leq\Ea{}{\Delta M_k\gamma^{M_k}}=\Ea{}{\CE{}{\Delta M_k}{M_k}\gamma^{M_k}}\leq t_\Est\Ea{}{\gamma^{M_k}}$$
+$$\E{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n}\leq\E{\Delta M_k\gamma^{M_k}}=\E{\CE{}{\Delta M_k}{M_k}\gamma^{M_k}}\leq t_\Est\E{\gamma^{M_k}}$$
 
 We get
 
-$$\Reg_1(\gamma)\leq\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{{\gamma^{\IT_k}}}+t_\Est(1-\gamma)\sum_{k=0}^\infty\Ea{}{\gamma^{M_k}}+\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{\gamma^{\ET_{k+1}}}$$
+$$\Reg_1(\gamma)\leq\Delta\V(\gamma)\sum_{k=0}^\infty\E{{\gamma^{\IT_k}}}+t_\Est(1-\gamma)\sum_{k=0}^\infty\E{\gamma^{M_k}}+\Delta\V(\gamma)\sum_{k=0}^\infty\E{\gamma^{\ET_{k+1}}}$$
 
 Applying Proposition A.16 to each term, we get
 
@@ -1350,18 +1364,18 @@ $$\Theta_{Mk}^r:=\AP{\Theta_{M_k},r\AP{\Theta\AT_{M_k:N_{k+1}}\Theta_{N_{k+1}}}}
 
 That is, $\Theta_M^r$ is the history of reward estimation experiments. We apply Proposition B.1 with $\delta:=\frac{1}{2}(1-\gamma)^2$ and $\epsilon:=(1-\gamma)^2$, to each of the two terms in $\Reg_0(\gamma)$:
 
-$$\Pa{}{\R_*\in\bigcap_{k=0}^\infty\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
-$$\Pa{}{\SHy_*\in\bigcap_{n=0}^\infty\CS^{\Hy}\AB{\Theta\AT_{:n}\Theta_n,\beta_\T(n+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
+$$\Pb{\R_*\in\bigcap_{k=0}^\infty\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
+$$\Pb{\SHy_*\in\bigcap_{n=0}^\infty\CS^{\Hy}\AB{\Theta\AT_{:n}\Theta_n,\beta_\T(n+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
 
 Here, $\beta_R$ and $\beta_\T$ correspond to $\beta$ in Proposition B.1.
 
 Since the hypotheses $\SHy_k$ is sampled from the posterior, for any $k\in\Nats$ we also have
 
-$$\Pa{}{\R_k\in\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
-$$\Pa{}{\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
+$$\Pb{\R_k\in\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
+$$\Pb{\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
 
-$$\Pa{}{\R_*,\R_k\in\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-(1-\gamma)^2$$
-$$\Pa{}{\THy,\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}} \geq 1-(1-\gamma)^2$$
+$$\Pb{\R_*,\R_k\in\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-(1-\gamma)^2$$
+$$\Pb{\THy,\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}} \geq 1-(1-\gamma)^2$$
 
 Denote
 
@@ -1370,8 +1384,8 @@ $$\CSE'_k:=\AC{\THy,\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\
 
 Define $\Reg_{\Delta\R}(\gamma)$ and $\Reg_{\Delta\SHy}(\gamma)$ by
 
-$$\Reg_{\Delta\R}(\gamma):=(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}}}$$
-$$\Reg_{\Delta\SHy}(\gamma):=\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n+1}\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}}$$
+$$\Reg_{\Delta\R}(\gamma):=(1-\gamma)\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}}}$$
+$$\Reg_{\Delta\SHy}(\gamma):=\Delta\V(\gamma)\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n+1}\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}}$$
 
 We have
 
@@ -1379,28 +1393,28 @@ $$\Reg_0(\gamma)=\Reg_{\Delta\R}(\gamma)+\Reg_{\Delta\SHy}(\gamma)$$
 
 We split $\Reg_{\Delta\R}$ into the $\CSE_k$ and $\CSE_k^\complement$ contributions
 
-$$\Reg_{\Delta\R}(\gamma)=(1-\gamma)\sum_{k=0}^\infty\Bigg(\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_k}+$$
-$$\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\Bigg)$$
+$$\Reg_{\Delta\R}(\gamma)=(1-\gamma)\sum_{k=0}^\infty\Bigg(\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_k}+$$
+$$\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\Bigg)$$
 
 For the second term, we have
 
 $$\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}}\leq2T\gamma^{N_k}$$
 
-$$\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq2T\Ea{}{\gamma^{N_k};\CSE^\complement_k}\leq2T\min\AP{\Ea{}{\gamma^{N_k}},\Pa{}{\CSE_k^\complement}}$$
+$$\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq2T\E{\gamma^{N_k};\CSE^\complement_k}\leq2T\min\AP{\E{\gamma^{N_k}},\Pb{\CSE_k^\complement}}$$
 
-$$\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq2T\min\AP{\Ea{}{\gamma^{N_k}},(1-\gamma)^2}$$
+$$\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq2T\min\AP{\E{\gamma^{N_k}},(1-\gamma)^2}$$
 
-$$(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq ??$$
+$$(1-\gamma)\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq ??$$
 
 % We need to extend Proposition A.16 to either cover this case or give the expression for E[\gamma^{N_k}]
 
-$$???\Reg_0(\gamma)\leq\Delta\V(\gamma)\sum_{n=0}^\infty\gamma^{n}\AP{\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+(1-\gamma)^2}$$
+$$???\Reg_0(\gamma)\leq\Delta\V(\gamma)\sum_{n=0}^\infty\gamma^{n}\AP{\E{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+(1-\gamma)^2}$$
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+1-\gamma+\frac{1}{1-\gamma^T}}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\E{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
 ...
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}?\sum_{n=0}^\infty\gamma^{n}\Ea{}{\sqrt{?\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}};\CSE_n }+1-\gamma+\frac{1}{1-\gamma^T}}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}?\sum_{n=0}^\infty\gamma^{n}\E{\sqrt{?\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}};\CSE_n }+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
 Denote
 
@@ -1408,11 +1422,11 @@ $$\Hy_l:=\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\beta(lT+1)^{-1}?}$$
 
 Clearly
 
-$$\Pa{}{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}}\leq\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B};\CSE_n}=1$$
+$$\Pb{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}}\leq\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B};\CSE_n}=1$$
 
 Using this inequality, dropping the $;G_n$ (since it can only the right hand side smaller) and moving the sum inside the expected value, we get
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}?\Ea{}{\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }+1-\gamma+\frac{1}{1-\gamma^T}}$$
+$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}?\E{\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
 We will now assume $\DRVO>0$ (if $\DRVO=0$, then $\Abs{\Hy}=1$ and $\Reg(\gamma)=0$) and $\gamma^T>\frac{1}{2}$. Applying Proposition ??, we conclude
 
