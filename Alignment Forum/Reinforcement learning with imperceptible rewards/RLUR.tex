@@ -34,11 +34,12 @@
 \newcommand{\Chev}[1]{\left\langle #1 \right\rangle}
 \newcommand{\Quote}[1]{\left\ulcorner #1 \right\urcorner}
 % probability theory
+\newcommand{\Pb}[1]{\operatorname{Pr}\AB{#1}}
 \newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
 \newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
 \newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
 \newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
-\newcommand{\E}[1]{\underset{#1}{\operatorname{E}}}
+\newcommand{\E}[1]{\operatorname{E}\AB{#1}}
 \newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
 \newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
 \newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
@@ -472,6 +473,8 @@ $$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\mathrm
 \begin{Large}More on the Regret Bound\end{Large}
 
 It might appear odd that the regret bound in Theorem 2 depends on the dimensions of the class of reward functions, but not on the dimensions on the class of transition kernels, like in the perceptible case. The reason for this is that we only give the asymptotic form. Asymptotically, the leading term is $O\AP{\sqrt[3]{\AP{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$ and its coefficient depends only on those parameters that appear in Theorem 2. However, examining the proof reveals that there is also an $O\AP{\sqrt{\AP{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$ term that has the same form as the regret bound in the perceptible case. For the sake of brevity and simplicity we will \textit{not}\Co{i} attempt to write down a more precise regret bound that reflects the role of the dimensions of the class of transition kernels, but in principle it is not difficult. We must keep in mind, however, that in practice the other term might be significant: \textit{a priori}\Co{i} the dimensions of the class of transition kernels are only bounded by a polynomial in $\Abs{\St}$ and $\Abs{\A}$ and the latter might be exponentially big for realistic models. 
+
+?? % reconsider the next paragraph; comment about potential shortcuts during reward estimation
 
 In fact, for the MDP setting we examine, the bound we give can probably be substantially improved. This is because we exploit the ability to measure an estimate of the reward, but we don't exploit the fact that knowing the transition kernel would make the reward effectively perceptible. For example, our ball sorting robot could measure the density of gold and silver once and consider it known thereafter (it's slightly worse if the measurement involves error, but not by that much). However, we mostly consider Theorem 2 to be a warm-up towards the POMDP setting, in which the reward never becomes effectively perceptible. In that setting, we suspect that $O\AP{\sqrt[3]{1-\gamma}}$ might be the best possible $\gamma$ dependence, up to logarithmic factors.
 
@@ -1329,7 +1332,7 @@ Denote $\Reg_{0}(\gamma)$ the first term on the RHS and $\Reg_{1}(\gamma)$ the s
 
 $$\Reg(\gamma)\leq\Reg_0(\gamma)+\Reg_1(\gamma)$$
 
-First, we analyze $\Reg_1(\gamma)$. In the second term, we have $\gamma^n\leq\gamma^{M_k}$, leading to
+First, we analyze $\Reg_1$. In the second term, we have $\gamma^n\leq\gamma^{M_k}$, leading to
 
 $$\Ea{}{\sum_{n=\IT_k}^{\ET_{k+1}-1}\gamma^n}\leq\Ea{}{\Delta M_k\gamma^{M_k}}=\Ea{}{\CE{}{\Delta M_k}{M_k}\gamma^{M_k}}\leq t_\Est\Ea{}{\gamma^{M_k}}$$
 
@@ -1341,7 +1344,7 @@ Applying Proposition A.16 to each term, we get
 
 $$\Reg_1(\gamma)\leq\frac{2\Delta\V(\gamma)+t_\Est(1-\gamma)}{\gamma^{2T-2}(1-\gamma)T}$$
 
-Now, we analyze $\Reg_0(\gamma)$. Define $\Theta_M^r\in\AP{\St\times\Reals}^\omega$ by
+Now, we analyze $\Reg_0$. Define $\Theta_M^r\in\AP{\St\times\Reals}^\omega$ by
 
 $$\Theta_{Mk}^r:=\AP{\Theta_{M_k},r\AP{\Theta\AT_{M_k:N_{k+1}}\Theta_{N_{k+1}}}}$$
 
@@ -1354,19 +1357,44 @@ Here, $\beta_R$ and $\beta_\T$ correspond to $\beta$ in Proposition B.1.
 
 Since the hypotheses $\SHy_k$ is sampled from the posterior, for any $k\in\Nats$ we also have
 
-??? % add analogical claim for \R!
-
+$$\Pa{}{\R_k\in\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
 $$\Pa{}{\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
 
+$$\Pa{}{\R_*,\R_k\in\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-(1-\gamma)^2$$
 $$\Pa{}{\THy,\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}} \geq 1-(1-\gamma)^2$$
 
 Denote
 
-$$\CSE_n:=\AC{\SHy_*,\SHy_{lT}\in\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\beta(lT+1)^{-1}?}}\subseteq\Omega$$
+$$\CSE_k:=\AC{\R_*,\R_k\in\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}}\subseteq\Omega$$
+$$\CSE'_k:=\AC{\THy,\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}}\subseteq\Omega$$
 
-We get
+Define $\Reg_{\Delta\R}(\gamma)$ and $\Reg_{\Delta\SHy}(\gamma)$ by
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\sum_{n=0}^\infty\gamma^{n}\AP{\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+(1-\gamma)^2}$$
+$$\Reg_{\Delta\R}(\gamma):=(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}}}$$
+$$\Reg_{\Delta\SHy}(\gamma):=\Delta\V(\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n+1}\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}}$$
+
+We have
+
+$$\Reg_0(\gamma)=\Reg_{\Delta\R}(\gamma)+\Reg_{\Delta\SHy}(\gamma)$$
+
+We split $\Reg_{\Delta\R}$ into the $\CSE_k$ and $\CSE_k^\complement$ contributions
+
+$$\Reg_{\Delta\R}(\gamma)=(1-\gamma)\sum_{k=0}^\infty\Bigg(\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_k}+$$
+$$\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\Bigg)$$
+
+For the second term, we have
+
+$$\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}}\leq2T\gamma^{N_k}$$
+
+$$\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq2T\Ea{}{\gamma^{N_k};\CSE^\complement_k}\leq2T\min\AP{\Ea{}{\gamma^{N_k}},\Pa{}{\CSE_k^\complement}}$$
+
+$$\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq2T\min\AP{\Ea{}{\gamma^{N_k}},(1-\gamma)^2}$$
+
+$$(1-\gamma)\sum_{k=0}^\infty\Ea{}{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq ??$$
+
+% We need to extend Proposition A.16 to either cover this case or give the expression for E[\gamma^{N_k}]
+
+$$???\Reg_0(\gamma)\leq\Delta\V(\gamma)\sum_{n=0}^\infty\gamma^{n}\AP{\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+(1-\gamma)^2}$$
 
 $$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\Ea{}{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+1-\gamma+\frac{1}{1-\gamma^T}}$$
 
