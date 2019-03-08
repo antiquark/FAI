@@ -36,11 +36,13 @@
 % probability theory
 \newcommand{\Pb}[1]{\operatorname{Pr}\AB{#1}}
 \newcommand{\Pa}[2]{\underset{#1}{\operatorname{Pr}}\AB{#2}}
+\newcommand{\CPb}[2]{\operatorname{Pr}\ABM{#1}{#2}}
 \newcommand{\CP}[3]{\underset{#1}{\operatorname{Pr}}\ABM{#2}{#3}}
 \newcommand{\PP}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{Pr}}}
 \newcommand{\PPP}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{Pr}}}
 \newcommand{\E}[1]{\operatorname{E}\AB{#1}}
 \newcommand{\Ea}[2]{\underset{#1}{\operatorname{E}}\AB{#2}}
+\newcommand{\CEx}[2]{\operatorname{E}\ABM{#1}{#2}}
 \newcommand{\CE}[3]{\underset{#1}{\operatorname{E}}\ABM{#2}{#3}}
 \newcommand{\EE}[2]{\underset{\substack{#1 \\ #2}}{\operatorname{E}}}
 \newcommand{\EEE}[3]{\underset{\substack{#1 \\ #2 \\ #3}}{\operatorname{E}}}
@@ -1395,62 +1397,117 @@ $$\Pb{\THy,\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}
 
 Denote
 
-$$\CSE_k:=\AC{\R_*,\R_k\in\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}}\subseteq\Omega$$
-$$\CSE'_k:=\AC{\THy,\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}}\subseteq\Omega$$
+$$\CSE_\R^k:=\AC{\R_*,\R_k\in\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}}\subseteq\Omega$$
+$$\CSE_\T^k:=\AC{\THy,\SHy_{k}\in\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}}\subseteq\Omega$$
 
-Define $\Reg_{\Delta\R}(\gamma)$ and $\Reg_{\Delta\SHy}(\gamma)$ by
+Define $\Reg_{\R}(\gamma)$ and $\Reg_{\T}(\gamma)$ by
 
-$$\Reg_{\Delta\R}(\gamma):=(1-\gamma)\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}}}$$
-$$\Reg_{\Delta\SHy}(\gamma):=\Delta\V(\gamma)\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n+1}\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}}$$
+$$\Reg_{\R}(\gamma):=(1-\gamma)\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}}}$$
+$$\Reg_{\T}(\gamma):=\Delta\V(\gamma)\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n+1}\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}}$$
 
 We have
 
-$$\Reg_0(\gamma)=\Reg_{\Delta\R}(\gamma)+\Reg_{\Delta\SHy}(\gamma)$$
+$$\Reg_0(\gamma)=\Reg_{\R}(\gamma)+\Reg_{\T}(\gamma)$$
 
-We split $\Reg_{\Delta\R}$ into the $\CSE_k$ and $\CSE_k^\complement$ contributions
+We split $\Reg_{\R}$ into the $\CSE_\R^k$ and $\CSE_\R^{k\complement}$ contributions
 
-$$\Reg_{\Delta\R}(\gamma)=(1-\gamma)\sum_{k=0}^\infty\Bigg(\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_k}+$$
-$$\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\Bigg)$$
+$$\Reg_{\R}(\gamma)=(1-\gamma)\sum_{k=0}^\infty\Bigg(\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_\R^k}+$$
+$$\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_\R^{k\complement}}\Bigg)$$
 
 For the second term, we have
 
 $$\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}}\leq2T\gamma^{N_k}$$
 
-$$\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq2T\E{\gamma^{N_k};\CSE^\complement_k}\leq2T\min\AP{\E{\gamma^{N_k}},\Pb{\CSE_k^\complement}}$$
+$$\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_\R^{k\complement}}\leq2T\E{\gamma^{N_k};\CSE_\R^{k\complement}}\leq2T\min\AP{\E{\gamma^{N_k}},\Pb{\CSE_\R^{k\complement}}}$$
 
-$$\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq2T\min\AP{\E{\gamma^{N_k}},(1-\gamma)^2}$$
+$$\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_\R^{k\complement}}\leq2T\min\AP{\E{\gamma^{N_k}},(1-\gamma)^2}$$
 
-$$(1-\gamma)\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE^\complement_k}\leq ??$$
+$$\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_\R^{k\complement}}\leq 2T\sum_{k=0}^\infty\min\AP{\E{\gamma^{N_k}},(1-\gamma)^2}$$
 
-% We need to extend Proposition A.16 to either cover this case or give the expression for E[\gamma^{N_k}]
+Applying Proposition A.17 to the RHS, we get
 
-$$???\Reg_0(\gamma)\leq\Delta\V(\gamma)\sum_{n=0}^\infty\gamma^{n}\AP{\E{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+(1-\gamma)^2}$$
+$$\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_\R^{k\complement}}\leq2T\AP{\Ceil{\frac{2\ln(1-\gamma)}{\ln\alpha}}+\frac{1}{T\gamma^{2T-2}(1-\gamma)}}(1-\gamma)^2$$
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\sum_{n=0}^\infty\gamma^{n}\E{\Dtva{\SHy_n\AP{\Theta_n,\AT_n},\THy\AP{\Theta_n,\AT_n}};\CSE_n }+1-\gamma+\frac{1}{1-\gamma^T}}$$
+Here, $\alpha$ is as defined in Proposition A.17. Since we are interested in the asymptotics $\gamma\rightarrow1$, and our ultimate choice of $T$ will ensure that $\gamma^T\rightarrow1$, we will henceforth make the assumption that $\gamma^{2T}>\frac{1}{2}$.
 
-...
+$$\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_\R^{k\complement}}\leq2T\Ceil{\frac{2\ln(1-\gamma)}{\ln\AP{1-\frac{1}{2}T(1-\gamma)}}}(1-\gamma)^2+4(1-\gamma)$$
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}?\sum_{n=0}^\infty\gamma^{n}\E{\sqrt{?\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}};\CSE_n }+1-\gamma+\frac{1}{1-\gamma^T}}$$
+Denote $\rho(\gamma,T)$ the expression on the RHS. We get
+
+$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Abs{\Delta\R_k\AP{\Theta_n}};\CSE_\R^k}+\rho(\gamma,T)}$$
 
 Denote
 
-$$\Hy_l:=\CS^\Hy\AB{\Theta\AT_{:lT}\Theta_{lT},\beta(lT+1)^{-1}?}$$
+$$\Hy_\R^k:=\CS^{\Hy_\R}\AB{\Theta_{M:k}^r,\beta_\R(k+1)^{-1}}$$
 
 Clearly
 
-$$\Pb{\sqrt{B_{\Theta_n\AT_n}\AP{\SHy_n\AP{\Theta_n,\AT_n}-\THy\AP{\Theta_n,\AT_n}}^{\otimes2}}\leq\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B};\CSE_n}=1$$
+$$\CPb{\Abs{\Delta\R_k\AP{\Theta_n}}\leq\W^{\Hy_\R^k}\AP{\Theta_n}}{\CSE_\R^k}=1$$
 
-Using this inequality, dropping the $;G_n$ (since it can only the right hand side smaller) and moving the sum inside the expected value, we get
+Using this inequality, dropping the $;G_\R^k$ (since it can only the right hand side smaller) and moving the sum inside the expected value, we get
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{1}{2}?\E{\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_{\Floor{n/T}}}\AP{\Theta_n\AT_n,B} }+1-\gamma+\frac{1}{1-\gamma^T}}$$
+$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\E{\sum_{k=0}^\infty\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\W^{\Hy_\R^k}\AP{\Theta_n}}+\rho(\gamma,T)}$$
 
-We will now assume $\DRVO>0$ (if $\DRVO=0$, then $\Abs{\Hy}=1$ and $\Reg(\gamma)=0$) and $\gamma^T>\frac{1}{2}$. Applying Proposition ??, we conclude
+For convenience, we will use the slightly weaker inequality
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)\AP{\frac{? C_{\mathrm{A.6}}}{2}\AP{\DRVO T+\sqrt{\DRVO\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}+1-\gamma+\frac{1}{1-\gamma^T}}$$
+$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\E{\sum_{k=0}^\infty\sum_{n=\ET_k}^{\IT_k}\gamma^{n}\W^{\Hy_\R^k}\AP{\Theta_n}}+\rho(\gamma,T)}$$
 
-Denote the second factor on the right hand side $F(\gamma)$, so that the inequality becomes 
+For any $i\in\Nats$, let $L_i$ be the stopping time defined recursively by
 
-$$\Reg(\gamma)\leq\Delta\V(\gamma)F(\gamma)$$
+$$L_0:=0$$
+$$L_{i+1}:=\min\ACM{l\in\Nats}{l>L_i,\ \exists k\in\Nats:\ET_k\leq l \leq \IT_k}$$
+
+We also define the random variable $K_i:\Omega\rightarrow\Nats$ by
+
+$$K_i:=\min\ACM{k\in\Nats}{\IT_k\geq L_i}$$
+
+We can now rewrite the previous inequality as
+
+$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\E{\sum_{i=0}^\infty\gamma^{L_i}\W^{\Hy_\R^{K_i}}\AP{\Theta_{L_i}}}+\rho(\gamma,T)}$$
+
+Obviously $L_i\geq i$ and hence
+
+$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\sum_{i=0}^\infty\gamma^{i}\E{\W^{\Hy_\R^{K_i}}\AP{\Theta_{L_i}}}+\rho(\gamma,T)}$$
+
+By Proposition B.2
+
+$$\sum_{k=0}^\infty\gamma^{2Tk}\W^{\Hy_\R^{k}}\AP{\Theta_{M_k}}\leq C_{\text{B.2}}\AP{\DRVO T+\sqrt{\DRVO\beta_\R\AP{\frac{1}{1-\gamma^{2T}}}\frac{1}{1-\gamma^{2T}}}}$$
+
+Denote $\tilde{\beta}_\R(\gamma,T,\DRVO)$ the expression on the RHS. Applying Proposition A.15, we conclude
+
+$$\sum_{i=0}^\infty\gamma^{i-2T}\E{\W^{\Hy_\R^{K_i}}\AP{\Theta_{L_i}}}\leq 2T\tilde{\beta}_\R(\gamma,T,\DRVO)+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}$$
+
+It follows
+
+$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\gamma^{2T}\AP{2T\tilde{\beta}_\R(\gamma,T,\DRVO)+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}}+\rho(\gamma,T)}$$
+
+Now, we analyze $\Reg_{\T}$. By the same reasoning as for $\Reg_\R$, we have
+
+$$\Reg_\T(\gamma)\leq\Delta\V(\gamma)\AP{\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}};\CSE_\T^k}+\rho(\gamma,T)}$$
+
+Denote
+
+$$\Hy_\T^k:=\CS^\Hy\AB{\Theta\AT_{:N_k}\Theta_{N_k},\beta_\T\AP{N_k+1}^{-1}}$$
+
+It is easy to see that
+
+$$\CPb{\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}\leq\frac{\Abs{\St}}{2}\W^{\Hy_\T^k}\AP{\Theta_n}}{\CSE_\T^k}=1$$
+
+It follows
+
+$$\Reg_\T(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\Abs{S}}{2}\E{\sum_{k=0}^\infty\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\W^{\Hy_\T^k}\AP{\Theta_n}}+\rho(\gamma,T)}$$
+
+We have $\RVO\Hy\leq\Abs{S}\Abs{\A}$. By Proposition B.2, we have ??
+
+% We need to somehow adapt Proposition B.2 to variable episode duration
+% Looking at the proof of Lemma 1 in OV (based on Proposition 8 in RV),
+% We can get a similar bound for non-uniform episodes (with fixed N_k),
+% With episode duration replaced by *maximal* episode duration
+% We need to write our version of Lemma 1 and then rederive versions of "A.5" and "A.6"
+
+$$\sum_{n=0}^\infty\gamma^{n}\W^{\Hy_\T^{?}}\AP{\Theta_{n}\AT_n}\leq C_{\text{B.2}}\AP{\Abs{S}\Abs{\A} T+\sqrt{\Abs{S}\Abs{\A}\beta_\T\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
+
+...
 
 We set
 
