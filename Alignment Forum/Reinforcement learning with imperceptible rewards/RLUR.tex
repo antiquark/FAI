@@ -788,21 +788,21 @@ $$Bu:=\sum_{q\in Q}u_q q$$
 
 Consider any $w\in\Ker{B}\cap\Reals^Q_0\setminus\boldsymbol{0}$. In particular, $w\in\Reals^Q_0$ and therefore
 
-$$0=\sum_{q\in Q}w_q=\sum_{q\in Q}\bold{1}_{w_q>0}w_q+\sum_{q\in Q}\bold{1}_{w_q<0}w_q$$
+$$0=\sum_{q\in Q}w_q=\sum_{q\in Q}\boldsymbol{1}_{w_q>0}w_q+\sum_{q\in Q}\boldsymbol{1}_{w_q<0}w_q$$
 
 Also
 
-$$\Norm{w}_1=\sum_{q\in Q}\Abs{w_q}=\sum_{q\in Q}\bold{1}_{w_q>0}w_q-\sum_{q\in Q}\bold{1}_{w_q<0}w_q$$
+$$\Norm{w}_1=\sum_{q\in Q}\Abs{w_q}=\sum_{q\in Q}\boldsymbol{1}_{w_q>0}w_q-\sum_{q\in Q}\boldsymbol{1}_{w_q<0}w_q$$
 
 Combining the last two identities, we conclude
 
-$$\sum_{q\in Q}\bold{1}_{w_q>0}w_q =-\sum_{q\in Q}\bold{1}_{w_q<0}w_q=\frac{\Norm{w}_1}{2}$$
+$$\sum_{q\in Q}\boldsymbol{1}_{w_q>0}w_q =-\sum_{q\in Q}\boldsymbol{1}_{w_q<0}w_q=\frac{\Norm{w}_1}{2}$$
 
 Using the assumption $w\ne\boldsymbol{0}$, this allows us to define $w^+,w^-\in\Delta Q$ by
 
-$$w^+_q:=\frac{2}{\Norm{w}_1}\bold{1}_{w_q>0}w_q$$
+$$w^+_q:=\frac{2}{\Norm{w}_1}\boldsymbol{1}_{w_q>0}w_q$$
 
-$$w^-_q:=-\frac{2}{\Norm{w}_1}\bold{1}_{w_q<0}w_q$$
+$$w^-_q:=-\frac{2}{\Norm{w}_1}\boldsymbol{1}_{w_q<0}w_q$$
 
 We have $w=\frac{1}{2}\Norm{w}_1\AP{w^+-w^-}$. Also, $Bw=0$ and therefore $Bw^+=Bw^-$. 
 
@@ -1318,7 +1318,23 @@ $$\sum_{k=0}^\infty\min\AP{\E{\gamma^{N_k}},\delta}\leq\AP{\Ceil{\frac{\ln\delta
 
 \textbf{Proof of Proposition A.17}\Co{b}
 
-TBD
+By Proposition A.16
+
+$$\sum_{k=0}^\infty\min\AP{\E{\gamma^{N_k}},\delta}\leq\sum_{k=0}^\infty\min\AP{\alpha^k,\delta}$$
+
+$$\sum_{k=0}^\infty\min\AP{\E{\gamma^{N_k}},\delta}\leq\sum_{k=0}^{\Ceil{\frac{\ln\delta}{\ln\alpha}}-1}\min\AP{\alpha^k,\delta}+\sum_{k=\Ceil{\frac{\ln\delta}{\ln\alpha}}}^\infty\min\AP{\alpha^k,\delta}$$
+
+In the second term, we have
+
+$$\alpha^k\leq\alpha^{\Ceil{\frac{\ln\delta}{\ln\alpha}}}\leq\alpha^{\frac{\ln\delta}{\ln\alpha}}=e^{\ln\alpha\frac{\ln\delta}{\ln\alpha}}=e^{\ln\delta}=\delta$$
+
+We get
+
+$$\sum_{k=0}^\infty\min\AP{\E{\gamma^{N_k}},\delta}\leq\sum_{k=0}^{\Ceil{\frac{\ln\delta}{\ln\alpha}}-1}\delta+\sum_{k=\Ceil{\frac{\ln\delta}{\ln\alpha}}}^\infty\alpha^k=\Ceil{\frac{\ln\delta}{\ln\alpha}}\delta+\frac{\alpha^{\Ceil{\frac{\ln\delta}{\ln\alpha}}}}{1-\alpha}$$
+
+We've already seen that $\alpha^{\Ceil{\frac{\ln\delta}{\ln\alpha}}}\leq\delta$, and therefore
+
+$$\sum_{k=0}^\infty\min\AP{\E{\gamma^{N_k}},\delta}\leq\Ceil{\frac{\ln\delta}{\ln\alpha}}\delta+\frac{\delta}{1-\alpha}=\AP{\Ceil{\frac{\ln\delta}{\ln\alpha}}+\frac{1}{1-\alpha}}\delta\ \blacksquare$$
 
 \textbf{Proof of Theorem 2}\Co{b}
 
