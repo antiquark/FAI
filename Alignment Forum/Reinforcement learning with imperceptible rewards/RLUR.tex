@@ -1338,7 +1338,7 @@ We've already seen that $\alpha^{\Ceil{\frac{\ln\delta}{\ln\alpha}}}\leq\delta$,
 
 $$\sum_{k=0}^\infty\min\AP{\E{\gamma^{N_k}},\delta}\leq\Ceil{\frac{\ln\delta}{\ln\alpha}}\delta+\frac{\delta}{1-\alpha}=\AP{\Ceil{\frac{\ln\delta}{\ln\alpha}}+\frac{1}{1-\alpha}}\delta\ \blacksquare$$
 
-We will the notations of Definition B.1 (see Appendix).
+We will use the notations of Definitions B.1 and B.2 (see Appendix).
 
 The following is a simple generalization of "Lemma 1" in [Osband and Van Roy 2014]\San{(https://arxiv.org/abs/1406.1853)} and the proof is essentially the same.
 
@@ -1354,7 +1354,28 @@ $$\Abs{\ACM{\AP{k\in[K],n\in\Nats}}{N_k\leq n<N_{k+1},\ \W^{\F^{k}}\AP{\boldsymb
 
 \textbf{Proof of Proposition A.18}\Co{b}
 
-TBD
+Let $A\subset\Nats\times\Nats$ be the set
+
+$$A:=\ACM{\AP{k\in[K],n\in\Nats}}{N_k\leq n<N_{k+1},\ \W^{\F^{k}}\AP{\boldsymbol{x}_{n}}>\theta}$$
+
+Let $A'\subset\Nats$ be the set
+
+$$A':=\ACM{n\in\Nats}{\exists k\in[K]:(k,n)\in A}$$
+
+For each $i\in\AB{\Abs{A}}$, we define $a_i\in\Nats$ recursively by
+
+$$a_0:=\min A'$$
+$$a_{i+1}:=\min\ACM{n\in A'}{n > a_i}$$
+
+Denote $D:=\RVO{\F}$ and let $L:=\Floor{\frac{\Abs{A}}{D+1}}$. We define $j\in\AB{\Abs{A}}$ and $\AC{\boldsymbol{x}'_{li}\in \X^*}_{l\in[L],i\in\AB{j+1}}$ by recursion over $i$. For $i=0$, we set $\boldsymbol{x}'_{l0}:=\Estr$. For any $i$, we consider whether there is $l\in[L]$ s.t. $\boldsymbol{x}_{a_i}$ is $(\F,\theta)$-independent of $\boldsymbol{x}'_{li}$. If there is such $l$, we set $\boldsymbol{x}'_{l,i+1}:=\boldsymbol{x}'_{li}\boldsymbol{x}_{a_i}$ and for any $m\in[L]\setminus l$, $\boldsymbol{x}'_{m,i+1}:=\boldsymbol{x}'_{mi}$. If there is no such $l$, we set $j:=i$. The latter situation must occur for some $i\in\AB{\Abs{A}}$, since otherwise we would get
+
+$$\sum_{l\in[L]}\Abs{\boldsymbol{x}'_{l\Abs{A}}}=\Abs{A}$$
+
+That would imply that there is $l\in[L]$ s.t.
+
+$$\Abs{\boldsymbol{x}'_{l\Abs{A}}}\geq\frac{\Abs{A}}{L}=\frac{\Abs{A}}{\Floor{\frac{\Abs{A}}{D+1}}}\geq\frac{\Abs{A}}{\AP{\frac{\Abs{A}}{D+1}}}=D+1$$
+
+This is impossible since, by construction of $\boldsymbol{x}'$, each element is $(\F,\theta)$-independent of the preceding subsequence whereas, by definition of $D$, it is the maximal length of such a sequence.
 
 \textbf{Proof of Theorem 2}\Co{b}
 
@@ -1538,6 +1559,10 @@ TBD
 \begin{Huge}Appendix\end{Huge}
 
 \textbf{Definition B.1}\Co{b}
+
+TBD % simplified version of "Definition 1"
+
+\textbf{Definition B.2}\Co{b}
 
 TBD % simplified version of "Definition A.1"
 
