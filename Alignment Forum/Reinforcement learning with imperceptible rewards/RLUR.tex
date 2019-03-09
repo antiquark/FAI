@@ -1338,6 +1338,24 @@ We've already seen that $\alpha^{\Ceil{\frac{\ln\delta}{\ln\alpha}}}\leq\delta$,
 
 $$\sum_{k=0}^\infty\min\AP{\E{\gamma^{N_k}},\delta}\leq\Ceil{\frac{\ln\delta}{\ln\alpha}}\delta+\frac{\delta}{1-\alpha}=\AP{\Ceil{\frac{\ln\delta}{\ln\alpha}}+\frac{1}{1-\alpha}}\delta\ \blacksquare$$
 
+We will the notations of Definition B.1 (see Appendix).
+
+The following is a simple generalization of "Lemma 1" in [Osband and Van Roy 2014]\San{(https://arxiv.org/abs/1406.1853)} and the proof is essentially the same.
+
+\textbf{Proposition A.18}\Co{b}
+
+\textit{Consider a set $\X$, a finite-dimensional inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also some $\boldsymbol{x}\in\X^\omega$, $\boldsymbol{y}\in\Y^\omega$, $T\in\Nats$, $\theta\in\Reals^+$, an increasing sequence $\AC{N_k\in\Nats}_{k\in\Nats}$ and a nondecreasing sequence $\AC{\beta_k\in\Reals^+}_{k\in\Nats}$. Suppose that for any $k\in\Nats$, $N_{k+1}\leq N_k+T$. For any $k\in\Nats$, define $\F^k$ by}\Co{i}
+
+$$\F^k:=\CS^\F\AB{\boldsymbol{xy}_{:N_k},\beta_k^{-1}}$$
+
+\textit{Then, for any $K\in\Nats$}\Co{i}
+
+$$\Abs{\ACM{\AP{k\in[K],n\in\Nats}}{N_k\leq n<N_{k+1},\ \W^{\F^{k}}\AP{\boldsymbol{x}_{n}}>\theta}}\leq\RVO{\F}\cdot\AP{4\theta^{-2}\beta_{K}+T}$$
+
+\textbf{Proof of Proposition A.18}\Co{b}
+
+TBD
+
 \textbf{Proof of Theorem 2}\Co{b}
 
 ???
@@ -1380,7 +1398,7 @@ Now, we analyze $\Reg_0$. Define $\Theta_M^r\in\AP{\St\times\Reals}^\omega$ by
 
 $$\Theta_{Mk}^r:=\AP{\Theta_{M_k},r\AP{\Theta\AT_{M_k:N_{k+1}}\Theta_{N_{k+1}}}}$$
 
-That is, $\Theta_M^r$ is the history of reward estimation experiments. We apply Proposition B.1 with $\delta:=\frac{1}{2}(1-\gamma)^2$ and $\epsilon:=(1-\gamma)^2$, to each of the two terms in $\Reg_0(\gamma)$:
+That is, $\Theta_M^r$ is the history of reward estimation experiments. We apply Proposition B.1 (see Appendix) with $\delta:=\frac{1}{2}(1-\gamma)^2$ and $\epsilon:=(1-\gamma)^2$, to each of the two terms in $\Reg_0(\gamma)$:
 
 $$\Pb{\R_*\in\bigcap_{k=0}^\infty\CS^{\Hy_\R}\AB{\Theta_{M:k}^{r},\beta_\R(k+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
 $$\Pb{\SHy_*\in\bigcap_{n=0}^\infty\CS^{\Hy}\AB{\Theta\AT_{:n}\Theta_n,\beta_\T(n+1)^{-1}}} \geq 1-\frac{1}{2}(1-\gamma)^2$$
@@ -1516,6 +1534,12 @@ $$T:=...$$
 Now, we analyze the $\gamma\rightarrow1$ limit. In this limit, the expression for $T$ justifies our assumption that $\gamma^T>\frac{1}{2}$. Indeed, we have...
 
 TBD
+
+\begin{Huge}Appendix\end{Huge}
+
+\textbf{Definition B.1}\Co{b}
+
+TBD % simplified version of "Definition A.1"
 
 \end{document}
 
