@@ -1180,6 +1180,12 @@ Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we ge
 
 \textbf{Proposition A.14}\Co{b}
 
+??? % Proposition needs to be reversed
+% We need to show that the probability K is *large* is small
+% Equivalently, the probability that K is small is *large*
+% The current, erroneous direction, can (qualitatively) be proven with probability *1* w/o Hoeffding
+% We should also allow for extra Delta terms in order to use together with Proposition A.19
+
 \textit{Consider $(\Omega,P)$ a probability space, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables and $T\in\Nats$, $T\geq2$. Assume that for any $k\in\Nats$}\Co{i}
 
 $$\CP{}{M_{k}=n}{M_{k-1}}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_{k-1} < n < M_{k-1}+2T\\ 0 \text{ otherwise} \end{cases}$$
@@ -1197,6 +1203,8 @@ $$\Pb{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
 % needs to be reversed
 
 \textbf{Proof of Proposition A.14}\Co{b}
+
+???
 
 By Hoeffding's inequality, for any $k\in\Nats$ and $m\in\Nats$
 
@@ -1264,7 +1272,7 @@ $$\sum_{n=0}^\infty\E{\frac{1}{2T}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X
 
 $$\sum_{n=0}^\infty\E{\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT$$
 
-Using Proposition A.14, we get
+Using Proposition A.14, we get ???
 
 $$\sum_{n=0}^\infty\AP{\E{\gamma^{\frac{n}{2T}-1}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}-\exp\AP{\frac{1}{2}-\frac{n}{4T}}} \leq 2CT$$
 
@@ -1414,6 +1422,10 @@ $$4\beta_K \geq\theta^2\AP{\frac{\Abs{A}}{D+1}-T}$$
 $$\Abs{A}\leq(D+1)\AP{\frac{4\beta_K}{\theta^2}+T}\ \blacksquare$$
 
 \textbf{Proposition A.19}\Co{b}
+
+??? % Possibly we need to reformulate using \gamma^K instead of \gamma^n,
+% and use something like Propositon A.14 to bridge the difference,
+% in the proof of Theorem 2
 
 \textit{There is some $C_{\mathrm{A.19}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
