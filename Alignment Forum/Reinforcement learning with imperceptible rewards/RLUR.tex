@@ -1407,11 +1407,29 @@ Since $f,\tilde{f}\in\F^{k_j}$, by the definition of $\F^{k_j}$ each of the two 
 
 $$2\sqrt{\beta_K} \geq\theta\sqrt{\max(L-T+1,0)}$$
 
-$$4\beta_K \geq \theta^2(L-T+1)$$
+$$4\beta_K \geq \theta^2(L+1-T)$$
 
 $$4\beta_K \geq\theta^2\AP{\frac{\Abs{A}}{D+1}-T}$$
 
 $$\Abs{A}\leq(D+1)\AP{\frac{4\beta_K}{\theta^2}+T}\ \blacksquare$$
+
+\textbf{Proposition A.19}\Co{b}
+
+\textit{There is some $C_{\mathrm{A.19}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+
+\textit{Consider a set $\X$, an inner product vector space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also some $\boldsymbol{x}\in\X^\omega$, $\boldsymbol{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\theta\in\Reals^+$, $\eta_0,\eta_1\in\Reals^+$, $\delta\in(0,1)$ and an increasing sequence $\AC{N_k\in\Nats}_{k\in\Nats}$. Suppose that for any $k\in\Nats$, $N_{k+1}\leq N_k+T$, and that $\gamma^T>\frac{1}{2}$. Denote}\Co{i}
+
+$$\beta(t):=\eta_0 + \eta_1t\ln{\frac{et}{\delta}}$$
+
+\textit{For any $k\in\Nats$, define $\F^k$ by}\Co{i}
+
+$$\F^k:=\CS^\F\AB{\boldsymbol{xy}_{:N_k},\beta\AP{N_k+1}^{-1}}$$
+
+\textit{Denote $D:=\RVO\F$. Then,}\Co{i}
+
+$$\sum_{k=0}^\infty\sum_{n=N_k}^{N_{k+1}-1}{\gamma^{n}\boldsymbol{1}_{\W^{F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq C_{\mathrm{A.5}}(D+1)\AP{\frac{1}{\theta^2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
+
+TBD
 
 \textbf{Proof of Theorem 2}\Co{b}
 
