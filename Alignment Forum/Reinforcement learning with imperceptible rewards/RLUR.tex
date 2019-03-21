@@ -1178,19 +1178,14 @@ $$\gamma^{\Delta\ET_k}\TE{\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_
 
 Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we get the desired result. $\blacksquare$
 
+% We should also allow for extra Delta terms in order to use together with Proposition A.19
 \textbf{Proposition A.14}\Co{b}
 
-??? % Proposition needs to be reversed
-% We need to show that the probability K is *large* is small
-% Equivalently, the probability that K is small is *large*
-% The current, erroneous direction, can (qualitatively) be proven with probability *1* w/o Hoeffding
-% We should also allow for extra Delta terms in order to use together with Proposition A.19
+???
 
-\textit{Consider $(\Omega,P)$ a probability space, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables and $T\in\Nats$, $T\geq2$. Assume that for any $k\in\Nats$}\Co{i}
+\textit{Consider $(\Omega,P)$ a probability space, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables and $T\in\Nats^+$. Assume that}\Co{i}
 
-$$\CP{}{M_{k}=n}{M_{k-1}}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_{k-1} < n < M_{k-1}+2T\\ 0 \text{ otherwise} \end{cases}$$
-
-\textit{Here, $M_{-1}$ is understood to identically equal $-1$.}\Co{i}
+$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_k < n < M_k+2T\\ 0 \text{ otherwise} \end{cases}$$
 
 \textit{Define the random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
 
@@ -1198,35 +1193,31 @@ $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\Pb{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
-
-% needs to be reversed
+$$\Pa{}{K_n>\frac{2n}{T}+1}\leq\exp\AP{-\frac{n}{4T}}$$
 
 \textbf{Proof of Proposition A.14}\Co{b}
 
-???
+By Hoeffding's inequality, for any $k\in\Nats$ and $m\in\Reals^{\geq0}$
 
-By Hoeffding's inequality, for any $k\in\Nats$ and $m\in\Nats$
+$$\Pa{}{M_k\leq kT-m}\leq\Pa{}{M_k-M_0\leq kT-m}\leq\exp\AP{-\frac{2m^2}{k(2T-2)^2}}$$
 
-$$\Pb{M_k\geq (k+1)T+m-1}\leq\exp\AP{-\frac{2m^2}{(k+1)\AP{2T-2}^2}}$$
+$$\Pa{}{M_k\leq kT-m}\leq\exp\AP{-\frac{m^2}{2kT^2}}$$
 
-Taking $m:=(k+1)T$, we get
+Taking $m:=\frac{1}{2}kT$, we get
 
-$$\Pb{M_k\geq 2(k+1)T}\leq\exp\AP{-\frac{2(k+1)^2T^2}{4(k+1)\AP{T-1}^2}}\leq\exp\AP{-\frac{k+1}{2}}$$
+$$\Pa{}{M_k\leq \frac{kT}{2}}\leq\exp\AP{-\frac{\AP{\frac{1}{2}kT}^2}{2kT^2}}=\exp\AP{-\frac{k}{8}}$$
 
 Moreover, by definition of $K_n$, we have, for any $k,n\in\Nats$
 
-$$\Pb{K_n\leq k}=\Pb{M_k\geq n}$$
+$$\Pa{}{K_n> k}=\Pa{}{M_k< n}$$
 
 It follows that
 
-$$\Pb{K_{2(k+1)T}\leq k}=\Pb{M_k\geq 2(k+1)T}\leq\exp\AP{-\frac{k+1}{2}}$$
+$$\Pa{}{K_{\Ceil{\frac{1}{2}kT}}>k}=\Pa{}{M_k< \Ceil{\frac{kT}{2}}}=\Pa{}{M_k<\frac{kT}{2}}\leq\exp\AP{-\frac{k}{8}}$$
 
-Note that the above trivially holds for $k=-1$ as well. Consider any $n\in\Nats$ and take $k:=\Floor{\frac{n}{2T}}-1$. We get
+Take $k:=\Ceil{\frac{2n}{T}}$. We get
 
-$$\Pb{K_{2\Floor{\frac{n}{2T}}T}\leq \Floor{\frac{n}{2T}}-1}\leq\exp\AP{-\frac{1}{2}\Floor{\frac{n}{2T}}}\leq\exp\AP{-\frac{1}{2}\AP{\frac{n}{2T}-1}}$$
-
-$$\Pb{K_{n}\leq {\frac{n}{2T}}-1}\leq\exp\AP{\frac{1}{2}-\frac{n}{4T}}\ \blacksquare$$
+$$\Pa{}{K_n>\frac{2n}{T}+1}\leq\Pa{}{K_{\Ceil{\frac{1}{2}\Ceil{\frac{2n}{T}}T}}>\Ceil{\frac{2n}{T}}}\leq\exp\AP{-\frac{\Ceil{\frac{2n}{T}}}{8}}\leq\exp\AP{-\frac{n}{4T}}\ \blacksquare$$
 
 \textbf{Proposition A.15}\Co{b}
 
@@ -1246,7 +1237,7 @@ $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
 \textit{Then,}\Co{i}
 
-$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\E{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq 2CT+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}$$
+$$\sum_{n=0}^\infty\gamma^{\frac{2n}{T}+1}\E{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}\leq 2CT+\frac{1}{1-\exp\AP{-\frac{1}{4T}}}$$
 
 \textbf{Proof of Proposition A.15}\Co{b}
 
@@ -1272,13 +1263,13 @@ $$\sum_{n=0}^\infty\E{\frac{1}{2T}\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X
 
 $$\sum_{n=0}^\infty\E{\gamma^{K_n}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT$$
 
-Using Proposition A.14, we get ???
+Using Proposition A.14, we get
 
-$$\sum_{n=0}^\infty\AP{\E{\gamma^{\frac{n}{2T}-1}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}-\exp\AP{\frac{1}{2}-\frac{n}{4T}}} \leq 2CT$$
+$$\sum_{n=0}^\infty\AP{\E{\gamma^{\frac{2n}{T}+1}f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}}-\exp\AP{-\frac{n}{4T}}} \leq 2CT$$
 
-$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\E{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\sum_{n=0}^\infty\exp\AP{\frac{1}{2}-\frac{n}{4T}}$$
+$$\sum_{n=0}^\infty\gamma^{\frac{2n}{T}+1}\E{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\sum_{n=0}^\infty\exp\AP{-\frac{n}{4T}}$$
 
-$$\sum_{n=0}^\infty\gamma^{\frac{n}{2T}-1}\E{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}\ \blacksquare$$
+$$\sum_{n=0}^\infty\gamma^{\frac{2n}{T}+1}\E{f_{K_n}\AP{X_{M_0},X_{M_1}\ldots X_{M_{K_n-1}},X_n}} \leq 2CT+\frac{1}{1-\exp\AP{-\frac{1}{4T}}}\ \blacksquare$$
 
 \textbf{Proposition A.16}\Co{b}
 
@@ -1576,15 +1567,15 @@ $$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\sum_{i=0}^\infty\gamma^{i}\E{\W^{\Hy_\R^{K_i
 
 By Proposition B.2
 
-$$\sum_{k=0}^\infty\gamma^{2Tk}\W^{\Hy_\R^{k}}\AP{\Theta_{M_k}}\leq C_{\text{B.2}}\AP{\DRVO T+\sqrt{\DRVO\beta_\R\AP{\frac{1}{1-\gamma^{2T}}}\frac{1}{1-\gamma^{2T}}}}$$
+$$\sum_{k=0}^\infty\gamma^{\frac{1}{2}Tk}\W^{\Hy_\R^{k}}\AP{\Theta_{M_k}}\leq C_{\text{B.2}}\AP{\DRVO T+\sqrt{\DRVO\beta_\R\AP{\frac{1}{1-\gamma^{\frac{1}{2}T}}}\frac{1}{1-\gamma^{\frac{1}{2}T}}}}$$
 
 Denote $\tilde{\beta}_\R(\gamma,T,\DRVO)$ the expression on the RHS. Applying Proposition A.15, we conclude
 
-$$\sum_{i=0}^\infty\gamma^{i-2T}\E{\W^{\Hy_\R^{K_i}}\AP{\Theta_{L_i}}}\leq 2T\tilde{\beta}_\R(\gamma,T,\DRVO)+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}$$
+$$\sum_{i=0}^\infty\gamma^{i+\frac{1}{2}T}\E{\W^{\Hy_\R^{K_i}}\AP{\Theta_{L_i}}}\leq 2T\tilde{\beta}_\R(\gamma,T,\DRVO)+\frac{1}{1-\exp\AP{-\frac{1}{4T}}}$$
 
 It follows
 
-$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\gamma^{2T}\AP{2T\tilde{\beta}_\R(\gamma,T,\DRVO)+\frac{\sqrt{e}}{1-\exp\AP{-\frac{1}{4T}}}}+\rho(\gamma,T)}$$
+$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\gamma^{-\frac{1}{2}T}\AP{2T\tilde{\beta}_\R(\gamma,T,\DRVO)+\frac{1}{1-\exp\AP{-\frac{1}{4T}}}}+\rho(\gamma,T)}$$
 
 Now, we analyze $\Reg_{\T}$. By the same reasoning as for $\Reg_\R$, we have
 
