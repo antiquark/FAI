@@ -1349,7 +1349,9 @@ $$\F^k:=\CS^\F\AB{\boldsymbol{xy}_{:N_k},\beta_k^{-1}}$$
 
 \textit{Denote $D:=\RVO\F$. Then, for any $K\in\Nats$}\Co{i}
 
-$$\Abs{\ACM{\AP{k\in[K],n\in\Nats}}{N_k\leq n<N_{k+1},\ \W^{\F^{k}}\AP{\boldsymbol{x}_{n}}>\theta}}\leq(D+1)\AP{\frac{4\beta_{K}}{\theta^{2}}+T}$$
+$$\Abs{\ACM{\AP{k\in[K],n\in\Nats}}{N_k\leq n<N_{k+1},\ \W^{\F^{k}}\AP{\boldsymbol{x}_{n}}>\theta}}\leq(D+1)\AP{\frac{4\beta_{K-1}}{\theta^{2}}+T}$$
+
+\textit{Here, $\beta_{-1}$ is understood to mean $0$.}\Co{i}
 
 \textbf{Proof of Proposition A.18}\Co{b}
 
@@ -1402,25 +1404,21 @@ Denote $f^*:=\LS^\F\AB{\boldsymbol{xy}_{:N_{k_j}},\beta_{k_j}^{-1}}$.
 
 $$\sqrt{\sum_{n=0}^{N_{k_j}-1}\Norm{f\AP{\boldsymbol{x}_n}-f^*\AP{\boldsymbol{x}_n}}^2}+\sqrt{\sum_{n=0}^{N_{k_j}-1}\Norm{\tilde{f}\AP{\boldsymbol{x}_n}-f^*\AP{\boldsymbol{x}_n}}^2}\geq\theta\sqrt{\max(L-T+1,0)}$$
 
-Since $f,\tilde{f}\in\F^{k_j}$, by the definition of $\F^{k_j}$ each of the two terms on the RHS is at most $\sqrt{\beta_{k_j}}\leq\sqrt{\beta_K}$ and we get
+Since $f,\tilde{f}\in\F^{k_j}$, by the definition of $\F^{k_j}$ each of the two terms on the RHS is at most $\sqrt{\beta_{k_j}}\leq\sqrt{\beta_{K-1}}$ and we get
 
-$$2\sqrt{\beta_K} \geq\theta\sqrt{\max(L-T+1,0)}$$
+$$2\sqrt{\beta_{K-1}} \geq\theta\sqrt{\max(L-T+1,0)}$$
 
-$$4\beta_K \geq \theta^2(L+1-T)$$
+$$4\beta_{K-1} \geq \theta^2(L+1-T)$$
 
-$$4\beta_K \geq\theta^2\AP{\frac{\Abs{A}}{D+1}-T}$$
+$$4\beta_{K-1} \geq\theta^2\AP{\frac{\Abs{A}}{D+1}-T}$$
 
-$$\Abs{A}\leq(D+1)\AP{\frac{4\beta_K}{\theta^2}+T}\ \blacksquare$$
+$$\Abs{A}\leq(D+1)\AP{\frac{4\beta_{K-1}}{\theta^2}+T}\ \blacksquare$$
 
 \textbf{Proposition A.19}\Co{b}
 
-??? % Possibly we need to reformulate using \gamma^K instead of \gamma^n,
-% and use something like Propositon A.14 to bridge the difference,
-% in the proof of Theorem 2
-
 \textit{There is some $C_{\mathrm{A.19}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider a set $\X$, an inner product vector space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also some $\boldsymbol{x}\in\X^\omega$, $\boldsymbol{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\theta\in\Reals^+$, $\eta_0,\eta_1\in\Reals^+$, $\delta\in(0,1)$ and an increasing sequence $\AC{N_k\in\Nats}_{k\in\Nats}$. Suppose that for any $k\in\Nats$, $N_{k+1}\leq N_k+T$, and that $\gamma^T>\frac{1}{2}$. Denote}\Co{i}
+\textit{Consider a set $\X$, an inner product vector space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also some $\boldsymbol{x}\in\X^\omega$, $\boldsymbol{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\theta\in\Reals^+$, $\eta_0,\eta_1\in\Reals^+$, $\delta\in(0,1)$ and an increasing sequence $\AC{N_k\in\Nats}_{k\in\Nats}$. Suppose that $N_0=0$, for any $k\in\Nats$, $N_{k+1}\leq N_k+T$, and $\gamma^T>\frac{1}{2}$. Denote}\Co{i}
 
 $$\beta(t):=\eta_0 + \eta_1t\ln{\frac{et}{\delta}}$$
 
@@ -1430,9 +1428,63 @@ $$\F^k:=\CS^\F\AB{\boldsymbol{xy}_{:N_k},\beta\AP{N_k+1}^{-1}}$$
 
 \textit{Denote $D:=\RVO\F$. Then,}\Co{i}
 
-$$\sum_{k=0}^\infty\sum_{n=N_k}^{N_{k+1}-1}{\gamma^{n}\boldsymbol{1}_{\W^{F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq C_{\mathrm{A.5}}(D+1)\AP{\frac{1}{\theta^2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
+$$\sum_{k=0}^\infty\sum_{n=N_k}^{N_{k+1}-1}{\gamma^{kT}\boldsymbol{1}_{\W^{F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq C_{\mathrm{A.5}}(D+1)\AP{\frac{1}{\theta^2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
 
-TBD
+\textbf{Proof of Proposition A.19}\Co{b}
+
+???
+
+By Proposition A.18, for any $K\in\Nats$
+
+$$\sum_{k=0}^{K-1}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}
+} \leq(D+1)\AP{\frac{4\beta\AP{N_{K-1}+1}}{\theta^{2}}+T}$$
+
+Here, $N_{-1}$ is understood to mean $0$. Observing that $N_k\leq kT$, we get
+
+$$\sum_{k=0}^{K-1}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}
+} \leq(D+1)\AP{\frac{4\beta\AP{KT+1}}{\theta^{2}}+T}$$
+
+Multiplying the inequality by $\gamma^{KT}$ and summing over $K$, we get
+
+$$\sum_{k=0}^{\infty}\AP{\sum_{K=k+1}^\infty \gamma^{KT}}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq(D+1)\sum_{K=0}^\infty\gamma^{KT}\AP{\frac{4\beta\AP{KT+1}}{\theta^{2}}+T}$$
+
+On the left hand side, we sum the geometric series. On the right hand side, we use the observation that
+
+$$\gamma^{KT}\AP{\frac{4\beta\AP{KT+1}}{\theta^{2}}+T} \leq \frac{1}{T}\int_0^T \gamma^{KT+t-T}\AP{\frac{4\beta\AP{KT+t+1}}{\theta^2}+T}\D t$$
+
+$$\gamma^{KT}\AP{\frac{4\beta\AP{KT+1}}{\theta^{2}}+T} \leq \frac{1}{T\gamma^T}\int_0^T \gamma^{KT+t}\AP{\frac{4\beta\AP{KT+t+1}}{\theta^2}+T}\D t$$
+
+Here, we used that $\beta(t)$ is an increasing function for $t\geq 1$. We get
+
+$$\sum_{k=0}^{\infty}\frac{\gamma^{(k+1)T}}{1-\gamma^T}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq \frac{D+1}{T\gamma^T}\int_0^\infty\gamma^{t}\AP{\frac{4\beta(t+1)}{\theta^2}+T}\D t$$
+
+???
+
+The integral on the right hand side is a Laplace transform (where the dual variable is $s=\ln\frac{1}{\gamma}$). The functions $f(t)=1$, $f(t)=t$ and $f(t)=t\ln{t}$ all have the property that, for any $s\in\Reals^+$
+
+$$\mathcal{L}[f](s)\leq \frac{1}{s}f\AP{\frac{1}{s}}$$
+
+Indeed, we have
+
+$$\mathcal{L}[1](s) = \frac{1}{s} \leq \frac{1}{s}$$
+
+$$\mathcal{L}[t](s) = \frac{1}{s^2} \leq \frac{1}{s}\cdot\frac{1}{s}$$
+
+$$\mathcal{L}[t\ln{t}](s) = -\frac{\ln{s}+\gamma_{\text{EM}}-1}{s^2}=\frac{1}{s}\cdot \frac{1}{s}\AP{\ln{\frac{1}{s}}+1-\gamma_{\text{EM}}}\leq\frac{1}{s}\cdot \frac{1}{s}\ln{\frac{1}{s}}$$
+
+Here, $\gamma_{\text{EM}}$ is the Euler-Mascheroni constant.
+
+We conclude
+
+$$\frac{\gamma^T}{1-\gamma^T}\sum_{l=0}^{\infty}\gamma^{lT}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\boldsymbol{x}_{lT+m}}>\theta]]} \leq \frac{\RVO{\F}}{T\gamma^T}\cdot\frac{1}{\ln{\frac{1}{\gamma}}}\AP{4\theta^{-2}\beta\AP{\frac{1}{\ln\frac{1}{\gamma}}}+T}$$
+
+Using the condition $\gamma^T>\frac{1}{2}$ and absorbing $O(1)$ factors into the definition of $C_{\text{A.5}}$, we get
+
+$$\sum_{l=0}^{\infty}\gamma^{lT}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\boldsymbol{x}_{lT+m}}>\theta]]} \leq C_{\text{A.5}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
+
+Since $\gamma^m\leq1$, this implies
+
+$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\boldsymbol{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.5}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
 
 \textbf{Proof of Theorem 2}\Co{b}
 
