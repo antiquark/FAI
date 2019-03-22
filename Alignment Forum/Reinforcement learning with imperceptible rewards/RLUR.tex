@@ -1481,17 +1481,13 @@ $$\sum_{k=0}^{\infty}\frac{\gamma^{(k+1)T}}{1-\gamma^T}\sum_{n=N_k}^{N_{k+1}-1}{
 
 $$\frac{\gamma^T}{1-\gamma^T}\sum_{k=0}^{\infty}\gamma^{kT}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq \frac{D+1}{T\gamma^T}\La_t\AB{\frac{4\beta(t+1)}{\theta^2}+T}\AP{\ln\frac{1}{\gamma}}$$
 
-Applying Proposition A.19, we conclude
+It is easy to see that Proposition A.19 is applicable to the RHS for $\alpha=2$. We get,
 
-$$\frac{\gamma^T}{1-\gamma^T}\sum_{k=0}^{\infty}\gamma^{kT}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq \frac{D+1}{T\gamma^T}\cdot\frac{?}{\ln\frac{1}{\gamma}}\AP{\frac{4\beta\AP{\frac{1}{\ln\frac{1}{\gamma}}+1}}{\theta^2}+T}$$
+$$\frac{\gamma^T}{1-\gamma^T}\sum_{k=0}^{\infty}\gamma^{kT}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq \frac{D+1}{T\gamma^T}\cdot\frac{3-e^{-1}}{\ln\frac{1}{\gamma}}\AP{\frac{4\beta\AP{\frac{1}{\ln\frac{1}{\gamma}}+1}}{\theta^2}+T}$$
 
 Using the condition $\gamma^T>\frac{1}{2}$ and absorbing $O(1)$ factors into the definition of $C_{\text{A.5}}$, we get
 
-$$\sum_{l=0}^{\infty}\gamma^{lT}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\boldsymbol{x}_{lT+m}}>\theta]]} \leq C_{\text{A.5}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
-
-Since $\gamma^m\leq1$, this implies
-
-$$\sum_{l=0}^\infty\sum_{m=0}^{T-1}{\gamma^{lT+m}[[\W^{F_{lT}}\AP{\boldsymbol{x}_{lT+m},B}>\theta]]} \leq C_{\mathrm{A.5}}\RVO{\F}\cdot\AP{\theta^{-2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
+$$\sum_{k=0}^{\infty}\gamma^{kT}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq C_{\text{A.5}} (D+1)\AP{\frac{1}{\theta^2}\beta\AP{\frac{1}{1-\gamma}}+T}\ \blacksquare$$
 
 \textbf{Proof of Theorem 2}\Co{b}
 
