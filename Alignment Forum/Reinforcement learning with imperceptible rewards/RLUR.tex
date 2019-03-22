@@ -1489,13 +1489,33 @@ $$\sum_{k=0}^{\infty}\gamma^{kT}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^
 
 \textbf{Proposition A.21}\Co{b}
 
-\textit{In the setting of Proposition A.20, assume that for any $x\in\X$ and $f\in\F$, $\Norm{f(x)}\leq1$. Then,}\Co{i}
+\textit{There is some $C_{\mathrm{A.21}}\in\Reals^+$ s.t. the following holds. In the setting of Proposition A.20, assume that for any $x\in\X$ and $f\in\F$, $\Norm{f(x)}\leq1$. Then,}\Co{i}
 
-$$\sum_{k=0}^{\infty}\sum_{n=N_k}^{N_{k+1}-1}\gamma^{kT}\W^{\F^k}\AP{\boldsymbol{x}_{n}} \leq C_{\text{A.21}}\AP{DT+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
+$$\sum_{k=0}^{\infty}\sum_{n=N_k}^{N_{k+1}-1}\gamma^{kT}\W^{\F^k}\AP{\boldsymbol{x}_{n}} \leq C_{\text{A.21}}\AP{DT+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}\ \blacksquare$$
 
 \textbf{Proof of Proposition A.21}\Co{b}
 
-TBD
+Due to the assumption $\Norm{f(x)}\leq1$, we have $\W^{\F^k}(x)\leq 2$. For any $t\in\Reals^+$, we have
+
+$$\W^{F^k}\AP{\boldsymbol{x}_{n}}=\int_0^2\boldsymbol{1}_{\W^{F^k}\AP{\boldsymbol{x}_{n}}>\theta}\D\theta\leq t+\int_t^2\boldsymbol{1}_{\W^{F^k}\AP{\boldsymbol{x}_{n}}>\theta}\D\theta$$
+
+$$\sum_{k=0}^\infty\sum_{n=N_k}^{N_{k+1}-1}{\gamma^{kT}\W^{F^k}\AP{\boldsymbol{x}_{n}}}\leq\frac{tT}{1-\gamma^{T}}+\int_t^2 \sum_{k=0}^\infty\sum_{n=N_k}^{N_{k+1}-1}\gamma^{kT}\boldsymbol{1}_{\W^{F^k}\AP{\boldsymbol{x}_{n}}>\theta}\D\theta$$
+
+Applying Proposition A.20 to integrand on the RHS
+
+$$\sum_{k=0}^\infty\sum_{n=N_k}^{N_{k+1}-1}{\gamma^{kT}\W^{F^k}\AP{\boldsymbol{x}_{n}}}\leq\frac{tT}{1-\gamma^{T}}+C_{\text{A.20}}D\int_t^2\AP{\frac{1}{\theta^2}\beta\AP{\frac{1}{1-\gamma}}+T}\D\theta$$
+
+Evaluating the integral and dropping some negative terms on the right hand side, we get
+
+$$\sum_{k=0}^\infty\sum_{n=N_k}^{N_{k+1}-1}{\gamma^{kT}\W^{F^k}\AP{\boldsymbol{x}_{n}}}\leq\frac{tT}{1-\gamma^{T}}+C_{\text{A.20}}D \AP{\frac{1}{t}\beta\AP{\frac{1}{1-\gamma}}+2T}$$
+
+We now set $t$ to be
+
+$$t:=\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\cdot(1-\gamma)}$$
+
+For an appropriate choice of $C_{\text{A.21}}$, and using the assumption $\gamma^T>\frac{1}{2}$, it follows that
+
+$$\sum_{k=0}^{\infty}\sum_{n=N_k}^{N_{k+1}-1}\gamma^{kT}\W^{\F^k}\AP{\boldsymbol{x}_{n}} \leq C_{\text{A.21}}\AP{DT+\sqrt{D\beta\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
 
 \textbf{Proof of Theorem 2}\Co{b}
 
