@@ -1417,23 +1417,23 @@ $$\Abs{A}\leq(D+1)\AP{\frac{4\beta_{K-1}}{\theta^2}+T}\ \blacksquare$$
 
 \textbf{Proposition A.19}\Co{b}
 
-Consider $\alpha\in\Nats$ and $f:\Reals^+\rightarrow\Reals^+$ non-decreasing s.t. $\ln{f}$ is Lipschitz continuous with constant $\alpha$. Let $\La$ denote the Laplace transform operator. Then,
-
+\textit{Consider $\alpha\in\Nats$ and $f:\Reals^+\rightarrow\Reals^+$ non-decreasing. Define $g:\Reals\rightarrow\Reals$ by $g(x):=\ln{f\AP{e^x}}$, and assume $g$ is Lipschitz continuous with constant $\alpha$. In other words, for any $t\in\Reals^+$ and $\lambda\in[1,\infty)$, we have $f\AP{\lambda t}\leq\lambda^\alpha f(t)$. Let $\La$ denote the Laplace transform operator. Then,
+}\Co{i}
 $$\La[f](s)\leq\frac{1-e^{-1}+\alpha!}{s}f\AP{\frac{1}{s}}$$
 
 \textbf{Proof of Proposition A.19}\Co{b}
 
 $$\La[f](s)=\int_0^\infty e^{-st}f(t)\D t=\int_0^{\frac{1}{s}}e^{-st}f(t)\D t+\int_{\frac{1}{s}}^\infty e^{-st}f(t)\D t$$
 
-For the first term, we will use that $f$ is non-decreasing, and for the second term, we will use that $\ln{f}$ is Lipschitz continuous with constant $\alpha$.
+For the first term, we will use that $f$ is non-decreasing, and for the second term, we will use that $g$ is Lipschitz continuous with constant $\alpha$.
 
 $$\La[f](s)\leq\int_0^{\frac{1}{s}}e^{-st}f\AP{\frac{1}{s}}\D t+\int_{\frac{1}{s}}^\infty e^{-st}f\AP{\frac{1}{s}}\cdot\AP{ts}^\alpha\D t$$
 
 $$\La[f](s)\leq\AP{\int_0^{\frac{1}{s}}e^{-st}\D t+s^\alpha\int_{\frac{1}{s}}^\infty e^{-st}t^\alpha\D t}f\AP{\frac{1}{s}}$$
 
-$$\La[f](s)\leq\AP{\int_0^{\frac{1}{s}}e^{-st}\D t+s^\alpha\int_{0}^\infty e^{-st}t^\alpha\D t}f\AP{\frac{1}{s}}=\AP{\frac{1-e^{-1}}{s}+s^\alpha\cdot\alpha!s^{-\alpha-1}}f\AP{\frac{1}{s}}$$
+$$\La[f](s)\leq\AP{\int_0^{\frac{1}{s}}e^{-st}\D t+s^\alpha\int_{0}^\infty e^{-st}t^\alpha\D t}f\AP{\frac{1}{s}}$$
 
-$$\La[f](s)\leq\frac{1-e^{-1}+\alpha!}{s}f\AP{\frac{1}{s}}\ \blacksquare$$
+$$\La[f](s)\leq\AP{\frac{1-e^{-1}}{s}+s^\alpha\cdot\alpha!s^{-\alpha-1}}f\AP{\frac{1}{s}}=\frac{1-e^{-1}+\alpha!}{s}f\AP{\frac{1}{s}}\ \blacksquare$$
 
 \textbf{Proposition A.20}\Co{b}
 
@@ -1479,25 +1479,11 @@ Here, we used that $\beta(t)$ is an increasing function for $t\geq 1$. We get
 
 $$\sum_{k=0}^{\infty}\frac{\gamma^{(k+1)T}}{1-\gamma^T}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq \frac{D+1}{T\gamma^T}\int_0^\infty\gamma^{t}\AP{\frac{4\beta(t+1)}{\theta^2}+T}\D t$$
 
-???
+$$\frac{\gamma^T}{1-\gamma^T}\sum_{k=0}^{\infty}\gamma^{kT}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq \frac{D+1}{T\gamma^T}\La_t\AB{\frac{4\beta(t+1)}{\theta^2}+T}\AP{\ln\frac{1}{\gamma}}$$
 
-The integral on the right hand side is a Laplace transform (where the dual variable is $s=\ln\frac{1}{\gamma}$). The functions $f(t)=1$, $f(t)=t$ and $f(t)=t\ln{t}$ all have the property that, for any $s\in\Reals^+$
+Applying Proposition A.19, we conclude
 
-$$\mathcal{L}[f](s)\leq \frac{1}{s}f\AP{\frac{1}{s}}$$
-
-Indeed, we have
-
-$$\mathcal{L}[1](s) = \frac{1}{s} \leq \frac{1}{s}$$
-
-$$\mathcal{L}[t](s) = \frac{1}{s^2} \leq \frac{1}{s}\cdot\frac{1}{s}$$
-
-$$\mathcal{L}[t\ln{t}](s) = -\frac{\ln{s}+\gamma_{\text{EM}}-1}{s^2}=\frac{1}{s}\cdot \frac{1}{s}\AP{\ln{\frac{1}{s}}+1-\gamma_{\text{EM}}}\leq\frac{1}{s}\cdot \frac{1}{s}\ln{\frac{1}{s}}$$
-
-Here, $\gamma_{\text{EM}}$ is the Euler-Mascheroni constant.
-
-We conclude
-
-$$\frac{\gamma^T}{1-\gamma^T}\sum_{l=0}^{\infty}\gamma^{lT}\sum_{m=0}^{T-1}{[[\W^{F_{lT}}\AP{\boldsymbol{x}_{lT+m}}>\theta]]} \leq \frac{\RVO{\F}}{T\gamma^T}\cdot\frac{1}{\ln{\frac{1}{\gamma}}}\AP{4\theta^{-2}\beta\AP{\frac{1}{\ln\frac{1}{\gamma}}}+T}$$
+$$\frac{\gamma^T}{1-\gamma^T}\sum_{k=0}^{\infty}\gamma^{kT}\sum_{n=N_k}^{N_{k+1}-1}{\boldsymbol{1}_{\W^{\F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq \frac{D+1}{T\gamma^T}\cdot\frac{?}{\ln\frac{1}{\gamma}}\AP{\frac{4\beta\AP{\frac{1}{\ln\frac{1}{\gamma}}+1}}{\theta^2}+T}$$
 
 Using the condition $\gamma^T>\frac{1}{2}$ and absorbing $O(1)$ factors into the definition of $C_{\text{A.5}}$, we get
 
