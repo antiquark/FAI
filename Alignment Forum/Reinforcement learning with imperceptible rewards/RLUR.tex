@@ -78,16 +78,17 @@
 % topology and category theory
 \newcommand{\Mor}{\mathrm{Mor}}
 \newcommand{\Pt}{\boldsymbol{\mathrm{pt}}}
-% limits
+% analysis
 \newcommand{\Lim}[1]{\lim_{#1 \rightarrow \infty}}
 \newcommand{\LimInf}[1]{\liminf_{#1 \rightarrow \infty}}
 \newcommand{\LimSup}[1]{\limsup_{#1 \rightarrow \infty}}
+\newcommand{\D}{\mathrm{d}} % differential
+\newcommand{\La}{\mathcal{L}}
 % arrows
 \newcommand{\K}{\xrightarrow{\mathrm{k}}}
 \newcommand{\PF}{\xrightarrow{\circ}}
 % miscellaneous
 \newcommand{\PS}[1]{\mathcal{P}\AP{#1}} % power set
-\newcommand{\D}{\mathrm{d}} % differential
 \newcommand{\Estr}{\boldsymbol{\lambda}} % empty string
 \newcommand{\KD}[1]{\boldsymbol{1}_{#1}}
 % Paper specific
@@ -1178,7 +1179,7 @@ $$\gamma^{\Delta\ET_k}\TE{\CE{\Ev_{k*}^{\Delta\ET_k}-\Ev_{*k}^{\Delta\ET_k}}{\V_
 
 Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we get the desired result. $\blacksquare$
 
-% We should also allow for extra Delta terms in order to use together with Proposition A.19
+% We should also allow for extra Delta terms in order to use together with Proposition A.20
 \textbf{Proposition A.14}\Co{b}
 
 ???
@@ -1416,7 +1417,27 @@ $$\Abs{A}\leq(D+1)\AP{\frac{4\beta_{K-1}}{\theta^2}+T}\ \blacksquare$$
 
 \textbf{Proposition A.19}\Co{b}
 
-\textit{There is some $C_{\mathrm{A.19}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+Consider $\alpha\in\Nats$ and $f:\Reals^+\rightarrow\Reals^+$ non-decreasing s.t. $\ln{f}$ is Lipschitz continuous with constant $\alpha$. Let $\La$ denote the Laplace transform operator. Then,
+
+$$\La[f](s)\leq\frac{1-e^{-1}+\alpha!}{s}f\AP{\frac{1}{s}}$$
+
+\textbf{Proof of Proposition A.19}\Co{b}
+
+$$\La[f](s)=\int_0^\infty e^{-st}f(t)\D t=\int_0^{\frac{1}{s}}e^{-st}f(t)\D t+\int_{\frac{1}{s}}^\infty e^{-st}f(t)\D t$$
+
+For the first term, we will use that $f$ is non-decreasing, and for the second term, we will use that $\ln{f}$ is Lipschitz continuous with constant $\alpha$.
+
+$$\La[f](s)\leq\int_0^{\frac{1}{s}}e^{-st}f\AP{\frac{1}{s}}\D t+\int_{\frac{1}{s}}^\infty e^{-st}f\AP{\frac{1}{s}}\cdot\AP{ts}^\alpha\D t$$
+
+$$\La[f](s)\leq\AP{\int_0^{\frac{1}{s}}e^{-st}\D t+s^\alpha\int_{\frac{1}{s}}^\infty e^{-st}t^\alpha\D t}f\AP{\frac{1}{s}}$$
+
+$$\La[f](s)\leq\AP{\int_0^{\frac{1}{s}}e^{-st}\D t+s^\alpha\int_{0}^\infty e^{-st}t^\alpha\D t}f\AP{\frac{1}{s}}=\AP{\frac{1-e^{-1}}{s}+s^\alpha\cdot\alpha!s^{-\alpha-1}}f\AP{\frac{1}{s}}$$
+
+$$\La[f](s)\leq\frac{1-e^{-1}+\alpha!}{s}f\AP{\frac{1}{s}}\ \blacksquare$$
+
+\textbf{Proposition A.20}\Co{b}
+
+\textit{There is some $C_{\mathrm{A.20}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
 \textit{Consider a set $\X$, an inner product vector space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also some $\boldsymbol{x}\in\X^\omega$, $\boldsymbol{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\theta\in\Reals^+$, $\eta_0,\eta_1\in\Reals^+$, $\delta\in(0,1)$ and an increasing sequence $\AC{N_k\in\Nats}_{k\in\Nats}$. Suppose that $N_0=0$, for any $k\in\Nats$, $N_{k+1}\leq N_k+T$, and $\gamma^T>\frac{1}{2}$. Denote}\Co{i}
 
@@ -1430,7 +1451,7 @@ $$\F^k:=\CS^\F\AB{\boldsymbol{xy}_{:N_k},\beta\AP{N_k+1}^{-1}}$$
 
 $$\sum_{k=0}^\infty\sum_{n=N_k}^{N_{k+1}-1}{\gamma^{kT}\boldsymbol{1}_{\W^{F^k}\AP{\boldsymbol{x}_{n}}>\theta}} \leq C_{\mathrm{A.5}}(D+1)\AP{\frac{1}{\theta^2}\beta\AP{\frac{1}{1-\gamma}}+T}$$
 
-\textbf{Proof of Proposition A.19}\Co{b}
+\textbf{Proof of Proposition A.20}\Co{b}
 
 ???
 
