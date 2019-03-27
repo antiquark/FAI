@@ -1182,13 +1182,7 @@ Applying this to each term in the earlier expression for $\Reg_0(\gamma)$, we ge
 % We should also allow for extra Delta terms in order to use together with Proposition A.20
 \textbf{Proposition A.14}\Co{b}
 
-???
-
-\textit{Consider $(\Omega,P)$ a probability space, $\AC{M_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables and $T\in\Nats^+$. Assume that}\Co{i}
-
-$$\CP{}{M_{k+1}=n}{M_k}=\begin{cases} \AP{2T-1}^{-1} \text{ if } M_k < n < M_k+2T\\ 0 \text{ otherwise} \end{cases}$$
-
-\textit{Define the random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
+\textit{Consider $(\Omega,P)$ a probability space, $\AC{M_k,\Delta_k:\Omega\rightarrow\Nats}_{k\in\Nats}$ random variables and $T\in\Nats^+$. Assume that $M_{k+1}-M_k\geq\Delta_k$ and the $\Delta_k$ are all independent and uniformly distributed between $1$ and $2T-1$. Define the random variable $K_n:\Omega\rightarrow\Nats$ by}\Co{i}
 
 $$K_n:=\min\ACM{k\in\Nats}{M_k\geq n}$$
 
@@ -1198,11 +1192,13 @@ $$\Pa{}{K_n>\frac{2n}{T}+1}\leq\exp\AP{-\frac{n}{4T}}$$
 
 \textbf{Proof of Proposition A.14}\Co{b}
 
-By Hoeffding's inequality, for any $k\in\Nats$ and $m\in\Reals^{\geq0}$
+Define $M'_k:=\sum_{l=0}^{k=1}\Delta_l$. Obviously, $M'_k\leq M_k$. For any $k\in\Nats$ and $m\in\Reals^{\geq0}$
 
-$$\Pa{}{M_k\leq kT-m}\leq\Pa{}{M_k-M_0\leq kT-m}\leq\exp\AP{-\frac{2m^2}{k(2T-2)^2}}$$
+$$\Pa{}{M_k\leq kT-m}\leq\Pa{}{M'_k\leq kT-m}$$
 
-$$\Pa{}{M_k\leq kT-m}\leq\exp\AP{-\frac{m^2}{2kT^2}}$$
+Apply Hoeffding's inequality to the RHS,
+
+$$\Pa{}{M_k\leq kT-m}\leq\exp\AP{-\frac{2m^2}{k(2T-2)^2}}\leq\exp\AP{-\frac{m^2}{2kT^2}}$$
 
 Taking $m:=\frac{1}{2}kT$, we get
 
@@ -1519,8 +1515,6 @@ $$\sum_{k=0}^{\infty}\sum_{n=N_k}^{N_{k+1}-1}\gamma^{kT}\W^{\F^k}\AP{\boldsymbol
 
 \textbf{Proof of Theorem 2}\Co{b}
 
-???
-
 We take $\pi^\dagger_\gamma:=\pi^\PSR_{\gamma,T}$ where $T\in\Nats^+$ will be specified later. By Proposition A.13
 
 $$\Reg(\gamma)\leq\sum_{k=0}^\infty\E{\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\AP{(1-\gamma)\Abs{\Delta\R_k\AP{\Theta_n}}+\gamma\Abs{\CE{\Delta\SHy_k}{\V_{\SHy_k\R_k}(\gamma)}{\Theta_n,\AT_n}}}}$$
@@ -1675,6 +1669,8 @@ $$\CPb{\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}\leq\frac{\Abs{\St}}{2}\W^{\Hy_\T^k
 It follows
 
 $$\Reg_\T(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\Abs{S}}{2}\E{\sum_{k=0}^\infty\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\W^{\Hy_\T^k}\AP{\Theta_n}}+\rho(\gamma,T)}$$
+
+% Apply Proposition A.14 first...
 
 We have $\RVO\Hy\leq\Abs{S}\Abs{\A}$. By Proposition B.2, we have ??
 
