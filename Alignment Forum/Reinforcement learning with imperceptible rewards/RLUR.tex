@@ -1642,9 +1642,9 @@ Obviously $L_i\geq i$ and hence
 
 $$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\sum_{i=0}^\infty\gamma^{i}\E{\W^{\Hy_\R^{K_i}}\AP{\Theta_{L_i}}}+\rho(\gamma,T)}$$
 
-By Proposition B.2
+On the other hand, by Proposition A.21 (for the $T=1$, $N_k=k$ case, applied to the subsequence $\Theta_{M_k}$, with $\gamma^{\frac{1}{2}T}$ playing the role of $\gamma$)
 
-$$\sum_{k=0}^\infty\gamma^{\frac{1}{2}Tk}\W^{\Hy_\R^{k}}\AP{\Theta_{M_k}}\leq C_{\text{B.2}}\AP{\DRVO T+\sqrt{\DRVO\beta_\R\AP{\frac{1}{1-\gamma^{\frac{1}{2}T}}}\frac{1}{1-\gamma^{\frac{1}{2}T}}}}$$
+$$\sum_{k=0}^\infty\gamma^{\frac{1}{2}Tk}\W^{\Hy_\R^{k}}\AP{\Theta_{M_k}}\leq C_{\text{A.21}}\AP{\DRVO +\sqrt{\DRVO\beta_\R\AP{\frac{1}{1-\gamma^{\frac{1}{2}T}}}\frac{1}{1-\gamma^{\frac{1}{2}T}}}}$$
 
 Denote $\tilde{\beta}_\R(\gamma,T,\DRVO)$ the expression on the RHS. Applying Proposition A.15, we conclude
 
@@ -1669,6 +1669,8 @@ $$\CPb{\Dtva{\Delta\SHy_k\AP{\Theta_n,\AT_n}}\leq\frac{\Abs{\St}}{2}\W^{\Hy_\T^k
 It follows
 
 $$\Reg_\T(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\Abs{S}}{2}\E{\sum_{k=0}^\infty\sum_{n=\ET_k}^{\IT_k-1}\gamma^{n}\W^{\Hy_\T^k}\AP{\Theta_n}}+\rho(\gamma,T)}$$
+
+$$\Reg_\T(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\Abs{S}}{2}\E{\sum_{i=0}^\infty\gamma^{L_i}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}}}+\rho(\gamma,T)}$$
 
 % Apply Proposition A.14 first...
 
