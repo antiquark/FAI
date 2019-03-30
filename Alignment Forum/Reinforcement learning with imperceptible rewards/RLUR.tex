@@ -459,17 +459,17 @@ $$t_\Est=\sup_{s\in\St,\mu\in\IS_\omega}\Ea{h\sim\mu\pi_{\mathrm{est}}(s,\cdot)}
 
 $$\tau:=\limsup_{\gamma\rightarrow1}{\max_{\T\in\Hy}\frac{\max_{s\in\St}\V_{\T\R_\T}(s,\gamma)-\min_{s\in\St}\V_{\T\R_\T}(s,\gamma)}{1-\gamma}}$$
 
-\textit{Define $\Hy^\R\subseteq\AC{\St\rightarrow\Reals}$ by}\Co{i}
+\textit{Define $\Hy_\R\subseteq\AC{\St\rightarrow\Reals}$ by}\Co{i}
 
-$$\Hy^\R:=\ACM{\R_\T}{T\in\Hy}$$
+$$\Hy_\R:=\ACM{\R_\T}{T\in\Hy}$$
 
-\textit{Denote $\DMB:=\MB{\Hy^\R}$ and $\DRVO:=\RVO{\Hy^\R}$. Define the Bayesian regret $\Reg(\gamma)$ by}
+\textit{Denote $\DMB:=\MB{\Hy_\R}$ and $\DRVO:=\RVO{\Hy_\R}$. Define the Bayesian regret $\Reg(\gamma)$ by}
 
 $$\Reg(\gamma):=\Ea{\T\sim\zeta}{\EU^*_{\T\R_\T}(\gamma)-\EU^{\pi^\dagger_\gamma}_{\T\R_\T}(\gamma)}$$
 
 \textit{Then, there is a family of policies $\AC{\pi^\dagger_\gamma:\St^*\times\St\K\A}_{\gamma\in(0,1)}$ s.t.}\Co{i}
 
-$$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\mathrm{est}}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\leq C$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\leq C$$
 
 \begin{Huge}Discussion\end{Huge}
 
@@ -1704,11 +1704,41 @@ $$\Reg_\T(\gamma)\leq\Delta\V(\gamma)\AP{\Abs{\St}\tilde{\beta}_\T\AP{\gamma,T,\
 
 We set
 
-$$T:=...$$
+$$T:=\sqrt[3]{\frac{\AP{\tau+t_\Est}^2}{\AP{\DMB+1}\DRVO(1-\gamma)\ln\frac{1}{1-\gamma}}}$$
 
-Now, we analyze the $\gamma\rightarrow1$ limit. In this limit, the expression for $T$ justifies our assumption that $\gamma^{2T}>\frac{1}{2}$. Indeed, we have...
+Now, we analyze the $\gamma\rightarrow1$ limit. In this limit, the expression for $T$ justifies our assumption that $\gamma^{2T}>\frac{1}{2}$. Indeed, we have
 
-TBD
+$$\lim_{\gamma\rightarrow1}\ln{\gamma^T}=\lim_{\gamma\rightarrow1}T\ln\gamma=\lim_{\gamma\rightarrow1}\sqrt[3]{\frac{\AP{\tau+t_\Est}^2}{\AP{\DMB+1}\DRVO(1-\gamma)\ln\frac{1}{1-\gamma}}}\cdot\ln\gamma=0$$
+
+We now analyze the separate contributions of $\Reg_\R$, $\Reg_\T$ and $\Reg_1$ to the limit of interest. We will use the notation $x\lesssim y$ to mean, there is some constant $C_0\in\Reals^+$ that depends on nothing (i.e. on none of the parameters of the problem) s.t. $x\leq C_0y$.
+
+Our previous bound on $\Reg_\R$ can be written as
+
+$$\Reg_\R(\gamma)\lesssim \DRVO(1-\gamma)T+$$
+$$\sqrt{\DRVO\ln\N\AP{\Hy_\R,(1-\gamma)^{-4}}}\cdot(1-\gamma)T+$$
+$$\sqrt{\DRVO\ln\frac{1}{1-\gamma}}\cdot(1-\gamma)T+$$
+$$\frac{1-\gamma}{1-\exp\AP{-\frac{1}{4T}}}+$$
+$$T\Ceil{\frac{\ln(1-\gamma)}{\ln\AP{1-\frac{1}{2}T(1-\gamma)}}}(1-\gamma)^3+$$
+$$(1-\gamma)^2+$$
+$$\frac{1}{T}$$
+
+Here we used that $1\lesssim\gamma^T\leq1$ and substituted the expressions for $\tilde{\beta}_\R$, $\tilde{\beta}$ and $\rho$.
+
+We analyze the separate contribution of each term.
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\DRVO(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\sqrt{\DRVO\ln\N\AP{\Hy_\R,(1-\gamma)^{-4}}}\cdot(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0???$$
+
+...
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}$$
+
+$$\beta(t):=C_{\mathrm{A.4}}\AP{\ln{\frac{\N(\F,\epsilon^{-2} )}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}}$$
+
+$$\tilde{\beta}_\R(\gamma,T,\DRVO)=C_{\text{A.21}}\AP{\DRVO +\sqrt{\DRVO\beta_\R\AP{\frac{1}{1-\gamma^{\frac{1}{2}T}}}\frac{1}{1-\gamma^{\frac{1}{2}T}}}}$$
+$$\rho(\gamma,T)=2T\Ceil{\frac{2\ln(1-\gamma)}{\ln\AP{1-\frac{1}{2}T(1-\gamma)}}}(1-\gamma)^2+4(1-\gamma)$$
+$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\gamma^{-\frac{1}{2}T}\AP{2T\tilde{\beta}_\R(\gamma,T,\DRVO)+\frac{1}{1-\exp\AP{-\frac{1}{4T}}}}+\rho(\gamma,T)}+\frac{2}{T}$$
 
 \begin{Huge}Appendix\end{Huge}
 
