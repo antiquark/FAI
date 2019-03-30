@@ -1684,21 +1684,23 @@ Since $L_i\geq i$, By Proposition A.14
 
 $$\sum_{i=0}^\infty\E{\gamma^{L_i}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}}\leq\sum_{i=0}^\infty\AP{\E{\gamma^{\frac{1}{2}\AP{K_i-1}T}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}}+\exp\AP{-\frac{i}{4T}}}$$
 
-$$\sum_{i=0}^\infty\E{\gamma^{L_i}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}}\leq\sum_{i=0}^\infty\E{\gamma^{\frac{1}{2}\AP{K_i-1}T}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}}+\frac{1}{1-\exp\AP{-\frac{1}{4T}}}$$
+$$\sum_{i=0}^\infty\E{\gamma^{L_i}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}}\leq\gamma^{-\frac{1}{2}T}\sum_{i=0}^\infty\E{\gamma^{\frac{1}{2}K_iT}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}}+\frac{1}{1-\exp\AP{-\frac{1}{4T}}}$$
 
 Denote
 
-$$\rho'(\gamma,T):=\rho(\gamma,T)+\frac{\Abs{\St}}{2}\cdot\frac{1}{1-\exp\AP{-\frac{1}{4T}}}$$
+$$\tilde{\rho}\AP{\gamma,T,\Abs{\St}}:=\rho(\gamma,T)+\frac{\Abs{\St}}{2}\cdot\frac{1}{1-\exp\AP{-\frac{1}{4T}}}$$
 
-We get
+We get, using that $\gamma^{-\frac{1}{2}T}<2$
 
-$$\Reg_\T(\gamma)\leq\Delta\V(\gamma)\AP{\frac{\Abs{S}}{2}\sum_{i=0}^\infty\E{\gamma^{\frac{1}{2}\AP{K_i-1}T}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}}+\rho'(\gamma,T)}$$
+$$\Reg_\T(\gamma)\leq\Delta\V(\gamma)\AP{\Abs{\St}\sum_{i=0}^\infty\E{\gamma^{\frac{1}{2}K_iT}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}}+\tilde{\rho}\AP{\gamma,T,\Abs{\St}}}$$
 
-We have $\RVO\Hy\leq\Abs{S}\Abs{\A}$. By Proposition A.21, we get ??
+On the other hand, $\RVO\Hy\leq\Abs{\St}\Abs{\A}$ and by Proposition A.21
 
-$$\sum_{i=0}^\infty\gamma^{K_i T}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}\leq C_{\text{A.21}}\AP{\Abs{S}\Abs{\A} T+\sqrt{\Abs{S}\Abs{\A}\beta_\T\AP{\frac{1}{1-\gamma}}\frac{1}{1-\gamma}}}$$
+$$\sum_{i=0}^\infty\gamma^{\frac{1}{2}K_i T}\W^{\Hy_\T^{K_i}}\AP{\Theta_{L_i}\AT_{L_i}}\leq C_{\text{A.21}}\AP{\Abs{\St}\Abs{\A} T+\sqrt{\Abs{\St}\Abs{\A}\beta_\T\AP{\frac{1}{1-\gamma^{\frac{1}{2}}}}\frac{1}{1-\gamma^{\frac{1}{2}}}}}$$
 
-...
+Denote $\tilde{\beta}_\T\AP{\gamma,T,\Abs{\St}\Abs{\A}}$ the expression on the RHS. It follows that
+
+$$\Reg_\T(\gamma)\leq\Delta\V(\gamma)\AP{\Abs{\St}\tilde{\beta}_\T\AP{\gamma,T,\Abs{\St}\Abs{\A}}+\tilde{\rho}(\gamma,T)}$$
 
 We set
 
