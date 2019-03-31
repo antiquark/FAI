@@ -1715,20 +1715,29 @@ We now analyze the separate contributions of $\Reg_\R$, $\Reg_\T$ and $\Reg_1$ t
 Our previous bound on $\Reg_\R$ can be written as
 
 $$\Reg_\R(\gamma)\lesssim \DRVO(1-\gamma)T+$$
-$$\sqrt{\DRVO\ln\N\AP{\Hy_\R,(1-\gamma)^{-4}}}\cdot(1-\gamma)T+$$
-$$\sqrt{\DRVO\ln\frac{1}{1-\gamma}}\cdot(1-\gamma)T+$$
+$$\sqrt{\DRVO\ln\N\AP{\Hy_\R,(1-\gamma)^{-4}}\cdot\frac{1}{1-\gamma^{\frac{1}{2}T}}}\cdot(1-\gamma)T+$$
+$$\sqrt{\DRVO\frac{1}{1-\gamma^{\frac{1}{2}T}}\ln\frac{1}{1-\gamma}}\cdot(1-\gamma)T+$$
 $$\frac{1-\gamma}{1-\exp\AP{-\frac{1}{4T}}}+$$
 $$T\Ceil{\frac{\ln(1-\gamma)}{\ln\AP{1-\frac{1}{2}T(1-\gamma)}}}(1-\gamma)^3+$$
 $$(1-\gamma)^2+$$
 $$\frac{1}{T}$$
 
-Here we used that $1\lesssim\gamma^T\leq1$ and substituted the expressions for $\tilde{\beta}_\R$, $\tilde{\beta}$ and $\rho$.
+Here we used that $1\lesssim\gamma^T\leq1$, substituted the expressions for $\tilde{\beta}_\R$, $\tilde{\beta}$ and $\rho$, and dropped some dominated terms.
 
 We analyze the separate contribution of each term.
 
 $$\limsup_{\gamma \rightarrow 1}\frac{\DRVO(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
 
-$$\limsup_{\gamma \rightarrow 1}\frac{\sqrt{\DRVO\ln\N\AP{\Hy_\R,(1-\gamma)^{-4}}}\cdot(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0???$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\sqrt{\DRVO\ln\N\AP{\Hy_\R,(1-\gamma)^{-4}}\cdot\frac{1}{1-\gamma^{\frac{1}{2}T}}}\cdot(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\sqrt{\DRVO\DMB\ln\frac{1}{1-\gamma}\cdot\frac{1}{(1-\gamma)T}}\cdot(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\sqrt{\DRVO\DMB(1-\gamma)\ln\frac{1}{1-\gamma}\cdot T}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim1$$
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\sqrt{\DRVO\frac{1}{1-\gamma^{\frac{1}{2}T}}\ln\frac{1}{1-\gamma}}\cdot(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\sqrt{\DRVO\frac{1}{(1-\gamma)T}\ln\frac{1}{1-\gamma}}\cdot(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\sqrt{\DRVO(1-\gamma)\ln\frac{1}{1-\gamma}\cdot T}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim\frac{1}{\sqrt[3]{\DMB+1}}$$
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\AP{\frac{1-\gamma}{1-\exp\AP{-\frac{1}{4T}}}}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
 
 ...
 
