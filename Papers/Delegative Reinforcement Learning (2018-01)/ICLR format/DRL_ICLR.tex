@@ -101,7 +101,7 @@
 \newcommand{\V}{\operatorname{V}}
 \newcommand{\Q}{\operatorname{Q}}
 \newcommand{\EU}{\operatorname{EU}}
-\newcommand{\Rg}{\operatorname{R}}
+\newcommand{\Rg}{\operatorname{Reg}}
 
 \newcommand{\MP}[2]{#1#2}
 \newcommand{\MA}[2]{#1\AB{#2}}
@@ -128,24 +128,10 @@
 % as long as the \iclrfinalcopy macro remains commented out below.
 % Non-anonymous submissions will be rejected without review.
 
-\author{Antiquus S.~Hippocampus, Natalia Cerebro \& Amelie P. Amygdale \thanks{ Use footnote for providing further information
-about author (webpage, alternative address)---\emph{not} for acknowledging
-funding agencies.  Funding acknowledgements go at the end of the paper.} \\
-Department of Computer Science\\
-Cranberry-Lemon University\\
-Pittsburgh, PA 15213, USA \\
-\texttt{\{hippo,brain,jen\}@cs.cranberry-lemon.edu} \\
-\And
-Ji Q. Ren \& Yevgeny LeNet \\
-Department of Computational Neuroscience \\
-University of the Witwatersrand \\
-Joburg, South Africa \\
-\texttt{\{robot,net\}@wits.ac.za} \\
-\AND
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email}
+\author{Vanessa Kosoy\\
+Independent researcher\\
+Petah Tikva, Israel \\
+\texttt{vanessa.kosoy@intelligence.org}
 }
 
 % The \author macro works with any number of authors. There are two commands
@@ -159,7 +145,7 @@ Address \\
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
 
-%\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
 \begin{document}
 
 
@@ -185,7 +171,7 @@ These idea of using prior knowledge or human intervention to avoid traps has bee
 
 In DRL, an agent interacts with an environment during an infinite sequence of \enquote{rounds}. On each round, the agent selects an action and the environment transits to a new state which is observed by the agent. The agent then receives a reward which depends on the state. There are two kinds of actions the agent can take: a \enquote{direct} action $a \in \A$ and the special delegation action $\bot$. If the agent takes action $\bot$, the \emph{advisor} takes some action $b \in \A$ which affects the environment in the same way as if it was taken directly. The agent then observes both $b$ and the new state of the environment. The utility function and regret are defined via geometric time discount with a constant $\gamma$.
 
-The algorithm we construct in order to show the regret bound is a variant of posterior sampling reinforcement learning (Thompson sampling). Denoting $\alpha:=1-\gamma$, the timeline is divided into intervals of length $O\AP{\alpha^{-\sfrac{1}{4}}}$. At the start of each interval, the algorithm samples a hypothesis out of its current belief state, and starts carrying out an optimal policy for this hypothesis. On each round, it checks whether the desired action is known to be \enquote{safe} with high probability in a particular formal sense. If it is safe, the action is taken. If it isn't safe, delegation is performed. Moreover, the belief state evolves using all observations, but hypotheses whose probability falls below $O\AP{\alpha^{\sfrac{1}{4}}}$ are discarded altogether. We then show that (i) given relatively mild assumptions about the advisor (namely, that it only takes safe actions and it takes the optimal action with at least some small probability,) the regret is bounded by $O\AP{\alpha^{-\sfrac{3}{4}}}$\footnote{See inequality~(\ref{eqn:crl__balanced_regret_bound__regret}). In our notation, regret is normalized by a factor of $\alpha$ to lie within $[0,1]$ (see Definition~\ref{def:utility}) so the bound is $O(\alpha^{\sfrac{1}{4}})$.} (in particular it is sublinear in $\alpha^{-1}$) and (ii) the number of delegations behaves like $O\AP{\alpha^{-\sfrac{1}{4}}}$\footnote{See inequality~(\ref{eqn:crl__balanced_regret_bound__delegations}).}. Here, we only gave the dependence on $\alpha$, but the expressions we obtain are more detailed and reflect the dependence on the number of hypothesis (which we assume to be finite), the derivative of the value functions of the hypotheses and the minimal probability with which the advisor takes an optimal action.
+The algorithm we construct in order to show the regret bound is a variant of posterior sampling reinforcement learning (see \cite{Osband2013}). Denoting $\alpha:=1-\gamma$, the timeline is divided into intervals of length $O\AP{\alpha^{-\sfrac{1}{4}}}$. At the start of each interval, the algorithm samples a hypothesis out of its current belief state, and starts carrying out an optimal policy for this hypothesis. On each round, it checks whether the desired action is known to be \enquote{safe} with high probability in a particular formal sense. If it is safe, the action is taken. If it isn't safe, delegation is performed. Moreover, the belief state evolves using all observations, but hypotheses whose probability falls below $O\AP{\alpha^{\sfrac{1}{4}}}$ are discarded altogether. We then show that (i) given relatively mild assumptions about the advisor (namely, that it only takes safe actions and it takes the optimal action with at least some small probability,) the regret is bounded by $O\AP{\alpha^{-\sfrac{3}{4}}}$\footnote{See inequality~(\ref{eqn:crl__balanced_regret_bound__regret}). In our notation, regret is normalized by a factor of $\alpha$ to lie within $[0,1]$ (see Definition~\ref{def:utility}) so the bound is $O(\alpha^{\sfrac{1}{4}})$.} (in particular it is sublinear in $\alpha^{-1}$) and (ii) the number of delegations behaves like $O\AP{\alpha^{-\sfrac{1}{4}}}$\footnote{See inequality~(\ref{eqn:crl__balanced_regret_bound__delegations}).}. Here, we only gave the dependence on $\alpha$, but the expressions we obtain are more detailed and reflect the dependence on the number of hypothesis (which we assume to be finite), the derivative of the value functions of the hypotheses and the minimal probability with which the advisor takes an optimal action.
 
 \Comment{The proof is based on the conjunction of four observations. The first is that, with high probability, our algorithm only takes safe actions (since it delegates whenever it is uncertain.) The second is that the number of delegations cannot be large for the \emph{information theoretic} reason that, delegation is only done under conditions in which it is expected to yield a certain minimal \emph{information gain}, whereas, since the number of hypotheses is some finite $N$, the total amount of information is also finite and equal to $\ln N$. The third is that, assuming all actions are safe, regret can be approximated by \enquote{episodic regret} (to show this we use the Taylor expansion of the value of states in the parameter $\alpha$.) The fourth is that posterior sampling reinforcement learning (without delegation) satisfies an upper bound on episode regret in terms of the information gain due to observing the reward during this episode (the intuition is, if observing the reward yields no information, then the optimal policy for any hypothesis is optimal for all other hypotheses, so there is no regret,) and the sum of information gains over episodes is again bounded by $\ln N$. Here, both information theoretic steps require the assumption that no hypothesis is assigned a very small but positive probability, which necessitates discarding such hypothesis. This \enquote{distortion} of the belief state has little effect because, obviously, hypotheses with very small probability are likely to be false.}
 
@@ -221,7 +207,7 @@ Given $M$ an MDP and some $\pi: \St_M \rightarrow \A_M$, we define $\T_{M\pi}: \
 \T_{M\pi}(t \mid s) := \T_M\APM{t}{s,\pi(s)}
 \end{equation}
 
-\Comment{That is, $\T_{M\pi}$ is the transition kernel of the Markov chain resulting from policy $\pi$ interacting with environment $M$.}
+That is, $\T_{M\pi}$ is the transition kernel of the Markov chain resulting from policy $\pi$ interacting with environment $M$.
 
 \end{definition}
 \end{samepage}
@@ -239,10 +225,10 @@ Given $M$ an MDP, we define $\V_M : \St_M \times [0,1) \rightarrow [0,1]$ and $\
 
 \begin{equation}
 \label{eqn:def__vq__q}
-\Q_M(s,a,\gamma):=(1-\gamma)\Rew_M(s)+\gamma\Ea{t \sim \T_{M\pi}(s)}{\V_M(t,\gamma)}
+\Q_M(s,a,\gamma):=(1-\gamma)\Rew_M(s)+\gamma\Ea{t \sim \T_{M}(s,a)}{\V_M(t,\gamma)}
 \end{equation}
 
-\Comment{Thus, $\V_M(s,\gamma)$ is the maximal value that can be extracted from state $s$ and $\Q_M(s,a,\gamma)$ is the maximal value that can be extracted from state $s$ after performing action $a$.}
+Thus, $\V_M(s,\gamma)$ is the maximal value that can be extracted from state $s$ and $\Q_M(s,a,\gamma)$ is the maximal value that can be extracted from state $s$ after performing action $a$.
 
 \end{definition}
 \end{samepage}
@@ -260,14 +246,12 @@ Given $M$ an MDP, we define $\V^0_M : \St_M \rightarrow [0,1]$ and $\Q^0_M: \St_
 \Q_M^0(s,a) := \lim_{\gamma \rightarrow 1} \Q_M(s,a,\gamma)
 \end{equation}
 
-\Comment{Indeed, the limits above are guaranteed to exist. We can think of them as describing the \enquote{long term planning} regime.}
+The limits above are guaranteed to exist, thanks to our assumptions that $\St$ and $\A$ are finite.
 
 \end{definition}
 \end{samepage}
 
-The limits above always exist, thanks to our assumptions that $\St$ and $\A$ are finite.
-
-Given a sets $A$, the notation $\PS{A}$ denotes the power set of $\A$.
+Given a set $A$, the notation $\PS{A}$ denotes the power set of $\A$.
 
 \begin{samepage}
 \begin{definition}
@@ -278,7 +262,7 @@ Given $M$ an MDP, we define $\A_M^0: \St_M \rightarrow \PS{\A_M}$ by
 \A_M^0(s) := \Argmax{a \in \A_M} \Q_M^0(s,a)
 \end{equation}
 
-\Comment{That is, $\A_M^0(s)$ is the set of actions at state $s$ that don't enter traps (i.e. destroy value in the long run.)}
+That is, $\A_M^0(s)$ is the set of actions at state $s$ that don't enter traps (i.e. destroy value in the long run.)
 
 \end{definition}
 \end{samepage}
@@ -292,7 +276,7 @@ Given $M$ an MDP, it is well known that there are $\A_M^\star: \St_M \rightarrow
 \A_M^\star(s) = \Argmax{a \in \A_M} \Q_M\AP{s,a,\gamma}
 \end{equation}
 
-\Comment{Thus, $\A_M^\star(s)$ is the set of actions that are optimal at state $s$, assuming that we plan for sufficiently long term.}
+Thus, $\A_M^\star(s)$ is the set of actions that are optimal at state $s$, assuming that we plan for sufficiently long term.
 
 \end{definition}
 \end{samepage}
@@ -304,24 +288,7 @@ Given a set $A$, the notation $A^*$ will denote the set of finite strings over a
 
 $A^\omega$ denotes the space of infinite strings over alphabet $A$, equipped with the product topology and the corresponding Borel sigma-algebra. Given $x\in A^\omega$ and $n \in \Nats$, $x_n \in A$ is the $n$-th symbol of the string $x$ (in our conventions, $0 \in \Nats$ so the string begins from the 0th symbol.) Given $h \in A^*$ and $x \in A^\omega$, the notation $h \sqsubset x$ means that $h$ is a prefix of $x$.
 
-\begin{samepage}
-\begin{definition}
-
-Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\pi$ as a policy, where the first argument is the past history of states and the second argument is the current state. We define $\MP{M}{\pi} \in \Delta\St_M^\omega$ by requiring that for any $h \in \St_M^*$ and $s,t \in \St_M$
-
-\begin{equation}
-\Pa{x\sim\MP{M}{\pi}}{s_M \sqsubset x} := 1
-\end{equation}
-
-
-\begin{equation}
-\CP{x\sim\MP{M}{\pi}}{hst \sqsubset x}{hs \sqsubset x} := \sum_{a \in \A_M} {\T_M\APM{t}{s,a} \pi\APM{a}{h,s}}
-\end{equation}
-
-In other words, $\MP{M}{\pi}$ is the probability measure over histories resulting from policy $\pi$ interacting with environment $M$.
-
-\end{definition}
-\end{samepage}
+Consider an MDP $M$ and some $\pi: \St_M^* \times \St_M \K \A_M$. We think of $\pi$ as a policy, where the first argument is the past history of states and the second argument is the current state. We denote $\MP{M}{\pi} \in \Delta\St_M^\omega$ the probability measure over histories resulting from policy $\pi$ interacting with environment $M$. That is, on each time step we sample an action from $\pi$ applied to previous history and last state, and sample a new state from $\T_M$ applied to last state and sampled action.
 
 \begin{samepage}
 \begin{definition}
@@ -416,6 +383,7 @@ We will also use the following shorthand notations
 
 \begin{samepage}
 \begin{definition}
+\label{def:t}
 
 Given any MDP $M$ and $\gamma\in\AP{\gamma_M,1}$, we define
 
@@ -423,7 +391,7 @@ Given any MDP $M$ and $\gamma\in\AP{\gamma_M,1}$, we define
 \Tn_{M}(\gamma):=\max_{s \in \St_M} \sup_{\theta\in(\gamma,1)} \Abs{\frac{\D{\V_{M}(s,\theta)}}{\D{\theta}}}
 \end{equation}
 
-The above quantity is closely related to the \emph{bias span} parameter, which is known to figure in regret bounds in the no-traps setting (see \cite{Bartlett2009}). Intuitively, it measures how hard is it to recover from a non-fatal error. It can also be related to the mixing time of the Markov chain resulting from following the optimal policy in the MDP, but discussing this in detail is out of the present scope.
+The above quantity is closely related to the \emph{bias span} parameter, which is known to figure in regret bounds in the no-traps setting (see \cite{Bartlett2009}). Intuitively, it measures how costly can a non-fatal error be (the normalized value lost as a result of such an error is approximately bounded by $(1-\gamma)\Tn_{M}(\gamma)$). It can also be related to the mixing time of the Markov chain resulting from following the optimal policy in the MDP (if $P$ is the maximal period of the chain, and the total variation distance from equilibrium falls as $F\lambda^n$, then $\Tn_M\leq F\frac{1+\lambda}{1-\lambda}+P$), but discussing this in detail is out of the present scope.
 
 \end{definition}
 \end{samepage}
@@ -456,7 +424,7 @@ We also denote
 \begin{theorem}
 \label{thm:regret_bound}
 
-There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\gamma,\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, non-empty finite sets $\St,\A$, some $s_0 \in \St$ and some $\Rew: \St \rightarrow [0,1]$. Consider some $N \in \Nats$ which is $\geq 2$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\Rew}$. Denote $\A_\X:=\A\sqcup\{\bot\}$ and $\St_\X:=\St \times \A_\X$. For each $k \in [N]$, assume that $\gamma_{M^k} < \gamma$ and denote $L^k:=\MA{M^k}{\Ad^k}$. Also, denote $\bar{\Tn}:=\frac{1}{N}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)$. Then, there is $\pi^\dagger: \St_\X^* \times \St_\X \K \A_\X$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: in this sense, it is \emph{not} anytime. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
+There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\epsilon,\eta \in (0,1)$, $T\in\Nats^+$, non-empty finite sets $\St,\A$, some $s_0 \in \St$ and some $\Rew: \St \rightarrow [0,1]$. Consider some $N \in \Nats$ which is $\geq 2$, $\AC{\T^k: \St \times \A \K \St}_{k\in[N]}$ and $\AC{\Ad^k :\St \K \A}_{k\in[N]}$. We regard the pairs $(\T^k,\Ad^k)$ as the set of \emph{hypotheses}, where $\T^k$ represents the transition kernel and $\Ad^k$ the advisor policy. Assume that for each $k\in[N]$, $\Ad^k$ is $\epsilon$-sane for the MDP $M^k:=\AP{\St,\A,s_0,\T^k,\Rew}$. Denote $\A_\X:=\A\sqcup\{\bot\}$ and $\St_\X:=\St \times \A_\X$. Fix some $\gamma\in(0,1)$ s.t. for each $k \in [N]$, $\gamma_{M^k} < \gamma$. Also, denote $L^k:=\MA{M^k}{\Ad^k}$ and $\bar{\Tn}:=\frac{1}{N}\sum_{k=0}^{N-1} \Tn_{M^k}(\gamma)$ (see Definition~\ref{def:t}). Then, there is $\pi^\dagger: \St_\X^* \times \St_\X \K \A_\X$\footnote{$\pi^\dagger$ implicitly depends on $\gamma$: in this sense, it is \emph{not} anytime. It also depends on $\eta$, $T$ and the set of hypotheses.} s.t.
 
 \begin{equation}
 \label{eqn:thm__regret_bound__regret}
@@ -476,9 +444,9 @@ There is some constant $C \in (0,\infty)$ s.t. the following holds. Fix some $\g
 
 That is, we have a Bayesian regret bound for learning the true MDP starting from a prior that is a uniform distribution over $N$ hypotheses, each of which is a joint hypothesis about the transition kernel and the advisor. The bound is formulated in terms of $N$. It trivially implies a worst-case regret bound as well, at the cost of another factor of $N$. No doubt it is possible to derive other type of regret bounds for the DRL setting, e.g. in terms of the number of states and actions, but we leave it for future work.
 
-Observe that Theorem~\ref{thm:regret_bound} is non-trivial even without equation~\ref{eqn:thm__regret_bound__delegations}, since, Definition~\ref{def:sane} is s.t. a policy that always delegates might fail to achieve any meaningful regret bound.
+Observe that Theorem~\ref{thm:regret_bound} is non-trivial even without equation~\ref{eqn:thm__regret_bound__delegations}, since, Definition~\ref{def:sane} is s.t. a policy that always delegates might fail to achieve any meaningful regret bound. Indeed, we can consider the special case of a multi-armed bandit, in which all actions are safe and therefore even the random policy is $\epsilon$-sane (as long as $\epsilon<\frac{1}{\Abs{\A}}$). Such a policy has normalized regret $\Omega(1)$, except for the degenerate case when all actions have the same reward.
 
-Note that $\eta$ and $T$ are external parameters of the policy that we can choose however we like ($\eta$ is a probability threshold below which we stop considering hypotheses, and $T$ is the length of episodes for the purpose of posterior sampling; see appendix~\ref{sec:outline}.) Taking appropriate values (that depend on $\gamma$, $N$, $\epsilon$, $\Abs{\A}$ and $\bar{\Tn}$) yields the following
+Note that $\eta$ and $T$ are external parameters of the policy that we can choose however we like ($\eta$ is a probability threshold below which we stop considering hypotheses, and $T$ is the length of episodes for the purpose of posterior sampling; see appendix~\ref{sec:outline}.) Taking appropriate values (that depend on $\gamma$, $N$, $\epsilon$, $\Abs{\A}$ and $\bar{\Tn}$; when $\gamma$ approaches $1$, $\eta$ should fall as $(1-\gamma)^{\frac{1}{4}}$ and $T$ should grow as $(1-\gamma)^{-\frac{1}{4}}$) yields the following
 
 \begin{samepage}
 \begin{corollary}
@@ -522,7 +490,7 @@ Then, there is $\pi^\dagger: \St_\X^* \times \St_\X \K \A_\X$ s.t. for any $k\in
 
 We start by giving an explicit description of an algorithm that implements the policy $\pi^\dagger$.
 
-By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\Ad^k\APM{\pi^{\star k}(s)}{s} > \epsilon$. The algorithm is then a variant of posterior sampling reinforcement learning in time intervals of size $T$, where sampling hypothesis $k$ leads to using policy $\pi^{\star k}$ but delegating when we are uncertain the action is safe. Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution. If the currently sampled hypothesis is discarded, the algorithm continues to select safe actions until the end of the time interval, delegating whenever no action is certainly safe.\pagebreak
+By condition~\ref{con:def__sane__bold} of Definition~\ref{def:sane}, for each $k\in[N]$ we can choose some $\pi^{\star k}: \St \rightarrow \A$ s.t. for any $s \in \St$, $\pi^{\star k}(s) \in \A_{M^k}^\star(s)$ and $\Ad^k\APM{\pi^{\star k}(s)}{s} > \epsilon$. The algorithm is then a variant of posterior sampling reinforcement learning in time intervals of size $T$ (see \cite{Osband2013}), where sampling hypothesis $k$ leads to using policy $\pi^{\star k}$ but delegating when we are uncertain the action is safe. Also, we repeatedly discard hypotheses with probability below $\eta$ from our belief distribution. If the currently sampled hypothesis is discarded, the algorithm continues to select safe actions until the end of the time interval, delegating whenever no action is certainly safe.\pagebreak
 
 \RestyleAlgo{boxed}
 \LinesNumbered
@@ -587,7 +555,7 @@ Note that, when the algorithm references $\Ad^k$ one lines \ref{ln:delegate_cond
 
 The form of inequalities (\ref{eqn:thm__regret_bound__regret}) and (\ref{eqn:thm__regret_bound__delegations}) is s.t. we can assume w.l.o.g. that $\eta < \frac{1}{N}$ and $\epsilon < \frac{1}{\Abs{\A}}$. In particular, the former assumption ensures that we get no division by 0 in line~\ref{ln:second_normalization} of the algorithm. Line~\ref{ln:first_normalization} might in principle involve division by 0, in which case the behavior of the algorithm can be arbitrary. For example, we may assume that in this case \Z becomes the uniform distribution again (but it doesn't matter.)
 
-Lines~\ref{ln:discard_low_probability_begin}-\ref{ln:second_normalization} might seem strange, but they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \Z to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines \ref{ln:discard_low_probability_begin}-\ref{ln:second_normalization} then correspond to conditioning \Z on the observation $\beta=\bot$. That is, in the imaginary setting these lines are replaced by the following:
+Lines~\ref{ln:discard_low_probability_begin}-\ref{ln:second_normalization} discard hypotheses that are too unlikely in order for the agent to take calculated risks (take an action even when there is a small probability of it being unsafe). Technically, in the proof they are necessary in order to apply certain mutual information inequalities (see below.) On the other hand, we also need \Z to coincide with the actual posterior given all observations, which seems like a contradiction. In order to resolve this, we introduce a class of imaginary environments $\AC{L^{k!}}_{k\in[N]}$ in which there is an additional observed signal $\Rev$ taking values in $[N]\sqcup\{\bot\}$ that, in environment $L^{k!}$, takes the value $k$ when $\DataSty{belief}(k) < \eta$ and $\bot$ otherwise. Lines \ref{ln:discard_low_probability_begin}-\ref{ln:second_normalization} then correspond to conditioning \Z on the observation $\beta=\bot$. That is, in the imaginary setting these lines are replaced by the following:
 
 \begin{algorithm}[h]
 
@@ -1247,7 +1215,9 @@ By equation~(\ref{eqn:crl__balanced_regret_bound__gamma}), the expression we rou
 
 \subsubsection*{Acknowledgments}
 
-\emph{Section intentionally left blank in anonymous version.}
+This work was funded by the Machine Intelligence Research Institute (Berkeley, California, USA).
+
+We wish to thank Alexander Appel for reviewing drafts of this work and providing helpful feedback.
 
 \bibliography{DRL}
 \bibliographystyle{iclr2019_conference}
