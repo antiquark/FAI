@@ -164,7 +164,7 @@ The literature study was very cursory and I will be glad to know about prior wor
 
 Partially Observable Markov Decision Processes (POMDPs) serve as a natural starting point for thinking about imperceptible rewards. Indeed, it might seem like all we have to do is consider RL in a POMDP environment and let the reward to be a function of the (imperceptible) state. However, this setting is in general unlearnable even given assumptions that rule out traps.
 
-A (finite) POMDP is defined by non-empty finite sets $\St$ (states), $\A$ (actions) and $\Ob$ (observations), the transition kernel $\T:\St\times\A\K\St\times\Ob$ and the reward function $\R:\St\rightarrow[0,1]$. As opposed to a "classical" POMDP, the value of $\R$ is assumed to be imperceptible. The perceptible setting is a special case of the imperceptible setting: we can always encode the reward into the observation.
+A (finite) POMDP is defined by non-empty finite sets $\St$ (states), $\A$ (actions) and $\Ob$ (observations), the transition kernel $\T:\St\times\A\K\St\times\Ob$ and the reward function $\R:\St\rightarrow[0,1]$. As opposed to the "classical" definition of POMDP, we allow the value of $\R$ is to be imperceptible. The perceptible setting is a special case of the imperceptible setting: we can always encode the reward into the observation.
 
 To formulate a learning problem, we assume $\St$, $\A$ and $\Ob$ to be fixed and an initial state $s_0\in\St$ to be given, while $\T$ and $\R$ are unknown and belong to some hypothesis class $\Hy$:
 
@@ -477,9 +477,7 @@ $$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\Est}}\
 
 It might appear odd that the regret bound in Theorem 2 depends on the dimensions of the class of reward functions, but not on the dimensions on the class of transition kernels, like in the perceptible case. The reason for this is that we only give the asymptotic form. Asymptotically, the leading term is $O\AP{\sqrt[3]{\AP{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$ and its coefficient depends only on those parameters that appear in Theorem 2. However, examining the proof reveals that there is also an $O\AP{\sqrt{\AP{1-\gamma}\ln{\frac{1}{1-\gamma}}}}$ term that has the same form as the regret bound in the perceptible case. For the sake of brevity and simplicity we will \textit{not}\Co{i} attempt to write down a more precise regret bound that reflects the role of the dimensions of the class of transition kernels, but in principle it is not difficult. We must keep in mind, however, that in practice the other term might be significant: \textit{a priori}\Co{i} the dimensions of the class of transition kernels are only bounded by a polynomial in $\Abs{\St}$ and $\Abs{\A}$ and the latter might be exponentially big for realistic models. 
 
-?? % reconsider the next paragraph; comment about potential shortcuts during reward estimation
-
-In fact, for the MDP setting we examine, the bound we give can probably be substantially improved. This is because we exploit the ability to measure an estimate of the reward, but we don't exploit the fact that knowing the transition kernel would make the reward effectively perceptible. For example, our ball sorting robot could measure the density of gold and silver once and consider it known thereafter (it's slightly worse if the measurement involves error, but not by that much). However, we mostly consider Theorem 2 to be a warm-up towards the POMDP setting, in which the reward never becomes effectively perceptible. In that setting, we suspect that $O\AP{\sqrt[3]{1-\gamma}}$ might be the best possible $\gamma$ dependence, up to logarithmic factors.
+\Co{In fact, for the MDP setting we examine, the bound we give can probably be substantially improved. This is because we exploit the ability to measure an estimate of the reward, but we don't exploit the fact that knowing the transition kernel would make the reward effectively perceptible. For example, our ball sorting robot could measure the density of gold and silver once and consider it known thereafter (it's slightly worse if the measurement involves error, but not by that much). However, we mostly consider Theorem 2 to be a warm-up towards the POMDP setting, in which the reward never becomes effectively perceptible. In that setting, we suspect that $O\AP{\sqrt[3]{1-\gamma}}$ might be the best possible $\gamma$ dependence, up to logarithmic factors.}
 
 \begin{Large}The Death of the Agent and Kamikaze Strategies\end{Large}
 
@@ -521,10 +519,6 @@ Essentially, what we're looking for is a way to extend an affine function from a
 A different natural approach is using Occam's razor, i.e. looking for an extension of minimal description length or the expected value of a random extension sampled from a conditional simplicity prior. This requires a natural way to describe instrumental reward functions. We do have such a way: assuming that the $\pi$ and $r$ guaranteed to exist by Theorem 1 can be chosen to be *computable*, the description is the program for those objects with respect to a fixed universal Turing machine (we consider a single program that computes both $\pi$ and $r$ to exploit possible mutual information between the two).
 
 These questions are left for future research.
-
-\textcolor{red}{!!! TODO: Discussion of recovering instrumental reward function from policy !!!}
-% Paragraph about instrumental vs. semi-instrumental should probably be moved here
-% Discussion sections should be mentioned in TLDR somehow
 
 \begin{Huge}Proofs\end{Huge}
 
@@ -1397,7 +1391,7 @@ $$\sum_{n=0}^{N_{k_j}-1}\Norm{f\AP{\boldsymbol{x}_n}-\tilde{f}\AP{\boldsymbol{x}
 
 $$\sqrt{\sum_{n=0}^{N_{k_j}-1}\Norm{f\AP{\boldsymbol{x}_n}-\tilde{f}\AP{\boldsymbol{x}_n}}^2}\geq\theta\sqrt{\max(L-T+1,0)}$$
 
-Denote $f^*:=\LS^\F\AB{\boldsymbol{xy}_{:N_{k_j}},\beta_{k_j}^{-1}}$.
+Denote $f^*:=\LS^\F\AB{\boldsymbol{xy}_{:N_{k_j}}}$.
 
 $$\sqrt{\sum_{n=0}^{N_{k_j}-1}\Norm{f\AP{\boldsymbol{x}_n}-f^*\AP{\boldsymbol{x}_n}}^2}+\sqrt{\sum_{n=0}^{N_{k_j}-1}\Norm{\tilde{f}\AP{\boldsymbol{x}_n}-f^*\AP{\boldsymbol{x}_n}}^2}\geq\theta\sqrt{\max(L-T+1,0)}$$
 
@@ -1435,7 +1429,7 @@ $$\La[f](s)\leq\AP{\frac{1-e^{-1}}{s}+s^\alpha\cdot\alpha!s^{-\alpha-1}}f\AP{\fr
 
 \textit{There is some $C_{\mathrm{A.20}}\in\Reals^+$ s.t. the following holds.}\Co{i}
 
-\textit{Consider a set $\X$, an inner product vector space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also some $\boldsymbol{x}\in\X^\omega$, $\boldsymbol{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\theta\in\Reals^+$, $\eta_0,\eta_1\in\Reals^+$, $\delta\in(0,1)$ and an increasing sequence $\AC{N_k\in\Nats}_{k\in\Nats}$. Suppose that $N_0=0$, for any $k\in\Nats$, $N_{k+1}\leq N_k+T$, and $\gamma^T>\frac{1}{2}$. Denote}\Co{i}
+\textit{Consider a set $\X$, an inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also some $\boldsymbol{x}\in\X^\omega$, $\boldsymbol{y}\in\Y^\omega$, $T\in\Nats^+$, $\gamma\in(0,1)$, $\theta\in\Reals^+$, $\eta_0,\eta_1\in\Reals^+$, $\delta\in(0,1)$ and an increasing sequence $\AC{N_k\in\Nats}_{k\in\Nats}$. Suppose that $N_0=0$, for any $k\in\Nats$, $N_{k+1}\leq N_k+T$, and $\gamma^T>\frac{1}{2}$. Denote}\Co{i}
 
 $$\beta(t):=\eta_0 + \eta_1t\ln{\frac{et}{\delta}}$$
 
@@ -1786,13 +1780,49 @@ $$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\Est}}\
 
 \begin{Huge}Appendix\end{Huge}
 
+The following is a special case of what appeared in the [previous essay]\San{(https://www.alignmentforum.org/posts/Qa5jG9z9dC6E4s9JH/dimensional-regret-without-resets)} as "Definition 1", introduced here for the sake of simplifying notations.
+
 \textbf{Definition B.1}\Co{b}
 
-TBD % simplified version of "Definition 1"
+\textit{Consider a set $\X$, an inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Consider also $\theta\in \Reals^+$, $n\in\Nats$, a sequence $\AC{x_k\in\X}_{k\in[n]}$ and $x^*\in\X$. $x^*$ is said to be} $\AP{\F,\theta}$-dependant on $\AC{x_k}$ \textit{when, for any $f,\tilde{f}\in\F$}\Co{i}
+
+$$\sum_{k=0}^{n-1}\Norm{f\AP{x_k}-\tilde{f}\AP{x_k}}^{2}\leq\theta^2\implies \Norm{f\AP{x^*}-\tilde{f}\AP{x^*}}\leq\theta$$
+
+\textit{Otherwise, $x^*$ is said to be}\Co{i} $\AP{\F,\theta}$-independent of $\AC{x_k}$.
+
+The following is a special case of what appeared in the [previous essay]\San{(https://www.alignmentforum.org/posts/Qa5jG9z9dC6E4s9JH/dimensional-regret-without-resets)} as "Definition A.1".
 
 \textbf{Definition B.2}\Co{b}
 
-TBD % simplified version of "Definition A.1"
+\textit{Consider a set $\X$, a finite-dimensional inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Assume $\F$ is compact w.r.t. the product topology on $\X\rightarrow\Y\cong\prod_{x\in\X}\Y$. Consider also some $n\in\Nats$, $\boldsymbol{x}\in\X^n$, $\boldsymbol{y}\in\Y^n$ and $\lambda\in\Reals^+$. We then use the notation}\Co{i}
+
+$$\LS^{\F}[\boldsymbol{xy}]:=\Argmin{f\in\F}{\sum_{m=0}^{n-1}\Norm{f\AP{\boldsymbol{x}_m}-\boldsymbol{y}_m }^{2}}$$
+
+$$\CS^{\F}[\boldsymbol{xy},\lambda]:=\ACM{f\in\F}{\sum_{m=0}^{n-1}\Norm{f\AP{\boldsymbol{x}_m}-\LS^\F[\boldsymbol{xy}]\AP{\boldsymbol{x}_m}}^{2}\leq \frac{1}{\lambda}}$$
+
+\textbf{Proposition B.1}\Co{b}
+
+\textit{There is some $C_{\mathrm{B.1}}\in\Reals^+$ s.t. the following holds.}\Co{i}
+
+\textit{Consider a finite set $\X$, a finite-dimensional inner product space $\Y$ and some $\F\subseteq\AC{\X\rightarrow\Y}$. Let $\AC{\mathfrak{H}_n\subseteq\PS{\X^\omega\times\Y^\omega}}_{n\in\Nats}$ be the canonical filtration, i.e.}\Co{i}
+
+$$\mathfrak{H}_n:=\ACM{A'\subseteq\X^\omega\times\Y^\omega}{A'=\ACM{\boldsymbol{xy}}{\boldsymbol{xy}_{:n}\in A},\ A\subseteq\X^n\times\Y^n\text{ Borel}}$$
+
+\textit{Consider also $f^*\in\F$ and $\mu\in\Delta\AP{\X^\omega\times\Y^\omega}$ s.t. for any $n\in\Nats$ and $x\in\X$}\Co{i}
+
+$$\CE{\boldsymbol{xy}\sim\mu}{\boldsymbol{y}_n}{\boldsymbol{x}_n=x,\ \mathfrak{H}_n} = f^*(x)$$
+
+\textit{Assume that $\Norm{\boldsymbol{y}_n}\leq1$ with $\mu$-probability $1$ for all $n\in\Nats$. Fix $\epsilon\in\Reals^+$, $\delta\in(0,1)$. Define $\beta:\Reals^+\rightarrow\Reals$ by}\Co{i}
+
+$$\beta(t):=C_{\mathrm{B.1}}\AP{\sigma^2 \ln{\frac{\N\AP{\F,\epsilon^{-2}\Id_d}}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}}$$
+
+\textit{Then,}\Co{i}
+
+$$\Pa{\boldsymbol{xy}\sim\mu}{f^*\not\in\bigcap_{n=0}^\infty\CS^\F\AB{\boldsymbol{xy}_{:n},\beta(n+1)^{-1}}} \leq \delta$$
+
+\textbf{Proof of Proposition B.1}\Co{b}
+
+Straightforward from "Proposition B.1" and "Proposition A.3" in the [previous essay]\San{(https://www.alignmentforum.org/posts/Qa5jG9z9dC6E4s9JH/dimensional-regret-without-resets)}. $\blacksquare$
 
 \end{document}
 
