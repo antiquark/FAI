@@ -1739,21 +1739,50 @@ $$\limsup_{\gamma \rightarrow 1}\frac{\sqrt{\DRVO(1-\gamma)\ln\frac{1}{1-\gamma}
 $$\limsup_{\gamma \rightarrow 1}\frac{\AP{\frac{1-\gamma}{1-\exp\AP{-\frac{1}{4T}}}}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
 $$\limsup_{\gamma \rightarrow 1}\frac{(1-\gamma)T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
 
-$$\limsup_{\gamma \rightarrow 1}\frac{\AP{T\Ceil{\frac{\ln(1-\gamma)}{\ln\AP{1-\frac{1}{2}T(1-\gamma)}}}(1-\gamma)^3}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\AP{T\Ceil{\frac{\ln(1-\gamma)}{\ln\AP{1-\frac{1}{2}T(1-\gamma)}}}(1-\gamma)^3}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\ln\frac{1}{1-\gamma}(1-\gamma)^2}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
 
 $$\limsup_{\gamma \rightarrow 1}\frac{(1-\gamma)^2}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
 
 $$\limsup_{\gamma \rightarrow 1}\frac{1}{T\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=\frac{1}{\tau+t_\Est}$$
 
-...
+Our previous bound on $\Reg_\T$ can be written as
 
-$$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}$$
+$$\R_\T(\gamma)\lesssim\Delta\V(\gamma)\Abs{\St}^2\Abs{\A} T$$
+$$+\Delta\V(\gamma)\Abs{\St}\sqrt{\Abs{\St}\Abs{\A}\ln{\frac{\N(\Hy,(1-\gamma)^{-4} )}{(1-\gamma)^2}}\cdot\frac{1}{1-\gamma^{\frac{1}{2}}}}$$
+$$+\Delta\V(\gamma)\Abs{\St}\sqrt{\Abs{\St}\Abs{\A}(1-\gamma)^{2} \frac{1}{1-\gamma^{\frac{1}{2}}}\ln{\frac{\AP{\frac{1}{1-\gamma^{\frac{1}{2}}}}}{(1-\gamma)^2}}\cdot\frac{1}{1-\gamma^{\frac{1}{2}}}}$$
+$$+\Delta\V(\gamma)T\Ceil{\frac{\ln(1-\gamma)}{\ln\AP{1-\frac{1}{2}T(1-\gamma)}}}(1-\gamma)^2$$
+$$+\Delta\V(\gamma)\cdot(1-\gamma)$$
+$$+\Delta\V(\gamma)\frac{\Abs{\St}}{2}\cdot\frac{1}{1-\exp\AP{-\frac{1}{4T}}}$$
 
-$$\beta(t):=C_{\mathrm{A.4}}\AP{\ln{\frac{\N(\F,\epsilon^{-2} )}{\delta}}+\epsilon t\ln{\frac{et}{\delta}}}$$
+We analyze the contribution of each term.
 
-$$\tilde{\beta}_\R(\gamma,T,\DRVO)=C_{\text{A.21}}\AP{\DRVO +\sqrt{\DRVO\beta_\R\AP{\frac{1}{1-\gamma^{\frac{1}{2}T}}}\frac{1}{1-\gamma^{\frac{1}{2}T}}}}$$
-$$\rho(\gamma,T)=2T\Ceil{\frac{2\ln(1-\gamma)}{\ln\AP{1-\frac{1}{2}T(1-\gamma)}}}(1-\gamma)^2+4(1-\gamma)$$
-$$\Reg_\R(\gamma)\leq(1-\gamma)\AP{\gamma^{-\frac{1}{2}T}\AP{2T\tilde{\beta}_\R(\gamma,T,\DRVO)+\frac{1}{1-\exp\AP{-\frac{1}{4T}}}}+\rho(\gamma,T)}+\frac{2}{T}$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\Delta\V(\gamma)\Abs{\St}^2\Abs{\A} T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\tau(1-\gamma)\Abs{\St}^2\Abs{\A} T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\Delta\V(\gamma)\Abs{\St}\sqrt{\Abs{\St}\Abs{\A}\ln{\frac{\N(\Hy,(1-\gamma)^{-4} )}{(1-\gamma)^2}}\cdot\frac{1}{1-\gamma^{\frac{1}{2}}}}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\tau(1-\gamma)\Abs{\St}\sqrt{\Abs{\St}\Abs{\A}\AP{\MB\Hy+1}\ln\frac{1}{1-\gamma}\cdot\frac{1}{1-\gamma}}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\Delta\V(\gamma)\Abs{\St}\sqrt{\Abs{\St}\Abs{\A}(1-\gamma)^{2} \frac{1}{1-\gamma^{\frac{1}{2}}}\ln{\frac{\AP{\frac{1}{1-\gamma^{\frac{1}{2}}}}}{(1-\gamma)^2}}\cdot\frac{1}{1-\gamma^{\frac{1}{2}}}}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\Delta\V(\gamma)T\Ceil{\frac{\ln(1-\gamma)}{\ln\AP{1-\frac{1}{2}T(1-\gamma)}}}(1-\gamma)^2}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\tau(1-\gamma)^2\ln\frac{1}{1-\gamma}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\Delta\V(\gamma)\cdot(1-\gamma)}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\Delta\V(\gamma)\frac{\Abs{\St}}{2}\cdot\frac{1}{1-\exp\AP{-\frac{1}{4T}}}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\tau(1-\gamma)\Abs{\St}T}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=0$$
+
+To complete the proof, we need to analyze the contribution of $\Reg_1$. We have
+
+$$\Reg_1(\gamma)\lesssim\frac{1}{T}\AP{\frac{\Delta\V(\gamma)}{(1-\gamma)}+t_\Est}$$
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\frac{1}{T}\AP{\frac{\Delta\V(\gamma)}{(1-\gamma)}+t_\Est}}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim$$
+$$\limsup_{\gamma \rightarrow 1}\frac{\tau+t_\Est}{T\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}=1$$
+
+Putting everything together, we conclude
+
+$$\limsup_{\gamma \rightarrow 1}\frac{\Reg(\gamma)}{\sqrt[3]{\AP{\tau+t_{\Est}}\AP{\DMB+1}\DRVO(1-\gamma)\ln{\frac{1}{1-\gamma}}}}\lesssim1\ \blacksquare$$
 
 \begin{Huge}Appendix\end{Huge}
 
