@@ -1,19 +1,12 @@
 % --------------------------------------------------------------------------- %
-% Poster for the ECCS 2011 Conference about Elementary Dynamic Networks.      %
-% --------------------------------------------------------------------------- %
-% Created with Brian Amberg's LaTeX Poster Template. Please refer for the     %
-% attached README.md file for the details how to compile with `pdflatex`.     %
-% --------------------------------------------------------------------------- %
-% $LastChangedDate:: 2011-09-11 10:57:12 +0200 (V, 11 szept. 2011)          $ %
-% $LastChangedRevision:: 128                                                $ %
-% $LastChangedBy:: rlegendi                                                 $ %
-% $Id:: poster.tex 128 2011-09-11 08:57:12Z rlegendi                        $ %
+% Created with Brian Amberg's LaTeX Poster Template.                          %
 % --------------------------------------------------------------------------- %
 \documentclass[a0paper,portrait]{baposter}
 
 \usepackage{relsize}            % For \smaller
 \usepackage{url}                        % For \url
 % \usepackage{epstopdf} % Included EPS files automatically converted to PDF to include with pdflatex
+\usepackage{csquotes}
 
 %%% Macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -109,18 +102,13 @@
 %        }
 }
 
-\headerbox{Problem}{name=problem,column=0,row=0,span=1}{
-Sampling networks always involves the act of aggregation (e.g., when collecting longitudinal samples of networks). We sutdy how the cumulation window length effects the properties of the aggregated network.
+\headerbox{Overview}{name=problem,column=0,row=0,span=1}{
+Most known theoretical regret bounds for reinforcement learning are either episodic or assume an environment without traps. Such regret bounds are inadequate for applications in which critical failures are too costly to be an acceptable side effect of learning, and it is impossible to train the algorithm sufficiently well using simulations only. We derive a regret bound without making either assumption, by allowing the algorithm to occasionally delegate an action to an external advisor. We call this setting \enquote{delegative reinforcement learning} (DRL).}
+
+\headerbox{Traps}{name=definitions,column=0,below=problem}{
+Traps are actions that incur irrecoverable long-term loss of reward.
 
 \includegraphics[width=\linewidth]{trap}
-}
-
-\headerbox{Basic Concepts}{name=definitions,column=0,below=problem}{
-\Comment{In our work the dynamic network is a series of graphs, that is, $DN = G_t(V_t,E_t)$, where $E_t \subseteq V_t \times V_t$ ($\forall t \geq 0$). The initial network, $G_0$, is considered as a parameter of the process. The \textbf{node set fixed} and we worked with an about \textbf{constant number of edges}. We assume that the evolution of the network can be described as the result of an edge creation and an edge deletion process. We define $G_t$ as the \textbf{snapshot network} and 
-        {\smaller
-        $$G_T = ( \bigcup^{T}_{t=0}V_t, \bigcup^{T}_{t=0}E_t) ~ \textnormal{for} ~ T \geq 0.$$
-        }
-as the \textbf{cumulative network}.}
 }
 
 \headerbox{Models}{name=models,column=0,below=definitions}{
