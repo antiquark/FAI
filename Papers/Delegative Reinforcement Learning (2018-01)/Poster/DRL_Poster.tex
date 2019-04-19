@@ -7,6 +7,7 @@
 \usepackage{url}                        % For \url
 % \usepackage{epstopdf} % Included EPS files automatically converted to PDF to include with pdflatex
 \usepackage{csquotes}
+\usepackage[boxruled]{algorithm2e}
 
 %%% Macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -103,20 +104,21 @@
 }
 
 \headerbox{Overview}{name=problem,column=0,row=0,span=1}{
-Most known theoretical regret bounds for reinforcement learning are either episodic or assume an environment without traps. Such regret bounds are inadequate for applications in which critical failures are too costly to be an acceptable side effect of learning, and it is impossible to train the algorithm sufficiently well using simulations only. We derive a regret bound without making either assumption, by allowing the algorithm to occasionally delegate an action to an external advisor. We call this setting \enquote{delegative reinforcement learning} (DRL).}
+Most known theoretical regret bounds for reinforcement learning are either episodic or assume an environment without traps. Such regret bounds are inadequate for applications in which critical failures are too costly to be an acceptable side effect of learning, and it is impossible to train the algorithm sufficiently well using simulations only. We derive a regret bound without making either assumption, by allowing the algorithm to occasionally delegate an action to an external advisor. We call this setting \enquote{delegative reinforcement learning} (DRL). An equivalent setting was introduced in \cite{Clouse1997} under the name "ask for help", but they proved no regret bound.}
 
 \headerbox{Traps}{name=definitions,column=0,below=problem}{
-Traps are actions that incur irrecoverable long-term loss of reward.
+Traps are actions that incur irrecoverable long-term loss of reward. For example, in the MDP below, action $b$ in state $s2$ is a trap (it reduces the maximal achievable long-term average reward from $\frac{1}{3}$ to $\frac{1}{5}$) whereas action $a$ in state $s0$ is suboptimal but isn't a trap.
 
 \includegraphics[width=\linewidth]{trap}
 }
 
-\headerbox{Models}{name=models,column=0,below=definitions}{
-\textbf{ER1} $G_0$ is a random graph. Add each non-existing edge with $p_A$, delete each existing edge with $p_D$ probability. \\
-\textbf{ER2} $G_0$ is a random graph. Add $k_A$ uniformly selected random new edges and delete $k_D$ existing edges. \\
-\textbf{ER3} $G_0$ is a random graph. Rewire $k_{RW}$ edges. \\
-\textbf{SPA} (\emph{Snapshot preferential}) $G_0$ is a scale free network. Add $k_A$ edges from a random node with preferential attachment based on the snapshot network. Delete $k_D$ existing edges. \\
-\textbf{CPA} (\emph{Cumulative preferential}) $G_0$ is a scale free network. Add $k_A$ edges from a random node with preferential attachment based on the cumulative network. Delete $k_D$ existing edges.
+\headerbox{Sanity}{name=models,column=0,below=definitions}{
+Our regret bound is applicable when the external advisor satisfies conditions we call \enquote{$\epsilon$-sanity} ($\epsilon$ is a parameter in $(0,1)$ that appears in the regret bound). These conditions are:
+\begin{enumerate}
+\item Never take trap actions.
+\item In any state, there is an optimal action which is taken with probability more than $\epsilon$.
+\end{enumerate}
+Such a policy doesn't have to be especially good: in our example, its average long-term reward can be $O(\epsilon)$.
 }
 
 \headerbox{References}{name=references,column=0,below=models}{
@@ -127,40 +129,62 @@ Traps are actions that incur irrecoverable long-term loss of reward.
 \begin{thebibliography}{1}                                                      % Simple bibliography with widest label of 1
 \itemsep=-0.01em                                                                                % Save space between the separation
 \setlength{\baselineskip}{0.4em}                                        % Save space with longer lines
-\bibitem{prevWork1} Laszlo Gulyas, Richard Legendi: \emph{Effects of Sample Duration on Network Statistics in Elementary Models of Dynamic Networks}, International Conference on Computational Science, Singapore (2011) 
-\bibitem{prevWork2} Laszlo Gulyas, Susan Khor, Richard Legendi and George Kampis \emph{Cumulative Properties of Elementary Dynamic Networks}, The International Sunbelt Social Network Conference XXXI (2011)
-\bibitem{gulya-kampis1} Gulyas, Laszlo et al.: \emph{Betweenness Centrality Dynamics in Networks of Changing Density}. Presented at the 19th International Symposium on Mathematical Theory of Networks and Systems (MTNS 2010)
+\bibitem{Clouse1997} J. Clouse: \emph{On Integrating Apprentice Learning and Reinforcement Learning} (1997)
+\bibitem{Osband2013} Ian Osband, Benjamin Van Roy and Daniel Russo: \emph{(More) Efficient Reinforcement Learning via Posterior Sampling}, 26th International Conference on Neural Information Processing Systems (2013)
 \end{thebibliography}
 }
 
 \headerbox{Acknowledgements}{name=acknowledgements,column=0,below=references, above=bottom}{
 \smaller                                                % Make the whole text smaller
 \vspace{-0.4em}                 % Save some space at the beginning
-This research was partially supported by the Hungarian Government (KMOP-1.1.2-08/1-2008-0002 ) and the European Union's Seventh Framework Programme: DynaNets, FET-Open project no. FET-233847 (\url{http://www.dynanets.org}).
-%The supports are gratefully acknowledged.
+This work was supported by the Machine Intelligence Research Institute (Berkeley, California, USA).
 } 
 
-\headerbox{Dynamic Networks are Sensitive to Aggregation}{name=density,span=2,column=1,row=0}{
-Network characteristics are extremely sensitive to minor changes in aggregation length. In our previous work \cite{prevWork1} \cite{prevWork2}, we studied the cumulative properties of Elementary Dynamic Network models over the complete time period (i.e., until they reach the stable point of a full network). Here we focus on the more realistc domain of sparse (cumulative) networks. We find that even when snapshot networks are stationary, \textbf{important network characteristics}  (average path lenght, clustering, betwenness centrality) \textbf{are extremely sensitive to aggregation} (window length). 
+\headerbox{Setting}{name=density,span=2,column=1,row=0}{
+On every round, the DRL agent takes either an action from the MDP action set $\mathcal{A}$, or a special \enquote{delegate} action $\bot$. If the action $\bot$ is taken, then the external advisor is asked to select an action from $\mathcal{A}$. In either case, the MDP environment is acted upon by an action from $\mathcal{A}$, and changes its state accordingly, in a way visible both to the DRL agent and the advisor. 
 
-\includegraphics[angle=0,width=0.98\linewidth]{setting}
+\includegraphics[angle=0,width=0.4\linewidth]{setting}
 }
 
-\headerbox{Degree Distribution Radically Changes}
+\headerbox{Algorithm}
 {name=degreeDistribution,span=2,column=1,below=density,above=bottom}{
-Degree distributions are exceptionally sensitive to the length of the aggregation window. \textbf{The same dynamic network may produce a normal, lognormal or even power law distribution for different aggregation lenghts.} The digree distribution of the snapshot and cumulative network is inherently different. The following surfaces show the CPA model until it approaches the complete network.
-\vspace{-0.2em}
-\begin{center}
-        \includegraphics[angle=-90,width=0.49\linewidth]{CPA_3d_snapshot}
-        \includegraphics[angle=-90,width=0.49\linewidth]{CPA_3d_cumulative}
-\end{center}
-\vspace{-0.2em}
-Taking slices of the cumulative 3D charts shows us how the degree distribution changes. The log-log charts below show the progression of these changes as the aggregation window gets larger.
-\vspace{-0.2em}
-\begin{center}
-        \includegraphics[angle=-90,width=0.49\linewidth]{ER1_cumulativeDegrees}
-        \includegraphics[angle=-90,width=0.49\linewidth]{CPA_cumulativeDegrees}
-\end{center}
+TBD
+\RestyleAlgo{boxed}
+\LinesNumbered
+\DontPrintSemicolon
+\SetKwFor{Loop}{InfiniteLoopBegin}{}{InfiniteLoopEnd}
+\SetKwData{Z}{belief}
+\SetKwData{J}{hypothesis}
+\SetKwData{S}{state}
+\SetKwData{RA}{agentAction}
+
+\begin{algorithm}[H]
+
+\SetKwData{NS}{newState}
+\SetKwData{AA}{advisorAction}
+\SetKwData{GA}{isSafeAction}
+
+\Z$\leftarrow$ uniform distribution over $[N]$\;
+\Loop{}{\label{ln:loop_begin}
+        \J$\leftarrow$ sample the distribution \Z\;\label{ln:sample_hypothesis}
+        \For{$m=0$ \KwTo $T-1$}{
+                \eIf{$\Z(\J) > 0$}{
+                        \RA$\leftarrow$ optimal action for \S given \J\;
+                        \If{\RA \normalfont{might be unsafe}}{\label{ln:delegate_cond}
+                                \RA$\leftarrow\bot$\label{ln:delegate_primary}
+                        }
+                                             
+                }{
+                        \RA$\leftarrow$ some certainly safe action or $\bot$ if there are none
+                }
+                take action \RA\;
+                update \Z according to observations\;
+                discard all hypotheses in \Z with probability below $\eta$\;               
+        }
+}
+
+\end{algorithm}
+
 }
 
 \end{poster}
