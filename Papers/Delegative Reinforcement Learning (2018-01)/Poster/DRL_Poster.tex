@@ -103,17 +103,17 @@
 %        }
 }
 
-\headerbox{Overview}{name=problem,column=0,row=0,span=1}{
+\headerbox{Overview}{name=overview,column=0,row=0,span=1}{
 Most known theoretical regret bounds for reinforcement learning are either episodic or assume an environment without traps. Such regret bounds are inadequate for applications in which critical failures are too costly to be an acceptable side effect of learning, and it is impossible to train the algorithm sufficiently well using simulations only. We derive a regret bound without making either assumption, by allowing the algorithm to occasionally delegate an action to an external advisor. We call this setting \enquote{delegative reinforcement learning} (DRL). An equivalent setting was introduced in \cite{Clouse1997} under the name "ask for help", but they proved no regret bound.}
 
-\headerbox{Traps}{name=definitions,column=0,below=problem}{
+\headerbox{Traps}{name=traps,column=0,below=overview}{
 Traps are actions that incur irrecoverable long-term loss of reward. For example, in the MDP below, action $b$ in state $s2$ is a trap (it reduces the maximal achievable long-term average reward from $\frac{1}{3}$ to $\frac{1}{5}$) whereas action $a$ in state $s0$ is suboptimal but isn't a trap.
 
 \includegraphics[width=\linewidth]{trap}
 }
 
-\headerbox{Sanity}{name=models,column=0,below=definitions}{
-Our regret bound is applicable when the external advisor satisfies conditions we call \enquote{$\epsilon$-sanity} ($\epsilon$ is a parameter in $(0,1)$ that appears in the regret bound). These conditions are:
+\headerbox{Sanity}{name=sanity,column=0,below=traps}{
+Our regret bound is applicable when the external advisor satisfies conditions we call \enquote{$\epsilon$-sanity} ($\epsilon$ is a parameter in $(0,1)$ that appears in the regret bound coefficient). These conditions are:
 \begin{enumerate}
 \item Never take trap actions.
 \item In any state, there is an optimal action which is taken with probability more than $\epsilon$.
@@ -121,7 +121,7 @@ Our regret bound is applicable when the external advisor satisfies conditions we
 Such a policy doesn't have to be especially good: in our example, its average long-term reward can be $O(\epsilon)$.
 }
 
-\headerbox{References}{name=references,column=0,below=models}{
+\headerbox{References}{name=references,column=0,below=sanity}{
 \smaller                                                                                                        % Make the whole text smaller
 \vspace{-0.4em}                                                                                 % Save some space at the beginning
 \bibliographystyle{plain}                                                       % Use plain style
@@ -140,15 +140,23 @@ Such a policy doesn't have to be especially good: in our example, its average lo
 This work was supported by the Machine Intelligence Research Institute (Berkeley, California, USA).
 } 
 
-\headerbox{Setting}{name=density,span=2,column=1,row=0}{
-On every round, the DRL agent takes either an action from the MDP action set $\mathcal{A}$, or a special \enquote{delegate} action $\bot$. If the action $\bot$ is taken, then the external advisor is asked to select an action from $\mathcal{A}$. In either case, the MDP environment is acted upon by an action from $\mathcal{A}$, and changes its state accordingly, in a way visible both to the DRL agent and the advisor. 
-
-\includegraphics[angle=0,width=0.4\linewidth]{setting}
+\headerbox{Setting}{name=setting,span=2,column=1,row=0}{
+On every round, the DRL agent takes either an action from the MDP action set $\mathcal{A}$, or the \enquote{delegate} action $\bot$. Upon delegation, the external advisor is asked to select an action from $\mathcal{A}$. In either case, the MDP environment is acted upon by an action from $\mathcal{A}$, and changes its state accordingly, in a way visible both to the DRL agent and the advisor. 
+\begin{center}
+\includegraphics[angle=0,width=0.35\linewidth]{setting}
+\end{center}
 }
 
 \headerbox{Algorithm}
-{name=degreeDistribution,span=2,column=1,below=density,above=bottom}{
-TBD
+{name=algorithm,span=2,column=1,below=setting}{
+The algorithm used to prove the regret bound is based on PSRL \cite{Osband2013} with artificial \enquote{episodes} of length $T$. The main differences are:
+\begin{enumerate}
+\item We only take an action if it is known to be safe (not trap) according to current belief state, otherwise we delegate.
+\item Hypotheses whose probability drops below some constant $\eta$ are discarded from the belief state.
+\end{enumerate}
+
+The regret bound can be expressed in terms of $T$ and $\eta$, which also allows setting them to values that give optimal asymptotics (see below).
+
 \RestyleAlgo{boxed}
 \LinesNumbered
 \DontPrintSemicolon
@@ -185,6 +193,24 @@ TBD
 
 \end{algorithm}
 
+}
+
+\headerbox{Regret Bound}
+{name=regret,span=2,column=1,below=algorithm,above=bottom}
+{
+We derive a Bayesian regret bound assuming a uniform prior over a finite number of hypotheses and geometric time discount. Denoting $\mathcal{R}_n$ the reward received on time step $n$, we define:
+
+$$\mathrm{Reg}:=\mathrm{E}^\star\left[(1-\gamma)\sum_{n=0}^\infty {\gamma^n \mathcal{R}_n}\right]-\mathrm{E}\left[(1-\gamma)\sum_{n=0}^\infty {\gamma^n \mathcal{R}_n}\right]$$
+
+Here, $\mathrm{E}^\star$ assumes the optimal policy for the true environment is followed, whereas $\mathrm{E}$ assumes that the algorithm above is followed. The regret bound is:
+
+$$\mathrm{Reg}=O\left((1-\gamma)^{\frac{1}{4}}\right)$$
+
+Denoting $\mathrm{D}$ the total number of delegations, we also prove:
+
+$$\Pr\left[\mathrm{D}>K\right]=O\left((1-\gamma)^{\frac{1}{4}}\right)+\frac{1}{K}O\left((1-\gamma)^{-\frac{1}{4}}\right)$$
+
+In the paper, we also give detailed expressions for the coefficients implicit in the \enquote{$O$}.
 }
 
 \end{poster}
