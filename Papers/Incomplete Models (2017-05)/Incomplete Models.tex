@@ -33,6 +33,10 @@
 
 \AtAppendix{\counterwithin{theorem}{section}}
 \AtAppendix{\counterwithin{proposition}{section}}
+\AtAppendix{\counterwithin{lemma}{section}}
+\AtAppendix{\counterwithin{corollary}{section}}
+\AtAppendix{\counterwithin{definition}{section}}
+\AtAppendix{\counterwithin{example}{section}}
 
 \newcommand{\Comment}[1]{}
 
@@ -135,9 +139,9 @@ The forecasting method we demonstrate is based on the principles introduced in \
 
 The above method is fairly general, but for our purposes, we associate with each incomplete model $M \in \MC$ a set of gamblers that make bets which are guaranteed to be profitable assuming the true environment $\mu$ satisfies the incomplete model (i.e. $\mu \in M$). The existence of these gamblers follows from the Hahn-Banach separation theorem (where the incomplete model defines the convex set in question) and selection theorems used to ensure that the choice of separating functional depends in a sufficiently \enquote{regular} way on the market pricing. In order to show that the forecaster we described satisfies the desired convergence property, we use tools from martingale theory.
 
-The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Section~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant forecaster}. Section~\ref{sec:prudent} introduces the concept of a \emph{prudent gambling strategy}, which is a technique for proving convergence theorems about dominant forecasters. Section~\ref{sec:construction} describes the gamblers associated with incomplete models and completes the proof of the main theorem.
+The structure of the paper is as follows. Section~\ref{sec:learning} defines the setting and states the main theorem. Appendix~\ref{sec:garrabrant} lays out the formalism of \enquote{combinatorial prediction markets,} and the central concept of a \emph{dominant forecaster}. Appendix~\ref{sec:prudent} introduces the concept of a \emph{prudent gambling strategy}, which is a technique for proving convergence theorems about dominant forecasters. Appendix~\ref{sec:construction} describes the gamblers associated with incomplete models and completes the proof of the main theorem. Appendix~\ref{sec:theorems} lists two theorems by other authors that we use. Appendix~\ref{sec:examples} proves the validity of some examples given in Section~\ref{sec:learning}.
 
-\section{Learning Incomplete Models}
+\section{Results}%{Learning Incomplete Models}
 \label{sec:learning}
 
 $\Nats$ will denote the set of natural numbers $\{0, 1, 2 \ldots\}$.
@@ -310,7 +314,9 @@ If we only cared about predicting the next observation (as opposed to producing 
 
 The rest of the paper is devoted to proving Theorem~\ref{thm:main}.
 
-\section{Dominant Forecasters}
+\appendix
+
+\section{Appendix: Dominant Forecasters}
 \label{sec:garrabrant}
 
 In this section we explain our generalization of the methods introduced in \cite{Garrabrant_2016} under the name \enquote{logical inductors.} The main differences between our formalism and that of \cite{Garrabrant_2016} are
@@ -802,7 +808,7 @@ We have
 By Corollary~\ref{crl:dominate_one}, there is a forecaster $F^G$ that dominates $\Bd_\zeta G^\xi$. By Proposition~\ref{prp:combining_gamblers}, $F^G$ dominates $\Bd_\zeta G^k$ for all $k \in \Nats$. By Proposition~\ref{prp:frugal_gambler}, $F^G$ dominates $G^k$ for all $k \in \Nats$.
 \end{proof}
 
-\section{Prudent Gambling Strategies}
+\section{Appendix: Prudent Gambling Strategies}
 \label{sec:prudent}
 
 In this section we construct a tool for proving asymptotic convergence results about dominant forecasters. We start by introducing a notion of \enquote{prudent gambling,} which requires that bets are only made when the expected payoff is a certain fraction of the risk. First, we need some notation.
@@ -1120,7 +1126,7 @@ By Corollary~\ref*{crl:prudent}\ref{itm:crl_prudent__sup}, $\sum_n Y_n\left(x\ri
 $$\sum_{n=0}^\infty \left(\E_{\mu^*}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right) \mid x_{:n}\OO\right]-\E_{F_n\left(x_{:n}\right)}\left[S_n\left(x_{:n};F_n\left(x_{:n}\right)\right)\right]\right) < +\infty$$
 \end{proof}
 
-\section{Proof of Main Theorem}
+\section{Appendix: Proof of Main Theorem}
 \label{sec:construction}
 
 In order to prove Theorem~\ref{thm:main}, we will need, given an incomplete model $M \subseteq \PMO$ and $\epsilon > 0$, a gambling strategy $S^{M\epsilon}$ s.t. $S^{M\epsilon}$ is $\mu$-prudent for any $\mu \in M$ and s.t. Theorem~\ref{thm:prudent} implies that any $F$ that dominates $S^{M\epsilon}$ satisfies equation~\ref{eqn:thm_main} \enquote{within $\epsilon$.} This motivates the following definition and lemma. We remind that, given $x \in \Reals$, $x_+:=\max(x,0)$.
@@ -1412,8 +1418,6 @@ Theorem~\ref{thm:main} is formulated using the Kantorovich-Rubinstein metric, bu
 The present work doesn't analyze any considerations of computational complexity or even computability. It would be very valuable, especially for practical applications, to understand the complexity of forecasters satisfying equation~\ref{eqn:thm_main} given various complexity-theoretic assumptions on $\MC$. In particular, that would entail designing concrete forecasting algorithms of this type, whereas the existence proof in the present work is non-constructive. Also, it would be valuable to analyze the speed of convergence in \ref{eqn:thm_main} and the possibly also the trade-offs between forecaster complexity and speed of convergence.
 
 Finally, we think that the current work may have some bearing on the so-called \enquote{grain of truth} problem (problem 5j in \cite{Hutter_2009}). The problem is, given a system of interacting rational agents, proving their convergence to some reasonable game-theoretic solution concept, e.g. a Nash equilibrium. For a pair of Bayesian agents, this normally requires each agent to lie in the model class $\MC$ of the other agent. However, this requirement is difficult to satisfy in settings that are fairly general, since usually the computational complexity of a Bayesian agent is higher than the complexities of all models in its prior. On the other hand, using our approach, each agent may learn incomplete models satisfied by the other agent that are computationally simpler than a full simulation. This might be sufficient to produce meaningful game-theoretic guarantees.}
-
-\appendix
 
 \section{Appendix: Some Useful Theorems}
 \label{sec:theorems}
