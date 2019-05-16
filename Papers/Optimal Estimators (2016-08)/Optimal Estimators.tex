@@ -1130,7 +1130,7 @@ We can assume $Q$ is bounded without loss of generality since given any $Q$ it e
 \subsection{Simple Example}
 \label{sec:fundamentals__one_way}
 
-The concept of an optimal polynomial-time estimator is in some sense complementary to the concept of pseudorandomness: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal polynomial-time estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal polynomial-time estimator, we use the concept of a hard-core predicate (which may be regarded as en elementary example of pseudorandomness). The notation $\Fall_\text{neg}$ below refers to the fall space defined in Example~\ref{exm:fall_neg} (functions that fall faster than any polynomial). \textcolor{red}{$\frac{1}{2}$ is an optimal polynomial-time estimator for a hard-core predicate.}
+The concept of an optimal polynomial-time estimator is in some sense complementary to the concept of pseudorandomness: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal polynomial-time estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal polynomial-time estimator, we use the concept of a hard-core predicate (which may be regarded as an elementary example of pseudorandomness). The notation $\Fall_\text{neg}$ below refers to the fall space defined in Example~\ref{exm:fall_neg} (functions that fall faster than any polynomial). \textcolor{red}{$\frac{1}{2}$ is an optimal polynomial-time estimator for a hard-core predicate.}
 
 \begin{theorem}
 \label{thm:hard_core}
@@ -2415,6 +2415,8 @@ Consider $(\Dist,f)$, $(\mathcal{E},g)$ distributional estimation problems and $
 
 Note that condition~\ref{con:def__psp_reduce__smp} is violated in the one-way function example above\textcolor{red}{, and in particular it ensures that the problem doesn't become significantly more difficult after applying $\pi$.}
 
+\textcolor{red}{Also, notice the similarity of condition ii to a randomized Karp reduction (page 189 in \cite{Goldreich_2008}). Reexpressing that definition in our terminology, it is $\forall x:\E_{z\sim\Un_\pi^{K}}[\Abs{f(x)-g(\pi^{K}(x,z))}]\ge\mu(K)$, where $\mu$ is a negligible function.}
+
 Precise strict pseudo-invertible $\EG$-reductions preserve $\ESG$-optimal estimators as a simple corollary of Theorem~\ref{thm:mult}:
 
 \begin{samepage}
@@ -2741,7 +2743,9 @@ Consider ${\Dist}$, ${\mathcal{E}}$ word ensembles. ${\Dist}$ is said to be \emp
 
 In this case, ${W}$ is called a \emph{Radon-Nikodym ${\EG}$-derivative of ${\Dist}$ w.r.t. ${\mathcal{E}}$}.
 
-\textcolor{red}{${\Dist}$ being dominated by ${\mathcal{E}}$ means that there is a bounded reweighting function that, on average, turns ${\mathcal{E}}$ into $\Dist$. This is a more restrictive reweighting condition than has been considered in the past, because a sequence of distributions that, in the limit, are supported on a vanishing fraction of the probability mass of $\mathcal{E}$, would force $W$ to be unboundedly large. The resistance of optimal estimators to reweighting carries over to the following two propositions (and the requirement of ample advice for $\EG$-optimal estimators to be optimal under reweightings still applies.) }
+\textcolor{red}{${\Dist}$ being dominated by ${\mathcal{E}}$ means that there is a bounded reweighting function that, on average, turns ${\mathcal{E}}$ into $\Dist$. This is a more restrictive condition than the notion of domination from Definition 17 of \cite{Bogdanov_2006}, which only requires that there is a polynomial $p(K)$ s.t. $\forall x\in \Supp\Dist^K:p(K)\mathcal{E}^K(x)\ge\Dist^K(x)$. Intuitively, this is because the notion of domination in Definition 17 of \cite{Bogdanov_2006} may produce up to a polynomial increase in the error of an optimal predictor due to channeling probability mass into  inputs where the optimal predictor fails, and not all fall spaces are invariant under multiplication by a polynomial.}
+
+\textcolor{red}{This is also a more restrictive reweighting condition than the one in Corollary 2.1, because a sequence of distributions that, in the limit, are supported on a vanishing fraction of the probability mass of $\mathcal{E}$, would force $W$ to be unboundedly large. The resistance of optimal estimators to reweighting carries over to the following two propositions (and the requirement of ample advice for $\EG$-optimal estimators to be optimal under reweightings still applies.) }
 \end{definition}
 \end{samepage}
 
@@ -3126,7 +3130,7 @@ Fix ${r,s: \Nats^n \Alg \Nats}$ s.t.
 
 Denote ${\Gamma_\text{det}:=(\Gamma_0^n,\Gamma_0^n)}$, ${\Gamma_{\textnormal{red}}:=(\Gamma_{r},\Gamma_0^n)}$, ${\Gamma_{\textnormal{smp}}:=(\Gamma_{s},\Gamma_0^n)}$.
 
-We will show that certain classes of functions paired with ${\Fall(\Gamma_{\text{smp}})}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\Fall(\Gamma_{\text{red}})}$-reductions. This construction is an adaption of the standard construction of a complete problem for ${\mathsf{SampNP}}$.
+We will show that certain classes of functions paired with ${\Fall(\Gamma_{\text{smp}})}$-samplable word ensembles have a distributional estimation problem which is complete w.r.t. precise pseudo-invertible ${\Fall(\Gamma_{\text{red}})}$-reductions. This construction is an adaption of the standard construction of a complete problem for ${\mathsf{SampNP}}$, \textcolor{red}{as provided in Theorem 10.25 of \cite{Goldreich_2008}}.
 
 \textcolor{red}{Due to the large number of variables and functions in the following theorem, some intuitive exposition of the result seems helpful. A universal function $\mathfrak{F}$ will be considered, which takes three inputs. There is an element $\phi$ of some encoded set $E$ that tells $\mathfrak{F}$ which (possibly hard-to-compute) function $f$ to emulate, a time parameter $k$ which controls the computational resources used in emulating $f$, and a bitstring $x$ which is just the input to $f$. When $k$ is sufficiently large, and $b$ is chosen appropriately, $\mathfrak{F}(b,k,x)=f(x)$. The distribution $\Dist_{\mathfrak{F}}$ is over 4-element tuples of a bitstring (which dictates what $f$ is), the last coordinate of $K$ ($k$), which serves as a time parameter, a bitstring $a$ (which can be interpreted as a sampler), and a bitstring $x$ (which is the output of the sampler when run for $k$ steps.}
 
@@ -3817,6 +3821,8 @@ For the sake of brevity, we will say \enquote{${\EG}$-perfect estimator} rather 
 \end{samepage}
 
 Perfect polynomial-time estimators are essentially objects of \enquote{classical} average-case complexity theory. In particular, perfect polynomial-time estimators for distributional decision problems of rank 1 are closely related to heuristic algorithms in the sense of \cite{Bogdanov_2006} (their existence is equivalent under mild assumptions), whereas perfect polynomial-time estimators for rank 2 problems of the form ${(\Dist^\eta,\chi_L)}$ with ${\Dist}$ of rank 1 are related to heuristic schemes.
+
+\textcolor{red}{Comparing the definition of a perfect estimator to the definition of an inapproximable predicate, (Definition 7.9 in \cite{Goldreich_2008}), if $f$ is $(\text{poly},\rho)$-inapproximable, and $\Dist^k$ is the uniform distribution over k-length bitstrings, then $\zeta\in o(\rho)$ means that there is no $\Fall_{\zeta}(\Gamma^{1}_{0},\Gamma^{1}_{\text{poly}})$-perfect estimator for $(\Dist,f)$.}
 
 \begin{samepage}
 \begin{proposition}
