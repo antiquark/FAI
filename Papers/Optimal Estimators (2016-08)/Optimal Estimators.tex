@@ -118,7 +118,7 @@
 
 \title{Optimal Polynomial-Time Estimators: A Bayesian Notion of Approximation Algorithm}
 
-\author{Vadim Kosoy\thanks{E-mail: \texttt{vadim.kosoy@intelligence.org}, Telephone: \texttt{+97237448629}}, Alexander Appel\thanks{?}}
+\author{Vanessa Kosoy\thanks{E-mail: \texttt{vanessa.kosoy@intelligence.org}, Telephone: \texttt{+97237448629}}, Alexander Appel\thanks{?}}
 
 \date{}
 
@@ -217,7 +217,7 @@ The first (Theorem~\ref{thm:exists_all}) shows that for suitable ${\Gamma}$ (in 
 
 The second (Theorem~\ref{thm:exists_smp}), which is another central result, shows that for suitable ${\Gamma}$ (logarithmic advice and enough random e.g. logarithmic amount of random bits is sufficient), any distributional decision\footnote{All of the theorems are described for decision problems in the overview for the sake of simplicity but we actually prove them for \enquote{estimation} problems i.e. ${f: \Words \rightarrow \Reals}$ instead of ${L \subseteq \Words}$. Here this generalisation is more important since any efficient algorithm producing ${(x,t)}$ pairs is the sampler of some distributional estimation problem.} problem ${(\Dist,L)}$ which is \emph{samplable} (i.e. it is possible to efficiently sample pairs ${(x,t)}$ where ${x \in \Words}$ is distributed approximately according to ${\Dist}$ and ${t \in \Rats}$ is an estimate of ${\chi_L(x)}$ which is approximately unbiased on average) admits an ${\FallU(\Gamma)}$-optimal polynomial-time estimator with the same advice strings as the sampler. In particular, if the sampler is uniform the estimator is also uniform.
 
-The samplability property allows recasting the estimation problem as a learning problem. That is, we use the sampler to generate a number \textcolor{red}{(we use ${\mathcal{O}\left(\left(\log{K_1}\right)^2\right)}$}) of problem instances for which an unbiased estimate of the correct answer is known, and we should now generalize from these instances to an instance for which the correct answer is unknown. The optimal polynomial-time estimator we construct accomplishes this using the empirical risk minimization principle from statical learning theory, applied to a hypothesis space which consists of programs. Specifically, the estimator iterates over all programs of length ${O\left(\log{K_1}\right)}$, runs each of them on the \textcolor{red}{samples ${\{(x_i,t_i)\}_{i \in [\mathcal{O}\left(\left(\log{K_1}\right)^2\right)]}}$ for time ${K_1}$ getting estimates ${\{p_i\}_{i \in [\mathcal{O}\left(\left(\log{K_1}\right)^2\right)]}}$ and computes the empirical risk ${\sum_{i \in [\mathcal{O}\left(\left(\log{K_1}\right)^2\right)]}(p_i-t_i)^2}$}. It then selects the program with the minimal risk and runs it on the input for time ${K_1}$ to get the desired estimate. This is similar to Levin's universal search which dovetails all programs to get optimality. The optimality of this estimator is also closely related to the fundamental theorem of statistical learning theory for agnostic PAC learning\cite{Shalev-Shwartz_2014}: like in agnostic PAC learning we get an estimate which is not  but is optimal within the hypothesis space (which in our case is the space of efficient estimators).
+The samplability property allows recasting the estimation problem as a learning problem. That is, we use the sampler to generate a number (we use ${\mathcal{O}\left(\left(\log{K_1}\right)^2\right)}$) of problem instances for which an unbiased estimate of the correct answer is known, and we should now generalize from these instances to an instance for which the correct answer is unknown. The optimal polynomial-time estimator we construct accomplishes this using the empirical risk minimization principle from statical learning theory, applied to a hypothesis space which consists of programs. Specifically, the estimator iterates over all programs of length ${O\left(\log{K_1}\right)}$, runs each of them on the samples ${\{(x_i,t_i)\}_{i \in [\mathcal{O}\left(\left(\log{K_1}\right)^2\right)]}}$ for time ${K_1}$ getting estimates ${\{p_i\}_{i \in [\mathcal{O}\left(\left(\log{K_1}\right)^2\right)]}}$ and computes the empirical risk ${\sum_{i \in [\mathcal{O}\left(\left(\log{K_1}\right)^2\right)]}(p_i-t_i)^2}$. It then selects the program with the minimal risk and runs it on the input for time ${K_1}$ to get the desired estimate. This is similar to Levin's universal search which dovetails all programs to get optimality. The optimality of this estimator is also closely related to the fundamental theorem of statistical learning theory for agnostic PAC learning\cite{Shalev-Shwartz_2014}: like in agnostic PAC learning we get an estimate which is not  but is optimal within the hypothesis space (which in our case is the space of efficient estimators).
 
 On the other hand, we rule out the existence of optimal polynomial-time estimators in the uniform case for certain problems. These negative results rely on the simple observation that if the veracity of ${x \in L}$ for ${x \sim \Dist^k}$ depends only on ${k}$, then advice strings of size $O(1)$ enable storing the exact answer to all such questions. Additionally, it is easy to see that an optimal polynomial-time estimator in the uniform case is still optimal when we allow ${O(1)}$ advice. This means that any optimal polynomial-time estimator for such a problem has to be a  polynomial-time estimator. So, any problem of this form that doesn't have uniform  polynomial-time estimators also doesn't have uniform optimal polynomial-time estimators. Consequently, any problem that is reducible to the former sort of problem also doesn't have optimal polynomial-time estimators.
 
@@ -374,7 +374,7 @@ Fix ${n \in \Nats}$. A \emph{distributional estimation problem of rank ${n}$} is
 
 \subsubsection{Growth Spaces and Polynomial-Time \texorpdfstring{$\Gamma$}{Γ}-Schemes}
 
-In the motivational model, the estimator was restricted to lie in a class of functions that factor through a fixed mapping. Of course we are interested in more realistic notions of efficiency. In the present work we consider restrictions on time complexity, access to random bits and size of advice strings. Spatial complexity is also of interest but treating it is out of our current scope. It is possible to consider weaker or stronger restrictions which we represent using the following abstraction \textcolor{red}{which is closely tied to big-$\mathcal{O}$ notation}:
+In the motivational model, the estimator was restricted to lie in a class of functions that factor through a fixed mapping. Of course we are interested in more realistic notions of efficiency. In the present work we consider restrictions on time complexity, access to random bits and size of advice strings. Spatial complexity is also of interest but treating it is out of our current scope. It is possible to consider weaker or stronger restrictions which we represent using the following abstraction which is closely tied to big-$\mathcal{O}$ notation:
 
 \begin{samepage}
 \begin{definition}
@@ -436,13 +436,13 @@ Fix ${n \in \Nats^{>0}}$. ${\gamma: \NatFun \Nats}$ is said to be \emph{steadily
 \item\label{con:def__sgrow__poly} There is ${s \in \NatPoly}$ s.t. ${\forall J \in \Nats^{n-1}, k \in \Nats: \gamma(J,k) \leq \frac{1}{2}\gamma(J,s(J,k))}$.
 \end{enumerate}
 \end{definition}
-\textcolor{red}{This could be thought of as a polynomial that is monotonically increasing in the last argument quickly enough that a polynomial increase in the last argument can double the available resources.}
+This could be thought of as a polynomial that is monotonically increasing in the last argument quickly enough that a polynomial increase in the last argument can double the available resources.
 \end{samepage}
 
 \begin{samepage}
 \begin{example}
 
-For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, we define ${\Gamma_{\gamma^*}}$, a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. \textcolor{red}{This is the space of functions that are bounded above by the reference function ${\gamma^*}$ with the last argument growing at a polynomial rate.}
+For any ${n \in \Nats^{>0}}$ and ${\gamma^*}$ steadily growing, we define ${\Gamma_{\gamma^*}}$, a growth space of rank ${n}$. ${\gamma \in \Gamma_{\gamma^*}}$ iff there is ${p \in \NatPoly}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p(J,k))}$. This is the space of functions that are bounded above by the reference function ${\gamma^*}$ with the last argument growing at a polynomial rate.
 
 To verify condition~\ref{con:def__grow__add}, consider ${\gamma_1}$, ${\gamma_2}$ s.t. ${\gamma(J,k) \leq \gamma^*(J,p_1(J,k))}$ and ${\gamma_2(J,k) \leq \gamma^*(J,p_2(J,k))}$. Choose ${p,s \in \NatPoly}$ s.t. ${p \geq \max(p_1,p_2)}$ and ${s}$ is as in condition~\ref{con:def__sgrow__poly} of Definition~\ref{def:sgrow}.
 
@@ -462,13 +462,13 @@ We now introduce our notion of an \enquote{efficient} algorithm.
 \begin{samepage}
 \begin{definition}
 
-Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ \textcolor{red}{that correspond to the length of the random and advice strings}. Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where\\ ${S: \Nats^n \times X \times \Words \times \Words \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \NatFun \Words$ are s.t.
+Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of rank $n$ that correspond to the length of the random and advice strings. Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\Gamma$-scheme of signature $X \rightarrow Y$} is a triple $(S,\R_S,\A_S)$ where\\ ${S: \Nats^n \times X \times \Words \times \Words \Alg Y}$, $\R_S: \Nats^n \times \Words \Alg \Nats$ and $\A_S: \NatFun \Words$ are s.t.
 
 \begin{enumerate}[(i)]
 
 \item $\max_{x \in X} \max_{y,z \in \Words} \T_S(K,x,y,z) \in \GammaPoly^n$
 
-\item $\max_{z \in \Words} \T_{\R_S}(K,z) \in \GammaPoly^n$. \textcolor{red}{Note that $\R_S$, the polynomial-time function that outputs the number of random bits to read, takes the advice string z as input.}
+\item $\max_{z \in \Words} \T_{\R_S}(K,z) \in \GammaPoly^n$. Note that $\R_S$, the polynomial-time function that outputs the number of random bits to read, takes the advice string z as input.
 
 \item The function $r: \NatFun \Nats$ defined by $r(K):=\R_S(K,\A_S(K))$ lies in $\GrowR$.
 
@@ -535,15 +535,15 @@ Fix $n \in \Nats$ and $\Gamma=(\GrowR$, $\GrowA)$ a pair of growth spaces of ran
 
 \begin{proof}
 
-Choose ${p,q \in \NatPoly}$ \textcolor{red}{(time bounds to emulate an arbitrary randomness function and algorithm from the uniform family)} and ${\{a_K, b_K \in \Words\}}_{K \in \Nats^n}$ 
-\textcolor{red}{(encodings of the randomness functions and algorithms, which by the definition of a uniform family, can be a finite set)} s.t. there is only a finite number of different words $a_K$ and $b_K$, and for any ${K,L \in \Nats^n}$, ${x \in X}$ and ${y,z \in \Words}$
+Choose ${p,q \in \NatPoly}$ (time bounds to emulate an arbitrary randomness function and algorithm from the uniform family) and ${\{a_K, b_K \in \Words\}}_{K \in \Nats^n}$ 
+(encodings of the randomness functions and algorithms, which by the definition of a uniform family, can be a finite set) s.t. there is only a finite number of different words $a_K$ and $b_K$, and for any ${K,L \in \Nats^n}$, ${x \in X}$ and ${y,z \in \Words}$
 
 \begin{align*}
 \Ev^{q(L)}(b_K;\En_{\Nats^n}(L),z) &= \R_{S_K}(L,z) \\
 \Ev^{p(L)}(a_K;\En_{\Nats^n}(L),x,y,z) &= S_K^L(x,y,z) 
 \end{align*}
 
-\textcolor{red}{Now, use the nonzero advice string to encode which algorithm is to be used on which input.} Construct ${\Delta_{\mathcal{S}}}$ s.t. for any ${K \in \Nats^n}$, ${x \in X}$, ${y, w \in \Words}$, ${u \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{a_K}}}$ and\\ ${v \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{b_K}}}$
+Now, use the nonzero advice string to encode which algorithm is to be used on which input. Construct ${\Delta_{\mathcal{S}}}$ s.t. for any ${K \in \Nats^n}$, ${x \in X}$, ${y, w \in \Words}$, ${u \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{a_K}}}$ and\\ ${v \in \Bool^{\leq \max_{K \in \Nats^n} \Abs{b_K}}}$
 
 \begin{align*}
 \A_{\Delta_{\mathcal{S}}}(K)&=\Chev{a_K,b_K,\A_{\mathcal{S}_K}(K)} \\
@@ -603,7 +603,7 @@ To verify condition \ref{con:def__fall__pol} note that ${2^{-K_{n-1}} \in \FallU
 
 For ${\varphi \equiv \infty}$ we use the notation ${\FallU:=\FallUt{\varphi}}$.
 
-\textcolor{red}{For example, if $\varepsilon_{1}(J,k):=\frac{\log\log p(J)}{\log (k+2)}$ and $\varepsilon_{2}(J,k):=\frac{\log\log p(J)}{\log\log (k+2)}$, then $\varepsilon_{1}(J,k)\in\FallU$, but $\varepsilon_{2}(J,k)\not\in\FallU$ because it falls too slowly to force the sum to converge.}
+For example, if $\varepsilon_{1}(J,k):=\frac{\log\log p(J)}{\log (k+2)}$ and $\varepsilon_{2}(J,k):=\frac{\log\log p(J)}{\log\log (k+2)}$, then $\varepsilon_{1}(J,k)\in\FallU$, but $\varepsilon_{2}(J,k)\not\in\FallU$ because it falls too slowly to force the sum to converge.
 
 \end{example}
 \end{samepage}
@@ -768,7 +768,7 @@ In this subsection we discuss some basic properties of optimal polynomial-time e
 
 \subsubsection{Optimality Relative to Uniform Families}
 
-Note that $\varepsilon$ in \ref{eqn:op} depends on $Q$. However in some sense the optimality condition is automatically uniform w.r.t. the resources required by $Q$. \textcolor{red}{The following Proposition \ref{prp:unif} can be used to reduce domination of a uniform family to domination of a single polynomial-time $\Gamma$-scheme constructed via Proposition \ref{prp:fam_diag}.}
+Note that $\varepsilon$ in \ref{eqn:op} depends on $Q$. However in some sense the optimality condition is automatically uniform w.r.t. the resources required by $Q$. The following Proposition \ref{prp:unif} can be used to reduce domination of a uniform family to domination of a single polynomial-time $\Gamma$-scheme constructed via Proposition \ref{prp:fam_diag}.
 
 \begin{proposition}
 \label{prp:unif}
@@ -820,7 +820,7 @@ Observe that $\bar{\Gamma}_{\mathfrak{R}}:=\GrowR+\GrowA$ is a growth space and 
 
 \begin{proof}
 
-\textcolor{red}{The proof will proceed by taking a $Q$ with access to extra randomness, and then considering another algorithm $\overline{Q}$ with access to the old amount of randomness, which uses the advice to encode an optimal prefix to the random string. Then we just need to show that $\overline{Q}$ dominates $Q$ and is dominated by $P$. This proof strategy also applies to the next proposition.}
+The proof will proceed by taking a $Q$ with access to extra randomness, and then considering another algorithm $\overline{Q}$ with access to the old amount of randomness, which uses the advice to encode an optimal prefix to the random string. Then we just need to show that $\overline{Q}$ dominates $Q$ and is dominated by $P$. This proof strategy also applies to the next proposition.
 
 Consider any $Q: \Words \xrightarrow{\bar{\Gamma}} \Rats$. Suppose $\R_Q=r_{\mathfrak{R}}+r_{\mathfrak{A}}$ where $r_{\mathfrak{R}} \in \GrowR$ and $r_{\mathfrak{A}} \in \GrowA$. For any $K \in \Nats^n$, choose 
 \[\bar{\A}_Q(K) \in \Argmin{y \in \WordsLen{r_{\mathfrak{A}}(K)}} \E_{(x,z) \sim \Dist^{K} \times U^{r_{\mathfrak{R}}(K)}}[(Q^{K}(x,yz) - f(x))^2]\]
@@ -874,7 +874,7 @@ Although the word ensemble plays a central role in the definition of an optimal 
 Given a growth space $\Gamma_*$ of rank $n$, $\Fall$ is called \emph{$\Gamma_*$-ample} when there is\\ $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \Gamma_*$.
 
 \end{definition}
-\textcolor{red}{The intuitive interpretation of this is that, when $\Gamma_*$ represents the amount of advice, the advice bits are sufficient to write down an approximation to some parameter with error at most $\zeta$.}
+The intuitive interpretation of this is that, when $\Gamma_*$ represents the amount of advice, the advice bits are sufficient to write down an approximation to some parameter with error at most $\zeta$.
 \begin{samepage}
 \begin{example}
 
@@ -902,7 +902,7 @@ Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimati
 
 \end{proposition}
 
-\textcolor{red}{This essentially says that if there is enough advice available, then an optimal estimator continues to be optimal when a poly-time adversary assigns weights to how important the various problem instances are. The proof will come after the following corollary.}
+This essentially says that if there is enough advice available, then an optimal estimator continues to be optimal when a poly-time adversary assigns weights to how important the various problem instances are. The proof will come after the following corollary.
 
 The relationship to the role of the word ensemble is as follows.
 
@@ -915,7 +915,7 @@ Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimati
 \[\mathcal{E}^K(x):=\frac{\E_{y \sim \Un_W^K}[W^K(x,y)] \Dist^K(x)}{\E_{(x',y) \sim \Dist^K \times \Un_W^K}[W^K(x',y)]}\]
 
 Then, $P$ is an $\Fall_W(\Gamma)$-optimal estimator for $(\mathcal{E},f)$.
-\textcolor{red}{That is, if the distribution on problem instances is reweighted by a poly-time adversary, an optimal estimator will continue being optimal, although with an increased error if the expected weight assigned by the adversary keeps falling as K grows. Therefore, the property of being an optimal estimator is robust against distributional shift when enough advice is available.}
+That is, if the distribution on problem instances is reweighted by a poly-time adversary, an optimal estimator will continue being optimal, although with an increased error if the expected weight assigned by the adversary keeps falling as K grows. Therefore, the property of being an optimal estimator is robust against distributional shift when enough advice is available.
 \end{corollary}
 \end{samepage}
 
@@ -943,7 +943,7 @@ We now give the proof of Proposition~\ref{prp:weight}.
 \begin{proof}[Proof of Proposition \ref{prp:weight}]
 
 %Intuitively, if the result was false, then $W$ being high implies that the Brier score of $Q$ is less than the Brier score of $P$. Thus,
-\textcolor{red}{The proof will construct a uniform family of algorithms that use their advice to encode an approximation of some number $t$, and use $P$ if $W$ assigns a weight less than the approximation, and $Q$ otherwise. $P$ dominates all the algorithms in this family, and after some reshuffling, and integrating over $t$, $W$ can be recovered, and this leads to the desired result.}
+The proof will construct a uniform family of algorithms that use their advice to encode an approximation of some number $t$, and use $P$ if $W$ assigns a weight less than the approximation, and $Q$ otherwise. $P$ dominates all the algorithms in this family, and after some reshuffling, and integrating over $t$, $W$ can be recovered, and this leads to the desired result.
 
 Consider $\zeta: \NatFun (0,\frac{1}{2}]$ s.t.  $\zeta \in \Fall$ and $\Floor{\log \frac{1}{\zeta}} \in \GrowA$. For any $K \in \Nats^n$ and $t \in \Reals$, let $\rho_\zeta^{K}(t) \in \Argmin{s \in \Rats \cap [t-\zeta(K),t+\zeta(K)]} \Abs{\En_\Rats(s)}$. Denote $M:= \sup W$. It is easy to see that there is $\gamma \in \GrowA$ s.t. for any $t \in [0, M]$, ${\Abs{\En_\Rats(\rho_\zeta^{K}(t))} \leq \gamma(K)}$.
 
@@ -1007,7 +1007,7 @@ Assume ${\GrowA=\Gamma_0^n}$. Consider ${(\Dist,f)}$ a distributional estimation
 \end{samepage}
 
 \begin{proof}
-\textcolor{red}{This proof proceeds by using the standard "domination of a uniform family" result to dominate all the algorithms with a bounded-size advice string that never changes. An algorithm with constant advice can be interpreted as switching around within this family, and thus is dominated.}
+This proof proceeds by using the standard "domination of a uniform family" result to dominate all the algorithms with a bounded-size advice string that never changes. An algorithm with constant advice can be interpreted as switching around within this family, and thus is dominated.
 Consider any ${Q: \Words \xrightarrow{\Gamma_1} \Rats}$. Choose ${l \in \Nats}$ s.t. ${\forall K \in \Nats^n: \Abs{\A_Q(K)} \leq l}$. For each\\ $a \in \Bool^{\leq l}$, construct ${Q_a: \Words \Scheme \Rats}$ s.t. for any ${K \in \Nats^n}$, ${x,y \in \Words}$
 
 \begin{align*}
@@ -1044,7 +1044,7 @@ Consider $(\Dist,f)$ a distributional estimation problem and ${P: \Words \Scheme
 \end{equation}
 
 For the sake of brevity, we will say \enquote{${\ESG}$-optimal estimator} rather than \enquote{${\ESG}$-optimal polynomial-time estimator.}
-\textcolor{red}{This definition is interesting because it can be interpreted as a game against an adversary that is allowed to look at what the estimator outputs, which then predicts whether the estimator will overestimate or underestimate the true value. $\ESG$-optimal polynomial-time estimators are inexploitable against this class of adversaries. As we will show shortly, inexploitability is a slightly stronger condition than optimality, in the sense than any $\ESG$-optimal polynomial-time estimator is $\mathcal{F}$-optimal, but going in the other direction requires at most logarithmic advice and is associated with an increase in the error. The inexploitability property will be used in many additional proofs.}
+This definition is interesting because it can be interpreted as a game against an adversary that is allowed to look at what the estimator outputs, which then predicts whether the estimator will overestimate or underestimate the true value. $\ESG$-optimal polynomial-time estimators are inexploitable against this class of adversaries. As we will show shortly, inexploitability is a slightly stronger condition than optimality, in the sense than any $\ESG$-optimal polynomial-time estimator is $\mathcal{F}$-optimal, but going in the other direction requires at most logarithmic advice and is associated with an increase in the error. The inexploitability property will be used in many additional proofs.
 \end {definition}
 
 The following theorem is the analogue in our language of the previous fact about inner product spaces. The notation $\Fall^{\frac{1}{2}}$ refers to Definition~\ref{def:fall_space_power}, i.e. it is just the set of square roots of all the functions in $\Fall$.
@@ -1130,7 +1130,7 @@ We can assume $Q$ is bounded without loss of generality since given any $Q$ it e
 \subsection{Simple Example}
 \label{sec:fundamentals__one_way}
 
-The concept of an optimal polynomial-time estimator is in some sense complementary to the concept of pseudorandomness: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal polynomial-time estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal polynomial-time estimator, we use the concept of a hard-core predicate (which may be regarded as an elementary example of pseudorandomness). The notation $\Fall_\text{neg}$ below refers to the fall space defined in Example~\ref{exm:fall_neg} (functions that fall faster than any polynomial). \textcolor{red}{$\frac{1}{2}$ is an optimal polynomial-time estimator for a hard-core predicate.}
+The concept of an optimal polynomial-time estimator is in some sense complementary to the concept of pseudorandomness: a pseudorandom process deterministically produces output that appears random to bounded algorithms whereas optimal polynomial-time estimators compute the moments of the perceived random distributions of the outputs of deterministic processes. To demonstrate this complementarity and give an elementary example of an optimal polynomial-time estimator, we use the concept of a hard-core predicate (which may be regarded as an elementary example of pseudorandomness). The notation $\Fall_\text{neg}$ below refers to the fall space defined in Example~\ref{exm:fall_neg} (functions that fall faster than any polynomial). $\frac{1}{2}$ is an optimal polynomial-time estimator for a hard-core predicate.
 
 \begin{theorem}
 \label{thm:hard_core}
@@ -1259,9 +1259,9 @@ Assume $\Fall$ is $\GrowA$-ample. Consider $(\Dist,f)$ a distributional estimati
 Then, $\alpha^{-1}\delta^2 \in \Fall$.
 
 \end{theorem}
-\textcolor{red}{Looking at the definition of an $\ESG$-optimal estimator, we see that, when $Q$ is $\{0,1\}$-valued to pick out a small subset of inputs, $P$ may be biased on that small subset, because the bias isn't normalized by dividing by the fraction of probability mass where $Q$ outputs 1. In the language of the above theorem, $\delta$ lies in $\Fall$, but $\frac{\delta}{\alpha}$ may not.}
+Looking at the definition of an $\ESG$-optimal estimator, we see that, when $Q$ is $\{0,1\}$-valued to pick out a small subset of inputs, $P$ may be biased on that small subset, because the bias isn't normalized by dividing by the fraction of probability mass where $Q$ outputs 1. In the language of the above theorem, $\delta$ lies in $\Fall$, but $\frac{\delta}{\alpha}$ may not.
 
-\textcolor{red}{Proposition~\ref{prp:weight} says that, given ample advice, optimal estimators continue to be optimal (although with increased error) on small subsets of their input, which is a slightly stronger condition. Therefore, the above theorem essentially says that if enough advice is available for Proposition~\ref{prp:weight} to apply, the property of resistance to reweighting implies that, for the subset that $W$ picks out, the unnormalized bias times the normalized bias is a small term that lies in $\Fall$.}
+Proposition~\ref{prp:weight} says that, given ample advice, optimal estimators continue to be optimal (although with increased error) on small subsets of their input, which is a slightly stronger condition. Therefore, the above theorem essentially says that if enough advice is available for Proposition~\ref{prp:weight} to apply, the property of resistance to reweighting implies that, for the subset that $W$ picks out, the unnormalized bias times the normalized bias is a small term that lies in $\Fall$.
 
 To see the relationship between Theorem~\ref{thm:calib} and calibration, consider the following corollary.
 
@@ -1348,7 +1348,7 @@ It is easy to see that ${\Abs{\En_\Rats(\epsilon)} = O(\log \frac{\alpha}{\Abs{\
 Q^{K}(x,y) &= P^{K}(x,y)-\epsilon(K)
 \end{align*}
 
-\textcolor{red}{This algorithm uses the advice string to check whether the normalized bias is too high, and if it is, it perturbs the estimated values accordingly.}
+This algorithm uses the advice string to check whether the normalized bias is too high, and if it is, it perturbs the estimated values accordingly.
 
 Applying Proposition~\ref{prp:weight} to $P$, $Q$ and $W$, we conclude there is $\varepsilon \in \Fall$ s.t.
 
@@ -1435,7 +1435,7 @@ This identity is tautologous if interpreted as a definition of $\E[F \mid A]$. H
 
 The language of optimal polynomial-time estimators provides a natural way to define an analogue of conditional expectation. Namely, consider a distributional estimation problem $(\Dist, f)$ and a decision problem ${L \subseteq \Words}$. Then, $P: \Words \Scheme \Rats$ represents the conditional expectation of $f$ given $L$ when it is an optimal polynomial-time estimator for $(\Dist \mid L, f)$. That is, the conditional expectation is the best estimate of $f(x)$ when the problem instance $x$ is sampled with the \emph{promise} $x \in L$.
 
-The above perspective allows us stating and proving non-tautological theorems analogous to \ref{eqn:cond_ev}. We give two such theorems, corresponding to two different ways to group the variables in \ref{eqn:cond_ev}. \textcolor{red}{Let $\chi_{L}$ be the indicator function for $L$. The first states that an optimal estimator for $\chi_{L}f$ can be made by multiplying together an optimal estimator for $\chi_{L}$ and a less accurate optimal estimator for $f|L$, and the second theorem states that a less accurate optimal estimator for $f|L$ can be made by dividing the output of an optimal estimator for $\chi_{L}f$ by the output of an optimal estimator for $L$. The amplification of error appears because $L$ might be a low-probability event, and conditional probabilities for low-probability events are less accurate than conditional probabilities for high-probability events.}
+The above perspective allows us stating and proving non-tautological theorems analogous to \ref{eqn:cond_ev}. We give two such theorems, corresponding to two different ways to group the variables in \ref{eqn:cond_ev}. Let $\chi_{L}$ be the indicator function for $L$. The first states that an optimal estimator for $\chi_{L}f$ can be made by multiplying together an optimal estimator for $\chi_{L}$ and a less accurate optimal estimator for $f|L$, and the second theorem states that a less accurate optimal estimator for $f|L$ can be made by dividing the output of an optimal estimator for $\chi_{L}f$ by the output of an optimal estimator for $L$. The amplification of error appears because $L$ might be a low-probability event, and conditional probabilities for low-probability events are less accurate than conditional probabilities for high-probability events.
 
 \begin{samepage}
 \begin{theorem}
@@ -1758,7 +1758,7 @@ Given encoded sets $X$ and $Y$, a \emph{polynomial-time $\MGrow$-scheme of signa
 
 Abusing notation, we denote the polynomial-time $\MGrow$-scheme $(S,\R_S,\M_S)$ by $S$.
 
-$\R_S^K(z)$ will denote $\R_S(K,z)$. $\UM_S^K \in \mathcal{P}(\Words \times \Words)$ is \textcolor{red}{the joint probability distribution over advice bitstrings and randomness bitstrings,} given by 
+$\R_S^K(z)$ will denote $\R_S(K,z)$. $\UM_S^K \in \mathcal{P}(\Words \times \Words)$ is the joint probability distribution over advice bitstrings and randomness bitstrings, given by 
 
 \[\UM_S^K(y,z):= \M_S^K(z) \delta_{\Abs{y},\R_S^K(z)} 2^{-\R_S^K(z)}\]
 
@@ -1832,14 +1832,14 @@ We require that the function $\varepsilon(K):=\E_{x \sim \Dist^{K}}[\Abs{f_\sigm
 
 \end{enumerate}
 
-\textcolor{red}{This represents the requirement of being able to efficiently generate question-answer pairs, such that the distribution of questions converges to the distribution $\Dist$, and the answers converge to the true output of the function $f$.}
+This represents the requirement of being able to efficiently generate question-answer pairs, such that the distribution of questions converges to the distribution $\Dist$, and the answers converge to the true output of the function $f$.
 
 When $\sup{\Abs{\sigma_1}} < \infty$ (since $f$ is bounded, this can always be assumed without loss of generality), $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $(\Dist,f)$}.
 
 \end{definition}
 \end{samepage}
 
-For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability become very weak, as seen in the following propositions, \textcolor{red}{which essentially say that if the bitstrings on which $\Dist$ is supported are short enough relative to the length of the advice string, then the randomized advice can just duplicate the distribution. And if there is ample advice available, then the randomized advice can also output an approximation to the true value of $f(x)$ along with $x$.}
+For sufficiently large $\GrowA$ the requirements of $\EMG$-samplability become very weak, as seen in the following propositions, which essentially say that if the bitstrings on which $\Dist$ is supported are short enough relative to the length of the advice string, then the randomized advice can just duplicate the distribution. And if there is ample advice available, then the randomized advice can also output an approximation to the true value of $f(x)$ along with $x$.
 \begin{samepage}
 \begin{proposition}
 \label{prp:adv_mgamma_smp}
@@ -1941,7 +1941,7 @@ We now introduce the notions of samplability over a given \enquote{base space} $
 
 Consider a word ensemble $\Dist$, an encoded set $Y$ and a family of Markov kernels ${\{\pi^K: \Supp \Dist^{K} \Markov Y\}_{K \in \Nats^n}}$. $\Dist$ is called \emph{polynomial-time $\EMG$-samplable (resp. polynomial-time $\EG$-samplable) relative to $\pi$} when there is a polynomial-time $\MGrow$-scheme (resp. polynomial-time $\Gamma$-scheme) $\sigma$ of signature $Y \rightarrow \Words$ s.t. ${\E_{y \sim \pi_*^K\Dist^{K}}[\Dtv(\Dist^K \mid (\pi^K)^{-1}(y),\sigma_y^K)] \in \Fall}$.
 
-In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$ relative to $\pi$}. \textcolor{red}{That is, even though the underlying distribution may not be samplable, if some evidence ($y$) is given, that permits sampling from the distribution conditional on $y$.}
+In this case, $\sigma$ is called a \emph{polynomial-time $\EMG$-sampler (resp. polynomial-time $\EG$-sampler) of $\Dist$ relative to $\pi$}. That is, even though the underlying distribution may not be samplable, if some evidence ($y$) is given, that permits sampling from the distribution conditional on $y$.
 
 \end{definition}
 
@@ -1970,7 +1970,7 @@ When $\sup{\Abs{\sigma_1}} < \infty$, $\sigma$ is called a \emph{polynomial-time
 
 Note that relative samplability reduces to absolute (ordinary) samplability when $Y=\bm{1}$.
 
-The following propositions are basic properties of samplable ensembles and problems which often come in handy. \textcolor{red}{Proposition~\ref{prp:smp} states that the expectation of a function $h(x)$ remains approximately unchanged when $x$ is replaced with a sampler of $\Dist$, and Proposition~\ref{prp:gen} states that the expectation of the product of $h(x)$ and $f(x)$ remains approximately unchanged when $x$ and $f(x)$ are replaced by question/answer pairs produced by a sampler for $(\Dist,f)$.}
+The following propositions are basic properties of samplable ensembles and problems which often come in handy. Proposition~\ref{prp:smp} states that the expectation of a function $h(x)$ remains approximately unchanged when $x$ is replaced with a sampler of $\Dist$, and Proposition~\ref{prp:gen} states that the expectation of the product of $h(x)$ and $f(x)$ remains approximately unchanged when $x$ and $f(x)$ are replaced by question/answer pairs produced by a sampler for $(\Dist,f)$.
 
 \begin{samepage}
 \begin{proposition}
@@ -2095,7 +2095,7 @@ Then, $P$ is an $\ESG$-optimal estimator for $(\Dist,f_1 f_2)$.
 \end{theorem}
 \end{samepage}
 
-In order to prove Theorem~\ref{thm:mult} we will need the following proposition\textcolor{red}{, which takes the defining inexploitability property of an $\ESG$-optimal estimator, and extends it to the adversary $S$ having access to randomized advice, which can be done because deterministic advice can copy the "luckiest possible advice string" drawn from the distribution over advice strings.}
+In order to prove Theorem~\ref{thm:mult} we will need the following proposition, which takes the defining inexploitability property of an $\ESG$-optimal estimator, and extends it to the adversary $S$ having access to randomized advice, which can be done because deterministic advice can copy the "luckiest possible advice string" drawn from the distribution over advice strings.
 
 \begin{samepage}
 \begin{proposition}
@@ -2184,7 +2184,7 @@ By Proposition~\ref{prp:mixed_ort}, this implies
 $$\Abs{\E[(P^{K}-f_1 f_2)S^{K}]} \equiv 0 \pmod \Fall$$
 \end{proof}
 
-The following corollary demonstrates one natural scenario in which the conditions of Theorem~\ref{thm:mult} hold. \textcolor{red}{The scenario is one where the distribution is $\Dist_{1}\times\Dist_{2}$, and the task is to estimate $f_{1}(x_{1})f_{2}(x_{2})$. By Theorem~\ref{thm:mult}, this can be done if there is a sampler for $(\Dist_{2},f_{2})$, and a sampler for $\Dist_{1}$.}%, because the two samplers can be put together to approximately sample from $\Dist_{1}\times\Dist_{2}$, and this is a sufficient condition for the product of the optimal estimators to be an optimal estimator.}
+The following corollary demonstrates one natural scenario in which the conditions of Theorem~\ref{thm:mult} hold. The scenario is one where the distribution is $\Dist_{1}\times\Dist_{2}$, and the task is to estimate $f_{1}(x_{1})f_{2}(x_{2})$. By Theorem~\ref{thm:mult}, this can be done if there is a sampler for $(\Dist_{2},f_{2})$, and a sampler for $\Dist_{1}$.%, because the two samplers can be put together to approximately sample from $\Dist_{1}\times\Dist_{2}$, and this is a sufficient condition for the product of the optimal estimators to be an optimal estimator.}
 
 \begin{samepage}
 \begin{corollary}
@@ -2199,7 +2199,7 @@ P^{K}(\Chev{x_1,x_2}, z_1 z_2)=P_1^{K}(x_1,z_1) P_2^{K}(x_2,z_2)
 \end{corollary}
 \end{samepage}
 
-In order to prove Corollary~\ref{crl:dir_prod}, we'll need \textcolor{red}{to prove several minor propositions first.}
+In order to prove Corollary~\ref{crl:dir_prod}, we'll need to prove several minor propositions first.
 
 \begin{samepage}
 \begin{proposition}
@@ -2413,7 +2413,7 @@ Consider $(\Dist,f)$, $(\mathcal{E},g)$ distributional estimation problems and $
 \end{definition}
 \end{samepage}
 
-Note that condition~\ref{con:def__psp_reduce__smp} is violated in the one-way function example above\textcolor{red}{, and in particular it ensures that the problem doesn't become significantly more difficult after applying $\pi$.}
+Note that condition~\ref{con:def__psp_reduce__smp} is violated in the one-way function example above, and in particular it ensures that the problem doesn't become significantly more difficult after applying $\pi$.
 
 \textcolor{red}{Also, notice the similarity of condition ii to a randomized Karp reduction (page 189 in \cite{Goldreich_2008}). Reexpressing that definition in our terminology, it is $\forall x:\E_{z\sim\Un_\pi^{K}}[\Abs{f(x)-g(\pi^{K}(x,z))}]\ge\mu(K)$, where $\mu$ is a negligible function.}
 
