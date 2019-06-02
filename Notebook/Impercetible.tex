@@ -100,7 +100,29 @@ Step 4: Bounding MB dimension for the belief-MDP in terms of POMDP-natural quant
 
 Step 5: Local dimension. Each POMDP kernel has a corresponding MDP kernel obtained by marginalizing out the observation. We need that for each belief state and action, the results of applying the latter lie in a low-dimensional affine space when we vary the hypothesis. This doesn't follow from considering the full-knowledge belief states only, but it does work when the number of hypotheses is small or the number of states is small. Can we formulate this condition without quantifying over belief states?
 
-Consider the transition kernel as an operator from $\Reals^{S\times A}$ to $\Reals^S$. Then, if our hypotheses lie in a low-dimensional affine subspace of this operator space, the local dimension in the above sense is low. (What about low-dimensional algebraic subspaces?) Perhaps this is also enough to bound Eluder and MB dimensions? Is it enough to consider $\Reals^{S}$ to $\Reals^S$ separately for each action?
+Consider the transition kernel as an operator from $\Reals^{S\times A}$ to $\Reals^S$. Then, if our hypotheses lie in a low-dimensional affine subspace of this operator space, the local dimension in the above sense is low. (What about low-dimensional low-degree algebraic subspaces?) Probably this is also enough to bound Eluder and MB dimensions? Is it enough to consider $\Reals^{S}$ to $\Reals^S$ separately for each action?
+
+Is this the only thing that works? In other words, if $H$ is a family of operators from $V$ to $V$, and for any $v\in V$, $Hv$ lies in an affine/linear subspace of dimension $\leq d$, does it mean $H$ lies in a affine/linear subspace of dimension $\leq d$? Reformulation: Consider $A_1, A_2 \ldots A_d$ linearly independent linear operators. Is there $v\in V$ s.t. $A_1v, A_2v\ldots A_d v$ linearly independent? Well, not always since $\dim\End(V) > \dim V$. But what if $d\ll\dim V$? Perhaps it is even the case that \textit{for almost all} $v\in V$, $A_1v, A_2v\ldots A_d v$ are linearly independent?
+
+Counterexample! Consider $\alpha,\beta\in V^*$ and $u\in V$ and let $Av:=\alpha(v)u$ and $Bv:=\beta(v)u$. Then $A$ and $B$ are linearly independent as long as $u\ne0$ and $\alpha,\beta$ are linearly independent. However, for any $v\in V$, $Av$ and $Bv$ are linearly dependent. Moreover we can take $\alpha_1,\alpha_2\ldots\alpha_d$ linearly independent and define $A_i:=u\otimes\alpha_i$, and then the $A_i$ are linearly independent but the span of $A_i v$ is of dimension 1.
+
+Actually the question can be naturally asked for operators from $V$ to $W$. How can we characterize sets $H$ of such operators, for which $\dim\Sp_{A\in H} Av\leq d$ for all $v\in V$?
+
+Consider linear subspaces $U\subseteq W$ and $H\subseteq \Hom(V,W)$. Then, for any $v\in V$
+
+\[\dim Hv \leq \dim U + \dim H/\Hom(V,U)\]
+
+Here, $H/\Hom(V,U)$ denotes the image of $H$ in $\Hom(V,W)/\Hom(V,U)$. The above can also be written as
+
+\[\dim Hv\leq\dim U+\dim H-\dim\AP{H\cap\Hom(V,U)}\]
+
+Is it true that, for any $H$ there is $U$ and $v\in V$ s.t. the above is an equality?
+
+Special case: suppose that $H$ is s.t. any $A\in H\setminus0$ is onto. Then, the claim is, there is $v\in V$ s.t.
+
+\[\dim Hv = \min(\dim W, \dim H)\]
+
+Further specialization? Induction by $\dim W$, $\dim H$, $\dim V$?
 
 \end{document}
 
